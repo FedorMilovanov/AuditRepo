@@ -542,11 +542,14 @@ export function App() {
       }
       setActiveNameId(target.id);
       setResumePosition(null);
-
-      window.setTimeout(() => {
-        const el = document.getElementById(`name-${target.id}`);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 260);
+      // #name-... is a shareable dossier link, not just a scroll target.
+      // Keep the article underneath aligned with the dossier; do not
+      // animate the document behind an open modal.
+      document.getElementById(`name-${target.id}`)?.scrollIntoView({
+        behavior: 'instant',
+        block: 'center',
+      });
+      setSelectedModalEntry(target);
     };
 
     navigateToHashName();
