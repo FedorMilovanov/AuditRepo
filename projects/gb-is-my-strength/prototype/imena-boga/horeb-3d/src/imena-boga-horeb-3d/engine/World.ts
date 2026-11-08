@@ -364,6 +364,9 @@ export class World {
     const item = this.exhibitPos.find((p) => p.e.id === id);
     if (!item || this.disposed || Math.hypot(this.pos.x - item.x, this.pos.y - item.z) > 5.5) return false;
     this.activeInspection = { id, until: this.t + 8 };
+    // The 'Inspect in 3D' click is also an explicit visitor gesture.
+    // Re-enable the environment before scheduling its subtle response.
+    this.audio.unlockFromGesture();
     this.audio.inspectCue(id, this.t);
     return true;
   }
