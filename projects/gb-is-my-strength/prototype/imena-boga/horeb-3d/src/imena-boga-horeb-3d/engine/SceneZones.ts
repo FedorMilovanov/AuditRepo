@@ -356,12 +356,16 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
 
     // Природные камни-рубежи: внешний порог — рассыпь мелких камней; внутренний — низкий скальный гребень
     const r = rng(5);
-    const ringStones = (radius: number, count: number, smin: number, smax: number, gap: number) => {
+    // Loose natural scree subtly marks the thresholds. Earlier equal-angle
+    // placements made two artificial, almost ceremonial stone circles.
+    // Collision/sandal rules remain governed ONLY by R_OUTER and R_INNER.
+    const thresholdScree = (name: string, radius: number, count: number, smin: number, smax: number, spread: number) => {
       const im = new THREE.InstancedMesh(stoneGeo, stoneMat, count);
+      im.name = name;
       const m = new THREE.Matrix4();
       for (let i = 0; i < count; i++) {
-        const a = (i / count) * Math.PI * 2 + (r() - 0.5) * gap;
-        const rr = radius + (r() - 0.5) * 0.6;
+        const a = r() * Math.PI * 2; // stochastic gaps and natural clusters
+        const rr = radius + (r() - 0.5) * spread;
         const s = smin + r() * (smax - smin);
         m.compose(new THREE.Vector3(BUSH.x + Math.cos(a) * rr, s * 0.3, BUSH.z + Math.sin(a) * rr),
           new THREE.Quaternion().setFromEuler(new THREE.Euler(r() * 3, r() * 3, r() * 3)), new THREE.Vector3(s * 1.3, s * 0.6, s));
@@ -369,8 +373,8 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       }
       group.add(im);
     };
-    ringStones(R_OUTER + 0.6, 46, 0.1, 0.26, 0.08);
-    ringStones(R_INNER + 0.3, 34, 0.25, 0.55, 0.05);
+    thresholdScree('outer-threshold-scree', R_OUTER + 0.8, 36, 0.12, 0.28, 3.4);
+    thresholdScree('inner-threshold-scree', R_INNER + 0.8, 25, 0.22, 0.48, 2.4);
     // рассеянные валуны
     const boulders = new THREE.InstancedMesh(stoneGeo, stoneMat, low ? 120 : 320);
     const m = new THREE.Matrix4();
