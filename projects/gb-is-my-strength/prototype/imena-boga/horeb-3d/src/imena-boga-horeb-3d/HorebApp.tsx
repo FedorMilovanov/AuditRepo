@@ -148,7 +148,9 @@ export default function HorebApp() {
       cancelled = true;
       controller.abort();
       if (w) {
-        resumePos.current = w.position;
+        // Every intentional route change records a checkpoint through
+        // leaveWorld/saveCheckpoint. Teardown must never restore stale
+        // coordinates after an explicit in-world progress reset.
         w.dispose();
       }
       if (new URLSearchParams(location.search).has('e2e')) {
@@ -216,6 +218,14 @@ export default function HorebApp() {
     checkpointRef.current = null;
     checkpointAt.current = performance.now();
     setProgress({ visited: [0], last: null });
+    if (screen === 'world') {
+      // A reset is a fresh expedition, not a storage edit while standing
+      // somewhere else. Exit without leaveWorld (which would save the
+      // position we are deliberately discarding).
+      setDialog(null);
+      setWs(null);
+      setScreen('intro');
+    }
   };
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
@@ -396,7 +406,7 @@ export default function HorebApp() {
           <SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} stats={ws ? `Измерено сейчас: ${ws.fps} fps, ${ws.calls} draw calls, ${ws.tris} треугольников, pixelRatio ${ws.pixelRatio}, геометрия: ${resolved.quality}` : undefined} />
           <div className="flex flex-wrap gap-2 mt-5">
             <button className="btn" onClick={() => { worldRef.current?.resetCamera(); setDialog(null); }}>Сбросить камеру</button>
-            <button className="btn" onClick={resetProgress}>Сбросить прогресс</button>
+            <button className="btn" onClick={resetProgress}>Сбросить маршрут и выйти</button>
           </div>
         </Modal>
       )}
