@@ -168,6 +168,22 @@ try {
       t: window.__horeb.world.t, locked: window.__horeb.world.inputLocked,
     }));
     check('closing modal resumes animation', !resumed.locked && resumed.t > frozenAt);
+    // Real loss of browser focus must neutralize *all* locomotion sources:
+    // not just W held down, but a stuck touch joystick and residual velocity.
+    await page.keyboard.down('KeyW');
+    const unfocused = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      w.setMoveInput(0.7, 0.5);
+      w.vel.set(2, 3);
+      window.dispatchEvent(new Event('blur'));
+      return { keys: w.keys.size, x: w.move.x, y: w.move.y,
+        speed: w.vel.length(), dragging: w.dragging };
+    });
+    await page.keyboard.up('KeyW');
+    check('window blur clears held keys, touch vector and inertia',
+      unfocused.keys === 0 && unfocused.x === 0 && unfocused.y === 0 &&
+      unfocused.speed === 0 && unfocused.dragging === null,
+      JSON.stringify(unfocused));
     // Zone 1 at its default spawn: the first inscription sits off the left
     // camera edge. It must *not* be rendered as half of a large cut-off word.
     await page.evaluate(() => {
