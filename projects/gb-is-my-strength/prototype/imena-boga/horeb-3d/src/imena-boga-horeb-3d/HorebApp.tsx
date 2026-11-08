@@ -25,7 +25,8 @@ function readSettings(): UiSettings {
     sound: typeof s.sound === 'boolean' ? s.sound : true,
     particles: typeof s.particles === 'boolean' ? s.particles : true,
     reducedMotion: typeof s.reducedMotion === 'boolean' ? s.reducedMotion : prefersReduced(),
-    exposure: typeof s.exposure === 'number' && Number.isFinite(s.exposure) ? Math.min(2, Math.max(0.6, s.exposure)) : 1.5,
+    // A modestly brighter initial image for phones; never override a saved choice.
+    exposure: typeof s.exposure === 'number' && Number.isFinite(s.exposure) ? Math.min(2, Math.max(0.6, s.exposure)) : (coarse() ? 1.75 : 1.5),
     showStats: s.showStats === true,
   };
 }
