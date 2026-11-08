@@ -77,6 +77,7 @@ export function buildBurningBush(low: boolean) {
   // Keep the base close to the stems: it must read as natural soil,
   // not as a wide illuminated ceremonial pedestal around the bush.
   const mound = new THREE.Mesh(moundGeo, new THREE.MeshStandardMaterial({ color: 0x3e332a, roughness: 1 }));
+  mound.name = 'bush-soil-base';
   mound.scale.set(0.72, 0.09, 0.78); group.add(mound);
 
   // Пламя
