@@ -1,0 +1,286 @@
+{
+  "name": "GBSM Premium 3D Library Lab V4",
+  "date": "2026-11-08",
+  "boundary": "isolated local experiment; no Product / AuditRepo writes",
+  "source": "interactive-3d-card-cover(1).zip",
+  "caveats": [
+    "full Vite build not confirmed",
+    "WebGL FPS/real GPU not confirmed",
+    "persistent IndexedDB / multi-tab browser test not confirmed",
+    "no Product reader/sync integration"
+  ],
+  "files": {
+    "ART_DIRECTION.md": {
+      "sha256": "f97e9e87eb91b730d9ab8d9debaf73537eab862c16b126fae541703e300c45ea",
+      "bytes": 3291
+    },
+    "CABINET_LAB_IMPLEMENTATION.md": {
+      "sha256": "f687c2c186eb9d20fd609dd8acb31f7d799d158921f71010172d57ac61877b5d",
+      "bytes": 8203
+    },
+    "PERSONAL_LIBRARY_RFC.md": {
+      "sha256": "79dbf46ae8b91be3716953ca5106e4a43776c3c7d324493b26508f483a21974c",
+      "bytes": 13871
+    },
+    "PROGRESSION_SYSTEM_RFC.md": {
+      "sha256": "eb67308d5fce36b90c6c9fb48e76650b0408c5277aed698f83395abedb2b3d2f",
+      "bytes": 15428
+    },
+    "README-LAB.md": {
+      "sha256": "f00f6a7fa979855f6ac1f20c123e61006e663bde2853e5d24049b74a4f33d6dd",
+      "bytes": 6484
+    },
+    "covers-contact-sheet.png": {
+      "sha256": "eafa578af7405e1dd040af8ec5e96b7e1e07372679561e2567937a40d9ec32c4",
+      "bytes": 337665
+    },
+    "index.html": {
+      "sha256": "8fd763ba6f68da22efdef597523bc896883e0f50e2ff51db691fec6999d8cb3b",
+      "bytes": 743
+    },
+    "package-lock.json": {
+      "sha256": "e6e7464f172f57d3b2585feed83f1df2037d37f62c7d605d9b0a7d8cbd29cee7",
+      "bytes": 131764
+    },
+    "package.json": {
+      "sha256": "ab6c596597d83899085a795387dd62fcdd0c5e66c33d0c5759c92b5a355e323c",
+      "bytes": 1273
+    },
+    "preview/cabinet-1440.png": {
+      "sha256": "22acc563871bbfbadb5fcc55090855d2ea3536da1227e4ab9c195c542b6506b1",
+      "bytes": 343202
+    },
+    "preview/cabinet-320.png": {
+      "sha256": "0e179533a79896d75be79c4b0116718a21751678e2f6517398deae19b99f80ce",
+      "bytes": 136392
+    },
+    "preview/cabinet-390.png": {
+      "sha256": "bd0ba04d03233a3286a31060740223e25804b50430d5049cc1b95542378d83e0",
+      "bytes": 136860
+    },
+    "preview/cabinet-presentation-1440.png": {
+      "sha256": "bca35be59aa579dcf7e84ace9d060e5ce2a9bc335ad3193dd6e997716433ff53",
+      "bytes": 357148
+    },
+    "preview/cabinet-presentation-390.png": {
+      "sha256": "3de241f61a8687faa655486fce8db4a0986a4517e869328a9f229b695b9716ff",
+      "bytes": 149776
+    },
+    "preview/cabinet-template.html": {
+      "sha256": "89f53f40e7aa68f38d774153b188d843b2e4cfe902032a420d359baeeee63b69",
+      "bytes": 17908
+    },
+    "preview/cabinet.html": {
+      "sha256": "f3fd3f6e3ecb50f7a02711d129371c4d779d6353fc22da449fef45384f4a7283",
+      "bytes": 35161
+    },
+    "preview/library-backdrop.jpg": {
+      "sha256": "90069bbbc95398daafb45a4a327edcf58424335a80161ab284e0e244e01bab5a",
+      "bytes": 57420
+    },
+    "preview/progression-1440.png": {
+      "sha256": "2077b358fcb556f1bc2a96c35b08fc6f091c9776460e05a2240083b0bc3216db",
+      "bytes": 220214
+    },
+    "preview/progression-320.png": {
+      "sha256": "1b14120657fc5b720735887f25ae8b8ef1873dd2bc628345ba803c19b1972504",
+      "bytes": 130181
+    },
+    "preview/progression-390.png": {
+      "sha256": "419d8a195f1d0753d9d0128549027c4647b59fa163922925f6fa0c0f68a91b52",
+      "bytes": 130361
+    },
+    "preview/progression-screenshot.png": {
+      "sha256": "2077b358fcb556f1bc2a96c35b08fc6f091c9776460e05a2240083b0bc3216db",
+      "bytes": 220214
+    },
+    "preview/progression.html": {
+      "sha256": "7771f3552e74aef31b33fe75ded54386d695946344b1294a9054884a2d8da781",
+      "bytes": 105835
+    },
+    "preview/template.html": {
+      "sha256": "7f38286304fc3d7e01712f91f4db91e02ab577138e10ff8c9ef6ad2fc26867fd",
+      "bytes": 14394
+    },
+    "provenance.json": {
+      "sha256": "c5a905ddf230b925a61338e0c41078be35e12a0d1f274608f08e89d707c42d97",
+      "bytes": 734
+    },
+    "public/covers/biografii.webp": {
+      "sha256": "0e0b28a78a5748f156609e73aaac6e35c954d4fe12018bd336cd657a0cb05425",
+      "bytes": 153712
+    },
+    "public/covers/nagornaya.webp": {
+      "sha256": "4b8dc8712551f03c79ffcd8ae9304b8943e38772beb140441ea4b595d2b6f46d",
+      "bytes": 158244
+    },
+    "public/covers/otstuplenie.webp": {
+      "sha256": "bb104e53169f843569cdeebc3e6f6fab39d88ec1d8af1cd639f4c04cefc66104",
+      "bytes": 150724
+    },
+    "reference/library-design-target.png": {
+      "sha256": "3391f518c93e2d476071d97ecea4b41c4260c7ed4477b0829f615a1b745147ef",
+      "bytes": 2876940
+    },
+    "scripts/build-cabinet-preview.cjs": {
+      "sha256": "27b66cbb78f40942c88810043cda699ff25ad59eccfb6208c9d84ac1f84b7a92",
+      "bytes": 1095
+    },
+    "scripts/build-lab-manifest.cjs": {
+      "sha256": "0915cf8d4b4a35cdb0ff8c7542a2784fb80a137e7aa68811cefb8073bb7b4a89",
+      "bytes": 1472
+    },
+    "scripts/build-progression-preview.cjs": {
+      "sha256": "a108e4ea616d93ff055176c92560f50afcafe579bdbe1bb3858925ad29eee940",
+      "bytes": 1069
+    },
+    "scripts/generate-covers.py": {
+      "sha256": "a2ec6d666309cb9570350ff0b958efbc464189cf7065a957b652bea9d32c7b04",
+      "bytes": 3002
+    },
+    "scripts/verify-architecture.cjs": {
+      "sha256": "72a1653a8f8af13c27254572d645c6f19e6612f8ab617a4ecb61573209a5e922",
+      "bytes": 2478
+    },
+    "src/App.tsx": {
+      "sha256": "a3cdd50003df4e85a4ab39c905d1baf8713f0c4e527de82db31c18cae8408b37",
+      "bytes": 6143
+    },
+    "src/audio.ts": {
+      "sha256": "e2bad191e4ca54180f4f2018c7636322f5372c81adcbcdc3be6bcc1ce183a83e",
+      "bytes": 4680
+    },
+    "src/cabinet/CabinetPanel.tsx": {
+      "sha256": "c383d9816b7e1a85aa5780f00d96e4611d76f1d90aa48b1b59ed83a39048f453",
+      "bytes": 17143
+    },
+    "src/cabinet/engine.ts": {
+      "sha256": "ae60ef7f2de31170b1f8ca12ad9d74bb523a4e1d5c2874e8b53d47930efc536b",
+      "bytes": 13959
+    },
+    "src/cabinet/storage.ts": {
+      "sha256": "e9e27fa7f7e4c6c415404e42ce08b343e5188e6ac243010c0486c733c137dbc7",
+      "bytes": 4024
+    },
+    "src/data.ts": {
+      "sha256": "c597f2849dc86aa70d5cf015e07099eacda05927ffac1fe57dfa9a608fea7abe",
+      "bytes": 17318
+    },
+    "src/fonts.ts": {
+      "sha256": "c87bef6ff735dfa07664abcffd531c92a12baed12e53175973527977531e9fc5",
+      "bytes": 1308
+    },
+    "src/index.css": {
+      "sha256": "d285aa33f316a1f8dc022623496dbcfe57428a9212c3493ec3ac2e4a98dbd736",
+      "bytes": 1417
+    },
+    "src/main.tsx": {
+      "sha256": "f268dc44f71240012de0cfb1569d8ac906265cccd45eb3a99059c1a663d2f830",
+      "bytes": 230
+    },
+    "src/progression/ProgressPanel.tsx": {
+      "sha256": "62d2af6f0bc3ca16ceccf8fb09826c12f7c06f28d6e4ae04431f43e3f7431882",
+      "bytes": 16145
+    },
+    "src/progression/engine.ts": {
+      "sha256": "6136ab7b0150d9c0ef8345139be20de6232722ccb8c202aaddf60be8c634d09d",
+      "bytes": 14956
+    },
+    "src/scene/Architecture.tsx": {
+      "sha256": "92272089e5eddb968adb87b6264540dee2f1d961c9addac4f42fbc19a3231587",
+      "bytes": 6014
+    },
+    "src/scene/Cards.tsx": {
+      "sha256": "04b31f693c038c46131ca447e6205e947db18aafcf21cfb425c230470bf8cc92",
+      "bytes": 5866
+    },
+    "src/scene/Center.tsx": {
+      "sha256": "32c4a95adbe8011960e34c58a92cb6d742f42e77b833622b76668a4d6e8340f8",
+      "bytes": 3643
+    },
+    "src/scene/Dressing.tsx": {
+      "sha256": "3f976699022df637146f08ffc2a587a7b2a4156efbc3e59f0d78f7cd649910b0",
+      "bytes": 4499
+    },
+    "src/scene/Platform.tsx": {
+      "sha256": "877bcd1712c9a427e0a8052db8ffe1b2bef5c5977aedd301016e15b27a3c4db5",
+      "bytes": 5034
+    },
+    "src/scene/Player.tsx": {
+      "sha256": "80f20e01d4c3cc350cb6e68db63b7da2e7d342158ddadf30f540ee5c089f79d6",
+      "bytes": 18663
+    },
+    "src/scene/SceneBoundary.tsx": {
+      "sha256": "017e81f3634f247d92fc8e7b0299c6366ee74433c9ce47fe5e1e3819970f600e",
+      "bytes": 1267
+    },
+    "src/scene/Sky.tsx": {
+      "sha256": "1f317ec4eb6447175514457c7c2df339f04f650382081b4965fb6bc74441d3c1",
+      "bytes": 12893
+    },
+    "src/scene/Stations.tsx": {
+      "sha256": "99f026552f4832b41e2382e53d237925efd104a22046f33f39e43b80359c382b",
+      "bytes": 19980
+    },
+    "src/scene/Tomes.tsx": {
+      "sha256": "cd2aea7d424b848d053bf4ecac3c725e885581259cfb6be56a0a03c4c2bc3e70",
+      "bytes": 4116
+    },
+    "src/scene/Vault.tsx": {
+      "sha256": "9560946254bd830f4b19061d95761b0a32a1f1de08098a6264b429e501624709",
+      "bytes": 2933
+    },
+    "src/scene/World.tsx": {
+      "sha256": "4f294838d535e1ab89d014d95aeb498d31313662c0bb4ca8a4661887408f1ee6",
+      "bytes": 6484
+    },
+    "src/store.ts": {
+      "sha256": "7f06f290be94fd87c40c081ee409d71c7c57fd883e6fbe5c884081bb486e4aa6",
+      "bytes": 9666
+    },
+    "src/textures.ts": {
+      "sha256": "374c85c194153cdc093757cb1f1e4d9107941ba5510fbbb4744bbe7d15cb1528",
+      "bytes": 16920
+    },
+    "src/ui/Overlay.tsx": {
+      "sha256": "20738d158af26ad0e88a2d209c0c4f46f8b783007ed9aabef325520e75a000b8",
+      "bytes": 42407
+    },
+    "src/utils/cn.ts": {
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+      "bytes": 169
+    },
+    "src/vite-env.d.ts": {
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "bytes": 38
+    },
+    "tests/browser-smoke.py": {
+      "sha256": "0bb17786a205db44c832db7db8f8db06bcf24693cdda4834dc5959a3faa493ff",
+      "bytes": 2687
+    },
+    "tests/cabinet-browser-smoke.py": {
+      "sha256": "d6cf61a7a59571df19489f96e6ba55af25b88589437464985fe767069ffe23f4",
+      "bytes": 4098
+    },
+    "tests/cabinet.cjs": {
+      "sha256": "978ba478bfeb7b77de796a58a94edcc81ee8366d58e39bbd68dd5e270f44a85e",
+      "bytes": 4086
+    },
+    "tests/progression.cjs": {
+      "sha256": "c8249c785c9c3a7d169d747c48358cae336a99a467bebbf62b70f202e8ba8cff",
+      "bytes": 4635
+    },
+    "tsconfig.json": {
+      "sha256": "2a760f56fa49b96935783a2c3b4ce63d67e4547fdace88c4f4361a0c4fc10848",
+      "bytes": 681
+    },
+    "tsconfig.lab-cabinet.json": {
+      "sha256": "a536bf325c0056f7af0d84d4774f6ce14e311731ff9bab0ddc8eca31cd6bb49d",
+      "bytes": 321
+    },
+    "vite.config.ts": {
+      "sha256": "18dd184b9091357fe23797ee047138e6af7663b59697ac45d6c3c219522db9fa",
+      "bytes": 538
+    }
+  }
+}
