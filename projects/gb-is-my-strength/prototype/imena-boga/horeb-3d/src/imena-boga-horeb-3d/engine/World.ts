@@ -49,7 +49,8 @@ export class World {
   private inputLocked = false;
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
-  private nameBeacons: { x: number; z: number; update: (distance: number) => void }[] = [];
+  private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean) => void }[] = [];
+  private activeInspection: { id: string; until: number } | null = null;
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
   private ambient = new THREE.AmbientLight(0xffeedd, 4.0);
@@ -157,7 +158,7 @@ export class World {
       if ((BEACON_IDS as readonly string[]).includes(e.id)) {
         const beacon = createNameBeacon(e, low);
         g.add(beacon.mesh);
-        this.nameBeacons.push({ x, z, update: beacon.update });
+        this.nameBeacons.push({ id: e.id, x, z, update: beacon.update });
       }
       let nx = -Math.sign(x) * 0.85, nz = 0.53;
       if (e.zone === 7) { nx = -Math.sign(x) * 0.6; nz = 0.8; }
@@ -347,6 +348,12 @@ export class World {
     const c = constrain(x, z, this.shoes !== 'unshod');
     this.pos.set(c.x, c.z); this.vel.set(0, 0); this.block = null; this.emit(true);
   }
+  inspectExhibit(id: string): boolean {
+    const item = this.exhibitPos.find((p) => p.e.id === id);
+    if (!item || this.disposed || Math.hypot(this.pos.x - item.x, this.pos.y - item.z) > 5.5) return false;
+    this.activeInspection = { id, until: this.t + 8 };
+    return true;
+  }
   resetCamera() { this.pitch = 0; this.yaw = this.pos.y < TUNNEL_END ? this.yawToBush() : 0; }
   private yawToBush() { return Math.atan2(-(0 - this.pos.x), -(-366 - this.pos.y)); }
   get position() { return { x: this.pos.x, z: this.pos.y }; }
@@ -430,7 +437,8 @@ export class World {
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
     for (const beacon of this.nameBeacons) {
-      beacon.update(Math.hypot(this.pos.x - beacon.x, this.pos.y - beacon.z));
+      beacon.update(Math.hypot(this.pos.x - beacon.x, this.pos.y - beacon.z),
+        this.activeInspection?.id === beacon.id && this.t < this.activeInspection.until);
     }
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
     this.bush.group.visible = this.pos.y < -286;
