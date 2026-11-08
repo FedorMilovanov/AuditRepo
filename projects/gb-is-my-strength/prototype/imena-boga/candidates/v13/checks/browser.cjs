@@ -63,13 +63,24 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     // Reflow contract: no Hebrew/Greek original or Russian caption may be
     // clipped when large-text zoom narrows the medallion's inline space.
     if(width===320){
-      const dots=page.getByRole('group',{name:'Выбор имени на медальоне'}).locator('button');
-      if(await dots.count()!==5)throw Error('Atlas glyph selector lost one of its five controls');
+      // Keep resize / focus / carousel state out of the main reading-preferences
+      // scenario. Reusing that page made WebKit's subsequent print-panel
+      // activation sensitive to the mobile-stress test's interaction history.
+      const glyphCtx=await browser.newContext({viewport:{width,height:844},locale:'ru-RU',reducedMotion:'reduce'});
+      try{
+        const glyphPage=await glyphCtx.newPage();
+        if(process.env.FONTS_MODE==='offline')
+          await glyphPage.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//,route=>route.abort());
+        await glyphPage.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+        await glyphPage.locator('h1').first().waitFor({state:'visible'});
+        await glyphPage.evaluate(()=>document.fonts.ready);
+        const dots=glyphPage.getByRole('group',{name:'Выбор имени на медальоне'}).locator('button');
+        if(await dots.count()!==5)throw Error('Atlas glyph selector lost one of its five controls');
       for(const narrow of [200,240,280,320,430]){
-        await page.setViewportSize({width:narrow,height:844});
+        await glyphPage.setViewportSize({width:narrow,height:844});
         for(let i=0;i<5;i++){
           await dots.nth(i).click();
-          const geo=await page.evaluate(()=>{
+          const geo=await glyphPage.evaluate(()=>{
             const row=document.querySelector('.gb-hero-medallion-controls');
             const card=document.querySelector('.gb-hero-medallion-button');
             const script=document.querySelector('.gb-hero-medallion-script');
@@ -102,8 +113,9 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             throw Error('Atlas mobile glyph/CTA reflow '+JSON.stringify({engine,narrow,i,geo}));
         }
       }
-      await page.setViewportSize({width,height:844});
-      await dots.first().click();
+      }finally{
+        await glyphCtx.close();
+      }
     }
     if(width===390){
       // In the reduced-motion browser context, hero navigation must not
@@ -291,6 +303,9 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     // A print/PDF request must invoke the browser synchronously inside the
     // click dispatch. A setTimeout can lose browser user-activation privileges.
     await settings.click();
+    await panel.waitFor({state:'visible',timeout:5000});
+    if((await settings.getAttribute('aria-expanded'))!=='true')
+      throw Error('Atlas settings did not reopen for print '+JSON.stringify({engine,width}));
     await page.evaluate(()=>{
       window.__printCalls=0;
       window.__printWasImmediate=false;
@@ -305,7 +320,10 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         }
       },{once:true});
     });
-    await panel.getByRole('button',{name:'Печать / PDF'}).click();
+    const printAction=panel.getByRole('button',{name:'Печать / PDF'});
+    if(!(await printAction.isVisible()))
+      throw Error('Atlas settings has no visible print action '+JSON.stringify({engine,width,content:await panel.innerText()}));
+    await printAction.click();
     const printWitness=await page.evaluate(()=>({
       calls:window.__printCalls,
       synchronous:window.__printWasImmediate
