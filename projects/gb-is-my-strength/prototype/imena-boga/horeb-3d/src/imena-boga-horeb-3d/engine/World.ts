@@ -200,7 +200,7 @@ export class World {
       }
     }) as unknown as EventListener);
     this.on(window, 'keyup', ((e: KeyboardEvent) => { this.keys.delete(e.code); }) as unknown as EventListener);
-    this.on(window, 'blur', () => this.keys.clear());
+    this.on(window, 'blur', () => this.stopMovement());
     this.on(document, 'mousemove', ((e: MouseEvent) => {
       if (document.pointerLockElement === c && !this.inputLocked) this.look(e.movementX, e.movementY);
     }) as unknown as EventListener);
@@ -226,15 +226,18 @@ export class World {
     }) as unknown as EventListener);
     const end = ((e: PointerEvent) => { if (this.dragging?.id === e.pointerId) this.dragging = null; }) as unknown as EventListener;
     this.on(window, 'pointerup', end); this.on(window, 'pointercancel', end);
-    this.on(document, 'pointerlockchange', () => this.emit(true));
+    this.on(document, 'pointerlockchange', () => {
+      if (document.pointerLockElement !== c) this.stopMovement();
+      this.emit(true);
+    });
     this.on(document, 'pointerlockerror', () => this.onEvent('pointerlock-denied'));
     this.on(window, 'resize', () => this.resize());
     this.on(document, 'visibilitychange', () => {
-      if (document.hidden) { this.keys.clear(); this.vel.set(0, 0); }
+      if (document.hidden) this.stopMovement();
       this.updateActiveState();
     });
     this.on(c, 'webglcontextlost', ((e: Event) => {
-      e.preventDefault(); this.contextLost = true; this.updateActiveState(); this.emit(true);
+      e.preventDefault(); this.stopMovement(); this.contextLost = true; this.updateActiveState(); this.emit(true);
     }) as unknown as EventListener);
     this.on(c, 'webglcontextrestored', () => {
       this.contextLost = false; this.updateActiveState(); this.emit(true);
@@ -285,14 +288,22 @@ export class World {
     this.resize();
   }
 
+  /** All movement sources must stop together. A phone may lose focus
+   * while a joystick pointer is held, leaving the touch vector nonzero.
+   * Clearing keys alone lets the explorer drift on tab reactivation.
+   */
+  private stopMovement() {
+    this.keys.clear();
+    this.move.x = this.move.y = 0;
+    this.vel.set(0, 0);
+    this.dragging = null;
+    this.stepAcc = 0;
+  }
   setInputLocked(v: boolean) {
     if (this.inputLocked === v) return;
     this.inputLocked = v;
     if (v) {
-      this.keys.clear();
-      this.move.x = this.move.y = 0;
-      this.vel.set(0, 0); // never drift through scenery behind a modal
-      this.dragging = null;
+      this.stopMovement(); // never drift through scenery behind a modal
       if (document.pointerLockElement === this.canvas) document.exitPointerLock();
     }
     this.updateActiveState();
