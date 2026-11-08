@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING; Atlas desktop navigation brand no truncation after wider header: exact-head browser CI pending; 2026-11-08 precise live DOM circle-edge strands+thread, spring-linked center, geometry during/after drag: exact-head CI PENDING; central sphere immediate drag follow and explicit pointer capture QA exact-head pending; no CSS position transition on dynamic center; exact-head CI pending; 2026-11-08 reading rail: floating diamond removed from all 29 sections, one understated active hairline only; exact-head CI pending",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING; Atlas desktop navigation brand no truncation after wider header: exact-head browser CI pending; 2026-11-08 precise live DOM circle-edge strands+thread, spring-linked center, geometry during/after drag: exact-head CI PENDING; central sphere immediate drag follow and explicit pointer capture QA exact-head pending; no CSS position transition on dynamic center; exact-head CI pending; 2026-11-08 reading rail: floating diamond removed from all 29 sections, one understated active hairline only; exact-head CI pending; 2026-11-08 active fixed-rail scrolling kept inside rail; MobileIndex traps Tab and restores focus on Escape or sends focus to selected heading; browser QA on exact head PENDING",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -228,8 +228,8 @@
       "bytes_normalized": 1371
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "735cd4aff312bfbcc524924fc6e398dc27bcfb93c2920a1563beff30aaad931d",
-      "bytes_normalized": 37985
+      "sha256": "1c7c050faa991172b4f8796b900b07f609e26cfde78f6a7815b74933d45c4156",
+      "bytes_normalized": 41179
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "71402e4c603598ed45611db88a6dcd1d194600910b1de4786c8b11982c7d8364",
@@ -252,16 +252,16 @@
       "bytes_normalized": 7363
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
-      "sha256": "007d57e634bd6806ddaf7bc274a4c541248790d0d445dce70415a4c62f7890e8",
-      "bytes_normalized": 6701
+      "sha256": "fc9ecaa6a9142de6c1921ae501f0e144e0e1eaef3341edb35d9305d5800c73e3",
+      "bytes_normalized": 8564
     },
     "sozvezdie/src/components/NameGrid.tsx": {
       "sha256": "21493c01ed488bab67178872d9c9cca1d980464c8d4d6fa416d27d06a4a07e29",
       "bytes_normalized": 17580
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "c72e911090e43d172b0b34fc1aaeb8d9bbced71f29271ca4b4092135643b1305",
-      "bytes_normalized": 17543
+      "sha256": "f317ef12e31f6628372d064b06c6648000c1059f990a1acfd90718e567fabcef",
+      "bytes_normalized": 17746
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "ee5e1b230bd75458a682ba15a61fef621c37bad7cd12d471f1b597b299189078",
@@ -272,8 +272,8 @@
       "bytes_normalized": 2967
     },
     "sozvezdie/src/components/Rails.tsx": {
-      "sha256": "71b604d27d884db102b1d1483041e5a7422ab640ad75e8bdbb8e92e2130f3c4d",
-      "bytes_normalized": 6057
+      "sha256": "5eef94e5889ddea2c0a70c01e9bf80e1c984f8bea133533009dda9a4b7a763ce",
+      "bytes_normalized": 6877
     },
     "sozvezdie/src/components/ReaderDock.tsx": {
       "sha256": "e3c8164cef2639d7ced4b0d4839ed8d0255d3dfbc3d54e4eb63feefcce363c1a",
