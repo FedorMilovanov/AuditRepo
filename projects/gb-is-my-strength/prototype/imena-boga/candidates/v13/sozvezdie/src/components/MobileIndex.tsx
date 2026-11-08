@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, List, X } from "lucide-react";
 import { NAMES, PARTS } from "../data/names";
@@ -22,11 +22,12 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
   const idx = NAMES.findIndex((n) => n.id === active);
   const progress = idx >= 0 ? ((idx + 1) / NAMES.length) * 100 : 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const focusTimer = window.setTimeout(() => closeRef.current?.focus(), 60);
+    // Commit the dialog and its initial keyboard focus in the same paint.
+    closeRef.current?.focus({ preventScroll: true });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -58,7 +59,6 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
     return () => {
-      window.clearTimeout(focusTimer);
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);

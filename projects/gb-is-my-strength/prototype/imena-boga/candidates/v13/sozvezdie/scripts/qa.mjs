@@ -677,11 +677,30 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await page.locator('[data-reader-dock] button[aria-expanded]').first().click();
   await page.waitForTimeout(300);
 
-  // mobile index opens, scrolls, closes
+  // The dialog receives focus in the same click dispatch that opens it.
+  // Observing from document bubble (after the React root handler) prevents
+  // a delayed timer from passing just because Playwright later waited 700ms.
+  await page.evaluate(() => {
+    window.__mobileIndexFocusWitness = null;
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element) ||
+          !target.closest('button[aria-label="Открыть список имён"]')) return;
+      const modal = document.querySelector('[aria-label="Указатель имен Бога"]');
+      window.__mobileIndexFocusWitness = Boolean(
+        modal && modal.contains(document.activeElement) &&
+        document.activeElement?.getAttribute("aria-label") === "Закрыть"
+      );
+    }, { once: true });
+  });
   await page.locator('button[aria-label="Открыть список имён"]').click();
-  await page.waitForTimeout(700);
+  const immediateFocus = await page.evaluate(() => window.__mobileIndexFocusWitness);
+  immediateFocus === true
+    ? ok(`mobile index focuses inside synchronously @${w}`)
+    : bad(`mobile index delayed initial focus @${w}: ${immediateFocus}`);
   const dlg = page.locator('[aria-label="Указатель имен Бога"]');
   (await dlg.isVisible()) ? ok(`mobile index opens @${w}`) : bad("mobile index did not open");
+  await page.waitForTimeout(700);
 
   // Main document scrollWidth can remain zero while labels are clipped
   // *inside* individual cards. Measure the actual glyph fragments for
