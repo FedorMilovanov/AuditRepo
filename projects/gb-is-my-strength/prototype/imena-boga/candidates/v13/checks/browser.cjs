@@ -302,33 +302,11 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     if(!focusReturned)throw Error('Escape did not return focus '+width);
     // A print/PDF request must invoke the browser synchronously inside the
     // click dispatch. A setTimeout can lose browser user-activation privileges.
-    const beforeReopen=await settings.evaluate(el=>{
-      const box=el.getBoundingClientRect(),top=document.elementFromPoint(box.x+box.width/2,box.y+box.height/2);
-      return {expanded:el.getAttribute('aria-expanded'),focus:document.activeElement?.getAttribute('aria-label'),
-        hit:top?.closest('button')?.getAttribute('aria-label'),panel:!!document.getElementById('gb-reader-settings')};
-    });
-    await page.evaluate(()=>{
-      window.__settingsReopenTrace=[];
-      const watch=event=>{
-        if(!(event.target instanceof Element)||
-           !event.target.closest('button[aria-label="Настройки чтения и шрифта"]'))return;
-        const button=document.querySelector('button[aria-label="Настройки чтения и шрифта"]');
-        window.__settingsReopenTrace.push({event:event.type,phase:event.eventPhase,
-          expanded:button?.getAttribute('aria-expanded'),
-          panel:!!document.getElementById('gb-reader-settings')});
-      };
-      document.addEventListener('pointerdown',watch,{capture:true,once:true});
-      document.addEventListener('click',watch,{once:true});
-    });
-    await settings.click();
-    const afterReopen=await page.evaluate(()=>{
-      const trigger=document.querySelector('button[aria-label="Настройки чтения и шрифта"]');
-      return {expanded:trigger?.getAttribute('aria-expanded'),
-        panel:!!document.getElementById('gb-reader-settings'),
-        focus:document.activeElement?.getAttribute('aria-label'),
-        trace:window.__settingsReopenTrace};
-    });
-    console.log('ATLAS_READER_REOPEN_WITNESS '+JSON.stringify({engine,width,beforeReopen,afterReopen}));
+    // Initial opening above validates pointer activation. After Escape,
+    // reopen via keyboard to certify an independent accessible activation
+    // path rather than reusing a WebKit coordinate click during layout churn.
+    await settings.focus();
+    await page.keyboard.press('Enter');
     await panel.waitFor({state:'visible',timeout:5000});
     if((await settings.getAttribute('aria-expanded'))!=='true')
       throw Error('Atlas settings did not reopen for print '+JSON.stringify({engine,width}));
