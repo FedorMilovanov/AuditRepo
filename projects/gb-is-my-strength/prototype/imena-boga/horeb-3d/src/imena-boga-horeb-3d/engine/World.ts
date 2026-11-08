@@ -360,9 +360,15 @@ export class World {
     const c = constrain(x, z, this.shoes !== 'unshod');
     this.pos.set(c.x, c.z); this.vel.set(0, 0); this.block = null; this.emit(true);
   }
-  inspectExhibit(id: string): boolean {
+  /** Saved references can be opened from anywhere, but their physical
+   * inspection action must only work at the exhibit's actual location. */
+  canInspectExhibit(id: string): boolean {
     const item = this.exhibitPos.find((p) => p.e.id === id);
-    if (!item || this.disposed || Math.hypot(this.pos.x - item.x, this.pos.y - item.z) > 5.5) return false;
+    return !!item && !this.disposed &&
+      Math.hypot(this.pos.x - item.x, this.pos.y - item.z) <= 5.5;
+  }
+  inspectExhibit(id: string): boolean {
+    if (!this.canInspectExhibit(id)) return false;
     this.activeInspection = { id, until: this.t + 8 };
     // The 'Inspect in 3D' click is also an explicit visitor gesture.
     // Re-enable the environment before scheduling its subtle response.
