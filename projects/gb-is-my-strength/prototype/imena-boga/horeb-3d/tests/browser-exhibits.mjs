@@ -1,7 +1,8 @@
 // Real browser check that all 42 3D markers can be approached, activated and read.
 // Explicit test, never an invisible SKIP. HOREB_BROWSER_PATH and HOREB_BASE_URL as in browser-smoke.
 import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const candidates = [process.env.HOREB_BROWSER_PATH, '/usr/bin/google-chrome', '/tmp/chromium',
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'].filter(Boolean);
@@ -13,6 +14,8 @@ const args = process.env.HOREB_SWIFTSHADER === '1'
 if (process.env.HOREB_NO_SANDBOX === '1') args.push('--no-sandbox', '--disable-setuid-sandbox');
 const browser = await puppeteer.launch({executablePath:browserPath,headless:true,args,protocolTimeout:90000});
 const failures = [];
+const screenshots = join(process.cwd(), '.test-build', 'screenshots');
+mkdirSync(screenshots, { recursive: true });
 let passed = 0;
 try {
   const page = await browser.newPage();
@@ -144,8 +147,24 @@ try {
     }));
     if (!remote.disabled || !remote.text.includes('Физический осмотр доступен только рядом'))
       throw new Error('Remote bookmark incorrectly enables physical interaction');
+    await page.screenshot({ path: join(screenshots, 'study-bookmark-remote.png') });
     await page.keyboard.press('Escape');
-    console.log('PASS elohim: inspect → 3D response → comparison → persistent bookmark → remote dossier guard');
+    // Browser-only book references survive leaving the WebGL world entirely.
+    await page.evaluate(() => [...document.querySelectorAll('nav button')]
+      .find((b) => b.textContent?.trim() === 'Выйти')?.click());
+    await page.waitForFunction(() => !!document.querySelector('h1')?.textContent?.includes('ИМЕНА БОГА'),
+      { timeout: 7500 });
+    await page.evaluate(() => [...document.querySelectorAll('button')]
+      .find((b) => b.textContent?.includes('Мои закладки'))?.click());
+    await page.waitForSelector('[role="dialog"]');
+    await page.evaluate((label) => [...document.querySelectorAll('[role="dialog"] button')]
+      .find((b) => b.textContent?.includes(label))?.click(), hero.label);
+    await page.waitForFunction((label) => {
+      const modal = document.querySelector('[role="dialog"]');
+      return !!modal?.textContent?.includes(label) && !!modal?.textContent?.includes('Быт. 1:1');
+    }, { timeout: 7500 }, hero.label);
+    await page.screenshot({ path: join(screenshots, 'study-bookmark-intro.png') });
+    console.log('PASS elohim: inspect → 3D response → comparison → saved bookmark → remote & intro reading');
   } catch (error) {
     failures.push('HERO ACTION: ' + (error?.message || error));
   }
