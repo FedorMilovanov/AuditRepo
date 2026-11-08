@@ -56,11 +56,11 @@ try {
   check('Escape closes modal', (await page.$$('[role="dialog"]')).length === 0);
 
   const start = await page.evaluate(() => [...document.querySelectorAll('button')]
-    .find((b) => b.textContent.includes('Начать путешествие'))?.textContent);
+    .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.textContent);
   check('WebGL start button available', !!start);
   if (start) {
     await page.evaluate(() => [...document.querySelectorAll('button')]
-      .find((b) => b.textContent.includes('Начать путешествие'))?.click());
+      .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
     await page.waitForFunction(() => !!(window.__horeb?.world && window.__horeb?.state()), { timeout: 75000 });
     const before = await page.evaluate(() => ({
       z: window.__horeb.state().z, count: window.__horeb.world.exhibitPos.length,
@@ -248,7 +248,7 @@ try {
   });
   await disabled.goto(base + '/', {waitUntil:'domcontentloaded',timeout:45000});
   check('no-WebGL fallback retains reader', await disabled.evaluate(() =>
-    ![...document.querySelectorAll('button')].some((b) => b.textContent.includes('Начать путешествие')) &&
+    ![...document.querySelectorAll('button')].some((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim())) &&
     [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Режим чтения'))));
   await disabled.close();
 
@@ -260,7 +260,7 @@ try {
     dims.document + '/' + dims.viewport);
   await mobile.screenshot({path:join(shots,'smoke-04-mobile.png')});
   await mobile.evaluate(() => [...document.querySelectorAll('button')]
-    .find((b) => b.textContent.includes('Начать путешествие'))?.click());
+    .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
   await mobile.waitForFunction(() => !!window.__horeb?.world, {timeout:75000});
   const labels = await mobile.evaluate(() => {
     let small = 0, large = 0;
