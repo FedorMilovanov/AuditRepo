@@ -147,7 +147,7 @@ try {
     }));
     if (!remote.disabled || !remote.text.includes('Физический осмотр доступен только рядом'))
       throw new Error('Remote bookmark incorrectly enables physical interaction');
-    await page.screenshot({ path: join(screenshots, 'study-bookmark-remote.png') });
+    await page.screenshot({ path: join(screenshots, 'smoke-study-bookmark-remote.png') });
     await page.keyboard.press('Escape');
     // Browser-only book references survive leaving the WebGL world entirely.
     await page.evaluate(() => [...document.querySelectorAll('nav button')]
@@ -163,7 +163,7 @@ try {
       const modal = document.querySelector('[role="dialog"]');
       return !!modal?.textContent?.includes(label) && !!modal?.textContent?.includes('Быт. 1:1');
     }, { timeout: 7500 }, hero.label);
-    await page.screenshot({ path: join(screenshots, 'study-bookmark-intro.png') });
+    await page.screenshot({ path: join(screenshots, 'smoke-study-bookmark-intro.png') });
     console.log('PASS elohim: inspect → 3D response → comparison → saved bookmark → remote & intro reading');
   } catch (error) {
     failures.push('HERO ACTION: ' + (error?.message || error));
