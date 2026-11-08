@@ -99,12 +99,26 @@ try {
       w.renderer.info.render.frame > frame;
   }, { polling: 200, timeout: 60000 }, beforeClose);
   await desktop.screenshot({ path: join(shots, 'visual-desktop-bush-boundary.png') });
-  witness.closeBush = await desktop.evaluate(() => ({
-    distance: window.__horeb.state().distBush,
-    shoes: window.__horeb.state().shoes,
-    zone: window.__horeb.state().zone,
-  }));
-  console.log('PASS outer bush boundary screenshot');
+  witness.closeBush = await desktop.evaluate(() => {
+    const world = window.__horeb.world;
+    const hud = document.querySelector('.hud');
+    return {
+      distance: window.__horeb.state().distBush,
+      shoes: window.__horeb.state().shoes,
+      zone: window.__horeb.state().zone,
+      hudOpacity: hud ? Number(getComputedStyle(hud).opacity) : 0,
+      ambientIntensity: world.ambient.intensity,
+      hemisphereIntensity: world.hemi.intensity,
+      moonIntensity: world.moon.intensity,
+    };
+  });
+  if (witness.closeBush.hudOpacity < 0.99)
+    throw new Error('BUSH UX: navigation becomes translucent at the sacred boundary');
+  if (witness.closeBush.ambientIntensity < 0.70 ||
+      witness.closeBush.hemisphereIntensity < 0.90 ||
+      witness.closeBush.moonIntensity < 1.00)
+    throw new Error('BUSH VISUAL: outdoor terrain fill is below audited visibility baseline');
+  console.log('PASS outer bush boundary screenshot, legible navigation and predawn fill');
   await desktop.close();
 
   const mobile = await browser.newPage();
