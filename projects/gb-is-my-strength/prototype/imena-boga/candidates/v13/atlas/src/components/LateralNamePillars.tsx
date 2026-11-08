@@ -301,6 +301,25 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   onJumpToName,
 }) => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  // The fixed navigation belongs to reading, not over the first-screen
+  // editorial composition. Observe the actual hero boundary (no pixel magic).
+  useEffect(() => {
+    const hero = document.getElementById('atlas-hero');
+    if (!hero) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      const sync = () => setPastHero(hero.getBoundingClientRect().bottom <= 0);
+      sync();
+      window.addEventListener('scroll', sync, { passive: true });
+      return () => window.removeEventListener('scroll', sync);
+    }
+    const observer = new IntersectionObserver(([entry]) =>
+      setPastHero(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0),
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
   const mobileTriggerRef = useRef<HTMLButtonElement | null>(null);
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const drawerCloseRef = useRef<HTMLButtonElement | null>(null);
@@ -335,7 +354,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       }
     };
     const onResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1440) {
         restoreDrawerFocusRef.current = false;
         setMobileDrawerOpen(false);
       }
@@ -370,7 +389,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   const scheduleUpdateBeam = React.useCallback(() => {
     window.cancelAnimationFrame(rafRef.current);
     rafRef.current = window.requestAnimationFrame(() => {
-      if (window.innerWidth < 1024 || !activeNameId) {
+      if (window.innerWidth < 1440 || !activeNameId) {
         setBeamCoords((prev) => (prev.visible ? { ...prev, visible: false } : prev));
         return;
       }
@@ -512,7 +531,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       />
 
       {/* Mobile & Tablet Floating Sacred Ribbon Trigger (< lg) */}
-      <div className="no-print fixed right-4 bottom-4 left-4 z-30 flex justify-center min-[1440px]:hidden">
+      <div className={`no-print fixed right-4 bottom-4 left-4 z-30 justify-center min-[1440px]:hidden ${pastHero ? "flex" : "hidden"} lg:left-auto lg:max-w-[300px] lg:justify-end`}>
         <button
           ref={mobileTriggerRef}
           type="button"

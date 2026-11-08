@@ -270,7 +270,7 @@ async function visit(browser,engine,app,width,base){
   }
  }finally{
   fs.writeFileSync(path.join(out,'visual-report.json'),JSON.stringify({
-   head:process.env.GITHUB_SHA||'local',generatedAt:new Date().toISOString(),
+   head:process.env.PR_HEAD_SHA||process.env.GITHUB_SHA||'local',checkoutMergeSha:process.env.GITHUB_SHA||null,generatedAt:new Date().toISOString(),
    shots,checks,findings},null,2));
   server.close();
  }

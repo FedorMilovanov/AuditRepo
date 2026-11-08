@@ -369,7 +369,7 @@ export default function App() {
       {inArticle && <Rails active={active} completedIds={completedIds} wide={prefs.measure === "wide"} onSelect={scrollTo} />}
       <MobileIndex active={active} completedIds={completedIds} onSelect={scrollTo} visible={inArticle} />
 
-      <main ref={mainRef}>{blocks}</main>
+      <main ref={mainRef} className="pb-28 md:pr-16 xl:pr-0">{blocks}</main>
 
       <Epilogue motionOn={prefs.motion} completedIds={completedIds} onSelect={scrollTo} />
 

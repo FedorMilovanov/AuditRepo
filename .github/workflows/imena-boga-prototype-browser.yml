@@ -21,6 +21,8 @@ jobs:
     name: Vite builds, browser contracts and CLS witness
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - name: Checkout bounded prototype and immutable Sinai reference
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -229,7 +231,7 @@ jobs:
           Локальный пакет содержит готовую production-сборку, а не исходный код.
           
           LOCAL_PREVIEW_README
-            sed -i "s/SHA_PLACEHOLDER/$GITHUB_SHA/g; s/APP_PLACEHOLDER/$app/g" "$OUTPUT/$app/README-RU.txt"
+            sed -i "s/SHA_PLACEHOLDER/$PR_HEAD_SHA/g; s/APP_PLACEHOLDER/$app/g" "$OUTPUT/$app/README-RU.txt"
             node --check "$OUTPUT/$app/preview-server.mjs"
             test -s "$OUTPUT/$app/Start-Preview.cmd"
             # Smoke-test the actual packaged local server. A configured peer

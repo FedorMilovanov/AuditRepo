@@ -139,10 +139,10 @@ function NameSection({
           </div>
         </Reveal>
 
-        <div className="mt-10 grid items-start gap-10 md:mt-14 md:grid-cols-12 md:gap-8">
+        <div className="mt-10 grid items-start gap-10 md:mt-14 lg:grid-cols-12 md:gap-8">
           {/* left / name block */}
-          <Reveal className={`min-w-0 md:col-span-5 md:sticky md:top-24 ${flip ? "md:order-2" : ""}`}>
-            <div className={flip ? "md:text-right" : ""}>
+          <Reveal className={`min-w-0 lg:col-span-5 lg:sticky lg:top-24 ${flip ? "lg:order-2" : ""}`}>
+            <div className={flip ? "lg:text-right" : ""}>
               <motion.p
                 initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -165,7 +165,7 @@ function NameSection({
                 {name.translit}
               </h3>
               <p className="mt-2 font-display text-xl text-cream-300">{name.russian}</p>
-              <div className={`mt-6 flex items-center gap-3 ${flip ? "md:justify-end" : ""}`}>
+              <div className={`mt-6 flex items-center gap-3 ${flip ? "lg:justify-end" : ""}`}>
                 <span className="h-px w-8 bg-gold-500/50" />
                 <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-gold-400">
                   {name.meaning}
@@ -185,7 +185,7 @@ function NameSection({
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
               )}
-              <div className={`mt-8 flex flex-wrap gap-2.5 ${flip ? "md:justify-end" : ""}`}>
+              <div className={`mt-8 flex flex-wrap gap-2.5 ${flip ? "lg:justify-end" : ""}`}>
                 <button
                   type="button"
                   onClick={copyLink}
@@ -225,7 +225,7 @@ function NameSection({
           </Reveal>
 
           {/* right / content */}
-          <div className={`md:col-span-7 ${flip ? "md:order-1" : ""}`}>
+          <div className={`lg:col-span-7 ${flip ? "lg:order-1" : ""}`}>
             {name.paragraphs.map((p, i) => (
               <Reveal key={i} delay={0.08 + i * 0.08}>
                 <p

@@ -346,7 +346,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
   const activeGlyph = SACRED_GLYPHS[glyphIndex];
 
   return (
-    <header
+    <header id="atlas-hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative overflow-hidden border-b pt-24 pb-16 md:pt-28 md:pb-24"

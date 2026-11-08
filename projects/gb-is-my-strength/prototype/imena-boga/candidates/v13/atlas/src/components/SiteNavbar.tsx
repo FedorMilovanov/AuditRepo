@@ -125,7 +125,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                className="font-ui rounded-md px-2 py-1 text-xs font-medium transition-colors"
+                className="font-ui inline-flex min-h-9 items-center rounded-md px-2 py-1 text-xs font-medium transition-colors"
                 style={{
                   color: isCurrent ? 'var(--gb-accent)' : 'var(--gb-muted)',
                   backgroundColor: isCurrent ? 'var(--gb-accent-soft)' : 'transparent',
