@@ -114,19 +114,14 @@ function NameSection({
       </motion.span>
 
       <div className="reader-measure relative mx-auto px-6">
-        {/* active-section light beam */}
+        {/* Subtle active-section reading guide; no floating marker beside prose. */}
         <span
+          data-reader-guide
           aria-hidden
           className={`pointer-events-none absolute -left-1 top-0 hidden h-full w-px origin-top transition-all duration-1000 ease-out md:block ${
             isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
           }`}
           style={{ background: "linear-gradient(to bottom, transparent, rgba(236,211,154,0.85) 18%, rgba(212,175,55,0.35) 70%, transparent)" }}
-        />
-        <span
-          aria-hidden
-          className={`pointer-events-none absolute -left-[5px] top-[18%] hidden h-2 w-2 rotate-45 bg-gold-300 shadow-[0_0_14px_rgba(244,229,187,0.95)] transition-opacity duration-700 md:block ${
-            isActive ? "opacity-100" : "opacity-0"
-          }`}
         />
         {/* header */}
         <Reveal>
