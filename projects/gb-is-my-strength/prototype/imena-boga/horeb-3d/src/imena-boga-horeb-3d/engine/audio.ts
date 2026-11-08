@@ -24,7 +24,11 @@ export class AmbientAudio {
     }
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AC) return;
-    const ctx = (this.ctx = new AC());
+    // Audio is optional. If the OS/browser rejects a Web Audio device,
+    // the visual route must remain available instead of failing World.create.
+    let ctx: AudioContext;
+    try { ctx = new AC(); } catch { return; }
+    this.ctx = ctx;
     this.master = ctx.createGain(); this.master.gain.value = this.enabled ? 0.9 : 0; this.master.connect(ctx.destination);
     this.ambienceBus = ctx.createGain(); this.ambienceBus.gain.value = 1; this.ambienceBus.connect(this.master);
     this.narrator = new NarratorBus(ctx, this.master, this.ambienceBus);
