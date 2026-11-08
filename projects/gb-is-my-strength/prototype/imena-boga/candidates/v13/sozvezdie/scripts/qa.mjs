@@ -303,6 +303,17 @@ const boxesOverlap = (a, b) =>
   const cards = await page.locator('#sozvezdie button[aria-label^="Перейти"]').count();
   cards === 29 ? ok("grid shows 29 names") : bad("grid cards: " + cards);
 
+  // A bare "/" from the reading surface focuses search immediately:
+  // no arbitrary timer may steal focus after another action.
+  await page.evaluate(() => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  });
+  await page.keyboard.press("/");
+  const shortcutFocus = await page.locator('#sozvezdie input[type="search"]')
+    .evaluate(el => document.activeElement === el);
+  shortcutFocus ? ok("slash focuses search without a delayed timer")
+    : bad("slash failed to focus search immediately");
+
   // search filter
   const search = page.locator('#sozvezdie input[type="search"]');
   await search.fill("пастырь");
@@ -683,6 +694,15 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await page.keyboard.press("Tab");
   (await mobileClose.evaluate(el => document.activeElement === el))
     ? ok("mobile dialog wraps forward Tab") : bad("mobile dialog forward Tab escaped");
+
+  // Global search keyboard shortcuts must not escape the mobile modal.
+  await page.keyboard.press("/");
+  await page.waitForTimeout(520);
+  const shortcutStayed = await dlg.evaluate(dialog =>
+    dialog.contains(document.activeElement) &&
+    document.activeElement?.getAttribute("aria-label") === "Закрыть");
+  shortcutStayed ? ok("slash search shortcut respects modal focus trap")
+    : bad("slash search shortcut stole focus from mobile dialog");
 
   const locked = await page.evaluate(() => document.body.style.overflow);
   locked === "hidden" ? ok("body scroll locked in modal") : bad("body not locked: " + locked);
