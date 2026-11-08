@@ -6,6 +6,7 @@ import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/e
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
+import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -40,6 +41,18 @@ t('name beacon is legible at 24m but not drawn past 35m',
 t('dark Horeb beacons stay below 55% brightness',
   beaconOpacity(9, true) <= 0.54 && beaconOpacity(9, true) > 0.5 &&
   beaconOpacity(9, false) > beaconOpacity(9, true));
+
+// A professional narrator requires human-owned, reviewed source recordings.
+// The DSP chain may exist in the lab without ever automatically inventing a
+// divine voice or fetching arbitrary external audio.
+t('three narrator spaces have physically bounded wet/dry preview profiles',
+  Object.keys(ACOUSTIC).length === 3 &&
+  Object.values(ACOUSTIC).every((p) => p.dry > p.wet && p.wet <= 0.2 && p.tail > 0));
+t('narrator cannot play unreviewed, remote or traversal audio',
+  Object.keys(APPROVED_NARRATION_ASSETS).length === 0 &&
+  !isApprovedAudioPath('/audio/narration/elohim.mp3') &&
+  !isApprovedAudioPath('https://unknown.example/speech.mp3') &&
+  !isApprovedAudioPath('/audio/narration/../../other.mp3'));
 
 // No repetitive stone: 42 steles must not be identical — varied scale/tilt/zone-tint.
 const scales = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).scale.toFixed(3)));
