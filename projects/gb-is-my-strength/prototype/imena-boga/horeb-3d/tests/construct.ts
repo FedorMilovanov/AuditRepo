@@ -74,6 +74,8 @@ const creationGroup = creation && buildExhibitProps(creation, false, 0, 0);
 const creationRock = creationGroup?.getObjectByName('scenic-boulder');
 t('creation landmark rock stays behind the Elōhîm label sightline',
   !!creationRock && creationRock.position.z <= -2.5);
+t('creation rock is a low background shelf, not an oversized spherical prop',
+  !!creationRock && creationRock.scale.y < 0.8 && creationRock.scale.x > creationRock.scale.y);
 
 // No repetitive stone: 42 steles must not be identical — varied scale/tilt/zone-tint.
 const scales = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).scale.toFixed(3)));
