@@ -14,7 +14,14 @@ export class AmbientAudio {
   enabled = true;
 
   start() {
-    if (this.ctx) { this.ctx.resume(); return; }
+    if (this.ctx) {
+      // Initialisation follows an async WebGL import; browser autoplay policy
+      // may keep this context suspended until a trusted visitor gesture.
+      // A rejected resume is a normal muted-browser state, not an exception.
+      if (this.enabled && this.ctx.state === 'suspended' && !document.hidden)
+        void this.ctx.resume().catch(() => { /* needs visitor gesture */ });
+      return;
+    }
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AC) return;
     const ctx = (this.ctx = new AC());
@@ -34,6 +41,16 @@ export class AmbientAudio {
     const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 0.7;
     this.fireGain = ctx.createGain(); this.fireGain.gain.value = 0;
     fsrc.connect(bp).connect(this.fireGain).connect(this.ambienceBus); fsrc.start();
+  }
+  /** Called synchronously from a real pointer/key/touch gesture, not RAF.
+   * No new sound is fetched or synthesized; it only unlocks the procedural bus.
+   * Reopening a dialog or foregrounding a tab must never force a new voice clip.
+   */
+  unlockFromGesture() {
+    if (!this.enabled || document.hidden) return;
+    this.start();
+    if (this.ctx?.state === 'suspended')
+      void this.ctx.resume().catch(() => { /* leave visual journey usable */ });
   }
   setEnabled(on: boolean) {
     this.enabled = on;
