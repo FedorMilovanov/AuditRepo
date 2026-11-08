@@ -231,12 +231,15 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       window.__printCalls=0;
       window.__printWasImmediate=false;
       window.print=()=>{window.__printCalls++};
+      // Check at document bubble: React's delegated click handler has run.
+      // A microtask queued in capture may run before React sees the click,
+      // falsely reporting that a synchronous print call was deferred.
       document.addEventListener('click',event=>{
         const target=event.target;
         if(target instanceof Element && target.closest('button')?.textContent?.includes('Печать / PDF')){
-          queueMicrotask(()=>{window.__printWasImmediate=window.__printCalls===1});
+          window.__printWasImmediate=window.__printCalls===1;
         }
-      },{capture:true,once:true});
+      },{once:true});
     });
     await panel.getByRole('button',{name:'Печать / PDF'}).click();
     const printWitness=await page.evaluate(()=>({
