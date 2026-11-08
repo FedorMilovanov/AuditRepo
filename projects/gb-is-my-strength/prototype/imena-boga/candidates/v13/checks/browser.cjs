@@ -161,6 +161,47 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     await method.locator('summary').click();
     if(!(await method.locator('details').evaluate(el=>el.hasAttribute('open'))))
       throw Error('Method disclosure not expandable '+width);
+    // Mobile/tablet scripture pillars are a true keyboard modal.
+    if(width<1024){
+      const trigger=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
+      await trigger.click();
+      const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
+      await drawer.waitFor({state:'visible'});
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть скрижаль');
+      if((await trigger.getAttribute('aria-expanded'))!=='true')
+        throw Error('Pillars trigger not expanded '+width);
+      const buttons=drawer.locator('button');
+      await buttons.first().focus();
+      await page.keyboard.press('Shift+Tab');
+      if(!(await buttons.last().evaluate(el=>document.activeElement===el)))
+        throw Error('Pillars reverse Tab leaked past dialog '+width);
+      await page.keyboard.press('Tab');
+      if(!(await buttons.first().evaluate(el=>document.activeElement===el)))
+        throw Error('Pillars forward Tab did not wrap '+width);
+      await page.keyboard.press('Escape');
+      await drawer.waitFor({state:'detached'});
+      await page.waitForFunction(() => document.body.style.overflow!=='hidden');
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Открыть скрижали имён Бога');
+      if((await trigger.getAttribute('aria-expanded'))!=='false')
+        throw Error('Pillars trigger stuck expanded '+width);
+      // The dossier captures the persistent ribbon as its restore target.
+      await trigger.click();
+      await drawer.locator('button').nth(2).click();
+      const dossier=page.getByRole('dialog');
+      await dossier.waitFor({state:'visible'});
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть окно');
+      await dossier.getByRole('button',{name:'Закрыть окно'}).click();
+      await dossier.waitFor({state:'detached'});
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Открыть скрижали имён Бога');
+      if(width===768){
+        await trigger.click();
+        await drawer.waitFor({state:'visible'});
+        await page.setViewportSize({width:1024,height:844});
+        await drawer.waitFor({state:'detached'});
+        await page.waitForFunction(() => document.body.style.overflow!=='hidden');
+        await page.setViewportSize({width,height:844});
+      }
+    }
     const finalLayout=await page.evaluate(()=>({
       viewport:document.documentElement.clientWidth,
       scroll:document.documentElement.scrollWidth
