@@ -74,6 +74,8 @@ function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (i
 
 export default function HorebApp() {
   const [screen, setScreen] = useState<Screen>(() => (location.hash === '#read' ? 'reader' : 'intro'));
+  // A failed GPU context needs a fresh canvas, not a timed intro→world race.
+  const [worldEpoch, setWorldEpoch] = useState(0);
   const [settings, setSettings] = useState<UiSettings>(readSettings);
   const [progress, setProgress] = useState(readProgress);
   const [dialog, setDialog] = useState<Dialog>(null);
@@ -161,7 +163,7 @@ export default function HorebApp() {
       worldRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen]);
+  }, [screen, worldEpoch]);
 
   useEffect(() => { worldRef.current?.applySettings(resolved); }, [resolved]);
   useEffect(() => { worldRef.current?.setInputLocked(dialog !== null); }, [dialog, ws === null]);
@@ -213,6 +215,18 @@ export default function HorebApp() {
     if (next === 'intro') setWs(null);
   };
   const exitWorld = () => leaveWorld('intro');
+  const restartWorld = () => {
+    // Explicit visitor action. The old WebGL context/canvas is discarded by
+    // effect cleanup; a new keyed canvas ensures a genuinely fresh renderer.
+    const pos = worldRef.current?.position;
+    if (pos) saveCheckpoint(pos);
+    setDialog(null);
+    setErr(null);
+    setWs(null);
+    setGuideCaption(null);
+    setFinale('none');
+    setWorldEpoch((n) => n + 1);
+  };
   const resetProgress = () => {
     resumePos.current = null;
     checkpointRef.current = null;
@@ -294,7 +308,7 @@ export default function HorebApp() {
   const gateInner = ws?.block === 'inner';
   return (
     <main className="fixed inset-0 bg-black text-parch select-none">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block outline-none" tabIndex={0} aria-label="3D-сцена. Полный текст экспозиции доступен в режиме чтения." />
+      <canvas key={worldEpoch} ref={canvasRef} className="absolute inset-0 w-full h-full block outline-none" tabIndex={0} aria-label="3D-сцена. Полный текст экспозиции доступен в режиме чтения." />
       <div className="fade-in-black pointer-events-none absolute inset-0 bg-black" style={{ animationDuration: settings.reducedMotion ? '0.01s' : '3s' }} />
       {!ws && !err && <p className="absolute inset-0 grid place-items-center text-muted" role="status">Камень раскрывается…</p>}
 
@@ -353,7 +367,7 @@ export default function HorebApp() {
       {ws?.contextLost && (
         <div role="alert" className="absolute inset-0 grid place-items-center bg-black/80 text-center p-6">
           <div><p className="font-display text-2xl">Графический контекст потерян</p><p className="text-muted mt-2">Ожидаем восстановления…</p>
-            <div className="mt-4 flex gap-2 justify-center"><button className="btn" onClick={() => { exitWorld(); setTimeout(start, 50); }}>Перезапустить сцену</button><button className="btn" onClick={() => leaveWorld('reader')}>Режим чтения</button></div></div>
+            <div className="mt-4 flex gap-2 justify-center"><button className="btn" onClick={restartWorld}>Перезапустить сцену</button><button className="btn" onClick={() => leaveWorld('reader')}>Режим чтения</button></div></div>
         </div>
       )}
       {err && <div role="alert" className="absolute inset-0 grid place-items-center bg-black text-center p-6"><div><p>{err}</p><button className="btn mt-4" onClick={() => leaveWorld('reader')}>Режим чтения</button></div></div>}
