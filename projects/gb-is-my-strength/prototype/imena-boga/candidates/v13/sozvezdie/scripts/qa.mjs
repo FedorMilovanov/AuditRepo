@@ -104,6 +104,26 @@ const boxesOverlap = (a, b) =>
   const firstSection = await page.locator("main section[id]").first().getAttribute("id");
   firstSection === "yhwh" ? ok("ЯХВЕ is first section") : bad("first section is " + firstSection);
 
+  // Long-form sections use only a single quiet hairline guide.
+  // A glowing diamond along the text rail looked like a stray UI artifact.
+  const readingGuides = await page.evaluate(() => {
+    const sections = [...document.querySelectorAll("main section[id]")]
+      .filter(section => section.querySelector(":scope > .reader-measure"));
+    const invalid = sections.filter(section => {
+      const measure = section.querySelector(":scope > .reader-measure");
+      const decorations = [...measure.children]
+        .filter(el => el.tagName === "SPAN" && el.hasAttribute("aria-hidden"));
+      return decorations.length !== 1 ||
+        !decorations[0].hasAttribute("data-reader-guide") ||
+        !decorations[0].classList.contains("w-px");
+    }).map(section => section.id);
+    return { count: sections.length, invalid };
+  });
+  readingGuides.count === 29 && readingGuides.invalid.length === 0
+    ? ok("29 name sections have clean hairline guides without floating diamonds")
+    : bad("floating/missing name-section guide " + JSON.stringify(readingGuides));
+
+
   // tree present, nodes clickable
   await page.locator("#tsentr").scrollIntoViewIfNeeded();
   await page.waitForTimeout(2900);
