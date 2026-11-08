@@ -192,6 +192,17 @@ if (gardenRecord) {
   let oliveLobes = 0;
   garden.traverse((o) => { if (o.name === 'olive-crown-lobe') oliveLobes++; });
   t('Gethsemane grove uses irregular multi-lobed olive crowns, not four spheres', oliveLobes >= 28);
+  const leafSprigs = (group: THREE.Group) => {
+    let count = 0;
+    group.traverse((o) => { if (o.name === 'olive-leaf-sprig') count++; });
+    return count;
+  };
+  const low = buildExhibitProps(gardenRecord, true, 0, 0);
+  t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
+    leafSprigs(low) === 4 * 7 * 6);
+  t('Gethsemane high detail doubles sprig density without extra trees',
+    leafSprigs(garden) === 4 * 7 * 12);
+
 } else {
   t('Gethsemane visual scene exists', false);
 }
