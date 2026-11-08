@@ -32,6 +32,18 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W13–W14 (2026-11-08): lighting improvements + e2e interaction tests
+
+Commits: `d73ba20` (lighting), `20c589f` (fog), `7b200b3` (zone-transition fix), `ff359ae` (zone-tinted), `afbe8db` (e2e), `7bf6e83` (test.sh) — все push'нуты.
+
+- **Lighting improvements:** AmbientLight 1.6→3.0 (tunnel), HemisphereLight 0→0.3, DirectionalLight 0→0.2. Exposure 1.15→1.5. Fog colors brightened ~50%. Zone-tinted lighting (25% blend from base warm toward zone fog color).
+- **Key bug found:** zone-transition loop was overriding field-declared light intensities every frame. Fixed tunnel to ambient 3.0/hemi 0.3/moon 0.2.
+- **Screenshot analysis:** brightness 19→47 (147% total improvement), black pixels 77.8%→0%, non-black 92.5%→99.9%. Brightness consistent 38-44 across tunnel zones.
+- **E2E interaction tests (12):** exhibit reading (teleport → prompt → E → reader dialog), bush/sandal mechanic (teleport → shoes prompt → removeShoes() → unshod → inner boundary blocks), no console errors. All pass via `?e2e` mode.
+- **Total browser tests:** 39 (7 audit + 9 interactions + 11 dialogs + 12 e2e). Total suite: 87 headless + 39 browser = **126 tests, 0 failed**.
+- **Branch:** `arena/13fed2e7-auditrepo` — pushed to remote.
+- Следующий шаг: more visual variety (zone-specific props, material textures), или continue with prop variety for 42 exhibits.
+
 ## Checkpoint W12 (2026-11-08): browser visual audit — Sparticuz Chromium 153
 
 Commits: `39dc300` (browser-audit), `aaa6833` (browser-interactions) — push'нуты в remote.
