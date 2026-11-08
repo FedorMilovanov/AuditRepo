@@ -5,6 +5,7 @@ import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
+import { BEACON_IDS, createNameBeacon } from './NameBeacon';
 import { choosePixelRatio, resetsAutoLowered } from './quality';
 import { validateExhibits } from '../data/validate';
 import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, separateObstacle, type Block } from './nav';
@@ -48,6 +49,7 @@ export class World {
   private inputLocked = false;
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
+  private nameBeacons: { x: number; z: number; update: (distance: number) => void }[] = [];
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
   private ambient = new THREE.AmbientLight(0xffeedd, 4.0);
@@ -152,6 +154,11 @@ export class World {
       lab.position.set(0, 1.42, 0.225);
       lab.scale.setScalar(v.labelScale);
       g.add(lab);
+      if ((BEACON_IDS as readonly string[]).includes(e.id)) {
+        const beacon = createNameBeacon(e, low);
+        g.add(beacon.mesh);
+        this.nameBeacons.push({ x, z, update: beacon.update });
+      }
       let nx = -Math.sign(x) * 0.85, nz = 0.53;
       if (e.zone === 7) { nx = -Math.sign(x) * 0.6; nz = 0.8; }
       g.position.set(x, 0, z);
@@ -422,6 +429,9 @@ export class World {
     this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
+    for (const beacon of this.nameBeacons) {
+      beacon.update(Math.hypot(this.pos.x - beacon.x, this.pos.y - beacon.z));
+    }
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
     this.bush.group.visible = this.pos.y < -286;
     this.audio.update(this.t, zone, db, Math.hypot(this.pos.x - 9.5, this.pos.y + 104));
