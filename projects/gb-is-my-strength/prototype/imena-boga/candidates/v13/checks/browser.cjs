@@ -212,6 +212,12 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       await trigger.click();
       const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
       await drawer.waitFor({state:'visible'});
+      const mobileNames=await drawer.locator('button').evaluateAll(buttons=>
+        buttons.filter(button=>button.textContent?.includes('Читать'))
+          .map(button=>({text:button.textContent?.trim().slice(0,60),
+            opacity:Number(getComputedStyle(button).opacity)})));
+      if(mobileNames.length!==36||mobileNames.some(item=>item.opacity<0.98))
+        throw Error('Atlas unread mobile names are illegibly faded '+JSON.stringify({width,mobileNames}));
       await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть скрижаль');
       if((await trigger.getAttribute('aria-expanded'))!=='true')
         throw Error('Pillars trigger not expanded '+width);
