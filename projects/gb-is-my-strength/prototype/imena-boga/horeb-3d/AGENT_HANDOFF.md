@@ -32,6 +32,20 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W15 (2026-11-08): 42-exhibit comprehensive browser test — all pass
+
+Commit `cb5eb84` на `arena/13fed2e7-auditrepo`.
+
+- **Comprehensive exhibit test (42):** `tests/browser-exhibits.mjs` — NEW. Teleports to each of 42 exhibits, verifies prompt shows correct ID, presses E, verifies reader dialog opens, closes. All 42 pass.
+- **Timing fixes:** Two issues found and fixed:
+  1. **Stale prompt race:** After teleport, 1.2s wait too short for SwiftShader (~1 FPS). Prompt lagged one exhibit behind. **Fixed:** poll prompt until match (up to 5s, 10 attempts × 500ms).
+  2. **Missed E key:** `page.keyboard.press('KeyE')` at 1 FPS missed the keypress (keydown+keyup between frames). **Fixed:** poll for dialog after E, retry E every 3rd attempt.
+- **Total browser tests:** 81 (7 audit + 9 interactions + 11 dialogs + 12 e2e + 42 exhibits). Total suite: 87 headless + 81 browser = **168 tests, 0 failed**.
+- **Build:** green (dist 1394 kB). tsc clean.
+- **Dev server:** 0.0.0.0:5173, HTTP 200.
+- **Branch:** `arena/13fed2e7-auditrepo` — pushed to remote.
+- Следующий шаг: visual quality (zone-specific decorations, more prop variety), mobile/a11y polish, or final audit.
+
 ## Checkpoint W13–W14 (2026-11-08): lighting improvements + e2e interaction tests
 
 Commits: `d73ba20` (lighting), `20c589f` (fog), `7b200b3` (zone-transition fix), `ff359ae` (zone-tinted), `afbe8db` (e2e), `7bf6e83` (test.sh) — все push'нуты.

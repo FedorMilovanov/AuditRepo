@@ -24,6 +24,8 @@ if [ -x /tmp/chromium ] && curl -s -o /dev/null -w '%{http_code}' http://127.0.0
   LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-dialogs.mjs
   echo "--- Browser e2e interaction test ---"
   LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-e2e.mjs
+  echo "--- Browser comprehensive exhibit test (42 exhibits, ~8 min) ---"
+  LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-exhibits.mjs
 else
   echo "--- Browser tests: SKIPPED (chromium binary or dev server unavailable) ---"
 fi
