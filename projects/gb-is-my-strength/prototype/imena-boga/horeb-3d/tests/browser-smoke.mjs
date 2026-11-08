@@ -262,6 +262,67 @@ try {
   await mobile.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
   await mobile.waitForFunction(() => !!window.__horeb?.world, {timeout:75000});
+  // Real browser pointer event sequences (mobile viewport): second finger
+  // must not take over or cancel the first finger's movement vector.
+  const multiTouch = await mobile.evaluate(() => {
+    const w = window.__horeb.world;
+    const stick = document.querySelector('[data-testid="movement-joystick"]');
+    if (!stick) return { error: 'missing joystick' };
+    const r = stick.getBoundingClientRect();
+    const pointer = (target, type, id, dx = 0, dy = 0) => target.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true, cancelable: true, pointerType: 'touch', pointerId: id,
+        isPrimary: id === 11 || id === 21,
+        clientX: r.left + r.width / 2 + dx,
+        clientY: r.top + r.height / 2 + dy,
+      }),
+    );
+    pointer(stick, 'pointerdown', 11, 38);
+    const firstX = w.move.x;
+    pointer(stick, 'pointerdown', 12, -38);
+    const afterSecondDownX = w.move.x;
+    pointer(stick, 'pointerup', 12, -38);
+    const afterSecondUpX = w.move.x;
+    pointer(stick, 'pointermove', 11, 28);
+    const afterOwnerMoveX = w.move.x;
+    pointer(stick, 'pointerup', 11, 28);
+    const releasedX = w.move.x;
+    // Also verify the viewing half (main canvas) retains its owning finger.
+    const canvas = document.querySelector('canvas');
+    const cr = canvas.getBoundingClientRect();
+    const viewPointer = (target, type, id, x) => target.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true, cancelable: true, pointerType: 'touch', pointerId: id,
+        isPrimary: id === 21, clientX: cr.left + x,
+        clientY: cr.top + cr.height / 3,
+      }),
+    );
+    viewPointer(canvas, 'pointerdown', 21, 280);
+    const cameraOwner = w.dragging?.id;
+    viewPointer(canvas, 'pointerdown', 22, 200);
+    const cameraOwnerAfterSecond = w.dragging?.id;
+    const yawBefore = w.yaw;
+    viewPointer(window, 'pointermove', 21, 295);
+    const yawAfter = w.yaw;
+    viewPointer(window, 'pointerup', 22, 200);
+    const cameraOwnerAfterSecondUp = w.dragging?.id;
+    viewPointer(window, 'pointerup', 21, 295);
+    return { firstX, afterSecondDownX, afterSecondUpX, afterOwnerMoveX,
+      releasedX, cameraOwner, cameraOwnerAfterSecond, cameraOwnerAfterSecondUp,
+      cameraReleased: w.dragging === null, yawBefore, yawAfter };
+  });
+  check('mobile joystick second finger cannot hijack or cancel movement',
+    multiTouch.firstX > 0.5 &&
+    Math.abs(multiTouch.afterSecondDownX - multiTouch.firstX) < 0.01 &&
+    Math.abs(multiTouch.afterSecondUpX - multiTouch.firstX) < 0.01 &&
+    multiTouch.afterOwnerMoveX > 0.3 && multiTouch.releasedX === 0,
+    JSON.stringify(multiTouch));
+  check('mobile camera second touch cannot hijack or cancel first camera drag',
+    multiTouch.cameraOwner === 21 &&
+    multiTouch.cameraOwnerAfterSecond === 21 &&
+    multiTouch.cameraOwnerAfterSecondUp === 21 &&
+    multiTouch.cameraReleased && Math.abs(multiTouch.yawAfter - multiTouch.yawBefore) > 0.005,
+    JSON.stringify(multiTouch));
   const labels = await mobile.evaluate(() => {
     let small = 0, large = 0;
     window.__horeb.world.scene.traverse((o) => {
