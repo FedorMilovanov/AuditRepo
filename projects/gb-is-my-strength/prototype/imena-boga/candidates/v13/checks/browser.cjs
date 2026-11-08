@@ -420,6 +420,22 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       });
       await page.locator('article[data-name-id]').first().scrollIntoViewIfNeeded();
       await trigger.waitFor({state:'visible',timeout:10000});
+      // Long Cyrillic/Greek/Hebrew names used to inflate the persistent
+      // bottom control past 100px at 320px, hiding article paragraphs.
+      // Full name remains inside the drawer; the trigger must stay compact.
+      const ribbonLayout=await trigger.evaluate(el=>{
+        const rect=el.getBoundingClientRect();
+        const label=el.querySelector('span.font-ui');
+        return {height:rect.height,width:rect.width,
+          label:label?.textContent?.trim(),
+          textWidth:label?.clientWidth,textScroll:label?.scrollWidth,
+          title:el.getAttribute('title')};
+      });
+      if(ribbonLayout.height>68||
+         (ribbonLayout.textWidth??0)+1<(ribbonLayout.textScroll??0)||
+         !ribbonLayout.title?.trim())
+        throw Error('Atlas mobile ribbon must remain compact and legible '+
+          JSON.stringify({width,ribbonLayout}));
       // Document-bubble observer runs after the React root's click handler.
       // A requestAnimationFrame-based focus transition must fail this witness,
       // even if later Playwright assertions happen to run after the frame.
