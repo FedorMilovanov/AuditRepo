@@ -202,6 +202,28 @@ try {
     if (guard.distance < 13.99 || guard.shoes !== 'shod')
       throw new Error('Restored progress bypassed holy threshold: ' + JSON.stringify(guard));
     console.log('PASS forged inner-bush checkpoint cannot bypass shoes/outer safety gate');
+    // An explorer can discard the saved checkpoint even if only one zone was
+    // visited; the primary action must return to a genuine fresh start.
+    await page.evaluate(() => [...document.querySelectorAll('nav button')]
+      .find((button) => button.textContent?.trim() === 'Выйти')?.click());
+    await page.waitForFunction(() => !!document.querySelector('h1')?.textContent?.includes('ИМЕНА БОГА'),
+      { timeout: 7500 });
+    const resetClicked = await page.evaluate(() => {
+      const button = [...document.querySelectorAll('button')]
+        .find((b) => b.textContent?.trim() === 'Сбросить прогресс');
+      button?.click();
+      return !!button;
+    });
+    if (!resetClicked) throw new Error('Reset saved checkpoint control unavailable');
+    await page.waitForFunction(() => {
+      const start = [...document.querySelectorAll('button')]
+        .some((b) => b.textContent?.trim() === 'Начать путешествие');
+      try {
+        const p = JSON.parse(localStorage.getItem('imena-horeb.progress.v1') || '{}');
+        return start && p.last === null && JSON.stringify(p.visited) === '[0]';
+      } catch { return false; }
+    }, { timeout: 6000 });
+    console.log('PASS reset clears persisted checkpoint and restores Begin Journey action');
   } catch (error) {
     failures.push('HERO ACTION: ' + (error?.message || error));
   }
