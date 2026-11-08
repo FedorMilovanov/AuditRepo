@@ -40,6 +40,10 @@ const TheologicalQuiz = lazy(() =>
 
 type ReaderTheme = 'light' | 'sepia' | 'dark';
 
+// All deliberate reader navigation follows the same system motion preference.
+const readerScrollBehavior = (): ScrollBehavior =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+
 const SUMMARY_THESES = [
   'В Библии имя Бога — не магический инструмент контроля, а заветное самооткровение Его сущности, святости и неизменной верности.',
   'Элохим, Эль и Адонай — самостоятельные обозначения Бога; ЯХВЕ — Его собственное имя в контексте Завета. Каждое выражение рассматривается в своём библейском и языковом контексте.',
@@ -409,7 +413,7 @@ export function App() {
 
   const handleResumeReading = useCallback(() => {
     if (!resumePosition) return;
-    window.scrollTo({ top: resumePosition, behavior: 'smooth' });
+    window.scrollTo({ top: resumePosition, behavior: readerScrollBehavior() });
     setResumePosition(null);
   }, [resumePosition]);
 
@@ -458,7 +462,7 @@ export function App() {
     if (!input) return;
     input.focus({ preventScroll: true });
     document.getElementById('constellation-atlas')?.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      behavior: readerScrollBehavior(),
       block: 'start',
     });
   }, []);
@@ -487,7 +491,7 @@ export function App() {
         // The modal explicitly suppresses focus restoration for this action.
         el.focus({ preventScroll: true });
         el.scrollIntoView({
-          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+          behavior: readerScrollBehavior(),
           block: 'center',
         });
       }
@@ -572,12 +576,12 @@ export function App() {
 
   const handleStartReading = () => {
     const el = document.getElementById('article-introduction');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: readerScrollBehavior() });
   };
 
   const handleOpenAtlas = () => {
     const el = document.getElementById('constellation-atlas');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: readerScrollBehavior() });
   };
 
   const activeSectionId = useMemo(() => {
