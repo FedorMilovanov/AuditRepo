@@ -82,6 +82,25 @@ jobs:
           npx playwright-core install chromium
           npm run qa
 
+      - name: Capture visual audit screenshots and interaction evidence
+        if: success()
+        shell: bash
+        env:
+          VISUAL_OUT: ${{ runner.temp }}/imena-visual-audit
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          node visual_review.cjs
+
+      - name: Upload private visual audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: imena-v13-visual-audit
+          path: ${{ runner.temp }}/imena-visual-audit/
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Create Windows local preview packages from the tested dist outputs
         shell: bash
         run: |
