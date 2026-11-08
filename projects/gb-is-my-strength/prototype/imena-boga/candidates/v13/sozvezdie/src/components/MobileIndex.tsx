@@ -15,6 +15,9 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const restoreTriggerRef = useRef(false);
+  const selectedTargetRef = useRef<string | null>(null);
   const current = NAMES.find((n) => n.id === active);
   const idx = NAMES.findIndex((n) => n.id === active);
   const progress = idx >= 0 ? ((idx + 1) / NAMES.length) * 100 : 0;
@@ -25,10 +28,32 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
     document.body.style.overflow = "hidden";
     const focusTimer = window.setTimeout(() => closeRef.current?.focus(), 60);
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        restoreTriggerRef.current = true;
+        setOpen(false);
+      }
+      if (event.key !== "Tab") return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const buttons = [...dialog.querySelectorAll<HTMLButtonElement>("button:not([disabled])")];
+      if (!buttons.length) return;
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      const inside = dialog.contains(document.activeElement);
+      if (event.shiftKey && (!inside || document.activeElement === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (!inside || document.activeElement === last)) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     const onResize = () => {
-      if (window.innerWidth >= 1280) setOpen(false);
+      if (window.innerWidth >= 1280) {
+        restoreTriggerRef.current = false;
+        setOpen(false);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
@@ -37,13 +62,20 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);
-      window.setTimeout(() => triggerRef.current?.focus(), 0);
     };
   }, [open]);
 
   const go = (id: string) => {
+    selectedTargetRef.current = id;
+    restoreTriggerRef.current = false;
     setOpen(false);
     onSelect(id);
+  };
+
+  const close = () => {
+    restoreTriggerRef.current = true;
+    selectedTargetRef.current = null;
+    setOpen(false);
   };
 
   return (
@@ -51,7 +83,13 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
       {/* floating pill */}
       {visible && <button
         ref={triggerRef}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          restoreTriggerRef.current = true;
+          selectedTargetRef.current = null;
+          setOpen(true);
+        }}
+        aria-haspopup="dialog"
+        aria-expanded={open}
         className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/90 py-2.5 pl-4 pr-5 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md transition-colors hover:border-gold-400/60 xl:hidden"
         aria-label="Открыть список имён"
       >
@@ -65,9 +103,21 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
       </button>}
 
       {/* overlay */}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => {
+        // Handoff keyboard focus after the dialog's exit animation completes.
+        const targetId = selectedTargetRef.current;
+        selectedTargetRef.current = null;
+        if (targetId) {
+          document.getElementById(targetId)?.querySelector<HTMLElement>("[data-name-heading]")
+            ?.focus({ preventScroll: true });
+        } else if (restoreTriggerRef.current && triggerRef.current?.getClientRects().length) {
+          triggerRef.current.focus({ preventScroll: true });
+        }
+        restoreTriggerRef.current = false;
+      }}>
         {open && (
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -83,7 +133,7 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
               </p>
               <button
                 ref={closeRef}
-                onClick={() => setOpen(false)}
+                onClick={close}
                 className="rounded-full border border-cream-800/60 p-2 text-cream-300 transition-colors hover:border-gold-500/50 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
                 aria-label="Закрыть"
               >
