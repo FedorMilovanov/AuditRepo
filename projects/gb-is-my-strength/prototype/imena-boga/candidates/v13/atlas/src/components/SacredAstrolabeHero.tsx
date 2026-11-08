@@ -420,7 +420,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
               type="button"
               onClick={() => onSelectGlyphName(activeGlyph.id)}
               title="Нажмите, чтобы открыть глубокий разбор этого Имени"
-              className="gb-hero-medallion-button group relative w-full min-w-0 cursor-pointer rounded-2xl border px-4 py-5 transition-shadow duration-500 motion-safe:active:scale-[0.985] motion-reduce:transition-none sm:px-8"
+              className="gb-hero-medallion-button group relative w-full min-w-0 cursor-pointer rounded-2xl border px-4 py-5 motion-safe:transition-[transform,box-shadow] motion-safe:duration-[160ms] motion-safe:ease-out motion-safe:active:scale-[0.985] motion-reduce:transition-none sm:px-8"
               style={{
                 transform: `rotateX(${medallionTilt.rx}deg) rotateY(${medallionTilt.ry}deg)`,
                 transformStyle: 'preserve-3d',
