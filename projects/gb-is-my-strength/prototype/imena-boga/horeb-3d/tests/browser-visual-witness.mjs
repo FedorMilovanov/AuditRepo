@@ -39,6 +39,10 @@ const attachErrors = (page, prefix) => {
   });
 };
 const startWorld = async (page) => {
+  // New pages in one Chromium browser can share HTTP cache. A conditional
+  // navigation may return 304 even though the scene is fine; demand a fresh
+  // document response for each independent visual witness instead.
+  await page.setCacheEnabled(false);
   const response = await page.goto(base + '/?e2e', { waitUntil: 'domcontentloaded', timeout: 45000 });
   if (response?.status() !== 200) throw new Error('Unexpected intro HTTP status ' + response?.status());
   const clicked = await page.evaluate(() => {
