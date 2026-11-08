@@ -69,7 +69,14 @@ async function layoutContract(page,app,engine,width){
   const fault=(kind,info)=>faults.push({kind,info});
   if(name==='atlas'){
    const sectionLinks=[...document.querySelectorAll('[data-atlas-section-link]')];
-   const visibleLinks=sectionLinks.filter(el=>getComputedStyle(el).display!=='none');
+   // The links are inside a parent hidden below xl. CSS display on the
+   // child is still "inline-flex"; inspect rendered geometry so hidden
+   // descendants aren't mistaken for 0x0 touch targets.
+   const visibleLinks=sectionLinks.filter(el=>{
+    const rect=el.getBoundingClientRect();
+    const css=getComputedStyle(el);
+    return rect.width>0&&rect.height>0&&css.visibility!=='hidden';
+   });
    if(width>=1280&&visibleLinks.length!==5)
     fault('atlas-section-links-missing',{count:visibleLinks.length});
    visibleLinks.forEach((el,i)=>{
