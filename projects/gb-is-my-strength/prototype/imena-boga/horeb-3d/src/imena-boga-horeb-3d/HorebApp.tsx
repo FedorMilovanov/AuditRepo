@@ -4,6 +4,7 @@ import { validateExhibits } from './data/validate';
 import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
+import { SceneMoment } from './ui/SceneMoment';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
 
@@ -55,6 +56,7 @@ export default function HorebApp() {
   const [err, setErr] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
+  const [examined, setExamined] = useState<Set<string>>(() => new Set());
   const [webgl] = useState(hasWebGL);
   const [isTouch] = useState(coarse);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -279,7 +281,15 @@ export default function HorebApp() {
         </section>
       )}
 
-      {exhibit && <Modal wide title={`${CATEGORY_RU[exhibit.category]} · ${exhibit.verseReference}`} onClose={() => setDialog(null)}><ExhibitCard e={exhibit} headingLevel={2} /></Modal>}
+      {exhibit && <Modal wide title={`${CATEGORY_RU[exhibit.category]} · ${exhibit.verseReference}`} onClose={() => setDialog(null)}>
+        <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} onInspect={() => {
+          if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
+          setExamined((old) => new Set(old).add(exhibit.id));
+          setDialog(null);
+          setToast('Осмотрите освещённую надпись и предметы. Нажмите E снова, чтобы сопоставить с Писанием.');
+        }} />
+        <ExhibitCard e={exhibit} headingLevel={2} />
+      </Modal>}
       {dialog?.kind === 'menu' && <Modal title="Управление экспозицией" onClose={() => setDialog(null)}>
         <div className="grid gap-3">
           <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>
