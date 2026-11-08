@@ -153,7 +153,11 @@ function NameSection({
               >
                 {name.hebrew}
               </motion.p>
-              <h3 className="mt-6 font-display text-4xl font-semibold italic text-cream-50 md:text-5xl">
+              <h3
+                data-name-heading
+                tabIndex={-1}
+                className="mt-6 font-display text-4xl font-semibold italic text-cream-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 md:text-5xl"
+              >
                 {name.translit}
               </h3>
               <p className="mt-2 font-display text-xl text-cream-300">{name.russian}</p>
