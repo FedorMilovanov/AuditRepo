@@ -47,3 +47,14 @@ npm run dev  # predev regenerates reader.html and fonts
 - Все карточки `HOLD` до независимого source/editorial/rights review. Благоговейная сценография, без визуального изображения Бога; куст должен быть **вне** художественной пещеры на Хориве. Даже после снятия обуви внутренний запрет подхода к кусту действует.
 
 **Один прототип — одна каноническая ветка/PR.** Следующий агент должен читать и менять **реальные исходники** здесь, а не создавать новоявленное приложение с таким же названием.
+
+## Доказательный браузерный smoke-тест (не входит в 88 unit/geometry)
+
+Запусти в отдельном терминале `npm run dev -- --host 127.0.0.1`, затем:
+
+```bash
+HOREB_BASE_URL=http://127.0.0.1:5173 HOREB_BROWSER_PATH=/path/to/chrome npm run test:browser:smoke
+```
+
+На Windows в PowerShell: `$env:HOREB_BROWSER_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'; npm.cmd run test:browser:smoke`.
+Проверка использует реальный Chromium, не отключает web security и **падает**, если браузер или работающий сервер недоступны; не объявлять её PASS при SKIPPED. Проверяются загрузка, фокус модального окна, старт WebGL, 42 размещения, WASD, пауза анимации на время диалога, HTML reader с 42 статьями, no-WebGL fallback и мобильный viewport. Скриншоты: `.test-build/screenshots/smoke-*.png` — локальные QA-артефакты, не источник исторических фактов и не GPU-бенчмарк.
