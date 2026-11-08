@@ -4,7 +4,7 @@ import { validateExhibits } from './data/validate';
 import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
-import { SceneMoment } from './ui/SceneMoment';
+import { SceneMoment, HERO_MOMENTS } from './ui/SceneMoment';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
 
@@ -57,6 +57,7 @@ export default function HorebApp() {
   const [toast, setToast] = useState<string | null>(null);
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
   const [examined, setExamined] = useState<Set<string>>(() => new Set());
+  const [guideCaption, setGuideCaption] = useState<string | null>(null);
   const [webgl] = useState(hasWebGL);
   const [isTouch] = useState(coarse);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -112,6 +113,7 @@ export default function HorebApp() {
   useEffect(() => { worldRef.current?.applySettings(resolved); }, [resolved]);
   useEffect(() => { worldRef.current?.setInputLocked(dialog !== null); }, [dialog, ws === null]);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(null), 4200); return () => clearTimeout(t); }, [toast]);
+  useEffect(() => { if (!guideCaption) return; const t = setTimeout(() => setGuideCaption(null), 7500); return () => clearTimeout(t); }, [guideCaption]);
 
   // посещённые зоны
   const zone = ws?.zone ?? 0;
@@ -268,6 +270,10 @@ export default function HorebApp() {
       )}
       {err && <div role="alert" className="absolute inset-0 grid place-items-center bg-black text-center p-6"><div><p>{err}</p><button className="btn mt-4" onClick={() => setScreen('reader')}>Режим чтения</button></div></div>}
       {toast && <p role="status" className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded text-sm max-w-[90vw] text-center">{toast}</p>}
+      {guideCaption && !dialog && <section role="status" aria-label="Текст рассказчика" className="pointer-events-none absolute top-36 left-1/2 -translate-x-1/2 w-[min(90vw,38rem)] rounded-sm border border-bronze/20 bg-black/75 px-5 py-4 text-center shadow-xl">
+        <p className="eyebrow text-bronze/85">Текст будущего рассказчика · без аудиозаписи</p>
+        <p className="mt-2 font-display text-lg sm:text-xl leading-snug text-parch/90">{guideCaption}</p>
+      </section>}
 
       {finale === 'show' && !dialog && (
         <section className="absolute right-4 bottom-28 sm:right-8 sm:bottom-10 w-[min(90vw,24rem)] gate p-5" aria-label="Место наблюдения">
@@ -285,6 +291,7 @@ export default function HorebApp() {
         <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} onInspect={() => {
           if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
           setExamined((old) => new Set(old).add(exhibit.id));
+          setGuideCaption(HERO_MOMENTS[exhibit.id]?.cue ?? null);
           setDialog(null);
           setToast('Осмотрите освещённую надпись и предметы. Нажмите E снова, чтобы сопоставить с Писанием.');
         }} />
