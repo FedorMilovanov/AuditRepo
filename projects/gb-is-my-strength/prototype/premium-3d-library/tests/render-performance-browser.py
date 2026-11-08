@@ -86,7 +86,7 @@ async def measure(browser, engine, width, height, touch):
 async def main():
     async with async_playwright() as playwright:
         for engine in ("chromium", "webkit"):
-            browser = await getattr(playwright, engine).launch(headless=True)
+            browser = await getattr(playwright, engine).launch(headless=True, **({"channel": "chrome"} if engine == "chromium" else {}))
             try:
                 for width, height, touch in ((1440, 900, False), (390, 844, True)):
                     await measure(browser, engine, width, height, touch)
