@@ -262,6 +262,11 @@ try {
   await mobile.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
   await mobile.waitForFunction(() => !!window.__horeb?.world, {timeout:75000});
+  // World.create resolves before its first RAF emits the WorldState. React
+  // only mounts <Joystick> after that state arrives: wait for the actual
+  // visible control, not merely the engine instance.
+  await mobile.waitForSelector('[data-testid="movement-joystick"]',
+    { visible: true, timeout: 30000 });
   const touchControls = await mobile.evaluate(() => ({
     hasJoystick: !!document.querySelector('[data-testid="movement-joystick"]'),
     maxTouchPoints: navigator.maxTouchPoints,
