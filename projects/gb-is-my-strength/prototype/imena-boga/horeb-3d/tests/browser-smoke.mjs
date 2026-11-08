@@ -159,6 +159,50 @@ try {
       t: window.__horeb.world.t, locked: window.__horeb.world.inputLocked,
     }));
     check('closing modal resumes animation', !resumed.locked && resumed.t > frozenAt);
+    // Zone 1 at its default spawn: the first inscription sits off the left
+    // camera edge. It must *not* be rendered as half of a large cut-off word.
+    await page.evaluate(() => {
+      const w = window.__horeb.world;
+      w.teleportZone(1);
+      w.yaw = 0;
+    });
+    const beaconAlpha = () => page.evaluate(() => {
+      let value = -1;
+      window.__horeb.world.scene.traverse((o) => {
+        if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim')
+          value = o.visible ? o.material.opacity : 0;
+      });
+      return value;
+    });
+    await page.waitForFunction(() => window.__horeb?.world?.position?.z <= -8, { timeout: 5000 });
+    await page.waitForFunction(() => {
+      const w = window.__horeb.world;
+      let opacity = -1;
+      w.scene.traverse((o) => {
+        if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim')
+          opacity = o.visible ? o.material.opacity : 0;
+      });
+      return opacity === 0;
+    }, { timeout: 7000, polling: 100 });
+    check('side Hebrew name fades before it clips at zone-1 spawn', (await beaconAlpha()) === 0);
+    await page.screenshot({ path: join(shots, 'smoke-02b-zone1-forward.png') });
+    await page.evaluate(() => {
+      const w = window.__horeb.world;
+      const e = w.exhibitPos.find((p) => p.e.id === 'elohim');
+      w.yaw = Math.atan2(-(e.x - w.position.x), -(e.z - w.position.z));
+    });
+    await page.waitForFunction(() => {
+      const w = window.__horeb.world;
+      let opacity = -1;
+      w.scene.traverse((o) => {
+        if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim')
+          opacity = o.visible ? o.material.opacity : 0;
+      });
+      return opacity > 0.5;
+    }, { timeout: 7000, polling: 100 });
+    check('turning towards Elōhîm reveals a complete glowing inscription', (await beaconAlpha()) > 0.5);
+    await page.screenshot({ path: join(shots, 'smoke-02c-zone1-faced.png') });
+
   }
 
   const reader = await page.goto(base + '/reader.html', { waitUntil: 'domcontentloaded', timeout: 45000 });
