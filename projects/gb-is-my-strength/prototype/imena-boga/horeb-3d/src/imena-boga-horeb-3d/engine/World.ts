@@ -142,7 +142,7 @@ export class World {
       steleMesh.scale.setScalar(v.scale);
       steleMesh.rotation.z = v.tilt;
       g.add(steleMesh);
-      const tx = labelTexture(e, e.zone === 5);
+      const tx = labelTexture(e, e.zone === 5, low);
       const lab = new THREE.Mesh(plane, new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: 0.42, roughness: 0.85 }));
       lab.position.set(0, 1.42, 0.225);
       lab.scale.setScalar(v.labelScale);

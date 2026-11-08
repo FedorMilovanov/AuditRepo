@@ -75,11 +75,15 @@ export function glowTexture(inner = 'rgba(255,220,160,1)', outer = 'rgba(255,120
 }
 
 // ── Надпись экспоната — визуализация, а не реконструкция древней надписи
-export function labelTexture(e: Exhibit, late: boolean) {
+export function labelTexture(e: Exhibit, late: boolean, low = false) {
+  // Logical layout stays at 640x900. In low mode we rasterize at 60% to
+  // reduce 42 texture uploads from ~97 MB to ~35 MB of raw RGBA pixels.
   const W = 640, H = 900;
+  const scale = low ? 0.6 : 1;
   const c = document.createElement('canvas');
-  c.width = W; c.height = H;
+  c.width = Math.round(W * scale); c.height = Math.round(H * scale);
   const g = c.getContext('2d')!;
+  g.scale(scale, scale);
   // фон — тёмный известняк с лёгким тиснением
   const bg = g.createLinearGradient(0, 0, 0, H);
   bg.addColorStop(0, '#2a241e'); bg.addColorStop(1, '#1a1612');

@@ -66,6 +66,16 @@ try {
       z: window.__horeb.state().z, count: window.__horeb.world.exhibitPos.length,
     }));
     check('42 actual 3D exhibit placements', before.count === 42, String(before.count));
+    const highResolution = await page.evaluate(() => {
+      let n = 0;
+      window.__horeb.world.scene.traverse((obj) => {
+        if (!obj.isMesh) return;
+        const m = obj.material;
+        if (m?.map?.image?.width === 640 && m.map.image.height === 900) n++;
+      });
+      return n;
+    });
+    check('high-quality original 640x900 label textures remain intact', highResolution === 42, String(highResolution));
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
     await page.keyboard.down('KeyW');
@@ -119,6 +129,21 @@ try {
   check('390px intro no horizontal overflow', dims.document <= dims.viewport + 1,
     dims.document + '/' + dims.viewport);
   await mobile.screenshot({path:join(shots,'smoke-04-mobile.png')});
+  await mobile.evaluate(() => [...document.querySelectorAll('button')]
+    .find((b) => b.textContent.includes('Начать путешествие'))?.click());
+  await mobile.waitForFunction(() => !!window.__horeb?.world, {timeout:75000});
+  const labels = await mobile.evaluate(() => {
+    let small = 0, large = 0;
+    window.__horeb.world.scene.traverse((o) => {
+      if (!o.isMesh || !o.material?.map?.image) return;
+      const {width,height}=o.material.map.image;
+      if (width===384 && height===540) small++;
+      if (width===640 && height===900) large++;
+    });
+    return {small,large,quality:window.__horeb.world.settings.quality};
+  });
+  check('mobile low-quality renders 42 compact labels (384x540)', labels.small === 42 && labels.large === 0 && labels.quality === 'low', JSON.stringify(labels));
+  await mobile.screenshot({path:join(shots,'smoke-05-mobile-world.png')});
   await mobile.close();
   check('no page runtime errors', errors.length === 0, errors.slice(0, 2).join(' | '));
 } catch (error) {
