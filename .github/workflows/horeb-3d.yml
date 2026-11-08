@@ -1,0 +1,115 @@
+name: HOREB 3D Lab QA
+
+on:
+  push:
+    branches:
+      - lane/horeb-3d-lab-20261108
+    paths:
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/**'
+      - '.github/workflows/horeb-3d.yml'
+  pull_request:
+    paths:
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/**'
+      - '.github/workflows/horeb-3d.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: horeb-3d-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: projects/gb-is-my-strength/prototype/imena-boga/horeb-3d
+
+jobs:
+  source-and-geometry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/package-lock.json'
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build app and accessible 42-entry reader
+        run: npm run build
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Verify 42 records and actual geometry
+        run: sh tests/test.sh
+      - name: Ensure HTML reader is reproducible and committed
+        run: |
+          set -euo pipefail
+          count="$(grep -o '<article id=' public/reader.html | wc -l | tr -d ' ')"
+          test "$count" = "42"
+          git diff --exit-code -- public/reader.html
+
+  actual-chromium:
+    needs: source-and-geometry
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/package-lock.json'
+      - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Start only the isolated HOREB preview
+        run: |
+          set -euo pipefail
+          npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > "$RUNNER_TEMP/horeb-vite.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/horeb-vite.pid"
+          for i in $(seq 1 40); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent --show-error http://127.0.0.1:5173/ > /dev/null
+      - name: Chrome desktop, mobile and 42 dossier baseline
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:smoke
+      - name: Open every one of the 42 dossiers with E
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:exhibits
+      - name: Preserve browser evidence if any test fails
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-chromium-debug-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/*.png
+            ${{ runner.temp }}/horeb-vite.log
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop isolated preview
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/horeb-vite.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/horeb-vite.pid")" 2>/dev/null || true
+          fi
