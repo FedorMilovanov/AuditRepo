@@ -44,7 +44,13 @@ function readProgress(): { visited: number[]; last: null | { x: number; z: numbe
   };
 }
 function hasWebGL() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } }
-const coarse = () => typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches;
+// Some real hybrid devices and mobile browser emulators expose a fine primary
+// pointer while still supporting direct touch. On a phone-size viewport such
+// visitors need the same joystick/action controls as (pointer: coarse).
+const coarse = () => typeof matchMedia !== 'undefined' && (
+  matchMedia('(pointer: coarse)').matches ||
+  ((navigator.maxTouchPoints || 0) > 0 && matchMedia('(max-width: 700px)').matches)
+);
 const prefersReduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (id: string) => void }) {
