@@ -60,6 +60,29 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
    if(name==='atlas'){
+    if(width===320){
+      // A stale stored ID (or a corrupted non-string value) must never
+      // count as an additional studied name after the corpus changes.
+      const seededContext=await browser.newContext({viewport:{width,height:844},locale:'ru-RU'});
+      try{
+        await seededContext.addInitScript(()=>{
+          localStorage.setItem('gb:imena:atlas:names-studied:v1',
+            JSON.stringify(['elohim','obsolete-name',42,null,'el','elohim']));
+        });
+        const seededPage=await seededContext.newPage();
+        await seededPage.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+        await seededPage.locator('h1').first().waitFor({state:'visible'});
+        await seededPage.waitForFunction(()=>{
+          const ids=JSON.parse(localStorage.getItem('gb:imena:atlas:names-studied:v1')||'[]');
+          return Array.isArray(ids)&&ids.length===2&&ids[0]==='elohim'&&ids[1]==='el';
+        },{timeout:5000});
+        const studiedLabel=await seededPage.locator('button[title^="Изучено "]').getAttribute('title');
+        if(!studiedLabel?.includes('Изучено 2 из 36'))
+          throw Error('Atlas progress includes obsolete/corrupted IDs '+studiedLabel);
+      }finally{
+        await seededContext.close();
+      }
+    }
     if(width>=1024){
       const rail=await page.evaluate(()=>{
         const columns=[...document.querySelectorAll('aside[aria-label*="скрижаль имён Бога"]')];
