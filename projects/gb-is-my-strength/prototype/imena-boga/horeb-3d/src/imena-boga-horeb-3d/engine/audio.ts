@@ -48,9 +48,9 @@ export class AmbientAudio {
    */
   unlockFromGesture() {
     if (!this.enabled || document.hidden) return;
+    // start() uses the current trusted input task to resume a suspended
+    // context exactly once; repeated click/keydown gestures are idempotent.
     this.start();
-    if (this.ctx?.state === 'suspended')
-      void this.ctx.resume().catch(() => { /* leave visual journey usable */ });
   }
   setEnabled(on: boolean) {
     this.enabled = on;
