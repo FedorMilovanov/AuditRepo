@@ -95,6 +95,27 @@ try {
     check('42 scenic glows share a radial alpha mask, not solid square sprites',
       glowMask.count === 42 && glowMask.centerAlpha > 200 && glowMask.cornerAlpha === 0,
       JSON.stringify(glowMask));
+    const beacons = await page.evaluate(() => {
+      const objects = [];
+      window.__horeb.world.scene.traverse((obj) => {
+        if (obj.name !== 'original-script-beacon') return;
+        objects.push({
+          id: obj.userData.exhibitId,
+          w: obj.material?.map?.image?.width,
+          h: obj.material?.map?.image?.height,
+          opacity: obj.material?.opacity,
+          depthTest: obj.material?.depthTest,
+        });
+      });
+      return objects;
+    });
+    const pilotIds = ['elohim','el-elyon','el-shaddai','el-olam','el-roi','yireh','ehyeh','yhwh'];
+    const expectedWidth = labelsByQuality.quality === 'high' ? 1024 : 640;
+    check('8 original-script pilot beacons retain canonical IDs and canvas resolution',
+      beacons.length === 8 && pilotIds.every((id) => beacons.some((b) =>
+        b.id === id && b.w === expectedWidth && b.depthTest === true)),
+      JSON.stringify(beacons));
+
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
     await page.keyboard.down('KeyW');
