@@ -7,8 +7,8 @@ import puppeteer from 'puppeteer-core';
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-const CHROME = '/tmp/chromium';
-const BASE = 'http://127.0.0.1:5173';
+const CHROME = process.env.HOREB_BROWSER_PATH || '/tmp/chromium';
+const BASE = process.env.HOREB_BASE_URL || 'http://127.0.0.1:5173';
 const SHOTS = join(process.cwd(), '.test-build/screenshots');
 
 if (!existsSync(SHOTS)) mkdirSync(SHOTS, { recursive: true });
@@ -50,11 +50,11 @@ const browser = await puppeteer.launch({
     }
     return false;
   });
-  t('settings dialog opens', settingsClicked);
+  t('settings dialog opens', settingsClicked && await page.evaluate(() => !!document.querySelector('[role="dialog"]')));
 
   await new Promise(r => setTimeout(r, 500));
   const settingsContent = await page.evaluate(() => document.body.innerText);
-  t('settings dialog has content', settingsContent.length > 100);
+  t('settings dialog has content', settingsContent.length > 100 && await page.$eval('[role="dialog"]', (e) => e.textContent.includes('Качество графики')).catch(() => false));
   await page.screenshot({ path: join(SHOTS, '12-settings.png') });
 
   // Close dialog
@@ -78,11 +78,11 @@ const browser = await puppeteer.launch({
     }
     return false;
   });
-  t('about dialog opens', aboutClicked);
+  t('about dialog opens', aboutClicked && await page.evaluate(() => !!document.querySelector('[role="dialog"]')));
 
   await new Promise(r => setTimeout(r, 500));
   const aboutContent = await page.evaluate(() => document.body.innerText);
-  t('about dialog has content', aboutContent.includes('экспозиц'));
+  t('about dialog has content', aboutContent.includes('экспозиц') && await page.$eval('[role="dialog"]', (e) => e.textContent.includes('География')).catch(() => false));
   await page.screenshot({ path: join(SHOTS, '13-about.png') });
 
   await page.keyboard.press('Escape');
@@ -104,11 +104,11 @@ const browser = await puppeteer.launch({
     }
     return false;
   });
-  t('sources dialog opens', sourcesClicked);
+  t('sources dialog opens', sourcesClicked && await page.evaluate(() => !!document.querySelector('[role="dialog"]')));
 
   await new Promise(r => setTimeout(r, 500));
   const sourcesContent = await page.evaluate(() => document.body.innerText);
-  t('sources dialog has content', sourcesContent.length > 100);
+  t('sources dialog has content', sourcesContent.length > 100 && await page.$eval('[role="dialog"]', (e) => e.textContent.includes('Research')).catch(() => false));
   await page.screenshot({ path: join(SHOTS, '14-sources.png') });
 
   await page.keyboard.press('Escape');
@@ -194,7 +194,7 @@ const browser = await puppeteer.launch({
   });
   await new Promise(r => setTimeout(r, 1000));
   const dialogInWorld = await page.evaluate(() => document.body.innerText.length > 200);
-  t('settings dialog works in 3D world', dialogInWorld);
+  t('settings dialog works in 3D world', dialogInWorld && await page.evaluate(() => !!document.querySelector('[role="dialog"]')));
 
   // Close and verify world still running
   await page.keyboard.press('Escape');

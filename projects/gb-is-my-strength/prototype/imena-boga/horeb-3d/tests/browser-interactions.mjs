@@ -7,8 +7,8 @@ import puppeteer from 'puppeteer-core';
 import { existsSync, mkdirSync, statSync } from 'fs';
 import { join } from 'path';
 
-const CHROME = '/tmp/chromium';
-const BASE = 'http://127.0.0.1:5173';
+const CHROME = process.env.HOREB_BROWSER_PATH || '/tmp/chromium';
+const BASE = process.env.HOREB_BASE_URL || 'http://127.0.0.1:5173';
 const SHOTS = join(process.cwd(), '.test-build/screenshots');
 
 if (!existsSync(SHOTS)) mkdirSync(SHOTS, { recursive: true });
@@ -44,14 +44,14 @@ page.on('console', msg => { if (msg.type() === 'error') consoleErrors.push(msg.t
 page.on('pageerror', err => consoleErrors.push('PAGEERROR: ' + err.message));
 
 // ── 1. Enter 3D world
-await page.goto(BASE, { waitUntil: 'networkidle0', timeout: 30000 });
+await page.goto(BASE + '/?e2e', { waitUntil: 'networkidle0', timeout: 30000 });
 await new Promise(r => setTimeout(r, 1500));
 await page.evaluate(() => {
   const btns = document.querySelectorAll('button');
   for (const b of btns) { if (b.textContent.includes('Начать')) { b.click(); return; } }
 });
 await new Promise(r => setTimeout(r, 5000));
-t('entered 3D world', true);
+t('entered 3D world with live state', await page.evaluate(() => Boolean(window.__horeb?.world && window.__horeb?.state())));
 
 // ── 2. FPS profiling (informational — SwiftShader is slow)
 const fpsResult = await page.evaluate(() => {
@@ -72,6 +72,7 @@ const fpsResult = await page.evaluate(() => {
 console.log(`  FPS (SwiftShader, informational): ${fpsResult.fps.toFixed(1)} FPS (${fpsResult.frames} frames in ${fpsResult.elapsed.toFixed(0)}ms)`);
 
 // ── 3. Walk forward through corridor
+const beforeWalk = await page.evaluate(() => window.__horeb?.state()?.z ?? null);
 for (let i = 0; i < 4; i++) {
   await page.keyboard.down('KeyW');
   await new Promise(r => setTimeout(r, 2000));
@@ -79,14 +80,16 @@ for (let i = 0; i < 4; i++) {
   await new Promise(r => setTimeout(r, 500));
 }
 await page.screenshot({ path: join(SHOTS, '08-walk-forward.png') });
-t('walked forward through corridor', true);
+const afterWalk = await page.evaluate(() => window.__horeb?.state()?.z ?? null);
+t('walked forward through corridor', Number.isFinite(beforeWalk) && Number.isFinite(afterWalk) && afterWalk < beforeWalk - 0.1, `z ${beforeWalk} -> ${afterWalk}`);
 
 // ── 4. Check interaction prompt system
-const hasPrompt = await page.evaluate(() => {
-  const text = document.body.innerText;
-  return text.includes('Имя') || text.includes('чтение') || text.includes('E');
+const promptSystemReady = await page.evaluate(() => {
+  const state = window.__horeb?.state();
+  return Boolean(state && Object.prototype.hasOwnProperty.call(state, 'prompt') &&
+    window.__horeb?.world?.exhibitPos?.length === 42);
 });
-t('exhibit interaction prompt system visible', hasPrompt);
+t('interactive World prompt state wired to all 42 exhibit markers', promptSystemReady);
 
 // ── 5. Try interact (press E)
 await page.keyboard.press('KeyE');
@@ -129,7 +132,7 @@ const memInfo = await page.evaluate(() => {
 if (memInfo) {
   t('JS heap memory under 100MB', parseFloat(memInfo.used) < 100, `${memInfo.used} MB used / ${memInfo.total} MB total`);
 } else {
-  t('JS heap memory (not available in headless)', true);
+  console.log('INFO: JS heap metric unavailable; memory gate NOT VERIFIED');
 }
 
 // ── 9. Reader mode deep test

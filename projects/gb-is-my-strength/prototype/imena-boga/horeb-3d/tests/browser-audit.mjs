@@ -8,9 +8,9 @@ import puppeteer from 'puppeteer-core';
 import { existsSync, mkdirSync, statSync } from 'fs';
 import { join } from 'path';
 
-const CHROME = '/tmp/chromium';
-const BASE = 'http://127.0.0.1:5173';
-const CACHE_BUST = '?v=' + Date.now();
+const CHROME = process.env.HOREB_BROWSER_PATH || '/tmp/chromium';
+const BASE = process.env.HOREB_BASE_URL || 'http://127.0.0.1:5173';
+const CACHE_BUST = '?e2e&v=' + Date.now();
 const SHOTS = join(process.cwd(), '.test-build/screenshots');
 
 if (!existsSync(SHOTS)) mkdirSync(SHOTS, { recursive: true });
@@ -21,8 +21,6 @@ const args = [
   '--single-process', '--no-zygote',
   '--headless=shell',
   '--window-size=1440,900',
-  '--allow-running-insecure-content',
-  '--disable-web-security',
   '--ignore-gpu-blocklist',
   '--font-render-hinting=none',
   '--disable-application-cache',
@@ -52,7 +50,7 @@ page.on('pageerror', err => consoleErrors.push('PAGEERROR: ' + err.message));
 await page.goto(BASE + CACHE_BUST, { waitUntil: 'networkidle0', timeout: 30000 });
 await new Promise(r => setTimeout(r, 2000));
 await page.screenshot({ path: join(SHOTS, '01-intro.png') });
-t('intro page loads', true);
+t('intro page loads', await page.$eval('h1', (h) => h.textContent.includes('ИМЕНА БОГА')).catch(() => false));
 t('no console errors on intro', consoleErrors.length === 0, consoleErrors.slice(0, 3).join('; '));
 
 // ── 2. WebGL check
@@ -81,7 +79,7 @@ const canvasInfo = await page.evaluate(() => {
   if (!c) return { found: false };
   return { found: true, w: c.width, h: c.height };
 });
-t('canvas element found after entering world', canvasInfo.found, canvasInfo.found ? `${canvasInfo.w}x${canvasInfo.h}` : 'no canvas');
+t('canvas element found after entering world', canvasInfo.found && canvasInfo.w > 0 && canvasInfo.h > 0, canvasInfo.found ? `${canvasInfo.w}x${canvasInfo.h}` : 'no canvas');
 
 // ── 6. Screenshot 3D world (initial view)
 await page.screenshot({ path: join(SHOTS, '02-world-initial.png') });
@@ -112,7 +110,11 @@ const promptText = await page.evaluate(() => {
   const el = document.querySelector('[role="dialog"], [data-prompt], .prompt, .interaction-hint');
   return el ? el.textContent : null;
 });
-t('interaction prompt system exists', promptText !== undefined);
+const worldCheck = await page.evaluate(() => ({
+  state: Boolean(window.__horeb?.state()),
+  exhibits: window.__horeb?.world?.exhibitPos?.length ?? -1,
+}));
+t('real World telemetry and 42 exhibit markers', worldCheck.state && worldCheck.exhibits === 42, JSON.stringify(worldCheck));
 
 // ── 11. Reader mode
 await page.goto(BASE + '/reader.html', { waitUntil: 'networkidle0', timeout: 30000 });
