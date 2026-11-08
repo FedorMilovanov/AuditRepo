@@ -165,6 +165,40 @@ try {
     }, { timeout: 7500 }, hero.label);
     await page.screenshot({ path: join(screenshots, 'smoke-study-bookmark-intro.png') });
     console.log('PASS elohim: inspect → 3D response → comparison → saved bookmark → remote & intro reading');
+
+    // A checkpoint was stored on explicit exit from zone 2, not just on E.
+    await page.waitForFunction(() => {
+      try {
+        const pos = JSON.parse(localStorage.getItem('imena-horeb.progress.v1') || 'null')?.last;
+        return !!pos && pos.z < -62 && pos.z > -116;
+      } catch { return false; }
+    }, { timeout: 6000 });
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.evaluate(() => [...document.querySelectorAll('button')]
+      .find((b) => b.textContent?.includes('Начать путешествие'))?.click());
+    await page.waitForFunction(() => !!window.__horeb?.world, { timeout: 90000 });
+    const resumedAt = await page.evaluate(() => ({
+      ...window.__horeb.world.position, shoes: window.__horeb.world.shoes,
+    }));
+    if (Math.abs(resumedAt.z + 68) > 1 || resumedAt.shoes !== 'shod')
+      throw new Error('Saved progress did not restore zone-2 checkpoint safely: ' + JSON.stringify(resumedAt));
+    console.log('PASS persisted travel checkpoint restores zone 2 after full reload');
+
+    // A forged/outdated checkpoint inside the forbidden bush radius must be
+    // clamped by the production spawn guard; restoring always starts shod.
+    await page.evaluate(() => localStorage.setItem('imena-horeb.progress.v1',
+      JSON.stringify({ visited: [0, 7], last: { x: 0, z: -366 } })));
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.evaluate(() => [...document.querySelectorAll('button')]
+      .find((b) => b.textContent?.includes('Начать путешествие'))?.click());
+    await page.waitForFunction(() => !!window.__horeb?.world, { timeout: 90000 });
+    const guard = await page.evaluate(() => ({
+      distance: window.__horeb.world.position.z + 366,
+      shoes: window.__horeb.world.shoes,
+    }));
+    if (guard.distance < 13.99 || guard.shoes !== 'shod')
+      throw new Error('Restored progress bypassed holy threshold: ' + JSON.stringify(guard));
+    console.log('PASS forged inner-bush checkpoint cannot bypass shoes/outer safety gate');
   } catch (error) {
     failures.push('HERO ACTION: ' + (error?.message || error));
   }
