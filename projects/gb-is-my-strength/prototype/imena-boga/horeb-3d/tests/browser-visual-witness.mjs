@@ -27,7 +27,7 @@ const witness = {
   timestamp: new Date().toISOString(),
   browser: chromePath,
   renderingMode: process.env.HOREB_SWIFTSHADER === '1' ? 'software-SwiftShader' : 'browser-default-not-verified-GPU',
-  desktop: [], mobile: [], closeBush: null, errors: [],
+  desktop: [], mobile: [], closeBush: null, innerBush: null, errors: [],
 };
 const browser = await puppeteer.launch({
   executablePath: chromePath, headless: true, args, protocolTimeout: 90000,
@@ -133,6 +133,31 @@ try {
       Math.abs(witness.closeBush.moonIntensity - 0.55) > 0.02)
     throw new Error('BUSH ART: dark predawn lighting was unexpectedly brightened');
   console.log('PASS outer bush boundary: subdued HUD, visible sandal action, dark sky');
+  // Additional close-up from the *permitted* unshod zone. This is essential
+  // for judging whether the bush reads as a living shrub, not only as sparks.
+  const initiated = await desktop.evaluate(() => window.__horeb.world.removeShoes());
+  if (!initiated) throw new Error('BUSH WALK: cannot remove footwear at outer boundary');
+  await desktop.waitForFunction(() => window.__horeb?.state()?.shoes === 'unshod',
+    { polling: 200, timeout: 10000 });
+  const frameBefore = await desktop.evaluate(() => window.__horeb.world.renderer.info.render.frame);
+  await desktop.evaluate(() => window.__horeb.world.teleportTo(0, -358));
+  await desktop.waitForFunction((previousFrame) => {
+    const s = window.__horeb?.state(), w = window.__horeb?.world;
+    return !!s && !!w && s.shoes === 'unshod' && s.zone === 7 &&
+      s.distBush >= 6.5 && s.distBush < 9 &&
+      w.renderer.info.render.frame > previousFrame;
+  }, { polling: 200, timeout: 10000 }, frameBefore);
+  await desktop.screenshot({ path: join(shots, 'visual-desktop-bush-inner-boundary.png') });
+  witness.innerBush = await desktop.evaluate(() => ({
+    distance: window.__horeb.state().distBush,
+    shoes: window.__horeb.state().shoes,
+    foliageInstances: window.__horeb.world.bush.foliage.count,
+    bushFoliageVisible: window.__horeb.world.bush.foliage.visible,
+    draws: window.__horeb.world.renderer.info.render.calls,
+  }));
+  if (witness.innerBush.foliageInstances < 32 || !witness.innerBush.bushFoliageVisible)
+    throw new Error('BUSH VISUAL: living foliage missing at close range');
+  console.log('PASS living bush close-up from permitted unshod boundary');
   await desktop.close();
 
   const mobile = await browser.newPage();
@@ -155,7 +180,8 @@ try {
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
 }
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
-  witness.closeBush?.shoes === 'shod' && witness.errors.length === 0;
+  witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
+  witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
   witness.mobile.length + '/3 mobile-emulated screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
