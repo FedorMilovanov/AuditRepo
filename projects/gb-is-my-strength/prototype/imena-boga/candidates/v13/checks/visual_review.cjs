@@ -58,6 +58,59 @@ async function diag(page,app,engine,width,stage){
  if(d.documentWidth>d.viewport+1)problem('HIGH','horizontal-page-overflow',{app,engine,width,stage,details:d.overflow});
  if(d.tinyTargets.length)problem('REVIEW','small-visible-touch-targets',{app,engine,width,stage,targets:d.tinyTargets});
 }
+
+/**
+ * Hard visual geometry gate: checks every Atlas card (not only the document),
+ * the overlapping-rail breakpoint and readable Constellation catalog text.
+ */
+async function layoutContract(page,app,engine,width){
+ const data=await page.evaluate(name=>{
+  const faults=[];
+  const fault=(kind,info)=>faults.push({kind,info});
+  if(name==='atlas'){
+   const sidebars=[...document.querySelectorAll('aside[aria-label*="скрижаль"]')];
+   const visible=sidebars.filter(node=>getComputedStyle(node).display!=='none');
+   if(sidebars.length!==2)fault('atlas-rail-count',{count:sidebars.length});
+   if(width<1440&&visible.length)fault('atlas-rail-overlaps-reader',{count:visible.length});
+   if(width>=1440&&visible.length!==2)fault('atlas-rail-vanished',{count:visible.length});
+   const articles=[...document.querySelectorAll('article[data-name-id]')];
+   if(articles.length!==36)fault('atlas-article-count',{count:articles.length});
+   articles.forEach((article,i)=>{
+    const group=article.querySelector('[data-name-display]');
+    const title=article.querySelector('[data-name-primary-title]');
+    const original=article.querySelector('[data-name-original]');
+    if(!group||!title||!original){fault('atlas-card-witness-missing',{index:i+1});return;}
+    const box=group.getBoundingClientRect(), tr=title.getBoundingClientRect(), or=original.getBoundingClientRect();
+    if(tr.width<Math.min(150,box.width-4))
+     fault('atlas-card-title-collapsed',{index:i+1,titleWidth:tr.width,available:box.width});
+    if(title.scrollWidth>title.clientWidth+2)
+     fault('atlas-card-title-overflow',{index:i+1,scroll:title.scrollWidth,client:title.clientWidth});
+    if(original.scrollWidth>original.clientWidth+2 || or.left<box.left-2 || or.right>box.right+2)
+     fault('atlas-card-original-overflow',{index:i+1,scroll:original.scrollWidth,
+      client:original.clientWidth,left:or.left,right:or.right,groupLeft:box.left,groupRight:box.right});
+   });
+   const hero=document.querySelector('h1')?.getBoundingClientRect();
+   if(hero)visible.forEach((sidebar,i)=>{
+    const r=sidebar.getBoundingClientRect();
+    if(hero.left<r.right&&hero.right>r.left&&hero.top<r.bottom&&hero.bottom>r.top)
+     fault('atlas-hero-behind-rail',{side:i,hero:[hero.left,hero.right],sidebar:[r.left,r.right]});
+   });
+  }else{
+   const labels=[...document.querySelectorAll('[data-name-translit]')];
+   if(labels.length!==29)fault('sozvezdie-index-count',{count:labels.length});
+   labels.forEach((el,i)=>{
+    const px=parseFloat(getComputedStyle(el).fontSize);
+    if(px<11.5)fault('sozvezdie-small-transliteration',{index:i+1,px});
+    if(el.scrollWidth>el.clientWidth+2)
+     fault('sozvezdie-transliteration-clipped',{index:i+1,scroll:el.scrollWidth,client:el.clientWidth});
+   });
+  }
+  return {faults};
+ },app);
+ record('layout-contract',{app,engine,width,faultCount:data.faults.length});
+ data.faults.forEach(f=>problem('BLOCKER',f.kind,{app,engine,width,info:f.info}));
+}
+
 async function safeAction(page,label,action){
  try{await action();record('interaction',{label,status:'PASS'});}
  catch(e){problem('HIGH','interaction-failed',{label,error:String(e).slice(0,480)});record('interaction',{label,status:'FAIL'});}
@@ -71,6 +124,7 @@ async function visit(browser,engine,app,width,base){
  try{
   await page.goto(base+'/'+app+'/',{waitUntil:'domcontentloaded',timeout:30000});
   await waitVisual(page);
+  await layoutContract(page,app,engine,width);
   await diag(page,app,engine,width,'hero');
   await shot(page,engine+'-'+app+'-'+width+'-01-hero');
   const checkpoint=app==='atlas'
@@ -142,6 +196,58 @@ async function visit(browser,engine,app,width,base){
     });
    }
   }
+
+  if(app==='atlas' && [320,390,768,1440].includes(width)){
+   await safeAction(page,engine+'-atlas-'+width+'-long-name',async()=>{
+    const name=page.locator('article[data-name-id]').last();
+    await name.locator('button[title="Нажмите, чтобы открыть полное досье"]').click();
+    const original=page.locator('[data-modal-original]');
+    await original.waitFor({state:'visible',timeout:10000});
+    await page.evaluate(async()=>{await document.fonts.ready});
+    const m=await original.evaluate(el=>({
+     scroll:el.scrollWidth,client:el.clientWidth,right:el.getBoundingClientRect().right,
+     parentRight:el.parentElement?.getBoundingClientRect().right
+    }));
+    record('atlas-last-modal',{engine,width,...m});
+    if(m.scroll>m.client+2||m.right>(m.parentRight||0)+2)
+     problem('BLOCKER','atlas-long-modal-original-overflow',{engine,width,measure:m});
+    await shot(page,engine+'-atlas-'+width+'-last-modal');
+    await page.keyboard.press('Escape');
+    await original.waitFor({state:'hidden',timeout:8000});
+    if(width<1440){
+     await page.getByRole('button',{name:'Открыть скрижали имён Бога'}).click();
+     const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
+     await drawer.waitFor({state:'visible'});
+     const names=await drawer.locator('[data-atlas-mobile-original]').evaluateAll(els=>els.map((el,i)=>({
+      n:i+1,scroll:el.scrollWidth,client:el.clientWidth,
+      right:el.getBoundingClientRect().right,parentRight:el.closest('button')?.getBoundingClientRect().right
+     })));
+     record('atlas-mobile-originals',{engine,width,count:names.length});
+     if(names.length!==36)problem('BLOCKER','atlas-mobile-original-count',{engine,width,count:names.length});
+     names.forEach(n=>{
+      if(n.scroll>n.client+2||n.right>(n.parentRight||0)+2)
+       problem('BLOCKER','atlas-mobile-original-clipped',{engine,width,measure:n});
+     });
+     await shot(page,engine+'-atlas-'+width+'-last-drawer');
+     await page.keyboard.press('Escape');
+    }
+   });
+  }
+  if(app==='sozvezdie'&&width===768){
+   await safeAction(page,engine+'-sozvezdie-tablet-dock',async()=>{
+    await page.locator('#yhwh').scrollIntoViewIfNeeded();
+    const dock=page.locator('[data-reader-dock]');
+    await dock.waitFor({state:'visible',timeout:7500});
+    const d=await dock.evaluate(el=>({
+     flex:getComputedStyle(el).flexDirection,top:el.getBoundingClientRect().top,screen:innerHeight
+    }));
+    record('tablet-reader-dock',{engine,width,...d});
+    if(d.flex!=='row'||d.top<d.screen-180)
+     problem('BLOCKER','tablet-dock-overlaps-text',{engine,width,measure:d});
+    await shot(page,engine+'-sozvezdie-'+width+'-tablet-dock');
+   });
+  }
+
   if(errors.length)problem('HIGH','runtime-errors',{app,engine,width,errors});
   if(failed.length)problem('HIGH','resource-errors',{app,engine,width,failed});
   record('session',{app,engine,width,status:'complete',errorCount:errors.length,resourceErrors:failed.length});
@@ -168,7 +274,9 @@ async function visit(browser,engine,app,width,base){
    shots,checks,findings},null,2));
   server.close();
  }
- console.log(JSON.stringify({status:'EVIDENCE_CAPTURED',shots:shots.length,
+ const blockers=findings.filter(f=>f.level==='BLOCKER'||f.level==='HIGH');
+ if(blockers.length)process.exitCode=1;
+ console.log(JSON.stringify({status:blockers.length?'VISUAL_CONTRACT_FAIL':'EVIDENCE_CAPTURED',shots:shots.length,
    sessions:checks.filter(c=>c.name==='session').length,findings:findings.length,
    high:findings.filter(f=>f.level==='HIGH').length,output:out}));
 })().catch(e=>{console.error(e.stack);process.exitCode=1;server.close()});
