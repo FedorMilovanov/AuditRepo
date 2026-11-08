@@ -29,6 +29,7 @@ import {
   ArrowUp,
   Compass,
   X,
+  ChevronDown,
   ChevronsUpDown,
 } from 'lucide-react';
 
@@ -106,6 +107,7 @@ export function App() {
 
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [illuminateAll, setIlluminateAll] = useState<boolean>(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
 
   // Track which divine names have progressively appeared as the reader scrolls down
   const [revealedIds, setRevealedIds] = useState<Set<string>>(() => {
@@ -644,19 +646,34 @@ export function App() {
             boxShadow: 'var(--gb-shadow-lg)',
           }}
         >
-          <div className="mb-4 flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--gb-border)' }}>
-            <span
-              className="font-serif-display text-lg sm:text-xl font-bold"
-              style={{ color: 'var(--gb-accent)' }}
-            >
-              Коротко
-            </span>
-            <span className="font-ui text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--gb-gold-ink)' }}>
+          <button
+            type="button"
+            aria-controls="atlas-summary-theses"
+            aria-expanded={summaryOpen}
+            onClick={() => setSummaryOpen((open) => !open)}
+            className="flex min-h-11 w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-lg text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+            style={{ color: 'var(--gb-accent)', outlineColor: 'var(--gb-gold)' }}
+          >
+            <span className="font-serif-display text-lg font-bold sm:text-xl">Коротко</span>
+            <span className="ml-auto font-ui text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--gb-gold-ink)' }}>
               Четыре тезиса исследования
             </span>
-          </div>
+            <ChevronDown
+              aria-hidden="true"
+              className={`h-4 w-4 shrink-0 transition-transform duration-500 ${summaryOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
 
-          <div className="space-y-3.5">
+          <div
+            id="atlas-summary-theses"
+            aria-hidden={!summaryOpen}
+            inert={!summaryOpen}
+            className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              summaryOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+            }`}
+          >
+            <div className="min-h-0 overflow-hidden">
+              <div className="mt-4 space-y-3.5 border-t pt-4" style={{ borderColor: 'var(--gb-border)' }}>
             {SUMMARY_THESES.map((thesis, index) => (
               <div key={index} className="flex items-start gap-3.5">
                 <span
@@ -677,6 +694,8 @@ export function App() {
                 </p>
               </div>
             ))}
+              </div>
+            </div>
           </div>
         </section>
 
