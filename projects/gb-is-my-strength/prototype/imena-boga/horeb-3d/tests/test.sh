@@ -20,6 +20,8 @@ if [ -x /tmp/chromium ] && curl -s -o /dev/null -w '%{http_code}' http://127.0.0
   LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-audit.mjs
   echo "--- Browser interaction test ---"
   LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-interactions.mjs
+  echo "--- Browser dialog & resilience test ---"
+  LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-dialogs.mjs
 else
   echo "--- Browser tests: SKIPPED (chromium binary or dev server unavailable) ---"
 fi
