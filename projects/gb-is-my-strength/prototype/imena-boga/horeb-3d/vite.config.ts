@@ -10,6 +10,9 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Keep production asset URLs relative so a downloaded dist/ folder works
+  // from file:// and a localhost static server, without a Product deployment.
+  base: './',
   plugins: [react(), tailwindcss(), viteSingleFile()],
   resolve: {
     alias: {
