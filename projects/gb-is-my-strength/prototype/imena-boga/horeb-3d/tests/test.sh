@@ -13,3 +13,11 @@ node .test-build/construct.mjs
 # Geometric placement check: every stele on solid ground (wall + zone-4 chasm ledge).
 npx esbuild tests/placement.ts --bundle --platform=node --format=esm --external:three --outfile=.test-build/placement.mjs
 node .test-build/placement.mjs
+# Browser visual audit: Sparticuz Chromium 153 via @sparticuz/chromium + puppeteer-core.
+# Optional — skipped if chromium binary or dev server unavailable.
+if [ -x /tmp/chromium ] && curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5173/ 2>/dev/null | grep -q 200; then
+  echo "--- Browser visual audit (Sparticuz Chromium 153) ---"
+  LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-audit.mjs
+else
+  echo "--- Browser visual audit: SKIPPED (chromium binary or dev server unavailable) ---"
+fi
