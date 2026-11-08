@@ -107,6 +107,7 @@ try {
     'HTTP ' + reader?.status() + ', cards ' + count);
   check('reader has Hebrew RTL', await page.$eval('[lang="he"][dir="rtl"]', () => true).catch(() => false));
   await page.screenshot({ path: join(shots, 'smoke-03-reader.png') });
+  await page.close(); // release the desktop WebGL context before mobile QA
 
   const disabled = await browser.newPage();
   await disabled.evaluateOnNewDocument(() => {
@@ -124,7 +125,7 @@ try {
 
   const mobile = await browser.newPage();
   await mobile.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
-  await mobile.goto(base + '/', {waitUntil:'domcontentloaded',timeout:45000});
+  await mobile.goto(base + '/?e2e', {waitUntil:'domcontentloaded',timeout:45000});
   const dims = await mobile.evaluate(() => ({document:document.documentElement.scrollWidth, viewport:innerWidth}));
   check('390px intro no horizontal overflow', dims.document <= dims.viewport + 1,
     dims.document + '/' + dims.viewport);
