@@ -348,9 +348,9 @@ export class World {
     fog.density += (f[1] - fog.density) * k;
     (this.scene.background as THREE.Color).copy(fog.color);
     const out = Math.min(1, Math.max(0, (TUNNEL_END + 2 - this.pos.y) / 10));
-    this.ambient.intensity = 1.6 * (1 - out) + 0.35 * out;
-    this.hemi.intensity = 0.55 * out;
-    this.moon.intensity = 0.55 * out;
+    this.ambient.intensity = 3.0 * (1 - out) + 0.35 * out;
+    this.hemi.intensity = 0.3 * (1 - out) + 0.55 * out;
+    this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
