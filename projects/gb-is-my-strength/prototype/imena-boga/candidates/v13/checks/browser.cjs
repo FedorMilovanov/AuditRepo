@@ -413,8 +413,11 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       await page.evaluate(()=>window.scrollTo(0,0));
       await page.waitForFunction(()=>
         document.getElementById('atlas-hero')?.getBoundingClientRect().bottom>0);
-      if(await trigger.isVisible())
+      // The IntersectionObserver fires asynchronously after the scroll paint.
+      // Wait for its React commit, but fail if the ribbon remains on the cover.
+      await trigger.waitFor({state:'hidden',timeout:10000}).catch(() => {
         throw Error('Atlas scripture ribbon obscures the opening hero '+width);
+      });
       await page.locator('article[data-name-id]').first().scrollIntoViewIfNeeded();
       await trigger.waitFor({state:'visible',timeout:10000});
       // Document-bubble observer runs after the React root's click handler.
