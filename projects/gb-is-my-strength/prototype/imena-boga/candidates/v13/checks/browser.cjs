@@ -628,7 +628,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
               JSON.stringify({engine,width,enabled,marks}));
           // The verse-card tilt must obey the in-app toggle independently of
           // OS preferences and reset immediately when OS reduce activates.
-          const verseTilt=motionPage.locator('#yhwh [data-reader-tilt]');
+          const verseTilt=motionPage.locator('#yhwh [data-reader-tilt]').first();
           await verseTilt.scrollIntoViewIfNeeded();
           await verseTilt.hover({position:{x:22,y:24}});
           const neutral='perspective(900px) rotateX(0deg) rotateY(0deg)';
