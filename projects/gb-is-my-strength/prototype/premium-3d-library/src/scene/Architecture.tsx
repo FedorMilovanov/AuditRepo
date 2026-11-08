@@ -115,9 +115,7 @@ function InstancedShelfBay({ bay, geometry }: { bay: number; geometry: THREE.Box
     </group>
   );
 }
-function InstancedShelfBays() {
-  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+function InstancedShelfBays({ geometry }: { geometry: THREE.BoxGeometry }) {
   return (
     <group>
       {SHELVED_BAYS.map((bay) => <InstancedShelfBay key={bay} bay={bay} geometry={geometry} />)}
@@ -125,47 +123,64 @@ function InstancedShelfBays() {
   );
 }
 
-function WindowBay({ bay }: { bay: number }) {
+const windowGlass = new THREE.MeshPhysicalMaterial({
+  color: "#b9d5d6", transparent: true, opacity: 0.09,
+  roughness: 0.06, metalness: 0.0, depthWrite: false, side: THREE.DoubleSide,
+});
+const windowMetal = new THREE.MeshStandardMaterial({
+  color: "#4b5550", roughness: 0.58, metalness: 0.45,
+});
+
+/** Stone/window mullions are instanced within each cullable architectural bay. */
+function WindowBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry }) {
   const a = (bay / BAYS) * Math.PI * 2;
+  const stoneParts = useMemo(() => [
+    [0, 0.9, 0, 4.50, 1.8, 0.45],
+    [0, 7.5, 0, 4.5, 2.7, 0.46],
+    [-2.17, 4.0, -0.08, 0.21, 4.5, 0.42],
+    [2.17, 4.0, -0.08, 0.21, 4.5, 0.42],
+    [0, 1.78, -0.27, 4.50, 0.15, 0.68],
+  ], []);
+  const metalParts = useMemo(() => [
+    [0, 4.0, -0.22, 0.075, 4.5, 0.15],
+    ...[2.75, 4.15, 5.6].map((y) => [0, y, -0.22, 4.3, 0.066, 0.15]),
+  ], []);
+  const stoneRef = useRef<THREE.InstancedMesh>(null!);
+  const metalRef = useRef<THREE.InstancedMesh>(null!);
+  useLayoutEffect(() => {
+    const pivot = new THREE.Object3D();
+    const place = (mesh: THREE.InstancedMesh, parts: number[][]) => {
+      parts.forEach(([x, y, z, w, h, d], i) => {
+        pivot.position.set(x, y, z);
+        pivot.rotation.set(0, 0, 0);
+        pivot.scale.set(w, h, d);
+        pivot.updateMatrix();
+        mesh.setMatrixAt(i, pivot.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingSphere();
+    };
+    place(stoneRef.current, stoneParts);
+    place(metalRef.current, metalParts);
+  }, [stoneParts, metalParts]);
   return (
     <group position={[Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS]} rotation-y={a}>
-      <mesh position={[0, 0.9, 0]} material={marble} receiveShadow>
-        <boxGeometry args={[4.50, 1.8, 0.45]} />
-      </mesh>
-      <mesh position={[0, 7.5, 0]} material={marble} receiveShadow>
-        <boxGeometry args={[4.5, 2.7, 0.46]} />
-      </mesh>
-      {[-2.17, 2.17].map((x) => (
-        <mesh key={x} position={[x, 4.0, -0.08]} material={marble} receiveShadow>
-          <boxGeometry args={[0.21, 4.5, 0.42]} />
-        </mesh>
-      ))}
-      <mesh position={[0, 4.00, -0.04]}>
+      <instancedMesh ref={stoneRef} args={[geometry, marble, stoneParts.length]} receiveShadow dispose={null} />
+      <mesh position={[0, 4.0, -0.04]} material={windowGlass} dispose={null}>
         <planeGeometry args={[4.12, 4.35]} />
-        <meshPhysicalMaterial color="#b9d5d6" transparent opacity={0.09} roughness={0.06} metalness={0.0} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
-      <mesh position={[0, 4.0, -0.22]}>
-        <boxGeometry args={[0.075, 4.5, 0.15]} />
-        <meshStandardMaterial color="#4b5550" roughness={0.58} metalness={0.45} />
-      </mesh>
-      {[2.75, 4.15, 5.6].map((y) => (
-        <mesh key={y} position={[0, y, -0.22]}>
-          <boxGeometry args={[4.3, 0.066, 0.15]} />
-          <meshStandardMaterial color="#4b5550" roughness={0.58} metalness={0.45} />
-        </mesh>
-      ))}
-      <mesh position={[0, 1.78, -0.27]} material={marble}>
-        <boxGeometry args={[4.50, 0.15, 0.68]} />
-      </mesh>
+      <instancedMesh ref={metalRef} args={[geometry, windowMetal, metalParts.length]} dispose={null} />
     </group>
   );
 }
 
 export function Architecture() {
+  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  useEffect(() => () => geometry.dispose(), [geometry]);
   return (
     <group>
-      <InstancedShelfBays />
-      {Array.from(WINDOW_BAYS).map((bay) => <WindowBay key={bay} bay={bay} />)}
+      <InstancedShelfBays geometry={geometry} />
+      {Array.from(WINDOW_BAYS).map((bay) => <WindowBay key={bay} bay={bay} geometry={geometry} />)}
       {/* Original entrance remains open: this is an exploration prototype, not a sealed maze. */}
       <group position={[0, 0, RADIUS]}>
         {[-1.72, 1.72].map(x => (
