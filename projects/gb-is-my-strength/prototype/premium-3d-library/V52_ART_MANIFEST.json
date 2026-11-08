@@ -1,0 +1,83 @@
+{
+  "schema": "gb-library-v52-art-scoped-source-manifest-v1",
+  "baseCommit": "4a0f4504f4f0b414c5175cac0a0216b272d54f33",
+  "status": "LAB_ART_HOLD",
+  "scope": "only architectural art changes; V5_SOURCE_MANIFEST.json preserves baseline provenance",
+  "files": [
+    {
+      "path": "ART_V52_ENGINEERING.md",
+      "bytes": 4248,
+      "sha256": "6414c5b3da7d694814281ab4125ac401374fb427d2660c388614f53ed96fb414"
+    },
+    {
+      "path": "evidence/art-v52/chromium-1440x900.png",
+      "bytes": 559253,
+      "sha256": "9b896574afca5f4f43754cd775241d52de6ed75741077280416b03d6682e746d"
+    },
+    {
+      "path": "evidence/art-v52/chromium-390x844.png",
+      "bytes": 178740,
+      "sha256": "e9ca5d368501adfd46306d39dd6d2709cade9cdfb2facef94542467ac5de5311"
+    },
+    {
+      "path": "evidence/art-v52/webkit-1440x900.png",
+      "bytes": 587788,
+      "sha256": "b2cddd695d60e34b866b097fcab4237746aadad9a8eedbfb28e9ba3621ed74f0"
+    },
+    {
+      "path": "evidence/art-v52/webkit-390x844.png",
+      "bytes": 184246,
+      "sha256": "089a4492c57acc1fd4e3088d3e2a8f170a77503be9e244ea4c195c753c19073f"
+    },
+    {
+      "path": "scripts/generate-architecture-materials.py",
+      "bytes": 2041,
+      "sha256": "f1f629f4e64176b455f7f9f81c65caf000f503e1c3ca65790592d2031e97e969"
+    },
+    {
+      "path": "scripts/requirements-art-v52.txt",
+      "bytes": 28,
+      "sha256": "170569426540ccc4e8a5294f25d7d4d381d9df2d8f955ec3a8091002cb4c9f19"
+    },
+    {
+      "path": "src/assets/pbr/limestone-color.webp",
+      "bytes": 3170,
+      "sha256": "a0c2da13a9d5b5c42676bfdceedc93c375293361754d002e93ceee8ae86459be"
+    },
+    {
+      "path": "src/assets/pbr/limestone-normal.png",
+      "bytes": 448030,
+      "sha256": "186275184c5ef746ecbceb86f08a0ad3a85e7639cc19113fb1d27c425a823066"
+    },
+    {
+      "path": "src/assets/pbr/oak-color.webp",
+      "bytes": 9108,
+      "sha256": "a9d06ab0b40905b05b548948aa1014bb7c03c60abd04f030ea47c7df21fe5963"
+    },
+    {
+      "path": "src/assets/pbr/oak-normal.png",
+      "bytes": 424125,
+      "sha256": "afdf87c4bc639e109df3de90f6531eb89840b65c2ff5852aee4df906b9ebf1ad"
+    },
+    {
+      "path": "src/scene/ArchitecturalPolish.tsx",
+      "bytes": 6335,
+      "sha256": "d5ab38735c856dcf402d64beab0a50782132618202ade2406f6e413429189994"
+    },
+    {
+      "path": "src/scene/Vault.tsx",
+      "bytes": 2897,
+      "sha256": "bef28a46d9761f1bb023dddfaa662ab5f3416972e6cce128bba4d11c70a69a5f"
+    },
+    {
+      "path": "src/scene/World.tsx",
+      "bytes": 6577,
+      "sha256": "994390a91152fc6a729f2460ed1a6fba1b3237e8806ee7318b60c5d4eeb53603"
+    },
+    {
+      "path": "tests/architectural-art-browser.py",
+      "bytes": 3100,
+      "sha256": "1f3059bf084ab1b4b8c6225ffbbdf6001632a5824fb15b96df2ddd4c20a6e439"
+    }
+  ]
+}

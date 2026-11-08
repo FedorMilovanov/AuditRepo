@@ -98,3 +98,7 @@ PASS (2026-11-08): Chromium/Playwright standalone HTML tested at 1440×960, 390�
 ## V4 progress-integrity correction
 
 The progression panel now uses strict `inspectProgress` for stored demo ledger imports. Future-dated XP, malformed entries and impossible token purchases cannot be silently credited; bad saved state is not overwritten without an explicit reset. See `PROGRESSION_SYSTEM_RFC.md`.
+
+## V5.2 — architecture craftsmanship (lab / art hold)
+
+See [ART_V52_ENGINEERING.md](ART_V52_ENGINEERING.md) and the real Chromium/WebKit snapshots in evidence/art-v52/. Source-owned procedural PBR maps and instanced architectural trims are **experimental**, not a photorealistic sign-off. Product, Reader and user account remain unchanged.

@@ -11,6 +11,7 @@ import { Dressing } from "./Dressing";
 import { Tomes } from "./Tomes";
 import { Vault } from "./Vault";
 import { Architecture } from "./Architecture";
+import { ArchitecturalPolish } from "./ArchitecturalPolish";
 import { Player, XRRig, CardboardRig } from "./Player";
 
 /** The visual target is daylight architectural realism, not cinematic bloom. */
@@ -169,6 +170,7 @@ export default function World() {
 
         <Platform />
         <Architecture />
+        <ArchitecturalPolish />
         <Vault />
         <Center />
         <Stations />

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import { marble, wood, goldMat } from "./Platform";
+import { roofLimestone } from "./ArchitecturalPolish";
 
 const RIBS = 20;
 const OC_R = 4.15;
@@ -30,9 +31,7 @@ export function Vault() {
   ], 112), []);
   return (
     <group>
-      <mesh geometry={shell} receiveShadow>
-        <meshStandardMaterial color="#cbbca3" roughness={0.92} metalness={0} side={THREE.DoubleSide} />
-      </mesh>
+      <mesh geometry={shell} material={roofLimestone} receiveShadow />
       {ribs.map((geo, i) => <mesh key={i} geometry={geo} material={marble} receiveShadow />)}
       <mesh position={[0, OC_Y, 0]} rotation-x={Math.PI / 2} material={marble}>
         <torusGeometry args={[OC_R, 0.3, 12, 96]} />
