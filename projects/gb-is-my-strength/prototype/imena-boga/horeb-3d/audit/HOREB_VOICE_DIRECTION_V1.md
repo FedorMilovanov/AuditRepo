@@ -122,7 +122,7 @@ Never infer pronunciations from `transliteration` or hardcoded `SpeechSynthesis`
 ## 6. Произношения: hard gate (обязателен)
 Таблица `pronunciation_approval` для каждого ID: `originalUnicode`, `BCP47 language` (`he`/`arc`/`grc`), `traditionalRu`, `IPA_or_russian_pronunciation`, `linguist`, `source`, `reviewed_on`, `decision`. Без этого — **RU narration only**, без декламации спорной «оригинальной формы».
 
-- `el-elyon`: запись текущего registry `אֵל עֶלְיוֹם` конфликтует с Быт. 14:18 `עֶלְיוֹן`. До сверки с Research **не генерировать voice и крупные буквы** для этой формы.
+- `el-elyon`: выявленная ошибка финальной буквы `ם` вместо `ן` **исправлена в HOREB** по актуальному Research #379: `verifiedForm=אֵל עֶלְיוֹן`; добавлен негативный unit-тест. **Тем не менее аудиопроизношение не утверждено**: до фонетического и правового gate voice-запись не выпускать.
 - `el-roi` и `ro-i`: разные корни «видеть» / «пасти», не одинаковая звуковая метка.
 - `ehyeh` и `yhwh`: различия Исх. 3:14/15. Тетраграмматон по умолчанию **не произносить реконструированно**; только объяснить чтение, а не навязать.
 - `atiq-yomin` и `elah-shmaya`: **арамейский**, не иврит. `abba` записано греческими буквами в NT; `pantokrator`, `alpha-omega`, `ego-eimi` и пр. — греческие формулы.
