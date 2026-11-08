@@ -10,6 +10,7 @@ export class AmbientAudio {
   private fireGain!: GainNode;
   private noise!: AudioBuffer;
   private nextDrip = 3;
+  private quietUntil = 0;
   enabled = true;
 
   start() {
@@ -50,11 +51,18 @@ export class AmbientAudio {
   suspend() { this.narrator?.stop(); this.ctx?.suspend(); }
   resume() { if (this.ctx && this.enabled) this.ctx.resume(); }
 
+  inspectCue(id: string, t: number) {
+    if (!this.ctx || !this.enabled) return;
+    // Physical reactions, never a divine voice, spell or arcade reward.
+    if (id === 'el-olam' || id === 'el-roi') this.drip(0.08);
+    if (id === 'ehyeh' || id === 'yhwh') this.quietUntil = Math.max(this.quietUntil, t + 4.5);
+  }
   update(t: number, zone: number, distBush: number, nearPool: number) {
     const c = this.ctx; if (!c || !this.enabled) return;
     const outside = zone >= 7;
     const gust = 0.6 + 0.4 * Math.sin(t * 0.21) * Math.sin(t * 0.077 + 1);
-    this.windGain.gain.setTargetAtTime((outside ? 0.11 : zone === 6 ? 0.08 : 0.045) * gust, c.currentTime, 0.4);
+    const hush = t < this.quietUntil ? 0.35 : 1;
+    this.windGain.gain.setTargetAtTime((outside ? 0.11 : zone === 6 ? 0.08 : 0.045) * gust * hush, c.currentTime, 0.4);
     this.windFilter.frequency.setTargetAtTime(outside ? 650 : zone === 4 ? 180 : 280, c.currentTime, 0.6);
     const fire = distBush < 60 ? Math.min(0.22, 3 / (distBush * distBush * 0.25 + 10)) : 0;
     this.fireGain.gain.setTargetAtTime(fire * (0.5 + Math.random()), c.currentTime, 0.03);
