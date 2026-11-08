@@ -32,7 +32,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
-  const leaf = new THREE.MeshStandardMaterial({ color: 0x3a4a2a, roughness: 0.9 });
+  const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
   const s: Shared = { stone, dark, wood, water, metal, leaf };
   CACHE = { low, s };
   return s;
@@ -166,10 +166,35 @@ function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
   }
 }
 function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared) {
-  const trunk = new THREE.Mesh(G.cyl(0.1, 0.16, 1.6, 6), s.wood);
-  trunk.position.set(x, 0.8, z); g.add(trunk);
-  const crown = new THREE.Mesh(G.sph(0.7, 8, 6), s.leaf);
-  crown.position.set(x, 1.5, z); g.add(crown);
+  // Stylised olive grove rather than identical low-poly green spheres.
+  // Irregular small silver-olive crown lobes and forked trunks read as a
+  // *living* grove from the visitor path without asserting a specific tree.
+  const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
+  const random = rng(seed);
+  const lean = (random() - 0.5) * 0.32;
+  const trunk = new THREE.Mesh(G.cyl(0.075, 0.17, 1.48, 7), s.wood);
+  trunk.position.set(x + lean * 0.2, 0.74, z);
+  trunk.rotation.z = lean;
+  g.add(trunk);
+  for (let i = 0; i < 4; i++) {
+    const a = i * Math.PI / 2 + random() * 0.5;
+    const fork = new THREE.Mesh(G.cyl(0.025, 0.065, 0.75, 5), s.wood);
+    fork.position.set(x + Math.cos(a) * 0.23, 1.33 + random() * 0.12, z + Math.sin(a) * 0.23);
+    fork.rotation.z = Math.cos(a) * 0.9;
+    fork.rotation.x = Math.sin(a) * -0.9;
+    g.add(fork);
+  }
+  for (let i = 0; i < 7; i++) {
+    const a = i * Math.PI * (2 / 7) + random() * 0.35;
+    const radius = i === 0 ? 0 : 0.34 + random() * 0.32;
+    const crown = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
+    crown.name = 'olive-crown-lobe';
+    crown.position.set(x + Math.cos(a) * radius + lean * 0.3,
+      1.53 + (random() - 0.5) * 0.31, z + Math.sin(a) * radius);
+    crown.rotation.set(random() * 0.22, random() * 1.2, random() * 0.25);
+    crown.scale.set(0.7 + random() * 0.4, 0.32 + random() * 0.22, 0.75 + random() * 0.3);
+    g.add(crown);
+  }
 }
 function addTomb(g: THREE.Group, x: number, z: number, s: Shared) {
   const back = new THREE.Mesh(G.box(1.6, 1.4, 0.3), s.stone);
