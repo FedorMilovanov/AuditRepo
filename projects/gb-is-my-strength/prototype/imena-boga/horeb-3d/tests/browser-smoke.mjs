@@ -123,6 +123,17 @@ try {
       beacons.length === 8 && beacons.every((b) => b.cornerAlpha === 0 && b.centerAlpha > 120),
       JSON.stringify(beacons.map(({id,cornerAlpha,centerAlpha})=>({id,cornerAlpha,centerAlpha}))));
 
+    const creationCollider = await page.evaluate(() => {
+      const world = window.__horeb.world;
+      const e = world.exhibitPos.find((p) => p.e.id === 'elohim');
+      if (!e) return false;
+      const len = Math.hypot(e.nx, e.nz) || 1;
+      const bx = e.x + e.nx / len * 1.2, bz = e.z + e.nz / len * 1.2;
+      return world.obstacles.some((o) => o.r >= 1.7 &&
+        Math.hypot(o.x - (bx - 1.4), o.z - (bz - 3.0)) < 0.01);
+    });
+    check('relocated creation boulder retains matching physical collision', creationCollider);
+
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
     await page.keyboard.down('KeyW');
