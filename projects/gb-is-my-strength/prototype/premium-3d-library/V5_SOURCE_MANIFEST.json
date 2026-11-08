@@ -304,8 +304,8 @@
     },
     {
       "path": "src/scene/Architecture.tsx",
-      "bytes": 6014,
-      "sha256": "92272089e5eddb968adb87b6264540dee2f1d961c9addac4f42fbc19a3231587"
+      "bytes": 8342,
+      "sha256": "3d30f06eca03ba82ad149668b2199d3efd2d1fa0389a0baf2449b6ef2f6ffc7f"
     },
     {
       "path": "src/scene/Cards.tsx",
@@ -324,8 +324,8 @@
     },
     {
       "path": "src/scene/Platform.tsx",
-      "bytes": 5034,
-      "sha256": "877bcd1712c9a427e0a8052db8ffe1b2bef5c5977aedd301016e15b27a3c4db5"
+      "bytes": 5249,
+      "sha256": "5e491fe73a34da9a03ba450a13811636f7307479dfd5a4a4b89a84979fac609e"
     },
     {
       "path": "src/scene/Player.tsx",
