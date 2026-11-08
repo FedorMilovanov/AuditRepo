@@ -5,7 +5,7 @@ import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
-import { BEACON_IDS, createNameBeacon } from './NameBeacon';
+import { BEACON_IDS, createNameBeacon, beaconViewFactor } from './NameBeacon';
 import { choosePixelRatio, resetsAutoLowered } from './quality';
 import { validateExhibits } from '../data/validate';
 import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, separateObstacle, type Block } from './nav';
@@ -49,7 +49,7 @@ export class World {
   private inputLocked = false;
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
-  private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean) => void }[] = [];
+  private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean, viewFactor?: number) => void }[] = [];
   private activeInspection: { id: string; until: number } | null = null;
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
@@ -441,9 +441,19 @@ export class World {
     this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
+    // Canvas label is wider than its stela. At oblique approach angles it
+    // otherwise clips harshly against the viewport edge. Match actual camera
+    // horizontal FOV (important on portrait mobile) without extra draw calls.
+    const halfHFov = Math.atan(Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2) * this.camera.aspect);
+    const fwdX = -Math.sin(this.yaw), fwdZ = -Math.cos(this.yaw);
     for (const beacon of this.nameBeacons) {
-      beacon.update(Math.hypot(this.pos.x - beacon.x, this.pos.y - beacon.z),
-        this.activeInspection?.id === beacon.id && this.t < this.activeInspection.until);
+      const dx = beacon.x - this.pos.x, dz = beacon.z - this.pos.y;
+      const dist = Math.hypot(dx, dz);
+      const dot = dist > 0 ? THREE.MathUtils.clamp((dx * fwdX + dz * fwdZ) / dist, -1, 1) : -1;
+      const bearing = Math.acos(dot);
+      beacon.update(dist,
+        this.activeInspection?.id === beacon.id && this.t < this.activeInspection.until,
+        beaconViewFactor(dist, bearing, halfHFov));
     }
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
     this.bush.group.visible = this.pos.y < -286;
