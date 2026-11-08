@@ -408,9 +408,15 @@ function addStrataWall(g: THREE.Group, x: number, z: number, s: Shared) {
     layer.position.set(x, 0.25 + i * 0.3, z + 1.4); g.add(layer);
   }
 }
-function addMassiveRock(g: THREE.Group, x: number, z: number, s: Shared) {
-  const r = new THREE.Mesh(G.dodec(1.4, 1), s.stone); r.name = 'scenic-boulder'; r.position.set(x, 0.7, z + 1.2); r.scale.set(1.2, 1.6, 1.2);
-  r.rotation.set(0.2, 0.4, 0.1); g.add(r);
+function addMassiveRock(g: THREE.Group, x: number, z: number, s: Shared, lowProfile = false) {
+  const r = new THREE.Mesh(G.dodec(1.4, 1), s.stone);
+  r.name = 'scenic-boulder';
+  // The creation marker is a witness to the written text, not a theatre
+  // prop perched beside it. Keep its rocky shelf low, fully behind the sign.
+  r.position.set(x, lowProfile ? 0.62 : 0.7, z + 1.2);
+  r.scale.set(lowProfile ? 1.1 : 1.2, lowProfile ? 0.55 : 1.6, lowProfile ? 0.88 : 1.2);
+  r.rotation.set(0.2, 0.4, 0.1);
+  g.add(r);
 }
 function addCrumblingSlope(g: THREE.Group, x: number, z: number, s: Shared) {
   for (let i = 0; i < 8; i++) {
@@ -484,7 +490,7 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
   const s = shared(low, surface);
   const key = e.environmentKey;
   switch (key) {
-    case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 1.4, pz - 4.2, s); break;
+    case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 1.4, pz - 4.2, s, true); break;
     case 'stone-corridor': addStrataWall(g, px, pz, s); addFalseGuide(g, px - 1.2, pz, s); break;
     case 'high-ledge-camp': addCampTable(g, px, pz, s); addVessel(g, px + 0.8, pz, s); break;
     case 'great-rock': addMassiveRock(g, px, pz, s); addCrumblingSlope(g, px - 1, pz, s); break;
