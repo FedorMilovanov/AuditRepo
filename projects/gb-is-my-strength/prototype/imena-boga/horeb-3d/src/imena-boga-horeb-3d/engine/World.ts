@@ -30,9 +30,6 @@ const ZONE_LIGHT: { amb: THREE.Color; hemi: THREE.Color }[] = FOG.map((f) => {
 });
 const EYE = 1.62;
 const SPEED = 2.3;
-// Predawn Horeb must remain dark but traversable: fill is ambient/hemisphere,
-// not additional point lights or fabricated supernatural lighting.
-const HOREB_FILL = { ambient: 0.75, hemisphere: 0.95, moon: 1.1 } as const;
 
 export class World {
   renderer: THREE.WebGLRenderer;
@@ -409,12 +406,12 @@ export class World {
     fog.density += (f[1] - fog.density) * k;
     (this.scene.background as THREE.Color).copy(fog.color);
     const out = Math.min(1, Math.max(0, (TUNNEL_END + 2 - this.pos.y) / 10));
-    this.ambient.intensity = 3.0 * (1 - out) + HOREB_FILL.ambient * out;
-    this.hemi.intensity = 0.3 * (1 - out) + HOREB_FILL.hemisphere * out;
+    this.ambient.intensity = 3.0 * (1 - out) + 0.35 * out;
+    this.hemi.intensity = 0.3 * (1 - out) + 0.55 * out;
     const zl = ZONE_LIGHT[zone];
     this.ambient.color.lerp(zl.amb, k);
     this.hemi.color.lerp(zl.hemi, k);
-    this.moon.intensity = 0.2 * (1 - out) + HOREB_FILL.moon * out;
+    this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
