@@ -58,12 +58,30 @@ const mergeReduction = Math.round((1 - mergeTotalAfter / mergeTotalBefore) * 100
 t(`mergePropsGroup reduces meshes overall (${mergeTotalBefore}→${mergeTotalAfter}, ${mergeReduction}% reduction)`, mergeReduction > 30);
 
 // Geometry optimization regression: compare actual 3D bounding boxes before/after merge.
+// Box3.setFromObject uses a conservative, inflated bounding box for ROTATED
+// meshes. After merge, the geometry has rotated vertices baked in, so that
+// approximate box is not comparable. Compare the actual transformed vertices.
+function vertexBounds(group: THREE.Group): THREE.Box3 {
+  group.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  const point = new THREE.Vector3();
+  group.traverse((o) => {
+    if (!(o instanceof THREE.Mesh) || !(o.geometry instanceof THREE.BufferGeometry)) return;
+    const position = o.geometry.getAttribute('position');
+    if (!position) return;
+    for (let i = 0; i < position.count; i++) {
+      point.fromBufferAttribute(position, i).applyMatrix4(o.matrixWorld);
+      box.expandByPoint(point);
+    }
+  });
+  return box;
+}
 const displaced: string[] = [];
 for (const e of EXHIBITS) {
   const group = buildExhibitProps(e, false, 0, 0);
-  const before = new THREE.Box3().setFromObject(group);
+  const before = vertexBounds(group);
   mergePropsGroup(group);
-  const after = new THREE.Box3().setFromObject(group);
+  const after = vertexBounds(group);
   if (before.isEmpty() || after.isEmpty() ||
       !Number.isFinite(before.min.x) || !Number.isFinite(after.max.z) ||
       before.min.distanceTo(after.min) > 0.001 ||
