@@ -22,6 +22,22 @@ export function beaconVisualScale(distance: number): number {
   return 0.78 + t * 0.36;
 }
 
+// Beacons are two-dimensional inscriptions on a side-facing stele. If the
+// player is looking down the tunnel, a near side stele may be partly offscreen.
+// Fade the inscription before the letters are sliced by the viewport edge;
+// rotating towards it reveals the complete text. The distance-only envelope
+// still controls long-range prominence and never creates a new GPU light.
+export function beaconViewFactor(distance: number, bearing: number, horizontalHalfFov: number): number {
+  if (!Number.isFinite(distance) || distance <= 0 ||
+      !Number.isFinite(bearing) || !Number.isFinite(horizontalHalfFov)) return 0;
+  const halfWidth = 1.825 * beaconVisualScale(distance);
+  const angularHalfWidth = Math.atan2(halfWidth, distance);
+  const safeHalfAngle = horizontalHalfFov - angularHalfWidth - 0.035;
+  if (safeHalfAngle <= 0) return 0;
+  const margin = 0.12; // roughly seven degrees of gentle fade
+  return Math.max(0, Math.min(1, (safeHalfAngle - Math.abs(bearing)) / margin));
+}
+
 export function createNameBeacon(e: Exhibit, low: boolean) {
   const canvas = document.createElement('canvas');
   const W = low ? 640 : 1024, H = low ? 256 : 410;
@@ -84,8 +100,8 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   mesh.visible = false;
   return {
     mesh,
-    update(distance: number, inspected = false) {
-      const opacity = beaconOpacity(distance, e.zone === 7);
+    update(distance: number, inspected = false, viewFactor = 1) {
+      const opacity = beaconOpacity(distance, e.zone === 7) * Math.max(0, Math.min(1, viewFactor));
       mesh.visible = opacity > 0.01;
       material.opacity = opacity;
       // A deliberate inspection brings the lettering forward without new GPU
