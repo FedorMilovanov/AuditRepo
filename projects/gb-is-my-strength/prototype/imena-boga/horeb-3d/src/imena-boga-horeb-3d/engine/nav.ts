@@ -53,6 +53,32 @@ export const ZONE_SPAWN: Record<number, { x: number; z: number }> = {
   5: { x: 0, z: -234 }, 6: { x: 0, z: -290 }, 7: { x: 0, z: -326 },
 };
 
+export type CircleObstacle = { x: number; z: number; r: number };
+
+/** Resolve a player's penetration into a circular prop/stele collider.
+ *  On a precisely centred contact the collision normal is undefined: use the
+ *  previous position, then a deterministic corridor-facing normal. Otherwise
+ *  an exact hit at d=0 would leave the player inside the object.
+ */
+export function separateObstacle(
+  x: number, z: number, previousX: number, previousZ: number,
+  obstacle: CircleObstacle, playerRadius = 0.35,
+): { x: number; z: number } {
+  const radius = obstacle.r + playerRadius;
+  if (![x, z, previousX, previousZ, obstacle.x, obstacle.z, radius].every(Number.isFinite) || radius <= 0) return { x, z };
+  let dx = x - obstacle.x, dz = z - obstacle.z;
+  let d = Math.hypot(dx, dz);
+  if (d >= radius) return { x, z };
+  if (d < 1e-6) {
+    dx = previousX - obstacle.x; dz = previousZ - obstacle.z;
+    d = Math.hypot(dx, dz);
+    if (d < 1e-6) {
+      dx = obstacle.x > 0 ? -1 : 1; dz = 0; d = 1;
+    }
+  }
+  return { x: obstacle.x + (dx / d) * radius, z: obstacle.z + (dz / d) * radius };
+}
+
 export type Block = null | 'wall' | 'outer' | 'inner';
 
 /** Ограничить позицию. Возвращает новую позицию и причину блокировки. */
