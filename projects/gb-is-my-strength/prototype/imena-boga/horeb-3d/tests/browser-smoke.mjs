@@ -143,6 +143,15 @@ try {
     // This proves directional movement, not FPS. Software-rendered GitHub Chrome
     // can execute only one animation frame during the test's 950 ms key hold.
     check('W actually moves player forward', after < before.z - 0.025, before.z.toFixed(2) + ' -> ' + after.toFixed(2));
+    // An async WebGL import can complete after the 'Start' click's transient
+    // activation has expired. A real W key event must recover Web Audio.
+    const resumedAudio = await page.waitForFunction(() =>
+      window.__horeb.world.audio.ctx?.state === 'running',
+      { timeout: 6500, polling: 100 }).then(() => true, () => false);
+    check('trusted movement key unlocks browser Web Audio after async world load',
+      resumedAudio && window !== undefined, String(await page.evaluate(() =>
+        window.__horeb.world.audio.ctx?.state ?? 'unavailable')));
+
 
     await page.evaluate(() => [...document.querySelectorAll('button')]
       .find((b) => b.textContent.trim() === 'Настройки')?.click());
