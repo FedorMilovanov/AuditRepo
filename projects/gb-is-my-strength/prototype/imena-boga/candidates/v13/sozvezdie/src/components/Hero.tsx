@@ -61,7 +61,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
   const glowY = useSpring(useTransform(py, [-0.5, 0.5], [-30, 30]), { stiffness: 50, damping: 20 });
 
   const onMove = (e: ReactPointerEvent<HTMLElement>) => {
-    if (!motionOn || e.pointerType === "touch") return;
+    if (!shouldAnimate || e.pointerType !== "mouse") return;
     const r = e.currentTarget.getBoundingClientRect();
     px.set((e.clientX - r.left) / r.width - 0.5);
     py.set((e.clientY - r.top) / r.height - 0.5);
@@ -95,10 +95,11 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
       </picture>
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,5,.64)_0%,rgba(9,8,6,.48)_42%,rgba(10,9,7,.72)_76%,#0a0907_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_50%_48%,rgba(10,9,7,.52),transparent_100%)]" />
-      <div className="absolute inset-0 opacity-70"><Starfield paused={!motionOn} /></div>
+      <div className="absolute inset-0 opacity-70"><Starfield paused={!shouldAnimate} /></div>
       <motion.div
-        style={{ x: glowX, y: glowY }}
-        className={`pointer-events-none absolute left-1/2 top-1/2 -ml-[280px] -mt-[280px] h-[560px] w-[560px] rounded-full bg-gold-500/[0.08] blur-[120px] ${motionOn ? "animate-glow-pulse" : ""}`}
+        style={shouldAnimate ? { x: glowX, y: glowY } : undefined}
+        data-hero-glow
+        className={`pointer-events-none absolute left-1/2 top-1/2 -ml-[280px] -mt-[280px] h-[560px] w-[560px] rounded-full bg-gold-500/[0.08] blur-[120px] ${shouldAnimate ? "animate-glow-pulse" : ""}`}
       />
 
       {/* A restrained armillary motif frames the title without replacing the landscape. */}
@@ -107,19 +108,20 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         style={{ perspective: "1400px" }}
         aria-hidden
       >
-        <Ring glyphs={RING_A} radius={330} spin={motionOn ? "animate-rotate-slow" : ""} size="text-2xl" />
+        <Ring glyphs={RING_A} radius={330} spin={shouldAnimate ? "animate-rotate-slow" : ""} size="text-2xl" />
       </div>
       <div
         className="absolute inset-0 hidden opacity-40 lg:block"
         style={{ perspective: "1400px" }}
         aria-hidden
       >
-        <Ring glyphs={RING_B} radius={470} spin={motionOn ? "animate-rotate-rev" : ""} size="text-xl" />
+        <Ring glyphs={RING_B} radius={470} spin={shouldAnimate ? "animate-rotate-rev" : ""} size="text-xl" />
       </div>
 
       {/* content */}
       <motion.div
-        style={{ rotateX, rotateY, transformPerspective: 1200 }}
+        style={shouldAnimate ? { rotateX, rotateY, transformPerspective: 1200 } : undefined}
+        data-hero-tilt
         className="relative z-10 flex flex-col items-center px-6 text-center"
       >
         <motion.p
