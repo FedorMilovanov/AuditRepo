@@ -110,7 +110,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           title={
             illuminateAll
               ? 'Показывать имена постепенно по мере чтения'
-              : 'Подсветить сразу все 36 рассмотренных имён и титулов на скрижалях'
+              : 'Подсветить все 36 исследуемых выражений на скрижалях'
           }
           className="font-ui inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors hover:opacity-90"
           style={{

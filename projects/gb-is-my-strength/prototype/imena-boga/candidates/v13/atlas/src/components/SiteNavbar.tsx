@@ -290,7 +290,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
               borderColor: 'var(--gb-border-strong)',
               color: 'var(--gb-ink)',
             }}
-            title={`Изучено ${studiedCount} из ${totalCount} имён. Открыть сводную скрижаль`}
+            title={`Изучено ${studiedCount} из ${totalCount} позиций. Открыть сводную скрижаль`}
           >
             <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" className="shrink-0">
               <circle
@@ -331,7 +331,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
               borderColor: 'var(--gb-border-strong)',
               color: 'var(--gb-ink)',
             }}
-            title="Перейти к сводной таблице 36 рассмотренных имён"
+            title="Перейти к сводной таблице 36 библейских выражений"
           >
             <Sparkles className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
             <span className="tabular-nums">
@@ -464,7 +464,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
               backgroundColor: 'var(--gb-surface)',
               color: 'var(--gb-ink)',
             }}
-            aria-label="Справочник всех имён"
+            aria-label="Справочник выражений Писания"
           >
             <Compass className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
           </button>

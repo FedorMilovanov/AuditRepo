@@ -792,7 +792,7 @@ export function App() {
                       {sec.title}
                     </span>
                     <span className="font-ui shrink-0 text-[11px]" style={{ color: 'var(--gb-muted)' }}>
-                      {sectionCount} имён
+                      {sectionCount} позиций
                     </span>
                   </a>
                 </li>
@@ -844,7 +844,7 @@ export function App() {
         >
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
-              { value: '36', label: 'имён и титулов Бога', sub: 'иврит · арамейский · греческий' },
+              { value: '36', label: 'библейских выражений', sub: 'иврит · арамейский · греческий' },
               { value: '5', label: 'частей-эпох', sub: 'от Творения до Троицы' },
               { value: '10', label: 'мест откровения', sub: 'на библейской карте' },
               { value: '4', label: 'режима чтения', sub: 'бумага · сепия · ночь · печать' },
@@ -878,7 +878,7 @@ export function App() {
               {
                 icon: '☰',
                 title: 'Боковые скрижали',
-                text: 'Имена являются по мере чтения; нажмите на любое, чтобы открыть разбор.',
+                text: 'Выражения открываются по мере чтения; нажмите на любое, чтобы открыть разбор.',
               },
               {
                 icon: '◈',
@@ -888,7 +888,7 @@ export function App() {
               {
                 icon: '✓',
                 title: 'Отметки изучения',
-                text: 'В досье каждого имени ставьте «Изучено» — прогресс сохраняется в браузере.',
+                text: 'В досье каждой позиции отмечайте «Изучено» — прогресс сохраняется в браузере.',
               },
             ].map((tip) => (
               <div key={tip.title} className="flex flex-1 items-start gap-2">
@@ -1053,7 +1053,7 @@ export function App() {
                   className="font-ui text-xs font-semibold tracking-wider uppercase"
                   style={{ color: 'var(--gb-gold-ink)' }}
                 >
-                  Часть {section.roman} · {sectionNames.length} изучаемых имён и титулов
+                  Часть {section.roman} · {sectionNames.length} исследуемых выражений
                 </div>
                 <h2
                   className="font-serif-display mt-1.5 text-2xl sm:text-4xl font-bold leading-tight"

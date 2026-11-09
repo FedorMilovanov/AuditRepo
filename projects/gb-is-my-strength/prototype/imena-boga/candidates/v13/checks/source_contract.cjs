@@ -72,6 +72,23 @@ if(!atlasExplorer.includes('36 исследуемых библейских вы�
    atlasExplorer.includes('36 рассмотренных имён и титулов Бога'))
  throw Error('Atlas catalogue wrongly presents 36 positions as canonical proper names');
 console.log('V13_SCOPE_LANGUAGE_CONTRACT_PASS');
+
+// A position count is not a count of personal divine names. Preserve this
+// editorial distinction in visible summaries and accessible control titles.
+const atlasUiSummary=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
+const atlasUiNavbar=fs.readFileSync(path.join(root,'atlas','src','components','SiteNavbar.tsx'),'utf8');
+const atlasUiPillars=fs.readFileSync(path.join(root,'atlas','src','components','LateralNamePillars.tsx'),'utf8');
+if (!atlasUiSummary.includes("label: 'библейских выражений'") ||
+    !atlasUiSummary.includes('{sectionCount} позиций') ||
+    !atlasUiSummary.includes('{sectionNames.length} исследуемых выражений') ||
+    atlasUiSummary.includes("label: 'имён и титулов Бога'") ||
+    atlasUiSummary.includes('{sectionCount} имён') ||
+    atlasUiNavbar.includes('из ${totalCount} имён') ||
+    atlasUiNavbar.includes('36 рассмотренных имён') ||
+    atlasUiPillars.includes('36 рассмотренных имён и титулов'))
+ throw Error('Atlas editorial count regressed from positions to proper names');
+console.log('V13_ATLAS_EDITORIAL_POSITION_COUNT_PASS');
+
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');
 if(readerSection.includes('«Я есмь» и составные имена') ||
