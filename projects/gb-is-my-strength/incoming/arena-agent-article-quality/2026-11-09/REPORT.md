@@ -395,3 +395,21 @@ Live snapshot: `https://gospod-bog.ru/baptisty-rossii/` и `.../vsehib-1944/`, �
 7. **`shape:'book'` снимает категоричность спора.** Гид §3.5 описывает вторую ветвь движка; `HEART-BOOK-SOURCE-TRUTH-CONTRACT.md` — 24 reader pages и **727 мин** (228 ядра + 499 extras); 17 owner-approved правок редакционных метаданных. Six строк `series.json` — реестр ядра, живой хаб даёт 6 карточек и счётчик 22+2. Рассинхрон есть, но «18 недоступны / 44 198 слов потеряны» не подтверждается; `GBS-SERIES-JSON-STALE` остаётся owner-open, P0 не доказан, painted rail не проверялся. «229 минут» из §11 относится к baptisty-MDX, не к книге «Сердце».
 
 Полный разбор — `03-CROSS_AGENT_SYNTHESIS.md` §14; строки `AAQ-A-061`…`066`; §12 критериев и §12 координации.
+
+---
+
+## 20. Десятый проход (2026-11-09): полный каталог, 727 минут, внешние атрибуции
+
+1. **Ветки.** `a33be340` → `9ca98f62` — агент A **сам снял** `GBS-SERIES-JSON-STALE` как четвёртую ложную тревогу; `0b6f34f6` → `cac25a81` — wave-7 дала 112 ownership-записей и JSON-LD хаба из активного конфига. Product `main` без изменений. Локальный `HEAD` снова откатывался — синхронизирован внутри своей ветки.
+
+2. **Индексы измерены точно.** `llms.txt` = 55 URL, `sitemap.xml` = 102, **0 URL из llms отсутствуют в sitemap** — это строгое устаревшее подмножество, отставание **47 URL**. 18 книжных статей «Сердца»: **18/18 в sitemap, 0/18 в llms**; пять свежих статей — 5/5 в sitemap, 0/5 в llms. Прошлая оговорка «четыре разных ценза» снята.
+
+3. **Живой каталог закрыл спор о 18 статьях.** Прочитаны все 5 чанков `/articles/`: все 18 extras перечислены с минутами. **6 ядра = 228, 18 extras = 499, всего 727** — ровно `HEART-BOOK-SOURCE-TRUTH-CONTRACT.md`. Агент A независимо нашёл `data/search-manifest.json` 24/24 и комментарий «intentionally presents… Chapter extras remain available through the book reader navigation». `AAQ-A-065` переведена в снятую как ложная тревога; «18 не видны читателю» опровергнуто живой страницей, но painted rail и owner signoff по-прежнему не проверены. Карточка «Сердце = 2 мин» — поле времени хаба, минуты статей верны.
+
+4. **Legacy-закрытие уточнено.** В ownership **112 = 111 `astro` + 1 `built-app`**, а комментарий скрипта говорит «Production deploy is not changed by this script; it is for local/dist parity». Моя формулировка «не попадают в прод» сужается до «не перезаписывают Astro в локальном dist»; читательский слой подтверждён живыми страницами, а не только кодом сборки.
+
+5. **Внешняя проверка атрибуций с живых страниц.** Chicago Statement Art. XIII, Feinberg p.301 (`ipsissima vox`, Geisler 1980), Turner JETS 53/4 2010 (Скоуфилд «a beautiful moral application»), MacArthur GTY #2222 от 05.08.1979, Rippon 1838 — **подтверждены**; две оговорки: у GTY перикопа Мф 5:33–37, а Мф 5:20 назван ключом внутри проповеди; CCEL отдал обёртку `loading…` без текста. Итого **42 внешних объекта, 40 прямых подтверждений, 2 оговорки, галлюцинаций H01/H02 нет**; это выборка, не ценз ~530.
+
+6. **W3C проверен по первоисточнику.** SC 3.1.2 (AA) содержит исключения proper names / technical terms / vernacular, правило «single words… unless it is clear that a change in language was intended», «don't fail» для ограничений screen reader и требование проверять разметку, а не только звук. Поэтому `assurance` (`AAQ-A-066`) — редакционный C20-witness, **не автоматическое нарушение WCAG**; `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT` остаётся owner-open.
+
+Полный разбор — `03-CROSS_AGENT_SYNTHESIS.md` §15; строки `AAQ-A-067`…`072`; §13 критериев и §13 координации.

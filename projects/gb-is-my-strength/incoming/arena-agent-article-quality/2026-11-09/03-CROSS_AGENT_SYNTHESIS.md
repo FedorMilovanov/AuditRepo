@@ -738,3 +738,91 @@ CDP full AX tree не экспортирует `language`-property ни для �
 - **Новое:** `llms.txt` 55 URL при 102 в sitemap, 0/18 книжных статей, отставание от anchor; минуты серии 2/3/5 в карточках каталога против 727/170; живой C20 `assurance`.
 - **Уточнено:** `shape:'book'` и 727 минут снимают категоричность спора о «не зарегистрированных» спутниках; `GBS-SERIES-JSON-STALE` остаётся owner-open, P0 не доказан.
 - **Осталось:** G1, «складное», допуск кандидатов в MASTER, live-release SHA, painted rail/аккордеон 24 страниц, WebKit/Firefox/TTS/устройство, полная проверка ~530 ссылок, обновление `llms.txt`. Авторство не определяется; Product, MASTER и `WORK_QUEUE.md` не тронуты.
+
+---
+
+## 15. Десятый проход (2026-11-09): полный каталог, 727 минут, внешняя проверка атрибуций
+
+### 15.0 Сверка веток
+
+| Ветка | Head | Дельта |
+|---|---|---|
+| моя `c6d6c46c` | `07731ba` → этот коммит | §15, §20, `AAQ-A-067`…`072`, §13 критериев, §13 координации |
+| `a33be340` | `bb2cbf33` → **`9ca98f62`** | `SERIES_JSON_FALSE_ALARM.md`: **`GBS-SERIES-JSON-STALE` снят автором** |
+| `0b6f34f6` | `0f97da9a` → **`cac25a81`** | wave-7: 112 ownership-записей, JSON-LD хаба из активного конфига, границы painted witness |
+| Product `main` | `5e2db6f0…` | без изменений |
+
+Локальный `HEAD` песочницы снова откатился на базовый `ae3669b`, а `/tmp`-corpus исчез; выполнены `git fetch` + `git reset --hard` внутри своей ветки до `07731ba` с сохранением восьми MD, tarball скачан заново. Все выводы ниже не зависят от сохранности `/tmp`.
+
+### 15.1 Индексы: точное отношение, а не «четыре разных ценза»
+
+В §14.3 я осторожно назвал 55 / 80 / 102 / 111 разными объектами счёта. Теперь отношение измерено точно:
+
+| Проверка | Значение |
+|---|---:|
+| уникальных URL в `llms.txt` | **55** |
+| уникальных `<loc>` в `sitemap.xml` | **102** |
+| URL из `llms.txt`, которых **нет** в sitemap | **0** |
+| 18 книжных статей «Сердца» в sitemap | **18/18** |
+| …в `llms.txt` | **0/18** |
+| свежие статьи (`kogda-chelovek-uhodit-ot-very`, `podrostok-za-kadrom-dvoynaya-zhizn`, `vzroslyy-rebenok-ushel-…`, `steven-lawson-…`, `lot-i-sodom`) в sitemap / llms | **5/5 и 0/5** |
+
+**Verdict:** `llms.txt` — **строгое подмножество** sitemap, отставшее на **47 URL**; это не «четыре несравнимые цифры», а измеримый дефицит одного индекса. Каталог заявляет 80 материалов, маршрутов 111 (включая хабы и утилиты). `llms.txt` обновлён 24.10.2026 при anchor 07.11.2026. Формулировка §14.3 «~54 % покрытия» уточняется: 55/102 = **53.9 %**, но теперь с доказательством вложенности, а не с оговоркой о разных объектах. Residual SYS-3 остаётся observation для владельца, не строкой MASTER.
+
+### 15.2 Живой каталог закрывает вопрос «18 статей не видны читателю»
+
+Прочитал **все пять чанков** `/articles/`. В chunks 3–4 перечислены все 18 «extras» книги «Сердце» с заголовками, описаниями и минутами: `tma-na-serdce` 34, `kak-hranit-serdce` 26, `myslennaya-zhizn-serdca` 26, `serdce-i-sokrovishche` 25, `serdce-i-telo` 23, `serdce-i-yazyk` 25, `serdce-ne-v-odinochku` 27, `serdce-pod-skorbyu` 28, `serdce-hrista-k-nemoshchnym` 44, `sovest-vnutrenniy-sud` 30, `starye-dorozhki-serdca` 28, `kak-menyaetsya-serdce` 27, `serdce-i-iskushenie` 26, `osvobozhdennoe-serdce` 27, `religioznoe-serdce` 26, `svoboda-vo-hriste` 26, `skrytye-idoly-serdca` 26, `strah-bozhij-rabskij-ili-synovnij` 25.
+
+Арифметика совпала с документацией до единицы:
+
+| Источник | Минуты |
+|---|---:|
+| 6 карточек ядра в каталоге | **228** (= `series.json` / 228) |
+| 18 extras в каталоге | **499** |
+| сумма 24 статей | **727** |
+| `docs/HEART-BOOK-SOURCE-TRUTH-CONTRACT.md` | **727** («24 unique reader pages», финальная страница начинается на 704) |
+
+Независимо агент A в `SERIES_JSON_FALSE_ALARM.md` нашёл источник: `data/search-manifest.json` содержит **24/24**, каталог строится из него; `HardTextsCardsSection.astro` прямо говорит «This shelf **intentionally** presents the prologue, lead article of each chapter and the reference endpaper. Chapter extras remain available through the book reader navigation»; `GillPartTocOverlay`, аккордеон и рельс выводят статьи глав. Он снял свой `GBS-SERIES-JSON-STALE` как четвёртую ложную тревогу подряд. Wave-7 агента `0b6f34f6` добавила source-уровень: JSON-LD хаба берёт `items.filter(tier !== 'chapter')` = 24 reader pages, счётчики `HardTextsStatsSection.astro` выводятся из активного конфига, а не из `series.json`.
+
+**Что это меняет.** `AAQ-A-065` переводится из «owner-open, P0 не доказан» в **снятую как ложную тревогу** (подтверждено тремя ветками). Уточнение к wave-7: там не хватало reader-facing witness и потому visible всех 18 не подтверждалось; **`/articles/` — это живая страница**, а не исходник, и она перечисляет все 18. Формулировка «18 статей не видны читателю / 44 198 слов потеряны» опровергнута. Граница сохраняется: painted rail/аккордеон/prev-next для всех 24 страниц, owner signoff и live-release SHA по-прежнему не проверены; `series.json` остаётся реестром ядра по замыслу. Новую строку MASTER не завожу.
+
+Карточка серии «Сердце = 2 мин» из `AAQ-A-064` теперь классифицируется точнее: минуты **статей** в каталоге верны и суммируются в 727; «2 мин» — время самой страницы-хаба, вынесенное в поле карточки серии. Это ошибка классификации поля, а не расчёта объёма.
+
+### 15.3 Уточнение к закрытию legacy-слоя
+
+Wave-7 дала более точный ценз, чем мой §14.1: в `migration/page-ownership.json` **112 записей — 111 `owner: astro` + 1 `built-app`** (я считал вхождения строки `astro` и получил 111/0). Принимаю. Также агент процитировал комментарий `copy-legacy-to-dist.js`: «Production deploy is not changed by this script; it is for local/dist parity».
+
+Поэтому моя формулировка «legacy HTML **не попадают в прод**» сужается до проверенного: legacy-тени **не перезаписывают Astro-страницы в локальном `dist/`**; управление production deploy этим скриптом не описывается. Читательский слой у меня подтверждён не только кодом сборки, но и 13 живыми `fetch_page`-страницами в §14.2 и полным каталогом в §15.2. `AAQ-A-061` остаётся методологически закрытой, но с уточнённой границей; wave-7 справедливо не принимает чужие кандидаты `GBS-SHADOW-HTML-STALE` и `G-*`-охраны в MASTER.
+
+### 15.4 Внешняя проверка атрибуций с живых страниц
+
+Впервые проверяю не ссылки из исходников, а **источники, которые живые статьи сами заявляют как доказательную базу** (`/nagornaya/`, `dzhon-gill-chast-1`, `krajne-li-isporcheno-serdce`). Это и есть «серьёзные сайты» из исходной задачи.
+
+| Атрибуция на живой странице | Внешний результат | Оговорка |
+|---|---|---|
+| Chicago Statement (1978), Art. XIII — «различный отбор материала в параллельных текстах совместим с непогрешимостью» | **подтверждено**: Art. XIII прямо содержит «variant selections of material in parallel accounts» [1](https://www.mbts.edu/about/beliefs/chicago-statement/), [2](https://www.thegospelcoalition.org/themelios/article/the-chicago-statement-on-biblical-inerrancy/) | нет |
+| Feinberg, *Inerrancy* (Zondervan, 1980), p. 301 — `ipsissima vox`, атрибуция не MacArthur/*Drawing Near* | **подтверждено**: Paul D. Feinberg, «The Meaning of Inerrancy», in N. L. Geisler (ed.), *Inerrancy*, 267–304, esp. 301; «Inerrancy does not demand… the *ipsissima verba*… only the *ipsissima vox*» [3](http://www.jeffriddle.net/2017/11/wm-83-ipsissima-verba-or-ipsissima-vox.html) | на странице проекта не указан редактор Geisler — сокращённая, но верная ссылка |
+| Turner, JETS 53/4 (2010) — Скоуфилд допускал «нравственное применение» | **подтверждено**: JETS 53/4 (Dec 2010) 697–716 «Matthew Among the Dispensationalists», сноска 31 цитирует *Scofield Reference Bible* 999–1000: «a beautiful moral application to the Christian» [4](https://etsjets.org/wp-content/uploads/2011/01/files_JETS-PDFs_53_53-4_JETS_53-4_697-716_Turner.pdf); сам note [5](https://biblehub.com/commentaries/sco/matthew/5.htm) | нет |
+| MacArthur, GTY #2222, 5 Aug 1979, «Мф 5:20 как ключ» | **подтверждено с оговоркой**: проповедь «The Spiritual Credibility Gap» №2222 от 05.08.1979, текст Мф 5:33–37, но внутри сказано «the key to what He says in the Sermon on the Mount is in verse 20» [6](https://www.gty.org/sermons/2222/the-spiritual-credibility-gap) | перикопа ≠ Мф 5:20; это ключ внутри проповеди, не ошибка |
+| Rippon, *A Brief Memoir* (1838), locator `Nov. 23, o. s. 1697` | **подтверждён объект**: полный текст «A brief memoir of the life and writings of the late Rev. John Gill, D.D.», By John Rippon, London: John Bennett, **1838** [7](https://archive.org/stream/briefmemoiroflif00ripp/briefmemoiroflif00ripp_djvu.txt) | OCR титула мусорный; точную строку `Nov. 23, o. s.` по chunk 0 не сверил |
+| Calvin, Commentary on Matthew 5:1 (CCEL) — «прямо отвергает две разные проповеди» | объект существует: CCEL, «Commentary on Matthew, Mark, Luke — Volume 1»; тело выдало `loading…` и требует логина [8](https://www.ccel.org/ccel/calvin/calcom31.ii.i.html) | **текст не подтверждён** через этот URL; ранее комментарий Кальвина на Иер 17:9–10 был доступен через `ccel.org/study/` |
+
+**Итог:** 6 объектов, 4 полных подтверждения, 2 оговорки атрибуции/доступности, **галлюцинаций H01/H02 нет**. Вместе с 36 URL из §12.5 и §13.6 — **42 внешних объекта**, из них 40 прямых подтверждений и 2 оговорки. Это по-прежнему выборка, не ценз ~530 ссылок. Сильный позитивный результат: живые статьи не просто цитируют «серьёзные сайты», но и сами предписывают не путать источник, реконструкцию и вывод — проверка это подтвердила.
+
+### 15.5 `assurance` и W3C: уточнение статуса C20
+
+Сам открыл [W3C Understanding SC 3.1.2 Language of Parts (Level AA)](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html), на которое сослалась wave-6. Первоисточник говорит:
+
+- исключения — proper names, **technical terms**, слова неопределённого языка, слова, вошедшие в обиход окружающего текста;
+- «single words should be considered part of the language of the surrounding text **unless it is clear that a change in language was intended**»;
+- ограничения screen reader при плоских accessible names «**don't fail** the requirements of this success criterion»;
+- «auditors can therefore not solely rely on the spoken output… but must verify whether… changes in natural language have been identified correctly in the **underlying code or markup**».
+
+**Следствие.** `AAQ-A-066` (`assurance` в русском тексте) остаётся редакционным C20-witness, но **не является автоматическим нарушением WCAG 3.1.2**: одиночный богословский термин может подпадать под исключение technical term / vernacular, а verdict требует проверки разметки, которой у меня нет. `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT` остаётся owner-open; зелёные gates, `???`=0 и отсутствие TTS-switching не закрывают его. Это согласуется с границами wave-6 и wave-7.
+
+### 15.6 Итог десятого прохода
+
+- **Снято:** `GBS-SERIES-JSON-STALE` / `AAQ-A-065` — ложная тревога; агент A отозвал сам, живой каталог `/articles/` перечисляет все 18 статей, сумма минут **228 + 499 = 727** точно совпадает с контрактом.
+- **Уточнено:** `llms.txt` — строгое подмножество sitemap (55 ⊂ 102), отставание 47 URL; legacy-закрытие ограничено локальным `dist` (112 = 111 astro + 1 built-app); «2 мин» — поле страницы хаба, а не ошибка минут статей; C20 `assurance` не автоматическое нарушение WCAG.
+- **Новое:** полный прочитанный каталог из 5 чанков; 6 внешних атрибуций с живых страниц (4 полных подтверждения, 2 оговорки); W3C SC 3.1.2 проверен по первоисточнику; 42 внешних объекта без галлюцинаций.
+- **Осталось:** G1, «складное», допуск кандидатов в MASTER, live-release SHA, painted rail/аккордеон 24 страниц, owner visual signoff, WebKit/Firefox/TTS/устройство, полная проверка ~530 ссылок, обновление `llms.txt`. Авторство не определяется; Product, MASTER и `WORK_QUEUE.md` не тронуты.
