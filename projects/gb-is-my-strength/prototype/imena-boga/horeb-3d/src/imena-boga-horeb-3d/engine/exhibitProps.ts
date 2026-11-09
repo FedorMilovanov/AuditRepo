@@ -39,11 +39,14 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
   const oliveWood = new THREE.MeshStandardMaterial({ color: 0x615746, roughness: 1 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
-  // Shallow spring water is a non-metallic dielectric, not the dark material
-  // used at the bottom of deep wells. This visible slate surface is lit by
-  // actual scene lights, with no artificial emissive glow or billboard.
+  // A shallow seep is translucent water over sediment, not an opaque colored
+  // painted polygon. No expensive transmission pass or metal-like reflections.
+  // The underlying bank, rock fragments and physically lit specular response
+  // give the surface visual depth without an unlit "water glow" billboard.
   const shallowWater = new THREE.MeshStandardMaterial({
-    color: 0x4e6460, roughness: 0.28, metalness: 0,
+    color: 0x788b82, roughness: 0.20, metalness: 0,
+    transparent: true, opacity: 0.66, depthWrite: false,
+    side: THREE.DoubleSide,
   });
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
@@ -480,8 +483,10 @@ function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
   // Water and wet bank use the same deterministic outline, but different sizes.
   const random = rng((Math.round(x * 307 + z * 109) ^ 0x5133) >>> 0);
   const shape = new THREE.Shape();
-  for (let i = 0; i <= 20; i++) {
-    const angle = (i % 20) * Math.PI * 2 / 20;
+  // Use exactly one point per perimeter angle; the old duplicate at 2π
+  // chose a *different* random radius and introduced a visible seam wedge.
+  for (let i = 0; i < 20; i++) {
+    const angle = i * Math.PI * 2 / 20;
     const radius = 0.47 + random() * 0.13 + 0.08 * Math.sin(angle * 3 + 0.6);
     const px = Math.cos(angle) * radius, pz = Math.sin(angle) * radius * 0.75;
     if (i === 0) shape.moveTo(px, pz); else shape.lineTo(px, pz);
@@ -492,6 +497,23 @@ function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
   basin.rotation.x = -Math.PI / 2;
   basin.scale.set(1.29, 1.23, 1);
   basin.position.set(x, 0.018, z); g.add(basin);
+  // One low irregular sediment bed and actual submerged fragments.
+  // The transparent dielectric surface is drawn afterwards, so fragments are
+  // visible through water rather than painted on top of the pool.
+  const bed = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.stone);
+  bed.name = 'spring-sediment-bed';
+  bed.rotation.x = -Math.PI / 2;
+  bed.position.set(x, 0.023, z); g.add(bed);
+  for (let i = 0; i < 11; i++) {
+    const a = random() * Math.PI * 2;
+    const rr = 0.04 + Math.sqrt(random()) * 0.29;
+    const stone = new THREE.Mesh(G.dodec(0.035 + random() * 0.028), i % 3 ? s.dark : s.stone);
+    stone.name = 'spring-submerged-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.032, z + Math.sin(a) * rr * 0.75);
+    stone.scale.set(1.12 + random() * 0.35, 0.18 + random() * 0.12, 0.7 + random() * 0.45);
+    stone.rotation.y = random() * Math.PI * 2;
+    g.add(stone);
+  }
   const pool = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.shallowWater);
   pool.name = 'spring-irregular-water';
   pool.rotation.x = -Math.PI / 2;
@@ -507,11 +529,7 @@ function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
       1 + random() * 0.32);
     g.add(stone);
   }
-  const glint = new THREE.Mesh(G.plane(0.18, 0.025),
-    new THREE.MeshBasicMaterial({ color: 0x9cbbc3, transparent: true, opacity: 0.35,
-      depthWrite: false, side: THREE.DoubleSide }));
-  glint.rotation.x = -Math.PI / 2; glint.rotation.z = -0.35;
-  glint.position.set(x - 0.10, 0.055, z - 0.09); g.add(glint);
+  // Do not add a floating painted glint; highlights must follow scene light.
 }
 function addDistantGlow(g: THREE.Group, x: number, z: number) {
   const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(180,200,255,0.6)', 'rgba(80,100,180,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
