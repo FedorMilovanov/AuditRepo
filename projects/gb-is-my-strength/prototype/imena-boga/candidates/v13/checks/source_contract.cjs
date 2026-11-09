@@ -52,3 +52,12 @@ if(!sevenIAm.includes('Ветхозаветный тематический ко�
  throw Error('Seven I-am theological classification note missing');
 console.log('V13_IAM_THEMATIC_SCOPE_PASS',thematicFields.length);
 
+const atlasModal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+if(!atlasModal.includes('data-atlas-expression-type') ||
+   !atlasModal.includes('Тип библейского выражения: {entry.category}') ||
+   !atlasModal.includes('<strong>Значение и перевод:</strong>') ||
+   !atlasModal.includes('Христианское прочтение во свете Христа'))
+  throw Error('Atlas expanded dossier must distinguish textual type, translation and Christian interpretation');
+if(atlasModal.includes('<strong>Буквальное значение:</strong>'))
+  throw Error('Atlas still asserts contested etymology as a literal meaning');
+console.log('V13_ATLAS_MODAL_CLASSIFICATION_PASS');
