@@ -110,7 +110,7 @@ try {
     }, id);
     if (!view.canInspect) throw new Error('Detail camera cannot inspect ' + id);
     await waitForRenderedFrame(desktop, before, view.zone);
-    await desktop.waitForTimeout(500);
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const file = 'visual-detail-' + slug + '.png';
     await desktop.screenshot({ path: join(shots, file) });
     witness.details.push({ ...view, screenshot: file });

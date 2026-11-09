@@ -9,7 +9,7 @@ import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -220,7 +220,7 @@ if (gardenRecord) {
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
     leafSprigs(low) === 4 * 7 * 16);
-  t('Gethsemane high detail doubles sprig density without extra trees',
+  t('Gethsemane high detail increases sprig density without extra trees',
     leafSprigs(garden) === 4 * 7 * 26);
 
 } else {
@@ -267,10 +267,13 @@ if (gardenRecord) {
   });
   t('Gethsemane olives have segmented rooted trunks and botanically thin leaves',
     trunks === 8 && roots === 12 && flatLeaves === 4 * 7 * 16);
-  t('grove physics and art share precisely one trunk layout',
+  const gardenX = PLACEMENTS['abba'][0];
+  const inward = -Math.sign(gardenX) * 0.85;
+  const anchorX = gardenX + inward * 1.2 / Math.hypot(inward, 0.53);
+  t('grove physics and art share one layout and preserve the central walk',
     OLIVE_GROVE_OFFSETS.length === 4 &&
-    OLIVE_GROVE_OFFSETS.every(([x, z]) => Number.isFinite(x) && Number.isFinite(z)) &&
-    OLIVE_GROVE_OFFSETS.every(([x]) => x - 4.6 + 1.018 < -0.75));
+    OLIVE_GROVE_OFFSETS.every(([dx, dz]) => Number.isFinite(dx) && Number.isFinite(dz)) &&
+    OLIVE_GROVE_OFFSETS.every(([dx]) => Math.abs(anchorX + dx) > 0.29 + 0.35 + 0.05));
 }
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
