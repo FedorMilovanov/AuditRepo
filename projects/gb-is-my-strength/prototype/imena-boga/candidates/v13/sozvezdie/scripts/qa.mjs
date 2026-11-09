@@ -123,6 +123,11 @@ const boxesOverlap = (a, b) =>
     ? ok("29 name sections have clean hairline guides without floating diamonds")
     : bad("floating/missing name-section guide " + JSON.stringify(readingGuides));
 
+  const kindLabels = await page.locator("[data-research-classification]").allTextContents();
+  kindLabels.length === 29 && kindLabels.every((text) => text.includes("Тип выражения:") && text.trim().length > 18) && new Set(kindLabels).size >= 10
+    ? ok("29 research classification labels rendered in reader entries")
+    : bad("research classification labels absent or generic: " + JSON.stringify({ count: kindLabels.length, diversity: new Set(kindLabels).size }));
+
 
   // tree present, nodes clickable
   await page.locator("#tsentr").scrollIntoViewIfNeeded();

@@ -46,7 +46,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
             className="font-serif-display mt-1 text-xl sm:text-2xl font-bold"
             style={{ color: 'var(--gb-ink)' }}
           >
-            Указатель 36 рассмотренных имён и титулов Бога: оригинал, транслитерация, Стронг и место Писания
+            Указатель 36 исследуемых обозначений: оригинал, транслитерация, Стронг и место Писания
           </h2>
           <p className="font-ui mt-1 text-xs" style={{ color: 'var(--gb-muted)' }}>
             Нажмите на строку, чтобы перейти к карточке в тексте статьи, или на название — чтобы

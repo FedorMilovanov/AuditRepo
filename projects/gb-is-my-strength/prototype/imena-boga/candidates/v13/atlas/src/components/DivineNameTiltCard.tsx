@@ -142,7 +142,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
               }}
             >
               <Sparkles className="h-3 w-3" style={{ color: 'var(--gb-gold)' }} />
-              Имя {entry.number}
+              Позиция {entry.number}
             </span>
             <span className="font-ui text-xs font-medium" style={{ color: 'var(--gb-muted)' }}>
               {entry.category}

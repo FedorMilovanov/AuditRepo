@@ -169,7 +169,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
           transition={{ duration: 1.2, delay: 1.5 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-3 font-ui text-[10px] uppercase tracking-[0.25em] text-cream-300 md:mt-12 md:gap-6"
         >
-          {[`${NAMES.length} имён и титулов`, "4 части", "Писание и контекст"].map((s, i) => (
+          {[`${NAMES.length} именований и выражений`, "4 части", "Писание и контекст"].map((s, i) => (
             <span key={s} className="flex items-center gap-3 md:gap-6">
               {i > 0 && <span className="h-1 w-1 rotate-45 bg-gold-500/70" />}
               {s}
@@ -179,9 +179,9 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         <a
           href="/imena-boga/atlas/"
           className="relative z-20 mt-7 inline-flex max-w-[90vw] items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-ink-900/85 px-4 py-2 text-center font-ui text-[10px] uppercase tracking-[0.14em] text-gold-300 shadow-lg backdrop-blur-md transition-colors hover:border-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300 sm:text-xs"
-          aria-label="Открыть второй флагман — интерактивную астролябию 36 имён и титулов"
+          aria-label="Открыть второй флагман — интерактивную астролябию с 36 исследуемыми позициями"
         >
-          <span aria-hidden="true">✦</span> Второй флагман: астролябия и атлас 36 имён →
+          <span aria-hidden="true">✦</span> Второй флагман: астролябия и атлас 36 позиций →
         </a>
       </motion.div>
 

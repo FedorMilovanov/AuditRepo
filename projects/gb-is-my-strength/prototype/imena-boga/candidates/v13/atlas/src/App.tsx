@@ -429,7 +429,7 @@ export function App() {
   const handleShare = useCallback(async () => {
     const shareData = {
       title: 'Имена Бога в Писании — Господь Бог: Сила Моя',
-      text: 'От Элохим и Яхве до Альфы и Омеги: 36 имён Божиих с экзегезой, лексикой и христологией.',
+      text: 'От Элохим и Яхве до Альфы и Омеги: 36 изучаемых именований, титулов и формул с экзегезой и богословским контекстом.',
       url: window.location.href,
     };
     try {
@@ -771,7 +771,7 @@ export function App() {
           >
             <span className="flex min-w-0 items-start gap-2">
               <BookOpen className="h-4 w-4 shrink-0" />
-              Структура исследования (5 частей · 36 имён)
+              Структура исследования (5 частей · 36 позиций)
             </span>
             <span style={{ color: 'var(--gb-muted)' }}>Прокручивайте вниз</span>
           </div>
@@ -823,7 +823,7 @@ export function App() {
                   <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold-ink)' }}>
                     VII.
                   </strong>
-                  Сводная скрижаль и поиск по всем 36 именам
+                  Сводная скрижаль и поиск по всем 36 позициям
                 </span>
                 <span className="font-ui shrink-0 text-[11px]" style={{ color: 'var(--gb-muted)' }}>
                   Справочник

@@ -275,7 +275,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               }}
             >
               <Sparkles className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-              Имя {entry.number} из {allNames.length}
+              Позиция {entry.number} из {allNames.length}
             </span>
 
             <button

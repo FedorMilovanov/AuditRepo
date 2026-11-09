@@ -165,6 +165,9 @@ function NameSection({
                 {name.translit}
               </h3>
               <p className="mt-2 font-display text-xl text-cream-300">{name.russian}</p>
+              <p data-research-classification className="mt-2 min-w-0 break-words font-ui text-xs leading-relaxed text-cream-400">
+                Тип выражения: {name.classification}
+              </p>
               <div className={`mt-6 flex items-center gap-3 ${flip ? "lg:justify-end" : ""}`}>
                 <span className="h-px w-8 bg-gold-500/50" />
                 <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-gold-400">
@@ -292,7 +295,7 @@ function NameSection({
               <Reveal delay={0.1}>
                 <div className="mt-10 border-t border-gold-500/15 pt-6">
                   <p className="font-ui text-[9px] font-medium uppercase tracking-[0.35em] text-cream-700">
-                    {name.id === "yhwh" ? "Имя в контексте: «Я есмь» и составные имена" : "Связанные имена"}
+                    {name.id === "yhwh" ? "Имя в контексте: «Я есмь» и составные имена" : "Связанные темы"}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {related.map((r) => (

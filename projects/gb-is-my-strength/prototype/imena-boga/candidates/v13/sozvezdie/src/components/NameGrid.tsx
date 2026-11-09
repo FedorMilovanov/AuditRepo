@@ -145,7 +145,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
     <nav
       id="sozvezdie"
       className="relative mx-auto max-w-6xl scroll-mt-28 px-6 pb-6 pt-4 md:pb-16"
-      aria-label="Указатель по 29 именам и титулам"
+      aria-label="Указатель по 29 библейским именованиям и выражениям"
     >
       {/* header */}
       <div className="mb-8 flex flex-col items-center text-center">
@@ -155,7 +155,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
           <span className="hairline w-10" />
         </p>
         <h2 className="mt-4 font-display text-3xl font-medium text-cream-100 md:text-4xl">
-          29 имён и титулов — <span className="gold-static italic">одним взглядом</span>
+          29 именований и выражений — <span className="gold-static italic">одним взглядом</span>
         </h2>
         <p className="mt-3 max-w-lg font-body text-base italic leading-relaxed text-cream-500">
           Нажмите на любое имя, чтобы открыть его раздел. Созвездие складывается из {NAMES.length}{" "}
