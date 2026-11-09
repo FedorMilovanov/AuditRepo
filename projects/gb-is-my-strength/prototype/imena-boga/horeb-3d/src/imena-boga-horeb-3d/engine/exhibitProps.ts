@@ -276,14 +276,14 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
   const random = rng(seed);
   const up = new THREE.Vector3(0, 1, 0);
-  const leanX = (random() - 0.5) * 0.46;
-  const leanZ = (random() - 0.5) * 0.40;
+  const leanX = (random() - 0.5) * 0.20;
+  const leanZ = (random() - 0.5) * 0.18;
   const barkPhase = random() * Math.PI * 2;
   const trunkHeight = 1.66;
   const spine = (t: number) => new THREE.Vector3(
-    x + leanX * t * t + 0.045 * Math.sin(t * 6.5 + barkPhase) * t,
+    x + leanX * t * t + 0.022 * Math.sin(t * 6.5 + barkPhase) * t,
     0.02 + t * trunkHeight,
-    z + leanZ * t * t + 0.045 * Math.cos(t * 5.1 + barkPhase) * t,
+    z + leanZ * t * t + 0.022 * Math.cos(t * 5.1 + barkPhase) * t,
   );
   const bole = new THREE.CylinderGeometry(0.105, 0.235, trunkHeight, 12, 14);
   const vertices = bole.getAttribute('position') as THREE.BufferAttribute;
