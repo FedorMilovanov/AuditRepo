@@ -311,11 +311,11 @@ async function visit(browser,engine,app,width,base){
    });
   }
 
-  if(app==='atlas' && width===390){
+  if(app==='atlas' && [320,390].includes(width)){
    // WCAG text-only resize stress. Unlike browser page zoom, this keeps
    // responsive breakpoints unchanged while enlarging text to 200%.
    // Never hide horizontal scrolling as a substitute for reflow.
-   await safeAction(page,engine+'-atlas-390-text-resize-200',async()=>{
+   await safeAction(page,engine+'-atlas-'+width+'-text-resize-200',async()=>{
     const count=await page.evaluate(()=>{
      const selector='h1,h2,h3,h4,h5,p,li,button,summary,input,[data-name-primary-title],[data-name-original],[data-name-translit]';
      const nodes=[...document.querySelectorAll(selector)].filter(el=>el.getBoundingClientRect().width>0);
@@ -338,7 +338,7 @@ async function visit(browser,engine,app,width,base){
         result.buttonRight>result.parentRight+2))
      problem('BLOCKER','atlas-text-resize-200-overflow',{engine,width,...result});
     await page.locator('#article-introduction').scrollIntoViewIfNeeded();
-    await shot(page,engine+'-atlas-390-text-resize-200');
+    await shot(page,engine+'-atlas-'+width+'-text-resize-200');
    });
   }
 

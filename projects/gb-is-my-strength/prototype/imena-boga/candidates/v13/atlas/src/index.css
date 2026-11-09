@@ -140,6 +140,12 @@ body {
   font-family: var(--f-greek);
 }
 
+/* Text-only enlargement must reflow editorial text inside narrow cards.
+   Break an otherwise unbreakable word rather than hiding page overflow. */
+#top main :is(p, h1, h2, h3, h4, button) {
+  overflow-wrap: anywhere;
+}
+
 /* Sacred Lateral Pillar Glow & Revelation Animations */
 @keyframes sacredPulse {
   0%, 100% {
