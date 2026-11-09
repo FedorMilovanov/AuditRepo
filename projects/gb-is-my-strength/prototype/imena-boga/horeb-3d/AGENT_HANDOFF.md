@@ -6,11 +6,19 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
-## Full 42 real side walks — точный дебаг первого CI
+## Текущий G13 — инженерно доказанные 42/42 маршрута (9 ноября 2026)
+
+**Точный завершённый baseline:** `eaa9b90a4d5fb0c59e07492c8c9c0b149654c19e`. [HOREB QA #42685624277](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624277), [AuditRepo Validate #42685624179](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624179), [Workflow Preflight #42685624308](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624308) — **3/3 SUCCESS**, включая все шесть QA jobs: source/geometry, actual-chromium, независимые четыре side-chromium. По отдельным журналам и артефактам: **10/10 + 18/18 + 12/12 + 2/2 = 42 уникальных Research ID**, каждый с физическим WASD/стрелки/E/возвратом, без teleport в коде маршрута. Вдобавок независимый реальный проход 0→7→0, 135/135 инженерных, 34/34 smoke, 42/42 E-досье, 8 desktop + 3 mobile-emulated + 3 detail PNG, браузерные ошибки 0. **G13 = PASS в Chromium SwiftShader на этом точном SHA**, но не на реальных телефонах.
+
+**Новая исправительная волна после baseline (требуется собственный exact-HEAD CI):** `tests/browser-smoke.mjs` ждёт фактической непрозрачности интро перед desktop/mobile скриншотами; `tests/browser-side-journey.mjs` запрещает методы телепортации во время пешеходного прохода и считает нарушения; production Vite-бандл не должен открывать `window.__horeb` даже с `?e2e` — контролируется `tests/browser-portable.mjs`. Изменения не являются повторной арт-приёмкой. Не объявлять их PASS до подтверждённых GitHub jobs на новом SHA.
+
+**Статус неизменен:** LAB DEVELOPMENT, Draft / EDITORIAL HOLD. Исследования 42/42 и права/озвучка, художественное качество, реальные GPU/Android/iOS/WebKit/Firefox/screen reader остаются отдельными незакрытыми воротами. Product/Research и исходный ZIP не менять. Ночной Хорив, HUD=0.4 и радиусы `R_OUTER=14`, `R_INNER=6.5` сохранять. Ни merge, ни deploy без решения владельца.
+
+## Архив первого полного CI — ошибки harness до исправления
 
 Первая полная матрица на `0d946ed945ee60ce8ea4273f2f8d6bb60220f96f`, [HOREB QA #42683502272](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42683502272), выявила **НЕ 42/42 PASS**, а два реальных дефекта test harness: `1-2` **10/10 SUCCESS**, `7` **2/2 SUCCESS**, независимый осевой `actual-chromium` **SUCCESS**; `3-4` прошёл 7/18 (все зона 3), затем остановился у `sabaoth` на дистанции **3.61м**, тогда как E prompt физически ограничен 3.6м; `5` прошёл 7/12 и не смог повернуть камеру к `kyrios-ho-theos`, потому что краткие стрелочные импульсы пропадали между программными WebGL-кадрами. **Ни одна священная граница, коллизия или радиус E не меняются**. Исправление: фактический дополнительный шаг W/S при `d > 3.35м`, плюс удержание реальной стрелки до подтверждённого сдвига yaw. Никакого `teleportTo`/direct yaw/fast-forward. Результат следующего exact-HEAD CI **PENDING**.
 
-## 42/42 физический доступ — новая параллельная волна (PENDING exact-HEAD)
+## Архив первоначального плана 42/42 (на момент написания был PENDING)
 
 Предыдущий terminal-green baseline `3dc773cc2879e52209d648961a5734ff11ca916e`: [HOREB QA #42680392328](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42680392328), Validate #42680392281 и Preflight #42680392381 — **3/3 SUCCESS**. Доказаны 7 боковых сцен через настоящий WASD/стрелки/E с возвратом в центр и независимый осевой 0→7→0, 135/135 engineer, 34/34 smoke, 42/42 dossier и 8+3+3 PNG. Это не физический доступ к остальным 35 сценам.
 
