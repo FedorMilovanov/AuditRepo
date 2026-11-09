@@ -11,7 +11,7 @@ Evidence: [successful CI with private screenshot artifact](https://github.com/Fe
 - Independent local Windows headless Chrome tested 320/390/768/1440. All **36/36** Atlas mobile dossiers opened with correct modal titles; all **29/29** Constellation grid buttons navigated to a name section.
 - Existing AuditRepo Validate, Workflow Preflight, and Browser QA were **3/3 SUCCESS on audited code**. This does not certify visual readability.
 
-## Confirmed visual defects — NOT CLOSED
+## Confirmed visual defects — HISTORICAL BASELINE (see resolution addendum)
 
 ### P1 — Atlas mobile drawer: catastrophic inner flex overflow for name #36 (320–768px)
 
@@ -53,3 +53,32 @@ At 1024/1440px, measured «Разбор →» and «К тексту» buttons ~*
 The owner-selected white-background fire-letter cover and earlier black-ink cover remain separate unintegrated editorial assets, not the current prototype hero. Research #379 retains `publicationState=BLOCKED` / **0 Product-approved units**; Sinai image rights, actual iOS/Android devices and Product Astro integration remain outstanding. Do **not** merge Draft PR #538, switch prototype SEO from `noindex`, or publish at gospod-bog.ru based only on this audit.
 
 Only the screenshot audit harness and report were committed here; **none of the listed visual source defects has been concealed or waived**.
+
+## Контрольное дополнение 2026-11-09 — разрешение прежних P1/P2 на exact HEAD
+
+**Это дополнение не переписывает исходный отчёт:** значения «NOT CLOSED» выше относятся к прежнему зафиксированному `bdfde6f`. Текущий проверенный исходный коммит — [`c5d12b8d73ef76d62ad6fd27bf75b6ff8f70f70d`](https://github.com/FedorMilovanov/AuditRepo/commit/c5d12b8d73ef76d62ad6fd27bf75b6ff8f70f70d); он прошёл [Browser QA #42524124908](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42524124908), [Validate #42524124927](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42524124927) и [Preflight #42524124909](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42524124909) — **3/3 SUCCESS**.
+
+Разобран точный artifact `imena-v13-visual-audit` [#13635290913](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42524124908/artifacts/13635290913): **24 сессии / 138 JPG / 162 диагностических записи / 0 findings**; `visual-report.json.head` совпадает с `c5d12b8`, а `checkoutMergeSha` относится к отдельному merge-checkout и **не** подменяет HEAD PR. Функциональный набор Созвездия: **133/133 PASS**. Архив GitHub имеет ограниченное время хранения: ссылки — не вечное хранилище свидетельств.
+
+| Исходная находка старого SHA | Подтверждение на `c5d12b8` | Статус |
+| --- | --- | --- |
+| Atlas #36: схлопывание заголовка в скрижалях | Исправлена общая переносимая компоновка; геометрический контракт всех 36 карточек и ручной просмотр выбранных кадров | **CLOSED — browser-contract scope** |
+| Atlas #36: обрезка греческого имени в досье | Проверены длинные оригинальные формы на 320/390 и адаптивные досье; кадры Chromium/WebKit | **CLOSED — browser-contract scope** |
+| Sozvezdie: невидимый H1 при первом показе | В текущем `Hero.tsx` H1 задан с `initial={false}`; последние hero-кадры видимы, без старого отложенного скрытия заголовка | **CLOSED — source + captured render** |
+| Atlas: обрезанный мобильный счётчик | Постоянная нижняя панель теперь компактна; длинное полное имя доступно в «Скрижалях»; проверки имени №32 и высоты панели выполнены | **CLOSED — browser-contract scope** |
+| Sozvezdie: мелкий текст каталога | Подписи увеличены; проверены все 29 оригинальных/транслитерированных подписей на четырёх ширинах | **CLOSED — browser-contract scope** |
+| Atlas: небольшие зоны ссылок/управления | Увеличены и проверены геометрические цели; скрытые элементы не считаются видимыми кликабельными ссылками | **CLOSED — browser-contract scope** |
+
+**Что это не доказывает:** реальный Safari/iOS или Android, полную экспертную оценку WCAG, права и точность научных формулировок, production LCP/INP. Не переносить статус `CLOSED` на эти независимые гейты и не объявлять весь проект завершённым.
+
+### Sinai asset: фиксированный состав, но не подтверждённые права
+
+- Активный прототип содержит `sinai-dawn-CyetHa7v.jpg` (**1672×941**, **216480 байт**, SHA-256 `e3fc3113302f78d89ae9d1998bca0474ec2f300e4cfa140c75e6240aa56e9fec`) и производный `sinai-dawn-DMmukO0D.webp` (**1672×941**, **140842 байт**, SHA-256 `738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b`). Извлечены из exact-head preview-артефакта #42524124908; эти хэши относятся к собранным байтам.
+- У проверенных файлов нет EXIF, XMP и встроенного поля авторства/лицензии. **Отсутствие метаданных не является доказательством, что снимок свободен от прав.** Текущий provenance: Arena export; исходный автор, URL, license grant и разрешение на производные **не подтверждены**.
+- Возможный открытый резерв для отдельной художественной примерки: [`'SUNRISE' over Mt Sinai Mountains(Egypt).JPG`](https://commons.wikimedia.org/wiki/File:%27SUNRISE%27_over_Mt_Sinai_Mountains(Egypt).JPG), автор Rudolph.A.furtado, заявлен public-domain release на странице Commons. Альтернативный [Sunrise on Mount Sinai - Egypt](https://commons.wikimedia.org/wiki/File:Sunrise_on_Mount_Sinai_-_Egypt.jpg), Ibrahim El-Mezayen, CC BY-SA 4.0 с атрибуцией/share-alike. Это **не** доказательства прав на текущий Arena JPEG и **не** решение заменить визуал без отдельной дизайн-приёмки. Изображения не импортировались.
+
+### Независимый Research и реальное устройство — по-прежнему HOLD
+
+[Research #379](https://github.com/FedorMilovanov/Research/pull/379) на `ba6c3c1d913ca088cc6b9190587e27db56e22b3e`: **6/6** GitHub workflow SUCCESS; **105/105** исследовательских употреблений имеют структурные claim-связи, но **0** завершённых критических колляций, **0** независимых научных публикационных допусков и **0** Product approvals. Research остаётся Draft / `RESEARCH_HOLD`. Windows preview `DESKTOP-O3FDOA4` недоступен на момент проверки 2026-11-09 (Offline); физическая iOS/Android приёмка **не выполнялась**. Ни один из этих блокеров не снят.
+
+**Правило дальнейшей работы:** только один кандидат `candidates/v13` в том же Draft PR; никаких новых веток/версий и никакого изменения Product/`main`. Документационный коммит после `c5d12b8` требует собственного CI при проверке нового HEAD, даже если не меняет исходники приложения.
