@@ -219,9 +219,9 @@ if (gardenRecord) {
   };
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
-    leafSprigs(low) === 4 * 7 * 16);
+    leafSprigs(low) === 4 * 7 * 24);
   t('Gethsemane high detail increases sprig density without extra trees',
-    leafSprigs(garden) === 4 * 7 * 26);
+    leafSprigs(garden) === 4 * 7 * 36);
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -316,7 +316,19 @@ if (gardenRecord) {
       o.material.side === THREE.DoubleSide) flatLeaves++;
   });
   t('Gethsemane olives have segmented rooted trunks and botanically thin leaves',
-    trunks === 8 && roots === 12 && flatLeaves === 4 * 7 * 16);
+    trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 24);
+  let gnarled = 0, twigs = 0, totalCrownHeight = 0;
+  grove.traverse((o) => {
+    if (o.name === 'olive-twig') twigs++;
+    if (o.name === 'olive-main-trunk' && o instanceof THREE.Mesh &&
+        o.geometry instanceof THREE.CylinderGeometry &&
+        o.geometry.parameters.heightSegments >= 12) {
+      gnarled++;
+      totalCrownHeight += o.position.y + o.geometry.parameters.height / 2;
+    }
+  });
+  t('Gethsemane mature olive boles are subdivided, torsioned and support real branchlets',
+    gnarled === 4 && twigs === 4 * 7 * 2 && totalCrownHeight > 6.5);
   const gardenX = PLACEMENTS['abba'][0];
   const inward = -Math.sign(gardenX) * 0.85;
   const anchorX = gardenX + inward * 1.2 / Math.hypot(inward, 0.53);
