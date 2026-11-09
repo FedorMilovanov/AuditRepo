@@ -408,20 +408,20 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
                   key={id}
                   type="button"
                   onClick={() => onSelect(id)}
-                  className={`relative flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
+                  className={`relative grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 rounded-xl border px-4 py-3 text-left transition-all ${
                     on ? "border-gold-400/60 bg-ink-800/80" : "border-cream-800/60 bg-ink-900/50"
                   }`}
                 >
                   <span aria-hidden className="absolute -left-[18px] top-1/2 h-px w-[18px] bg-gold-600/50" />
-                  <span {...scriptAttrs(n)} className="shrink-0 font-hebrew text-lg text-gold-300">
+                  <span {...scriptAttrs(n)} className="col-start-1 row-start-1 min-w-0 font-hebrew text-lg text-gold-300">
                     {id === "ehyeh" ? "אֶהְיֶה" : n.hebrew}
                   </span>
-                  <span className="min-w-0 flex-1">
+                  <span className="col-span-2 row-start-2 min-w-0 break-words">
                     <span className="block font-display text-lg italic leading-tight text-cream-100">{n.translit}</span>
                     <span className="block font-body text-sm leading-tight text-cream-500">{n.russian}</span>
                   </span>
-                  <span className="shrink-0 font-ui text-xs uppercase tracking-[0.14em] text-gold-600">{ref}</span>
-                  {completedIds.has(id) && <Check className="h-3.5 w-3.5 shrink-0 text-gold-400" strokeWidth={2.5} />}
+                  <span className="col-start-2 row-start-1 justify-self-end font-ui text-xs uppercase tracking-[0.14em] text-gold-600">{ref}</span>
+                  {completedIds.has(id) && <Check className="col-start-2 row-start-3 h-3.5 w-3.5 shrink-0 justify-self-end text-gold-400" strokeWidth={2.5} />}
                 </button>
               );
             })}
