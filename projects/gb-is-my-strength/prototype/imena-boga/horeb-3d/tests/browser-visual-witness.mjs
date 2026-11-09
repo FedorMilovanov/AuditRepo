@@ -157,8 +157,22 @@ try {
   // for judging whether the bush reads as a living shrub, not only as sparks.
   const initiated = await desktop.evaluate(() => window.__horeb.world.removeShoes());
   if (!initiated) throw new Error('BUSH WALK: cannot remove footwear at outer boundary');
-  await desktop.waitForFunction(() => window.__horeb?.state()?.shoes === 'unshod',
-    { polling: 200, timeout: 10000 });
+  // Removal now progresses in World simulation time, not wall time. A busy
+  // SwiftShader runner may take >10 s to render 2.6 s of active frames.
+  // Wait for the actual terminal state, fail with live diagnostics if stalled.
+  try {
+    await desktop.waitForFunction(() => window.__horeb?.world?.shoes === 'unshod',
+      { polling: 200, timeout: 30000 });
+  } catch (error) {
+    const state = await desktop.evaluate(() => {
+      const w = window.__horeb?.world;
+      return w ? { shoes: w.shoes, elapsed: w.shoeRemovalElapsed,
+        simTime: w.t, fps: w.fps, locked: w.inputLocked,
+        contextLost: w.contextLost, hidden: document.hidden } : null;
+    });
+    throw new Error('BUSH WALK: removal did not complete in active simulation: ' +
+      JSON.stringify(state), { cause: error });
+  }
   const frameBefore = await desktop.evaluate(() => window.__horeb.world.renderer.info.render.frame);
   await desktop.evaluate(() => window.__horeb.world.teleportTo(0, -358));
   await desktop.waitForFunction((previousFrame) => {
