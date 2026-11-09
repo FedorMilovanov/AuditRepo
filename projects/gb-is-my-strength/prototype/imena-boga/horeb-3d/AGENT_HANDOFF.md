@@ -6,6 +6,12 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
+## Follow-up — расширение реального бокового прохода, HEAD ожидает новый CI
+
+**Полностью зелёная исходная доказательная база:** `6e384204d920dc170c7c460ca0e7627ca7f929b0`, [HOREB 3D QA #42669566098](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669566098), [Validate #42669566087](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669566087), [Preflight #42669565883](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669565883) = **3/3 SUCCESS**. РЕАЛЬНЫЕ WASD/стрелки/E к `elohim`, `el-olam`, `abba` с открытием досье и возвратом к центру PASS; полный осевой keyboard маршрут 0→7→0 PASS. Все 42 E досье отдельно проверялись через controlled teleport — это НЕ реальное прохождение всех 42.
+
+**Новая проверка G13 — PENDING exact-HEAD:** один непрерывный `tests/browser-side-journey.mjs` идёт к семи боковым сюжетам: `elohim`, `el-olam`, `el-roi` (Агарь), `el-gibbor` (правый уступ), `qedosh-yisrael` (левый берег пропасти), `abba` (Гефсимания), `ehyeh` (священный Хорив, вне внешнего порога). Без `teleportTo` и самодельных координат, каждая сцена требует E/досье и возврата к центру. В CI тест выполняется **в параллельном `side-chromium` job** (с отдельными артефактами и временным Vite), чтобы не затягивать не относящийся к нему обязательный axial `actual-chromium`. Обе работы обязаны быть терминально SUCCESS на точном SHA; один зелёный job не означает закрытия workflow. Это реальный маршрут 7/42, а не полный 42/42.
+
 ## Боковые экспозиции — проверка реального пешего доступа (9 ноября 2026)
 
 Предыдущее подтверждение `e48a5b343a6f75b3fb7dc3a95ee47ff5216e9f35` **3/3 SUCCESS**: HOREB [#42645436526](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42645436526), Validate #42645436536 и Preflight #42645436543. Текущее точное состояние получай из PR #543 и GitHub Actions, не полагайся на архивные SHAs.

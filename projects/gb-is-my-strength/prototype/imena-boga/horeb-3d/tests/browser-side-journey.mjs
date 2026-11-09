@@ -1,7 +1,8 @@
 // Side-exhibit pedestrian witness: real player keyboard input, no teleport,
 // no world position/yaw mutation, no simulation clock manipulation.
-// Verifies three physically different side scenes, their E dossiers, and
-// safe recovery to the centre passage between interactions.
+// Verifies seven physically different side scenes, including both sides of
+// the chasm ledge and the outdoor Horeb approach, all E dossiers and safe
+// recovery to the centre passage between interactions.
 import puppeteer from 'puppeteer-core';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -108,7 +109,11 @@ async function axis(kind, target, label, tolerance = 0.65) {
 const approach = [
   { id: 'elohim', zone: 1, label: 'creation' },
   { id: 'el-olam', zone: 2, label: 'beersheba' },
+  { id: 'el-roi', zone: 2, label: 'hagar-spring' },
+  { id: 'el-gibbor', zone: 4, label: 'right-chasm-ledge' },
+  { id: 'qedosh-yisrael', zone: 4, label: 'left-chasm-side' },
   { id: 'abba', zone: 5, label: 'gethsemane' },
+  { id: 'ehyeh', zone: 7, label: 'horeb-inscription' },
 ];
 
 try {
@@ -192,7 +197,8 @@ try {
   if (record.exhibits.length !== approach.length || record.errors.length)
     throw new Error('SIDE incomplete with runtime errors ' + JSON.stringify(record));
   record.result = 'PASS';
-  console.log('PASS 3 independently selected side scenes reached by actual keyboard WASD + arrow turns + E, no teleport, no collision stalls, all returned to centre');
+  console.log('PASS ' + approach.length +
+    ' independently selected side scenes reached by actual keyboard WASD + arrow turns + E, no teleport, no collision stalls, all returned to centre');
 } catch (error) {
   record.result = 'FAIL';
   record.failure = String(error?.stack || error);
