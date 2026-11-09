@@ -1,4 +1,4 @@
-# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волна 2)
+# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–3)
 
 ## Meta
 
@@ -8,22 +8,22 @@
 - Date: 2026-11-09
 - Audited branch/ref: `main`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` = `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; `pushed_at 2026-11-09T06:28:12Z`
-- Environment: read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`; без сборки и без браузера
-- Build mode: source
-- Browser / device if used: не использовался
+- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`), `npm run strangler:build`, parse5-ценз `dist`; браузера/AX-рантайма не было
+- Build mode: волна 2 `source`; волна 3 `dist` (116 HTML / 1248 файлов)
+- Browser / device if used: не использовался; Chromium отсутствует (`~/.cache/ms-playwright` пуст, системного binary нет)
 - Scope: 111 маршрутов, 79 читательских статей, 32 хабов/утилит; один общий прогон
-- Explicit exclusions: финальный DOM/браузер/production, авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, проверка quiz runtime
+- Explicit exclusions: браузер/AX/фактическая отрисовка, авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, runtime quiz clicks. Волна 3 добавляет статический финальный HTML, но не заменяет браузерный witness
 - Signal class: Product
-- Proof state: `FAIL` для 17 verified-source дефектов; `UNPROVEN` для атрибуции авторства; `N/A` для DOM/browser
-- Claim boundary: только исходный reader-facing текст на якоре выше; не финальная разметка, не рантайм, не авторство
+- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM следа в границе проверенных паттернов; `UNPROVEN` для атрибуции авторства, внешней истинности и browser/AX
+- Claim boundary: исходный reader-facing текст и статический final-HTML `dist` на якоре выше; не браузерная отрисовка, не AX, не рантайм, не авторство, не внешняя проверка источников
 - Preservation boundary: не менять Product, не создавать новый универсальный контракт/чек-лист, не авто-переписывать русскую прозу
 - Semantic owner: существующие строки `MASTER_BUG_MATRIX.md`; новые строки не допускаются без owner-решения
 - Overlapping active owner/PR/branch check: открытые PR в AuditRepo #545, #544, #543, #542, #538, #521, #514 — нашу article-lane не пересекают; активные строки MASTER: `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` (admission 2026-10-25), `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`.
-- Report type: `source-audit`
+- Report type: `source-audit + built-DOM-audit`
 
 > Anchor фиксирует, что именно смотрелось. Не обновлять отчёт только потому, что исходный репозиторий позже сдвинулся.
 
-**Артефакты волны 2:** этот `REPORT.md` + `ALL_ARTICLES_MATRIX.csv` в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Копия полного отчёта и CSV также лежит в `/home/user` вне git для быстрого просмотра. Клон Product — в `/tmp`, вне репо.
+**Артефакты волн 2–3:** этот `REPORT.md` (§9 — дельта волны 3) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, добавлены DOM-колонки) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist` и логи гейтов — в `/tmp`, вне репо. Ни одного нового файла в AuditRepo не создано.
 
 ---
 
@@ -497,3 +497,198 @@ C1/C2/C11/C12/C13 — ручные lane (протокол §3.3). C23 (покр�
 | GOV.UK thin, WP:RS не прочитан | A–Z style guide + WP:RS добавлены | закрыта дыра в положительном списке |
 | пуш запрещён | пуш в свою ветку разрешён | явная команда пользователя |
 
+
+---
+
+## 9. Волна 3 — реальные Product gates, built-DOM witness и ручные lane
+
+**Статус:** дополняет §§1–8, не отменяет их. Тот же anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; 17 source-HARD fixtures и 5 положительных контролей из §4.6/§4.7 остаются базой. Новое здесь — полный checkout Product, `npm ci`, реальный `dist`, прогон гейтов, статический DOM-ценз и bounded triage ручных C1/C2/C11/C12/C13. **Браузера, AX-дерева и внешней проверки источников по-прежнему нет.**
+
+### 9.0 Границы и воспроизводимость
+
+```text
+/tmp/gbs-product: git sparse-checkout disable   -> 3363 tracked files, 275 MB, anchor unchanged
+PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci       -> 377 packages, node_modules 342 MB, exit 0
+npm run strangler:build                         -> exit 0, dist 1248 files / 101 MB, 116 HTML
+astro:check (внутри build)                     -> 641 files, 0 errors, 0 warnings, 7 hints
+parse5 DOM-ценз /tmp/aiq/dom*.js               -> 112 index.html; 111 соответствуют матрице + 1 утилита
+                                                  /konfessii/russkij-baptizm/_app/ (вне 111);
+                                                  CSV `index.astro` сопоставлен с `/`
+```
+
+DOM-ценз: эффективный унаследованный `lang` от `<html lang="ru">`, Text-узлы parse5, пропуск `script/style/template/noscript/svg/math`, фильтр hidden/`sr-only`; греч. `U+0370–03FF/U+1F00–1FFF`, евр. `U+0590–05FF`; отдельно группируются multi-run phrases из ≥2 иноязычных runs, разделённых только пробелом/пунктуацией. Это **статический final-HTML witness**, не painted/AX/browser witness.
+
+**Самокоррекция sparse-выгрузки.** На неполном sparse-checkout те же команды давали ложные ошибки: `content:sources:check` — 20 «legacy source unavailable», `content:parity` — 10 «legacy reference not found», `typograf:dry` — `ENOENT /tmp/gbs-product/articles`, `content:coverage:audit` — `dist not found`. После `git sparse-checkout disable` и `npm ci` они исчезли. Это артефакт среды, не регрессия Product и не зелёный результат гейтов.
+
+### 9.1 Реальные gates на полном якоре
+
+| Команда | Exit | Ключевой вывод | Что НЕ доказывает |
+|---|---:|---|---|
+| `article:qa` | 0 | 180 article files, 0 errors / 0 warnings; semantic manifest 2 routes / 2 deletion mutations killed | редакционную пригодность; не видит `karty/**/*.json` |
+| `content:sources:check` | 0 | 54 published series parts, 112 route profiles, 70 MDX, 28 canonical / 42 reference-only, 0 explicit draft, 53 legacy paths; «every published part … explicit provenance» | само содержание claim, edition, rights, независимую corroboration |
+| `content:parity` | 0 | STRICT, 73 routes, 73 strict-native, 57 derived runtime contracts, 0 source-only markers; effective contracts coherent | текстовую parity прозы, фактическую истинность |
+| `mdx:structure:audit` | 0 | 70 MDX, 0 errors / 0 warnings | источники/локаторы/язык частей |
+| `readable-audit` | 0 | readable/publication layer passed | одиночные homoglyph-малформации |
+| `validate` / `validate:strict` | 0 | 0 errors, 2 warnings (`css/highlights-runtime.css`, `css/site.css`: нестандартный брейкпоинт `767px`); Russian quote policy passed | typograf drift, DOM-утечки |
+| `seo-audit` | 0 | 0 errors / 0 warnings | редакционный текст |
+| `engine:contracts` | 0 | reader/relation/Atlas contracts intact; series façade 46 consumers; Nagornaya bar asset 5 mounts, rev `3c7e0bdd` | browser/runtime клики |
+| `content:coverage:audit` | 0 | internal contract 6/6; `expected=0, exercised=0, explicit-skips=111, undeclared=0, warnings=0, passed=1/1` | покрытие контента: **все 111 маршрутов явно пропущены** |
+| `maps:validate` | 0 | 11 route files, publication statuses consistent | `Чекy` в `/karty/ishod/` |
+| `editorial:lint` / `sources:hygiene` / `data:consistency` / `content:guard` | 0 | pass / «No backstage research scaffolding …» / pass / 43 baseline pages +3 delta | полный охват серийных конфигов и всех типов каркаса |
+| `migration:metadata:check:strict` | 0 | все production Astro routes покрыты; `Series shapes: {"flat":46,"book":36}`; public-surface-registry verified | серийную идентичность в прозе |
+| `astro:audit:article-mdx:strict` | 0 | 37 routes passed, 27 warnings «no immutable migration baseline found for content floor» | отсутствие редакционных дефектов |
+| `typograf:dry` | **0** | `Would change: 6 files` | типографическую чистоту: **fail-open** |
+
+`validate:static-publication`, `engine:guard`, browser visual/parity и `source:links:dist` **не запускались**: нет Chromium (`~/.cache/ms-playwright` пуст, системного binary нет), внешний egress ограничен. Поэтому «весь CI зелёный» не заявляется. `npm ci` и сборка выполнены только в `/tmp`; Product не коммитился. `scripts/typograf.js` один раз применён к временному клону для точного diff (16 изменённых строк), затем `git checkout -- articles` восстановил исходник.
+
+### 9.2 Зелёные gates ≠ редакционная пригодность
+
+На одном и том же якоре одновременно верны:
+
+- 17 source-HARD из §4.6;
+- `article:qa`, `content:parity`, `mdx:structure`, `readable-audit`, `validate:strict`, `seo-audit`, `engine:contracts` — exit 0;
+- финальный `dist` всё ещё содержит служебный каркас (9/9 source C5-HARD воспроизводятся), 515 видимых иноязычных runs без `lang`, `Чекy`, гибридный английский C20 и 6 файлов типографического drift при exit 0.
+
+Это прямое подтверждение запрета подменять редакционную проверку зелёным CI. Не создаётся новая строка MASTER, не изобретается новый ADMIT/универсальный чек-лист; активные owner-строки остаются: `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`, `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`, `SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE`.
+
+### 9.3 DOM-ценз: язык частей
+
+| Метрика | Волна 3, `dist` | Комментарий |
+|---|---:|---|
+| HTML-документов | 112 | 111 строк матрицы + `/konfessii/russkij-baptizm/_app/` |
+| греч. + евр. runs | 1029 | 829 Greek + 200 Hebrew |
+| runs с эффективным `ru`/без `lang` | 543 | 38 routes; после hidden-фильтра **515 / 38 routes** |
+| корректно размеченных runs | **486 / 34 routes** | платформа умеет `grc`/`he`/`el`/`la`; это не «невозможно» |
+| консервативные multi-run phrases без `lang` | **96 / 15 routes** | **89 видимых / 14 routes**; не зависит от исключения для отдельных технических лексем |
+| корректно размеченные multi-run phrases | 60 / 15 routes | Home `/` имеет 86 correct runs, 27 correct phrases, 0 missing |
+| `/` Home healthy control | 28 Greek + 58 Hebrew, 0 missing | но 9 `aria-label` с ивритом при эффективном `ru` — TRIGGER, не HARD |
+| foreign text в атрибутах | 29 / 6 routes | `aria-label`, `id`, `astro-island props`; AX/browser не проверен |
+| маршрутов с ≥10 видимыми missing runs | **11** | 5 из 6 source C7-HARD + 6 новых кандидатов |
+
+**Сверка с MASTER без ложной регрессии.** `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT` фиксировал 289/39 routes и 109 multi-run/20 на других якорях/методике. Наш свежий anchor даёт 543/41 raw, 515/38 visible, 96/15 phrases. Это **не объявление регрессии и не закрытие строки**: отличаются anchor, фильтр hidden, группировка runs и порог. Независимо от методики, свежий консервативный набор из 89 видимых фраз на 14 маршрутах достаточно, чтобы не списывать дефект на WCAG-исключение для одиночных терминов.
+
+**11 маршрутов с ≥10 видимыми missing runs** (`domLangMissingVisible` в CSV):
+
+| Route | Visible missing | Correct tagged | Статус относительно §4.6 |
+|---|---:|---:|---|
+| `articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki` | 15 | 0 | новый DOM-кандидат |
+| `articles/novoe-serdce` | 15 | 11 | новый DOM-кандидат |
+| `articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy` | 37 | 6 | новый DOM-кандидат |
+| `articles/serdce-hrista-k-nemoshchnym` | 42 | 42 | новый DOM-кандидат; смешанная разметка |
+| `articles/serdce-i-duh` | 24 | 16 | новый DOM-кандидат |
+| `articles/teksty-pisaniya-kotorymi-manipuliruyut` | 15 | 0 | source C7-HARD, воспроизведён |
+| `hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2` | 65 | 0 | source C7-HARD, воспроизведён |
+| `hard-texts/blagovestie-mertvym-1-petra-4-5-6` | 69 | 0 | source C7-HARD, воспроизведён |
+| `hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda` | 110 | 0 | source C7-HARD, воспроизведён |
+| `hard-texts/enoh-prorochestvoval-iuda-14-15-4q204` | 32 | 0 | source C7-HARD, воспроизведён |
+| `nagornaya/chast-4` | 18 | 3 | новый DOM-кандидат |
+
+Шестой source C7-HARD `articles/20-antisovetov-pastoru` в финальном DOM имеет **6** видимых runs без `lang` против 12 в исходном скане: часть source-вхождений не дошла до Text-узлов `dist` ( entities/скрытые поверхности/иная проекция). HARD не отзывается: 6 видимых foreign runs без `lang` остаются, но число «12» более не переносить на DOM. 6 новых кандидатов **не записываются автоматически в HARD и не добавляют строки MASTER**: им нужен owner/редакционный разбор исключений WCAG 3.1.2.
+
+**Точные DOM-fixtures консервативных multi-run phrases** (первая видимая фраза на маршруте, `dist/.../index.html:line`):
+
+```text
+articles/cerkovnaya-disciplina-vlast-granicy-zashchita/index.html:687        οἰκονόμος θεοῦ
+articles/dzhon-gill-chast-4-ekzeget/index.html:410                            εἰς ἡμᾶς
+articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html:1261  τὰ περὶ ἑαυτοῦ
+articles/novoe-serdce/index.html:711                                           שֵׁם קָדְשִׁי
+articles/osvobozhdennoe-serdce/index.html:708                                  σῶμα πνευματικόν
+articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html:719           πεπραμένος, θέλω
+articles/serdce-hrista-k-nemoshchnym/index.html:714                            κατὰ πάντα
+articles/teksty-pisaniya-kotorymi-manipuliruyut/index.html:712                 εἰς σέ
+hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/index.html:711                ἀγγέλους τε τοὺς μὴ τηρήσαντας
+hard-texts/blagovestie-mertvym-1-petra-4-5-6/index.html:739                   οἳ ἀποδώσουσιν λόγον
+hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/index.html:736               θανατωθεὶς μὲν σαρκὶ
+hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/index.html:713               Ἐπροφήτευσεν δὲ καὶ τούτοις
+nagornaya/chast-2/index.html:300                                               πτωχοὶ τῷ πνεύματι
+nagornaya/chast-4/index.html:545                                               πᾶσα γραφή θεόπνευστος
+```
+
+### 9.4 DOM-ценз: каркас, C20, `???`, смешанный скрипт, типографика
+
+**C5.** 9/9 source C5-HARD воспроизводятся в финальном HTML (63 marker hits / 11 routes). `domScaffold` в CSV считает именно hits, не новые вердикты:
+
+| Route | Hits | `dist` line | Статус |
+|---|---:|---|---|
+| `baptisty-rossii/dva-sezda-1884` | 5 | `…/index.html:669` | C5 HARD (`94f05457…`, `Research \`main\``, `A1/A2/A3/B1/C/D`) |
+| `baptisty-rossii/goneniya-i-sovest` | 5 | `:669` | C5 HARD |
+| `baptisty-rossii/noch-na-kure` | 5 | `:669` | C5 HARD |
+| `baptisty-rossii/yuzhnaya-shtunda` | 5 | `:669` | C5 HARD |
+| `baptisty-rossii/podpolnaya-pechat` | 2 | `:670` | C5 HARD (`SHA256`, «исследовательский корпус») |
+| `baptisty-rossii/sovetskaya-noch` | 1 | `:668` | C5 HARD (`SHA-256 … по MASTER`) |
+| `hard-texts/kniga-enoha-kotoroy-ne-bylo-...` | 10 | `:940` | C5 HARD (`Research authority \`GEN6-ENOCH-…-DECISION-LXVI\``) |
+| `hard-texts/mozhno-li-doveryat-1-enohu-...` | 24 | `:918` | C5 HARD (`VERSION-HOLD`, 14 authority tokens) |
+| `journal/dossiers/g3` | 3 | `:229` | C5 HARD + C20 HARD (`Research authority:`) |
+| `baptisty-rossii/spravochnik` | 2 | `:670` | **TRIGGER**: объяснение про `SHA-256` и «HOLD до page-level locator» может быть читательской оговоркой, не утечкой |
+| `hard-texts/enoh-prorochestvoval-iuda-14-15-4q204` | 1 | `:840` | **TRIGGER**: `<code>HOLD</code>` в пояснении «какие требуют осторожного HOLD» |
+
+То есть «11 routes» ≠ «11 новых C5-HARD»: 2 пограничных маркера оставлены TRIGGER. `sources:hygiene` при этом законно проходит: его `FORBIDDEN` — узкий список (`raw-sources/`, `research-досье`, `_app/index.html`, …), а не `SHA`/`Research authority`/`GEN6`/`A1/A2/A3`/`VERSION-HOLD`; scan dirs охватывают MDX и pilot bodies, из конфигов явно только `baptistFlatSeriesConfig.ts`. Наш отдельный проход теми же regex по 14 series config/data файлам нашёл лишь один **нерендерящийся** комментарий `src/components/article-pilots/_shared/series/pastorSeriesConfig.ts:10` (`… зафиксирован в research/pastor-series/MASTER-PLAN.md`) — не reader leak и не новый контракт.
+
+**C20.** Оба source-HARD доходят до финального HTML: `dist/articles/kogda-chelovek-uhodit-ot-very/index.html:231` (description/JSON-LD: «… assurance и perseverance») и `dist/journal/dossiers/g3/index.html:229` («immutable Research handoff», «публичный evidence route», «evidence set»). Библиографические названия и переведённые термины по-прежнему исключены.
+
+**`???`.** `grep -rloE '\?{3,}' dist --include='*.html'` = **0 файлов / 0 вхождений** во всех 112 HTML, включая атрибуты и комментарии; parse5 Text-узлы тоже 0. На текущем якоре симптом не воспроизвёлся, но `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` **не закрывается**: нет браузерной painted/ALT-проверки, нет owner-решения, более ранние MASTER-якоря фиксировали 1385 runs. Это observation current anchor, не реабилитация строки.
+
+**C6 / mixed script.** `/karty/ishod/index.html:286` по-прежнему публикует `Суккот = Чекy` и `крепость Чекy` с латинской `y` (U+0079); `article:qa` = 0/0 на 180 article files, `readable-audit` = pass, `maps:validate` = pass. Это ровно граница `SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE`: map JSON/static projection вне article scope. Склеек `яP/еT/оL/иM/еG` и известных MASTER-форм на якоре нет; C6 остаётся 3 TRIGGER / 0 HARD.
+
+**Typograf.** `npm run typograf:dry` exit **0**, но `Would change: 6 files`; применение к временному клону дало 16 изменённых строк, затем откат:
+
+```text
+articles/20-antisovetov-pastoru/index.html
+articles/dzhon-gill-chast-2-uchenyi/index.html
+articles/dzhon-gill-chast-3-nasledie/index.html
+articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html
+articles/kod-da-vinchi/index.html
+articles/krajne-li-isporcheno-serdce/index.html
+```
+
+Типичная правка — неразрывный пробел после короткого слова: `по Гиллу` → `по Гиллу`, `не обвал` → `не обвал`. Это точное воспроизведение `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN` на свежем якоре, не новая строка. Python-эмуляция давала 11 файлов из-за Unicode `\b` вместо JS ASCII `\b`; авторитетен только Node-результат 6/16.
+
+### 9.5 Ручные lane C1/C2/C11/C12/C13 — bounded triage, не «закрыто»
+
+Ноль авто-флагов в §4.8 по-прежнему **не доказательство чистоты**. Волна 3 даёт точные внутренние свидетели, но не внешнюю верификацию:
+
+| Lane | Что проверено на якоре | Граница |
+|---|---|---|
+| **C1** claim/evidence | 5 положительных контролей §4.7 сохранены; `EDITORIAL-SOURCE-POLICY.md:17–30,36–57` (сила формулировки, independence, «пробел честнее правдоподобной детали», типы claim), 15 явных маркеров осторожного вывода в 10 MDX (`Нельзя писать:`, `Точный вывод:`, «нельзя выдавать за», «Эти различия важны») | каждый рискованный claim, «N сообщил X» vs «X произошло», независимая corroboration и права — вручную у агента B; внешние источники не открывались |
+| **C2** locator | 70 MDX: **6** со сносками, **96** определений, **82** со строгим locator-like адресом (page/folio/plate/edition/`4Q204`/`IAA`/`CC BY-SA`/`§`); **64** MDX без `[^n]`, но с ≥5 quote-like spans. Положительные контроли: `enoh…mdx:262` Codex Sinaiticus folio 325, `:266` Milik 183–186 / Plate IX, `:274` 4Q204 / version 2026-02-11 / CC BY-SA 4.0 | 14 определений без строгого локатора не = HARD; 64 файла — triage, а не «64 дефекта»; edition/version/rights/контекст не проверены внешне |
+| **C11** ход рассуждения | 15 маркеров в 10 MDX; `enoh…mdx:147` «Нельзя писать:», `:169` «Точный вывод:», `:107` различение уровней, `:207` богословский вывод отделён от рукописной цепочки | отсутствие маркера ≠ отсутствие рассуждения; полный проход по 111 routes вручную не сделан |
+| **C12** термины | `data/glossary.json` = 137 терминов, `data/glossary-policy.json` = 6 ключей; GOV.UK A–Z / S20 / S44 остаются нормой | first-use объяснение каждого термина и аббревиатуры не автоматизировано; WCAG-исключение для technical terms не отменяет русского перевода |
+| **C13** серийная идентичность | 9 config/data modules + `SeriesReaderChrome` façade; `engine:contracts` = 46 consumers; `migration:metadata:check:strict` = flat 46 / book 36 и public-surface-registry verified; `pastor-series-quizzes.ts` = **64 `sourceRef`**, все 64 разрешаются в `id` соответствующего `dist/articles/.../index.html` (`src/runtime/article-quiz.js:164–167` ставит `href` напрямую) | owner-решение о названиях/статусах/числе частей и route-specific identity не принималось; generic-усреднения не вводилось |
+
+**Топ C2-triage** (quote-like spans без сносок): `steven-lawson-samoobman-i-publichnyy-golos` 528, `krajne-li-isporcheno-serdce` 113, `serdce-hrista-k-nemoshchnym` 78, `hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki` 68, `otstuplenie-ot-very-iuda-evreyam-6` 66, `vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti` 62, `serdce-spravochnik` 60, `priznaki-zdorovoy-cerkvi` 54, `sovershennoletie-roditelskaya-vlast-chto-menyaetsya` 54, `vernye-i-neizvestnye-zdorovoe-pastyrstvo` 54. Это **очередь проверки**, не HARD-вердикты и не «доказательство ИИ».
+
+Самокоррекция C13: первый парсер `PASTOR_SERIES_QUIZZES` не учитывал quoted keys (`'sem-tipov':`, `'kogda-uhodit':`, `'zdorovaya-cerkov':`) и ошибочно приписал 23 `sourceRef` к соседней статье, получив «23 missing anchors». После исправления — **64/64 resolved, 60 distinct href, 0 missing**. Это пример, почему ручной lane требует точного `file:line`, а не агрегата «0/23».
+
+### 9.6 Обновлённая матрица и split 3 агентов
+
+`ALL_ARTICLES_MATRIX.csv` остаётся **одним файлом на 111 маршрутов**; добавлены 8 колонок, старые 31 колонка не изменены:
+
+```text
+domHtml                 1 для всех 111 (`index.astro` -> `/`; лишний utility HTML не включён)
+domLangMissingVisible   видимые Greek/Hebrew runs с эффективным ru (сумма 515)
+domLangPhraseMissing    видимые conservative multi-run phrases (сумма 89)
+domLangCorrect          корректно размеченные runs (сумма 486)
+domScaffold             hits служебных маркеров в финальном HTML (сумма 63)
+domQmarks               `???` в Text-узлах (сумма 0)
+domMixed                уникальные смешанно-скриптовые токены (сумма 1)
+domAttrLangRisk         foreign text в атрибутах под ru (сумма 29)
+```
+
+Split не переписывается: общий ключ `route + criterion_id`, поля `agent,status,evidence,anchor,claim_boundary,what_this_evidence_does_not_prove`, один отчёт + одна CSV, не 13 отчётов.
+
+| Агент | Волна 3 | Что осталось |
+|---|---|---|
+| **A (этот)** | полный checkout, `npm ci`, build, gates, DOM-ценз, 8 новых колонок, §9, самокоррекции | свести финальный ответ; не закрывать MASTER без owner |
+| **B** | C2 footnote/quiz `sourceRef` triage, 5 положительных контролей,series config scan | C1/C2/C3/C8/C5/C20: внешняя corroboration, edition/rights/locator, exact negative fixtures |
+| **C** | C5/C7/C20/C6 в `dist`, `???`=0, typograf fail-open, `Чекy` | C4/C21/C23/C24 + browser/AX/painted witness, DOM-parity на final head |
+
+**Ветки/пуш.** Перед записью повторно сверены `git branch --show-current` = `arena/0b6f34f6-auditrepo`, `git status --short` = clean, upstream `origin/arena/0b6f34f6-auditrepo`, remote head `983dad7`. Пуш — обычный `git push` только в эту ветку; `push -u` не повторяется, чужие PR/ветки не трогаются, ветка не переключается/не переименовывается.
+
+### 9.7 Чего волна 3 НЕ доказывает
+
+- Нет browser/AX/painted geometry, нет скриншотов, нет runtime quiz clicks и print/PDF witness.
+- Нет внешней проверки исторических/богословских утверждений, edition/version, прав и независимой corroboration.
+- Нет вывода «ИИ/человек»: стилевые маркеры остаются TRIGGER.
+- Нет нового универсального контракта/чек-листа, новых строк MASTER и автопереписывания прозы.
+- Зелёные gates не заменяют редакционную пригодность; `content:coverage:audit` с `explicit-skips=111` и `typograf:dry` с exit 0 при 6 файлах — отдельные напоминания об этом.
+- `???`=0 и 89 видимых lang-phrases — наблюдения текущего anchor, а не решение owner по старым MASTER-строкам.
