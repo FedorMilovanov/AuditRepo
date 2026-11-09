@@ -31,10 +31,10 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full cursor-pointer items-center justify-between gap-3 text-left"
+        className="flex w-full min-w-0 cursor-pointer items-center justify-between gap-3 text-left"
         aria-expanded={open}
       >
-        <div>
+        <div className="min-w-0 flex-1">
           <div
             className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
             style={{ color: 'var(--gb-gold-ink)' }}
@@ -43,7 +43,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
             <span>Справочная таблица · для печати и быстрого поиска</span>
           </div>
           <h2
-            className="font-serif-display mt-1 text-xl sm:text-2xl font-bold"
+            className="font-serif-display mt-1 min-w-0 text-xl sm:text-2xl font-bold break-words"
             style={{ color: 'var(--gb-ink)' }}
           >
             Указатель 36 исследуемых обозначений: оригинал, транслитерация, Стронг и место Писания

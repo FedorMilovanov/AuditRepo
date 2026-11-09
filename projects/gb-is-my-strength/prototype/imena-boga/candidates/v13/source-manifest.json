@@ -52,12 +52,12 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "15635322ef954e9dafdd27fd60e0b4456bdaba1fd6064a67f96eca07211ce075",
-      "bytes_normalized": 65505
+      "sha256": "3c5517091760035b78dd3c1e04ec682e7a59e74e7935463f2211172ec4b4eee6",
+      "bytes_normalized": 65650
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "d79346486f7b1a0d68423be88d8fa266ad28184ecfa95280641af6d382de4343",
-      "bytes_normalized": 15314
+      "sha256": "d7dedd3edcc96c422d376a9212b7c99f262cb96684c7716d89581653abd13596",
+      "bytes_normalized": 15411
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
       "sha256": "f77d6fcb07f3a610a35c9f36a43b5c180fc4460cf8477e649fa7d4e47d65c47a",
@@ -84,8 +84,8 @@
       "bytes_normalized": 30396
     },
     "atlas/src/components/NamesIndexTable.tsx": {
-      "sha256": "b2d36299152efcfc21cf2fd99270d9764ca57bed7bc863e766ba37c9a1efda2f",
-      "bytes_normalized": 8920
+      "sha256": "fe0e2d679e738e434e3b0901d15cb8e6ac0bca4715f01940339383b69f323381",
+      "bytes_normalized": 8975
     },
     "atlas/src/components/NearViewport.tsx": {
       "sha256": "d407272d44a0dae124adfa90d94915b10f3d0abf1f945805a65f3e5c21ed2e66",
@@ -184,8 +184,8 @@
       "bytes_normalized": 11850
     },
     "checks/visual_review.cjs": {
-      "sha256": "1c10d852aea1a8abd638bd4b17f08278edb9838a2422d26e8fdaabdfa67f9336",
-      "bytes_normalized": 19502
+      "sha256": "dcc35b380d7cd2ed97880c81b175459759bb1efa2052f9def16bebc14ef78bdc",
+      "bytes_normalized": 21425
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

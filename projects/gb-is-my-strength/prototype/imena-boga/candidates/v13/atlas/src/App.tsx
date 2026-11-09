@@ -915,7 +915,7 @@ export function App() {
         {/* Introduction Essay */}
         <section id="article-introduction" className="scroll-mt-24 space-y-5">
           <h2
-            className="font-serif-display text-2xl sm:text-3xl font-bold leading-snug"
+            className="font-serif-display text-2xl sm:text-3xl font-bold leading-snug break-words"
             style={{ color: 'var(--gb-ink)' }}
           >
             Почему Бог открывает Свои имена: не заклинание, а заветное самооткровение
@@ -995,7 +995,7 @@ export function App() {
 
           {/* Global Reading Mode Bar: Expand / Collapse all 36 exegeses inline */}
           <div
-            className="no-print mt-8 flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 sm:px-5"
+            className="no-print mt-8 flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 sm:px-5"
             style={{
               backgroundColor: 'var(--gb-surface)',
               borderColor: 'var(--gb-border-strong)',
@@ -1008,15 +1008,15 @@ export function App() {
             <button
               type="button"
               onClick={handleToggleExpandAll}
-              className="font-ui inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-semibold transition-colors hover:opacity-90"
+              className="font-ui inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-center gap-1.5 rounded-xl border px-3.5 py-2 text-left text-xs font-semibold leading-snug whitespace-normal break-words transition-colors hover:opacity-90"
               style={{
                 backgroundColor: allExpanded ? 'var(--gb-accent)' : 'var(--gb-accent-soft)',
                 borderColor: allExpanded ? 'var(--gb-accent)' : 'var(--gb-gold)',
                 color: allExpanded ? '#ffffff' : 'var(--gb-accent)',
               }}
             >
-              <ChevronsUpDown className="h-3.5 w-3.5" />
-              <span>
+              <ChevronsUpDown className="h-3.5 w-3.5 shrink-0" />
+              <span className="min-w-0 break-words">
                 {allExpanded
                   ? 'Свернуть все 36 разборов'
                   : 'Развернуть все 36 разборов в тексте'}
@@ -1056,7 +1056,7 @@ export function App() {
                   Часть {section.roman} · {sectionNames.length} исследуемых выражений
                 </div>
                 <h2
-                  className="font-serif-display mt-1.5 text-2xl sm:text-4xl font-bold leading-tight"
+                  className="font-serif-display mt-1.5 text-2xl sm:text-4xl font-bold leading-tight break-words"
                   style={{ color: 'var(--gb-ink)' }}
                 >
                   {section.title}

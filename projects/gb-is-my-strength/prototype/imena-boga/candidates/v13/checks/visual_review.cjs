@@ -311,6 +311,37 @@ async function visit(browser,engine,app,width,base){
    });
   }
 
+  if(app==='atlas' && width===390){
+   // WCAG text-only resize stress. Unlike browser page zoom, this keeps
+   // responsive breakpoints unchanged while enlarging text to 200%.
+   // Never hide horizontal scrolling as a substitute for reflow.
+   await safeAction(page,engine+'-atlas-390-text-resize-200',async()=>{
+    const count=await page.evaluate(()=>{
+     const selector='h1,h2,h3,h4,h5,p,li,button,summary,input,[data-name-primary-title],[data-name-original],[data-name-translit]';
+     const nodes=[...document.querySelectorAll(selector)].filter(el=>el.getBoundingClientRect().width>0);
+     const fontSizes=nodes.map(el=>parseFloat(getComputedStyle(el).fontSize));
+     nodes.forEach((el,i)=>el.style.setProperty('font-size',fontSizes[i]*2+'px','important'));
+     return nodes.length;
+    });
+    await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(resolve))});
+    const result=await page.evaluate(()=>{
+     const doc=document.documentElement;
+     const button=[...document.querySelectorAll('button')].find(el=>el.textContent?.includes('Развернуть все 36 разборов'));
+     const rect=button?.getBoundingClientRect();
+     const parent=button?.parentElement?.getBoundingClientRect();
+     return {viewport:doc.clientWidth,documentWidth:doc.scrollWidth,
+      buttonFound:!!button,buttonRight:rect?.right??null,parentRight:parent?.right??null};
+    });
+    record('atlas-text-resize-200',{engine,width,count,...result});
+    if(!result.buttonFound || result.documentWidth>result.viewport+2 ||
+       (result.buttonRight!==null && result.parentRight!==null &&
+        result.buttonRight>result.parentRight+2))
+     problem('BLOCKER','atlas-text-resize-200-overflow',{engine,width,...result});
+    await page.locator('#article-introduction').scrollIntoViewIfNeeded();
+    await shot(page,engine+'-atlas-390-text-resize-200');
+   });
+  }
+
   if(errors.length)problem('HIGH','runtime-errors',{app,engine,width,errors});
   if(failed.length)problem('HIGH','resource-errors',{app,engine,width,failed});
   record('session',{app,engine,width,status:'complete',errorCount:errors.length,resourceErrors:failed.length});

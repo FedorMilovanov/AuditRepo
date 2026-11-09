@@ -56,12 +56,12 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
       }}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
-        <div>
-          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
+        <div className="min-w-0 flex-1">
+          <div className="font-ui flex min-w-0 flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
             <Compass className="h-4 w-4" />
-            <span>Библейская география откровения · В духе раздела «Карты»</span>
+            <span className="min-w-0 break-words">Библейская география откровения · В духе раздела «Карты»</span>
           </div>
-          <h2 className="font-serif-display mt-1 text-2xl sm:text-3xl font-bold" style={{ color: 'var(--gb-ink)' }}>
+          <h2 className="font-serif-display mt-1 min-w-0 text-2xl sm:text-3xl font-bold break-words" style={{ color: 'var(--gb-ink)' }}>
             Карта жертвенников и мест явления Имён Божьих
           </h2>
         </div>
