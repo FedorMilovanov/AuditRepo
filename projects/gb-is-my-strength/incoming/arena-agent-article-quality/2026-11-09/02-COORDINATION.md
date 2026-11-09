@@ -124,3 +124,15 @@ Product `main` не сдвинулся с `5e2db6f0…`. Чужие ветки �
 | `arena/0b6f34f6-auditrepo` | `3ad38e77` | wave-5: +8 колонок в CSV (55), `REPORT.md` §11, interactive runtime и visual-parity |
 
 Product `main` не сдвинулся с `5e2db6f0…`. Локальный `HEAD` совпал с remote, `reset` не потребовался. Чужие ветки — только `gh api /compare` и `/contents?ref=...`; чужие файлы не правились, пуш — только в свою ветку. Два файла агента A на одном head расходятся (`BODY_ASTRO_HISTORY.md` §5 заявляет дефект, `FINAL_BUG_MATRIX.md` его отзывает) — при сверке брать финальную матрицу. Кандидаты строк из чужих `_coordination/` и `incoming/` в `MASTER_BUG_MATRIX.md` не переносятся без решения владельца.
+
+---
+
+## 12. Сверка веток, девятый проход (2026-11-09)
+
+| Ветка | Head | Дельта |
+|---|---|---|
+| `arena/c6d6c46c-auditrepo` (я) | `2721e67` → этот коммит | §14 синтеза, §19 отчёта, `AAQ-A-061`…`066`, §12 критериев |
+| `arena/a33be340-auditrepo` | `bb2cbf33` | `BUILD_OWNERSHIP_AND_STALE_SHADOWS.md`: legacy-тени не доходят до прода, `GBS-SERIES-JSON-STALE` как P0-кандидат |
+| `arena/0b6f34f6-auditrepo` | `0f97da9a` | wave-6: 59 колонок CSV, W3C SC 3.1.2 AA / H58, `shape:'book'`, 727 минут, 17 owner-правок, C23 без переклассификации |
+
+Product `main` не сдвинулся с `5e2db6f0…`. Локальный `HEAD` совпал с remote. Все три ветки теперь согласны, что legacy HTML — тень, а не продукт, и что 18 материалов «Сердца» зарегистрированы в книжной модели; расхождение остаётся только в оценке приоритета `series.json` (агент A — P0, `0b6f34f6` — UNPROVEN, я — owner-open). Чужие файлы читались только `gh api`, пуш — только в свою ветку. Кандидаты из `_coordination/` и `incoming/` в `MASTER_BUG_MATRIX.md` не переносятся без решения владельца.
