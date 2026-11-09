@@ -49,6 +49,15 @@ const ease = (k: number) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const wrapPi = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
+/** Frame the central reading table on narrow touch displays without changing
+ * walking coordinates, collision volume, desktop spawn or XR orientation. */
+const PORTRAIT_TOUCH_SPAWN_PITCH = -0.08;
+function entryPitch(): number {
+  return window.matchMedia("(pointer: coarse) and (orientation: portrait)").matches
+    ? PORTRAIT_TOUCH_SPAWN_PITCH
+    : SPAWN.pitch;
+}
+
 export function Player() {
   const { camera, gl } = useThree();
   /**
@@ -228,7 +237,7 @@ export function Player() {
       prev.current = s.phase;
       if (s.phase === "play") {
         input.seenIntro = true;
-        const dest = { x: SPAWN.x, y: EYE, z: SPAWN.z, yaw: SPAWN.yaw, pitch: SPAWN.pitch };
+        const dest = { x: SPAWN.x, y: EYE, z: SPAWN.z, yaw: SPAWN.yaw, pitch: entryPitch() };
         input.x = dest.x;
         input.z = dest.z;
         input.yaw = dest.yaw;

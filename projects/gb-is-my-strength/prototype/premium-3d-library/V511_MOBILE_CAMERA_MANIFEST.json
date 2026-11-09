@@ -1,0 +1,72 @@
+{
+  "schema": "gb-library-v511-mobile-portrait-camera-v1",
+  "baseCommit": "4c4338dfed890786857b274b726d2e90579d1f05",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "purpose": "Responsive mobile portrait entry composition; negative control quality A/B evidence",
+  "qualityGates": {
+    "labCommands": 5,
+    "typescript": true,
+    "viteBuild": true,
+    "mobileHud": "6/6",
+    "interaction": "12/12",
+    "architecturalBrowser": "4/4",
+    "referenceBay": "5/5"
+  },
+  "limitations": [
+    "emulated mobile viewport rather than physical phone",
+    "visual matched screenshot acceptance, not photo realism",
+    "first graphics switch stalls remain unresolved"
+  ],
+  "files": [
+    {
+      "path": "src/scene/Player.tsx",
+      "bytes": 19033,
+      "sha256": "bc1f975d487ed4f4c4f829a7764c0062f66a6307b92fc203571bc0b38739f741"
+    },
+    {
+      "path": "V511_MOBILE_CAMERA_ENGINEERING.md",
+      "bytes": 6328,
+      "sha256": "4ac1591d31c970e5b8c96a7515f26b3372dee35ba5200206a40f137e51196549"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-chrome-390-before.webp",
+      "bytes": 119784,
+      "sha256": "2127fe54bc41bf8b0b2b947b2832e87c54a2a00eb4ed7cf77df8966e61e5e50f"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-chrome-390-after.webp",
+      "bytes": 117410,
+      "sha256": "e84b1d6a8ee78074de93ae40fecabd1d500eefdd6913c2ddd64f6cc2beb298cb"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-chrome-320-before.webp",
+      "bytes": 97456,
+      "sha256": "e8f3bb80b011460a4f53b72c3d82fdc7f9dcb8305dee9188863e670ff2fa4e00"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-chrome-320-after.webp",
+      "bytes": 96900,
+      "sha256": "edc77141f98c90aea7ead14612f3f2443b7a95b329687f2a0c75adb837cb3d06"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-webkit-390-before.webp",
+      "bytes": 108994,
+      "sha256": "c443cdef6741eea5511d5c01fb256344b4d78149bfbdb7684600b5f9f56129aa"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-webkit-390-after.webp",
+      "bytes": 106878,
+      "sha256": "dc499e505ddce56f04e5fd54ea905c46a0109620c2173b487894586fff513cb8"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-comparison.jpg",
+      "bytes": 77032,
+      "sha256": "fa82961781ca3a7601b42669810988a1d1b7be4e00c3da7ea7d7567a08d03b8f"
+    },
+    {
+      "path": "evidence/mobile-camera-v511-evidence.json",
+      "bytes": 5686,
+      "sha256": "2c9ed63499ebafc0f2e3c030214190f77ddc2f5fad0691d3ce681d0d947ccad6"
+    }
+  ]
+}

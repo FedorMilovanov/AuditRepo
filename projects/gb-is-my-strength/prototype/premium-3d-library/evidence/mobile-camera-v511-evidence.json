@@ -1,0 +1,182 @@
+{
+  "schema": "gb-library-v511-control-experiments-v1",
+  "date": "2026-11-09",
+  "exactBenchBase": "4c4338dfed890786857b274b726d2e90579d1f05",
+  "environment": "isolated Windows desktop, installed Chrome and Playwright WebKit, 1440x900 DPR1 reduced-motion",
+  "candidate": "same single source-owned portrait touch spawn pitch change; no other tracked code",
+  "rejectedExperiments": [
+    {
+      "id": "stable-shadow",
+      "patch": "Canvas shadows always set to percentage; directional light castShadow remains quality-dependent",
+      "decision": "REJECTED: no reproducible speedup"
+    },
+    {
+      "id": "fixed-floor",
+      "patch": "Floor CanvasTexture frozen at initial quality via useMemo [] (for diagnosis only); would violate correct quality/memory state",
+      "decision": "REJECTED: still substantial stalls and wrong after-switch texture resolution"
+    }
+  ],
+  "benchmarks": {
+    "baseline": [
+      {
+        "engine": "chromium",
+        "startQuality": "high",
+        "durationMs": 838.6,
+        "maximumRafGapMs": 784,
+        "frames": 5
+      },
+      {
+        "engine": "chromium",
+        "startQuality": "low",
+        "durationMs": 260.5,
+        "maximumRafGapMs": 200.2,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "high",
+        "durationMs": 981,
+        "maximumRafGapMs": 816,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "low",
+        "durationMs": 2022,
+        "maximumRafGapMs": 1818,
+        "frames": 5
+      }
+    ],
+    "stable-shadow": [
+      {
+        "engine": "chromium",
+        "startQuality": "high",
+        "durationMs": 865.7,
+        "maximumRafGapMs": 800.5,
+        "frames": 5
+      },
+      {
+        "engine": "chromium",
+        "startQuality": "low",
+        "durationMs": 261,
+        "maximumRafGapMs": 200.1,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "high",
+        "durationMs": 992,
+        "maximumRafGapMs": 834,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "low",
+        "durationMs": 2010,
+        "maximumRafGapMs": 1804,
+        "frames": 5
+      }
+    ],
+    "fixed-floor": [
+      {
+        "engine": "chromium",
+        "startQuality": "high",
+        "durationMs": 798.7,
+        "maximumRafGapMs": 733.8,
+        "frames": 5
+      },
+      {
+        "engine": "chromium",
+        "startQuality": "low",
+        "durationMs": 174.8,
+        "maximumRafGapMs": 116.8,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "high",
+        "durationMs": 940,
+        "maximumRafGapMs": 790,
+        "frames": 5
+      },
+      {
+        "engine": "webkit",
+        "startQuality": "low",
+        "durationMs": 1865,
+        "maximumRafGapMs": 1702,
+        "frames": 5
+      }
+    ]
+  },
+  "limitations": [
+    "Only one fresh-context observation per engine/starting-quality/experiment",
+    "WebKit Windows graphics backend is not equivalent to physical Safari/iPhone GPU",
+    "requestAnimationFrame gaps are not GPU frame timings",
+    "Other local agents might affect CPU/GPU, do not infer small numeric differences as causal",
+    "Both diagnostic patches were reverted before accepting the mobile composition change",
+    "Artistic image acceptance uses genuine browser screenshots; not generated concepts"
+  ],
+  "screenshots": [
+    {
+      "path": "mobile-camera-v511-chrome-390-before.webp",
+      "source": "camera-v511-before\\chromium-390x844-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 119784,
+      "sha256": "2127fe54bc41bf8b0b2b947b2832e87c54a2a00eb4ed7cf77df8966e61e5e50f",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "mobile-camera-v511-chrome-390-after.webp",
+      "source": "camera-v511-after\\chromium-390x844-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 117410,
+      "sha256": "e84b1d6a8ee78074de93ae40fecabd1d500eefdd6913c2ddd64f6cc2beb298cb",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "mobile-camera-v511-comparison.jpg",
+      "source": "v511-chromium-390x844-before-after-contact.jpg",
+      "bytes": 77032,
+      "sha256": "fa82961781ca3a7601b42669810988a1d1b7be4e00c3da7ea7d7567a08d03b8f",
+      "note": "Contact sheet resized for comparison; full resolution lossless originals above"
+    },
+    {
+      "path": "mobile-camera-v511-chrome-320-before.webp",
+      "source": "camera-v511-before\\chromium-320x760-hall.png",
+      "width": 320,
+      "height": 760,
+      "bytes": 97456,
+      "sha256": "e8f3bb80b011460a4f53b72c3d82fdc7f9dcb8305dee9188863e670ff2fa4e00",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "mobile-camera-v511-chrome-320-after.webp",
+      "source": "camera-v511-after\\chromium-320x760-hall.png",
+      "width": 320,
+      "height": 760,
+      "bytes": 96900,
+      "sha256": "edc77141f98c90aea7ead14612f3f2443b7a95b329687f2a0c75adb837cb3d06",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "mobile-camera-v511-webkit-390-before.webp",
+      "source": "camera-v511-before\\webkit-390x844-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 108994,
+      "sha256": "c443cdef6741eea5511d5c01fb256344b4d78149bfbdb7684600b5f9f56129aa",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "mobile-camera-v511-webkit-390-after.webp",
+      "source": "camera-v511-after\\webkit-390x844-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 106878,
+      "sha256": "dc499e505ddce56f04e5fd54ea905c46a0109620c2173b487894586fff513cb8",
+      "decoded_rgb_identical": true
+    }
+  ]
+}
