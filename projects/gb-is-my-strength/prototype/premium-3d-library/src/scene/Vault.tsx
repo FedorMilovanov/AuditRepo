@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { marble, wood, goldMat } from "./Platform";
 import { roofLimestone } from "./ArchitecturalPolish";
@@ -20,7 +20,10 @@ function ribCurve(index: number) {
 
 /** Opaque, physically shaded limestone roof replaces the transparent glowing dome. */
 export function Vault() {
-  const ribs = useMemo(() => Array.from({ length: RIBS }, (_, i) => new THREE.TubeGeometry(ribCurve(i), 24, 0.13, 7, false)), []);
+  // All ribs have the same profile and differ only by a rotation about Y.
+  // Reuse one tube geometry instead of allocating and drawing 20 copies.
+  const rib = useMemo(() => new THREE.TubeGeometry(ribCurve(0), 24, 0.13, 7, false), []);
+  const ribInstances = useRef<THREE.InstancedMesh>(null!);
   const shell = useMemo(() => new THREE.LatheGeometry([
     new THREE.Vector2(OC_R, OC_Y),
     new THREE.Vector2(OC_R + 0.6, OC_Y - 0.12),
@@ -29,10 +32,28 @@ export function Vault() {
     new THREE.Vector2(11.5, 10.15),
     new THREE.Vector2(COL_R, COL_Y),
   ], 112), []);
+  useLayoutEffect(() => {
+    const mesh = ribInstances.current;
+    const pivot = new THREE.Object3D();
+    for (let i = 0; i < RIBS; i++) {
+      // ribCurve(0) already contains the half-bay offset (PI/RIBS).
+      // Rotating by a whole-bay angle reproduces ribCurve(i) exactly.
+      pivot.position.set(0, 0, 0);
+      pivot.rotation.set(0, i * Math.PI * 2 / RIBS, 0);
+      pivot.scale.set(1, 1, 1);
+      pivot.updateMatrix();
+      mesh.setMatrixAt(i, pivot.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.computeBoundingSphere();
+  }, []);
+  // These geometries are created manually, not owned by JSX.
+  useEffect(() => () => { rib.dispose(); shell.dispose(); }, [rib, shell]);
   return (
     <group>
-      <mesh geometry={shell} material={roofLimestone} receiveShadow />
-      {ribs.map((geo, i) => <mesh key={i} geometry={geo} material={marble} receiveShadow />)}
+      <mesh geometry={shell} material={roofLimestone} receiveShadow dispose={null} />
+      <instancedMesh ref={ribInstances} args={[rib, marble, RIBS]}
+        receiveShadow dispose={null} />
       <mesh position={[0, OC_Y, 0]} rotation-x={Math.PI / 2} material={marble}>
         <torusGeometry args={[OC_R, 0.3, 12, 96]} />
       </mesh>
