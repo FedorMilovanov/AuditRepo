@@ -15,14 +15,16 @@ Draft PR: https://github.com/FedorMilovanov/AuditRepo/pull/543
 4. При чистой рабочей копии обнови только выбранную локальную каноническую ветку через fast-forward, либо сделай отдельный **изолированный локальный checkout** из FETCH_HEAD. Не пушь в старые `arena/7f74c768-auditrepo` или `arena/13fed2e7-auditrepo`; все дальнейшие изменения направляй в PR #543, без force-push.
 5. Внимательно прочти `README.md`, `AGENT_HANDOFF.md`, `briefs/SCENE_SPEC_42.md`, `SOURCE_PROVENANCE.md` и актуальные файлы кода. Другие прототипы, Research и Product не менять.
 
-## 2. Актуальная инженерная база
+## 2. Текущий baseline и обязательные новые gates
 
 - **42 уникальных Research ID** (29 baseline + 13 extension), 42/42 `PLACEMENTS`, 42 тематические группы объектов; это **не** 42 собственных имени Бога и **не** редакционное разрешение.
 - 8 пространственных зон, Хорив, несгорающий куст, правила снятия обуви, внешнее и внутреннее ограничения, без визуализации Бога; HTML fallback.
 - `engine/exhibitProps.ts` строит сюжетные предметы: колодцы, шатры, жертвенники, овец, пещеры, дороги, городские модели и др. `mergePropsGroup` сохраняет world transforms и fail-closed на несовместимых геометриях.
-- Проверка текущей базы: `npm ci`, `npm run build` (42 HTML-досье), `npx tsc --noEmit`, `sh tests/test.sh` **89/89 PASS** (33 contract + 50 construction + 6 placement), **Chrome 18/18 PASS** плюс **реальные E-взаимодействия 42/42 PASS**. GitHub [HOREB 3D Lab QA](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42457953509) прошёл на Linux (build+test и Chromium). Browser-стадии `tests/test.sh` могут SKIP; обязательные отдельные скрипты — `npm run test:browser:smoke` и `npm run test:browser:exhibits`.
+- Последний верифицированный до Journey & Art коммит `265d8b0b`: [CI #42564180832](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42564180832) = 3/3 SUCCESS, 127/127 engineer, 34/34 Chromium smoke, 42/42 E-досье, 8 desktop + 3 mobile-emulated. Это НЕ гарантия для новой волны.
+- Новые исходники: `tests/browser-journey.mjs` (настоящий проход WASD и возвращение без телепортов); обновлённая `SceneZones.ts` и `procedural.ts` (камень и дальний Хорив); `exhibitProps.ts` (колодец/оливы). Все проверки на **новом HEAD** обязательны.
+- Команды: `npm ci && npm run build && npx tsc --noEmit && sh tests/test.sh`, затем при поднятом dev-server `npm run test:browser:smoke`, `npm run test:browser:exhibits`, `npm run test:browser:journey`, `npm run test:browser:visual`. CI фиксирует PASS/FAIL, а не SKIP; evidence = `.test-build/journey-witness.json`, PNG и visual-witness.json. Journey на программном GPU может работать несколько минут.
 - AuditRepo `preflight` и `validate` и новый HOREB source/Chrome workflow зелёные; **всегда сверяй CI на точном текущем HEAD**.
-- В старом Chromium SwiftShader агент сообщил около **1 FPS**, это не performance approval на GPU.
+- SwiftShader в CI не является аппаратным бенчмарком; ранее RTX 3060 в Chrome показала 56–60 FPS на отдельном старом HEAD, а для нынешнего нужны новые замеры.
 - Дополнительные ветки Arena — исторические кандидаты, **не** новые канонические проекты. Их содержание уже оценено, выбор базы сделан.
 
 ## 3. Следующий практический этап: визуальные и функциональные gates
@@ -43,4 +45,4 @@ E. Research #379: сверяй каждую интерпретацию и язы
 
 Не говори «полный нуль» без реального браузерного/GPU/редакционного свидетельства. Записывай только доказанные PASS, BLOCKED и FAIL с exact SHA и командой воспроизведения. Исправляй воспроизводимые ошибки тестом и кодом **в существующем PR #543**, обновляя один `AGENT_HANDOFF.md`. Не создавай HOREB V2, дублирующие ветки и отдельные отчётные версии. Не сливай PR и не деплой Product без отдельного разрешения владельца.
 
-**Начинай с визуальной и функциональной проверки реально существующих 42 окружений, а не с ещё одного пересказа брифа.**
+**Начинай с CI новой Journey & Art волны. Исправляй только воспроизводимые баги, затем сравнивай реальные 8+3 before/after PNG; сохрани Draft/HOLD, тёмный Хорив, оба радиуса и одну ветку.**
