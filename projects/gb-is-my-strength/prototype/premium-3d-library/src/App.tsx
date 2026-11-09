@@ -128,11 +128,12 @@ export default function App() {
 /**
  * При переключении качества или входе в очки композер и материалы пересобираются —
  * без этой вуали это выглядит как мигание картинки.
+ * Фото-режим меняет только HUD, не Canvas/материалы: сплошная вуаль
+ * при входе/выходе из фото-режима не нужна и скрывает готовый 3D-кадр.
  */
 function FadeVeil() {
   const quality = useStore((s) => s.quality);
   const mode = useStore((s) => s.mode);
-  const photo = useStore((s) => s.photo);
   const xr = useStore((s) => s.xr);
   const [on, setOn] = useState(false);
   const first = useRef(true);
@@ -144,9 +145,10 @@ function FadeVeil() {
     setOn(true);
     const t = window.setTimeout(() => setOn(false), 520);
     return () => window.clearTimeout(t);
-  }, [quality, mode, photo, xr]);
+  }, [quality, mode, xr]);
   return (
     <div
+      data-gb-fade-veil
       className="pointer-events-none fixed inset-0 z-[60] bg-[#c4c1b7] transition-opacity duration-500"
       style={{ opacity: on ? 1 : 0 }}
     />

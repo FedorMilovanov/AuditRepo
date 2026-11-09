@@ -1,0 +1,301 @@
+{
+  "schema": "gb-library-v59-graphics-observations-v1",
+  "baseCommit": "6756263e066ed4c995d3e25af1a2951a79cd170b",
+  "date": "2026-11-09",
+  "environment": "DESKTOP-O3FDOA4 / Windows / RTX3060 host / headless Playwright Chromium and WebKit / DPR 1",
+  "limitations": [
+    "single sample per case",
+    "rAF rate is not GPU frame time",
+    "Windows WebKit exposed Apple GPU identity; not confirmed same GPU backend as Chrome",
+    "touch emulation is not physical phone",
+    "separate microbenchmark is not the library scene"
+  ],
+  "libraryProfiles": [
+    {
+      "engine": "webkit",
+      "quality": "high",
+      "viewport": "1440x900",
+      "renderer": "Apple GPU",
+      "vendor": "Apple Inc.",
+      "canvasPx": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": false,
+      "drawBufferWidth": 1440,
+      "drawBufferHeight": 900,
+      "frames": 105,
+      "seconds": 4.13,
+      "rAFps": 25.4,
+      "p50": 39,
+      "p95": 42,
+      "p99": 49,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "quality": "low",
+      "viewport": "1440x900",
+      "renderer": "Apple GPU",
+      "vendor": "Apple Inc.",
+      "canvasPx": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": false,
+      "drawBufferWidth": 1440,
+      "drawBufferHeight": 900,
+      "frames": 108,
+      "seconds": 4.11,
+      "rAFps": 26.29,
+      "p50": 37,
+      "p95": 45,
+      "p99": 50,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "quality": "high",
+      "viewport": "390x844",
+      "renderer": "Apple GPU",
+      "vendor": "Apple Inc.",
+      "canvasPx": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": false,
+      "drawBufferWidth": 390,
+      "drawBufferHeight": 844,
+      "frames": 179,
+      "seconds": 4.1,
+      "rAFps": 43.65,
+      "p50": 20,
+      "p95": 30,
+      "p99": 31,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "quality": "low",
+      "viewport": "390x844",
+      "renderer": "Apple GPU",
+      "vendor": "Apple Inc.",
+      "canvasPx": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": false,
+      "drawBufferWidth": 390,
+      "drawBufferHeight": 844,
+      "frames": 205,
+      "seconds": 4.12,
+      "rAFps": 49.78,
+      "p50": 16,
+      "p95": 30,
+      "p99": 31,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "quality": "high",
+      "viewport": "1440x900",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002504) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "canvasPx": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": true,
+      "drawBufferWidth": 1440,
+      "drawBufferHeight": 900,
+      "frames": 246,
+      "seconds": 4.11,
+      "rAFps": 59.82,
+      "p50": 16.7,
+      "p95": 16.8,
+      "p99": 16.8,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "quality": "low",
+      "viewport": "1440x900",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002504) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "canvasPx": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": true,
+      "drawBufferWidth": 1440,
+      "drawBufferHeight": 900,
+      "frames": 246,
+      "seconds": 4.11,
+      "rAFps": 59.81,
+      "p50": 16.7,
+      "p95": 16.8,
+      "p99": 16.8,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "quality": "high",
+      "viewport": "390x844",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002504) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "canvasPx": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": true,
+      "drawBufferWidth": 390,
+      "drawBufferHeight": 844,
+      "frames": 246,
+      "seconds": 4.11,
+      "rAFps": 59.88,
+      "p50": 16.7,
+      "p95": 16.8,
+      "p99": 16.8,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "quality": "low",
+      "viewport": "390x844",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002504) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "canvasPx": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "backingRatio": 1,
+      "extensionGpuTimer": true,
+      "drawBufferWidth": 390,
+      "drawBufferHeight": 844,
+      "frames": 246,
+      "seconds": 4.11,
+      "rAFps": 59.84,
+      "p50": 16.7,
+      "p95": 16.8,
+      "p99": 16.8,
+      "errors": []
+    }
+  ],
+  "syntheticDrawProfiles": [
+    {
+      "engine": "webkit",
+      "draws": -1,
+      "frames": 182,
+      "secs": 2.9,
+      "rAFps": 62.65,
+      "p50": 16,
+      "p95": 17,
+      "renderer": null
+    },
+    {
+      "engine": "webkit",
+      "draws": 1,
+      "frames": 186,
+      "secs": 2.92,
+      "rAFps": 63.79,
+      "p50": 16,
+      "p95": 17,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "webkit",
+      "draws": 25,
+      "frames": 173,
+      "secs": 2.91,
+      "rAFps": 59.49,
+      "p50": 17,
+      "p95": 19,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "webkit",
+      "draws": 125,
+      "frames": 161,
+      "secs": 2.91,
+      "rAFps": 55.27,
+      "p50": 17,
+      "p95": 24,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "webkit",
+      "draws": 250,
+      "frames": 152,
+      "secs": 2.92,
+      "rAFps": 52.13,
+      "p50": 19,
+      "p95": 22,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "chromium",
+      "draws": -1,
+      "frames": 170,
+      "secs": 2.9,
+      "rAFps": 58.58,
+      "p50": 16.7,
+      "p95": 16.8,
+      "renderer": null
+    },
+    {
+      "engine": "chromium",
+      "draws": 1,
+      "frames": 176,
+      "secs": 2.91,
+      "rAFps": 60.48,
+      "p50": 16.7,
+      "p95": 16.8,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "chromium",
+      "draws": 25,
+      "frames": 176,
+      "secs": 2.91,
+      "rAFps": 60.52,
+      "p50": 16.7,
+      "p95": 16.8,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "chromium",
+      "draws": 125,
+      "frames": 177,
+      "secs": 2.91,
+      "rAFps": 60.88,
+      "p50": 16.7,
+      "p95": 16.8,
+      "renderer": "WebKit WebGL"
+    },
+    {
+      "engine": "chromium",
+      "draws": 250,
+      "frames": 176,
+      "secs": 2.91,
+      "rAFps": 60.39,
+      "p50": 16.7,
+      "p95": 16.8,
+      "renderer": "WebKit WebGL"
+    }
+  ]
+}
