@@ -324,7 +324,7 @@ export default function HorebApp() {
   const gateOuter = ws?.block === 'outer' && ws.shoes === 'shod';
   const gateInner = ws?.block === 'inner';
   return (
-    <main className="fixed inset-0 bg-black text-parch select-none">
+    <main className="fixed inset-0 bg-black text-parch select-none" aria-busy={!ws && !err}>
       <canvas key={`${worldEpoch}-${resolved.quality}`} ref={canvasRef} className="absolute inset-0 w-full h-full block outline-none" tabIndex={0} aria-label="3D-сцена. Полный текст экспозиции доступен в режиме чтения." />
       <div className="fade-in-black pointer-events-none absolute inset-0 bg-black" style={{ animationDuration: settings.reducedMotion ? '0.01s' : '3s' }} />
       {!ws && !err && <p className="absolute inset-0 grid place-items-center text-muted" role="status">Камень раскрывается…</p>}
