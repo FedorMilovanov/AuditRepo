@@ -27,7 +27,8 @@ import sys
 # --- пороги по профилям ------------------------------------------------------
 TH = {
     "P1": {"pct_1sent": 12, "cv": 0.75, "words_per_h2": (350, 500), "pct_lt15": 15, "min_words": 900},
-    "P2": {"pct_1sent": 25, "cv": 0.65, "words_per_h2": (250, 500), "pct_lt15": 30, "min_words": 700},
+    # P2: по решению владельца (2026-11-09) короткие абзацы — ДЕФЕКТ, порог как P1
+    "P2": {"pct_1sent": 12, "cv": 0.75, "words_per_h2": (350, 500), "pct_lt15": 15, "min_words": 900},
     "P3": {"pct_1sent": 18, "cv": 0.75, "words_per_h2": (300, 500), "pct_lt15": 20, "min_words": 900},
     "P4": {"pct_1sent": 35, "cv": 0.55, "words_per_h2": (150, 500), "pct_lt15": 40, "min_words": 500},
     "P5": {"pct_1sent": 35, "cv": 0.55, "words_per_h2": (150, 600), "pct_lt15": 40, "min_words": 300},
@@ -131,6 +132,8 @@ def main() -> int:
         si = int(m["summary_items"])
         if 0 < si < 4:
             add("C-06", f"{si}", "4-6", "P2", "«Коротко» короче нормы")
+        elif si == 0:
+            add("C-06", "нет блока", "4-6", "P2", "«Коротко» отсутствует (обязательно везде)")
 
         rt = int(m["readingTime"])
         wpm = float(m["words_per_min"])
