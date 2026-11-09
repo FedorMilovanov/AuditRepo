@@ -8,6 +8,8 @@ import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush'
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
+import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
+import { buildZones } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -228,3 +230,43 @@ if (gardenRecord) {
 if (errors.length) console.log('errors:\n' + errors.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
+
+// Journey & Art Foundation: shared stone palette must vary in world space
+// instead of using the former periodic horizontal bands.
+const stoneField = [
+  [0, 2, -10], [-6, 4, -42], [8, 8, -90],
+  [-3, 12, -140], [2, 30, -200], [1, 5, -260],
+].map(([x, y, z]) => caveSurfaceVariation(x, y, z));
+t('3D rock coloration is deterministic, bounded and not uniformly striped',
+  stoneField.every((v) => Number.isFinite(v) && v >= 0.64 && v <= 1.2) &&
+  Math.max(...stoneField) - Math.min(...stoneField) > 0.025 &&
+  caveSurfaceVariation(0, 2, -10) === stoneField[0]);
+
+const wellRecord = EXHIBITS.find((e) => e.environmentKey === 'beersheba-well');
+if (wellRecord) {
+  const well = buildExhibitProps(wellRecord, true, 0, 0);
+  let stones = 0;
+  well.traverse((o) => { if (o.name === 'well-rim-stone') stones++; });
+  t('Beersheba well has an irregular hand-set fourteen-stone rim', stones === 14);
+}
+if (gardenRecord) {
+  const grove = buildExhibitProps(gardenRecord, true, 0, 0);
+  let branches = 0;
+  grove.traverse((o) => { if (o.name === 'olive-branch') branches++; });
+  t('Gethsemane four trees have independent visible structural branches', branches >= 24);
+}
+const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
+const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
+let distantSafe = distantCrags instanceof THREE.InstancedMesh && distantCrags.count === 32;
+if (distantCrags instanceof THREE.InstancedMesh) {
+  const matrix = new THREE.Matrix4();
+  const point = new THREE.Vector3();
+  for (let i = 0; i < distantCrags.count; i++) {
+    distantCrags.getMatrixAt(i, matrix);
+    point.setFromMatrixPosition(matrix);
+    if (!Number.isFinite(point.y) || Math.abs(point.x) <= 26 ||
+        point.z > -325 || point.z < -397) distantSafe = false;
+  }
+}
+t('distant Horeb geology frames the approach outside all navigable bounds',
+  distantSafe);

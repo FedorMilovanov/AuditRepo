@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { fbm, rng, glowTexture, shaftMaterial } from './procedural';
+import { fbm, rng, glowTexture, shaftMaterial, caveSurfaceVariation } from './procedural';
 import { halfWidth, vaultHeight, LEDGE_X, TUNNEL_END, BUSH, R_OUTER, R_INNER, chasmFactor } from './nav';
 
 export interface Obstacle { x: number; z: number; r: number }
@@ -42,7 +42,7 @@ export const chasmF = chasmFactor;
 const TINTS: [number, [number, number, number]][] = [
   [4, [0.42, 0.36, 0.3]], [-30, [0.58, 0.47, 0.35]], [-64, [0.55, 0.42, 0.32]], [-90, [0.62, 0.4, 0.29]],
   [-118, [0.55, 0.38, 0.27]], [-145, [0.6, 0.38, 0.23]], [-172, [0.4, 0.39, 0.4]], [-200, [0.33, 0.36, 0.42]],
-  [-230, [0.44, 0.39, 0.34]], [-260, [0.46, 0.4, 0.34]], [-292, [0.33, 0.33, 0.36]], [-322, [0.36, 0.37, 0.42]],
+  [-230, [0.35, 0.39, 0.42]], [-260, [0.32, 0.35, 0.41]], [-292, [0.33, 0.33, 0.36]], [-322, [0.36, 0.37, 0.42]],
 ];
 function tint(z: number): [number, number, number] {
   for (let i = 0; i < TINTS.length - 1; i++) {
@@ -102,12 +102,16 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         if (cf > 0 && ca > 0 && y < H * 0.45) y -= cf * 55 * (1 - Math.max(-1, y) / (H * 0.45));
         pos.push(x, y, z);
         bake(x * 0.8, Math.max(0, y), z, tmp);
-        const v = 0.55 + 0.6 * n;
+        const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z);
         const ao = 0.55 + 0.45 * Math.min(1, Math.max(0, y) / 3) * (1 - 0.35 * Math.max(0, y / H - 0.7));
         let vein = 1;
         if (z < -62 && z > -118) vein = 1 + 0.35 * Math.max(0, Math.sin(y * 1.7 + n * 9) - 0.85) * 6;
         col.push(tr * v * ao * tmp[0] * vein, tg * v * ao * tmp[1] * vein, tb * v * ao * tmp[2] * (vein > 1 ? 1.05 : 1));
-        uv.push((j / N) * (hw + H) * 0.5, z * 0.25);
+        // World-space domain warp breaks the long UV-aligned bands in gallery walls.
+        // Both components are continuous across z slices and keep one shared atlas.
+        const warp = fbm(x * 0.11 + 4, y * 0.13, z * 0.11 + 8, 2) - 0.5;
+        uv.push((j / N) * (hw + H) * 0.5 + warp * 0.9,
+          z * 0.25 + warp * 1.1);
       }
     }
     for (let i = 0; i < zs.length - 1; i++) for (let j = 0; j < N; j++) {
@@ -138,9 +142,10 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         fp.push(x, y, z);
         bake(x, 0, z, tmp);
         const wear = 1 + 0.12 * Math.exp(-(x * x) / 4);
-        const v = (0.45 + 0.5 * n) * wear * 0.85;
+        const v = (0.45 + 0.5 * n) * wear * 0.85 * caveSurfaceVariation(x, 0, z);
         fc.push(tr * v * tmp[0], tg * v * tmp[1], tb * v * tmp[2]);
-        fu.push(x * 0.3, z * 0.3);
+        const warp = fbm(x * 0.12, 0.5, z * 0.12, 2) - 0.5;
+        fu.push(x * 0.3 + warp * 0.4, z * 0.3 + warp * 0.5);
       }
     }
     for (let i = 0; i < zs.length - 1; i++) for (let j = 0; j < M; j++) {
@@ -304,6 +309,17 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
 
   // ── Зона 7: открытый ландшафт у Хорива
   {
+    // One elevation function for both terrain vertices and distant rock crags.
+    // Crags stay outside the player corridor and never alter the bush guards.
+    const terrainHeight = (x: number, z: number): number => {
+      const dw = Math.hypot(x / 1.3, (z - (BUSH.z + 10)) * 0.9);
+      const mask = ss(36, 150, dw);
+      const horeb = 330 * Math.exp(-((x - 30) ** 2 + (z + 760) ** 2) / (2 * 150 ** 2));
+      const ridge = Math.pow(fbm(x * 0.006, 1, z * 0.006, 5), 2.2) * 260;
+      const near = fbm(x * 0.12, 2, z * 0.12, 3) * 0.22;
+      const backWall = ss(-345, -322, z) * 60 * ss(14, 60, Math.abs(x));
+      return near + mask * (ridge + horeb * 0.9) + backWall;
+    };
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
     tg.rotateX(-Math.PI / 2);
@@ -312,13 +328,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const tc: number[] = [];
     for (let i = 0; i < p.count; i++) {
       const x = p.getX(i), z = p.getZ(i);
-      const dw = Math.hypot(x / 1.3, (z - (BUSH.z + 10)) * 0.9);
-      const mask = ss(36, 150, dw);
-      const horeb = 330 * Math.exp(-((x - 30) ** 2 + (z + 760) ** 2) / (2 * 150 ** 2));
-      const ridge = Math.pow(fbm(x * 0.006, 1, z * 0.006, 5), 2.2) * 260;
-      const near = fbm(x * 0.12, 2, z * 0.12, 3) * 0.22;
-      const backWall = ss(-345, -322, z) * 60 * ss(14, 60, Math.abs(x));
-      const y = near + mask * (ridge + horeb * 0.9) + backWall;
+      const y = terrainHeight(x, z);
       p.setY(i, y);
       const v = 0.5 + 0.5 * fbm(x * 0.05, 5, z * 0.05, 3);
       const hcol = Math.min(1, y / 200);
@@ -329,6 +339,27 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const terrainMat = rockMat.clone();
     terrainMat.side = THREE.FrontSide;
     group.add(new THREE.Mesh(tg, terrainMat));
+
+    // Deterministic distant geology frames the narrow wilderness approach.
+    // All instances are beyond x=±26m (the traversable region); no invisible
+    // collision or new lights. Heights sample the SAME terrain function.
+    const crags = new THREE.InstancedMesh(stoneGeo, stoneMat, low ? 32 : 64);
+    crags.name = 'horeb-distant-crags';
+    const cliffRng = rng(72026), cliffMatrix = new THREE.Matrix4();
+    for (let i = 0; i < crags.count; i++) {
+      const sign = i % 2 === 0 ? -1 : 1;
+      const x = sign * (29 + cliffRng() * 23);
+      const z = -326 - cliffRng() * 70;
+      const size = 1.4 + cliffRng() * 3.6;
+      cliffMatrix.compose(new THREE.Vector3(x, terrainHeight(x, z) + size * 0.24, z),
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(
+          (cliffRng() - 0.5) * 0.4, cliffRng() * Math.PI, (cliffRng() - 0.5) * 0.35)),
+        new THREE.Vector3(size * (0.7 + cliffRng() * 0.4),
+          size * (1.2 + cliffRng() * 0.8), size * (0.6 + cliffRng() * 0.4)));
+      crags.setMatrixAt(i, cliffMatrix);
+    }
+    crags.instanceMatrix.needsUpdate = true;
+    group.add(crags);
 
     // Скальная стена с выходом
     const shape = new THREE.Shape();

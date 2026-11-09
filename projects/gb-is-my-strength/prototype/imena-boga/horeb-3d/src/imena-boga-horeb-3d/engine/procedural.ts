@@ -30,6 +30,16 @@ export function rng(seed: number) {
 }
 
 // ── Процедурная текстура камня (canvas) — цвет + рельеф
+/** Stable, 3D world-space lithology modulation. No horizontal UV-striping
+ * dependency; adjacent slices share the same material field at their seams.
+ * Calculated once when meshes are built, not per animation frame.
+ */
+export function caveSurfaceVariation(x: number, y: number, z: number): number {
+  const broad = fbm(x * 0.065 + 12, y * 0.09 - 7, z * 0.052 + 3, 3);
+  const grain = fbm(x * 0.38 - 5, y * 0.27, z * 0.31 + 8, 2);
+  return Math.max(0.64, Math.min(1.2, 0.76 + broad * 0.35 + (grain - 0.5) * 0.2));
+}
+
 export function rockTextures(size = 512) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
@@ -40,9 +50,12 @@ export function rockTextures(size = 512) {
     // тайлящийся шум: усредняем по торической выборке
     const u = x / S, v = y / S;
     const n = fbm(u, v, 0.5, 5);
-    const strata = 0.5 + 0.5 * Math.sin(v * 0.9 + n * 6);
+    // Multiscale mineral deposits, not evenly spaced horizontal sine bands.
+    // Existing mirrored-repeat wrapping keeps adjacent texture tiles continuous.
+    const strata = fbm(u * 0.18 + 13, v * 0.31 - 5, 1.6, 3);
+    const grain = fbm(u * 1.7 - 21, v * 1.2 + 9, 3.4, 2);
     const crack = Math.abs(fbm(u * 0.6 + 9, v * 0.6, 3, 3) - 0.5) < 0.018 ? 0.55 : 1;
-    const val = (0.55 + 0.35 * n + 0.1 * strata) * crack;
+    const val = (0.47 + 0.31 * n + 0.16 * strata + 0.06 * grain) * crack;
     const i = (y * size + x) * 4;
     img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.min(255, val * 255);
     img.data[i + 3] = 255;

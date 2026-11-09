@@ -79,6 +79,20 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
   collar.position.set(x, 0.45, z); g.add(collar);
   const water = new THREE.Mesh(G.cyl(r - 0.05, r - 0.05, 0.04, 18), s.water);
   water.position.set(x, 0.4, z); g.add(water);
+  // The collar remains the load-bearing silhouette. Individually tilted
+  // weathered stones avoid a perfectly manufactured torus as the visible rim.
+  const random = rng((Math.round(x * 131 + z * 173) ^ 0x57211) >>> 0);
+  for (let i = 0; i < 14; i++) {
+    const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.17;
+    const rr = r + 0.02 + (random() - 0.5) * 0.12;
+    const pebble = new THREE.Mesh(G.dodec(0.24, 0), s.stone);
+    pebble.name = 'well-rim-stone';
+    pebble.position.set(x + Math.cos(a) * rr, 0.97 + (random() - 0.5) * 0.11,
+      z + Math.sin(a) * rr);
+    pebble.scale.set(0.8 + random() * 0.38, 0.45 + random() * 0.27, 0.76 + random() * 0.3);
+    pebble.rotation.set((random() - 0.5) * 0.4, a, (random() - 0.5) * 0.38);
+    g.add(pebble);
+  }
 }
 function addTamarisk(g: THREE.Group, x: number, z: number, s: Shared) {
   const trunk = new THREE.Mesh(G.cyl(0.08, 0.14, 1.8, 6), s.wood);
@@ -184,6 +198,18 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     fork.rotation.z = Math.cos(a) * 0.9;
     fork.rotation.x = Math.sin(a) * -0.9;
     g.add(fork);
+  }
+  // Structural lateral branches retain a readable silhouette even at dusk.
+  // Do not substitute large green balloon spheres for foliage.
+  for (let i = 0; i < 6; i++) {
+    const a = i * (Math.PI * 2 / 6) + random() * 0.3;
+    const b = new THREE.Mesh(G.cyl(0.017, 0.055, 0.92 + random() * 0.35, 5), s.wood);
+    b.name = 'olive-branch';
+    b.position.set(x + Math.cos(a) * 0.38, 1.52 + (random() - 0.5) * 0.24,
+      z + Math.sin(a) * 0.38);
+    b.rotation.z = Math.cos(a) * (0.9 + random() * 0.45);
+    b.rotation.x = -Math.sin(a) * (0.9 + random() * 0.45);
+    g.add(b);
   }
   for (let i = 0; i < 7; i++) {
     const a = i * Math.PI * (2 / 7) + random() * 0.35;
@@ -480,7 +506,14 @@ function addScrolls(g: THREE.Group, x: number, z: number, s: Shared) {
   addScroll(g, x + 0.4, z + 0.3, s, 0.6);
 }
 function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, n = 3) {
-  for (let i = 0; i < n; i++) { addOliveTree(g, x - 1.2 + i * 1.2, z + (i % 2) * 0.8, s, low); }
+  // Asymmetric planted grove: vary depth and spacing rather than four
+  // interpenetrating identical treetops on a straight evenly spaced line.
+  const lateral = [-2.15, -0.72, 0.98, 2.25];
+  const depth = [0.32, -0.68, 0.79, -0.21];
+  for (let i = 0; i < n; i++) {
+    addOliveTree(g, x + (lateral[i] ?? (i - n / 2) * 1.55),
+      z + (depth[i] ?? ((i % 2) ? -0.5 : 0.5)), s, low);
+  }
 }
 
 // ── Диспетчер: environmentKey → конкретные props.

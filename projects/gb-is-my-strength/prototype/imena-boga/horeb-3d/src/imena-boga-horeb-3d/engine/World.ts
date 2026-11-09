@@ -180,7 +180,8 @@ export class World {
       // Keep its physical collider aligned with actual geometry, not the old
       // abstract props anchor (the light shaft itself needs no collider).
       if (e.id === 'elohim') this.obstacles.push({ x: bx - 1.4, z: bz - 3.0, r: 1.75 });
-      else this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // other props anchors
+      else this.obstacles.push({ x: bx, z: bz,
+        r: e.environmentKey === 'beersheba-well' ? 1.45 : 0.6 }); // actual stone well radius
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
   }
