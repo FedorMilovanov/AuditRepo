@@ -60,8 +60,8 @@
       "bytes_normalized": 15314
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "f9b3c84a8b8aec1c32b5bf91245bb2bb63d9158f4bad3a60449b1779f8623b47",
-      "bytes_normalized": 15897
+      "sha256": "8e575f63ddd373f5686199dff2862d9b85343a2fb97e4ae5a0b836376155b24b",
+      "bytes_normalized": 15927
     },
     "atlas/src/components/DivineNameModal.tsx": {
       "sha256": "8b8d50efb5e484ab3e5c29e995c04484e7e6491e661d5b299d3f72d997137fb9",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "ee5204ae81b99a3c0a0371d3555569e39aa70b5be3009d56a1d00a1e510fab3e",
-      "bytes_normalized": 4400
+      "sha256": "1339a7c2a9b7d23410c86b9abb1b61644baf58fc3b91b21b21e668d59a790a8a",
+      "bytes_normalized": 5348
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -264,8 +264,8 @@
       "bytes_normalized": 18212
     },
     "sozvezdie/src/components/NameTree.tsx": {
-      "sha256": "41815fdd91b10afa398345654fbb6499cd94535816465e194e0e631b6d451473",
-      "bytes_normalized": 25161
+      "sha256": "1ef3a12a6b31117e0bd72de2dee674db0eb5bc3363fcc331b2b9df48cfce5d42",
+      "bytes_normalized": 25381
     },
     "sozvezdie/src/components/PartDivider.tsx": {
       "sha256": "8680812fc00da44ea4e6a6e1ea4b42621105510fd16b26e49de87db2f2ef1782",

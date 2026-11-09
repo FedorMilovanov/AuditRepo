@@ -13,14 +13,14 @@ interface NameTreeProps {
   motionOn?: boolean;
 }
 
-/** Inner circle: the "I AM" thread — bush → Jesus → Immanuel. */
+/** Inner circle: thematic reader thread — not identical words or lexeme derivation. */
 const INNER: { id: string; angle: number; ref: string }[] = [
   { id: "ehyeh", angle: -90, ref: "Исход 3:14" },
   { id: "ego-eimi", angle: 30, ref: "Иоанна 8:58" },
   { id: "immanuel", angle: 150, ref: "Матфея 1:23" },
 ];
 
-/** Outer circle: the nine compound names built on יהוה. */
+/** Outer circle: nine YHWH expressions with distinct referents (place, altar, city, title, predicates). */
 const OUTER_IDS = [
   "yireh",
   "rapha",
@@ -152,7 +152,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
             ЯХВЕ — личное имя Бога Израиля; оно встречается в еврейском Ветхом Завете тысячи раз, а точная частота зависит от текстового корпуса. Оно не
             «корень», от которого произошли прочие имена, — Элохим, Эль и Адонай
             самостоятельны. Но именно вокруг ЯХВЕ выстроено откровение: внутренний
-            круг — нить «Я есмь», внешний — девять имён, где ЯХВЕ стоит рядом со
+            круг — тематическая нить «Я есмь», внешний — девять разных библейских выражений, где ЯХВЕ стоит рядом со
             словом о том, чем Он является для Своего народа.
           </p>
         </Reveal>
@@ -165,7 +165,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         data-dragging={scene.dragging ? "true" : "false"}
         className={`relative mx-auto mt-12 hidden aspect-square w-full max-w-[660px] select-none md:block ${scene.dragging ? "cursor-grabbing" : "cursor-grab"}`}
         role="group"
-        aria-label="Упругая иллюстрация взаимосвязей имён Бога: имена можно потянуть мышью; Tab — перейти между именами, стрелки — к соседнему имени, Home и End — начало и конец"
+        aria-label="Иллюстрация тематических связей библейских именований: элементы можно потянуть мышью; Tab — перейти между элементами, стрелки — к соседнему, Home и End — начало и конец"
         onPointerDown={scene.onPointerDown}
         onPointerMove={scene.onPointerMove}
         onPointerUp={scene.onPointerUp}
@@ -427,10 +427,10 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
             })}
           </div>
 
-          {/* nine compound names */}
+          {/* Nine expressions containing YHWH, not nine independent proper divine names. */}
           <p className="relative pt-7 font-ui text-[8.5px] uppercase tracking-[0.3em] text-gold-500">
             <span aria-hidden className="absolute -left-7 top-[34px] h-1.5 w-1.5 translate-x-[8px] rotate-45 bg-gold-400" />
-            Девять имён с ЯХВЕ
+            Девять выражений с ЯХВЕ
           </p>
           <div className="mt-3 space-y-2">
             {OUTER_IDS.map((id) => {

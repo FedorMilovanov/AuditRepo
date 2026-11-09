@@ -96,13 +96,13 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           className="font-serif-display mt-3 text-2xl sm:text-3xl font-bold"
           style={{ color: 'var(--gb-ink)' }}
         >
-          Сводная скрижаль 36 рассмотренных имён и титулов Бога
+          Сводная скрижаль 36 исследуемых библейских выражений
         </h2>
         <p
           className="font-body-editorial mx-auto mt-2 max-w-2xl text-sm sm:text-base"
           style={{ color: 'var(--gb-muted)' }}
         >
-          Фильтруйте имена по богословской теме или нужде души, ищите по русскому названию,
+          Фильтруйте выражения по богословской теме или нужде души, ищите по русскому названию,
           оригиналу, номеру Стронга, библейскому сюжету или месту Писания.
         </p>
       </div>
@@ -164,10 +164,10 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
             borderColor: 'var(--gb-gold)',
             color: 'var(--gb-accent)',
           }}
-          title="Открыть случайное Имя Бога для вдумчивого чтения и молитвы"
+          title="Открыть случайную исследуемую позицию для вдумчивого чтения"
         >
           <Shuffle className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-          <span>Случайное Имя</span>
+          <span>Случайная позиция</span>
         </button>
       </div>
 
@@ -243,7 +243,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           style={{ borderColor: 'var(--gb-border)', backgroundColor: 'var(--gb-bg)' }}
         >
           <p className="font-body-editorial text-base" style={{ color: 'var(--gb-muted)' }}>
-            По текущим условиям поиска имён не найдено.
+            По текущим условиям поиска выражений не найдено.
           </p>
           <button
             type="button"

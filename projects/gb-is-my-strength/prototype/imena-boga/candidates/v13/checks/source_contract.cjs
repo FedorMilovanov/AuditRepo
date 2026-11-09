@@ -61,3 +61,14 @@ if(!atlasModal.includes('data-atlas-expression-type') ||
 if(atlasModal.includes('<strong>Буквальное значение:</strong>'))
   throw Error('Atlas still asserts contested etymology as a literal meaning');
 console.log('V13_ATLAS_MODAL_CLASSIFICATION_PASS');
+
+// Displayed counts describe editorial expressions, not 29/36 distinct personal names.
+const readerTree=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameTree.tsx'),'utf8');
+const atlasExplorer=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
+if(!readerTree.includes('Девять выражений с ЯХВЕ') || readerTree.includes('Девять имён с ЯХВЕ') ||
+   readerTree.includes('the nine compound names built on'))
+ throw Error('Reader constellation incorrectly treats YHWH place/altar/city titles as nine proper names');
+if(!atlasExplorer.includes('36 исследуемых библейских выражений') ||
+   atlasExplorer.includes('36 рассмотренных имён и титулов Бога'))
+ throw Error('Atlas catalogue wrongly presents 36 positions as canonical proper names');
+console.log('V13_SCOPE_LANGUAGE_CONTRACT_PASS');
