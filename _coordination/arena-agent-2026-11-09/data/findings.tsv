@@ -1,0 +1,286 @@
+profile	article	criterion	measured	norm	severity	note
+P3	anatomiya-padeniya-pyat-stadiy	B-01	57%	<=18%	P1	
+P3	anatomiya-padeniya-pyat-stadiy	B-02	0.67	>=0.75	P2	
+P3	anatomiya-padeniya-pyat-stadiy	B-04	36%	<=20%	P3	
+P3	anatomiya-padeniya-pyat-stadiy	C-01	113 сл/h2	300-500	P2	
+P3	angely-pod-mrakom-iuda-6-7-2-petra-2	B-01	66%	<=18%	P1	
+P3	angely-pod-mrakom-iuda-6-7-2-petra-2	B-04	51%	<=20%	P3	
+P3	angely-pod-mrakom-iuda-6-7-2-petra-2	C-05	0	>0	P2	нет h2-каркаса
+P3	angely-pod-mrakom-iuda-6-7-2-petra-2	D-06	68 сл/мин	150-230	P3	readingTime=24
+P3	blagovestie-mertvym-1-petra-4-5-6	B-01	83%	<=18%	P1	
+P3	blagovestie-mertvym-1-petra-4-5-6	B-04	62%	<=20%	P3	
+P3	blagovestie-mertvym-1-petra-4-5-6	C-05	0	>0	P2	нет h2-каркаса
+P3	blagovestie-mertvym-1-petra-4-5-6	D-06	80 сл/мин	150-230	P3	readingTime=19
+P3	cerkovnaya-disciplina-vlast-granicy-zashchita	B-01	53%	<=18%	P1	
+P3	cerkovnaya-disciplina-vlast-granicy-zashchita	B-04	40%	<=20%	P3	
+P3	cerkovnaya-disciplina-vlast-granicy-zashchita	C-01	131 сл/h2	300-500	P2	
+P3	chto-bibliya-nazyvaet-serdcem	B-01	27%	<=18%	P1	
+P3	chto-bibliya-nazyvaet-serdcem	B-02	0.67	>=0.75	P2	
+P3	chto-bibliya-nazyvaet-serdcem	B-04	22%	<=20%	P3	
+P3	chto-bibliya-nazyvaet-serdcem	C-01	143 сл/h2	300-500	P2	
+P3	chto-bibliya-nazyvaet-serdcem	D-06	73 сл/мин	150-230	P3	readingTime=39
+P3	duhi-v-temnice-noi-kreshchenie-pobeda	B-01	72%	<=18%	P1	
+P3	duhi-v-temnice-noi-kreshchenie-pobeda	B-04	42%	<=20%	P3	
+P3	duhi-v-temnice-noi-kreshchenie-pobeda	C-05	0	>0	P2	нет h2-каркаса
+P3	duhi-v-temnice-noi-kreshchenie-pobeda	D-06	73 сл/мин	150-230	P3	readingTime=28
+P1	dva-sezda-1884	B-01	25%	<=12%	P1	
+P1	dva-sezda-1884	B-02	0.59	>=0.75	P2	
+P1	dva-sezda-1884	B-04	20%	<=15%	P3	
+P1	dva-sezda-1884	D-01	868 сл	>=900	P1	ниже тира Мост
+P1	dva-sezda-1884	C-01	108 сл/h2	350-500	P2	
+P1	dva-sezda-1884	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	dva-sezda-1884	D-06	51 сл/мин	150-230	P3	readingTime=17
+P1	dzhon-gill-chast-1-chelovek	B-01	36%	<=12%	P1	
+P1	dzhon-gill-chast-1-chelovek	B-04	21%	<=15%	P3	
+P1	dzhon-gill-chast-1-chelovek	C-01	1261 сл/h2	350-500	P3	секции слишком длинные
+P1	dzhon-gill-chast-2-uchenyi	B-01	43%	<=12%	P1	
+P1	dzhon-gill-chast-2-uchenyi	B-04	33%	<=15%	P3	
+P1	dzhon-gill-chast-2-uchenyi	C-01	1642 сл/h2	350-500	P3	секции слишком длинные
+P1	dzhon-gill-chast-2-uchenyi	E-02	2	0	P2	прямые кавычки в теле
+P1	dzhon-gill-chast-3-nasledie	B-01	35%	<=12%	P1	
+P1	dzhon-gill-chast-3-nasledie	B-04	26%	<=15%	P3	
+P1	dzhon-gill-chast-3-nasledie	C-01	2835 сл/h2	350-500	P3	секции слишком длинные
+P3	dzhon-gill-chast-4-ekzeget	B-01	61%	<=18%	P1	
+P3	dzhon-gill-chast-4-ekzeget	D-06	62 сл/мин	150-230	P3	readingTime=71
+P3	dzhon-gill-chast-4-ekzeget	E-02	28	0	P2	прямые кавычки в теле
+P1	dzhon-gill-istoricheskiy-kontekst	B-01	40%	<=12%	P1	
+P1	dzhon-gill-istoricheskiy-kontekst	B-02	0.69	>=0.75	P2	
+P1	dzhon-gill-istoricheskiy-kontekst	B-04	18%	<=15%	P3	
+P1	dzhon-gill-istoricheskiy-kontekst	C-01	253 сл/h2	350-500	P2	
+P1	dzhon-gill-spravochnik	B-01	24%	<=12%	P1	
+P1	dzhon-gill-spravochnik	B-04	17%	<=15%	P3	
+P1	dzhon-gill-spravochnik	C-01	152 сл/h2	350-500	P2	
+P5	enoh-prorochestvoval-iuda-14-15-4q204	B-01	57%	<=35%	P1	
+P5	enoh-prorochestvoval-iuda-14-15-4q204	C-05	0	>0	P2	нет h2-каркаса
+P5	enoh-prorochestvoval-iuda-14-15-4q204	D-06	77 сл/мин	150-230	P3	readingTime=19
+P1	goneniya-i-sovest	B-01	31%	<=12%	P1	
+P1	goneniya-i-sovest	B-02	0.66	>=0.75	P2	
+P1	goneniya-i-sovest	B-04	27%	<=15%	P3	
+P1	goneniya-i-sovest	C-01	137 сл/h2	350-500	P2	
+P1	goneniya-i-sovest	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	goneniya-i-sovest	D-06	80 сл/мин	150-230	P3	readingTime=24
+P3	hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki	B-02	0.69	>=0.75	P2	
+P3	hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki	C-01	2614 сл/h2	300-500	P3	секции слишком длинные
+P3	hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki	E-02	12	0	P2	прямые кавычки в теле
+P1	iniciativnaya-gruppa	B-01	36%	<=12%	P1	
+P1	iniciativnaya-gruppa	B-02	0.69	>=0.75	P2	
+P1	iniciativnaya-gruppa	B-04	21%	<=15%	P3	
+P1	iniciativnaya-gruppa	C-01	149 сл/h2	350-500	P2	
+P1	iniciativnaya-gruppa	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	iniciativnaya-gruppa	D-06	83 сл/мин	150-230	P3	readingTime=25
+P3	kak-hranit-serdce	B-01	18%	<=18%	P2	
+P3	kak-hranit-serdce	B-02	0.53	>=0.75	P2	
+P3	kak-hranit-serdce	C-01	131 сл/h2	300-500	P2	
+P3	kak-hranit-serdce	D-06	55 сл/мин	150-230	P3	readingTime=26
+P3	kak-menyaetsya-serdce	B-01	39%	<=18%	P1	
+P3	kak-menyaetsya-serdce	B-02	0.72	>=0.75	P2	
+P3	kak-menyaetsya-serdce	C-01	179 сл/h2	300-500	P2	
+P3	kak-menyaetsya-serdce	D-06	66 сл/мин	150-230	P3	readingTime=27
+P1	kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom	B-01	57%	<=12%	P1	
+P1	kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom	B-04	30%	<=15%	P3	
+P1	kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom	C-05	0	>0	P2	нет h2-каркаса
+P1	kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom	D-06	110 сл/мин	150-230	P3	readingTime=38
+P3	kod-da-vinchi	B-01	39%	<=18%	P1	
+P3	kod-da-vinchi	B-04	25%	<=20%	P3	
+P3	kod-da-vinchi	C-01	264 сл/h2	300-500	P2	
+P1	kogda-chelovek-uhodit-ot-very	B-01	62%	<=12%	P1	
+P1	kogda-chelovek-uhodit-ot-very	B-02	0.73	>=0.75	P2	
+P1	kogda-chelovek-uhodit-ot-very	B-04	37%	<=15%	P3	
+P1	kogda-chelovek-uhodit-ot-very	C-01	127 сл/h2	350-500	P2	
+P1	kogda-uhodit-kogda-ostavatsya	B-01	61%	<=12%	P1	
+P1	kogda-uhodit-kogda-ostavatsya	B-04	41%	<=15%	P3	
+P1	kogda-uhodit-kogda-ostavatsya	C-01	115 сл/h2	350-500	P2	
+P3	krajne-li-isporcheno-serdce	B-01	29%	<=18%	P1	
+P3	krajne-li-isporcheno-serdce	B-04	21%	<=20%	P3	
+P3	krajne-li-isporcheno-serdce	E-02	4	0	P2	прямые кавычки в теле
+P3	mozhno-li-doveryat-1-enohu-kanonicheskiy-audit	B-01	61%	<=18%	P1	
+P3	mozhno-li-doveryat-1-enohu-kanonicheskiy-audit	B-04	40%	<=20%	P3	
+P3	mozhno-li-doveryat-1-enohu-kanonicheskiy-audit	C-05	0	>0	P2	нет h2-каркаса
+P3	mozhno-li-doveryat-1-enohu-kanonicheskiy-audit	D-06	82 сл/мин	150-230	P3	readingTime=42
+P3	myslennaya-zhizn-serdca	B-01	26%	<=18%	P2	
+P3	myslennaya-zhizn-serdca	B-02	0.65	>=0.75	P2	
+P3	myslennaya-zhizn-serdca	B-04	22%	<=20%	P3	
+P3	myslennaya-zhizn-serdca	C-01	158 сл/h2	300-500	P2	
+P3	myslennaya-zhizn-serdca	D-06	67 сл/мин	150-230	P3	readingTime=26
+P1	nesovershennyy-chelovek-v-nesovershennoy-cerkvi	B-01	58%	<=12%	P1	
+P1	nesovershennyy-chelovek-v-nesovershennoy-cerkvi	B-02	0.65	>=0.75	P2	
+P1	nesovershennyy-chelovek-v-nesovershennoy-cerkvi	B-04	49%	<=15%	P3	
+P1	nesovershennyy-chelovek-v-nesovershennoy-cerkvi	C-01	89 сл/h2	350-500	P2	
+P1	noch-na-kure	B-01	38%	<=12%	P1	
+P1	noch-na-kure	B-04	27%	<=15%	P3	
+P1	noch-na-kure	C-01	148 сл/h2	350-500	P2	
+P1	noch-na-kure	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	noch-na-kure	D-06	66 сл/мин	150-230	P3	readingTime=18
+P3	novoe-serdce	B-01	34%	<=18%	P1	
+P3	novoe-serdce	B-04	21%	<=20%	P3	
+P3	novoe-serdce	C-01	214 сл/h2	300-500	P2	
+P3	novoe-serdce	D-06	68 сл/мин	150-230	P3	readingTime=38
+P3	osvobozhdennoe-serdce	B-02	0.70	>=0.75	P2	
+P3	osvobozhdennoe-serdce	C-01	153 сл/h2	300-500	P2	
+P3	osvobozhdennoe-serdce	D-06	51 сл/мин	150-230	P3	readingTime=27
+P1	otreklis-ot-hrista-istoriya-cerkvi	B-01	74%	<=12%	P1	
+P1	otreklis-ot-hrista-istoriya-cerkvi	B-04	38%	<=15%	P3	
+P1	otreklis-ot-hrista-istoriya-cerkvi	C-01	133 сл/h2	350-500	P2	
+P3	otstuplenie-chto-govorit-bibliya	B-01	47%	<=18%	P1	
+P3	otstuplenie-chto-govorit-bibliya	B-04	38%	<=20%	P3	
+P3	otstuplenie-chto-govorit-bibliya	C-01	163 сл/h2	300-500	P2	
+P3	otstuplenie-chto-govorit-bibliya	D-06	145 сл/мин	150-230	P3	readingTime=18
+P3	otstuplenie-ot-very-iuda-evreyam-6	B-01	23%	<=18%	P2	
+P3	otstuplenie-ot-very-iuda-evreyam-6	B-02	0.62	>=0.75	P2	
+P3	otstuplenie-ot-very-iuda-evreyam-6	B-04	23%	<=20%	P3	
+P3	otstuplenie-ot-very-iuda-evreyam-6	C-01	187 сл/h2	300-500	P2	
+P3	otstuplenie-ot-very-iuda-evreyam-6	D-06	120 сл/мин	150-230	P3	readingTime=42
+P1	otstupniki-biblii-iuda-saul-ierovoam-dimas	B-01	62%	<=12%	P1	
+P1	otstupniki-biblii-iuda-saul-ierovoam-dimas	B-02	0.72	>=0.75	P2	
+P1	otstupniki-biblii-iuda-saul-ierovoam-dimas	B-04	39%	<=15%	P3	
+P1	otstupniki-biblii-iuda-saul-ierovoam-dimas	C-01	137 сл/h2	350-500	P2	
+P1	peterburgskaya-liniya	B-01	28%	<=12%	P1	
+P1	peterburgskaya-liniya	B-02	0.59	>=0.75	P2	
+P1	peterburgskaya-liniya	B-04	20%	<=15%	P3	
+P1	peterburgskaya-liniya	C-01	151 сл/h2	350-500	P2	
+P1	peterburgskaya-liniya	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	peterburgskaya-liniya	D-06	86 сл/мин	150-230	P3	readingTime=21
+P1	petr-i-iuda-padenie-ili-otstuplenie	B-01	47%	<=12%	P1	
+P1	petr-i-iuda-padenie-ili-otstuplenie	B-02	0.65	>=0.75	P2	
+P1	petr-i-iuda-padenie-ili-otstuplenie	B-04	35%	<=15%	P3	
+P1	petr-i-iuda-padenie-ili-otstuplenie	C-01	136 сл/h2	350-500	P2	
+P1	podpolnaya-pechat	B-01	35%	<=12%	P1	
+P1	podpolnaya-pechat	B-02	0.68	>=0.75	P2	
+P1	podpolnaya-pechat	B-04	24%	<=15%	P3	
+P1	podpolnaya-pechat	C-01	116 сл/h2	350-500	P2	
+P1	podpolnaya-pechat	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	podpolnaya-pechat	D-06	76 сл/мин	150-230	P3	readingTime=23
+P2	podrostok-za-kadrom-chto-delat-tserkvi	B-01	71%	<=25%	P1	
+P2	podrostok-za-kadrom-chto-delat-tserkvi	B-04	55%	<=30%	P3	
+P2	podrostok-za-kadrom-chto-delat-tserkvi	C-01	183 сл/h2	250-500	P2	
+P2	podrostok-za-kadrom-chto-delat-tserkvi	D-06	103 сл/мин	150-230	P3	readingTime=39
+P2	podrostok-za-kadrom-dvoynaya-zhizn	B-01	42%	<=25%	P1	
+P2	podrostok-za-kadrom-dvoynaya-zhizn	B-04	31%	<=30%	P3	
+P2	podrostok-za-kadrom-dvoynaya-zhizn	C-01	241 сл/h2	250-500	P2	
+P2	podrostok-za-kadrom-dvoynaya-zhizn	D-06	121 сл/мин	150-230	P3	readingTime=32
+P2	podrostok-za-kadrom-roditelyam-posle-razoblacheniya	B-01	57%	<=25%	P1	
+P2	podrostok-za-kadrom-roditelyam-posle-razoblacheniya	B-04	43%	<=30%	P3	
+P2	podrostok-za-kadrom-roditelyam-posle-razoblacheniya	C-01	206 сл/h2	250-500	P2	
+P2	podrostok-za-kadrom-roditelyam-posle-razoblacheniya	D-06	115 сл/мин	150-230	P3	readingTime=43
+P1	priznaki-zdorovoy-cerkvi	B-01	60%	<=12%	P1	
+P1	priznaki-zdorovoy-cerkvi	B-02	0.61	>=0.75	P2	
+P1	priznaki-zdorovoy-cerkvi	B-04	44%	<=15%	P3	
+P1	priznaki-zdorovoy-cerkvi	C-01	83 сл/h2	350-500	P2	
+P3	religioznoe-serdce	B-01	25%	<=18%	P2	
+P3	religioznoe-serdce	B-02	0.67	>=0.75	P2	
+P3	religioznoe-serdce	C-01	157 сл/h2	300-500	P2	
+P3	religioznoe-serdce	D-06	48 сл/мин	150-230	P3	readingTime=26
+P3	rimlyanam-7-veruyushchiy-ili-neveruyushchiy	B-01	32%	<=18%	P1	
+P3	rimlyanam-7-veruyushchiy-ili-neveruyushchiy	B-04	29%	<=20%	P3	
+P3	rimlyanam-7-veruyushchiy-ili-neveruyushchiy	C-01	264 сл/h2	300-500	P2	
+P3	rimlyanam-7-veruyushchiy-ili-neveruyushchiy	D-06	64 сл/мин	150-230	P3	readingTime=45
+P3	sem-tipov-razlichenie-uchiteley	B-01	30%	<=18%	P1	
+P3	sem-tipov-razlichenie-uchiteley	C-01	158 сл/h2	300-500	P2	
+P3	serdce-hrista-k-nemoshchnym	B-01	26%	<=18%	P2	
+P3	serdce-hrista-k-nemoshchnym	D-06	110 сл/мин	150-230	P3	readingTime=44
+P3	serdce-hrista-k-nemoshchnym	E-02	6	0	P2	прямые кавычки в теле
+P3	serdce-i-duh	B-01	33%	<=18%	P1	
+P3	serdce-i-duh	B-04	22%	<=20%	P3	
+P3	serdce-i-duh	C-01	271 сл/h2	300-500	P2	
+P3	serdce-i-duh	D-06	84 сл/мин	150-230	P3	readingTime=42
+P3	serdce-i-iskushenie	B-01	36%	<=18%	P1	
+P3	serdce-i-iskushenie	B-04	25%	<=20%	P3	
+P3	serdce-i-iskushenie	C-01	178 сл/h2	300-500	P2	
+P3	serdce-i-iskushenie	D-06	68 сл/мин	150-230	P3	readingTime=26
+P3	serdce-i-sokrovishche	B-01	29%	<=18%	P1	
+P3	serdce-i-sokrovishche	B-02	0.67	>=0.75	P2	
+P3	serdce-i-sokrovishche	B-04	29%	<=20%	P3	
+P3	serdce-i-sokrovishche	C-01	138 сл/h2	300-500	P2	
+P3	serdce-i-sokrovishche	D-06	55 сл/мин	150-230	P3	readingTime=25
+P3	serdce-i-telo	B-01	19%	<=18%	P2	
+P3	serdce-i-telo	B-02	0.59	>=0.75	P2	
+P3	serdce-i-telo	C-01	139 сл/h2	300-500	P2	
+P3	serdce-i-telo	D-06	67 сл/мин	150-230	P3	readingTime=23
+P3	serdce-i-yazyk	B-01	20%	<=18%	P2	
+P3	serdce-i-yazyk	B-02	0.69	>=0.75	P2	
+P3	serdce-i-yazyk	C-01	156 сл/h2	300-500	P2	
+P3	serdce-i-yazyk	D-06	69 сл/мин	150-230	P3	readingTime=25
+P3	serdce-ne-v-odinochku	B-02	0.50	>=0.75	P2	
+P3	serdce-ne-v-odinochku	C-01	128 сл/h2	300-500	P2	
+P3	serdce-ne-v-odinochku	D-06	52 сл/мин	150-230	P3	readingTime=27
+P3	serdce-pod-skorbyu	B-02	0.52	>=0.75	P2	
+P3	serdce-pod-skorbyu	C-01	169 сл/h2	300-500	P2	
+P3	serdce-pod-skorbyu	D-06	60 сл/мин	150-230	P3	readingTime=28
+P3	serdce-spravochnik	B-01	71%	<=18%	P1	
+P3	serdce-spravochnik	B-04	57%	<=20%	P3	
+P3	serdce-spravochnik	D-01	321 сл	>=900	P1	ниже тира Мост
+P3	serdce-spravochnik	C-01	32 сл/h2	300-500	P2	
+P3	serdce-spravochnik	D-06	14 сл/мин	150-230	P3	readingTime=23
+P3	skrytye-idoly-serdca	B-01	22%	<=18%	P2	
+P3	skrytye-idoly-serdca	B-02	0.63	>=0.75	P2	
+P3	skrytye-idoly-serdca	C-01	205 сл/h2	300-500	P2	
+P3	skrytye-idoly-serdca	D-06	79 сл/мин	150-230	P3	readingTime=26
+P2	sovershennoletie-roditelskaya-vlast-chto-menyaetsya	B-01	82%	<=25%	P1	
+P2	sovershennoletie-roditelskaya-vlast-chto-menyaetsya	B-04	70%	<=30%	P3	
+P2	sovershennoletie-roditelskaya-vlast-chto-menyaetsya	C-01	107 сл/h2	250-500	P2	
+P2	sovershennoletie-roditelskaya-vlast-chto-menyaetsya	D-06	95 сл/мин	150-230	P3	readingTime=35
+P3	sovest-vnutrenniy-sud	B-01	29%	<=18%	P1	
+P3	sovest-vnutrenniy-sud	B-02	0.68	>=0.75	P2	
+P3	sovest-vnutrenniy-sud	B-04	23%	<=20%	P3	
+P3	sovest-vnutrenniy-sud	C-01	188 сл/h2	300-500	P2	
+P3	sovest-vnutrenniy-sud	D-06	69 сл/мин	150-230	P3	readingTime=30
+P1	sovetskaya-noch	B-01	23%	<=12%	P1	
+P1	sovetskaya-noch	B-02	0.51	>=0.75	P2	
+P1	sovetskaya-noch	C-01	132 сл/h2	350-500	P2	
+P1	sovetskaya-noch	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	sovetskaya-noch	D-06	66 сл/мин	150-230	P3	readingTime=28
+P1	spravochnik	B-01	71%	<=12%	P1	
+P1	spravochnik	B-04	67%	<=15%	P3	
+P1	spravochnik	C-01	88 сл/h2	350-500	P2	
+P1	spravochnik	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	spravochnik	D-06	36 сл/мин	150-230	P3	readingTime=27
+P3	starye-dorozhki-serdca	B-01	23%	<=18%	P2	
+P3	starye-dorozhki-serdca	B-02	0.65	>=0.75	P2	
+P3	starye-dorozhki-serdca	B-04	23%	<=20%	P3	
+P3	starye-dorozhki-serdca	C-01	166 сл/h2	300-500	P2	
+P3	starye-dorozhki-serdca	D-06	71 сл/мин	150-230	P3	readingTime=28
+P1	steven-lawson-samoobman-i-publichnyy-golos	B-01	38%	<=12%	P1	
+P1	steven-lawson-samoobman-i-publichnyy-golos	B-04	25%	<=15%	P3	
+P3	strah-bozhij-rabskij-ili-synovnij	B-01	42%	<=18%	P1	
+P3	strah-bozhij-rabskij-ili-synovnij	B-04	21%	<=20%	P3	
+P3	strah-bozhij-rabskij-ili-synovnij	C-01	173 сл/h2	300-500	P2	
+P3	strah-bozhij-rabskij-ili-synovnij	D-06	55 сл/мин	150-230	P3	readingTime=25
+P3	svoboda-vo-hriste	B-01	37%	<=18%	P1	
+P3	svoboda-vo-hriste	B-04	29%	<=20%	P3	
+P3	svoboda-vo-hriste	C-01	159 сл/h2	300-500	P2	
+P3	svoboda-vo-hriste	D-06	61 сл/мин	150-230	P3	readingTime=26
+P3	teksty-pisaniya-kotorymi-manipuliruyut	B-01	36%	<=18%	P1	
+P3	teksty-pisaniya-kotorymi-manipuliruyut	C-01	120 сл/h2	300-500	P2	
+P3	teksty-pisaniya-kotorymi-manipuliruyut	D-06	103 сл/мин	150-230	P3	readingTime=14
+P3	tma-na-serdce	B-01	31%	<=18%	P1	
+P3	tma-na-serdce	B-02	0.70	>=0.75	P2	
+P3	tma-na-serdce	C-01	194 сл/h2	300-500	P2	
+P3	tma-na-serdce	D-06	75 сл/мин	150-230	P3	readingTime=26
+P3	vernye-i-neizvestnye-zdorovoe-pastyrstvo	B-01	41%	<=18%	P1	
+P3	vernye-i-neizvestnye-zdorovoe-pastyrstvo	B-02	0.70	>=0.75	P2	
+P3	vernye-i-neizvestnye-zdorovoe-pastyrstvo	B-04	28%	<=20%	P3	
+P3	vernye-i-neizvestnye-zdorovoe-pastyrstvo	C-01	137 сл/h2	300-500	P2	
+P1	vsehib-1944	B-01	25%	<=12%	P1	
+P1	vsehib-1944	B-02	0.47	>=0.75	P2	
+P1	vsehib-1944	C-01	107 сл/h2	350-500	P2	
+P1	vsehib-1944	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	vsehib-1944	D-06	66 сл/мин	150-230	P3	readingTime=26
+P2	vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti	B-01	85%	<=25%	P1	
+P2	vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti	B-04	67%	<=30%	P3	
+P2	vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti	C-01	116 сл/h2	250-500	P2	
+P2	vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti	D-06	111 сл/мин	150-230	P3	readingTime=42
+P2	vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya	B-01	77%	<=25%	P1	
+P2	vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya	B-04	61%	<=30%	P3	
+P2	vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya	C-01	131 сл/h2	250-500	P2	
+P2	vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya	D-06	94 сл/мин	150-230	P3	readingTime=36
+P2	vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie	B-01	71%	<=25%	P1	
+P2	vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie	B-04	62%	<=30%	P3	
+P2	vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie	C-01	152 сл/h2	250-500	P2	
+P2	vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie	D-06	91 сл/мин	150-230	P3	readingTime=37
+P1	yuzhnaya-shtunda	B-01	40%	<=12%	P1	
+P1	yuzhnaya-shtunda	B-02	0.67	>=0.75	P2	
+P1	yuzhnaya-shtunda	B-04	20%	<=15%	P3	
+P1	yuzhnaya-shtunda	D-01	711 сл	>=900	P1	ниже тира Мост
+P1	yuzhnaya-shtunda	C-01	102 сл/h2	350-500	P2	
+P1	yuzhnaya-shtunda	C-06	3	4-6	P2	«Коротко» короче нормы
+P1	yuzhnaya-shtunda	D-06	36 сл/мин	150-230	P3	readingTime=20
