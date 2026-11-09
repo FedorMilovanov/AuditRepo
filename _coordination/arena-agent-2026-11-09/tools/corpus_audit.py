@@ -94,6 +94,35 @@ def n_sent(p: str) -> int:
 
 # --- метрики ----------------------------------------------------------------
 
+def _markdown_summary_items(text: str):
+    """Пункты блока "## Коротко" в markdown-виде. None = блока нет."""
+    lines = text.split("\n")
+    start = None
+    for i, line in enumerate(lines):
+        if re.match(r"^##\s*Коротко\s*$", line.strip()):
+            start = i + 1
+            break
+    if start is None:
+        return None
+    n = 0
+    stopped = False
+    for line in lines[start:]:
+        st = line.strip()
+        if not st:
+            continue
+        # конец блока: заголовок в любом виде (markdown или HTML)
+        if re.match(r"^#{1,2}\s", st) or re.match(r"^<h[12][\s>]", st, re.I):
+            break
+        # после первого не-пункта блок закончился (защита от списков в теле)
+        if re.match(r"^(\d+[.)]|[-*])\s+\S", st):
+            if stopped:
+                break
+            n += 1
+        else:
+            stopped = True
+    return n
+
+
 def measure(path: str) -> dict:
     raw = open(path, encoding="utf-8").read()
     is_html = path.endswith(".html")
@@ -106,8 +135,17 @@ def measure(path: str) -> dict:
     heads = re.findall(r"<h2[^>]*>(.*?)</h2>", strip_fm(raw), flags=re.S | re.I)
     heads = [re.sub(r"<[^>]+>", "", h).strip() for h in heads]
 
+    # два варианта блока: HTML summary-card и markdown "## Коротко"
     sm = re.search(r"summary-card(.{0,12000}?)</section>", strip_fm(raw), re.S)
-    summary_items = len(re.findall(r"summary-card__item", sm.group(1))) if sm else 0
+    if sm:
+        summary_items = len(re.findall(r"summary-card__item", sm.group(1)))
+        summary_kind = "html"
+    else:
+        items = _markdown_summary_items(strip_fm(raw))
+        if items is None:
+            summary_items, summary_kind = 0, "none"
+        else:
+            summary_items, summary_kind = items, "markdown"
 
     rt = re.search(r"readingTime:\s*(\d+)", raw)
     rt = int(rt.group(1)) if rt else 0
@@ -127,6 +165,7 @@ def measure(path: str) -> dict:
         "no_h2": 1 if not heads else 0,
         "short_h2": sum(1 for h in heads if len(h.split()) <= 4),
         "summary_items": summary_items,
+        "summary_kind": summary_kind,
         "readingTime": rt,
         "words_per_min": w / max(rt, 1),
         "straight_quotes": body.count(Q),
@@ -181,7 +220,7 @@ def main() -> int:
 
     # --- TSV
     cols = ["article", "words", "paras", "cv", "median", "pct_1sent", "pct_lt15",
-            "h2", "words_per_h2", "no_h2", "short_h2", "summary_items", "readingTime",
+            "h2", "words_per_h2", "no_h2", "short_h2", "summary_items", "summary_kind", "readingTime",
             "words_per_min", "straight_quotes", "short_dash", "hyphen_dash", "yo"]
     if a.dossier_dir:
         cols += ["years_missing", "names_missing"]
@@ -213,6 +252,10 @@ def main() -> int:
     print(f"статей с «Коротко» <4 пунктов    : "
           f"{sum(1 for r in rows if 0 < r['summary_items'] < 4)} "
           f"(нет блока: {sum(1 for r in rows if r['summary_items'] == 0)})")
+    print(f"«Коротко» HTML / markdown / нет  : "
+          f"{sum(1 for r in rows if r['summary_kind']=='html')} / "
+          f"{sum(1 for r in rows if r['summary_kind']=='markdown')} / "
+          f"{sum(1 for r in rows if r['summary_kind']=='none')}")
     print(f"readingTime вне 150–230 сл/мин   : "
           f"{sum(1 for r in rows if r['readingTime'] and not 150 <= r['words_per_min'] <= 230)}")
     print(f"прямых кавычек в теле            : {sum(r['straight_quotes'] for r in rows)}")
