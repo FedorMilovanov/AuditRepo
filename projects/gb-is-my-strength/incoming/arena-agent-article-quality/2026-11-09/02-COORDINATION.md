@@ -70,3 +70,21 @@ Severity: `blocker` / `risk` / `signal-only`. `signal-only` в счёт баго
 - Коммит ограничен одной папкой `incoming/arena-agent-article-quality/`; `MASTER_BUG_MATRIX.md`, `WORK_QUEUE.md`, `SYSTEM_THEMES.md`, `CLOSURE_LEDGER.md` и любые Product-файлы не затрагиваются.
 - Слияние трёх матриц, дедупликация по системным причинам и допуск строк в активную матрицу по-прежнему требуют отдельного решения владельца.
 - Фактический commit SHA и результат `git push` фиксируются в ответе владельцу и в `git log` ветки.
+
+---
+
+## 8. Подтверждено: три отдельные ветки (2026-11-09)
+
+Владелец оказался прав — агенты действительно разошлись по веткам. Проверено `gh api repos/FedorMilovanov/AuditRepo/branches`:
+
+| Ветка | Роль | Артефакты |
+|---|---|---|
+| `arena/c6d6c46c-auditrepo` | **я, coordinator** | 8 файлов в `incoming/arena-agent-article-quality/2026-11-09/` |
+| `arena/a33be340-auditrepo` | агент прозы baptisty | `incoming/arena-agent/2026-11-09/` (2 файла) + `_coordination/arena-agent-2026-11-09/` (8 файлов, 3 TSV, 2 скрипта) |
+| `arena/0b6f34f6-auditrepo` | агент всех 111 маршрутов | `incoming/arena-all-articles-audit/2026-11-09/` (`REPORT.md` 65 КБ + `ALL_ARTICLES_MATRIX.csv`) |
+
+**Правила, применённые мной:** чужие ветки читались только через `gh api /contents?ref=...`; ни одного `checkout`, `commit` или `push` в чужую ветку. Пересечений по путям нет: у всех свои каталоги `incoming/<agent>/`. Мой коммит ограничен `incoming/arena-agent-article-quality/`.
+
+**Решения владельца, полученные другим агентом и учтённые здесь:** «P2 — дефект, пороги приравнены к P1»; «тиры вручную не назначаются, супер-маленькие и странные статьи — баг»; «„Коротко“ обязательно везде, 4–6 пунктов, складное». Последнее отменяет мою жанровую поправку по справочнику — см. `MATRIX-A.md` `AAQ-A-030`.
+
+**Сводка и дедупликация:** `03-CROSS_AGENT_SYNTHESIS.md` (8 системных причин, existing owners, 6 вопросов владельцу). Активная `MASTER_BUG_MATRIX.md` не изменялась; допуск строк остаётся за владельцем.

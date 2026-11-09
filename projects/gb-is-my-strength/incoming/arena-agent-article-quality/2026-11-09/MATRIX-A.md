@@ -90,3 +90,14 @@
 - Подсчёт `gterm=33` — только по 10 `baptisty-rossii/*Body.astro`; вынесенные компоненты (`BaptistyHistoricalMedia.astro`, `SeriesReaderChrome.astro`) и runtime-инъекция `data/glossary.json` в этот счёт не входят.
 - Browser/runtime confirmation по `AAQ-A-024` **не выполнялась**; статус намеренно не повышен до `verified`.
 - Правки Product не производились; `MASTER_BUG_MATRIX.md` не тронут.
+
+---
+
+## Третий проход (2026-11-09): поправки после кросс-агентной сверки
+
+| ID | Файл / route | Критерий | Что найдено | Доказательство (anchor) | Жанровая поправка | Severity | Статус | Владелец |
+|---|---|---|---|---|---|---|---|---|
+| `AAQ-A-029` | все 10 baptisty-маршрутов | C07 / C23 / SYS-1 | **Layer split.** `index.astro` рендерит `Body.astro`, MDX не подключены; 9 MDX = 15 136 слов, 10 Body = 27 608, Jaccard 8-словных шинглов 0.004 / 0.041 / 0.515. Любая метрика полноты/`readingTime` по MDX не описывает живую страницу | Product `5e2db6f0…`: `src/pages/baptisty-rossii/*/index.astro`; подсчёт слов и Jaccard в `03-CROSS_AGENT_SYNTHESIS.md` §2 | `supersedes:` все строки C07 группы A, включая снятые в предыдущем проходе | `risk` (systemic) | `verified-at-anchor` | agent-a |
+| `AAQ-A-030` | `spravochnik` | C06 / S17 | **Снятие снятия.** `AAQ-A-026` отзывается: решение владельца «„Коротко“ обязательно везде, 4–6 пунктов, складное» зафиксировано в `STATUS.md` ветки `arena/a33be340-auditrepo`. Отсутствие блока у справочника перестаёт быть жанровым исключением | внешний witness, read-only `gh api`, 2026-11-09 | owner decision выше жанровой таблицы `00-CRITERIA.md` §4 | `risk` | `supersedes: AAQ-A-026` | agent-a |
+
+**Итог группы A:** 21 файл, baseline + 10/10 live + layer-проверка. Активны `AAQ-A-024` (candidate, browser check), `AAQ-A-025` (3 статьи, S17), `AAQ-A-029` (systemic), `AAQ-A-030` (справочник, S17). Положительные `AAQ-A-027/028` сохранены. Остальные baseline-сигналы сняты или остаются `signal-only`.
