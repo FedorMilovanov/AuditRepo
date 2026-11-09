@@ -116,8 +116,8 @@
       "bytes_normalized": 16788
     },
     "atlas/src/data/divineNames.ts": {
-      "sha256": "62a3accba1a0f29c571d7312f0f98aab3fed8855d7f60b2734cffa2ea96abc27",
-      "bytes_normalized": 144417
+      "sha256": "9dfcd1a78dd3d331b5cee24ce2965da36ba1de62c4c83fbc64413175019b238e",
+      "bytes_normalized": 144965
     },
     "atlas/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
