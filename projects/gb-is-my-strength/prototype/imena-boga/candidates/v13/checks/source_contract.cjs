@@ -89,6 +89,14 @@ if (!atlasUiSummary.includes("label: 'библейских выражений'")
  throw Error('Atlas editorial count regressed from positions to proper names');
 console.log('V13_ATLAS_EDITORIAL_POSITION_COUNT_PASS');
 
+const atlasUiHero=fs.readFileSync(path.join(root,'atlas','src','components','SacredAstrolabeHero.tsx'),'utf8');
+if (!atlasUiHero.includes('Сводная схема · 36 позиций') ||
+    atlasUiHero.includes('Созвездие 36 рассмотренных имён') ||
+    atlasUiHero.includes('36 именований и формул (еврейский'))
+ throw Error('Atlas hero mislabeled its internal 36-position overview as canonical names');
+console.log('V13_ATLAS_HERO_SCOPE_PASS');
+
+
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');
 if(readerSection.includes('«Я есмь» и составные имена') ||

@@ -533,7 +533,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
             Автор-редактор: <strong style={{ color: 'var(--gb-ink)' }}>Фёдор Милованов</strong>
           </span>
           <span aria-hidden="true">·</span>
-          <span>36 именований и формул (еврейский, арамейский, греческий)</span>
+          <span>36 исследуемых выражений (еврейский, арамейский, греческий)</span>
           <span aria-hidden="true">·</span>
           <span>Пять тематических частей</span>
           <span aria-hidden="true">·</span>
@@ -568,7 +568,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
             }}
           >
             <Compass className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
-            <span>Созвездие 36 рассмотренных имён</span>
+            <span>Сводная схема · 36 позиций</span>
           </button>
         </div>
 
