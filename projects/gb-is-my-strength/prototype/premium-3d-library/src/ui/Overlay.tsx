@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { BASE, ITEMS, TOUR, byId, itemPos, type Item } from "../data";
 import ProgressPanel from "../progression/ProgressPanel";
 import CabinetPanel from "../cabinet/CabinetPanel";
@@ -106,12 +107,11 @@ function Intro({ onProgress, onCabinet }: { onProgress: () => void; onCabinet: (
   const phase = useApp((s) => s.phase);
   const ready = useApp((s) => s.ready);
   const xrSupported = useApp((s) => s.xrSupported);
-  const sitemap = useApp((s) => s.sitemap);
   if (phase !== "intro" || !ready) return null;
   return (
-    <div className="pointer-events-none fixed inset-0 z-20 flex flex-col justify-between p-5 sm:p-8">
+    <div data-gb-intro className="pointer-events-auto fixed inset-0 z-20 flex flex-col justify-between gap-6 overflow-x-hidden overflow-y-auto overscroll-y-contain p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] pt-[calc(1.25rem+env(safe-area-inset-top,0px))] sm:p-8">
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#181c1a]/85 via-[#181c1a]/40 to-transparent sm:via-[#181c1a]/25" />
-      <header className="fade-up flex items-start justify-between gap-4">
+      <header className="fade-up flex shrink-0 items-start justify-between gap-4">
         <div className="glass pointer-events-auto flex items-center gap-3 rounded-full py-2 pl-2 pr-5">
           <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-b from-[#f9f1dc] to-[#b49a73] font-display text-lg font-semibold text-[#24231f]">Г</span>
           <span className="font-display text-lg leading-none">
@@ -120,7 +120,7 @@ function Intro({ onProgress, onCabinet }: { onProgress: () => void; onCabinet: (
           </span>
         </div>
         <div className="flex gap-2">
-          <Btn onClick={() => toggleSitemap(true)}>
+          <Btn onClick={() => toggleSitemap(true)} title="Карта сайта">
             <Ico d={I.map} /> <span className="hidden sm:inline">Карта сайта</span>
           </Btn>
           <a
@@ -132,7 +132,7 @@ function Intro({ onProgress, onCabinet }: { onProgress: () => void; onCabinet: (
         </div>
       </header>
 
-      <main className="max-w-2xl pb-2">
+      <main className="max-w-2xl shrink-0 pb-2">
         <div className="fade-up mb-4 inline-flex items-center gap-2 rounded-full border border-[#d8b88d]/40 bg-black/30 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-[#d8b88d] backdrop-blur" style={{ animationDelay: "0.1s" }}>
           <span className="h-1.5 w-1.5 rounded-full bg-[#d8b88d]" /> Аввакум 3:19
         </div>
@@ -201,7 +201,6 @@ function Intro({ onProgress, onCabinet }: { onProgress: () => void; onCabinet: (
           {!xrSupported && !coarse && <span className="text-[#d8b88d]/70">VR: откройте страницу в браузере шлема (Quest, Pico) — появится кнопка «Войти в VR»</span>}
         </div>
       </main>
-      {sitemap ? null : null}
     </div>
   );
 }
@@ -553,6 +552,61 @@ function SitemapPanel() {
   const phase = useApp((s) => s.phase);
   const visited = useApp((s) => s.visited);
   const [q, setQ] = useState("");
+  const panelRef = useRef<HTMLElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    const root = document.getElementById("root");
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const wasInert = root?.inert ?? false;
+
+    // The dialog is portaled to document.body, not a child of #root.
+    // Inert prevents both background keyboard focus and AT traversal.
+    if (root) root.inert = true;
+    searchRef.current?.focus({ preventScroll: true });
+    return () => {
+      if (root) root.inert = wasInert;
+      if (trigger?.isConnected && trigger !== document.body) {
+        trigger.focus({ preventScroll: true });
+      } else {
+        // Touch Safari/WebKit does not focus buttons on tap. Restore to the
+        // logical opener even when activeElement was BODY before the dialog.
+        const selector = phase === "intro"
+          ? '[data-gb-intro] button[title="Карта сайта"]'
+          : window.matchMedia("(min-width: 1280px)").matches
+            ? '[data-gb-toolbar] button[title="Карта сайта (M)"]'
+            : '[data-gb-toolbar] button[title="Карта сайта"]';
+        document.querySelector<HTMLElement>(selector)?.focus({ preventScroll: true });
+      }
+    };
+  }, [open, phase]);
+
+  const onDialogKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSitemap(false);
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const nodes = Array.from(panelRef.current?.querySelectorAll<HTMLElement>(
+      'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
+    ) ?? []).filter((node) => node.getClientRects().length > 0 && !node.inert);
+    if (!nodes.length) {
+      event.preventDefault();
+      return;
+    }
+    // WebKit desktop may skip button elements in native Tab navigation,
+    // depending on Full Keyboard Access. Explicitly advance within the
+    // actual visible controls so focus never leaves the modal in that mode.
+    const index = nodes.indexOf(document.activeElement as HTMLElement);
+    const nextIndex = event.shiftKey
+      ? (index <= 0 ? nodes.length - 1 : index - 1)
+      : (index < 0 || index === nodes.length - 1 ? 0 : index + 1);
+    event.preventDefault();
+    nodes[nextIndex].focus();
+  };
   if (!open) return null;
   const query = q.trim().toLowerCase();
   const match = (it: Item) => !query || (it.title + " " + it.desc + " " + it.label + " " + it.tags.join(" ") + " " + (it.spine || "")).toLowerCase().includes(query);
@@ -560,24 +614,37 @@ function SitemapPanel() {
   const cards = ITEMS.filter((i) => (i.kind === "card" || i.kind === "lectern") && match(i));
   const tomes = ITEMS.filter((i) => i.kind === "tome" && match(i));
   const empty = sections.length + cards.length + tomes.length === 0;
-  return (
-    <div className="fixed inset-0 z-30 flex justify-end bg-black/30 backdrop-blur-[2px]" onClick={() => toggleSitemap(false)}>
-      <aside onClick={(e) => e.stopPropagation()} className="glass scroll-thin fade-up flex h-full w-full max-w-md flex-col overflow-y-auto !rounded-none !border-y-0 !border-r-0 p-5 sm:p-6">
+  return createPortal(
+    <div data-gb-sitemap-backdrop className="fixed inset-0 z-30 flex justify-end bg-black/30 backdrop-blur-[2px]" onClick={() => toggleSitemap(false)}>
+      <aside
+        data-gb-sitemap-dialog
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gb-sitemap-title"
+        onKeyDown={onDialogKeyDown}
+        onClick={(e) => e.stopPropagation()}
+        className="glass scroll-thin fade-up flex h-full w-full max-w-md flex-col overflow-y-auto !rounded-none !border-y-0 !border-r-0 p-5 sm:p-6"
+      >
         <div className="mb-5 flex items-start justify-between">
           <div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-[#d8b88d]">Навигация</div>
-            <h2 className="font-display text-4xl font-semibold leading-none">Карта сайта</h2>
+            <h2 id="gb-sitemap-title" className="font-display text-4xl font-semibold leading-none">Карта сайта</h2>
             <p className="mt-2 text-xs text-[#bcb5aa]">
               {phase === "play" ? "Выберите станцию — вы окажетесь рядом с ней в зале." : "Все материалы библиотеки. «Подойти» откроет зал и подведёт к нужному месту."}{" "}
               Открыто {visited.length} из {ITEMS.length}.
             </p>
           </div>
-          <button onClick={() => toggleSitemap(false)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-[#e0dcd1] hover:bg-white/10">
+          <button type="button" aria-label="Закрыть карту сайта" onClick={() => toggleSitemap(false)} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-[#e0dcd1] hover:bg-white/10">
             <Ico d={I.x} />
           </button>
         </div>
 
+        <label htmlFor="gb-sitemap-search" className="mb-2 text-xs text-[#d8b88d]">Поиск по карте сайта</label>
         <input
+          id="gb-sitemap-search"
+          ref={searchRef}
+          type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Найти: Гилл, сердце, карты…"
@@ -611,7 +678,8 @@ function SitemapPanel() {
         </div>
         <div className="mt-auto pt-4 text-center font-display text-sm italic text-[#d8b88d]/70">Soli Deo Gloria</div>
       </aside>
-    </div>
+    </div>,
+    document.body
   );
 }
 
