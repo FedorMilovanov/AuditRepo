@@ -37,7 +37,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   });
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
-  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x615746, roughness: 1 });
+  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x504e46, roughness: 1 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   // A shallow seep is translucent water over sediment, not an opaque colored
   // painted polygon. No expensive transmission pass or metal-like reflections.
@@ -270,68 +270,105 @@ function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
   }
 }
 function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
-  // Mediterranean olive, read as a gnarled tree rather than a vertical pole
-  // carrying ellipsoid pebbles. Every branch physically joins its parent.
+  // Mature Mediterranean olive: a squat, irregular, torsioned bole, spreading
+  // structural forks and an open silver-green canopy, not cone-trunk topiary.
+  // Physical trunk radius stays within the separately tested 0.29m collider.
   const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
   const random = rng(seed);
   const up = new THREE.Vector3(0, 1, 0);
-  const leanX = (random() - 0.5) * 0.58;
-  const leanZ = (random() - 0.5) * 0.42;
-  const base = new THREE.Vector3(x, 0.02, z);
-  const knee = new THREE.Vector3(x + leanX * 0.38, 0.69, z + leanZ * 0.38);
-  const crownBase = new THREE.Vector3(x + leanX, 1.43, z + leanZ);
+  const leanX = (random() - 0.5) * 0.46;
+  const leanZ = (random() - 0.5) * 0.40;
+  const barkPhase = random() * Math.PI * 2;
+  const trunkHeight = 1.66;
+  const spine = (t: number) => new THREE.Vector3(
+    x + leanX * t * t + 0.045 * Math.sin(t * 6.5 + barkPhase) * t,
+    0.02 + t * trunkHeight,
+    z + leanZ * t * t + 0.045 * Math.cos(t * 5.1 + barkPhase) * t,
+  );
+  const bole = new THREE.CylinderGeometry(0.105, 0.235, trunkHeight, 12, 14);
+  const vertices = bole.getAttribute('position') as THREE.BufferAttribute;
+  for (let i = 0; i < vertices.count; i++) {
+    const px = vertices.getX(i), py = vertices.getY(i), pz = vertices.getZ(i);
+    const t = Math.max(0, Math.min(1, (py + trunkHeight / 2) / trunkHeight));
+    const angle = Math.atan2(pz, px);
+    const grooves = 1 + 0.085 * Math.sin(angle * 6 + t * 9 + barkPhase) +
+      0.04 * Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const center = spine(t);
+    vertices.setXYZ(i, (center.x - x) + px * grooves, py,
+      (center.z - z) + pz * grooves);
+  }
+  bole.computeVertexNormals();
+  const boleMesh = new THREE.Mesh(bole, s.oliveWood);
+  boleMesh.name = 'olive-main-trunk';
+  boleMesh.position.set(x, 0.02 + trunkHeight / 2, z);
+  g.add(boleMesh);
+  const base = spine(0);
   const segment = (from: THREE.Vector3, to: THREE.Vector3,
     bottom: number, top: number, name: string) => {
     const vector = to.clone().sub(from), length = vector.length();
-    const piece = new THREE.Mesh(G.cyl(top, bottom, length, 7), s.oliveWood);
+    const piece = new THREE.Mesh(G.cyl(top, bottom, length, low ? 7 : 10), s.oliveWood);
     piece.name = name;
     piece.position.copy(from).addScaledVector(vector, 0.5);
     piece.quaternion.setFromUnitVectors(up, vector.normalize());
     g.add(piece);
   };
-  segment(base, knee, 0.23, 0.16, 'olive-main-trunk');
-  segment(knee, crownBase, 0.16, 0.09, 'olive-main-trunk');
+  // Buttress roots are shallow ground details; they do not widen the colliding
+  // trunk or add invisible collision walls.
   for (let i = 0; i < 3; i++) {
-    const a = (i / 3) * Math.PI * 2 + random() * 0.42;
-    const root = base.clone().add(new THREE.Vector3(Math.cos(a) * 0.27, 0.035, Math.sin(a) * 0.27));
-    segment(root, base.clone().add(new THREE.Vector3(0, 0.4, 0)), 0.10, 0.055, 'olive-root');
+    const angle = i * Math.PI * 2 / 3 + random() * 0.34;
+    const root = base.clone().add(new THREE.Vector3(
+      Math.cos(angle) * 0.30, 0.014, Math.sin(angle) * 0.30));
+    segment(root, spine(0.22), 0.075, 0.035, 'olive-root');
   }
-  // Forks end *inside* the foliage, rather than protruding as horizontal sticks.
-  for (let i = 0; i < 6; i++) {
-    const a = i * (Math.PI * 2 / 6) + random() * 0.34;
-    const stem = knee.clone().lerp(crownBase, 0.46 + random() * 0.37);
-    const reach = 0.38 + random() * 0.36;
-    const tip = crownBase.clone().add(new THREE.Vector3(
-      Math.cos(a) * reach, 0.21 + random() * 0.28, Math.sin(a) * reach));
-    segment(stem, tip, 0.065, 0.012, 'olive-branch');
-  }
-  // Seven independently placed foliage pockets, with narrow light-catching
-  // lanceolate leaves. Shared geometry/materials merge into just a few draws.
+  const crownBase = spine(1);
+  const branchTips: THREE.Vector3[] = [];
+  // Each fork is joined to the sculpted trunk and to its foliage pocket.
   for (let i = 0; i < 7; i++) {
-    const a = i * Math.PI * (2 / 7) + random() * 0.34;
-    const radius = i === 0 ? 0 : 0.30 + random() * 0.40;
-    const origin = crownBase.clone().add(new THREE.Vector3(
-      Math.cos(a) * radius, 0.25 + (random() - 0.5) * 0.38,
-      Math.sin(a) * radius));
-    const core = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
+    const angle = i * Math.PI * 2 / 7 + (random() - 0.5) * 0.36;
+    const reach = 0.57 + random() * 0.47;
+    const tip = crownBase.clone().add(new THREE.Vector3(
+      Math.cos(angle) * reach, 0.31 + random() * 0.34,
+      Math.sin(angle) * reach));
+    const stem = spine(0.68 + random() * 0.22);
+    const elbow = stem.clone().lerp(tip, 0.55).add(new THREE.Vector3(
+      -Math.sin(angle) * 0.075, 0.10, Math.cos(angle) * 0.075));
+    segment(stem, elbow, 0.092, 0.053, 'olive-branch');
+    segment(elbow, tip, 0.053, 0.014, 'olive-branch');
+    branchTips.push(tip);
+  }
+  // Seven crowns are supported by seven real forks. The small muted lobes
+  // supply volume while lanceolate two-sided leaves supply the silhouette.
+  // Geometry/materials remain shared so mergePropsGroup keeps draw calls low.
+  for (let i = 0; i < branchTips.length; i++) {
+    const origin = branchTips[i];
+    const core = new THREE.Mesh(G.sph(0.5, 9, 6),
+      i % 3 === 0 ? s.leafSilver : s.leaf);
     core.name = 'olive-crown-lobe';
     core.position.copy(origin);
-    core.rotation.set(random() * 0.3, random() * 1.4, (random() - 0.5) * 0.45);
-    core.scale.set(0.24 + random() * 0.11, 0.23 + random() * 0.11, 0.28 + random() * 0.12);
+    core.rotation.set((random() - 0.5) * 0.55, random() * Math.PI * 2,
+      (random() - 0.5) * 0.48);
+    core.scale.set(0.49 + random() * 0.13, 0.32 + random() * 0.11,
+      0.39 + random() * 0.13);
     g.add(core);
-    const leaflets = low ? 16 : 26;
+    for (let j = 0; j < 2; j++) {
+      const end = origin.clone().add(new THREE.Vector3(
+        (random() - 0.5) * 0.48, (random() - 0.5) * 0.19,
+        (random() - 0.5) * 0.48));
+      segment(origin, end, 0.018, 0.006, 'olive-twig');
+    }
+    const leaflets = low ? 24 : 36;
     for (let j = 0; j < leaflets; j++) {
-      const spread = 0.14 + Math.pow(random(), 0.62) * 0.47;
+      const spread = 0.07 + Math.pow(random(), 0.72) * 0.39;
       const theta = random() * Math.PI * 2;
-      const elevation = (random() - 0.5) * 0.54;
+      const elevation = (random() - 0.5) * 0.48;
       const leaf = new THREE.Mesh(G.oliveLeaf(),
-        j % 4 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+        j % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
       leaf.name = 'olive-leaf-sprig';
-      leaf.position.set(origin.x + Math.cos(theta) * spread, origin.y + elevation,
-        origin.z + Math.sin(theta) * spread);
-      leaf.rotation.set((random() - 0.5) * 1.2, random() * Math.PI * 2,
-        (random() - 0.5) * 1.9);
-      leaf.scale.set(0.10 + random() * 0.07, 0.065 + random() * 0.055, 1);
+      leaf.position.set(origin.x + Math.cos(theta) * spread,
+        origin.y + elevation, origin.z + Math.sin(theta) * spread);
+      leaf.rotation.set((random() - 0.5) * 1.1, random() * Math.PI * 2,
+        (random() - 0.5) * 1.7);
+      leaf.scale.set(0.11 + random() * 0.075, 0.07 + random() * 0.055, 1);
       g.add(leaf);
     }
   }
