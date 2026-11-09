@@ -256,7 +256,29 @@ async function visit(browser,engine,app,width,base){
     await page.keyboard.press('Escape');
     await original.waitFor({state:'hidden',timeout:8000});
     if(width<1440){
-     await page.getByRole('button',{name:'Открыть скрижали имён Бога'}).click();
+     // The floating launcher intentionally yields to nearby card actions.
+     // After closing a dossier, return to a stable reading anchor.
+     const intro=page.locator('#article-introduction');
+     await intro.evaluate(el=>{
+      const top=window.scrollY+el.getBoundingClientRect().top;
+      window.scrollTo({top:Math.max(0,top-110),behavior:'instant'});
+     });
+     const launcher=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
+     await launcher.waitFor({state:'visible',timeout:8000});
+     // Verify its real bounds do not overlap article actions.
+     const overlappingCardActions=await launcher.evaluate(el=>{
+      const ribbon=el.getBoundingClientRect();
+      return [...document.querySelectorAll('[data-atlas-card-actions]')].filter(node=>{
+       const card=node.getBoundingClientRect();
+       return card.width>0 && card.height>0 &&
+        ribbon.left<card.right && ribbon.right>card.left &&
+        ribbon.top<card.bottom && ribbon.bottom>card.top;
+      }).length;
+     });
+     record('atlas-launcher-clearance',{engine,width,overlappingCardActions});
+     if(overlappingCardActions)
+      problem('BLOCKER','atlas-launcher-overlaps-card-actions',{engine,width,overlappingCardActions});
+     await launcher.click();
      const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
      await drawer.waitFor({state:'visible'});
      const names=await drawer.locator('[data-atlas-mobile-original]').evaluateAll(els=>els.map((el,i)=>({
