@@ -51,3 +51,73 @@ This is a transport-only follow-up to the V5.2 art candidate, not a visual redes
 - Standalone Vite production build, strict TypeScript, five lab checks: **PASS**. Source-level browser art witness: **4/4 PASS** in Chromium and WebKit at 1440×900 and touch-emulated 390×844, including required local PBR assets, WebGL2, no JS/HTTP errors or horizontal overflow.
 - `GB_LIBRARY_ART_EVIDENCE_DIR` lets a new QA run save screenshots **outside** the historical V5.2 evidence directory; that directory remains a frozen record.
 - This is a smaller **network payload**, not evidence of faster material decode, lower decompressed GPU VRAM, improved WebKit frame time, or owner acceptance. **LAB / ART HOLD continues**.
+## V5.6 — one reference joinery bay (2026-11-09)
+
+**LAB / ART HOLD.** This is one deliberately scoped experiment in architectural
+craftsmanship, not a hall-wide style approval, GLB replacement or public release.
+
+### Source and physical constraints
+
+- Keep all visitor routes, navigation data, cabinet/catalogue, item transforms,
+  WebXR paths, textures and scene lighting unchanged.
+- A single **bay 5 (90°)** beside the window arcade receives a profiled stone
+  arch, structural pilasters with plinths/imposts, timber shelf nosings,
+  stepped cornice, recessed cabinet-panel detailing and small metalwork.
+- The parts are original deterministic geometry in
+  `src/scene/ArchitecturalPolish.tsx` rather than ad hoc meshes at individual
+  editorial stations. The `ReferenceBay` component is parameterized by bay;
+  **do not clone the effect across all bays** until visual/GPU acceptance.
+- A unit BoxGeometry buffer is shared by the existing global trims and all
+  three reference-bay instanced groups. Narrow brass details do not cast
+  separate GPU shadow passes; larger stone/timber trim retains cast shadows.
+- Every new component remains outside the 14.5m colonnade boundary.
+  No interaction raycast registration or collision/teleport data is changed.
+
+### Real screenshots and non-acceptance
+
+The same **public sitemap «Подойти» action** positioned the camera in
+both builds. Screenshots are original browser renders encoded as
+**lossless WebP** (decoded RGB unchanged; no AI-generated scene substitute):
+
+- **Before (V5.5)** — [Chrome, Confessions, 1440×900](evidence/reference-v56-before-creeds-chromium-1440x900.webp)
+- **After (V5.6)** — [Chrome, Confessions, 1440×900](evidence/reference-v56-after-creeds-chromium-1440x900.webp)
+- **After (V5.6)** — [Chrome touch emulation, 390×844](evidence/reference-v56-after-creeds-chromium-390x844.webp)
+- **After (V5.6)** — [WebKit touch emulation, 390×844](evidence/reference-v56-after-creeds-webkit-390x844.webp)
+
+The added trim is **visible but modest**. It does not make the full
+rotunda photographic. The original concept
+`reference/library-design-target.png` remains a higher-quality design
+target, not a screenshot or a promise of matching fidelity.
+
+### Exact-machine costs
+
+At Windows / RTX 3060 / Chrome channel / DPR 1, identical build/start
+and rAF sampling method, comparison against base PR #545 commit
+`79a920ce537e06f69387141a7335e48e9228dd1b`:
+
+| Engine, 1× DPR | Baseline draws/frame | V5.6 draws/frame | rAF/s baseline → V5.6 |
+| --- | ---: | ---: | ---: |
+| Chrome 1440×900 | 241.1 | 247.2 (+2.5%) | 60.0 → 60.0 |
+| Chrome touch-emulated 390×844 | 126.6 | 126.6 | 60.0 → 60.0 |
+| WebKit 1440×900 | 242.4 | 248.5 (+2.5%) | 28.9 → 28.5 |
+| WebKit touch-emulated 390×844 | 126.6 | 126.6 | 61.3 → 61.3 |
+
+Chrome initial transfer 2,882,106 → 2,883,572 bytes (+1,466).
+WebKit desktop remains a hard performance gate; browser rAF is not GPU
+frame timing and WebKit on Windows is **not a physical iPhone benchmark**.
+A change of <1 rAF/s here is measurement noise, not evidence of a speedup.
+
+### Technical acceptance versus product/art acceptance
+
+- Full `tsc --noEmit` and Vite production build passed; five existing
+  lab checks passed.
+- `tests/reference-bay-browser.py` records the real public navigation
+  paths at Confessions and the neighboring series: **5/5** Chrome/WebKit
+  desktop/mobile captures with no JS/HTTP errors or overflow.
+- Existing art, mobile HUD and manifest regression suites remain
+  separate gates, tested on the exact candidate before promotion.
+- **Still open**: authored architectural GLB kit, professional lighting/
+  photogrammetric material reference, genuine mobile GPU and VR testing,
+  full GPU memory/texture-pressure and WebGL loss/recovery, accessibility,
+  editorial/Product admission and owner approval at matched angles.
+- Do not merge this LAB into Product/main or call it production-ready.

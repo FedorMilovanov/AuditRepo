@@ -96,10 +96,13 @@ function details() {
   return { oak, stonework };
 }
 
-function InstancedTrim({ entries, material }: { entries: Element[]; material: THREE.Material }) {
+function InstancedTrim({ entries, material, geometry, castShadow = true }: {
+  entries: Element[];
+  material: THREE.Material;
+  geometry: THREE.BoxGeometry;
+  castShadow?: boolean;
+}) {
   const ref = useRef<THREE.InstancedMesh>(null!);
-  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
   useLayoutEffect(() => {
     const mesh = ref.current;
     const pivot = new THREE.Object3D();
@@ -117,7 +120,7 @@ function InstancedTrim({ entries, material }: { entries: Element[]; material: TH
     mesh.instanceMatrix.needsUpdate = true;
     mesh.computeBoundingSphere();
   }, [entries]);
-  return <instancedMesh ref={ref} args={[geometry, material, entries.length]} castShadow receiveShadow dispose={null} />;
+  return <instancedMesh ref={ref} args={[geometry, material, entries.length]} castShadow={castShadow} receiveShadow dispose={null} />;
 }
 
 function WindowArches() {
@@ -159,13 +162,97 @@ function VaultTrim() {
   </group>;
 }
 
+
+/**
+ * A single reference-quality joinery bay at the east end of the window arcade.
+ *
+ * This is deliberately a reusable architectural grammar rather than dozens
+ * of custom meshes scattered across the hall.  The visible forward surface
+ * stays at radius >= 14.60 m, outside the 14.5 m column circulation boundary.
+ * Former shelf, book and exhibit transforms are left completely unchanged.
+ */
+const ARCH_FRONT = -1.08;
+const brass = new THREE.MeshStandardMaterial({
+  color: '#be9d6a', metalness: 0.64, roughness: 0.44,
+});
+function referenceParts(bay: number) {
+  const oak: Element[] = [];
+  const stoneTrim: Element[] = [];
+  const metal: Element[] = [];
+  const part = (into: Element[], x: number, y: number, z: number,
+                w: number, h: number, d: number) =>
+    into.push(elem(bay, x, y, z, w, h, d));
+
+  // Load-bearing pilasters; three-dimensional plinths and impost blocks.
+  for (const x of [-2.22, 2.22]) {
+    part(stoneTrim, x, 4.08, -0.89, 0.28, 7.58, 0.38);
+    part(stoneTrim, x, 0.36, -0.98, 0.43, 0.55, 0.53);
+    part(stoneTrim, x, 7.12, -0.99, 0.47, 0.36, 0.45);
+    part(oak, x * 0.88, 3.83, -1.00, 0.11, 7.07, 0.16);
+    part(oak, x * 0.88, 7.38, -1.07, 0.29, 0.13, 0.23);
+  }
+
+  // Recessed, solid timber shelves, stile and stepped cornice.
+  part(oak, 0, 4.02, -0.94, 0.11, 7.10, 0.18);
+  for (let level = 0; level <= 6; level++) {
+    const y = 0.56 + level * 1.06;
+    part(oak, 0, y, -1.00, 3.84, 0.11, 0.19);
+    part(metal, 0, y + 0.064, -1.099, 3.72, 0.014, 0.016);
+  }
+  for (const [y, width, depth] of [[7.55, 4.05, 0.36], [7.72, 4.23, 0.32], [7.88, 4.38, 0.28]]) {
+    part(oak, 0, y, -0.98, width, 0.13, depth);
+  }
+  // Recessed panel moulding and individually positioned dark-metal knobs.
+  for (const x of [-1.0, 1.0]) {
+    part(oak, x, 0.31, -1.02, 1.69, 0.38, 0.12);
+    part(metal, x + (x > 0 ? -0.65 : 0.65), 0.32, -1.10, 0.045, 0.065, 0.032);
+  }
+  return { oak, stoneTrim, metal };
+}
+
+function ReferenceBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry }) {
+  const { oak, stoneTrim, metal } = useMemo(() => referenceParts(bay), [bay]);
+  const arch = useMemo(() => {
+    // Dressed stone arch over the oak alcove. A real profiled solid in 3D,
+    // not an emissive decal or a transparent painted outline.
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-2.02, 7.10, 0),
+      new THREE.Vector3(-1.83, 7.60, 0),
+      new THREE.Vector3(-1.18, 8.14, 0),
+      new THREE.Vector3(0, 8.40, 0),
+      new THREE.Vector3(1.18, 8.14, 0),
+      new THREE.Vector3(1.83, 7.60, 0),
+      new THREE.Vector3(2.02, 7.10, 0),
+    ]);
+    return new THREE.TubeGeometry(curve, 48, 0.17, 9, false);
+  }, []);
+  useEffect(() => () => arch.dispose(), [arch]);
+  const a = bay * Math.PI * 2 / BAYS;
+  return (
+    <group>
+      <InstancedTrim entries={oak} material={wood} geometry={geometry} />
+      <InstancedTrim entries={stoneTrim} material={marble} geometry={geometry} />
+      <InstancedTrim entries={metal} material={brass} geometry={geometry} castShadow={false} />
+      <group
+        position={[Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS]}
+        rotation-y={a}
+      >
+        <mesh geometry={arch} position={[0, 0, ARCH_FRONT]} material={marble} castShadow receiveShadow />
+      </group>
+    </group>
+  );
+}
+
 /** Adds static craftsmanship only; original interaction IDs and station positions stay intact. */
 export function ArchitecturalPolish() {
   const { oak, stonework } = useMemo(details, []);
+  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  useEffect(() => () => geometry.dispose(), [geometry]);
   return <group>
-    <InstancedTrim entries={oak} material={wood} />
-    <InstancedTrim entries={stonework} material={marble} />
+    <InstancedTrim entries={oak} material={wood} geometry={geometry} />
+    <InstancedTrim entries={stonework} material={marble} geometry={geometry} />
     <WindowArches />
+    <ReferenceBay bay={5} geometry={geometry} />
     <VaultTrim />
   </group>;
 }
