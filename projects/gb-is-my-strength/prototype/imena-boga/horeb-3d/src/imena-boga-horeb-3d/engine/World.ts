@@ -193,7 +193,7 @@ export class World {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
       if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
-        if (this.inputLocked) return;
+        if (this.inputLocked || this.shoes === 'removing') return;
         // Browsers may suspend Web Audio when the scene was loaded through an
         // async dynamic import. Resume only inside a real keyboard gesture.
         if (e.isTrusted) this.audio.unlockFromGesture();
@@ -314,7 +314,7 @@ export class World {
     this.updateActiveState();
   }
   setMoveInput(x: number, y: number) {
-    if (this.inputLocked || !Number.isFinite(x) || !Number.isFinite(y)) {
+    if (this.inputLocked || this.shoes === 'removing' || !Number.isFinite(x) || !Number.isFinite(y)) {
       this.move.x = this.move.y = 0;
       return;
     }
@@ -331,7 +331,7 @@ export class World {
 
   /** Снять обувь — только у внешнего порога, только из состояния 'shod'. Повторные вызовы игнорируются. */
   removeShoes(): boolean {
-    if (this.shoes !== 'shod') return false;
+    if (this.shoes !== 'shod' || this.inputLocked || this.disposed || this.contextLost || document.hidden) return false;
     if (distToBush(this.pos.x, this.pos.y) > R_OUTER + 3) return false;
     this.audio.unlockFromGesture();
     this.shoes = 'removing';
