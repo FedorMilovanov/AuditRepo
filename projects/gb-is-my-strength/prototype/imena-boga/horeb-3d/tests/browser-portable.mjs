@@ -26,7 +26,8 @@ try {
   const page = await browser.newPage();
   page.setDefaultTimeout(90000);
   page.on('pageerror', (err) => errors.push(err.message));
-  const response = await page.goto(pathToFileURL(html).href, { waitUntil: 'domcontentloaded' });
+  // A forged ?e2e in a production preview must not expose the mutable World.
+  const response = await page.goto(pathToFileURL(html).href + '?e2e', { waitUntil: 'domcontentloaded' });
   if (!response || response.status() !== 200) throw new Error('file:// preview cannot be loaded');
   await page.waitForSelector('h1', { timeout: 45000 });
   const title = await page.$eval('h1', (h) => h.textContent);
@@ -39,8 +40,10 @@ try {
   });
   if (!start) throw new Error('Offline WebGL start button missing');
   await page.waitForFunction(() => !!document.querySelector('canvas'), { timeout: 90000 });
-  // Without ?e2e the world is private; a visible canvas with a running view
-  // and no script exceptions is the portable test witness.
+  if (!await page.evaluate(() => window.__horeb === undefined))
+    throw new Error('Production build leaked mutable e2e World API under ?e2e');
+  // Production World remains private even with an explicit ?e2e query.
+  // A visible canvas and no script exceptions witness the portable render.
   await new Promise((resolve) => setTimeout(resolve, 1000));
   if (errors.length) throw new Error('Offline runtime errors: ' + errors.join(' | '));
   const read = await page.goto(pathToFileURL(reader).href, { waitUntil: 'domcontentloaded' });
