@@ -1,4 +1,4 @@
-# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–3)
+# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–4)
 
 ## Meta
 
@@ -8,22 +8,22 @@
 - Date: 2026-11-09
 - Audited branch/ref: `main`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` = `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; `pushed_at 2026-11-09T06:28:12Z`
-- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`), `npm run strangler:build`, parse5-ценз `dist`; браузера/AX-рантайма не было
-- Build mode: волна 2 `source`; волна 3 `dist` (116 HTML / 1248 файлов)
-- Browser / device if used: не использовался; Chromium отсутствует (`~/.cache/ms-playwright` пуст, системного binary нет)
-- Scope: 111 маршрутов, 79 читательских статей, 32 хабов/утилит; один общий прогон
-- Explicit exclusions: браузер/AX/фактическая отрисовка, авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, runtime quiz clicks. Волна 3 добавляет статический финальный HTML, но не заменяет браузерный witness
+- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов), `npm run strangler:build`, parse5-ценз `dist`; волна 4 — headless Chromium 153 из npm-пакета `@sparticuz/chromium@153.0.0` (без `npx playwright install`), локальный static server `dist`, browser-sweep 112 HTML и реальные Product browser-gates
+- Build mode: волна 2 `source`; волны 3–4 `dist` (112 `index.html` / 1248 файлов / 101 MB; 111 матричных маршрутов + `/konfessii/russkij-baptizm/_app/`)
+- Browser / device if used: волна 3 — без браузера; волна 4 — headless Chromium 153 (`chrome-headless-shell`, Linux x64), desktop 1280×900 и Product mobile/desktop matrices; WebKit/Firefox, реальное устройство и TTS voice-switching не проверялись
+- Scope: 111 маршрутов, 79 читательских статей, 32 хабов/утилит; один общий прогон. Волна 4 отдельно обошла 112 финальных HTML (включая utility `_app`)
+- Explicit exclusions: авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, WebKit/Firefox/реальное устройство, TTS voice-switching и полный runtime quiz-click прогон. Волна 4 добавляет bounded Chromium painted/AX witness, но не заменяет внешнюю редакционную проверку
 - Signal class: Product
-- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM следа в границе проверенных паттернов; `UNPROVEN` для атрибуции авторства, внешней истинности и browser/AX
-- Claim boundary: исходный reader-facing текст и статический final-HTML `dist` на якоре выше; не браузерная отрисовка, не AX, не рантайм, не авторство, не внешняя проверка источников
+- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM и browser-painted следа в границе проверенных паттернов; `UNPROVEN` для атрибуции авторства, внешней истинности, WebKit/Firefox/TTS и полного runtime quiz-click прогона
+- Claim boundary: исходный reader-facing текст, статический final-HTML `dist` и bounded headless-Chromium отрисовка/AX-дерево на якоре выше; не WebKit/Firefox, не реальное устройство, не TTS, не авторство, не внешняя проверка источников
 - Preservation boundary: не менять Product, не создавать новый универсальный контракт/чек-лист, не авто-переписывать русскую прозу
 - Semantic owner: существующие строки `MASTER_BUG_MATRIX.md`; новые строки не допускаются без owner-решения
 - Overlapping active owner/PR/branch check: открытые PR в AuditRepo #545, #544, #543, #542, #538, #521, #514 — нашу article-lane не пересекают; активные строки MASTER: `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` (admission 2026-10-25), `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`.
-- Report type: `source-audit + built-DOM-audit`
+- Report type: `source-audit + built-DOM-audit + browser-painted-witness`
 
 > Anchor фиксирует, что именно смотрелось. Не обновлять отчёт только потому, что исходный репозиторий позже сдвинулся.
 
-**Артефакты волн 2–3:** этот `REPORT.md` (§9 — дельта волны 3) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, добавлены DOM-колонки) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist` и логи гейтов — в `/tmp`, вне репо. Ни одного нового файла в AuditRepo не создано.
+**Артефакты волн 2–4:** этот `REPORT.md` (§9 — дельта волны 3, §10 — дельта волны 4) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, DOM- и browser-колонки) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist`, Chromium binary, скриншоты и логи гейтов — в `/tmp` / `~/.cache`, вне репо. Ни одного нового файла в AuditRepo не создано.
 
 ---
 
@@ -502,7 +502,7 @@ C1/C2/C11/C12/C13 — ручные lane (протокол §3.3). C23 (покр�
 
 ## 9. Волна 3 — реальные Product gates, built-DOM witness и ручные lane
 
-**Статус:** дополняет §§1–8, не отменяет их. Тот же anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; 17 source-HARD fixtures и 5 положительных контролей из §4.6/§4.7 остаются базой. Новое здесь — полный checkout Product, `npm ci`, реальный `dist`, прогон гейтов, статический DOM-ценз и bounded triage ручных C1/C2/C11/C12/C13. **Браузера, AX-дерева и внешней проверки источников по-прежнему нет.**
+**Статус:** дополняет §§1–8, не отменяет их. Тот же anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; 17 source-HARD fixtures и 5 положительных контролей из §4.6/§4.7 остаются базой. Новое здесь — полный checkout Product, `npm ci`, реальный `dist`, прогон гейтов, статический DOM-ценз и bounded triage ручных C1/C2/C11/C12/C13. На момент волны 3 браузера/AX не было; волна 4 (§10) добавляет bounded Chromium witness, внешней проверки источников по-прежнему нет.
 
 ### 9.0 Границы и воспроизводимость
 
@@ -686,9 +686,142 @@ Split не переписывается: общий ключ `route + criterion_
 
 ### 9.7 Чего волна 3 НЕ доказывает
 
-- Нет browser/AX/painted geometry, нет скриншотов, нет runtime quiz clicks и print/PDF witness.
+- Волна 3 не имела browser/AX/painted geometry и скриншотов; волна 4 добавляет bounded Chromium painted/AX witness и один print-media witness, но не runtime quiz-click прогон и не полный PDF/печатный аудит.
 - Нет внешней проверки исторических/богословских утверждений, edition/version, прав и независимой corroboration.
 - Нет вывода «ИИ/человек»: стилевые маркеры остаются TRIGGER.
 - Нет нового универсального контракта/чек-листа, новых строк MASTER и автопереписывания прозы.
 - Зелёные gates не заменяют редакционную пригодность; `content:coverage:audit` с `explicit-skips=111` и `typograf:dry` с exit 0 при 6 файлах — отдельные напоминания об этом.
 - `???`=0 и 89 видимых lang-phrases — наблюдения текущего anchor, а не решение owner по старым MASTER-строкам.
+
+---
+
+## 10. Волна 4 — настоящий headless Chromium, painted/AX witness и browser-gates
+
+**Статус:** дополняет §9, не отменяет 17 source-HARD, 5 положительных контролей и разделение HARD/TRIGGER. Тот же anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`, тот же `dist`. Волна 3 честно говорила «браузера нет»; волна 4 снимает **только эту** границу в bounded объёме. Внешней проверки источников, авторства, WebKit/Firefox, реального устройства и TTS по-прежнему нет.
+
+### 10.0 Как получен браузер без `npx playwright install`
+
+Официальный CDN Playwright недоступен в sandboxed egress, но `registry.npmjs.org` разрешён. Поэтому:
+
+```text
+/tmp/browser: npm i @sparticuz/chromium@153.0.0   -> chromium.br + al2023.tar.br + fonts + swiftshader
+inflate('al2023.tar.br')                           -> /tmp/al2023/lib (libnspr4.so, libnss3.so, …)
+LD_LIBRARY_PATH=/tmp/al2023/lib
+FONTCONFIG_PATH=/tmp/fonts
+symlink /tmp/chromium -> ~/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome
+symlink /tmp/chromium -> ~/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+python3 -m http.server 8123 --directory /tmp/gbs-product/dist --bind 0.0.0.0
+```
+
+Playwright 1.62 из `node_modules` Product запускал этот `chrome-headless-shell`; внешние запросы в browser-sweep блокировались, локальные `127.0.0.1:8123` разрешались. Один первичный `SIGSEGV` при launch устранён повторной попыткой с урезанными args — это нестабильность headless-shell в песочнице, не дефект Product. Static server после всех проверок остановлен; `git status` клона Product чист, anchor не менялся.
+
+### 10.1 Реальные Product browser-gates
+
+| Команда | Exit | Результат | Граница |
+|---|---:|---|---|
+| `npm run validate:static-publication:light` | 0 | 4134 строки; `168 passed · 6 warnings · 0 errors · 12 info`; `astro:check` 641 файл 0/0/7 hints; `article:qa` 0/0; MDX 70/70; pastor-series G-1…G-8 pass; SW dist readiness pass | 6 warnings: CSS/JS budget, `deploy.yml` не v4, concurrency, magic z-index, protocol-relative URL; часть visual-parity assertions в source mode явно `skipped` без `--require-dist` |
+| `node scripts/dist-smoke-audit.js --no-build --production-like` | 0 | representative desktop 1366×900 + mobile 390×844: **28/28 проверок** (14 route entries × 2 viewport, `/` дважды в списке) status 200, H1/canonical/overflow/robots здоровы; 14 распознанных `mc.yandex.ru/metrika` connection-closed, 0 прочих ошибок | первый запуск **без** `--production-like` дал 10 issues только из-за ожидавшегося build-only `/dev/astro-test/`; это ошибка режима запуска, не Product |
+| `npm run overlay:browser:all` | 0 | runtime overlay, map-overlay landscape и special-overlay launcher/fallback прошли в Chromium | несколько `net::ERR_FAILED` от заблокированных внешних ресурсов внутри special-overlay fixtures; script завершился exit 0, эти сообщения не стали ошибкой гейта |
+| `npm run nagornaya:bar-asset:browser:test` | 0 | `parts 1–5 @ 360/390 and desktop 1024` | только Nagornaya bar asset |
+| `node scripts/visual-parity-screenshots.js --routes /about/ --warn-only` | 0 | Chromium launched OK; desktop diff **0.184%** (1280×3843 vs 3914), mobile **0.301%** (390×5928 vs 5960), 6 PNG в `/tmp/gbs-product/reports/visual-parity/about/` | bounded pilot одного маршрута с `--warn-only`, не полная visual-parity baseline и не закрытие owner-строк |
+
+Даже этот расширенный зелёный прогон не отменяет §9.2: 17 HARD, утечки каркаса, `lang`, `Чекy` и typograf drift остаются. `validate:static-publication:light` не означает «редакционно пригодно».
+
+### 10.2 Browser-sweep всех 112 финальных HTML
+
+Один headless context, `viewport 1280×900`, `waitUntil: load`, внешние запросы abort, `pageerror` слушается на каждой странице. Открыты **111 строк матрицы + `/konfessii/russkij-baptizm/_app/`**; `index.astro` сопоставлен с `/`.
+
+| Метрика | Результат |
+|---|---:|
+| status 200 / ошибок навигации | **112 / 0** |
+| uncaught `pageerror` | **0** |
+| `???` runs в `body.innerText` | **0** |
+| `??` runs в `body.innerText` | **0** |
+| `???` в `outerHTML` / атрибутах | **0 / 0** |
+| `?` **внутри** кириллического слова (Text/attrs) | **0 / 0** |
+| служебный каркас: painted minimal elements | **19 / 10 routes** |
+| C20-лексемы: painted minimal elements | **15 / 6 routes** |
+| `Чекy`: painted elements | **1 / 1 route** |
+| foreign runs с эффективным `ru` | **558 / 39 routes**; из них **25 sr-only** (`/karty/ishod/` 24, `/karty/avraam/` 1), **533 не-sr-only** |
+| корректно размеченные foreign runs | **426 / 36 routes** |
+
+**Самокоррекция эвристики `?`.** Первый счётчик «`?` рядом с кириллицей» дал 1111 — это обычные вопросительные знаки в конце русских предложений (`…?`), не порча. Он отброшен. Авторитетные проверки: `\?{3,}`, `\?{2,}`, `?` между двумя кириллическими буквами, `???` в `alt/title/href/src/aria-label/content/value/placeholder` и в сыром `outerHTML` — все **0** на всех 112 страницах.
+
+**`GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`.** Все девять исторических Baptist-маршрутов (`spravochnik`, `podpolnaya-pechat`, `iniciativnaya-gruppa`, `peterburgskaya-liniya`, `goneniya-i-sovest`, `yuzhnaya-shtunda`, `noch-na-kure`, `vsehib-1944`, `dva-sezda-1884`) открыты в Chromium: ни `???`, ни `??`, ни внутрисловных `?`, ни `???` в атрибутах. На текущем якоре симптом **не воспроизводится в painted text**. Owner-строка всё равно не закрывается: нет решения владельца, нет сравнения с live-release SHA и нет восстановления исходных строк; это observation, не разрешение старого дефекта.
+
+### 10.3 Точные painted/AX witnesses
+
+После `scrollIntoViewIfNeeded()` + `Range.getBoundingClientRect()` + `document.elementFromPoint()` + CDP `Accessibility.getFullAXTree`:
+
+| Случай | Route | Token | Rect после scroll | Hit | Язык | AX |
+|---|---|---|---|---|---|---|
+| Healthy control | `/` | `יְהוִה` | `85.7×61 @ (691,164)` | `SPAN`, self/child | **explicit `lang="he"`** | `button`, `StaticText`, `InlineTextBox`, `ignored=false` |
+| C7 HARD | `/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/` | `θανατωθεὶς μὲν σαρκὶ` | `189×24 @ (272,437.5)` | `SPAN`, self/child | effective **`ru`** (унаследован от `<html>`) | `StaticText`, `InlineTextBox`, `ignored=false`, без `language`-property |
+| C5 HARD | `/baptisty-rossii/dva-sezda-1884/` | `94f05457…` | `294×18 @ (431.8,476.4)` | `LI`, self/child | `ru` | 2 AX-узла |
+| C5+C20 HARD | `/journal/dossiers/g3/` | `Research authority:` | `131×18 @ (603.9,793.5)` | `STRONG`, self/child | `ru` | 2 AX-узла |
+| C6 mixed-script | `/karty/ishod/` | `Чекy` | **print media** `38×20 @ (93,471.9)` | `B`, self/child | `ru` | `StaticText` + `InlineTextBox`, `ignored=false` |
+
+Важное уточнение к §9.4: на обычном **screen** `Чекy` лежит в `.sr-only map-text-fallback` с `overflow:hidden` и `body/html overflow:hidden`; `elementFromPoint` там `null`. Слова «`dist` публикует» были верны для DOM/HTML и AX, но **не для нормальной экранной отрисовки**. В `media: print` после прокрутки токен получает реальную геометрию и попадает в hit-test; AX-дерево видит обе фразы и в screen, и в print. Это ровно та граница `SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE`, которую MASTER описывает как print/AT, а не «обычный видимый текст».
+
+CDP full AX tree не экспортирует `language`-property ни для здорового `lang="he"`, ни для пропущенного `ru`; поэтому браузер доказывает **вхождение текста в AX и painted geometry**, но не доказывает переключение голоса TTS. `article:qa`/Axe-подобные проверки по-прежнему не могут вывести пропущенный язык фразы из одного только отсутствия ошибки.
+
+**C5/C20 без расширения HARD.** 19 painted scaffold-элементов приходятся на **10 маршрутов**: 9 source C5-HARD + `baptisty-rossii/spravochnik` (TRIGGER, читательское объяснение `SHA-256`). Bare `<code>HOLD</code>` на `hard-texts/enoh…` в C5-паттерн не включён. 15 C20-совпадений на 6 маршрутах включают только **2 source-HARD** (`kogda-chelovek-uhodit-ot-very`, `journal/dossiers/g3`); остальные — легитимные библиографические названия, `(assurance)` с русским пояснением и `doctrinal authority` с оговоркой, уже разобранные в §8. Новых HARD и новых строк MASTER не добавлено.
+
+### 10.4 `lang`: почему browser-числа отличаются от parse5
+
+| Метод | Missing | Correct | Причина |
+|---|---:|---:|---|
+| §9 parse5, hidden-class filter | 515 / 38 routes | 486 / 34 routes | классы `sr-only`/`hidden` исключались эвристически |
+| §10 Chromium, computed style + Range geometry | **558 / 39 routes** | **426 / 36 routes** | `.sr-only` имеет `visibility:visible` и client rects, поэтому 25 foreign runs в `karty/*` попали в счёт; без sr-only — **533 missing / 426 correct** |
+
+Это **не регрессия и не исправление**: другой фильтр видимости, другая группировка и другой anchor-метод. Независимо от выбора, консервативные multi-run phrases из §9.3 (89 видимых / 14 routes) и 12 browser-маршрутов с ≥10 missing runs дают один и тот же вывод: платформа умеет `grc/he`, но разметка фрагментирована. 12 маршрутов с ≥10: те же 11 из §9.3 плюс `/karty/ishod/` (46, из них 24 sr-only). Владелец строки `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT` не менялся.
+
+### 10.5 Typograf: fail-open дошёл до `dist`
+
+Канонический `npm run typograf:dry` на root `articles/` по-прежнему **exit 0 / `Would change: 6 files`**. Тот же скрипт с единственной заменой `ARTICLES_DIR` на `dist/articles` (логика `processText` не менялась, dry-run, без записи) даёт **exit 0 / `Would change: 15 files`**:
+
+```text
+dist/articles/20-antisovetov-pastoru/index.html
+dist/articles/dzhon-gill-chast-2-uchenyi/index.html
+dist/articles/dzhon-gill-chast-3-nasledie/index.html
+dist/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html
+dist/articles/kak-hranit-serdce/index.html
+dist/articles/kod-da-vinchi/index.html
+dist/articles/krajne-li-isporcheno-serdce/index.html
+dist/articles/myslennaya-zhizn-serdca/index.html
+dist/articles/serdce-hrista-k-nemoshchnym/index.html
+dist/articles/serdce-i-sokrovishche/index.html
+dist/articles/serdce-i-telo/index.html
+dist/articles/serdce-ne-v-odinochku/index.html
+dist/articles/serdce-pod-skorbyu/index.html
+dist/articles/sovest-vnutrenniy-sud/index.html
+dist/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/index.html
+```
+
+6 root-файлов сохраняются, ещё 9 поверхностей появляются после postbuild/нативных страниц. Это расширение наблюдения `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, а не новый контракт и не автоправка: скрипт применён только в dry-run, Product `git status` чист.
+
+### 10.6 Матрица, split и границы
+
+`ALL_ARTICLES_MATRIX.csv` остаётся **одним файлом на 111 маршрутов**; добавлены 8 browser-колонок (всего 47):
+
+```text
+browserPainted               1 для всех 111
+browserQmarkRuns             сумма 0
+browserLangMissingPainted    сумма 558
+browserLangCorrectPainted    сумма 426
+browserScaffoldPainted       сумма 19
+browserC20Painted            сумма 15
+browserMixedPainted          сумма 1
+browserPageErrors            сумма 0
+```
+
+Суммы по 111 строкам равны суммам по 112 HTML: лишний utility `_app` дал нули по всем метрикам. Split 3 агентов и общий ключ `route + criterion_id` не переписаны: **A** — методология/gates/DOM/browser/матрица; **B** — внешняя corroboration, edition/rights/locator, C1/C2/C3/C8/C5/C20; **C** — WebKit/Firefox/device/TTS, полный runtime quiz-click и PDF/print-parity, если owner решит их закрывать. Не создано ни одного нового файла в AuditRepo, ни одного нового универсального чек-листа/ADMIT-контракта; style-only вывод «ИИ/человек» не делался.
+
+**Чего волна 4 всё ещё НЕ доказывает:**
+- нет WebKit/Firefox, реального устройства, TTS voice-switching и полного runtime quiz-click прогона;
+- нет внешней проверки исторических/богословских claims, edition/version, прав и независимой corroboration;
+- `visual-parity` проверен только на `/about/` с `--warn-only`; `validate:static-publication:light` часть dist-assertions честно пропускает в source mode;
+- `???`=0 и `Чекy` print/AX witness — наблюдения текущего anchor, а не owner-решение по MASTER-строкам;
+- зелёный `validate:static-publication:light` не заменяет редакционную пригодность и не снимает 17 HARD.
+
+**Ветки/пуш.** Перед записью повторно сверены `git branch --show-current` = `arena/0b6f34f6-auditrepo`, `git status --short` (до правок — clean), upstream `origin/arena/0b6f34f6-auditrepo`, remote head волны 3 `4dd240e`. Пуш — обычный `git push` только в эту ветку; чужие PR/ветки не трогаются, ветка не переключается и не переименовывается.
