@@ -229,6 +229,10 @@ def _extra(all_text, lens, paras):
         'colon_pct': round(100 * sum(1 for p in paras if p.rstrip().endswith(':')) / len(paras)),
         # доля абзацев из одного предложения (рубленая подача)
         'one_sentence_pct': round(100 * sum(1 for p in paras if len(re.findall(r'[.!?…](?:\s|$)', p)) <= 1) / len(paras)),
+        # антитеза «не X, а Y» на 10 000 слов — главный маркер корпуса
+        'antiteza': round(10000 * len(re.findall(r'\bне\s+[^.;,]{1,30},?\s+а\s+', low)) / max(sum(lens), 1), 1),
+        # правило трёх (X, Y и Z) — считать осторожно, в богословии норма
+        'triads': round(10000 * len(re.findall(r'\b\w+,\s+\w+\s+и\s+\w+\b', low)) / max(sum(lens), 1), 1),
         # риторический вопрос в начале/конце абзаца
         'question_pct': round(100 * sum(1 for p in paras if '?' in p and len(p.split()) < 30) / len(paras)),
     }
