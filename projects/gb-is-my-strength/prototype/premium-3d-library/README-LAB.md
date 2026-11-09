@@ -6,6 +6,38 @@ Original reference: `interactive-3d-card-cover(1).zip` (Arena Battle hall second
 The original archive is NOT overwritten; this is a derived standalone working tree.
 The first Arena card edition is used for the missing `immersive-vr` capability check.
 
+## Current state — 2026-11-09 (V5.14 baseline; Draft ART HOLD)
+
+**This page retains early V3–V5 diary entries as history.**
+Read [CURRENT_STATUS.md](CURRENT_STATUS.md) before acting. The current 3D
+scene has verified Chrome/WebKit browser screenshots and 31/31 recent lab
+regressions, but **full architectural art, real devices, editorial data and
+Product integration are not approved**. The first graphics-quality change
+remains slow in some WebKit cases.
+
+On changes to this lab, the existing required AuditRepo Validate workflow now
+runs five Node lab checks, strict TypeScript, a production Vite build,
+the 20-rib geometric equivalence test and the source-owned seven-suite
+39-case Playwright journey gate. **The new Linux workflow must prove
+its own success on the current GitHub HEAD; do not infer PASS from older
+preflight runs.** No branch or automatic Product release is involved.
+
+### Source-owned current acceptance
+
+```sh
+npm ci --no-audit --no-fund
+npm run lab:check
+npm run lab:catalog:test
+npm run lab:cabinet:test
+npm run lab:progression:test
+npm run lab:cabinet:types
+node tests/vault-rib-equivalence.mjs
+npx tsc --noEmit
+npm run build
+python tests/browser-runner-contract.py
+python scripts/run-browser-regression.py  # requires Python Playwright + Chrome/WebKit
+```
+
 ## Direction
 
 Natural daylight, limestone shell, deep timber shelves, real reading tables,
@@ -13,7 +45,7 @@ physically shaded non-emissive materials. Inspiration image lives in
 `reference/library-design-target.png` and is an **AI concept, not a running-app screenshot**.
 The current source is a structural/lighting study, not claimed to match that photo.
 
-## Current V5 checks and unresolved visual quality (2026-11-08)
+## Historical V5 checks and unresolved visual quality (2026-11-08 snapshot)
 
 Authorized Windows: clean npm install, five lab checks, full strict TypeScript and Vite split-assets build **PASS**. Separate headless Chromium opened cabinet, progression and actual hall at 1440×900 / 390×844. **3D art is still visibly schematic; mobile HUD has layout overlap.** Neither visual approval nor GPU FPS, XR, WebKit or Product integration is claimed. See `QA_V5_REAL_BROWSER.md` and real screenshots in `evidence/`. Earlier V3/V4 QA descriptions below are historical snapshots.
 

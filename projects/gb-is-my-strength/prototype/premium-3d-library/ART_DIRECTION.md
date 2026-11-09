@@ -24,7 +24,15 @@ candidate*, not a photo or a claim of finished photorealism.
 - Restores explicit VR support detection lost from the previous prototype.
 - Safe localStorage fallbacks, fail-closed WebGL2 check, existing context-loss UI.
 
-## Not yet verified
+## Initial source-patch questions (historic 2026-11-08)
+
+The following bullet list describes the **first source-only patch**.
+Windows installation, TypeScript, build, browser Chrome/WebKit checks and
+several scene repairs are now witnessed on later commits. Refer to
+[CURRENT_STATUS.md](CURRENT_STATUS.md) for current status. Physical-device
+WebGL/VR memory/performance, complete high-fidelity art and Product routes
+remain open.
+
 
 - Dependency installation/build/browser FPS on target devices: offline container
   does not provide npm packages; source patch is not a production artifact.

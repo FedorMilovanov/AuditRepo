@@ -1,6 +1,6 @@
 # Premium 3D Library — V5 experience blueprint
 
-**Status:** `lab-active`, not `promotion-ready`. Owner: Fedor Milovanov. Product: `gb-is-my-strength`.
+**Status:** `lab-active`, not `promotion-ready`. **Current verification: [CURRENT_STATUS.md](CURRENT_STATUS.md) (2026-11-09), not the historical table below.** Owner: Fedor Milovanov. Product: `gb-is-my-strength`.
 **Date:** 2026-11-08. Audience: reader, researcher, owner-curator. Scope: ONE 3D Library prototype, no Product edits.
 
 ## 1. Product identity — one corpus, several views
@@ -83,10 +83,10 @@ Future personal quote data needs stable content identifiers, exact text, nearby 
 | Catalog policy projection + noindex | PASS in fixture tests | exact Product registry and metadata projection |
 | Cabinet pure-engine and import rules | PASS | real-origin IndexedDB, reload, cross-tab, backup/restore |
 | Progress integrity | PASS | Product-verified event contract, no client trust |
-| React/Vite production build | NOT VERIFIED | clean npm ci, typecheck, build, all imports |
-| Desktop WebGL aesthetic | NOT VERIFIED | 3 viewport screenshots, camera route QA, memory check |
-| Mobile/WebKit | NOT VERIFIED for 3D | 320 / 390 / 768, touch, long labels, reduced motion |
-| FPS + GPU recovery | NOT VERIFIED | representative hardware, low/medium/high and fallback |
+| React/Vite production build | PASS on V5.14 Windows lab; Linux conditional CI gate added, pending exact-head run | clean npm ci, typecheck, build, all imports |
+| Desktop WebGL aesthetic | Screenshots and routed-camera QA verified; complete premium art NOT ACCEPTED | reference-matched owner visual signoff, memory check |
+| Mobile/WebKit | Chrome/WebKit emulation verified; real mobile devices NOT tested | 320 / 390 / 768, physical touch, long labels, reduced motion |
+| FPS + GPU recovery | Short rAF/draw-call measurements + simulated context recovery only; hardware OPEN | repeatable GPU/VRAM/thermal testing, low/medium/high and fallback |
 | Product bridge | NOT IMPLEMENTED | owner-approved SYSTEM lane and exact-head tests |
 | Owner visual signoff | PENDING | before any Production implementation |
 
