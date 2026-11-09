@@ -201,7 +201,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         };
       });
       await page.getByRole('button',{name:'Начать последовательное чтение'}).click();
-      await page.getByRole('button',{name:'Созвездие 36 рассмотренных имён'}).click();
+      await page.getByRole('button',{name:'Сводная схема · 36 позиций'}).click();
       const witness=await page.evaluate(()=>window.__readerScrollWitness);
       if(witness.length!==2||witness[0].id!=='article-introduction'||
          witness[1].id!=='constellation-atlas'||witness.some(x=>x.behavior!=='instant'))
