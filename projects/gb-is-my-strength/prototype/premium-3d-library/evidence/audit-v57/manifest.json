@@ -1,0 +1,296 @@
+{
+  "head": "c611a49c8764ead62652bdd58ba5f27f713eb503",
+  "date": "2026-11-09",
+  "capture": "isolated browser screenshots, not AI generated",
+  "sourceMachine": "DESKTOP-O3FDOA4 Windows 11; emulated mobile uses desktop GPU",
+  "files": [
+    {
+      "path": "01-desktop-cover.webp",
+      "source": "chromium-1440x900-01-intro.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 730426,
+      "sha256": "3162b92fba4db78d93f9a8e1f274f7ed4f2f05f1a278848447e32a0d78a6a9f8",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "02-desktop-hall.webp",
+      "source": "chromium-1440x900-02-hall.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 412248,
+      "sha256": "09e9a232d0730e91fb7aa241f54aa25d3759d80e96cd915e9b89e3fbbd58466b",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "03-desktop-sitemap.webp",
+      "source": "chromium-1440x900-03-map.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 416218,
+      "sha256": "606c3af8001fee185b354f47622deabc06057651ae51515364907c030a7d828b",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "04-desktop-confessions.webp",
+      "source": "chromium-1440x900-07-confessions-station.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 519108,
+      "sha256": "c91232d698ea5daf8a49efa01529c20227883f87e456ea022dde7c3000342eae",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "05-desktop-detail.webp",
+      "source": "chromium-1440x900-08-item-detail.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 311772,
+      "sha256": "12b53fb134021b422684b61ca57f6bcc49df83708c393e01a1c6a1e06273bb29",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "06-desktop-cabinet.webp",
+      "source": "chromium-1440x900-09-cabinet.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 97772,
+      "sha256": "ccd86cbafc1705870e1a8c10ef4b064dda16d12ae050fc26bce4984ac3dfa313",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "07-desktop-progression.webp",
+      "source": "chromium-1440x900-11-progression.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 148668,
+      "sha256": "d11a6c3ab33ee3eb492c26abdb18554578a2b16d8ecb2df9b4758270b6c8cfe6",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "08-desktop-tour.webp",
+      "source": "chromium-1440x900-12-tour.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 491244,
+      "sha256": "98883b03d4beefcc7f197bc95b733d99bc39fe6a3983d8eee668bb5d16b21a84",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "09-desktop-photo-settled.webp",
+      "source": "retake-chromium-desktop-photo-stable.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 356282,
+      "sha256": "3fc471833abc09ce287d4f19969d1523a6b929983aa7d71680587ee84e7ebb57",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "10-mobile-390-cover.webp",
+      "source": "chromium-390x844-01-intro.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 220998,
+      "sha256": "99e6cb75b6f4b3545327ad5990744ab33c3bd92a89a17b6278b5359e5e506880",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "11-mobile-390-hall.webp",
+      "source": "chromium-390x844-02-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 119682,
+      "sha256": "2f77d6c91600b386c0d009bd64883de828bb841b28b450882ff296c8e4f76a7c",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "12-mobile-390-sitemap.webp",
+      "source": "chromium-390x844-03-map.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 126540,
+      "sha256": "9e2340f520cd143fa0318f6106b5947f82da43bd09b63298433d7779bb15925d",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "13-mobile-390-detail.webp",
+      "source": "chromium-390x844-08-item-detail.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 106208,
+      "sha256": "c7ba71eb013c3e0823cfd286a59238d3731dc7dd96d83dc9904160a390161cfe",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "14-mobile-390-cabinet.webp",
+      "source": "chromium-390x844-09-cabinet.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 33164,
+      "sha256": "53fae768c2ccfa216fe1307a4df51836167315ea1f931a9f6067c791bc376b5d",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "15-mobile-390-more-menu.webp",
+      "source": "chromium-390x844-10-more-menu.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 165124,
+      "sha256": "9715044c157cf94e87fb5cdc6e487fdae385de62057e2b4cca1e9e6f2df55452",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "16-mobile-390-progression.webp",
+      "source": "chromium-390x844-11-progression.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 34244,
+      "sha256": "a4917cb1e21590d43ce26996901a62fbec61da5dc7dcf86b6740fd5bffffec2e",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "17-mobile-390-tour.webp",
+      "source": "chromium-390x844-12-tour.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 120828,
+      "sha256": "016c34dac56181615fa501772a8ea2ff9131710ebd6ba2b6347b7712ae8c334c",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "18-mobile-390-photo-settled.webp",
+      "source": "follow-photo-650.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 91942,
+      "sha256": "f3e4bf3de2104c2a9ceae95d1167a04a335028130540bd4893f291e826df1a4b",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "19-mobile-320-cover.webp",
+      "source": "chromium-320x760-01-intro.png",
+      "width": 320,
+      "height": 760,
+      "bytes": 174806,
+      "sha256": "cbd269469e871186b317c68e002e4342422d75ae7bb5973886114711a11e1a2d",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "20-mobile-320-hall.webp",
+      "source": "chromium-320x760-02-hall.png",
+      "width": 320,
+      "height": 760,
+      "bytes": 97482,
+      "sha256": "6a7da81497edb9187418f94d54344bd78ddaa850eb6a737988d8aca39c531961",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "21-mobile-landscape-844x390-blocked-entry.webp",
+      "source": "chromium-844x390-01-intro.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 267098,
+      "sha256": "a2af3924d964f0fb3f0d878d17dd30fee9837353b64f5318c92bd9d27005a6d9",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "22-webkit-mobile-cover-settled.webp",
+      "source": "retake-webkit-mobile-intro-stable.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 149370,
+      "sha256": "d99c513a6db10aeac621d789f19553e29121e6afc2ac87b0f6fffdd5ed1c48b0",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "23-webkit-mobile-hall.webp",
+      "source": "webkit-390x844-02-hall.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 109074,
+      "sha256": "b88799d093dea5f258a2cec8a152137d3721efd0fe48452fbd85307f099fbbf3",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "24-webkit-mobile-cabinet.webp",
+      "source": "webkit-390x844-09-cabinet.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 26558,
+      "sha256": "25469b84ada680b976b6395d17d23dac3b3df47bb1463b99b1156f5676c25b5b",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "25-webkit-desktop-hall.webp",
+      "source": "webkit-1440x900-02-hall.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 395132,
+      "sha256": "52a8ec8c8455c0b76183925ff14ac98d447f04e97f6cf494476eb7cc696d913c",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "26-webgl-context-lost.webp",
+      "source": "follow-chromium-contextlost.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 53120,
+      "sha256": "cc26c2a1d110e8341e82023d1cce5465b676b1f9006e7d3cbf101578aea9f44c",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "27-webgl-context-restored.webp",
+      "source": "follow-chromium-contextrestored.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 412984,
+      "sha256": "75a3a7fbf54d01d36e1661f0c9157857d2e7fe0d7497a2d1df3763f7d0c96c66",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "28-no-webgl-fallback.webp",
+      "source": "no-webgl-fallback.png",
+      "width": 1200,
+      "height": 800,
+      "bytes": 30828,
+      "sha256": "0bb935102f2af526d36b26322b23f75ed343a432413eeaf20be6243baec3fa94",
+      "decoded_rgb_identical": true
+    },
+    {
+      "path": "montage-desktop.jpg",
+      "source": "desktop-chrome-contact.jpg",
+      "width": 1185,
+      "height": 1160,
+      "bytes": 127222,
+      "sha256": "6471f9bc28008c63b5df4828054151ddb687e0f3bdaeed44275e9355ed039fdb",
+      "note": "overview contact sheet; resized previews; see numbered full-res captures"
+    },
+    {
+      "path": "montage-mobile-390.jpg",
+      "source": "mobile-chrome-contact.jpg",
+      "width": 828,
+      "height": 1660,
+      "bytes": 116007,
+      "sha256": "647455b7448d12c822f25a0ca2209d1d9d915d771e5e4a1f01ea5965c35c6ba3",
+      "note": "overview contact sheet; resized previews; see numbered full-res captures"
+    },
+    {
+      "path": "montage-webkit-mobile.jpg",
+      "source": "mobile-webkit-contact.jpg",
+      "width": 828,
+      "height": 1245,
+      "bytes": 102224,
+      "sha256": "0ed0a797cd0f93419b21535ad0d3b260475a60a9c0a4f5fe7a58d8818f139f26",
+      "note": "overview contact sheet; resized previews; see numbered full-res captures"
+    },
+    {
+      "path": "montage-mobile-320.jpg",
+      "source": "small-320-contact.jpg",
+      "width": 828,
+      "height": 1245,
+      "bytes": 95421,
+      "sha256": "c43084fb8c95919997505d6b938221d4bb708c072426b8c8b7dc3908910984b9",
+      "note": "overview contact sheet; resized previews; see numbered full-res captures"
+    }
+  ]
+}
