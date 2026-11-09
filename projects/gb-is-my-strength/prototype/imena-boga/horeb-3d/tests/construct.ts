@@ -329,6 +329,18 @@ if (gardenRecord) {
   });
   t('Gethsemane mature olive boles are subdivided, torsioned and support real branchlets',
     gnarled === 4 && twigs === 4 * 7 * 2 && totalCrownHeight > 6.5);
+  let maxTrunkRadius = 0, sculptedTrunks = 0;
+  grove.traverse((o) => {
+    if (o.name !== 'olive-main-trunk' || !(o instanceof THREE.Mesh)) return;
+    sculptedTrunks++;
+    const positions = o.geometry.getAttribute('position');
+    for (let i = 0; i < positions.count; i++) {
+      maxTrunkRadius = Math.max(maxTrunkRadius,
+        Math.hypot(positions.getX(i), positions.getZ(i)));
+    }
+  });
+  t('Gethsemane deformed wooden boles stay inside the shared 0.29m trunk collider',
+    sculptedTrunks === 4 && maxTrunkRadius <= 0.29);
   const gardenX = PLACEMENTS['abba'][0];
   const inward = -Math.sign(gardenX) * 0.85;
   const anchorX = gardenX + inward * 1.2 / Math.hypot(inward, 0.53);
