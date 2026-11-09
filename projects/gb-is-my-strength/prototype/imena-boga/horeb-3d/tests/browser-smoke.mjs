@@ -279,6 +279,53 @@ try {
       JSON.stringify(restoredWorld));
     await page.screenshot({ path: join(shots, 'smoke-02d-webgl-restarted.png') });
     await page.evaluate(() => { delete window.__lostWorld; delete window.__lostCanvas; });
+    // The solemn barefoot action is now a World-clock animation, not an
+    // independent RAF. Pausing 3D must pause the ceremony; reopening cannot
+    // unexpectedly mark shoes removed or release a stuck joystick movement.
+    const barefootStart = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      w.teleportTo(0, -351);
+      w.setMoveInput(0.7, 0.5);
+      const accepted = w.removeShoes();
+      // Direct movement during the ritual must be ignored as well.
+      w.setMoveInput(0.8, 0.1);
+      w.setInputLocked(true);
+      return { accepted, shoes: w.shoes, elapsed: w.shoeRemovalElapsed,
+        x: w.move.x, y: w.move.y, velocity: w.vel.length(), pos: w.position };
+    });
+    check('shoes may only be removed at the outside boundary with no residual input',
+      barefootStart.accepted && barefootStart.shoes === 'removing' &&
+      barefootStart.x === 0 && barefootStart.y === 0 && barefootStart.velocity === 0,
+      JSON.stringify(barefootStart));
+    await new Promise((r) => setTimeout(r, 950));
+    const duringPause = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      return { shoes: w.shoes, elapsed: w.shoeRemovalElapsed,
+        pos: w.position, locked: w.inputLocked };
+    });
+    check('pausing world also pauses removal of shoes, even after wall time',
+      duringPause.locked && duringPause.shoes === 'removing' &&
+      Math.abs(duringPause.elapsed - barefootStart.elapsed) < 0.0001,
+      JSON.stringify(duringPause));
+    await page.evaluate(() => window.__horeb.world.setInputLocked(false));
+    await page.waitForFunction(() => window.__horeb?.world?.shoes === 'unshod',
+      { timeout: 22000, polling: 100 });
+    const barefootDone = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      return { shoes: w.shoes, elapsed: w.shoeRemovalElapsed,
+        distance: Math.hypot(w.position.x, w.position.z + 366),
+        sandals: w.sandals?.children.length ?? 0,
+        moveX: w.move.x, moveY: w.move.y,
+        velocity: w.vel.length() };
+    });
+    check('removing shoes resumes exactly once on live simulation frames',
+      barefootDone.shoes === 'unshod' && barefootDone.elapsed >= 2.6 &&
+      barefootDone.sandals === 2 && barefootDone.distance >= 6.5 &&
+      barefootDone.moveX === 0 && barefootDone.moveY === 0 &&
+      barefootDone.velocity === 0,
+      JSON.stringify(barefootDone));
+    await page.screenshot({ path: join(shots, 'smoke-02e-shoes-resumed.png') });
+
 
 
   }
