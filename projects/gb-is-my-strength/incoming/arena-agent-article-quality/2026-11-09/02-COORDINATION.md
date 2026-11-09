@@ -100,3 +100,15 @@ Severity: `blocker` / `risk` / `signal-only`. `signal-only` в счёт баго
 | `arena/0b6f34f6-auditrepo` | `1cbfa19d` | 2 коммита: wave-3 Product gates/built-DOM, wave-4 Chromium painted/AX witness по 112 HTML |
 
 Обе чужие ветки прочитаны `gh api /compare` и `/contents?ref=...` **только на чтение**; ни одного `checkout`, `commit` или `push` в чужую ветку. Product `main` не сдвинулся с `5e2db6f0…`. Пересечений по путям нет. Прежняя запись §8 «„Коротко“ обязательно везде» устарела: агент A сам пересмотрел решение (обязателен >1500 слов), см. `AAQ-A-046`. Пуш — только в `arena/c6d6c46c-auditrepo`.
+
+---
+
+## 10. Сверка веток, седьмой проход (2026-11-09)
+
+| Ветка | Head | Дельта |
+|---|---|---|
+| `arena/c6d6c46c-auditrepo` (я) | `d45e21f` → этот коммит | §12 синтеза, §17 отчёта, `AAQ-A-049`…`054`, §10 критериев |
+| `arena/a33be340-auditrepo` | `c13dc5ef` | 5 коммитов: карта серий, canonical-архитектура, финальная матрица, **поправка о слоях** (триггером указан мой синтез) |
+| `arena/0b6f34f6-auditrepo` | `1cbfa19d` | без изменений |
+
+Product `main` не сдвинулся с `5e2db6f0…`. Чужие ветки читались `gh api /compare` и `/contents?ref=...` только на чтение; `checkout`, commit и push в чужие ветки не выполнялись. Локальный `HEAD` песочницы снова откатился на базовый `ae3669b` — синхронизирован `fetch` + `reset --hard` внутри `arena/c6d6c46c-auditrepo` до `d45e21f`, без смены ветки. Кандидаты строк из `FINAL_BUG_MATRIX.md` агента A остаются в его `_coordination/`; допуск в `MASTER_BUG_MATRIX.md` — только по решению владельца. Пуш — только в свою ветку.
