@@ -48,7 +48,11 @@ const wrap = (x) => Math.atan2(Math.sin(x), Math.cos(x));
 async function face(yaw, label) {
   const begin = Date.now();
   let s = await read();
-  while (Math.abs(wrap(yaw - s.yaw)) > 0.045) {
+  // The real 30-FPS SwiftShader controller turns in discrete simulation
+  // increments (~0.05–0.10 rad). A sub-step accuracy target oscillates
+  // forever despite healthy input. Accept one simulation-frame angular step;
+  // the physical E prompt still enforces the correct visible plaque.
+  while (Math.abs(wrap(yaw - s.yaw)) > 0.12) {
     if (Date.now() - begin > 14000)
       throw new Error('SIDE TURN STALLED ' + label + ' ' + JSON.stringify({ yaw, state: s }));
     const diff = wrap(yaw - s.yaw);
