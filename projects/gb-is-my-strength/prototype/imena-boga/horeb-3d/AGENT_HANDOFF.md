@@ -6,6 +6,10 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
+## Full 42 real side walks — точный дебаг первого CI
+
+Первая полная матрица на `0d946ed945ee60ce8ea4273f2f8d6bb60220f96f`, [HOREB QA #42683502272](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42683502272), выявила **НЕ 42/42 PASS**, а два реальных дефекта test harness: `1-2` **10/10 SUCCESS**, `7` **2/2 SUCCESS**, независимый осевой `actual-chromium` **SUCCESS**; `3-4` прошёл 7/18 (все зона 3), затем остановился у `sabaoth` на дистанции **3.61м**, тогда как E prompt физически ограничен 3.6м; `5` прошёл 7/12 и не смог повернуть камеру к `kyrios-ho-theos`, потому что краткие стрелочные импульсы пропадали между программными WebGL-кадрами. **Ни одна священная граница, коллизия или радиус E не меняются**. Исправление: фактический дополнительный шаг W/S при `d > 3.35м`, плюс удержание реальной стрелки до подтверждённого сдвига yaw. Никакого `teleportTo`/direct yaw/fast-forward. Результат следующего exact-HEAD CI **PENDING**.
+
 ## 42/42 физический доступ — новая параллельная волна (PENDING exact-HEAD)
 
 Предыдущий terminal-green baseline `3dc773cc2879e52209d648961a5734ff11ca916e`: [HOREB QA #42680392328](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42680392328), Validate #42680392281 и Preflight #42680392381 — **3/3 SUCCESS**. Доказаны 7 боковых сцен через настоящий WASD/стрелки/E с возвратом в центр и независимый осевой 0→7→0, 135/135 engineer, 34/34 smoke, 42/42 dossier и 8+3+3 PNG. Это не физический доступ к остальным 35 сценам.

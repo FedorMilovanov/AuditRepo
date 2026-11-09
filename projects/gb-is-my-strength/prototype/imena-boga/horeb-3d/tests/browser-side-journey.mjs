@@ -60,25 +60,43 @@ const wrap = (x) => Math.atan2(Math.sin(x), Math.cos(x));
 
 // Turning is done by holding the real arrow key, not setting world.yaw.
 async function face(yaw, label) {
-  const begin = Date.now();
+  const started = Date.now();
   let s = await read();
-  // The real 30-FPS SwiftShader controller turns in discrete simulation
-  // increments (~0.05–0.10 rad). A sub-step accuracy target oscillates
-  // forever despite healthy input. Accept one simulation-frame angular step;
-  // the physical E prompt still enforces the correct visible plaque.
+  // Low-FPS SwiftShader can render no frame during a 45–140 ms tap.
+  // Hold the REAL arrow key until a simulation-frame yaw change is observed;
+  // do not change World.yaw or skip time. Still fail on a genuinely stalled
+  // renderer/controller, and require the physical E prompt afterwards.
   while (Math.abs(wrap(yaw - s.yaw)) > 0.12) {
-    if (Date.now() - begin > 14000)
-      throw new Error('SIDE TURN STALLED ' + label + ' ' + JSON.stringify({ yaw, state: s }));
+    if (Date.now() - started > 30000)
+      throw new Error('SIDE TURN STALLED ' + label + ' ' +
+        JSON.stringify({ targetYaw: yaw, state: s }));
     const diff = wrap(yaw - s.yaw);
     const key = diff > 0 ? 'ArrowLeft' : 'ArrowRight';
+    const before = s.yaw;
+    let changed = false;
     await page.keyboard.down(key);
-    await sleep(Math.min(140, Math.max(45, Math.abs(diff) / 1.6 * 400)));
-    await page.keyboard.up(key);
-    await sleep(100);
-    s = await read(); safe(s, label + '-turn');
+    try {
+      for (let n = 0; n < 30; n++) {
+        await sleep(120);
+        s = await read(); safe(s, label + '-turn');
+        const remaining = wrap(yaw - s.yaw);
+        if (Math.abs(remaining) <= 0.12 ||
+            Math.sign(remaining) !== Math.sign(diff) ||
+            Math.abs(wrap(s.yaw - before)) >= 0.035) {
+          changed = true;
+          break;
+        }
+      }
+    } finally {
+      await page.keyboard.up(key);
+    }
+    if (!changed)
+      throw new Error('SIDE TURN NO RENDERED ANGULAR PROGRESS ' + label +
+        JSON.stringify({ key, targetYaw: yaw, state: s }));
+    await sleep(90);
+    s = await read(); safe(s, label + '-turn-settle');
   }
 }
-
 // Steering axes uses actual W/S/A/D with yaw≈0. Stop before targets, allow
 // movement to decelerate, then correct small overshoots by a real reverse key.
 async function axis(kind, target, label, tolerance = 0.65) {
@@ -194,7 +212,15 @@ try {
     const sideX = ex.x - Math.sign(ex.x) * 2.4;
     await axis('x', sideX, item.id + '-side-detour', 0.58);
     await sleep(350);
-    const near = await read(); safe(near, item.id + '-approach');
+    let near = await read(); safe(near, item.id + '-approach');
+    // Interaction radius is 3.6 m. A stele at x=±8.5 can finish a little
+    // beyond it after keyboard momentum has settled. Physically correct the
+    // longitudinal approach with W/S rather than relaxing canInspectExhibit
+    // or directly moving the visitor through a wall/collider.
+    if (Math.hypot(near.x - ex.x, near.z - ex.z) > 3.35) {
+      await axis('z', ex.z + 1.75, item.id + '-final-forward', 0.4);
+      near = await read(); safe(near, item.id + '-final-approach');
+    }
     if (Math.hypot(near.x - ex.x, near.z - ex.z) > 3.58)
       throw new Error('SIDE target too far ' + JSON.stringify({ ex, near }));
     await face(Math.atan2(-(ex.x - near.x), -(ex.z - near.z)),
