@@ -21,11 +21,32 @@ try {
   page.on('pageerror', (e) => errors.push(String(e)));
   const response = await page.goto(base + '/?e2e', { waitUntil: 'domcontentloaded' });
   if (response?.status() !== 200) throw new Error('Intro HTTP ' + response?.status());
-  // Force high via the documented saved setting before first WebGL startup.
-  await page.evaluate(() => localStorage.setItem('imena-horeb.settings.v1',
-    JSON.stringify({ quality: 'high', sound: false, particles: false,
-      reducedMotion: true, exposure: 1.5, showStats: false })));
-  await page.reload({ waitUntil: 'domcontentloaded' });
+  // Choose high through the real introductory settings UI. Pre-seeding
+  // storage between DOMContentLoaded and React's first effect is racy: the
+  // initial "auto" write may overwrite the seed on slow GitHub runners.
+  await page.waitForFunction(() => [...document.querySelectorAll('button')].some((b) =>
+    (b.textContent || '').trim() === 'Настройки доступности'), { timeout: 30000 });
+  const introSettings = await page.evaluate(() => {
+    const b = [...document.querySelectorAll('button')].find((button) =>
+      (button.textContent || '').trim() === 'Настройки доступности');
+    b?.click(); return !!b;
+  });
+  if (!introSettings) throw new Error('Intro quality settings action missing');
+  await page.waitForSelector('[role="dialog"] input[name="q"]');
+  const choseHigh = await page.evaluate(() => {
+    const radio = [...document.querySelectorAll('input[name="q"]')].find((input) =>
+      input.closest('label')?.textContent?.includes('Высокое'));
+    radio?.click(); return !!radio;
+  });
+  if (!choseHigh) throw new Error('High quality radio missing');
+  await page.waitForFunction(() => {
+    const input = [...document.querySelectorAll('input[name="q"]')].find((x) =>
+      x.closest('label')?.textContent?.includes('Высокое'));
+    return !!input?.checked;
+  }, { timeout: 5000 });
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !document.querySelector('[role="dialog"]'),
+    { timeout: 10000 });
   const started = await page.evaluate(() => {
     const button = [...document.querySelectorAll('button')].find((b) =>
       /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()));
@@ -33,8 +54,19 @@ try {
     return !!button;
   });
   if (!started) throw new Error('World start action missing');
-  await page.waitForFunction(() => window.__horeb?.world?.settings.quality === 'high',
-    { polling: 200, timeout: 90000 });
+  try {
+    await page.waitForFunction(() => window.__horeb?.world?.settings.quality === 'high',
+      { polling: 200, timeout: 60000 });
+  } catch (e) {
+    const diagnostic = await page.evaluate(() => ({
+      quality: window.__horeb?.world?.settings.quality ?? null,
+      saved: localStorage.getItem('imena-horeb.settings.v1'),
+      status: document.querySelector('[role="status"]')?.textContent ?? null,
+      alert: document.querySelector('[role="alert"]')?.textContent ?? null,
+    }));
+    throw new Error('HIGH PROFILE DID NOT START: ' +
+      JSON.stringify({ diagnostic, errors, original: String(e) }));
+  }
   await page.evaluate(() => {
     const world = window.__horeb.world;
     // Direct position only seeds a SAFE point; the real journey is verified
