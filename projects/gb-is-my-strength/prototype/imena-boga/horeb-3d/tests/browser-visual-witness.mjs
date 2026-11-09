@@ -94,18 +94,21 @@ try {
   if (witness.desktop[0].quality === 'low' && witness.desktop[0].calls >= 245)
     throw new Error('PERFORMANCE: zone-0 distance culling ineffective, draw calls=' +
       witness.desktop[0].calls + ' (baseline 306)');
-  // At the final zone, nearby name markers must remain visible even though
-  // distant signs and props have been culled.
+  // At zone-7 spawn, the Horeb signs are about 21 metres ahead, so a
+  // hard-coded 20-metre threshold incorrectly selected zero nearby props.
+  // Derive the observation range from the same quality profile as World.
+  // The actual uninterrupted 0->7->0 journey is tested separately.
   const groups = await desktop.evaluate(() => {
     const w = window.__horeb.world;
     const z = w.position.z, list = w.scenicGroups;
-    const close = list.filter((item) => Math.abs(item.z - z) < 20);
-    const distant = list.filter((item) => Math.abs(item.z - z) > 150);
+    const cutoff = w.settings.quality === 'low' ? 85 : 125;
+    const close = list.filter((item) => Math.abs(item.z - z) < cutoff - 1);
+    const distant = list.filter((item) => Math.abs(item.z - z) > cutoff + 25);
     return { allNear: close.every((item) => item.object.visible),
-      someDistantHidden: distant.some((item) => !item.object.visible),
-      close: close.length, distant: distant.length };
+      allDistantHidden: distant.every((item) => !item.object.visible),
+      close: close.length, distant: distant.length, cutoff };
   });
-  if (!groups.allNear || !groups.someDistantHidden || !groups.close || !groups.distant)
+  if (!groups.allNear || !groups.allDistantHidden || !groups.close || !groups.distant)
     throw new Error('SCENIC CULL: expected near objects visible, distant art hidden ' +
       JSON.stringify(groups));
   console.log('PASS nearby exhibits preserved / distant meshes not drawn; zone0=' +
