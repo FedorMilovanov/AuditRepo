@@ -8,7 +8,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
@@ -39,13 +39,19 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
   const oliveWood = new THREE.MeshStandardMaterial({ color: 0x615746, roughness: 1 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
+  // Shallow spring water is a non-metallic dielectric, not the dark material
+  // used at the bottom of deep wells. This visible slate surface is lit by
+  // actual scene lights, with no artificial emissive glow or billboard.
+  const shallowWater = new THREE.MeshStandardMaterial({
+    color: 0x4e6460, roughness: 0.28, metalness: 0,
+  });
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
   const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
   // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
   const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x596947, roughness: 0.95, side: THREE.DoubleSide });
   const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x858e70, roughness: 0.95, side: THREE.DoubleSide });
-  const s: Shared = { stone, dark, wood, oliveWood, water, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
+  const s: Shared = { stone, dark, wood, oliveWood, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -486,7 +492,7 @@ function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
   basin.rotation.x = -Math.PI / 2;
   basin.scale.set(1.29, 1.23, 1);
   basin.position.set(x, 0.018, z); g.add(basin);
-  const pool = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.water);
+  const pool = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.shallowWater);
   pool.name = 'spring-irregular-water';
   pool.rotation.x = -Math.PI / 2;
   pool.position.set(x, 0.046, z); g.add(pool);
