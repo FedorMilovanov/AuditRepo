@@ -11,7 +11,8 @@
     "prebuild": "node tests/generate-reader.mjs",
     "test:browser:smoke": "node tests/browser-smoke.mjs",
     "test:browser:exhibits": "node tests/browser-exhibits.mjs",
-    "test:browser:visual": "node tests/browser-visual-witness.mjs"
+    "test:browser:visual": "node tests/browser-visual-witness.mjs",
+    "test:browser:journey": "node tests/browser-journey.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

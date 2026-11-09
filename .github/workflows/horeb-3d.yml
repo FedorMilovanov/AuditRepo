@@ -23,7 +23,7 @@ defaults:
 jobs:
   source-and-geometry:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 32
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -100,6 +100,13 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:exhibits
+      - name: Walk the whole route and back by actual keyboard input (no teleport)
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:journey
       - name: Build and test the direct local file preview
         env:
           HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
@@ -123,6 +130,8 @@ jobs:
           path: |
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/journey-witness.json
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
           retention-days: 7
           if-no-files-found: error
