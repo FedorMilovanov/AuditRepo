@@ -161,7 +161,7 @@ export default function HorebApp() {
       if (!world) return;
       if (cancelled) { world.dispose(); return; }
       w = world; worldRef.current = world;
-      if (new URLSearchParams(location.search).has('e2e')) (window as unknown as { __horeb: unknown }).__horeb = { world, state: () => stateRef.current };
+      if (import.meta.env.DEV && new URLSearchParams(location.search).has('e2e')) (window as unknown as { __horeb: unknown }).__horeb = { world, state: () => stateRef.current };
     }).catch((e) => { if (!cancelled && e?.name !== 'AbortError') { console.error(e); setErr('Не удалось запустить 3D-сцену на этом устройстве.'); } });
     return () => {
       cancelled = true;
@@ -172,7 +172,7 @@ export default function HorebApp() {
         // coordinates after an explicit in-world progress reset.
         w.dispose();
       }
-      if (new URLSearchParams(location.search).has('e2e')) {
+      if (import.meta.env.DEV && new URLSearchParams(location.search).has('e2e')) {
         const debug = window as unknown as { __horeb?: { world: World } };
         if (debug.__horeb?.world === w) delete debug.__horeb;
       }
