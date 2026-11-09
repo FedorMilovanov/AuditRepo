@@ -160,6 +160,22 @@ try {
   const initial = await read(); safe(initial, 'initial');
   if (Math.abs(initial.z + 2) > 0.6 || Math.abs(initial.x) > 0.5)
     throw new Error('SIDE unsafe/altered spawn ' + JSON.stringify(initial));
+  // Test-side tripwire: an accidental future direct teleport must be a FAIL,
+  // even if its destination happens to satisfy the ordinary E-distance checks.
+  await page.evaluate(() => {
+    const w = window.__horeb.world;
+    window.__horebSideTeleportViolations = 0;
+    for (const method of ['teleportTo', 'teleportZone']) {
+      if (typeof w[method] !== 'function') throw new Error('SIDE missing movement guard: ' + method);
+      Object.defineProperty(w, method, {
+        configurable: false, writable: false,
+        value: () => {
+          window.__horebSideTeleportViolations++;
+          throw new Error('SIDE FORBIDDEN TELEPORT ' + method);
+        },
+      });
+    }
+  });
 
   // Use the production registry, not a hand-maintained list that might omit
   // an exhibit added later. The zone partition must exhaust all 42 IDs.
@@ -252,6 +268,10 @@ try {
       throw new Error('SIDE could not return to central passage ' +
         JSON.stringify(centre));
   }
+  const teleportViolations = await page.evaluate(() => window.__horebSideTeleportViolations);
+  record.teleportCalls = teleportViolations;
+  if (teleportViolations !== 0)
+    throw new Error('SIDE forbidden movement method invoked ' + teleportViolations);
   if (record.exhibits.length !== approach.length || record.errors.length)
     throw new Error('SIDE incomplete with runtime errors ' + JSON.stringify(record));
   record.result = 'PASS';
