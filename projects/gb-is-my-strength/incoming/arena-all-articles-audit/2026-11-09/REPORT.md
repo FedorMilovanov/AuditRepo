@@ -1,4 +1,4 @@
-# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–4)
+# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–5)
 
 ## Meta
 
@@ -8,22 +8,22 @@
 - Date: 2026-11-09
 - Audited branch/ref: `main`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` = `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; `pushed_at 2026-11-09T06:28:12Z`
-- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов), `npm run strangler:build`, parse5-ценз `dist`; волна 4 — headless Chromium 153 из npm-пакета `@sparticuz/chromium@153.0.0` (без `npx playwright install`), локальный static server `dist`, browser-sweep 112 HTML и реальные Product browser-gates
-- Build mode: волна 2 `source`; волны 3–4 `dist` (112 `index.html` / 1248 файлов / 101 MB; 111 матричных маршрутов + `/konfessii/russkij-baptizm/_app/`)
-- Browser / device if used: волна 3 — без браузера; волна 4 — headless Chromium 153 (`chrome-headless-shell`, Linux x64), desktop 1280×900 и Product mobile/desktop matrices; WebKit/Firefox, реальное устройство и TTS voice-switching не проверялись
+- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов), `npm run strangler:build`, parse5-ценз `dist`; волна 4 — headless Chromium 153 из npm-пакета `@sparticuz/chromium@153.0.0` (без `npx playwright install`), локальный static server `dist`, browser-sweep 112 HTML и реальные Product browser-gates; волна 5 — песочница пересоздана с нуля на том же якоре, `npm ci` + `strangler:build` + `pagefind:build:dist`, реальные Chromium runtime/visual-parity gates и кросс-агентная сверка MDX↔`dist`
+- Build mode: волна 2 `source`; волны 3–5 `dist` (112 `index.html` / 1248 файлов / 101 MB; 111 матричных маршрутов + `/konfessii/russkij-baptizm/_app/`). Волна 5 дополнительно собрала `pagefind` (102 страницы / 29117 слов)
+- Browser / device if used: волна 3 — без браузера; волны 4–5 — headless Chromium 153 (`chrome-headless-shell`, Linux x64), desktop 1280×900, Product mobile 390×844/360 и desktop matrices; WebKit/Firefox, реальное устройство и TTS voice-switching не проверялись
 - Scope: 111 маршрутов, 79 читательских статей, 32 хабов/утилит; один общий прогон. Волна 4 отдельно обошла 112 финальных HTML (включая utility `_app`)
-- Explicit exclusions: авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, WebKit/Firefox/реальное устройство, TTS voice-switching и полный runtime quiz-click прогон. Волна 4 добавляет bounded Chromium painted/AX witness, но не заменяет внешнюю редакционную проверку
+- Explicit exclusions: авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, WebKit/Firefox/реальное устройство, TTS voice-switching и полный cross-browser runtime quiz-click/owner visual signoff. Волны 4–5 добавляют bounded Chromium painted/AX/runtime/visual-parity witness, но не заменяют внешнюю редакционную проверку
 - Signal class: Product
-- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM и browser-painted следа в границе проверенных паттернов; `UNPROVEN` для атрибуции авторства, внешней истинности, WebKit/Firefox/TTS и полного runtime quiz-click прогона
-- Claim boundary: исходный reader-facing текст, статический final-HTML `dist` и bounded headless-Chromium отрисовка/AX-дерево на якоре выше; не WebKit/Firefox, не реальное устройство, не TTS, не авторство, не внешняя проверка источников
+- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM и browser-painted следа в границе проверенных паттернов; `PASS` только для bounded Chromium runtime-gates волны 5; `UNPROVEN` для атрибуции авторства, внешней истинности, WebKit/Firefox/TTS, owner visual acceptance и полного cross-browser прогона
+- Claim boundary: исходный reader-facing текст, статический final-HTML `dist`, bounded headless-Chromium отрисовка/AX-дерево, runtime-клики и visual-parity pilots на якоре выше; не WebKit/Firefox, не реальное устройство, не TTS voice-switching, не owner signoff, не авторство, не внешняя проверка источников
 - Preservation boundary: не менять Product, не создавать новый универсальный контракт/чек-лист, не авто-переписывать русскую прозу
 - Semantic owner: существующие строки `MASTER_BUG_MATRIX.md`; новые строки не допускаются без owner-решения
 - Overlapping active owner/PR/branch check: открытые PR в AuditRepo #545, #544, #543, #542, #538, #521, #514 — нашу article-lane не пересекают; активные строки MASTER: `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` (admission 2026-10-25), `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`.
-- Report type: `source-audit + built-DOM-audit + browser-painted-witness`
+- Report type: `source-audit + built-DOM-audit + browser-painted-witness + bounded-runtime/visual-parity-witness`
 
 > Anchor фиксирует, что именно смотрелось. Не обновлять отчёт только потому, что исходный репозиторий позже сдвинулся.
 
-**Артефакты волн 2–4:** этот `REPORT.md` (§9 — дельта волны 3, §10 — дельта волны 4) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, DOM- и browser-колонки) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist`, Chromium binary, скриншоты и логи гейтов — в `/tmp` / `~/.cache`, вне репо. Ни одного нового файла в AuditRepo не создано.
+**Артефакты волн 2–5:** этот `REPORT.md` (§9 — дельта волны 3, §10 — дельта волны 4, §11 — дельта волны 5) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, 55 колонок: DOM-, browser-, MDX- и visual-parity) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist`, Chromium binary, скриншоты и логи гейтов — в `/tmp` / `~/.cache`, вне репо. Ни одного нового файла в AuditRepo не создано.
 
 ---
 
@@ -686,7 +686,7 @@ Split не переписывается: общий ключ `route + criterion_
 
 ### 9.7 Чего волна 3 НЕ доказывает
 
-- Волна 3 не имела browser/AX/painted geometry и скриншотов; волна 4 добавляет bounded Chromium painted/AX witness и один print-media witness, но не runtime quiz-click прогон и не полный PDF/печатный аудит.
+- Волна 3 не имела browser/AX/painted geometry и скриншотов; волны 4–5 добавляют bounded Chromium painted/AX witness, print-media witness и реальные runtime-клики, но не полный cross-browser/owner PDF/печатный аудит.
 - Нет внешней проверки исторических/богословских утверждений, edition/version, прав и независимой corroboration.
 - Нет вывода «ИИ/человек»: стилевые маркеры остаются TRIGGER.
 - Нет нового универсального контракта/чек-листа, новых строк MASTER и автопереписывания прозы.
@@ -815,13 +815,128 @@ browserMixedPainted          сумма 1
 browserPageErrors            сумма 0
 ```
 
-Суммы по 111 строкам равны суммам по 112 HTML: лишний utility `_app` дал нули по всем метрикам. Split 3 агентов и общий ключ `route + criterion_id` не переписаны: **A** — методология/gates/DOM/browser/матрица; **B** — внешняя corroboration, edition/rights/locator, C1/C2/C3/C8/C5/C20; **C** — WebKit/Firefox/device/TTS, полный runtime quiz-click и PDF/print-parity, если owner решит их закрывать. Не создано ни одного нового файла в AuditRepo, ни одного нового универсального чек-листа/ADMIT-контракта; style-only вывод «ИИ/человек» не делался.
+Суммы по 111 строкам равны суммам по 112 HTML: лишний utility `_app` дал нули по всем метрикам. Split 3 агентов и общий ключ `route + criterion_id` не переписаны: **A** — методология/gates/DOM/browser/матрица; **B** — внешняя corroboration, edition/rights/locator, C1/C2/C3/C8/C5/C20; **C** — WebKit/Firefox/device/TTS, полный cross-browser runtime quiz-click и owner PDF/print/visual parity, если owner решит их закрывать. Волна 5 (§11) выполняет bounded Chromium-часть C, не закрывая владельца. Не создано ни одного нового файла в AuditRepo, ни одного нового универсального чек-листа/ADMIT-контракта; style-only вывод «ИИ/человек» не делался.
 
 **Чего волна 4 всё ещё НЕ доказывает:**
-- нет WebKit/Firefox, реального устройства, TTS voice-switching и полного runtime quiz-click прогона;
+- нет WebKit/Firefox, реального устройства, TTS voice-switching и полного cross-browser runtime quiz-click прогона; волна 5 закрывает только bounded Chromium interactive-audit;
 - нет внешней проверки исторических/богословских claims, edition/version, прав и независимой corroboration;
-- `visual-parity` проверен только на `/about/` с `--warn-only`; `validate:static-publication:light` часть dist-assertions честно пропускает в source mode;
+- `visual-parity` волны 4 был только `/about/` с `--warn-only`; волна 5 расширяет его до 11 first-fold landings, 3 full-page routes и неудачной попытки всех 43 baseline routes, но owner signoff по-прежнему нет; `validate:static-publication` и `:light` на этом якоре содержат одни и те же 41 команду и различаются лишь порядком пяти хвостовых гейтов;
 - `???`=0 и `Чекy` print/AX witness — наблюдения текущего anchor, а не owner-решение по MASTER-строкам;
-- зелёный `validate:static-publication:light` не заменяет редакционную пригодность и не снимает 17 HARD.
+- зелёные `validate:static-publication`/`:light`, `interactive-audit` и `engine:guard` не заменяют редакционную пригодность и не снимают 17 HARD; `smoke:konfessii` дополнительно показал fail-open: exit 0 при `ERR_CONNECTION_REFUSED`/`errors=1`.
 
 **Ветки/пуш.** Перед записью повторно сверены `git branch --show-current` = `arena/0b6f34f6-auditrepo`, `git status --short` (до правок — clean), upstream `origin/arena/0b6f34f6-auditrepo`, remote head волны 3 `4dd240e`. Пуш — обычный `git push` только в эту ветку; чужие PR/ветки не трогаются, ветка не переключается и не переименовывается.
+
+---
+
+## 11. Волна 5 — кросс-агентная сверка рендер-слоя, реальные runtime-клики и visual-parity
+
+**Статус:** дополняет §§9–10, не отменяет 17 source-HARD, 64 TRIGGER, 5 положительных контролей и разделение HARD/TRIGGER. Тот же Product anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`. Волна 5 снимает часть границ «browser/AX был, runtime/visual-parity не было» **только в bounded Chromium-объёме**. Owner visual signoff, WebKit/Firefox, реальное устройство, TTS voice-switching, внешняя corroboration/rights/edition и закрытие MASTER-строк по-прежнему отсутствуют.
+
+### 11.0 Восстановление песочницы, ветки и окружения
+
+В начале волны песочница была пересоздана: локальный `HEAD` AuditRepo снова показывал базовый `ae3669b`, а два наших deliverable лежали untracked; remote `arena/0b6f34f6-auditrepo` оставался на `1cbfa19`. SHA-256 обоих файлов точно совпали с blobs удалённого коммита. Выполнены `git fetch origin '+refs/heads/arena/0b6f34f6-auditrepo:refs/remotes/origin/arena/0b6f34f6-auditrepo'`, настройка upstream и `git reset --mixed origin/arena/0b6f34f6-auditrepo`; отдельного «ремонтного» коммита нет, рабочее дерево стало clean. Это восстановление локальной базы git, а не изменение истории ветки.
+
+Product-окружение собрано заново с нуля: shallow clone `main` дал ровно тот же anchor, 3363 tracked-файла и чистый status; `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci` — 377 пакетов; `npm run strangler:build` — exit 0, 112 `index.html` / 1248 файлов / 101 MB; `npm run pagefind:build:dist` — 102 страницы / 29117 слов. `@sparticuz/chromium@153.0.0` распакован в `/tmp/chromium` с `/tmp/al2023/lib` и `/tmp/fonts`, подключён symlink'ами к registry Playwright 1.62.1. Static-серверы `dist` на портах 8123 и 8090 поднимались для browser-гейтов и остановлены после проверок. `git status` Product в конце — чистый; `main` Product по-прежнему равен аудированному anchor.
+
+### 11.1 Другие arena-ветки и спор «42 MDX из 70»
+
+Проверка пересечений: открытые PR AuditRepo остались #545, #544, #543, #542, #538, #521, #514; дополнительно существуют arena-ветки `01a10d48`, `13fed2e7`, `7f74c768`, `a33be340`, `c6d6c46c`. На **нашей** ветке `arena/0b6f34f6-auditrepo` лежат `REPORT.md` и `ALL_ARTICLES_MATRIX.csv`; ни на одной из пяти других arena-веток этих двух путей нет — конфликта путей и чужой правки нашего пакета не обнаружено. Ветка `arena/a33be340-auditrepo` содержит поправку `CORRECTION_RENDERED_LAYER.md` с утверждением «42 из 70 MDX не подключены ни к одному маршруту», «18 статей Сердца вне навигации» и предлагает новые `G-ORPHAN-MDX` / `G-MDX-ASTRO-PARITY` охраны. Это чужой документ; он не merging, не принимается как новый ADMIT-контракт и не порождает новый универсальный чек-лист.
+
+На том же якоре мы независимо пересчитали оба слоя:
+
+| Проверка | Результат | Что означает |
+|---|---:|---|
+| `src/content/articles/*.mdx` | **70** | исходная коллекция |
+| MDX с прямым `import … @/content/articles/*.mdx` в `src/pages` | **28** | 직접 импортируются маршрутом |
+| MDX без прямого импорта в `src/pages` | **42** | **число 42 воспроизводится**, но только как «нет прямого import» |
+| `src/layouts/SeriesArticleLayout.astro` использует `getCollection + render()` | да | динамический механизм существует |
+| страниц `src/pages`, импортирующих `SeriesArticleLayout` | **0** | механизм на этом якоре не подключён к routes |
+| MDX с `sourceMode: "metadata-only"` | **6** | 6 Gill-файлов объявлены metadata-only, это не «потеря прозы» |
+| Jaccard по 8-словным шинглам MDX ↔ 112 built HTML, лучший маршрут ≥0.30 | **58 / 70** | у большинства MDX текст представлен в `dist` |
+| из 42 без прямого импорта имеют лучший Jaccard ≥0.30 | **30** | рендерятся через Astro-компоненты с перекрывающимся текстом; «сирота» — слишком сильный вывод |
+| из 42 без прямого импорта имеют лучший Jaccard <0.30 | **12** | 6 metadata-only + 6 расхождений |
+| расхождения среди `sourceMode != metadata-only` | **6** | 5 Baptist-маршрутов и 1 пограничный |
+
+Шингловое сравнение сделано как **диагностический witness**, а не как новая норма: MDX очищался от frontmatter/JSX/разметки, HTML — parse5 Text nodes без script/style/hidden; порог 0.30 взят лишь для сопоставления с формулировкой чужой поправки. 30 «component-similar» маршрутов дают Jaccard **0.438–0.928** (например `chto-bibliya-nazyvaet-serdcem` 0.911, `serdce-hrista-k-nemoshchnym` 0.928, `spravochnik` Baptist 0.633). 6 несовпадающих `rendered`-MDX:
+
+```text
+baptisty-rossii/dva-sezda-1884            0.0282
+baptisty-rossii/noch-na-kure              0.0080
+baptisty-rossii/peterburgskaya-liniya     0.0104
+baptisty-rossii/sovetskaya-noch           0.0061
+baptisty-rossii/yuzhnaya-shtunda          0.0382
+articles/tma-na-serdce                    0.2990  (порогово-чувствителен)
+```
+
+**Вывод по C23:** авто-проверка «есть ли компонент/импорт» действительно давала 0 флагов, но отсутствие прямого import не доказывает ни расхождения текстов, ни их паритета. Существующий владелец `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` уже описывает этот класс; волна 5 **не** переклассифицирует C23, **не** добавляет 6 новых HARD, **не** создаёт новую строку MASTER и **не** вводит предлагаемые чужой веткой универсальные guard'ы. 6 расхождений остаются bounded TRIGGER для owner-решения; 17 HARD / 64 TRIGGER из §4 не меняются.
+
+### 11.2 Настоящие Chromium runtime-гейты
+
+Официальный `npm run interactive-audit` без патчей **не может пройти** в этой песочнице: первому же `reader-share-browser-outcome-contract.cjs` нужен `webkit-2336/pw_run.sh`, которого нет. Это ограничение egress/браузерного набора, не дефект Product. Для bounded Chromium-witness четыре harness-скрипта временно переведены на `['chromium']` / `GB_SHARE_BROWSERS=chromium` / `HOME_DESIGN_BROWSER=chromium`; после прогона все четыре восстановлены `git checkout --`, SHA-256 совпали с оригиналами, Product status чистый. Изменения Product-исходников в репозиторий не попадали.
+
+`interactive-audit` с `AUDIT_BASE=http://127.0.0.1:8123` — **exit 0, 488 строк**:
+
+```text
+Reader share/copy outcome contract:        12/12 PASS
+Reader share browser outcome contract:     18/18 PASS
+Reader print preflight contract:            5/5 PASS
+PDF: gill 29/29 · hermenevtika 33/33 · baptists 13/13
+Mobile print scroll owner contract:         3/3 PASS
+GB INTERACTIVE AUDIT: 56 pages · 10 series · 6 quizzes · glossary 3 · footnotes 1
+                      · theme 6 · search 4 · media 2 · chrome labels 7 · header hosts 7
+✅ Interactive audit passed
+HOMEPAGE RESUME BROWSER CONTRACT: PASS (chromium)
+✅ native article quiz browser parity passed (/articles/kod-da-vinchi/)
+✅ series quiz source handoff contract passed (53 checks; mobile 390×844 Dark, reduced-motion, native clicks)
+Standalone reader layout guards: 184/184 PASS
+HOME DESIGN AUDIT PRO chromium: 338/338 named variants PASS
+```
+
+Дополнительные Product-гейты после запуска сервера 8090 и регенерации `reports/relation-projection.json` официальным `project-relations-to-dist.mjs`:
+
+| Команда | Exit | Ключевой результат |
+|---|---:|---|
+| `npm run engine:guard` | 0 | `Unified navigation engine sweep completed`; static relationship panel `9/9`; Atlas state browser console clean |
+| `npm run workflows:check` | 0 | CI browser/print stability, 285 pinned declarations, 95 exact Node-toolchain declarations |
+| `npm run smoke:maps` | 0 | `/karty/ishod/`: 139 SVG circles, 3/3 routes, 0 overflow/errors; 8 holding-routes честно skipped |
+| `npm run smoke:maps:mobile` | 0 | `ishod` + `avraam` 390px, 0 overflow/errors |
+| `npm run smoke:content:mobile` | 0 | 11 representative routes, 0 overflow/errors |
+| `npm run gill:mobile-play:smoke` | 0 | long-press/rapid-tap/state machine; **не** TTS voice-switching |
+| `npm run visual:pixelmatch:contract` | 0 | `PIXELMATCH 7 ESM AND ALPHA CONTRACT: PASS` |
+| `npm run validate:static-publication` | 0 | 4134 строки, `168 passed · 6 warnings · 0 errors · 12 info`; `astro:check` 641 файлов / 0 errors |
+| `npm run smoke:konfessii` | 0 | **fail-open**: exit 0 и при `ERR_CONNECTION_REFUSED`, и при `errors=1` на desktop/mobile |
+
+Первые запуски `engine:guard` и трёх smoke-гейтов дали exit 1 из-за окружения: не хватало сгенерированного `reports/relation-projection.json`, а smoke-скрипты жестко ждут server на `127.0.0.1:8090`. После регенерации отчёта и запуска сервера все они прошли; эти первые ошибки не записываются как Product-дефекты. `validate:static-publication` и `validate:static-publication:light` на этом якоре содержат **одни и те же 41 команду**, различаясь только порядком пяти хвостовых гейтов; поэтому «non-light» не даёт дополнительной владельческой авторитета по сравнению с волной 4. `baptisty:authentic-media:browser` не запускался: в нём жёсткий цикл `{chromium, webkit}`.
+
+Даже все эти зелёные exit 0 не заменяют редакционную проверку, не снимают 17 HARD и не закрывают строки MASTER.
+
+### 11.3 Visual-parity: три уровня, ни один не owner signoff
+
+1. **Попытка всех 43 baseline routes, full-page.** `visual-parity-screenshots.js` по умолчанию берёт `data/public-content-baseline.json` (43 маршрута). Запуск с `--warn-only` и таймаутом 1500 с дал 10 маршрутов / **20 числовых viewport-пар** до падения Chromium на `/articles/kod-da-vinchi/`; остальные **66 пар** получили `Target page, context or browser has been closed`. Из 20 числовых пар **2 прошли** порог 1% (`/about/` desktop 0.184%, mobile 0.888%) и **18 превысили** его. Это **не авторитетный результат**: браузер умер среди длинных full-page скриншотов, в логах видны заблокированные внешние image/CSP/SSL-запросы, а 7 маршрутов в baseline объявлены `native-contract`, где legacy-diff диагностический. Полная 43-route parity не заявлена.
+2. **11 landing-routes, first-fold, `--warn-only`.** `npm run visual:parity:screenshots:landings -- --warn-only --first-fold-only` — exit 0, 22 пары, 14 пар >1%. baseline-check — **exit 1** с 4 проблемами у `legacy-diff` маршрутов: `/karty/` desktop 26.195% >0.500%, mobile 28.797% >2.551%; `/konfessii/` desktop 3.037% >0.500%, mobile 1.940% >0.500%. Остальные 7 маршрутов — `native-contract`, их legacy-diff delegated to named guards. First-fold скриншоты не напрямую сравнимы с full-page baseline, поэтому это диагностика, а не принятие/отклонение владельцем.
+3. **Full-page контроль на 3 маршрутах.** `/about/,/karty/,/konfessii/` без `--first-fold-only`: `/about/` desktop 0.184%, mobile **0.888%**; `/karty/` desktop 20.089%, mobile 24.443%; `/konfessii/` desktop 3.234%, mobile 5.856%. baseline-check — **exit 1 уже с 5 проблемами**, включая `/about/` mobile 0.888% > allowed 0.500%. В волне 4 pilot `/about/` mobile давал 0.301%; свежая пересборка с `pagefind` и повторными попытками дала 0.888%. Это наблюдение нестабильности/разницы окружения, **не доказанная регрессия и не owner-accepted parity**. Пилот волны 4 был `--warn-only` без baseline-check.
+
+Ни один из трёх уровней не даёт `visual:parity:production` signoff, не закрывает owner-требование реального screenshot acceptance и не создаёт новую строку MASTER.
+
+### 11.4 Матрица, границы и пуш
+
+`ALL_ARTICLES_MATRIX.csv` остаётся одним файлом на **111 маршрутов**; добавлены 8 колонок (всего **55**):
+
+```text
+mdxDirectImport             1/0 для 70 MDX-связанных routes; пусто для 41 хаба/утилиты
+mdxBestJaccard              лучший Jaccard MDX↔built HTML, 4 знака
+mdxLayerClass              direct-import | component-similar | component-divergent | metadata-only
+vpFirstFoldDesktopPct      first-fold diff для 11 landings
+vpFirstFoldMobilePct       first-fold diff для 11 landings
+vpBaselineMode             legacy-diff | native-contract для тех же 11 landings
+vpFullPageDesktopPct       full-page diff для 3 выбранных routes
+vpFullPageMobilePct        full-page diff для 3 выбранных routes
+```
+
+Распределение `mdxLayerClass`: `direct-import 28`, `component-similar 30`, `component-divergent 6`, `metadata-only 6`; у остальных 41 route поля пустые. `vpBaselineMode`: `native-contract 7`, `legacy-diff 4`. 70 suggested MDX-route попали в существующие 111 строк матрицы без дублей. Свежие JSON/логи/screenshot'ы лежат в `/tmp/aiq-wave5` и `/tmp/gbs-product/reports`, вне AuditRepo.
+
+Split 3 агентов и ключ `route + criterion_id` не переписаны: **A** — методология, gates, DOM/browser/AX, матрица и кросс-агентная сверка; **B** — внешняя corroboration, edition/rights/locator, C1/C2/C3/C8/C5/C20; **C** — WebKit/Firefox/device/TTS, полный cross-browser runtime quiz-click, PDF/print/visual owner parity. Волна 5 закрывает только bounded Chromium-часть C, не подменяя владельца. Не создано новых файлов в AuditRepo, новых ADMIT-контрактов, универсальных чек-листов, строк MASTER или style-only выводов «ИИ/человек». Ручные lane C1/C2/C11/C12/C13 остаются bounded triage; зелёный CI ≠ редакционная пригодность.
+
+**Чего волна 5 всё ещё НЕ доказывает:** WebKit/Firefox, реальное устройство, TTS voice-switching, полный cross-browser interactive/visual прогон, owner screenshot signoff, внешняя истинность/права/edition, закрытие `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` и других MASTER-строк. `???`=0, `interactive-audit` exit 0 и 28/42/70 MDX-ценз — observations текущего anchor, а не разрешение старых дефектов.
+
+**Ветки/пуш.** Перед записью повторно сверены `git branch --show-current` = `arena/0b6f34f6-auditrepo`, локальный `HEAD`/`origin/arena/0b6f34f6-auditrepo` = `1cbfa19`, `git status --short` после восстановления ветки = clean; чужие arena-ветки не содержат наших двух файлов. Пуш — обычный `git push origin arena/0b6f34f6-auditrepo`; ветка не переключается, не переименовывается, чужие PR/ветки не трогаются.
