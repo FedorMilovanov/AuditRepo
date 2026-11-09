@@ -206,7 +206,7 @@ async function visit(browser,engine,app,width,base){
     if(width===390)await safeAction(page,engine+'-sozvezdie-'+width+'-mobile-index',async()=>{
      await page.locator('#yhwh').scrollIntoViewIfNeeded();
      await page.getByRole('button',{name:'Открыть список имён'}).click();
-     await page.getByRole('dialog',{name:'Указатель имен Бога'}).waitFor({state:'visible'});
+     await page.getByRole('dialog',{name:'Указатель библейских выражений'}).waitFor({state:'visible'});
      await shot(page,engine+'-sozvezdie-'+width+'-08-mobile-index');
      await page.keyboard.press('Escape');
     });

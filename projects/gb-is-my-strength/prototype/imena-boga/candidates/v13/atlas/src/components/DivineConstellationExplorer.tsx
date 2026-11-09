@@ -181,7 +181,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
             key={tag}
             type="button"
             onClick={() => setQuery((prev) => (prev === tag ? '' : tag))}
-            className="font-ui cursor-pointer rounded-md border px-2 py-0.5 text-[11px] transition-colors hover:opacity-85"
+            className="font-ui inline-flex min-h-11 cursor-pointer items-center rounded-lg border px-3 py-2 text-xs transition-colors hover:opacity-85"
             style={{
               backgroundColor: query === tag ? 'var(--gb-accent-soft)' : 'var(--gb-bg)',
               borderColor: query === tag ? 'var(--gb-accent)' : 'var(--gb-border)',
@@ -324,7 +324,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                 </button>
 
                 <div
-                  className="font-ui mt-3 flex items-center justify-between border-t pt-2 text-[11px]"
+                  className="font-ui mt-3 flex min-h-11 flex-wrap items-center justify-between gap-1 border-t pt-2 text-xs"
                   style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-muted)' }}
                 >
                   <span>{item.keyVerses[0]?.ref}</span>
@@ -332,7 +332,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                     <button
                       type="button"
                       onClick={() => onJumpToName(item)}
-                      className="inline-flex cursor-pointer items-center gap-1 hover:underline"
+                      className="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-md px-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       style={{ color: 'var(--gb-muted)' }}
                       title="Перейти к карточке в тексте статьи"
                     >
@@ -342,7 +342,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                     <button
                       type="button"
                       onClick={() => onSelectName(item)}
-                      className="inline-flex cursor-pointer items-center gap-1 font-semibold hover:underline"
+                      className="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-md px-2 font-semibold hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       style={{ color: 'var(--gb-accent)' }}
                     >
                       <BookOpen className="h-3 w-3" />

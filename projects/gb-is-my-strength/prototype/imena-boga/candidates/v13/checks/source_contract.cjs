@@ -120,3 +120,14 @@ if (darkTiny || /text-\[(?:7|8|8\.5|9|9\.5|10|10\.5|11)px\]/.test(
  fs.readFileSync(path.join(root,'sozvezdie','src','App.tsx'),'utf8')))
   throw Error('Visual regression: metadata scale below 12px');
 console.log('V13_VISUAL_SYSTEM_CONTRACT_PASS',JSON.stringify({darkFiles,tinyUtilityCount:darkTiny}));
+
+const atlasCatalog=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
+const atlasTable=fs.readFileSync(path.join(root,'atlas','src','components','NamesIndexTable.tsx'),'utf8');
+const atlasScripture=fs.readFileSync(path.join(root,'atlas','src','components','ScriptureRefPill.tsx'),'utf8');
+if(atlasCatalog.includes('inline-flex cursor-pointer items-center gap-1 hover:underline')||
+   atlasCatalog.includes('inline-flex cursor-pointer items-center gap-1 font-semibold hover:underline')||
+   !atlasCatalog.includes('min-h-11')||
+   !atlasTable.includes('min-h-11')||
+   !atlasScripture.includes('min-h-11'))
+  throw Error('Touch-target regression: catalog/tag/table/reference actions undersized');
+console.log('V13_TOUCH_TARGET_SCOPE_PASS');

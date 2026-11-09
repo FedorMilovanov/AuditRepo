@@ -697,7 +697,7 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
       const target = event.target;
       if (!(target instanceof Element) ||
           !target.closest('button[aria-label="Открыть список имён"]')) return;
-      const modal = document.querySelector('[aria-label="Указатель имен Бога"]');
+      const modal = document.querySelector('[aria-label="Указатель библейских выражений"]');
       window.__mobileIndexFocusWitness = Boolean(
         modal && modal.contains(document.activeElement) &&
         document.activeElement?.getAttribute("aria-label") === "Закрыть"
@@ -709,11 +709,11 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   immediateFocus === true
     ? ok(`mobile index focuses inside synchronously @${w}`)
     : bad(`mobile index delayed initial focus @${w}: ${immediateFocus}`);
-  const dlg = page.locator('[aria-label="Указатель имен Бога"]');
+  const dlg = page.locator('[aria-label="Указатель библейских выражений"]');
   (await dlg.isVisible()) ? ok(`mobile index opens @${w}`) : bad("mobile index did not open");
   const targets = await page.evaluate(() => {
     const trigger = document.querySelector('button[aria-label="Открыть список имён"]');
-    const dialog = document.querySelector('[role="dialog"][aria-label="Указатель имен Бога"]');
+    const dialog = document.querySelector('[role="dialog"][aria-label="Указатель библейских выражений"]');
     const close = dialog?.querySelector('button[aria-label="Закрыть"]');
     const heading = dialog?.querySelector('div.flex.items-center p.font-ui');
     if (!trigger || !dialog || !close || !heading) return { error: "missing mobile controls" };
@@ -791,12 +791,12 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
     : bad("mobile dialog failed to restore trigger focus");
   await mobileTrigger.click();
   await page.waitForTimeout(500);
-  await page.locator('[aria-label="Указатель имен Бога"] button').nth(1).click();
+  await page.locator('[aria-label="Указатель библейских выражений"] button').nth(1).click();
   await page.waitForTimeout(700);
   const destination = await page.evaluate(() => ({
     hash: location.hash,
     focused: document.activeElement === document.querySelector('#yhwh [data-name-heading]'),
-    dialogExists: Boolean(document.querySelector('[aria-label="Указатель имен Бога"]')),
+    dialogExists: Boolean(document.querySelector('[aria-label="Указатель библейских выражений"]')),
   }));
   destination.hash === "#yhwh" && destination.focused && !destination.dialogExists
     ? ok("mobile name selection transfers focus to its heading")
@@ -881,7 +881,7 @@ for (const width of [320, 390, 768, 1440]) {
   await page.waitForFunction((count) => document.querySelector("header button")?.textContent?.includes(`${count}/${count}`), ids.length, { timeout: 10000 });
   await page.keyboard.press("m");
   await page.waitForTimeout(900);
-  (await page.getByText("Все 29 имён изучены").isVisible())
+  (await page.getByText("Все 29 разделов отмечены как изученные").isVisible())
     ? ok("all-studied celebration fires")
     : bad("celebration did not fire");
   await page.screenshot({ path: join(tmpdir(), "shot-celebration.png") });

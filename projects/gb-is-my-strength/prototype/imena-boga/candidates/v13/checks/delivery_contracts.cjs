@@ -63,9 +63,9 @@ const server=createServer((req,res)=>{
   await reader.locator('#sozvezdie button[aria-label*="Эль Шадда"]').first().click();
   await reader.getByRole('button',{name:'Открыть список имён'}).waitFor({state:'visible',timeout:10000});
   await reader.getByRole('button',{name:'Открыть список имён'}).click();
-  await reader.getByRole('dialog',{name:'Указатель имен Бога'}).waitFor({state:'visible'});
+  await reader.getByRole('dialog',{name:'Указатель библейских выражений'}).waitFor({state:'visible'});
   await reader.keyboard.press('Escape');
-  await reader.getByRole('dialog',{name:'Указатель имен Бога'}).waitFor({state:'hidden'});
+  await reader.getByRole('dialog',{name:'Указатель библейских выражений'}).waitFor({state:'hidden'});
   if(errB.length)throw Error('Reader runtime errors '+JSON.stringify(errB));
   results.push('Reader mobile index opens immediately in article and closes with Escape');
   await reader.close();

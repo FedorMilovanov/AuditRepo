@@ -75,7 +75,7 @@ export const ScriptureRefPill: React.FC<ScriptureRefPillProps> = ({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-md border px-1.5 py-0.5 text-[0.82em] font-semibold transition-colors hover:opacity-85"
+        className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-md border px-2.5 py-2 text-xs font-semibold transition-colors hover:opacity-85"
         style={{
           backgroundColor: 'var(--gb-accent-soft)',
           borderColor: open ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
@@ -111,7 +111,7 @@ export const ScriptureRefPill: React.FC<ScriptureRefPillProps> = ({
               <button
                 type="button"
                 onClick={handleCopyVerse}
-                className="cursor-pointer rounded-full p-1 hover:opacity-75"
+                className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full hover:opacity-75"
                 style={{ color: 'var(--gb-muted)' }}
                 aria-label="Скопировать стих"
                 title="Скопировать стих"
@@ -125,7 +125,7 @@ export const ScriptureRefPill: React.FC<ScriptureRefPillProps> = ({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="cursor-pointer rounded-full p-1 hover:opacity-75"
+                className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full hover:opacity-75"
                 style={{ color: 'var(--gb-muted)' }}
                 aria-label="Закрыть стих"
               >
@@ -143,7 +143,7 @@ export const ScriptureRefPill: React.FC<ScriptureRefPillProps> = ({
 
           {originalNote && (
             <span
-              className="font-ui mt-2 block rounded-lg px-2.5 py-1.5 text-[11px]"
+              className="font-ui mt-2 block rounded-lg px-2.5 py-2 text-xs"
               style={{ backgroundColor: 'var(--gb-bg)', color: 'var(--gb-muted)' }}
             >
               {originalNote}

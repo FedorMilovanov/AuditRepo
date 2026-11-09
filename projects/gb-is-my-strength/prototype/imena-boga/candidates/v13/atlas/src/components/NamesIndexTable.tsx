@@ -133,7 +133,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
                             <button
                               type="button"
                               onClick={() => onSelectName(item)}
-                              className="font-serif-display cursor-pointer text-left text-[15px] font-bold hover:underline"
+                              className="font-serif-display inline-flex min-h-11 cursor-pointer items-center text-left text-[15px] font-bold hover:underline"
                               style={{ color: 'var(--gb-ink)' }}
                             >
                               {item.transliteration}
@@ -170,7 +170,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
                             <button
                               type="button"
                               onClick={() => onJumpToName(item)}
-                              className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors hover:opacity-85"
+                              className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors hover:opacity-85"
                               style={{
                                 borderColor: 'var(--gb-border-strong)',
                                 backgroundColor: 'var(--gb-bg)',

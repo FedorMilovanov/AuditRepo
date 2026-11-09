@@ -60,8 +60,8 @@
       "bytes_normalized": 15314
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "8e575f63ddd373f5686199dff2862d9b85343a2fb97e4ae5a0b836376155b24b",
-      "bytes_normalized": 15927
+      "sha256": "f77d6fcb07f3a610a35c9f36a43b5c180fc4460cf8477e649fa7d4e47d65c47a",
+      "bytes_normalized": 16180
     },
     "atlas/src/components/DivineNameModal.tsx": {
       "sha256": "2bc616c0b5311637f4e70eb972b6c742081c85711fd5bf006e345a1f6492ff06",
@@ -84,8 +84,8 @@
       "bytes_normalized": 30419
     },
     "atlas/src/components/NamesIndexTable.tsx": {
-      "sha256": "7d3830025f4424e685e781bdb84d6618dc3043d3c123bec7f6732f3c0d1e2763",
-      "bytes_normalized": 8881
+      "sha256": "b2d36299152efcfc21cf2fd99270d9764ca57bed7bc863e766ba37c9a1efda2f",
+      "bytes_normalized": 8920
     },
     "atlas/src/components/NearViewport.tsx": {
       "sha256": "d407272d44a0dae124adfa90d94915b10f3d0abf1f945805a65f3e5c21ed2e66",
@@ -96,8 +96,8 @@
       "bytes_normalized": 26668
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
-      "sha256": "16a45f398de1406ce6a0aefeac9c51838d3941cf558d0fd7251e0f87d05496ed",
-      "bytes_normalized": 5455
+      "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",
+      "bytes_normalized": 5542
     },
     "atlas/src/components/SevenIAmStatements.tsx": {
       "sha256": "c9d0ab9bf9ac69f05ac9792b7cf4fb60949739d125d779e4c1394455622b1f32",
@@ -152,8 +152,8 @@
       "bytes_normalized": 12061
     },
     "checks/delivery_contracts.cjs": {
-      "sha256": "a7c1b138cc9bc9c26260d382833cef3a67399f6d264142baf6905e82688f3274",
-      "bytes_normalized": 5222
+      "sha256": "66efa87d67797cb4a6726bb9728baac3b4735ba7cd2ef8d3eefbab618a46fdd8",
+      "bytes_normalized": 5266
     },
     "checks/font_contract.cjs": {
       "sha256": "1ae4648a52bcf613320a4d4eba7b887094288050ad8f31fb78095d3773185ef9",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "cf2589deaa9fb06455c040a2f0f1f84be921ec9674289fec70bf0d54b5aaddf1",
-      "bytes_normalized": 8801
+      "sha256": "37288be761e3329e12f14f9d34ccbc1dd82b7ed535e8ce653d3d2ba4a75ef568",
+      "bytes_normalized": 9593
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -228,8 +228,8 @@
       "bytes_normalized": 1371
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "480a810ad639056891013ad315c92514c5be74e1d16449b33cf6d1a03c02dcc4",
-      "bytes_normalized": 51235
+      "sha256": "27f78a10869bc25092ed3f6c59c53c0f60574fb0d929e3ff8b690b351438cab4",
+      "bytes_normalized": 51381
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "536d69ff1dca4ce67c41d2cab17440f6a28e3d767abbc561ffcdf02ba5e0791e",
