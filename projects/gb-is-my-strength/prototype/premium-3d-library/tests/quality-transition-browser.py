@@ -42,12 +42,16 @@ async def measure_once(page, engine, size, touch, attempt):
       window.__qualityCanvasBefore =
         [...document.querySelectorAll('canvas')].find(c => !!c.getContext('webgl2'));
     }""")
-    trace = await control.evaluate("""async (button) => {
+    # Software-rendered CI may take longer to compile the first high preset.
+    # Still require BOTH actual transitions and no remaining overlay.
+    limit_ms = 20000 if os.getenv("GB_LIBRARY_CI_SOFTWARE_GPU") == "1" else 5500
+    trace = await control.evaluate("""async (button, options) => {
       const labelButton = document.querySelector('[data-gb-toolbar] button[title="Качество графики"]');
       const first = labelButton.textContent.trim();
       const perf = performance.now();
       const records = [];
       let previousState = "", framesOldQualityCovered = 0, last = 0, maxGap = 0;
+      let sawCover = false, settledVisibleFrames = 0;
       return new Promise((resolve) => {
         function frame(timestamp) {
           if (last) maxGap = Math.max(maxGap, timestamp - last);
@@ -59,9 +63,16 @@ async def measure_once(page, engine, size, touch, attempt):
             records.push({at: +(performance.now() - perf).toFixed(1), key});
             previousState = key;
           }
+          if (layer) sawCover = true;
           if (layer && current === first) framesOldQualityCovered++;
-          if (performance.now()-perf > 3400) {
-            resolve({first,last:labelButton.textContent.trim(),
+          // A complete transition must have painted the cover, changed the
+          // quality label, removed the cover and painted two settled frames.
+          settledVisibleFrames = sawCover && current !== first && !layer
+            ? settledVisibleFrames + 1 : 0;
+          const elapsed = performance.now() - perf;
+          if (settledVisibleFrames >= 2 || elapsed > options.limitMs) {
+            resolve({first,last:labelButton.textContent.trim(), elapsedMs:+elapsed.toFixed(1),
+              timedOut: settledVisibleFrames < 2, settledVisibleFrames,
               records,framesOldQualityCovered,maxRafGapMs:+maxGap.toFixed(1),
               overlayGone:!document.querySelector('[data-gb-quality-transition]'),
               beigeVeilOpacity:document.querySelector('[data-gb-fade-veil]')?.style.opacity});
@@ -75,7 +86,8 @@ async def measure_once(page, engine, size, touch, attempt):
           button.click();
         }
       });
-    }""")
+    }""", {"limitMs": limit_ms})
+    assert not trace["timedOut"], ("Quality mutation exceeded its strict completion deadline", engine, size, trace)
     assert trace["first"] != trace["last"], (engine, size, trace)
     assert trace["framesOldQualityCovered"] >= 1, ("No prepared cover frame", trace)
     assert trace["overlayGone"], ("Quality overlay stuck", trace)
