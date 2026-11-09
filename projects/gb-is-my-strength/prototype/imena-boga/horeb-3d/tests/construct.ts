@@ -281,6 +281,22 @@ if (hagarRecord) {
     surface.material.emissiveIntensity === 1 &&
     surface.material.emissive.getHex() === 0 &&
     surface.material.color.g > bank.material.color.g * 1.5);
+  let submerged = 0, fakeUnlitGlints = 0;
+  scene.traverse((o) => {
+    if (o.name === 'spring-submerged-stone') submerged++;
+    if (o instanceof THREE.Mesh && o.material instanceof THREE.MeshBasicMaterial &&
+        o.material.transparent && o.geometry instanceof THREE.PlaneGeometry) fakeUnlitGlints++;
+  });
+  const bed = scene.getObjectByName('spring-sediment-bed');
+  t('Hagar spring reads as actual translucent water over sediment, with no fake unlit glint',
+    surface instanceof THREE.Mesh &&
+    surface.material instanceof THREE.MeshStandardMaterial &&
+    surface.material.transparent === true &&
+    surface.material.opacity >= 0.55 && surface.material.opacity <= 0.78 &&
+    surface.material.depthWrite === false &&
+    bed instanceof THREE.Mesh &&
+    bed.position.y < surface.position.y &&
+    submerged === 11 && fakeUnlitGlints === 0);
 }
 if (gardenRecord) {
   const grove = buildExhibitProps(gardenRecord, true, 0, 0);
