@@ -88,6 +88,28 @@ try {
     witness.desktop.push(evidence);
     console.log('PASS desktop zone ' + zone + ' screenshot ' + evidence.screenshot);
   }
+  // Hardware safety witness. Compare low-quality startup draw calls to the
+  // before-optimization artifact (306 calls in zone 0). This is a GPU command
+  // budget check, not an FPS claim from software SwiftShader.
+  if (witness.desktop[0].quality === 'low' && witness.desktop[0].calls >= 245)
+    throw new Error('PERFORMANCE: zone-0 distance culling ineffective, draw calls=' +
+      witness.desktop[0].calls + ' (baseline 306)');
+  // At the final zone, nearby name markers must remain visible even though
+  // distant signs and props have been culled.
+  const groups = await desktop.evaluate(() => {
+    const w = window.__horeb.world;
+    const z = w.position.z, list = w.scenicGroups;
+    const close = list.filter((item) => Math.abs(item.z - z) < 20);
+    const distant = list.filter((item) => Math.abs(item.z - z) > 150);
+    return { allNear: close.every((item) => item.object.visible),
+      someDistantHidden: distant.some((item) => !item.object.visible),
+      close: close.length, distant: distant.length };
+  });
+  if (!groups.allNear || !groups.someDistantHidden || !groups.close || !groups.distant)
+    throw new Error('SCENIC CULL: expected near objects visible, distant art hidden ' +
+      JSON.stringify(groups));
+  console.log('PASS nearby exhibits preserved / distant meshes not drawn; zone0=' +
+    witness.desktop[0].calls + ' GPU calls');
   // Editorial LAB art inspection only: a stable 4.6 m view of the actual
   // Beersheba well, Hagar's spring and Gethsemane grove. These photographic
   // camera positions do NOT certify route accessibility; the independent

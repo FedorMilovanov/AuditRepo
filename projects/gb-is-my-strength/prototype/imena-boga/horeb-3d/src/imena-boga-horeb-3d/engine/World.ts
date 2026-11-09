@@ -50,6 +50,10 @@ export class World {
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
   private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean, viewFactor?: number) => void }[] = [];
+  // Scene objects remain in the 42-item registry/physics, but a visitor does
+  // not need GPU draws for exhibits a hundred metres behind the fog.
+  private scenicGroups: { object: THREE.Group; z: number }[] = [];
+  private frameBudgetElapsed = 0;
   private activeInspection: { id: string; until: number } | null = null;
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
@@ -73,7 +77,11 @@ export class World {
 
   private constructor(private canvas: HTMLCanvasElement, settings: WorldSettings, private onState: (s: WorldState) => void, private onEvent: (e: string) => void) {
     this.settings = settings;
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: settings.quality === 'high', powerPreference: 'high-performance' });
+    this.renderer = new THREE.WebGLRenderer({
+      canvas, antialias: settings.quality === 'high',
+      // A low profile must not force the discrete/high-draw adapter.
+      powerPreference: settings.quality === 'low' ? 'low-power' : 'high-performance',
+    });
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = settings.exposure;
@@ -168,6 +176,7 @@ export class World {
       g.rotation.y = Math.atan2(nx, nz);
       g.userData.exhibitId = e.id;
       this.scene.add(g);
+      this.scenicGroups.push({ object: g, z });
       // Уникальные props сцены: перед стелом (к центру прохода), видны при подходе;
       // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
       const d = Math.hypot(nx, nz) || 1;
@@ -175,6 +184,7 @@ export class World {
       const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump, glow: propGlow });
       mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
+      this.scenicGroups.push({ object: props, z });
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
       // The creation rock was moved behind its stele to clear Hebrew script.
       // Keep its physical collider aligned with actual geometry, not the old
@@ -278,6 +288,7 @@ export class World {
     const active = !this.disposed && !this.contextLost && !this.inputLocked && !document.hidden;
     if (active) {
       this.clock.getDelta(); // discard wall time after a pause
+      this.frameBudgetElapsed = 0; // do not catch up frames after a paused scene
       this.renderer.setAnimationLoop(this.loop);
       if (this.settings.sound) this.audio.start();
     } else {
@@ -425,7 +436,16 @@ export class World {
   }
 
   private loop = () => {
-    const dt = Math.min(0.1, this.clock.getDelta()); // коллизия аналитическая — туннелирования нет
+    const slice = Math.min(0.1, this.clock.getDelta());
+    this.frameBudgetElapsed += slice;
+    // Limit unnecessary GPU work on 120/144/240Hz screens; the low-power
+    // profile uses 30 FPS, the detailed one at most 60 FPS. Never throw away
+    // elapsed simulation time for movement, collisions or the sandal ritual.
+    const frameInterval = this.settings.quality === 'low' || this.settings.reducedMotion
+      ? 1 / 30 : 1 / 60;
+    if (this.frameBudgetElapsed + 0.001 < frameInterval) return;
+    const dt = Math.min(0.1, this.frameBudgetElapsed);
+    this.frameBudgetElapsed = 0;
     this.t += dt;
     this.advanceShoeRemoval(dt);
     const motion = !this.settings.reducedMotion;
@@ -490,6 +510,12 @@ export class World {
     this.hemi.color.lerp(zl.hemi, k);
     this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
+    // Fog-hidden stations were still submitting meshes to the GPU.
+    // Only artwork is distance-culled; colliders, 42 dossiers, navigation and
+    // the visitor's current prompt are never removed.
+    const maxSceneryDistance = this.settings.quality === 'low' ? 85 : 125;
+    for (const scenic of this.scenicGroups)
+      scenic.object.visible = Math.abs(scenic.z - this.pos.y) <= maxSceneryDistance;
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
     // Canvas label is wider than its stela. At oblique approach angles it
     // otherwise clips harshly against the viewport edge. Match actual camera
@@ -515,7 +541,9 @@ export class World {
     this.frames++; this.fpsT += dt;
     if (this.fpsT >= 1) {
       this.fps = Math.round(this.frames / this.fpsT); this.frames = 0; this.fpsT = 0;
-      if (this.settings.autoQuality && this.fps < 38 && this.renderer.getPixelRatio() > 1) {
+      // Do not mistake our deliberate 30 FPS power cap for a slow GPU.
+      const slowThreshold = this.settings.quality === 'low' || this.settings.reducedMotion ? 24 : 38;
+      if (this.settings.autoQuality && this.fps < slowThreshold && this.renderer.getPixelRatio() > 1) {
         this.lowFpsT++;
         if (this.lowFpsT >= 3) {
           this.autoLoweredResolution = true;
