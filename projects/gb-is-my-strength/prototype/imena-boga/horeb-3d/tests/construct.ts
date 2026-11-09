@@ -227,10 +227,6 @@ if (gardenRecord) {
   t('Gethsemane visual scene exists', false);
 }
 
-if (errors.length) console.log('errors:\n' + errors.join('\n'));
-console.log(`\n${pass} passed, ${fail} failed`);
-process.exit(fail ? 1 : 0);
-
 // Journey & Art Foundation: shared stone palette must vary in world space
 // instead of using the former periodic horizontal bands.
 const stoneField = [
@@ -270,3 +266,7 @@ if (distantCrags instanceof THREE.InstancedMesh) {
 }
 t('distant Horeb geology frames the approach outside all navigable bounds',
   distantSafe);
+
+if (errors.length) console.log('errors:\n' + errors.join('\n'));
+console.log(`\n${pass} passed, ${fail} failed`);
+process.exit(fail ? 1 : 0);
