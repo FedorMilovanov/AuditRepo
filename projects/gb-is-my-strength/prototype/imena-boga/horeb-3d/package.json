@@ -13,6 +13,7 @@
     "test:browser:exhibits": "node tests/browser-exhibits.mjs",
     "test:browser:visual": "node tests/browser-visual-witness.mjs",
     "test:browser:journey": "node tests/browser-journey.mjs",
+    "test:browser:side": "node tests/browser-side-journey.mjs",
     "test:browser:quality": "node tests/browser-quality.mjs"
   },
   "dependencies": {

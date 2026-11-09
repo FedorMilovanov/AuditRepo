@@ -6,6 +6,12 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
+## Боковые экспозиции — проверка реального пешего доступа (9 ноября 2026)
+
+Предыдущее подтверждение `e48a5b343a6f75b3fb7dc3a95ee47ff5216e9f35` **3/3 SUCCESS**: HOREB [#42645436526](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42645436526), Validate #42645436536 и Preflight #42645436543. Текущее точное состояние получай из PR #543 и GitHub Actions, не полагайся на архивные SHAs.
+
+Введён независимый `tests/browser-side-journey.mjs` — **реальные W/S/A/D, стрелки поворота камеры и E**, без `teleportTo`/`teleportZone`/прямого присваивания координат или ускорения симуляции. Три репрезентативных боковых объекта по одному непрерывному пути: `elohim` (Творение, зона 1), `el-olam` (колодец Вирсавии, зона 2), `abba` (Гефсимания, зона 5), каждый с фактическим контекстным диалогом, сторожем застревания и возвратом в центральный проход. Сохраняет `.test-build/side-journey-witness.json`, три PNG. Новый тест включён в GitHub `actual-chromium` перед осевым `journey`. **Проверка на новом HEAD только PENDING до terminal CI**. Эта тройка НЕ покрывает физическую доступность всех 42 боковых экспозиций. Компьютер владельца Offline; никаких локальных CUDA/GPU нагрузок. Product/Research и тёмный Хорив не менять, Draft/Editorial HOLD.
+
 ## Текущий подтверждённый контроль — 9 ноября 2026
 
 **Последний полностью проверенный кодовый HEAD:** `962e674b2c2c306eab96b91d4ff254be560975dc`. На этом SHA завершились [HOREB QA #42642009842](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009842), [Validate #42642009840](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009840), [Preflight #42642009839](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009839): **3/3 SUCCESS**. Исходники/типы/конструкция **135/135** (43+86+6), Chrome smoke **34/34**, все **42/42** E-досье, живое управление W→Хорив с E снятия обуви и S→вход без `teleportZone()` — PASS. 8 desktop, 3 mobile-emulated и 3 close-up screenshots; runtime errors=0. Экспозиции Research остаются **Editorial HOLD**.

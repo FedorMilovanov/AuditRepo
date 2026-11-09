@@ -107,6 +107,13 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:quality
+      - name: Walk from the centre to three side exhibits using only real input
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:side
       - name: Walk the whole route and back by actual keyboard input (no teleport)
         env:
           HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
@@ -139,6 +146,7 @@ jobs:
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/journey-witness.json
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/side-journey-witness.json
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
           retention-days: 7
           if-no-files-found: error
@@ -150,6 +158,7 @@ jobs:
           path: |
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/side-journey-witness.json
             ${{ runner.temp }}/horeb-vite.log
           retention-days: 7
           if-no-files-found: warn
