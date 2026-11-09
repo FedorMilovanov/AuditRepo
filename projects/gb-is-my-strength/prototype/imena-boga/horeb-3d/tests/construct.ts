@@ -245,8 +245,30 @@ if (wellRecord) {
   well.traverse((o) => { if (o.name === 'well-rim-stone') stones++; });
   let groundStones = 0;
   well.traverse((o) => { if (o.name === 'well-ground-stone') groundStones++; });
-  t('Beersheba well has a hand-set stone rim and non-uniform loose scree',
-    stones === 14 && groundStones === 18);
+  let courses = 0, sprays = 0, needles = 0;
+  well.traverse((o) => {
+    if (o.name === 'well-course-stone') courses++;
+    if (o.name === 'tamarisk-spray') sprays++;
+    if (o.name === 'tamarisk-needle') needles++;
+  });
+  const shaft = well.getObjectByName('well-open-shaft');
+  t('Beersheba well is a hollow stone shaft, never capped by a cylinder lid',
+    shaft instanceof THREE.Mesh &&
+    shaft.geometry instanceof THREE.CylinderGeometry &&
+    shaft.geometry.parameters.openEnded === true &&
+    courses === 42 && stones === 14 && groundStones === 18);
+  t('Beersheba tamarisk has airy sprays, not an opaque green canopy',
+    sprays === 10 && needles === 70);
+}
+const hagarRecord = EXHIBITS.find((e) => e.environmentKey === 'wilderness-spring');
+if (hagarRecord) {
+  const scene = buildExhibitProps(hagarRecord, true, 0, 0);
+  let edges = 0;
+  scene.traverse((o) => { if (o.name === 'spring-natural-edge-stone') edges++; });
+  t('Hagar spring has a shallow irregular water polygon and natural bank',
+    scene.getObjectByName('spring-irregular-water') instanceof THREE.Mesh &&
+    scene.getObjectByName('spring-irregular-bank') instanceof THREE.Mesh &&
+    edges === 13);
 }
 if (gardenRecord) {
   const grove = buildExhibitProps(gardenRecord, true, 0, 0);

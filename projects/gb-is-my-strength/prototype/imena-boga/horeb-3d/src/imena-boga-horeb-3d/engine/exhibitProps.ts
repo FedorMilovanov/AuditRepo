@@ -12,8 +12,10 @@ interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMa
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
-  [-2.15, 0.32], [-0.72, -0.68], [0.98, 0.79], [2.25, -0.21],
+  [-2.15, -1.25], [-0.72, -2.02], [0.98, -1.13], [2.25, -1.79],
 ];
+/** The well's tree is rooted away from both the stone rim and front inscription. */
+export const BEERSHEBA_TAMARISK_OFFSET = { x: 2.15, z: -0.75 } as const;
 
 let CACHE: { low: boolean; s: Shared } | null = null;
 export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
@@ -58,7 +60,8 @@ function geoCached(type: string, params: any): THREE.BufferGeometry {
   if (!g) {
     switch (type) {
       case 'BoxGeometry': g = new THREE.BoxGeometry(params.w, params.h, params.d); break;
-      case 'CylinderGeometry': g = new THREE.CylinderGeometry(params.rt, params.rb, params.h, params.s); break;
+      case 'CylinderGeometry': g = new THREE.CylinderGeometry(params.rt, params.rb, params.h,
+        params.s, 1, params.openEnded === true); break;
       case 'SphereGeometry': g = new THREE.SphereGeometry(params.r, params.w, params.h); break;
       case 'ConeGeometry': g = new THREE.ConeGeometry(params.r, params.h, params.s); break;
       case 'TorusGeometry': g = new THREE.TorusGeometry(params.r, params.t, params.rs, params.ts, params.arc); break;
@@ -82,7 +85,8 @@ function geoCached(type: string, params: any): THREE.BufferGeometry {
 }
 const G = {
   box: (w: number, h: number, d: number) => geoCached('BoxGeometry', { w, h, d }),
-  cyl: (rt: number, rb: number, h: number, s = 7) => geoCached('CylinderGeometry', { rt, rb, h, s }),
+  cyl: (rt: number, rb: number, h: number, s = 7, openEnded = false) =>
+    geoCached('CylinderGeometry', { rt, rb, h, s, openEnded }),
   sph: (r: number, w = 8, h = 6) => geoCached('SphereGeometry', { r, w, h }),
   cone: (r: number, h: number, s = 7) => geoCached('ConeGeometry', { r, h, s }),
   tor: (r: number, t: number, rs = 6, ts = 10, arc = Math.PI * 2) => geoCached('TorusGeometry', { r, t, rs, ts, arc }),
@@ -93,15 +97,36 @@ const G = {
 
 function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
   const r = low ? 1.1 : 1.3;
-  const ring = new THREE.Mesh(G.tor(r, 0.18, 6, 18), s.stone);
-  ring.rotation.x = Math.PI / 2; ring.position.set(x, 0.55, z); g.add(ring);
-  const collar = new THREE.Mesh(G.cyl(r + 0.1, r + 0.12, 0.9, 18), s.stone);
-  collar.position.set(x, 0.45, z); g.add(collar);
-  const water = new THREE.Mesh(G.cyl(r - 0.05, r - 0.05, 0.04, 18), s.water);
-  water.position.set(x, 0.4, z); g.add(water);
-  // The collar remains the load-bearing silhouette. Individually tilted
-  // weathered stones avoid a perfectly manufactured torus as the visible rim.
   const random = rng((Math.round(x * 131 + z * 173) ^ 0x57211) >>> 0);
+  // A WELL is a hollow shaft, not a capped solid cylinder with a dark lid.
+  // The double-sided inner wall masks gaps in the hand-laid exterior courses.
+  const interiorMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2d241d, roughness: 1, side: THREE.DoubleSide,
+  });
+  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.86, 24, true), interiorMaterial);
+  liner.name = 'well-open-shaft';
+  liner.position.set(x, 0.43, z); g.add(liner);
+  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025, 24), s.water);
+  water.name = 'well-water-below-rim';
+  water.position.set(x, 0.20, z); g.add(water);
+  for (let layer = 0; layer < 3; layer++) {
+    for (let i = 0; i < 14; i++) {
+      const a = (i + (layer % 2) * 0.5) * Math.PI * 2 / 14 +
+        (random() - 0.5) * 0.065;
+      const stone = new THREE.Mesh(G.box(0.47, 0.30, 0.28), s.stone);
+      stone.name = 'well-course-stone';
+      stone.position.set(x + Math.cos(a) * (r + 0.065),
+        0.16 + layer * 0.29 + (random() - 0.5) * 0.025,
+        z + Math.sin(a) * (r + 0.065));
+      stone.rotation.y = -a - Math.PI / 2 + (random() - 0.5) * 0.07;
+      stone.scale.set(0.91 + random() * 0.20, 0.89 + random() * 0.16,
+        0.9 + random() * 0.16);
+      g.add(stone);
+    }
+  }
+  // Thin embedded lip behind each irregular upper course: no torus "donut".
+  const lip = new THREE.Mesh(G.tor(r + 0.025, 0.075, 6, 24), s.stone);
+  lip.rotation.x = Math.PI / 2; lip.position.set(x, 0.91, z); g.add(lip);
   for (let i = 0; i < 14; i++) {
     const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.17;
     const rr = r + 0.02 + (random() - 0.5) * 0.12;
@@ -113,8 +138,7 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
     pebble.rotation.set((random() - 0.5) * 0.4, a, (random() - 0.5) * 0.38);
     g.add(pebble);
   }
-  // Loose rubble just outside the collar breaks a floating circular silhouette.
-  // It is strictly decorative, small enough to step over, and outside the shaft.
+  // The small ground stones sit below ankle level; they are not invisible walls.
   for (let i = 0; i < 18; i++) {
     const a = random() * Math.PI * 2, rr = r + 0.34 + random() * 0.54;
     const stone = new THREE.Mesh(G.dodec(0.11 + random() * 0.07), s.stone);
@@ -126,15 +150,40 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
   }
 }
 function addTamarisk(g: THREE.Group, x: number, z: number, s: Shared) {
-  const trunk = new THREE.Mesh(G.cyl(0.08, 0.14, 1.8, 6), s.wood);
-  trunk.position.set(x, 0.9, z); g.add(trunk);
-  const crown = new THREE.Mesh(G.sph(0.9, 8, 6), s.leaf);
-  crown.position.set(x, 1.7, z); crown.scale.set(1, 0.7, 1); g.add(crown);
-  for (let i = 0; i < 5; i++) {
-    const a = (i / 5) * Math.PI * 2;
-    const droop = new THREE.Mesh(G.cyl(0.03, 0.05, 1.1, 5), s.leaf);
-    droop.position.set(x + Math.cos(a) * 0.7, 1.5, z + Math.sin(a) * 0.7);
-    droop.rotation.z = Math.cos(a) * 0.5; droop.rotation.x = Math.sin(a) * 0.5; g.add(droop);
+  // The former giant green ellipsoid hid the name and looked like a plastic
+  // topiary. A living tamarisk has an airy crown of drooping fine sprays.
+  const random = rng((Math.round(x * 113 + z * 157) ^ 0x4165) >>> 0);
+  const up = new THREE.Vector3(0, 1, 0);
+  const bottom = new THREE.Vector3(x, 0.04, z);
+  const stem = new THREE.Vector3(x + 0.10, 1.35, z - 0.05);
+  const trunk = new THREE.Mesh(G.cyl(0.065, 0.15, 1.36, 7), s.wood);
+  trunk.name = 'tamarisk-trunk';
+  trunk.position.copy(bottom).lerp(stem, 0.5);
+  trunk.quaternion.setFromUnitVectors(up, stem.clone().sub(bottom).normalize());
+  g.add(trunk);
+  for (let i = 0; i < 10; i++) {
+    const a = i * Math.PI * 2 / 10 + random() * 0.28;
+    const root = new THREE.Vector3(x + 0.07, 1.06 + random() * 0.3, z - 0.04);
+    const reach = 0.45 + random() * 0.42;
+    const tip = new THREE.Vector3(root.x + Math.cos(a) * reach,
+      1.32 + random() * 0.42, root.z + Math.sin(a) * reach);
+    const delta = tip.clone().sub(root);
+    const spray = new THREE.Mesh(G.cyl(0.008, 0.027, delta.length(), 5), s.wood);
+    spray.name = 'tamarisk-spray';
+    spray.position.copy(root).addScaledVector(delta, 0.5);
+    spray.quaternion.setFromUnitVectors(up, delta.normalize());
+    g.add(spray);
+    for (let j = 0; j < 7; j++) {
+      const fol = new THREE.Mesh(G.oliveLeaf(), (i + j) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+      fol.name = 'tamarisk-needle';
+      const t = 0.42 + (j / 7) * 0.58;
+      fol.position.copy(root).lerp(tip, t);
+      fol.position.y -= (j % 2) * 0.07;
+      fol.rotation.set((random() - 0.5) * 1.6, random() * Math.PI * 2,
+        (random() - 0.5) * 1.7);
+      fol.scale.set(0.11 + random() * 0.07, 0.11 + random() * 0.06, 1);
+      g.add(fol);
+    }
   }
 }
 function addTent(g: THREE.Group, x: number, z: number, s: Shared, w = 2.2, h = 1.8) {
@@ -421,8 +470,42 @@ function addDryStream(g: THREE.Group, x: number, z: number, s: Shared) {
   for (let i = 0; i < 8; i++) { const r = new THREE.Mesh(G.dodec(0.08 + rng(i + 1)() * 0.06), s.stone); r.position.set(x - 0.4 + rng(i + 2)() * 0.8, 0.06, z - 1.5 + rng(i + 3)() * 3); g.add(r); }
 }
 function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
-  const pool = new THREE.Mesh(G.cyl(0.4, 0.4, 0.04, 12), s.water); pool.position.set(x, 0.04, z); g.add(pool);
-  const rim = new THREE.Mesh(G.tor(0.42, 0.06, 6, 12), s.stone); rim.rotation.x = Math.PI / 2; rim.position.set(x, 0.05, z); g.add(rim);
+  // A small irregular seep in the rock, NOT a circular artificial drain.
+  // Water and wet bank use the same deterministic outline, but different sizes.
+  const random = rng((Math.round(x * 307 + z * 109) ^ 0x5133) >>> 0);
+  const shape = new THREE.Shape();
+  for (let i = 0; i <= 20; i++) {
+    const angle = (i % 20) * Math.PI * 2 / 20;
+    const radius = 0.47 + random() * 0.13 + 0.08 * Math.sin(angle * 3 + 0.6);
+    const px = Math.cos(angle) * radius, pz = Math.sin(angle) * radius * 0.75;
+    if (i === 0) shape.moveTo(px, pz); else shape.lineTo(px, pz);
+  }
+  shape.closePath();
+  const basin = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.dark);
+  basin.name = 'spring-irregular-bank';
+  basin.rotation.x = -Math.PI / 2;
+  basin.scale.set(1.29, 1.23, 1);
+  basin.position.set(x, 0.018, z); g.add(basin);
+  const pool = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.water);
+  pool.name = 'spring-irregular-water';
+  pool.rotation.x = -Math.PI / 2;
+  pool.position.set(x, 0.046, z); g.add(pool);
+  for (let i = 0; i < 13; i++) {
+    const a = random() * Math.PI * 2;
+    const rr = 0.49 + random() * 0.27;
+    const stone = new THREE.Mesh(G.dodec(0.07 + random() * 0.09), s.stone);
+    stone.name = 'spring-natural-edge-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.075,
+      z + Math.sin(a) * rr * 0.77);
+    stone.scale.set(1.1 + random() * 0.45, 0.33 + random() * 0.25,
+      1 + random() * 0.32);
+    g.add(stone);
+  }
+  const glint = new THREE.Mesh(G.plane(0.18, 0.025),
+    new THREE.MeshBasicMaterial({ color: 0x9cbbc3, transparent: true, opacity: 0.35,
+      depthWrite: false, side: THREE.DoubleSide }));
+  glint.rotation.x = -Math.PI / 2; glint.rotation.z = -0.35;
+  glint.position.set(x - 0.10, 0.055, z - 0.09); g.add(glint);
 }
 function addDistantGlow(g: THREE.Group, x: number, z: number) {
   const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(180,200,255,0.6)', 'rgba(80,100,180,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
@@ -566,7 +649,8 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
     case 'dual-path': addPath(g, px - 0.6, pz, s, 3, 'z'); addPath(g, px + 0.6, pz, s, 2.5, 'z'); break;
     case 'fertile-camp': addTurnedPath(g, px, pz, s); addCampTable(g, px - 1, pz, s); break;
     case 'patriarch-tent': addTent(g, px, pz, s); addVessel(g, px + 1, pz, s); break;
-    case 'beersheba-well': addWell(g, px, pz, s, low); addTamarisk(g, px + 0.9, pz - 0.3, s); break;
+    case 'beersheba-well': addWell(g, px, pz, s, low);
+      addTamarisk(g, px + BEERSHEBA_TAMARISK_OFFSET.x, pz + BEERSHEBA_TAMARISK_OFFSET.z, s); break;
     case 'wilderness-spring': addThinSpring(g, px, pz, s); addVessel(g, px - 0.8, pz, s); break;
     case 'bethel-altar': addAltar(g, px, pz, s); addWall(g, px, pz + 1, s, 2, 1.2); break;
     case 'mountain-slope': addRidge(g, px, pz, s, 5, 1.2); addRam(g, px + 0.8, pz - 0.5, s); break;
