@@ -15,3 +15,5 @@
 **Протокол A/B:** сравнивать на одинаковой точке появления, 1440×900, один профиль low и один browser backend. Отдельно оценивать глифы, контраст, просветы между ветвями, узнаваемость колодца и куст на открытом плато. Сравнивать FPS на одинаковом физическом GPU: SwiftShader не заменяет аппаратный тест. Браузерный путь 0→7→0 по оси X=0 не равен доказанной физической доступности всех боковых экспонатов.
 
 | G10 LOW_POWER_AND_SCENIC_CULL | PENDING exact-HEAD CI | Низкий профиль `low-power` 30 FPS / high 60 FPS, экономный дистанционный рендер 85/125 м, сохранение локального E и всех 42 записей; сравнение zone0 calls с 306 baseline. Реальный ПК Offline, причина его перегрузки не установлена; аппаратный стресс тест запрещён без восстановления и отдельного допуска. |
+
+| G11 LIVE_QUALITY_REBUILD | PENDING exact-HEAD CI | High↔low inside a living 3D journey must produce fresh keyed canvas/WebGL renderer, 42 correctly-sized label atlas, safe checkpoint. New `tests/browser-quality.mjs` in independent GitHub runner. GPU device-specific acceptance remains HOLD. |

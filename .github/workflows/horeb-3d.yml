@@ -100,6 +100,13 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:exhibits
+      - name: Recreate WebGL when changing to the real low-power quality
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:quality
       - name: Walk the whole route and back by actual keyboard input (no teleport)
         env:
           HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}

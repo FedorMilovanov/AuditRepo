@@ -118,6 +118,23 @@ export default function HorebApp() {
       ? old : { ...old, last: point });
   }, []);
 
+  // WebGL adapter preference, antialiasing and low/high geometry are decided
+  // at context creation. Applying only a new DPR to the old renderer was a
+  // misleading quality switch, especially after a low-power choice.
+  const applyUiSettings = (next: Partial<UiSettings>) => {
+    const mode = next.quality ?? settings.quality;
+    const low = mode === 'low' || (mode === 'auto' &&
+      (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || innerWidth < 700));
+    const desired = low ? 'low' : 'high';
+    if (screen === 'world' && desired !== resolved.quality) {
+      const current = worldRef.current?.position;
+      if (current) saveCheckpoint(current);
+      setDialog(null);
+      setWs(null);
+    }
+    setSettings((previous) => ({ ...previous, ...next }));
+  };
+
   // ── Жизненный цикл 3D-мира (создаётся только по кнопке; уничтожается при выходе)
   useEffect(() => {
     if (screen !== 'world' || !canvasRef.current) return;
@@ -163,7 +180,7 @@ export default function HorebApp() {
       worldRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen, worldEpoch]);
+  }, [screen, worldEpoch, resolved.quality]);
 
   useEffect(() => { worldRef.current?.applySettings(resolved); }, [resolved]);
   useEffect(() => { worldRef.current?.setInputLocked(dialog !== null); }, [dialog, ws === null]);
@@ -288,7 +305,7 @@ export default function HorebApp() {
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
           {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
-      {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} /></Modal>}
+      {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
       {introDialog?.kind === 'about' && <Modal wide title="Об экспозиции" onClose={() => setIntroDialog(null)}><AboutExhibition /></Modal>}
       {introDialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setIntroDialog(null)}>
@@ -308,7 +325,7 @@ export default function HorebApp() {
   const gateInner = ws?.block === 'inner';
   return (
     <main className="fixed inset-0 bg-black text-parch select-none">
-      <canvas key={worldEpoch} ref={canvasRef} className="absolute inset-0 w-full h-full block outline-none" tabIndex={0} aria-label="3D-сцена. Полный текст экспозиции доступен в режиме чтения." />
+      <canvas key={`${worldEpoch}-${resolved.quality}`} ref={canvasRef} className="absolute inset-0 w-full h-full block outline-none" tabIndex={0} aria-label="3D-сцена. Полный текст экспозиции доступен в режиме чтения." />
       <div className="fade-in-black pointer-events-none absolute inset-0 bg-black" style={{ animationDuration: settings.reducedMotion ? '0.01s' : '3s' }} />
       {!ws && !err && <p className="absolute inset-0 grid place-items-center text-muted" role="status">Камень раскрывается…</p>}
 
@@ -417,7 +434,7 @@ export default function HorebApp() {
       </Modal>}
       {dialog?.kind === 'settings' && (
         <Modal title="Настройки" onClose={() => setDialog(null)}>
-          <SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} stats={ws ? `Измерено сейчас: ${ws.fps} fps, ${ws.calls} draw calls, ${ws.tris} треугольников, pixelRatio ${ws.pixelRatio}, геометрия: ${resolved.quality}` : undefined} />
+          <SettingsPanel s={settings} set={applyUiSettings} stats={ws ? `Измерено сейчас: ${ws.fps} fps, ${ws.calls} draw calls, ${ws.tris} треугольников, pixelRatio ${ws.pixelRatio}, геометрия: ${resolved.quality}` : undefined} />
           <div className="flex flex-wrap gap-2 mt-5">
             <button className="btn" onClick={() => { worldRef.current?.resetCamera(); setDialog(null); }}>Сбросить камеру</button>
             <button className="btn" onClick={resetProgress}>Сбросить маршрут и выйти</button>

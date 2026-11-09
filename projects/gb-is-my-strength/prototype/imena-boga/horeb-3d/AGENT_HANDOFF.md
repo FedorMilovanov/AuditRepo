@@ -6,6 +6,14 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
+## Quality switch and resource safety — точная волна, 9 ноября 2026
+
+**Подтверждённый baseline:** `c7ba3f2241b44e79ca6c2b88b3aa0381d641a05b` [HOREB QA #42614267241](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42614267241): 3/3 SUCCESS. 135/135 construction+registry+nav, Chrome smoke 34/34, 42/42 E-dossiers, реальный keyboard-проход 0→7→0, 8+3 кадра + три крупных плана, runtime errors=0. Distance-cull (low 85m/high 125m) уменьшил команды рендера в zone0 306→105 (-65.7%), zone1 306→103 (-66.3%), zone2 258→101 (-60.9%), zone3 258→117 (-54.7%), zone4 163→122 (-25.2%), zone5 163→86 (-47.2%). Измерение SwiftShader, **не** пользовательского RTX GPU.
+
+**Новая техническая корректировка:** ранее выбор качества в открытом мире менял только DPR, но геометрия, 42 атласа и WebGL `powerPreference` оставались от прежнего созданного renderer. Теперь `HorebApp` обрабатывает `high→low` / `low→high` как смену контекста: сохраняет безопасную позицию, уничтожает прежний WebGL, меняет keyed canvas и создаёт новую сцену в выбранном качестве. `tests/browser-quality.mjs` доказывает новое canvas, освобождение предыдущего рендера, 42 малых label atlas, safe re-entry, отсутствие runtime errors. **До exact-HEAD CI считать gate PENDING**.
+
+Никаких стресс-тестов на пользовательском ПК: все Desktop Commander подключения `DESKTOP-O3FDOA4` Offline; возможная аппаратная перегрузка/температура не диагностирована. Границы Хорива, тёмное освещение, исходный архив, Product/Research, 42 Editorial HOLD и Draft PR не изменять.
+
 ## GPU-sparing wave — осторожная разработка после сообщения о перегрузке ПК
 
 Локальный `DESKTOP-O3FDOA4` показан **Offline**; ни тесты, ни нагрузочные процессы на пользовательском компьютере не запускать. Вся 3D-приёмка выполняется на отдельном GitHub Ubuntu/Chromium runner; его SwiftShader не является доказательством FPS/VRAM на реальном ПК. Аппаратный стресс-тест и настройка неисправной CUDA **HOLD**.
