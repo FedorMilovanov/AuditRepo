@@ -80,6 +80,11 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
    }
    if(name==='atlas'){
+    // Readability of the navbar must not depend on backdrop-filter support.
+    const navPaint=await page.locator('nav[aria-label="Основная навигация сайта"]')
+      .evaluate(el=>getComputedStyle(el).backgroundColor);
+    if(!/^rgb\(/.test(navPaint))
+      throw Error('Atlas header is translucent over article text '+JSON.stringify({engine,width,navPaint}));
     if(width===1440){
       // Dynamic OS preference change: a medallion already tilted under a
       // normal-motion setting must immediately return to neutral, without
@@ -456,6 +461,11 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         throw Error('Atlas mobile drawer did not receive focus in opening click '+JSON.stringify({width,synchronousFocus}));
       const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
       await drawer.waitFor({state:'visible'});
+      // Multi-row mobile header protects the whole title from actions.
+      const drawerHeading=await drawer.locator('h3').boundingBox();
+      if(width<=390 && (!drawerHeading || drawerHeading.height>65))
+        throw Error('Mobile drawer title squeezed by header controls '+JSON.stringify({engine,width,drawerHeading}));
+
       const mobileNames=await drawer.locator('button').evaluateAll(buttons=>
         buttons.filter(button=>button.textContent?.includes('Читать'))
           .map(button=>({text:button.textContent?.trim().slice(0,60),
@@ -555,6 +565,25 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         await page.waitForFunction(() => document.body.style.overflow!=='hidden');
         await page.setViewportSize({width,height:844});
       }
+    }
+    // Exact last-dossier witness: an article and its Greek noun form one
+    // unbreakable typographic token, not an orphaned Omega glyph in WebKit.
+    if(width===320){
+      const last=page.locator('article[data-name-id]').last();
+      await last.scrollIntoViewIfNeeded();
+      await last.getByRole('button',{name:'Открыть полное досье'}).click();
+      const original=page.locator('[data-modal-original]');
+      await original.waitFor({state:'visible'});
+      const greekPhrases=await original.locator('span.whitespace-nowrap').allTextContents();
+      if(!greekPhrases.includes('τὸ\u00a0Ὦ') ||
+         !greekPhrases.includes('τὸ\u00a0Ἄλφα'))
+        throw Error('Atlas Greek article split exposes orphan symbol '+JSON.stringify({engine,width,greekPhrases}));
+      const header=page.locator('#modal-divine-name-title');
+      const headerText=await header.innerText();
+      if(!headerText.includes('То\u00a0Альфа') ||
+         !headerText.includes('то\u00a0О'))
+        throw Error('Atlas Greek transliteration not grouped '+JSON.stringify({engine,width,headerText}));
+      await page.getByRole('dialog').getByRole('button',{name:'Закрыть окно'}).click();
     }
     // A link copied from the divine-name dossier must reopen that dossier
     // in a clean browser session (not merely scroll behind a closed overlay).

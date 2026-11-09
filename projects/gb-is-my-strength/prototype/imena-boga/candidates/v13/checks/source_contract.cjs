@@ -80,3 +80,43 @@ if(readerSection.includes('«Я есмь» и составные имена') ||
    readerEpilogue.includes('Все имена этой страницы'))
  throw Error('Reader related-section or epilogue reintroduced false proper-name counts');
 console.log('V13_READER_SEMANTIC_SCOPE_PASS');
+
+// These guards target the visual-system regressions found in the 138-frame
+// manual review. They complement (not replace) real browser screenshots.
+const qAtlasModal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+const qAtlasNavbar=fs.readFileSync(path.join(root,'atlas','src','components','SiteNavbar.tsx'),'utf8');
+const qAtlasPillars=fs.readFileSync(path.join(root,'atlas','src','components','LateralNamePillars.tsx'),'utf8');
+const qAtlasCard=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
+const qDarkDock=fs.readFileSync(path.join(root,'sozvezdie','src','components','ReaderDock.tsx'),'utf8');
+if (!qAtlasNavbar.includes("backgroundColor: 'var(--gb-bg)'") ||
+    qAtlasNavbar.includes("backdropFilter: 'blur(18px) saturate(150%)'"))
+  throw Error('Visual regression: header text shines through the nav');
+if (!qAtlasModal.includes('inline-block whitespace-nowrap') ||
+    !qAtlasModal.includes('data-modal-original') ||
+    !qAtlasModal.includes("entry.original.replace(/(τὸ|"))
+  throw Error('Visual regression: Greek articles can become orphan glyphs');
+if (!qAtlasModal.includes('sm:flex-row sm:items-center sm:justify-between') ||
+    !qAtlasModal.includes('min-h-11 min-w-11'))
+  throw Error('Visual regression: narrow dossier header has inaccessible controls');
+if (!qAtlasPillars.includes('sm:flex-row sm:items-center sm:justify-between') ||
+    !qAtlasPillars.includes('cardActionsNearDock') ||
+    !qAtlasPillars.includes('Указатель выражений Писания'))
+  throw Error('Visual regression: mobile drawer or reading-action clearance lost');
+if (!qAtlasCard.includes('data-atlas-card-actions') ||
+    !qAtlasCard.includes('min-h-11') ||
+    qAtlasCard.includes('<span>Исполнение во Христе Иисусе</span>'))
+  throw Error('Visual regression: Atlas actions or editorial interpretation labels lost');
+if (!qDarkDock.includes('opacity-0 pointer-events-none') ||
+    !qDarkDock.includes('bg-ink-950 px-1.5'))
+  throw Error('Visual regression: dark reader dock obscures text while scrolling');
+let darkTiny=0, darkFiles=0;
+for (const file of fs.readdirSync(path.join(root,'sozvezdie','src','components'))) {
+  if (!file.endsWith('.tsx')) continue;
+  const source=fs.readFileSync(path.join(root,'sozvezdie','src','components',file),'utf8');
+  darkTiny+=(source.match(/text-\[(?:7|8|8\.5|9|9\.5|10|10\.5|11)px\]/g)||[]).length;
+  darkFiles++;
+}
+if (darkTiny || /text-\[(?:7|8|8\.5|9|9\.5|10|10\.5|11)px\]/.test(
+ fs.readFileSync(path.join(root,'sozvezdie','src','App.tsx'),'utf8')))
+  throw Error('Visual regression: metadata scale below 12px');
+console.log('V13_VISUAL_SYSTEM_CONTRACT_PASS',JSON.stringify({darkFiles,tinyUtilityCount:darkTiny}));

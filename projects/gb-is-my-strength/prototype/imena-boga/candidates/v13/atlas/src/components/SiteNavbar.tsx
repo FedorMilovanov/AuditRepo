@@ -78,9 +78,9 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
       aria-label="Основная навигация сайта"
       className="fixed top-0 right-0 left-0 z-40 h-14 border-b transition-colors duration-300"
       style={{
-        backgroundColor: 'var(--gb-glass)',
-        borderColor: 'var(--gb-border)',
-        backdropFilter: 'blur(18px) saturate(150%)',
+        backgroundColor: 'var(--gb-bg)',
+        borderColor: 'var(--gb-border-strong)',
+        boxShadow: progress > 0.002 ? '0 8px 24px rgba(0, 0, 0, 0.08)' : 'none',
       }}
     >
       {/* Top 2.5px Crimson-Gold Reading Progress Bar */}

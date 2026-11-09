@@ -407,3 +407,21 @@ input:focus-visible,
 .thin-sacred-scroll::-webkit-scrollbar-thumb:hover {
   background: var(--gb-gold);
 }
+
+/* Quiet optical protection for the main title: the orbit never gains equal
+   visual prominence to the reader's first sentence. No hard-edged overlay. */
+.gb-hero-title::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  inset: -1.25rem -0.75rem;
+  border-radius: 4rem;
+  background: radial-gradient(ellipse at center, var(--gb-bg) 12%, transparent 78%);
+  opacity: 0.72;
+}
+
+/* The catalogue launcher respects physical screen cutouts and home indicators. */
+[data-atlas-launcher-shell] {
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}

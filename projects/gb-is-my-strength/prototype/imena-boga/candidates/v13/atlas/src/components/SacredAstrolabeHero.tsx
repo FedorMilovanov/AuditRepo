@@ -503,7 +503,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
 
         {/* Main Editorial Title */}
         <h1
-          className="font-serif-display mx-auto max-w-3xl text-3xl sm:text-5xl md:text-[3.35rem] font-bold leading-[1.14] tracking-tight"
+          className="gb-hero-title font-serif-display relative isolate mx-auto max-w-3xl text-3xl sm:text-5xl md:text-[3.35rem] font-bold leading-[1.14] tracking-tight"
           style={{ color: 'var(--gb-ink)' }}
         >
           Имена Бога в Писании:{' '}
@@ -520,7 +520,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
         >
           В Библии имя Бога — не условный ярлык и не магическая формула, а самооткровение Его
           характера, святости и верности. По мере чтения ниже по бокам страницы будут последовательно
-          являться и озаряться 36 рассмотренных имён, титулов и обращений к Богу — нажмите на любое, чтобы
+          являться и озаряться 36 исследуемых библейских выражений — нажмите на любое, чтобы
           открыть лексический и богословский разбор.
         </p>
 

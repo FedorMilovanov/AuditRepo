@@ -149,7 +149,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
     >
       {/* header */}
       <div className="mb-8 flex flex-col items-center text-center">
-        <p className="flex items-center gap-4 font-ui text-[10px] font-medium uppercase tracking-[0.45em] text-gold-400">
+        <p className="flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.45em] text-gold-400">
           <span className="hairline w-10" />
           Созвездие имён
           <span className="hairline w-10" />
@@ -197,7 +197,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                 <X className="h-3.5 w-3.5" />
               </button>
             ) : (
-              <kbd className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded border border-cream-800/70 px-1.5 py-0.5 font-ui text-[9px] text-cream-700 sm:block">
+              <kbd className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded border border-cream-800/70 px-1.5 py-0.5 font-ui text-xs text-cream-700 sm:block">
                 /
               </kbd>
             )}
@@ -205,14 +205,14 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
 
           <div className="min-w-44 md:text-right">
             <div className="flex items-center justify-between gap-3 md:justify-end">
-              <p className="font-ui text-[9px] uppercase tracking-[0.28em] text-cream-500">
+              <p className="font-ui text-xs uppercase tracking-[0.28em] text-cream-500">
                 Изучено {completedIds.size}/{NAMES.length}
               </p>
               {completedIds.size > 0 && (
                 <button
                   type="button"
                   onClick={onClearProgress}
-                  className="inline-flex items-center gap-1 font-ui text-[9px] uppercase tracking-[0.18em] text-cream-700 transition-colors hover:text-gold-300"
+                  className="inline-flex items-center gap-1 font-ui text-xs uppercase tracking-[0.18em] text-cream-700 transition-colors hover:text-gold-300"
                 >
                   <RotateCcw className="h-3 w-3" /> Сброс
                 </button>
@@ -232,7 +232,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             type="button"
             onClick={openRandomFiltered}
             disabled={filtered.length === 0}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-gold-500/30 px-4 py-2 font-ui text-[10px] uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/60 hover:bg-gold-500/10 disabled:cursor-not-allowed disabled:opacity-35"
+            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-gold-500/30 px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/60 hover:bg-gold-500/10 disabled:cursor-not-allowed disabled:opacity-35"
             aria-label="Открыть случайное имя из результатов поиска"
             title="Открыть случайное имя из выбранной части исследования"
           >
@@ -245,7 +245,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             type="button"
             onClick={() => setPartFilter(0)}
             aria-pressed={partFilter === 0}
-            className={`rounded-full border px-3.5 py-1.5 font-ui text-[9px] uppercase tracking-[0.2em] transition-all ${
+            className={`rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.2em] transition-all ${
               partFilter === 0
                 ? "border-gold-400/70 bg-gold-500/15 text-gold-200"
                 : "border-cream-800/60 text-cream-500 hover:border-gold-500/35 hover:text-cream-300"
@@ -262,7 +262,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                 type="button"
                 onClick={() => setPartFilter(index + 1)}
                 aria-pressed={selected}
-                className={`rounded-full border px-3.5 py-1.5 font-ui text-[9px] uppercase tracking-[0.18em] transition-all ${
+                className={`rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.18em] transition-all ${
                   selected
                     ? "border-gold-400/70 bg-gold-500/15 text-gold-200"
                     : "border-cream-800/60 text-cream-500 hover:border-gold-500/35 hover:text-cream-300"
@@ -272,11 +272,11 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
               </button>
             );
           })}
-          <span className="ml-auto font-ui text-[9px] uppercase tracking-[0.22em] text-cream-700" aria-live="polite">
+          <span className="ml-auto font-ui text-xs uppercase tracking-[0.22em] text-cream-700" aria-live="polite">
             {query && filtered.length > 0 ? "Enter — открыть первое" : `Показано: ${filtered.length}`}
           </span>
         </div>
-        <p className="mt-3 hidden items-center gap-4 border-t border-cream-800/40 pt-3 font-ui text-[9px] uppercase tracking-[0.2em] text-cream-700 lg:flex">
+        <p className="mt-3 hidden items-center gap-4 border-t border-cream-800/40 pt-3 font-ui text-xs uppercase tracking-[0.2em] text-cream-700 lg:flex">
           <span><kbd className="rounded border border-cream-800/80 px-1 text-gold-400">/</kbd> поиск</span>
           <span><kbd className="rounded border border-cream-800/80 px-1 text-gold-400">← →</kbd> соседние имена в статье</span>
           <span><kbd className="rounded border border-cream-800/80 px-1 text-gold-400">M</kbd> отметить изученным</span>
@@ -289,7 +289,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
         if (entries.length === 0) return null;
         return (
           <div key={part.id} className="mb-8">
-            <p className="mb-4 flex items-center gap-4 font-ui text-[9px] font-medium uppercase tracking-[0.4em] text-cream-500">
+            <p className="mb-4 flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.4em] text-cream-500">
               <span className="font-display text-lg italic text-gold-500">{part.numeral}</span>
               {part.title}
               <span className="hairline flex-1" />
@@ -316,7 +316,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     }`}
                   >
                     <span
-                      className={`absolute left-2.5 top-2 font-ui text-[11px] tracking-[0.12em] transition-colors duration-300 ${
+                      className={`absolute left-2.5 top-2 font-ui text-xs tracking-[0.12em] transition-colors duration-300 ${
                         isActive || isCompleted ? "text-gold-400" : "text-cream-400 group-hover:text-gold-300"
                       }`}
                     >
@@ -362,7 +362,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
           <button
             type="button"
             onClick={resetFilters}
-            className="mt-6 rounded-full border border-gold-500/40 px-5 py-2.5 font-ui text-[9px] uppercase tracking-[0.25em] text-gold-300 transition-colors hover:bg-gold-500/10"
+            className="mt-6 rounded-full border border-gold-500/40 px-5 py-2.5 font-ui text-xs uppercase tracking-[0.25em] text-gold-300 transition-colors hover:bg-gold-500/10"
           >
             Показать все имена
           </button>

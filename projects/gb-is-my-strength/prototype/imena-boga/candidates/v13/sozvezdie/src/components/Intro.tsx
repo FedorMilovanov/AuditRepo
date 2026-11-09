@@ -12,7 +12,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
     <section id="intro" className="relative scroll-mt-24 py-28 md:py-36">
       <div className="mx-auto max-w-3xl px-6">
         <Reveal>
-          <p className="flex items-center gap-4 font-ui text-[11px] font-medium uppercase tracking-[0.45em] text-gold-400">
+          <p className="flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.45em] text-gold-400">
             <span className="hairline w-10" />
             Введение
           </p>
@@ -23,7 +23,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
           </h2>
         </Reveal>
         <Reveal delay={0.15}>
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-ui text-[10px] font-medium uppercase tracking-[0.3em] text-cream-500">
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-ui text-xs font-medium uppercase tracking-[0.3em] text-cream-500">
             <a
               href="https://gospod-bog.ru/about/"
               className="text-gold-400 transition-colors hover:text-gold-300"
@@ -39,7 +39,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex items-center gap-2 border border-cream-800/60 px-3 py-1.5 text-[9px] text-cream-500 transition-all duration-300 hover:border-gold-500/50 hover:text-gold-300"
+              className="inline-flex items-center gap-2 border border-cream-800/60 px-3 py-1.5 text-xs text-cream-500 transition-all duration-300 hover:border-gold-500/50 hover:text-gold-300"
               aria-label="Распечатать статью"
             >
               <Printer className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -71,13 +71,13 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
               «Сущий послал меня к вам… это имя Моё в вечности, и памятование
               о Мне в род и род».
             </p>
-            <cite className="mt-4 block font-ui text-[10px] not-italic uppercase tracking-[0.3em] text-cream-500">Исход 3:14–15</cite>
+            <cite className="mt-4 block font-ui text-xs not-italic uppercase tracking-[0.3em] text-cream-500">Исход 3:14–15</cite>
           </blockquote>
         </Reveal>
 
         <Reveal delay={0.35}>
           <div className="border-y border-gold-500/20 py-9">
-            <p className="font-ui text-[10px] font-medium uppercase tracking-[0.35em] text-gold-400">Как устроено исследование</p>
+            <p className="font-ui text-xs font-medium uppercase tracking-[0.35em] text-gold-400">Как устроено исследование</p>
             <h3 className="mt-4 font-display text-3xl text-cream-100">{NAMES.length} именований. Не закрытый список.</h3>
             <p className="mt-4 font-body text-lg leading-relaxed text-cream-300">
               Писание не даёт одного исчерпывающего перечня «всех имён Бога».
@@ -94,7 +94,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
 
         <Reveal delay={0.4}>
           <nav className="mt-14" aria-label="Части исследования">
-            <p className="mb-6 font-ui text-[10px] uppercase tracking-[0.35em] text-cream-500">Путь чтения</p>
+            <p className="mb-6 font-ui text-xs uppercase tracking-[0.35em] text-cream-500">Путь чтения</p>
             {PARTS.map((part, i) => {
               const first = NAMES.find((n) => n.part === i + 1);
               if (!first) return null;

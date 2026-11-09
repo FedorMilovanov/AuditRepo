@@ -64,12 +64,12 @@
       "bytes_normalized": 15927
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "8b8d50efb5e484ab3e5c29e995c04484e7e6491e661d5b299d3f72d997137fb9",
-      "bytes_normalized": 28853
+      "sha256": "2bc616c0b5311637f4e70eb972b6c742081c85711fd5bf006e345a1f6492ff06",
+      "bytes_normalized": 29761
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
-      "sha256": "c62353ededcc8a4e9f6506079cbefe5ddcc24fd466d0af76730ab1bf4c1399c3",
-      "bytes_normalized": 16542
+      "sha256": "42971ca00620855a62922c638f8bb458b7b1b059e3498936ab53a3fd70fa942c",
+      "bytes_normalized": 16616
     },
     "atlas/src/components/FeatureLoadBoundary.tsx": {
       "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
@@ -80,8 +80,8 @@
       "bytes_normalized": 10418
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "a9ff1bd43043b64be7240b75c1332c1a43c49407a5400dd855386151e003ae20",
-      "bytes_normalized": 28394
+      "sha256": "21d2c5f69fec644415519e987ea9eb733930a02efe14655b085aa31dc4d156e6",
+      "bytes_normalized": 30419
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "7d3830025f4424e685e781bdb84d6618dc3043d3c123bec7f6732f3c0d1e2763",
@@ -92,8 +92,8 @@
       "bytes_normalized": 1260
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "986db40c5b32b339ecced2804c7f7f102485a59b5d25f4e974b9bcb88c7a7a70",
-      "bytes_normalized": 26660
+      "sha256": "b8638024ddc594725a048adccfe55ead7fb60704d9e2745a992f01fe7ad1501a",
+      "bytes_normalized": 26668
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "16a45f398de1406ce6a0aefeac9c51838d3941cf558d0fd7251e0f87d05496ed",
@@ -104,8 +104,8 @@
       "bytes_normalized": 14367
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "51a94873a5a80f8951c96af92493a25c04b2e765de60a6c5341cc4abdbbb3958",
-      "bytes_normalized": 20835
+      "sha256": "40abf0efc8e254bda27db233ffe20c7592404f19b7ccdb1bfcb4b26e6783a949",
+      "bytes_normalized": 20941
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -124,8 +124,8 @@
       "bytes_normalized": 1238
     },
     "atlas/src/index.css": {
-      "sha256": "94ebee8e840c6aec574041d14f1a73ee19462e209e8b12d1dea5225636fd827e",
-      "bytes_normalized": 9495
+      "sha256": "b90b0209782f28e95fa8dc7f62426f7b4eaac607040c7a964d0bd5a44c902430",
+      "bytes_normalized": 10078
     },
     "atlas/src/main.tsx": {
       "sha256": "577d8a6ab658c40f91c62c2f6f083eefbdc6b653bd2d65d5ec766c3d6bdb5c30",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "90fb5ec821d02c5430187bf43e4bf1d03d9278f3dd39db4472d6999a2c599687",
-      "bytes_normalized": 30943
+      "sha256": "58a997cfc0c0c1678fb720f966163eca19621f559725087ca8dc9e8c54a1089f",
+      "bytes_normalized": 48059
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "af51234056dfc2b23f02b7ceff75c7bbb756994b25455c82a9a8edf6d40bcf87",
-      "bytes_normalized": 6008
+      "sha256": "cf2589deaa9fb06455c040a2f0f1f84be921ec9674289fec70bf0d54b5aaddf1",
+      "bytes_normalized": 8801
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -232,52 +232,52 @@
       "bytes_normalized": 51235
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "71402e4c603598ed45611db88a6dcd1d194600910b1de4786c8b11982c7d8364",
-      "bytes_normalized": 17541
+      "sha256": "536d69ff1dca4ce67c41d2cab17440f6a28e3d767abbc561ffcdf02ba5e0791e",
+      "bytes_normalized": 17638
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
       "bytes_normalized": 140842
     },
     "sozvezdie/src/components/Epilogue.tsx": {
-      "sha256": "63d637e23447c55da3f054e018e8261167bc576814d4d076d3bf74052c2377f6",
-      "bytes_normalized": 9372
+      "sha256": "c7cc89091d5e94ca90256dfb670996eb54ad40601f8558b91e8b8a4ffc3e6a3f",
+      "bytes_normalized": 9342
     },
     "sozvezdie/src/components/Hero.tsx": {
-      "sha256": "b5b91cfc2a0b239d1fcca5ae0b0176299f0341808a6dbfe595f1fa2e1caa6a11",
-      "bytes_normalized": 9642
+      "sha256": "54437cbfff11e46a67fe53511dd715ae8ab790b110b6f43ba15a1eaea465d223",
+      "bytes_normalized": 9646
     },
     "sozvezdie/src/components/Intro.tsx": {
-      "sha256": "3cf7cdc0ce29c49eddd2529fb51c3f3ce1606eb796f5e956af6f2fdc050aa762",
-      "bytes_normalized": 7363
+      "sha256": "024f5eaf91f31944f1191f54cc25bb9e5dc596939424f8aa9668539af0445931",
+      "bytes_normalized": 7340
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
-      "sha256": "d4cf59152a1e9ddf0cf4f16dccd1907a8fface75c4f0d8b6ab3e893ae046efe7",
-      "bytes_normalized": 9927
+      "sha256": "ce1b72bb964eb64ce41b25ac1d317a3440632e92fd1d2c9dbbf7f9a6c96b720a",
+      "bytes_normalized": 9923
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "e616dbe1f225f6b145ba4978b6dc26e600ed72542ba5b73c2bc3f7f13ddfd7d6",
-      "bytes_normalized": 18503
+      "sha256": "01440b1250c2fda414fa660ec8cbb8d2008edf744b1adb8c0a771ca415e1f9c1",
+      "bytes_normalized": 18464
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "0decac9c61745fb3cbd8bb3c3b8af65666c16e3918f760f4501b3acdbb90dde5",
-      "bytes_normalized": 18233
+      "sha256": "4bf29dbea698f47958524790664b682eacc122a64a7ea352570b67dccd70eb60",
+      "bytes_normalized": 18188
     },
     "sozvezdie/src/components/NameTree.tsx": {
-      "sha256": "1ef3a12a6b31117e0bd72de2dee674db0eb5bc3363fcc331b2b9df48cfce5d42",
-      "bytes_normalized": 25381
+      "sha256": "87c3eb0605c7450475c2ce97387668674765adbef87c2d58f055e2fbe92a2731",
+      "bytes_normalized": 25336
     },
     "sozvezdie/src/components/PartDivider.tsx": {
-      "sha256": "8680812fc00da44ea4e6a6e1ea4b42621105510fd16b26e49de87db2f2ef1782",
-      "bytes_normalized": 2967
+      "sha256": "9870afaffbefa69f540a6636ded7d382e9ed9b891d5e16901e4885fd4ed8b86e",
+      "bytes_normalized": 2960
     },
     "sozvezdie/src/components/Rails.tsx": {
-      "sha256": "5eef94e5889ddea2c0a70c01e9bf80e1c984f8bea133533009dda9a4b7a763ce",
-      "bytes_normalized": 6877
+      "sha256": "393dcecb28a293ecde6e11e240e53acdb654a8b177cbec5488568b2c98dd6e95",
+      "bytes_normalized": 6899
     },
     "sozvezdie/src/components/ReaderDock.tsx": {
-      "sha256": "bcb39c81b037edaa492efc3ffdb74bcca4ee66b5c731dece93ac6accca892147",
-      "bytes_normalized": 12364
+      "sha256": "3c4d64c7d0193a0102fdd49b82be5064f0faa31dff461aef0ed9f22bf82e8c84",
+      "bytes_normalized": 12566
     },
     "sozvezdie/src/components/Reveal.tsx": {
       "sha256": "a472c1df117a111b2dead67b1e782480b5cb189b1062c1df02375b2c36793240",
@@ -288,16 +288,16 @@
       "bytes_normalized": 6781
     },
     "sozvezdie/src/components/Tetragrammaton.tsx": {
-      "sha256": "b15aa683ce613a148ce44f6b4bd7fbc89b3114ef8c028a7a33a6aeb22acbc17c",
-      "bytes_normalized": 10702
+      "sha256": "7c985fbe1cd56daf596f0e3a3e5b09e96efe83d6f839a535fb8b72ef70e12302",
+      "bytes_normalized": 10728
     },
     "sozvezdie/src/components/Tilt.tsx": {
       "sha256": "e16c69b80d670c38e31f1a7391a6ade828306c14d3d03cd7e9199efaa3e6ed4b",
       "bytes_normalized": 1809
     },
     "sozvezdie/src/components/Toast.tsx": {
-      "sha256": "e9a9caf76e7756052e680e34b949fe0e995ea19c0cf368abf0cdba9d6453444f",
-      "bytes_normalized": 3630
+      "sha256": "d6d55bcf5f105542ddae4454d3fd79218339fe0946f638e3df5da6efc7db6395",
+      "bytes_normalized": 3626
     },
     "sozvezdie/src/components/useElasticConstellation.ts": {
       "sha256": "27cd660b50a469ca14c77121fe7e002cfc1fc224daa4e5366a9b7cb4815f9bf5",
@@ -312,8 +312,8 @@
       "bytes_normalized": 1238
     },
     "sozvezdie/src/index.css": {
-      "sha256": "cf404e6fbfe384d47b0489e6212bcf59b38d11994c7131a74f7a5b941d5efb7f",
-      "bytes_normalized": 8078
+      "sha256": "9ae49035f6f5fe33868f298d56c8dad533048c6c5074c712729710ac58ef12ba",
+      "bytes_normalized": 8274
     },
     "sozvezdie/src/main.tsx": {
       "sha256": "76f104d10a14363fbeed89b8c2768741ded2849154df9c6de3dda1dca835aba8",

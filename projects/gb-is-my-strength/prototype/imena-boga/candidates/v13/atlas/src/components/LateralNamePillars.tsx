@@ -265,7 +265,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectName(item)}
-                    className="font-ui inline-flex min-h-8 items-center rounded-md px-1.5 text-[11px] font-medium hover:underline"
+                    className="font-ui inline-flex min-h-11 items-center rounded-md px-2 text-xs font-medium hover:underline"
                     style={{ color: 'var(--gb-accent)' }}
                   >
                     Разбор →
@@ -273,7 +273,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                   <button
                     type="button"
                     onClick={() => onJumpToName(item)}
-                    className="font-ui inline-flex min-h-8 items-center rounded-md px-1.5 text-[11px] underline decoration-dotted hover:opacity-80"
+                    className="font-ui inline-flex min-h-11 items-center rounded-md px-2 text-xs underline decoration-dotted hover:opacity-80"
                     style={{ color: 'var(--gb-muted)' }}
                   >
                     К тексту
@@ -302,6 +302,22 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
 }) => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
+  const [cardActionsNearDock, setCardActionsNearDock] = useState(false);
+  // An unobtrusive index launcher must not cover reading-card actions.
+  // Observe the bottom part of the viewport, not arbitrary page coordinates.
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-card-actions]'));
+    const visibleActions = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visibleActions.add(entry.target);
+        else visibleActions.delete(entry.target);
+      }
+      setCardActionsNearDock(visibleActions.size > 0);
+    }, { rootMargin: '-70% 0px 0px 0px', threshold: 0 });
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
   // The fixed navigation belongs to reading, not over the first-screen
   // editorial composition. Observe the actual hero boundary (no pixel magic).
   useEffect(() => {
@@ -531,7 +547,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       />
 
       {/* Mobile & Tablet Floating Sacred Ribbon Trigger (< lg) */}
-      <div className={`no-print fixed right-4 bottom-4 left-4 z-30 justify-center min-[1440px]:hidden ${pastHero ? "flex" : "hidden"} lg:left-auto lg:max-w-[300px] lg:justify-end`}>
+      <div data-atlas-launcher-shell className={`no-print fixed right-3 bottom-4 z-30 min-[1440px]:hidden ${pastHero && !cardActionsNearDock ? "block" : "hidden"} `}>
         <button
           ref={mobileTriggerRef}
           type="button"
@@ -545,7 +561,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           aria-haspopup="dialog"
           aria-expanded={mobileDrawerOpen}
           aria-controls="gb-mobile-pillars-dialog"
-          className="sacred-active-glow flex min-h-14 w-full max-w-md cursor-pointer items-center justify-between gap-2 rounded-2xl border px-3 py-2 shadow-xl motion-safe:transition-transform motion-safe:active:scale-[0.99] sm:gap-3 sm:px-4 sm:py-3"
+          className="sacred-active-glow flex min-h-12 max-w-[12rem] cursor-pointer items-center gap-2 rounded-full border px-3 py-2 shadow-xl motion-safe:transition-transform motion-safe:active:scale-[0.99]"
           style={{
             backgroundColor: 'var(--gb-surface)',
             borderColor: 'var(--gb-gold)',
@@ -558,15 +574,15 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           <div className="flex min-w-0 flex-1 items-center gap-2">
             <Sparkles aria-hidden="true" className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
             <span
-              className="font-ui min-w-0 whitespace-nowrap text-left text-[11px] font-semibold tracking-normal sm:text-xs"
+              className="font-ui whitespace-nowrap text-left text-xs font-semibold tabular-nums"
               style={{ color: 'var(--gb-gold-ink)' }}
             >
-              Открыто {displayRevealedCount}/{names.length} · №{names.indexOf(activeEntry) + 1}
+              №{names.indexOf(activeEntry) + 1}/{names.length}
             </span>
           </div>
 
           <span
-            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 text-[11px] font-semibold text-white sm:px-2.5 sm:text-xs"
+            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-xs font-semibold text-white"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <span>Скрижали</span>
@@ -595,7 +611,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             <div
-              className="mb-4 flex items-center justify-between border-b pb-3"
+              className="mb-4 flex flex-col gap-3 border-b pb-3 sm:flex-row sm:items-center sm:justify-between"
               style={{ borderColor: 'var(--gb-border)' }}
             >
               <div>
@@ -603,17 +619,17 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                   className="font-ui text-[11px] font-semibold tracking-wider uppercase"
                   style={{ color: 'var(--gb-gold-ink)' }}
                 >
-                  Скрижали Имён Божьих · {displayRevealedCount} / {names.length} открыто
+                  Указатель выражений Писания · {displayRevealedCount} / {names.length} открыто
                 </div>
                 <h3 className="font-serif-display text-lg font-bold">
-                  Нажмите на любое Имя для чтения
+                  Выберите выражение для изучения
                 </h3>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-end">
                 <button
                   type="button"
                   onClick={onToggleIlluminateAll}
-                  className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors"
+                  className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-colors"
                   style={{
                     backgroundColor: illuminateAll ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
                     borderColor: illuminateAll ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
@@ -627,7 +643,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                   type="button"
                   ref={drawerCloseRef}
                   onClick={dismissDrawer}
-                  className="rounded-full border p-2"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border"
                   style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
                   aria-label="Закрыть скрижаль"
                 >
@@ -660,7 +676,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                   >
                     <div className="min-w-0 w-full">
                       <div
-                        className="font-ui text-[10px] font-semibold uppercase"
+                        className="font-ui text-xs font-semibold uppercase"
                         style={{ color: 'var(--gb-gold-ink)' }}
                       >
                         № {item.number} · {isRevealed ? 'Явлено' : 'Далее в тексте'}
@@ -683,7 +699,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                         {item.original}
                       </span>
                       <span
-                        className="font-ui mt-1 inline-flex items-center gap-1 text-[10px]"
+                        className="font-ui mt-1 inline-flex items-center gap-1 text-xs"
                         style={{ color: 'var(--gb-muted)' }}
                       >
                         <BookOpen className="h-3 w-3" /> Читать

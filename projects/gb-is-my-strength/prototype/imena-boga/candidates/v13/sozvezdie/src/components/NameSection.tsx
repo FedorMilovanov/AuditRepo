@@ -128,7 +128,7 @@ function NameSection({
         {/* header */}
         <Reveal>
           <div
-            className={`flex items-center gap-4 font-ui text-[10px] font-medium uppercase tracking-[0.4em] text-gold-400/90`}
+            className={`flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.4em] text-gold-400/90`}
           >
             <span>Раздел {num} / {NAMES.length}</span>
             <span className="hairline flex-1" />
@@ -170,7 +170,7 @@ function NameSection({
               </p>
               <div className={`mt-6 flex items-center gap-3 ${flip ? "lg:justify-end" : ""}`}>
                 <span className="h-px w-8 bg-gold-500/50" />
-                <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-gold-400">
+                <p className="font-ui text-xs uppercase tracking-[0.3em] text-gold-400">
                   {name.meaning}
                 </p>
               </div>
@@ -180,7 +180,7 @@ function NameSection({
               {counterpartId && (
                 <a
                   href={`/imena-boga/atlas/#name-${encodeURIComponent(counterpartId)}`}
-                  className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-500/35 bg-gold-500/[0.07] px-4 py-2 font-ui text-[10px] uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/70 hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-500/35 bg-gold-500/[0.07] px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/70 hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
                   aria-label={`Перейти к соответствующему разделу «${name.translit}» в Астролябии`}
                 >
                   <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
@@ -192,7 +192,7 @@ function NameSection({
                 <button
                   type="button"
                   onClick={copyLink}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-800/60 px-4 font-ui text-[9px] uppercase tracking-[0.2em] text-cream-500 transition-all hover:border-gold-500/45 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-800/60 px-4 font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-all hover:border-gold-500/45 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
                   aria-label={`Скопировать ссылку на ${name.translit}`}
                   aria-live="polite"
                 >
@@ -203,7 +203,7 @@ function NameSection({
                   <button
                     type="button"
                     onClick={share}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-800/60 px-4 font-ui text-[9px] uppercase tracking-[0.2em] text-cream-500 transition-all hover:border-gold-500/45 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cream-800/60 px-4 font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-all hover:border-gold-500/45 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
                     aria-label={`Поделиться разделом ${name.translit}`}
                   >
                     <Share2 className="h-3.5 w-3.5" />
@@ -214,7 +214,7 @@ function NameSection({
                   type="button"
                   onClick={() => onToggleComplete(name.id)}
                   aria-pressed={completed}
-                  className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 font-ui text-[9px] uppercase tracking-[0.2em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 ${
+                  className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 font-ui text-xs uppercase tracking-[0.2em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 ${
                     completed
                       ? "border-gold-400/70 bg-gold-500/15 text-gold-200 shadow-[0_0_22px_-6px_rgba(212,175,55,0.65)]"
                       : "border-cream-800/60 text-cream-500 hover:border-gold-500/45 hover:text-gold-300"
@@ -251,13 +251,13 @@ function NameSection({
                     «{name.verse.text}»
                   </p>
                   <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                    <p className="font-ui text-[11px] font-medium uppercase tracking-[0.35em] text-gold-400">
+                    <p className="font-ui text-xs font-medium uppercase tracking-[0.35em] text-gold-400">
                       — {name.verse.ref}
                     </p>
                     <button
                       type="button"
                       onClick={copyVerse}
-                      className="relative z-10 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gold-500/25 px-3 py-1.5 font-ui text-[8.5px] uppercase tracking-[0.2em] text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+                      className="relative z-10 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gold-500/25 px-3 py-1.5 font-ui text-xs uppercase tracking-[0.2em] text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
                       aria-label={`Скопировать стих ${name.verse.ref}`}
                     >
                       <Copy className="h-3 w-3" strokeWidth={1.5} />
@@ -276,7 +276,7 @@ function NameSection({
                   <Reveal key={f.label} delay={0.1 + i * 0.08} className="h-full">
                     <div className="h-full">
                       <Icon className="h-4 w-4 text-gold-500/80" strokeWidth={1.5} />
-                      <p className="mt-3 font-ui text-[9px] uppercase tracking-[0.25em] text-cream-700">
+                      <p className="mt-3 font-ui text-xs uppercase tracking-[0.25em] text-cream-700">
                         {f.label}
                       </p>
                       <p className="mt-1 font-body text-[15px] leading-snug text-cream-300">
@@ -294,7 +294,7 @@ function NameSection({
             {related.length > 0 && (
               <Reveal delay={0.1}>
                 <div className="mt-10 border-t border-gold-500/15 pt-6">
-                  <p className="font-ui text-[9px] font-medium uppercase tracking-[0.35em] text-cream-700">
+                  <p className="font-ui text-xs font-medium uppercase tracking-[0.35em] text-cream-700">
                     {name.id === "yhwh" ? "Имя ЯХВЕ в контексте: «Я есмь» и связанные выражения" : "Связанные темы"}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -312,7 +312,7 @@ function NameSection({
                         >
                           {r.hebrew}
                         </span>
-                        <span className="font-ui text-[9px] uppercase tracking-[0.2em] text-cream-500 transition-colors group-hover:text-cream-200">
+                        <span className="font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-colors group-hover:text-cream-200">
                           {r.translit}
                         </span>
                         <ArrowRight className="h-3 w-3 text-cream-800 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-gold-400" strokeWidth={1.5} />
@@ -336,7 +336,7 @@ function NameSection({
             >
               <ArrowLeft className="h-4 w-4 shrink-0 text-cream-700 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-gold-300" strokeWidth={1.5} />
               <span>
-                <span className="block font-ui text-[9px] uppercase tracking-[0.3em] text-cream-700 transition-colors group-hover:text-gold-500">
+                <span className="block font-ui text-xs uppercase tracking-[0.3em] text-cream-700 transition-colors group-hover:text-gold-500">
                   Предыдущее
                 </span>
                 <span className="mt-1 block font-display text-lg italic leading-tight text-cream-300 transition-colors group-hover:text-gold-200">
@@ -355,7 +355,7 @@ function NameSection({
               aria-label={`Следующее имя: ${next.translit}`}
             >
               <span>
-                <span className="block font-ui text-[9px] uppercase tracking-[0.3em] text-cream-700 transition-colors group-hover:text-gold-500">
+                <span className="block font-ui text-xs uppercase tracking-[0.3em] text-cream-700 transition-colors group-hover:text-gold-500">
                   Следующее
                 </span>
                 <span className="mt-1 block font-display text-lg italic leading-tight text-cream-300 transition-colors group-hover:text-gold-200">

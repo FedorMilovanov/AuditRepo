@@ -261,28 +261,28 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
       >
         {/* Top Modal Header */}
         <div
-          className="flex items-center justify-between gap-2 border-b px-4 py-3.5 sm:px-8 sm:py-4"
+          className="flex flex-col gap-3 border-b px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-4"
           style={{
             backgroundColor: 'var(--gb-bg)',
             borderColor: 'var(--gb-border)',
           }}
         >
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
             <span
-              className="font-ui inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold tracking-wider uppercase"
+              className="font-ui inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-bold tracking-wide uppercase"
               style={{
                 backgroundColor: 'var(--gb-accent-soft)',
                 color: 'var(--gb-accent)',
               }}
             >
               <Sparkles className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-              Позиция {entry.number} из {allNames.length}
+              Позиция {entry.number}/{allNames.length}
             </span>
 
             <button
               type="button"
               onClick={() => onToggleStudied(entry.id)}
-              className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-medium transition-colors"
+              className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1 text-xs font-medium transition-colors"
               style={{
                 backgroundColor: isStudied ? 'rgba(42, 107, 74, 0.12)' : 'var(--gb-surface)',
                 borderColor: isStudied ? '#2a6b4a' : 'var(--gb-border-strong)',
@@ -295,12 +295,12 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex w-full items-center justify-end gap-2 sm:w-auto">
             {hasSpeechSupport && (
               <button
                 type="button"
                 onClick={handleToggleSpeech}
-                className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+                className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
                 style={{
                   borderColor: speaking ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
                   backgroundColor: speaking ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
@@ -316,7 +316,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <button
               type="button"
               onClick={handleCopy}
-              className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
@@ -331,14 +331,14 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
                 color: 'var(--gb-ink)',
               }}
-              title="Скопировать прямую ссылку на это Имя"
-              aria-label="Скопировать прямую ссылку на это Имя"
+              title="Скопировать прямую ссылку на эту позицию"
+              aria-label="Скопировать прямую ссылку на эту позицию"
             >
               {linkCopied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Share2 className="h-3.5 w-3.5" />}
               <span className="hidden md:inline">{linkCopied ? 'Ссылка скопирована' : 'Ссылка'}</span>
@@ -348,7 +348,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
-              className="cursor-pointer rounded-full border p-2 transition-colors hover:opacity-80"
+              className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors hover:opacity-80"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
@@ -394,13 +394,20 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 dir={entry.language === 'greek' ? 'ltr' : 'rtl'}
                 className={`${
                   entry.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                } relative z-10 block w-full min-w-0 break-words text-[clamp(1.5rem,6vw,3.75rem)] font-bold leading-snug [overflow-wrap:anywhere]`}
+                } relative z-10 block w-full min-w-0 break-words text-[clamp(1.125rem,5vw,3.75rem)] font-bold leading-snug ${entry.language === 'greek' ? '[overflow-wrap:normal]' : '[overflow-wrap:anywhere]'}`}
                 style={{
                   color: 'var(--gb-ink)',
                   textShadow: '0 0 28px var(--gb-gold-glow)',
                 }}
               >
-                {entry.original}
+                {entry.language === 'greek'
+                  ? entry.original.replace(/(τὸ|Τὸ|ὁ|ἡ|τοῦ|τῶν)\s+/gu, '$1\u00A0').trim().split(/[ \t\r\n]+/u).map((word, index) => (
+                      <React.Fragment key={index}>
+                        {index > 0 ? ' ' : null}
+                        <span className="inline-block whitespace-nowrap">{word}</span>
+                      </React.Fragment>
+                    ))
+                  : entry.original}
               </div>
 
               <h2
@@ -408,7 +415,9 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 className="font-serif-display relative z-10 mt-3 text-2xl sm:text-3xl font-bold"
                 style={{ color: 'var(--gb-ink)' }}
               >
-                {entry.transliteration}
+                {entry.language === 'greek'
+                  ? entry.transliteration.replace(/(то|То)\s+/gu, '$1\u00A0')
+                  : entry.transliteration}
               </h2>
               <p
                 className="font-serif-display relative z-10 mt-1 text-lg sm:text-xl italic font-semibold"

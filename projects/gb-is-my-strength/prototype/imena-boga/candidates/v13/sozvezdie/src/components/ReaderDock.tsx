@@ -62,14 +62,14 @@ function ProgressRing({
           strokeWidth="2" strokeLinecap="round" style={{ pathLength: progress }}
         />
       </svg>
-      <span className="absolute font-ui text-[8px] tabular-nums text-gold-300" aria-hidden="true">
+      <span className="absolute font-ui text-xs tabular-nums text-gold-300" aria-hidden="true">
         {expanded ? <X className="h-3 w-3 sm:hidden" /> : null}
         <span className={expanded ? "hidden sm:inline" : ""}>{pct}</span>
       </span>
       {completedCount > 0 && (
         <span
           aria-hidden="true"
-          className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 font-ui text-[7px] font-semibold tabular-nums text-ink-950 shadow-[0_0_10px_rgba(212,175,55,0.55)]"
+          className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold-500 px-1 font-ui text-xs font-semibold tabular-nums text-ink-950 shadow-[0_0_10px_rgba(212,175,55,0.55)]"
         >
           {completedCount}
         </span>
@@ -185,8 +185,8 @@ export default function ReaderDock({
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         data-reader-dock
         data-idle={scrolling && !expanded ? "false" : "true"}
-        className={`fixed bottom-[5.2rem] right-3 z-40 flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950/85 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] backdrop-blur-md transition-all duration-500 xl:bottom-5 xl:right-5 xl:flex-col xl:gap-1 xl:py-2 ${
-          scrolling && !expanded ? "scale-90 opacity-25" : "scale-100 opacity-100"
+        className={`fixed bottom-[5.2rem] right-3 z-40 flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] backdrop-blur-md transition-all duration-500 xl:bottom-5 xl:right-5 xl:flex-col xl:gap-1 xl:py-2 ${
+          scrolling && !expanded ? "scale-90 opacity-0 pointer-events-none" : "scale-100 opacity-100"
         }`}
         role="toolbar"
         aria-label="Настройки чтения"
@@ -284,12 +284,12 @@ export default function ReaderDock({
             role="region"
             aria-label="Горячие клавиши"
           >
-            <p className="font-ui text-[9px] uppercase tracking-[0.35em] text-gold-400">Горячие клавиши</p>
+            <p className="font-ui text-xs uppercase tracking-[0.35em] text-gold-400">Горячие клавиши</p>
             <dl className="mt-4 space-y-2.5">
               {SHORTCUTS.map(([key, label]) => (
                 <div key={key} className="flex items-center justify-between gap-4">
                   <dt>
-                    <kbd className="rounded border border-cream-800/80 bg-ink-900 px-1.5 py-0.5 font-ui text-[10px] text-gold-300">{key}</kbd>
+                    <kbd className="rounded border border-cream-800/80 bg-ink-900 px-1.5 py-0.5 font-ui text-xs text-gold-300">{key}</kbd>
                   </dt>
                   <dd className="text-right font-body text-sm text-cream-300">{label}</dd>
                 </div>

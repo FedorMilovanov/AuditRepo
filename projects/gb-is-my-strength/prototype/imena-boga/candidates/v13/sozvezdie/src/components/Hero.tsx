@@ -75,7 +75,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
     <section
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-44 pt-24 sm:pb-36 sm:pt-20"
     >
       {/* atmosphere */}
       {/* A real image request gets native decoding and LCP priority, unlike a
@@ -128,7 +128,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
           initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease }}
-          className="font-ui text-[11px] font-medium uppercase tracking-[0.45em] text-cream-500"
+          className="font-ui text-xs font-medium uppercase tracking-[0.45em] text-cream-500"
         >
           Господь Бог — Сила Моя · Богословская библиотека
         </motion.p>
@@ -167,7 +167,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
           initial={shouldAnimate ? { opacity: 0 } : false}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 1.5 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-3 font-ui text-[10px] uppercase tracking-[0.25em] text-cream-300 md:mt-12 md:gap-6"
+          className="mt-8 flex flex-wrap items-center justify-center gap-3 font-ui text-xs uppercase tracking-[0.25em] text-cream-300 md:mt-12 md:gap-6"
         >
           {[`${NAMES.length} именований и выражений`, "4 части", "Писание и контекст"].map((s, i) => (
             <span key={s} className="flex items-center gap-3 md:gap-6">
@@ -178,7 +178,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         </motion.div>
         <a
           href="/imena-boga/atlas/"
-          className="relative z-20 mt-7 inline-flex max-w-[90vw] items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-ink-900/85 px-4 py-2 text-center font-ui text-[10px] uppercase tracking-[0.14em] text-gold-300 shadow-lg backdrop-blur-md transition-colors hover:border-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300 sm:text-xs"
+          className="relative z-20 mt-7 inline-flex max-w-[90vw] items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-ink-900/85 px-4 py-2 text-center font-ui text-xs uppercase tracking-[0.14em] text-gold-300 shadow-lg backdrop-blur-md transition-colors hover:border-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300 sm:text-xs"
           aria-label="Открыть второй флагман — интерактивную астролябию с 36 исследуемыми позициями"
         >
           <span aria-hidden="true">✦</span> Второй флагман: астролябия и атлас 36 позиций →
@@ -201,7 +201,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         className="group absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3"
         aria-label="Перейти к введению"
       >
-        <span className="font-ui text-[10px] uppercase tracking-[0.4em] text-cream-500 transition-colors group-hover:text-gold-300">
+        <span className="font-ui text-xs uppercase tracking-[0.4em] text-cream-500 transition-colors group-hover:text-gold-300">
           Читать
         </span>
         <span className="relative h-12 w-px overflow-hidden bg-cream-700/40">

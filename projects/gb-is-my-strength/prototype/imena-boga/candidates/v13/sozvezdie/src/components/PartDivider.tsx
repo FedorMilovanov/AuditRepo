@@ -59,8 +59,8 @@ export default function PartDivider({ numeral, title, desc, entries, onSelect }:
                   >
                     {entry.hebrew}
                   </span>
-                  <span className="mx-2 text-[10px] text-cream-700">·</span>
-                  <span className="font-ui text-[9px] uppercase tracking-[0.2em] text-cream-500 transition-colors duration-300 group-hover:text-cream-300">
+                  <span className="mx-2 text-xs text-cream-700">·</span>
+                  <span className="font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-colors duration-300 group-hover:text-cream-300">
                     {entry.translit}
                   </span>
                 </button>

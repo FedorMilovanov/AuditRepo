@@ -74,7 +74,7 @@ export default function Toast({ toast }: { toast: ToastMessage | null }) {
                 {gold ? <Sparkles className="h-3.5 w-3.5" /> : <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
               </span>
               <span className="flex flex-col">
-                <span className={`font-ui text-[10px] font-medium uppercase tracking-[0.22em] ${gold ? "text-gold-200" : "text-cream-100"}`}>
+                <span className={`font-ui text-xs font-medium uppercase tracking-[0.22em] ${gold ? "text-gold-200" : "text-cream-100"}`}>
                   {toast.text}
                 </span>
                 {toast.sub && <span className="font-body text-sm italic text-cream-500">{toast.sub}</span>}

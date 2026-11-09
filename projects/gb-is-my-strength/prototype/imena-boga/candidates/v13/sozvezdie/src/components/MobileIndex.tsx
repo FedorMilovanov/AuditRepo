@@ -91,15 +91,15 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
         }}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="fixed left-1/2 z-40 flex min-h-11 max-w-[calc(100vw-2rem)] min-w-0 -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/40 bg-ink-900/95 px-4 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md transition-colors hover:border-gold-300/65 motion-safe:active:scale-[0.98] motion-reduce:transition-none xl:hidden"
+        className="fixed left-1/2 z-40 flex min-h-11 max-w-[calc(100vw-2rem)] min-w-0 -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/40 bg-ink-950 px-4 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.7)] transition-colors hover:border-gold-300/65 motion-safe:active:scale-[0.98] motion-reduce:transition-none xl:hidden"
         style={{ bottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))" }}
         aria-label="Открыть список имён"
       >
         <List className="h-4 w-4 shrink-0 text-gold-300" strokeWidth={1.5} />
-        <span className="font-ui min-w-0 break-words text-center text-[11px] font-medium uppercase leading-snug tracking-[0.15em] text-cream-200">
-          {current ? current.translit : "Все имена"}
+        <span className="font-ui min-w-0 break-words text-center text-xs font-medium uppercase leading-snug tracking-[0.15em] text-cream-200">
+          {current ? current.translit : "Разделы"}
         </span>
-        <span className="shrink-0 font-hebrew text-[11px] text-cream-500">
+        <span className="shrink-0 font-hebrew text-xs text-cream-500">
           {idx >= 0 ? `${String(idx + 1).padStart(2, "0")}/${NAMES.length}` : ""}
         </span>
       </button>}
@@ -126,13 +126,13 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
             transition={{ duration: reducedMotion ? 0 : 0.24 }}
             role="dialog"
             aria-modal="true"
-            aria-label="Указатель имен Бога"
+            aria-label="Указатель библейских выражений"
             className="fixed inset-0 z-50 flex flex-col bg-ink-950/96 backdrop-blur-xl xl:hidden"
           >
             <div className="flex min-w-0 items-center justify-between gap-3 px-5 pt-6 sm:px-6"
               style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top, 0px))" }}>
-              <p className="font-ui min-w-0 text-[11px] font-medium uppercase leading-relaxed tracking-[0.2em] text-gold-300">
-                Указатель имён и титулов
+              <p className="font-ui min-w-0 text-xs font-medium uppercase leading-relaxed tracking-[0.2em] text-gold-300">
+                Указатель библейских выражений
               </p>
               <button
                 ref={closeRef}
@@ -152,7 +152,7 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
             <div className="flex-1 overscroll-contain overflow-y-auto px-5 pb-24 pt-5 sm:px-6 sm:pt-6">
               {PARTS.map((part, pi) => (
                 <div key={part.id} className="mb-8">
-                  <p className="flex items-center gap-3 font-ui text-[10px] font-medium uppercase tracking-[0.2em] text-cream-400">
+                  <p className="flex items-center gap-3 font-ui text-xs font-medium uppercase tracking-[0.2em] text-cream-400">
                     <span className="font-display text-base italic text-gold-500/80">
                       {part.numeral}
                     </span>

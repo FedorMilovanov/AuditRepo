@@ -43,7 +43,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
           >
             שְׁמוֹת
           </span>
-          <p className="mt-3 font-ui text-[10px] uppercase tracking-[0.4em] text-cream-500">
+          <p className="mt-3 font-ui text-xs uppercase tracking-[0.4em] text-cream-500">
             Шмот — «Имена» (ивритское название книги Исход)
           </p>
         </Reveal>
@@ -88,17 +88,17 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
               </svg>
               <span className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="font-display text-2xl font-semibold leading-none text-gold-200">{completedCount}</span>
-                <span className="font-ui text-[8px] tracking-[0.2em] text-cream-500">из {total}</span>
+                <span className="font-ui text-xs tracking-[0.2em] text-cream-500">из {total}</span>
               </span>
             </div>
-            <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-cream-300">
+            <p className="font-ui text-xs uppercase tracking-[0.3em] text-cream-300">
               {done ? "Путь пройден целиком" : completedCount === 0 ? "Ваш путь по именам" : "Изучено на этом устройстве"}
             </p>
             {!done && nextUnread && (
               <button
                 type="button"
                 onClick={() => onSelect(nextUnread.id)}
-                className="group inline-flex items-center gap-2 rounded-full border border-gold-500/35 px-5 py-2.5 font-ui text-[9px] uppercase tracking-[0.22em] text-gold-300 transition-all hover:border-gold-400/70 hover:bg-gold-500/10"
+                className="group inline-flex items-center gap-2 rounded-full border border-gold-500/35 px-5 py-2.5 font-ui text-xs uppercase tracking-[0.22em] text-gold-300 transition-all hover:border-gold-400/70 hover:bg-gold-500/10"
               >
                 {completedCount === 0 ? "Начать с" : "Следующее неизученное"} · {nextUnread.translit}
                 <span className="transition-transform group-hover:translate-x-0.5">→</span>
@@ -114,7 +114,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
         {/* further reading from the library */}
         <Reveal delay={0.4}>
           <div className="mt-14 text-left">
-            <p className="text-center font-ui text-[10px] font-medium uppercase tracking-[0.4em] text-cream-500">
+            <p className="text-center font-ui text-xs font-medium uppercase tracking-[0.4em] text-cream-500">
               Читать дальше в библиотеке
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -145,7 +145,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
         <Reveal delay={0.45}>
           <a
             href="https://gospod-bog.ru"
-            className="group mt-12 inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/70 px-8 py-4 font-ui text-[11px] font-medium uppercase tracking-[0.3em] text-gold-300 transition-all duration-300 hover:border-gold-400/60 hover:bg-ink-800 hover:shadow-[0_0_40px_rgba(212,175,55,0.18)]"
+            className="group mt-12 inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/70 px-8 py-4 font-ui text-xs font-medium uppercase tracking-[0.3em] text-gold-300 transition-all duration-300 hover:border-gold-400/60 hover:bg-ink-800 hover:shadow-[0_0_40px_rgba(212,175,55,0.18)]"
           >
             <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={1.5} />
             Вернуться в библиотеку
@@ -153,7 +153,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
         </Reveal>
 
         <Reveal delay={0.5}>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 font-ui text-[11px] tracking-[0.15em] text-cream-500 sm:flex-row">
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 font-ui text-xs tracking-[0.15em] text-cream-500 sm:flex-row">
             <a
               href="mailto:viktorcoy2012@gmail.com"
               className="inline-flex items-center gap-2 transition-colors hover:text-gold-300"
@@ -175,7 +175,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
         </Reveal>
 
         <Reveal delay={0.55}>
-          <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream-800/40 pt-8 font-ui text-[10px] uppercase tracking-[0.25em] text-cream-700 md:flex-row">
+          <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream-800/40 pt-8 font-ui text-xs uppercase tracking-[0.25em] text-cream-700 md:flex-row">
             <span>Господь Бог — Сила Моя</span>
             <span>Библиотека Фёдора Милованова</span>
             <span>© 2026 · Изучайте медленно</span>

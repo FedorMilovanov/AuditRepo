@@ -136,7 +136,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
     >
       <div className="mx-auto max-w-3xl text-center">
         <Reveal>
-          <p className="flex items-center justify-center gap-4 font-ui text-[10px] font-medium uppercase tracking-[0.45em] text-gold-400">
+          <p className="flex items-center justify-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.45em] text-gold-400">
             <span className="hairline w-10" />
             Имя в центре
             <span className="hairline w-10" />
@@ -249,7 +249,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           <span dir="rtl" lang="he" className="glow-gold font-hebrew text-4xl font-medium leading-none text-gold-200 lg:text-5xl">
             יהוה
           </span>
-          <span data-orbit-center-caption className="mt-1.5 font-ui text-[11px] uppercase tracking-[0.18em] text-cream-300">ЯХВЕ</span>
+          <span data-orbit-center-caption className="mt-1.5 font-ui text-xs uppercase tracking-[0.18em] text-cream-300">ЯХВЕ</span>
         </motion.button>
 
         {NODES.map((node, i) => {
@@ -302,7 +302,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
               </span>
               <span
                 data-scene-caption
-                className={`relative z-10 mt-0.5 max-w-[112px] break-words rounded-sm bg-ink-950 px-2 py-0.5 font-ui text-[9px] uppercase leading-tight tracking-[0.1em] shadow-[0_0_9px_4px_rgba(10,9,7,0.78)] transition-colors ${
+                className={`relative z-10 mt-0.5 max-w-[112px] break-words rounded-sm bg-ink-950 px-2 py-0.5 font-ui text-xs uppercase leading-tight tracking-[0.1em] shadow-[0_0_9px_4px_rgba(10,9,7,0.78)] transition-colors ${
                   lit ? "text-cream-50" : "text-cream-300"
                 }`}
               >
@@ -313,7 +313,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         })}
       </div>
 
-      <p className="mx-auto mt-2 hidden max-w-[660px] text-center font-ui text-[10px] tracking-[0.1em] text-cream-500 md:block">
+      <p className="mx-auto mt-2 hidden max-w-[660px] text-center font-ui text-xs tracking-[0.1em] text-cream-500 md:block">
         Иллюстрация имён · потяните узел мышью — связи мягко последуют за ним
       </p>
 
@@ -323,7 +323,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           <span aria-hidden="true" className="pointer-events-none absolute -left-16 -top-24 h-48 w-48 rounded-full bg-gold-400/10 blur-[58px]" />
           <div className="relative flex items-center gap-5">
             <div className="min-w-0 flex-1">
-              <p className="font-ui text-[10px] uppercase tracking-[0.25em] text-gold-500">Фокус созвездия · Tab / ← → / Enter</p>
+              <p className="font-ui text-xs uppercase tracking-[0.25em] text-gold-500">Фокус созвездия · Tab / ← → / Enter</p>
               <p className="mt-1 font-display text-[27px] italic leading-tight text-cream-50" aria-live="polite">{selected.translit}</p>
               <p className="mt-1 font-body text-base leading-snug text-cream-300">{selected.russian} <span className="text-cream-700">·</span> {selected.verse.ref}</p>
             </div>
@@ -332,7 +332,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
               <button
                 type="button"
                 onClick={() => onSelect(selected.id)}
-                className="rounded-full border border-gold-400/55 px-4 py-1.5 font-ui text-[10px] font-medium uppercase tracking-[0.13em] text-gold-200 transition-colors hover:border-gold-200 hover:bg-gold-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-300"
+                className="rounded-full border border-gold-400/55 px-4 py-1.5 font-ui text-xs font-medium uppercase tracking-[0.13em] text-gold-200 transition-colors hover:border-gold-200 hover:bg-gold-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-300"
                 aria-label={`Открыть исследование: ${selected.translit}`}
               >
                 {selectedIsCurrent ? "К разделу" : "Изучить имя"} <span aria-hidden="true">↗</span>
@@ -367,7 +367,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
             <span lang="he" dir="rtl" className="font-hebrew text-[21px] text-gold-200">יהוה</span>
           </div>
         </div>
-        <p className="mt-1 text-center font-ui text-[9px] uppercase tracking-[0.19em] text-cream-500">Имена в библейском повествовании</p>
+        <p className="mt-1 text-center font-ui text-xs uppercase tracking-[0.19em] text-cream-500">Имена в библейском повествовании</p>
       </div>
 
       {/* ─────────── branch list · phones ─────────── */}
@@ -384,7 +384,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
             יהוה
           </span>
           <span className="min-w-0">
-            <span className="block font-ui text-[8px] uppercase tracking-[0.3em] text-gold-500">Центральное имя Писания</span>
+            <span className="block font-ui text-xs uppercase tracking-[0.3em] text-gold-500">Центральное имя Писания</span>
             <span className="mt-1 block font-display text-2xl font-semibold italic text-cream-50">ЯХВЕ</span>
             <span className="block font-body text-sm text-cream-500">Сущий · Господь Завета</span>
           </span>
@@ -394,7 +394,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         {/* the "I AM" thread */}
         <div className="relative mt-2 pl-7">
           <span aria-hidden className="absolute bottom-4 left-[11px] top-0 w-px bg-gradient-to-b from-gold-400/70 via-gold-600/40 to-transparent" />
-          <p className="relative pt-5 font-ui text-[8.5px] uppercase tracking-[0.3em] text-gold-500">
+          <p className="relative pt-5 font-ui text-xs uppercase tracking-[0.3em] text-gold-500">
             <span aria-hidden className="absolute -left-7 top-[26px] h-1.5 w-1.5 translate-x-[8px] rotate-45 bg-gold-400" />
             Нить «Я есмь»
           </p>
@@ -420,7 +420,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
                     <span className="block font-display text-lg italic leading-tight text-cream-100">{n.translit}</span>
                     <span className="block font-body text-sm leading-tight text-cream-500">{n.russian}</span>
                   </span>
-                  <span className="shrink-0 font-ui text-[8px] uppercase tracking-[0.14em] text-gold-600">{ref}</span>
+                  <span className="shrink-0 font-ui text-xs uppercase tracking-[0.14em] text-gold-600">{ref}</span>
                   {completedIds.has(id) && <Check className="h-3.5 w-3.5 shrink-0 text-gold-400" strokeWidth={2.5} />}
                 </button>
               );
@@ -428,7 +428,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           </div>
 
           {/* Nine expressions containing YHWH, not nine independent proper divine names. */}
-          <p className="relative pt-7 font-ui text-[8.5px] uppercase tracking-[0.3em] text-gold-500">
+          <p className="relative pt-7 font-ui text-xs uppercase tracking-[0.3em] text-gold-500">
             <span aria-hidden className="absolute -left-7 top-[34px] h-1.5 w-1.5 translate-x-[8px] rotate-45 bg-gold-400" />
             Девять выражений с ЯХВЕ
           </p>
@@ -462,7 +462,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         </div>
       </div>
 
-      <p className="mx-auto mt-8 max-w-md text-center font-ui text-[9px] uppercase leading-relaxed tracking-[0.28em] text-cream-700">
+      <p className="mx-auto mt-8 max-w-md text-center font-ui text-xs uppercase leading-relaxed tracking-[0.28em] text-cream-700">
         <span className="mr-2 inline-block h-px w-6 translate-y-[-3px] border-t border-dashed border-gold-500" />
         нить «Я есмь» · Исх 3:14 → Ин 8:58 → Мф 1:23
       </p>

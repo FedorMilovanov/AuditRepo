@@ -42,7 +42,7 @@ function RailItem({
       aria-current={active ? "true" : undefined}
       className={`group relative flex w-full items-center gap-3 rounded-lg px-2 py-1.5 transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
         side === "left" ? "flex-row-reverse" : ""
-      } ${active ? "bg-gold-500/[0.08]" : "hover:bg-gold-500/[0.05]"}`}
+      } ${active ? "bg-gold-500/[0.14] ring-1 ring-inset ring-gold-500/35" : "hover:bg-gold-500/[0.05]"}`}
     >
       {/* diamond marker */}
       <span
@@ -56,18 +56,18 @@ function RailItem({
       />
       <span className={`flex min-w-0 flex-col ${side === "left" ? "items-end" : "items-start"}`}>
         <span
-          className={`font-hebrew text-[11px] leading-none transition-all duration-500 ${
+          className={`font-hebrew text-xs leading-none transition-all duration-500 ${
             active ? "text-gold-300/80" : passed ? "text-cream-400/80" : "text-cream-400/80 group-hover:text-cream-200"
           }`}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
         <span
-          className={`flex max-w-full items-center gap-1.5 font-ui text-[11px] uppercase tracking-[0.12em] transition-all duration-500 ${
+          className={`flex max-w-full items-center gap-1.5 font-ui text-xs uppercase tracking-[0.12em] transition-all duration-500 ${
             active
               ? "glow-gold text-gold-200"
               : passed
-                ? "text-cream-300/80"
+                ? "text-cream-300"
                 : "text-cream-300/80 group-hover:text-cream-100"
           } ${side === "left" ? "flex-row-reverse" : ""}`}
         >
@@ -135,7 +135,7 @@ export default function Rails({ active, completedIds, wide, onSelect }: RailsPro
         aria-label={`Указатель имён: ${title}`}
       >
         <p
-          className={`mb-4 flex items-center gap-3 font-ui text-[11px] uppercase tracking-[0.18em] text-cream-400 ${
+          className={`mb-4 flex items-center gap-3 font-ui text-xs uppercase tracking-[0.18em] text-cream-400 ${
             side === "left" ? "justify-end" : ""
           }`}
         >

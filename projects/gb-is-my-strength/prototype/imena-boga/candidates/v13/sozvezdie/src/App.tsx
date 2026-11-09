@@ -169,7 +169,7 @@ export default function App() {
     const prev = prevCompleted.current;
     prevCompleted.current = completedIds.size;
     if (prev < NAMES.length && completedIds.size === NAMES.length) {
-      notify(`Все ${NAMES.length} имён изучены`, "«Господь Бог — сила моя» · Soli Deo Gloria", "gold");
+      notify(`Все ${NAMES.length} разделов отмечены как изученные`, "«Господь Бог — сила моя» · Soli Deo Gloria", "gold");
     }
   }, [completedIds, notify]);
 
@@ -306,13 +306,13 @@ export default function App() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "border-b border-gold-500/10 bg-ink-950/85 backdrop-blur-md" : "bg-transparent"
+          scrolled ? "border-b border-gold-500/15 bg-ink-950" : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
           <a
             href="https://gospod-bog.ru"
-            className="flex min-h-11 min-w-0 shrink items-center whitespace-nowrap font-ui text-[10px] font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
+            className="flex min-h-11 min-w-0 shrink items-center whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
             Господь Бог — Сила Моя
           </a>
@@ -332,10 +332,10 @@ export default function App() {
                 {activeEntry.hebrew}
               </span>
               <span className="h-1 w-1 rotate-45 bg-gold-500/60" />
-              <span className="truncate font-ui text-[10px] uppercase tracking-[0.22em] text-cream-200 group-hover:text-gold-200">
+              <span className="truncate font-ui text-xs uppercase tracking-[0.22em] text-cream-200 group-hover:text-gold-200">
                 {activeEntry.translit}
               </span>
-              <span className="font-ui text-[9px] tabular-nums text-cream-700">
+              <span className="font-ui text-xs tabular-nums text-cream-700">
                 {String(activeIdx + 1).padStart(2, "0")}/{NAMES.length}
               </span>
             </button>
@@ -346,7 +346,7 @@ export default function App() {
           <a
             href="https://gospod-bog.ru/articles/"
             aria-label="Библиотека статей"
-            className="group flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-[10px] font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
+            className="group flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
           >
             <BookOpen className="h-4 w-4 text-gold-400 min-[400px]:hidden" strokeWidth={1.5} aria-hidden="true" />
             <span className="hidden min-[400px]:inline">Библиотека</span>
@@ -411,7 +411,7 @@ export default function App() {
               }}
               className="group flex items-center gap-3 rounded-full py-2 pl-4 pr-3 transition-colors hover:bg-gold-500/10"
             >
-              <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-cream-500">Продолжить</span>
+              <span className="font-ui text-xs uppercase tracking-[0.25em] text-cream-500">Продолжить</span>
               <span {...scriptAttrs(NAMES.find((n) => n.id === resumeId)!)} className="font-hebrew text-sm text-gold-300">
                 {NAMES.find((n) => n.id === resumeId)?.hebrew}
               </span>

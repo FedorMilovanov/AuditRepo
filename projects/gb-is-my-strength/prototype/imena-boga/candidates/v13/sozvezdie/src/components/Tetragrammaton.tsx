@@ -75,7 +75,7 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
 
   return (
     <div id="tetragrammaton" className="mt-12 scroll-mt-28 border-t border-gold-500/15 pt-8">
-      <p className="font-ui text-[9px] font-medium uppercase tracking-[0.35em] text-gold-400">
+      <p className="font-ui text-xs font-medium uppercase tracking-[0.35em] text-gold-400">
         Анатомия имени · тетраграмматон
       </p>
       <p className="mt-2 flex items-center gap-2 font-body text-sm italic text-cream-500">
@@ -125,7 +125,7 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
                   >
                     {letter.glyph}
                   </span>
-                  <span dir="ltr" className="relative mt-2 font-ui text-[8.5px] uppercase tracking-[0.2em] text-cream-200 sm:mt-3 sm:text-[9px]">
+                  <span dir="ltr" className="relative mt-2 font-ui text-xs uppercase tracking-[0.2em] text-cream-200 sm:mt-3 sm:text-xs">
                     {letter.name}
                   </span>
                   <span dir="ltr" className="relative mt-0.5 font-display text-sm italic text-gold-500">
@@ -159,7 +159,7 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
               </span>
               <span className="font-display text-xl font-semibold text-cream-100">{current.name}</span>
               {current.ref && (
-                <span className="ml-auto font-ui text-[9px] uppercase tracking-[0.25em] text-gold-500">{current.ref}</span>
+                <span className="ml-auto font-ui text-xs uppercase tracking-[0.25em] text-gold-500">{current.ref}</span>
               )}
             </p>
             <p className="mt-2 font-body text-[15.5px] leading-relaxed text-cream-300">{current.note}</p>
@@ -167,14 +167,14 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
         </AnimatePresence>
       </div>
 
-      <p className="mt-3 text-right font-ui text-[9px] uppercase tracking-[0.18em] text-cream-700">
+      <p className="mt-3 text-right font-ui text-xs uppercase tracking-[0.18em] text-cream-700">
         числовые значения букв в традиционной системе счёта · {sum}
       </p>
       <p className="mt-2 font-body text-xs leading-relaxed text-cream-600">
         Эти числовые значения не являются самостоятельным богословским толкованием имени и не служат основанием для скрытых пророческих смыслов.
       </p>
 
-      <p className="mt-9 font-ui text-[9px] font-medium uppercase tracking-[0.35em] text-cream-500">
+      <p className="mt-9 font-ui text-xs font-medium uppercase tracking-[0.35em] text-cream-500">
         Как имя дошло до русского текста
       </p>
       <ol className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -187,7 +187,7 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
             transition={{ duration: 0.6, delay: 0.1 + i * 0.12 }}
             className="relative rounded-xl border border-cream-800/50 bg-ink-900/40 px-3 py-4 text-center"
           >
-            <span className="absolute left-2 top-1.5 font-ui text-[8px] text-cream-700">{i + 1}</span>
+            <span className="absolute left-2 top-1.5 font-ui text-xs text-cream-700">{i + 1}</span>
             <span
               lang={step.he ? "he" : undefined}
               dir={step.he ? "rtl" : undefined}
@@ -195,7 +195,7 @@ export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
             >
               {step.value}
             </span>
-            <span className="mt-1.5 block font-ui text-[8.5px] uppercase tracking-[0.18em] text-cream-300">{step.label}</span>
+            <span className="mt-1.5 block font-ui text-xs uppercase tracking-[0.18em] text-cream-300">{step.label}</span>
             <span className="mt-0.5 block font-body text-xs italic text-cream-500">{step.sub}</span>
           </motion.li>
         ))}

@@ -325,7 +325,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
               style={{ color: 'var(--gb-accent)' }}
             >
               <Cross className="h-3.5 w-3.5" />
-              <span>Исполнение во Христе Иисусе</span>
+              <span>Христианское прочтение во свете Христа</span>
             </div>
             <p className="font-body-editorial text-[15px] leading-relaxed" style={{ color: 'var(--gb-ink)' }}>
               {entry.christologicalFulfillment}
@@ -357,14 +357,14 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
 
         {/* Bottom Interactive Action Strip */}
         <div
-          className="no-print relative z-10 mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4"
+          data-atlas-card-actions className="no-print relative z-10 mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4"
           style={{ borderColor: 'var(--gb-border)' }}
         >
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => onToggleExpand(entry.id)}
-              className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors hover:opacity-85"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-bg)',
@@ -387,13 +387,13 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             <button
               type="button"
               onClick={() => onToggleStudied(entry.id)}
-              className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors hover:opacity-85"
               style={{
                 borderColor: isStudied ? '#2a6b4a' : 'var(--gb-border-strong)',
                 backgroundColor: isStudied ? 'rgba(42, 107, 74, 0.12)' : 'var(--gb-bg)',
                 color: isStudied ? '#2a6b4a' : 'var(--gb-ink-secondary)',
               }}
-              title="Отметить это Имя как изученное"
+              title="Отметить эту позицию как изученную"
             >
               <CheckCircle2 className="h-3.5 w-3.5" />
               <span>{isStudied ? 'Изучено ✓' : 'Отметить изученным'}</span>
@@ -403,7 +403,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
           <button
             type="button"
             onClick={() => onSelect(entry)}
-            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all hover:translate-x-0.5"
+            className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all hover:translate-x-0.5"
             style={{
               backgroundColor: 'var(--gb-accent-soft)',
               color: 'var(--gb-accent)',
