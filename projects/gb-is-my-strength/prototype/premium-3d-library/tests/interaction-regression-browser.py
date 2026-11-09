@@ -13,6 +13,7 @@ import os
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 
 URL=os.environ.get("GB_LIBRARY_TEST_URL","http://127.0.0.1:8771/")
 OUT=Path(os.environ.get("GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -59,7 +60,7 @@ async def assert_modal(page):
 
 async def run_case(browser,engine,w,h,touch):
     size=f"{w}x{h}"
-    context=await browser.new_context(viewport={"width":w,"height":h},
+    context=await test_context(browser,viewport={"width":w,"height":h},
         is_mobile=touch,has_touch=touch,device_scale_factor=1,reduced_motion="reduce")
     page=await context.new_page()
     errors=[]
@@ -131,8 +132,7 @@ async def main():
     failures=[]
     async with async_playwright() as pw:
         for engine in ("chromium","webkit"):
-            browser=await getattr(pw,engine).launch(headless=True,
-                 **({"channel":"chrome"} if engine=="chromium" else {}))
+            browser = await getattr(pw,engine).launch(**launch_kwargs(engine))
             try:
                 for e,w,h,touch in CASES:
                     if e!=engine:continue

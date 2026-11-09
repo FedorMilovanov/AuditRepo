@@ -20,9 +20,11 @@ expected = {
     "reference-bay-browser.py": 5,
     "photo-transition-browser.py": 4,
     "quality-transition-browser.py": 4,
+    "cabinet-persistence-browser.py": 2,
+    "webgl-recovery-browser.py": 6,
 }
 assert dict(module.TESTS) == expected
-assert sum(expected.values()) == 39
+assert sum(expected.values()) == 47
 assert len(set(module.EVIDENCE_VARIABLES.values())) == len(expected)
 assert set(module.EVIDENCE_VARIABLES) == set(expected)
 
@@ -114,4 +116,4 @@ except (AssertionError, ValueError):
 else:
     raise AssertionError("Malformed JSON was silently ignored")
 
-print("BROWSER_CI_CONTRACT_PASS: seven suites, 39 cases; fails on missing/SKIP/errors/bad quality direction/malformed JSON")
+print("BROWSER_CI_CONTRACT_PASS: nine suites, 47 cases; fails on missing/SKIP/errors/bad quality direction/malformed JSON")

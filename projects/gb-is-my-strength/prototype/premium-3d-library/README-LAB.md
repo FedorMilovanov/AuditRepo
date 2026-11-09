@@ -17,8 +17,8 @@ remains slow in some WebKit cases.
 
 On changes to this lab, the existing required AuditRepo Validate workflow now
 runs five Node lab checks, strict TypeScript, a production Vite build,
-the 20-rib geometric equivalence test and the source-owned seven-suite
-39-case Playwright journey gate. **The new Linux workflow must prove
+the 20-rib geometric equivalence test and the source-owned nine-suite
+47-case Playwright journey gate. **The new Linux workflow must prove
 its own success on the current GitHub HEAD; do not infer PASS from older
 preflight runs.** No branch or automatic Product release is involved.
 

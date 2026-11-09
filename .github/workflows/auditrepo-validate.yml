@@ -243,14 +243,15 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --disable-pip-version-check 'playwright==1.62.0'
-          python3 -m playwright install --with-deps chrome webkit
+          python3 -m playwright install --with-deps chromium webkit
 
-      - name: Premium 3D Library public browser regression (39 cases)
+      - name: Premium 3D Library public browser regression (47 cases)
         if: env.RUN_GB_LIBRARY == '1'
-        timeout-minutes: 35
+        timeout-minutes: 45
         shell: bash
         working-directory: projects/gb-is-my-strength/prototype/premium-3d-library
         env:
+          GB_LIBRARY_CI_SOFTWARE_GPU: '1'
           GB_LIBRARY_CI_EVIDENCE_DIR: ${{ runner.temp }}/premium3d-browser-evidence
         run: python3 scripts/run-browser-regression.py
 

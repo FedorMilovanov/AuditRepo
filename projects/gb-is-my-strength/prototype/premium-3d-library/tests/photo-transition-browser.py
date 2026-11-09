@@ -7,13 +7,14 @@ their own independent lifecycle test (quality-transition-browser.py).
 import asyncio,json,os,tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 URL=os.environ.get("GB_LIBRARY_TEST_URL","http://127.0.0.1:8771/")
 OUT=Path(os.environ.get("GB_LIBRARY_PHOTO_EVIDENCE_DIR",str(Path(tempfile.gettempdir())/"gb-library-photo-v59")))
 CASES=[("chromium",1440,900,False),("chromium",390,844,True),
        ("webkit",1440,900,False),("webkit",390,844,True)]
 
 async def run(browser,engine,w,h,touch):
-    ctx=await browser.new_context(viewport={"width":w,"height":h},device_scale_factor=1,
+    ctx=await test_context(browser,viewport={"width":w,"height":h},device_scale_factor=1,
                                   is_mobile=touch,has_touch=touch,reduced_motion="reduce")
     page=await ctx.new_page()
     errors=[]
@@ -66,8 +67,7 @@ async def run(browser,engine,w,h,touch):
 async def main():
     async with async_playwright() as pw:
         for engine in ("chromium","webkit"):
-            browser=await getattr(pw,engine).launch(headless=True,
-                **({"channel":"chrome"} if engine=="chromium" else {}))
+            browser = await getattr(pw,engine).launch(**launch_kwargs(engine))
             try:
                 for e,w,h,touch in CASES:
                     if e==engine: await run(browser,e,w,h,touch)

@@ -11,6 +11,7 @@ import re
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 OUT = Path(os.environ.get("GB_LIBRARY_QUALITY_EVIDENCE_DIR",
@@ -95,7 +96,7 @@ async def measure_once(page, engine, size, touch, attempt):
 
 async def run_case(browser, engine, width, height, touch):
     size = f"{width}x{height}"
-    ctx = await browser.new_context(viewport={"width": width, "height": height},
+    ctx = await test_context(browser,viewport={"width": width, "height": height},
                                     device_scale_factor=1, is_mobile=touch,
                                     has_touch=touch, reduced_motion="reduce")
     page = await ctx.new_page()
@@ -124,8 +125,7 @@ async def run_case(browser, engine, width, height, touch):
 async def main():
     async with async_playwright() as playwright:
         for engine in ("chromium", "webkit"):
-            browser = await getattr(playwright, engine).launch(headless=True,
-                **({"channel": "chrome"} if engine == "chromium" else {}))
+            browser = await getattr(playwright, engine).launch(**launch_kwargs(engine))
             try:
                 for e, w, h, touch in CASES:
                     if e == engine:

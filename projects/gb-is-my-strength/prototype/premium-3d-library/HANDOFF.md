@@ -11,7 +11,7 @@ the library's own build and Playwright journeys have run in CI.
 The conditional library-specific steps are now authored into the existing
 AuditRepo Validate workflow. They run only when the lab path changes and
 must pass on an exact PR head before any new technical acceptance claim.
-The local regression runner demands seven suites / 39 browser scenarios,
+The local regression runner demands nine suites / 47 browser scenarios,
 plus Node lab/TypeScript/build/geometry checks. No new branches, no Product
 repository writes and no hidden relaxation or skipping of errors.
 

@@ -60,7 +60,7 @@ python tests/browser-runner-contract.py
 python scripts/run-browser-regression.py
 ```
 
-The final runner serves `dist/` on ephemeral loopback and demands seven non-skipped suites: **12 interaction + 4 architecture + 4 central book + 6 mobile HUD + 5 reference bay + 4 photo + 4 quality = 39 cases** (quality also checks both switch directions). Screenshot witnesses go into an external temporary directory, not tracked `evidence/`. No runtime patch or debug camera teleport is allowed.
+The final runner serves `dist/` on ephemeral loopback and demands nine non-skipped suites: **12 interaction + 4 architecture + 4 central book + 6 mobile HUD + 5 reference bay + 4 photo + 4 quality + 2 cabinet IndexedDB + 6 WebGL recovery/fallback = 47 cases** (quality also checks both switch directions). Screenshot witnesses go into an external temporary directory, not tracked `evidence/`. No runtime patch or debug camera teleport is allowed.
 
 ## Wave sequence and safe ownership
 

@@ -29,6 +29,8 @@ TESTS = (
     ("reference-bay-browser.py", 5),
     ("photo-transition-browser.py", 4),
     ("quality-transition-browser.py", 4),
+    ("cabinet-persistence-browser.py", 2),
+    ("webgl-recovery-browser.py", 6),
 )
 EVIDENCE_VARIABLES = {
     "interaction-regression-browser.py": "GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -38,6 +40,8 @@ EVIDENCE_VARIABLES = {
     "reference-bay-browser.py": "GB_LIBRARY_FOCUS_EVIDENCE_DIR",
     "photo-transition-browser.py": "GB_LIBRARY_PHOTO_EVIDENCE_DIR",
     "quality-transition-browser.py": "GB_LIBRARY_QUALITY_EVIDENCE_DIR",
+    "cabinet-persistence-browser.py": "GB_LIBRARY_CABINET_EVIDENCE_DIR",
+    "webgl-recovery-browser.py": "GB_LIBRARY_RECOVERY_EVIDENCE_DIR",
 }
 
 
@@ -100,22 +104,37 @@ def run_all(evidence_root: Path) -> None:
             env[EVIDENCE_VARIABLES[name]] = str(evidence_dir)
             print(f"RUN {name} (expected {expected} cases)", flush=True)
             start = time.monotonic()
-            try:
-                result = subprocess.run(
-                    [sys.executable, str(ROOT / "tests" / name)],
-                    cwd=ROOT, env=env, capture_output=True, text=True,
-                    encoding="utf8", errors="replace", timeout=480,
-                    check=False,
-                )
-            except subprocess.TimeoutExpired as exc:
-                raise AssertionError(f"{name}: 480s timeout") from exc
-            print(result.stdout, end="", flush=True)
-            if result.stderr:
-                print(result.stderr, file=sys.stderr, flush=True)
-            assert result.returncode == 0, (
-                f"{name}: exit code {result.returncode}"
+            # Keep each browser case visible in GitHub logs *as it happens*.
+            # Buffered subprocess.run() previously swallowed partial witnesses
+            # until its timeout, concealing the real Linux failure case.
+            process = subprocess.Popen(
+                [sys.executable, "-u", str(ROOT / "tests" / name)],
+                cwd=ROOT, env=env,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                text=True, encoding="utf8", errors="replace", bufsize=1,
             )
-            verify_case_records(name, result.stdout, expected)
+            lines: list[str] = []
+            def relay_output() -> None:
+                assert process.stdout is not None
+                for line in process.stdout:
+                    lines.append(line)
+                    print(line, end="", flush=True)
+            relay = threading.Thread(target=relay_output, daemon=True)
+            relay.start()
+            try:
+                return_code = process.wait(timeout=480)
+            except subprocess.TimeoutExpired as exc:
+                process.kill()
+                process.wait(timeout=10)
+                relay.join(timeout=10)
+                raise AssertionError(
+                    f"{name}: 480s timeout after {len(lines)} output lines; "
+                    "see the last successful case above"
+                ) from exc
+            relay.join(timeout=10)
+            assert not relay.is_alive(), f"{name}: output reader stalled"
+            assert return_code == 0, f"{name}: exit code {return_code}"
+            verify_case_records(name, "".join(lines), expected)
             print(
                 json.dumps({
                     "suite": name, "result": "PASS", "cases": expected,

@@ -15,6 +15,7 @@ import tempfile
 from pathlib import Path
 
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.environ.get("GB_LIBRARY_FOCUS_EVIDENCE_DIR",
@@ -22,7 +23,7 @@ EVIDENCE = Path(os.environ.get("GB_LIBRARY_FOCUS_EVIDENCE_DIR",
 
 
 async def inspect(browser, engine, station, station_label, width, height, mobile):
-    context = await browser.new_context(
+    context = await test_context(browser,
         viewport={"width": width, "height": height},
         device_scale_factor=1, is_mobile=mobile, has_touch=mobile,
         reduced_motion="reduce")
@@ -74,8 +75,7 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
 async def main():
     async with async_playwright() as playwright:
         for engine in ("chromium", "webkit"):
-            browser = await getattr(playwright, engine).launch(
-                headless=True, **({"channel": "chrome"} if engine == "chromium" else {}))
+            browser = await getattr(playwright, engine).launch(**launch_kwargs(engine))
             try:
                 for width, height, mobile in ((1440, 900, False), (390, 844, True)):
                     await inspect(browser, engine, "creeds", "Конфессии", width, height, mobile)

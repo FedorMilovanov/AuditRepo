@@ -14,6 +14,7 @@ import tempfile
 from pathlib import Path
 
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.environ.get("GB_LIBRARY_HUD_EVIDENCE_DIR", tempfile.gettempdir()))
@@ -27,7 +28,7 @@ def overlap(a, b):
 
 
 async def inspect(browser, engine, width, height):
-    context = await browser.new_context(
+    context = await test_context(browser,
         viewport={"width": width, "height": height},
         device_scale_factor=1, is_mobile=True, has_touch=True,
         reduced_motion="reduce")
@@ -94,7 +95,7 @@ async def main():
     async with async_playwright() as playwright:
         for engine in ("chromium", "webkit"):
             browser_type = getattr(playwright, engine)
-            browser = await browser_type.launch(headless=True)
+            browser = await browser_type.launch(**launch_kwargs(engine))
             try:
                 for width, height in ((320, 760), (390, 844), (768, 1024)):
                     await inspect(browser, engine, width, height)

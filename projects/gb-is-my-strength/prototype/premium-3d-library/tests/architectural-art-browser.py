@@ -9,13 +9,14 @@ import json
 import os
 from pathlib import Path
 from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context
 
 URL = os.environ.get('GB_LIBRARY_TEST_URL', 'http://127.0.0.1:8771/')
 # An external evidence directory preserves the original V5.2 screenshot witnesses.
 OUT = Path(os.environ.get('GB_LIBRARY_ART_EVIDENCE_DIR', str(Path(__file__).resolve().parents[1] / 'evidence' / 'art-v52')))
 
 async def one(browser, engine, width, height, mobile):
-    context = await browser.new_context(viewport={'width': width, 'height': height},
+    context = await test_context(browser,viewport={'width': width, 'height': height},
         device_scale_factor=1, is_mobile=mobile, has_touch=mobile, reduced_motion='reduce')
     page = await context.new_page()
     errors = []
@@ -47,7 +48,7 @@ async def main():
     async with async_playwright() as p:
         for engine in ('chromium','webkit'):
             browser_type = getattr(p, engine)
-            browser = await browser_type.launch(headless=True, **({'channel':'chrome'} if engine=='chromium' else {}))
+            browser = await browser_type.launch(**launch_kwargs(engine))
             try:
                 await one(browser, engine, 1440, 900, False)
                 await one(browser, engine, 390, 844, True)
