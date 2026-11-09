@@ -1,4 +1,4 @@
-# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–5)
+# Аудит ВСЕХ статей «Господь Бог — Сила Моя» — критерии, прогон, матрицы багов (волны 2–6)
 
 ## Meta
 
@@ -8,22 +8,22 @@
 - Date: 2026-11-09
 - Audited branch/ref: `main`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` = `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`; `pushed_at 2026-11-09T06:28:12Z`
-- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов), `npm run strangler:build`, parse5-ценз `dist`; волна 4 — headless Chromium 153 из npm-пакета `@sparticuz/chromium@153.0.0` (без `npx playwright install`), локальный static server `dist`, browser-sweep 112 HTML и реальные Product browser-gates; волна 5 — песочница пересоздана с нуля на том же якоре, `npm ci` + `strangler:build` + `pagefind:build:dist`, реальные Chromium runtime/visual-parity gates и кросс-агентная сверка MDX↔`dist`
-- Build mode: волна 2 `source`; волны 3–5 `dist` (112 `index.html` / 1248 файлов / 101 MB; 111 матричных маршрутов + `/konfessii/russkij-baptizm/_app/`). Волна 5 дополнительно собрала `pagefind` (102 страницы / 29117 слов)
+- Environment: волна 2 — read-only `gh api` + shallow/sparse `git clone` в `/tmp/gbs-product`, без сборки; волна 3 — полный checkout того же якоря, `npm ci` (377 пакетов), `npm run strangler:build`, parse5-ценз `dist`; волна 4 — headless Chromium 153 из npm-пакета `@sparticuz/chromium@153.0.0` (без `npx playwright install`), локальный static server `dist`, browser-sweep 112 HTML и реальные Product browser-gates; волна 5 — песочница пересоздана с нуля на том же якоре, `npm ci` + `strangler:build` + `pagefind:build:dist`, реальные Chromium runtime/visual-parity gates и кросс-агентная сверка MDX↔`dist`; волна 6 — только bounded read-only `gh api` и канонические страницы W3C, без Product clone/build/browser
+- Build mode: волна 2 `source`; волны 3–5 `dist` (112 `index.html` / 1248 файлов / 101 MB; 111 матричных маршрутов + `/konfessii/russkij-baptizm/_app/`). Волна 5 дополнительно собрала `pagefind` (102 страницы / 29117 слов). Волна 6 не пересобирала `dist` и не создавала новые HTML/скриншоты
 - Browser / device if used: волна 3 — без браузера; волны 4–5 — headless Chromium 153 (`chrome-headless-shell`, Linux x64), desktop 1280×900, Product mobile 390×844/360 и desktop matrices; WebKit/Firefox, реальное устройство и TTS voice-switching не проверялись
 - Scope: 111 маршрутов, 79 читательских статей, 32 хабов/утилит; один общий прогон. Волна 4 отдельно обошла 112 финальных HTML (включая utility `_app`)
-- Explicit exclusions: авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, WebKit/Firefox/реальное устройство, TTS voice-switching и полный cross-browser runtime quiz-click/owner visual signoff. Волны 4–5 добавляют bounded Chromium painted/AX/runtime/visual-parity witness, но не заменяют внешнюю редакционную проверку
+- Explicit exclusions: авторство «ИИ/человек», фактическая истинность каждого исторического/богословского утверждения, внешняя corroboration/rights/edition, WebKit/Firefox/реальное устройство, TTS voice-switching и полный cross-browser runtime quiz-click/owner visual signoff. Волны 4–5 добавляют bounded Chromium painted/AX/runtime/visual-parity witness, но не заменяют внешнюю редакционную проверку; волна 6 добавляет только remote source/docs witness
 - Signal class: Product
-- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM и browser-painted следа в границе проверенных паттернов; `PASS` только для bounded Chromium runtime-gates волны 5; `UNPROVEN` для атрибуции авторства, внешней истинности, WebKit/Firefox/TTS, owner visual acceptance и полного cross-browser прогона
-- Claim boundary: исходный reader-facing текст, статический final-HTML `dist`, bounded headless-Chromium отрисовка/AX-дерево, runtime-клики и visual-parity pilots на якоре выше; не WebKit/Firefox, не реальное устройство, не TTS voice-switching, не owner signoff, не авторство, не внешняя проверка источников
+- Proof state: `FAIL` для 17 verified-source дефектов; `FAIL` для их финального-DOM и browser-painted следа в границе проверенных паттернов; `PASS` только для bounded Chromium runtime-gates волны 5; `UNPROVEN` для атрибуции авторства, внешней истинности, WebKit/Firefox/TTS, owner visual acceptance, полного cross-browser прогона и чужого `GBS-SATELLITES-DECLARED-NOT-REGISTERED` на якоре волны 6
+- Claim boundary: исходный reader-facing текст, статический final-HTML `dist`, bounded headless-Chromium отрисовка/AX-дерево, runtime-клики и visual-parity pilots на якоре выше; волна 6 — только удалённые исходники/конфиги/docs того же anchor и внешние нормы W3C; не WebKit/Firefox, не реальное устройство, не TTS voice-switching, не owner signoff, не авторство, не внешняя проверка источников
 - Preservation boundary: не менять Product, не создавать новый универсальный контракт/чек-лист, не авто-переписывать русскую прозу
 - Semantic owner: существующие строки `MASTER_BUG_MATRIX.md`; новые строки не допускаются без owner-решения
 - Overlapping active owner/PR/branch check: открытые PR в AuditRepo #545, #544, #543, #542, #538, #521, #514 — нашу article-lane не пересекают; активные строки MASTER: `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` (admission 2026-10-25), `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`, `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`.
-- Report type: `source-audit + built-DOM-audit + browser-painted-witness + bounded-runtime/visual-parity-witness`
+- Report type: `source-audit + built-DOM-audit + browser-painted-witness + bounded-runtime/visual-parity-witness + bounded API/source cross-agent reconciliation + external-norm anchors`
 
 > Anchor фиксирует, что именно смотрелось. Не обновлять отчёт только потому, что исходный репозиторий позже сдвинулся.
 
-**Артефакты волн 2–5:** этот `REPORT.md` (§9 — дельта волны 3, §10 — дельта волны 4, §11 — дельта волны 5) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, 55 колонок: DOM-, browser-, MDX- и visual-parity) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Свежие копии полного отчёта и CSV лежат в `/home/user` вне git; клон Product, `node_modules`, `dist`, Chromium binary, скриншоты и логи гейтов — в `/tmp` / `~/.cache`, вне репо. Ни одного нового файла в AuditRepo не создано.
+**Артефакты волн 2–6:** этот `REPORT.md` (§9 — дельта волны 3, §10 — дельта волны 4, §11 — дельта волны 5, §12 — bounded API/source дельта волны 6) + `ALL_ARTICLES_MATRIX.csv` (111 маршрутов, 59 колонок: DOM-, browser-, MDX-, visual-parity, remote-fixture/series-layer/external-norm) в `projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/`. Клон Product, `node_modules`, `dist`, Chromium binary, скриншоты и логи волн 3–5 были runtime-only в `/tmp` / `~/.cache` и в текущей песочнице не сохранились; артефакты волны 6 лежат только в `/tmp/aiq-wave6/` вне git. Ни одного нового файла в AuditRepo не создано.
 
 ---
 
@@ -920,7 +920,7 @@ HOME DESIGN AUDIT PRO chromium: 338/338 named variants PASS
 
 ### 11.4 Матрица, границы и пуш
 
-`ALL_ARTICLES_MATRIX.csv` остаётся одним файлом на **111 маршрутов**; добавлены 8 колонок (всего **55**):
+`ALL_ARTICLES_MATRIX.csv` остаётся одним файлом на **111 маршрутов**; в волне 5 добавлены 8 колонок (на тот момент всего **55**):
 
 ```text
 mdxDirectImport             1/0 для 70 MDX-связанных routes; пусто для 41 хаба/утилиты
@@ -940,3 +940,61 @@ Split 3 агентов и ключ `route + criterion_id` не переписа�
 **Чего волна 5 всё ещё НЕ доказывает:** WebKit/Firefox, реальное устройство, TTS voice-switching, полный cross-browser interactive/visual прогон, owner screenshot signoff, внешняя истинность/права/edition, закрытие `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` и других MASTER-строк. `???`=0, `interactive-audit` exit 0 и 28/42/70 MDX-ценз — observations текущего anchor, а не разрешение старых дефектов.
 
 **Ветки/пуш.** Перед записью повторно сверены `git branch --show-current` = `arena/0b6f34f6-auditrepo`, локальный `HEAD`/`origin/arena/0b6f34f6-auditrepo` = `1cbfa19`, `git status --short` после восстановления ветки = clean; чужие arena-ветки не содержат наших двух файлов. Пуш — обычный `git push origin arena/0b6f34f6-auditrepo`; ветка не переключается, не переименовывается, чужие PR/ветки не трогаются.
+
+---
+
+## 12. Волна 6 — bounded API/source сверка чужих веток, книжной серии и внешнего language-of-parts якоря
+
+**Статус:** после коммита `3ad38e7` сделана только read-only сверка на том же Product anchor `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8` и канонических страницах W3C. Product не клонировался, `dist` не пересобирался, браузер/published HTML/runtime не запускались; чужие ветки и PR не изменялись. 17 HARD, 64 TRIGGER, 5 положительных контролей, C23, строки MASTER, split 3 агентов и ключ `route + criterion_id` не переклассифицированы. Новых ADMIT-контрактов, универсальных guard'ов, owner-решений и style-only выводов «ИИ/человек» нет.
+
+### 12.1 Удалённая повторная проверка fixtures и внешний позитивный якорь C7
+
+Повторно запрошены 22 локации §4.6/§4.7 на anchor: **17 exact negative HARD + 5 positive controls**, **16 уникальных Product-файлов**. Совпали **22/22** пары `path:line` с ожидаемым фрагментом: 10 полных ожидаемых подстрок и 12 устойчивых 30-символьных окон (в таблице отчёта часть цитат сокращена). Это повторная фиксация исходного witness, а не новый gate, не DOM/browser-перепроверка и не снятие HARD.
+
+C7 уже опирался на WCAG 2.2 SC 3.1.2 (§2). Волна 6 уточняет внешний позитивный якорь, не превращая его в новый контракт:
+
+- [W3C Understanding SC 3.1.2 Language of Parts](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html), **Level AA**: «The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words or phrases that have become part of the vernacular of the immediately surrounding text». Исключения criteria-gated; отдельные заимствованные слова без явного намерения сменить язык не требуют разметки.
+- [W3C Technique H58](https://www.w3.org/WAI/WCAG22/Techniques/html/H58.html): sufficient, но не обязательный способ — `lang` на элементе с иноязычным фрагментом, значения по [BCP 47](https://www.rfc-editor.org/info/bcp47), проверка соответствия кода реальному языку содержимого.
+- [W3C Quickref WCAG 2.2](https://www.w3.org/WAI/WCAG22/quickref/) фиксирует 3.1.2 как Level AA; [W3C i18n Group Note, §2 Language](https://www.w3.org/TR/international-specs/) рекомендует метаданные языка на уровне строки/документа, а не эвристики, и возможность размечать inline-смену языка. Это Group Note, **не** нормативный hard requirement и не новый ADMIT.
+- Understanding SC 3.1.2 отдельно оговаривает: ограничения screen reader/UA при озвучивании плоских accessible names находятся вне контроля автора и сами по себе не проваливают критерий; аудитор не может опираться только на spoken output и должен проверять исходную разметку. Поэтому painted/AX-дерево волны 4 и отсутствие TTS voice-switching не являются ни доказательством соответствия, ни его опровержением.
+
+`c7WcagAnchor = WCAG-2.2-SC-3.1.2-AA` проставлен только на **6 маршрутов с C7-HARD** как ссылка на норму, **не** verdict соответствия. `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT` остаётся owner-open; зелёные gates, `???`=0 и Chromium-only workaround его не закрывают.
+
+### 12.2 Чужие ветки и спор «42 MDX / 18 спутников / 229 минут»
+
+Коллизионная проверка перед записью: Product `main` и открытые PR AuditRepo #545, #544, #543, #542, #538, #521, #514 не изменились. Read-only просмотрены `arena/a33be340-auditrepo@bf44916` и `arena/c6d6c46c-auditrepo@de3398f`. По `git/trees/<anchor>?recursive=1` (`truncated=false`, 3363 blobs) независимо воспроизведены **70** `src/content/articles/*.mdx`, **49** `*Body.astro`, **111** `src/pages/**/index.astro`; таким образом число **119 = 70 + 49** у агента C6 воспроизводится как ценз файлов, но не как ценз показанного читателю текста.
+
+| Чужой тезис | Статус сверки на source-уровне |
+|---|---|
+| A33: `Body.astro` — официальная архитектура, MDX — legacy; **42/70** MDX без прямого import = «архив, не критично» | `docs/SERIES-ENGINE-GUIDE.md` §2 действительно предписывает тело статьи `<...>Body.astro` и не упоминает MDX; **42 без прямого import** уже независимо воспроизведено в §11.1. Вывод «архив / не критично / исключить из аудитов» из отсутствия import не следует: 30 из 42 имеют перекрывающийся текст в built HTML, 6 объявлены `metadata-only`, 6 расходятся. C23 и `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` не переклассифицируются |
+| A33: 18 материалов «Сердца» объявлены спутниками, но не зарегистрированы; новый P0 `GBS-SATELLITES-DECLARED-NOT-REGISTERED` | Ниже показано, что активный конфиг регистрирует их в книжной форме как статьи глав. Буквальный тезис «не зарегистрированы» исходниками anchor не подтверждается; автор чужой ветки сам указал, что сборку не запускал. Без build/HTML/rail/accordion witness нельзя ни принять P0, ни закрыть его, ни завести новую строку MASTER |
+| C6: SYS-1 split-brain, Jaccard-расхождения, **229 мин** `readingTime` из frontmatter против 28099 живых слов, 6/6 URL witnesses | 229 мин относится к **10 baptisty-MDX** (`17+24+25+18+21+23+28+27+26+20`), а не к серии «Сердце». 6/6 URL — bounded выборка, не внешняя corroboration/rights/edition всего корпуса. Выводы о фактической истинности и editor/owner-решении не принимаются |
+
+Product-источники на том же anchor дают два разных, но сосуществующих слоя:
+
+| Источник | Что содержит | Граница вывода |
+|---|---|---|
+| `docs/SERIES-ENGINE-GUIDE.md` §1/§2 | Плоская серия: спутник = `letter` + `tier:'satellite'` + `parent`, только аккордеон части, не рельс/счёт, не в `data/series.json`; тело статьи — `Body.astro` | Описывает **flat**-форму, а не всю книжную серию |
+| `docs/SERIES-ENGINE-GUIDE.md` §3.5 | `shape:'book'`: главы `tier:'chapter'` с римскими марками, статьи `mark:'arabic'` + `parent` + `pages[id]`; живой пример — «Сердце» | Книжная форма — отдельная ветвь того же движка |
+| `src/components/article-pilots/_shared/series/seriesConfig.ts` | `defineSeriesConfig` проверяет `arabic → parent/pages`, `chapter` и `shape:'book'`; спутник обязывает `letter` + `tier:'satellite'` | Валидатор поддерживает оба яруса; это не runtime-witness |
+| `.../series/hardTextsSeriesConfig.ts` | 18 `HEART_SATELLITES` defs, 4 `HEART_CHAPTERS` с `extras`, `HEART_BOOK_SEQUENCE` = пролог + 4 lead + 18 extras + справочник = **24 уникальные reader pages**, `shape:'book'`; `items` включает 4 группы-главы, 2 форзаца и **22 статьи с арабскими номерами** (4 lead + 18 extras), для всех 24 reader pages есть `pages[id]`, у статей глав — `parent: ch.id` | 18 зарегистрированы **не как letter-спутники**, а как полноценные арабские статьи глав; комментарий в шапке файла ещё использует старую терминологию «спутники» |
+| `heartSeriesData.ts` / `data/series.json` | 6 core items / 6 `hard-texts.parts`, сумма `readingTime` **228 мин** | Ядро реестра `series.json`; guide §2 прямо исключает из него спутники, а 6 строк не являются списком всех 24 книжных страниц |
+| `docs/HEART-BOOK-SOURCE-TRUTH-CONTRACT.md` | Существующий Product source-of-truth: **24 unique reader pages**, полная книга **727 мин**; канон — `heartSeriesData.ts` + `hardTextsSeriesConfig.ts` + native Astro article components | 228 мин ядра + 499 мин 18 extras = 727; это не 229 мин baptisty-frontmatter |
+| `data/editorial-metadata-review-decisions/heart-satellites-reconciliation-20260908.json` | **17** owner-approved правок editorial dates/reviewStatus; все 17 slug'ов — подмножество 18 extras, `tma-na-serdce` в этом JSON нет | Слой редакционных метаданных, а не доказательство navigation/runtime и не ценз всех 18 |
+
+Все 24 slug'а «Сердца» уже присутствуют в 111 строках `ALL_ARTICLES_MATRIX.csv`: **6 `core`** и **18 `book-article`**. На source-уровне отсутствие `tier:'satellite'` в 6 `HEART_SERIES_ITEMS` и 6 строках `data/series.json` объясняется книжной формой и «core-only» реестром, а не отсутствием конфигурации 18 материалов. Вместе с тем волна 6 не запускала `npm ci`/build/`engine:guard`/browser, не смотрела собранный rail/аккордеон/prev-next и не проверяла реальную доступность всех 24 маршрутов читателю. Поэтому чужой P0 остаётся **UNPROVEN**, а не подтверждённым и не снятым; 17 HARD / 64 TRIGGER и C23 не меняются.
+
+### 12.3 Матрица, границы и пуш
+
+`ALL_ARTICLES_MATRIX.csv` остаётся одним файлом на **111 маршрутов**; добавлены 4 колонки (**59** всего), новые строки не создавались:
+
+```text
+hardFixtureRemoteCount       0/1/2 — число удалённо сопоставленных HARD fixture на route; сумма 17, 16 routes, journal/dossiers/g3 = 2
+positiveControlRemoteCount   0/5 — все 5 контролей на hard-texts/enoh-prorochestvoval-iuda-14-15-4q204
+heartBookSourceLayer         core (6) | book-article (18) | пусто (87); только source-классификация
+c7WcagAnchor                 WCAG-2.2-SC-3.1.2-AA на 6 C7-HARD routes; внешняя норма, не verdict
+```
+
+**Чего волна 6 НЕ доказывает:** Product build/published HTML, rail/accordion/prev-next для 24 книжных страниц, полный WebKit/Firefox interactive, реальное устройство, TTS voice-switching, PDF/print-parity, owner visual signoff, внешнюю истинность/права/edition, закрытие `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`, `SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT`, `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` и других MASTER-строк. `OWNER_APPROVED=true`/baseline update не применялись; зелёные прежние gates, `???`=0, partial screenshots, AX-absence и `--warn-only` exit 0 не заменяют редакционную проверку.
+
+**Ветки/пуш.** Работа ведётся только на `arena/0b6f34f6-auditrepo`; ветка не переключалась, не переименовывалась, чужие PR/ветки не трогались. Перед записью повторно сверены `git branch --show-current`, `HEAD`/upstream/`origin/arena/0b6f34f6-auditrepo` = `3ad38e7` и неизменность Product anchor; после правок двух существующих файлов выполняются `git diff --check`, обычный `git push origin arena/0b6f34f6-auditrepo` и `present_file REPORT.md`. Артефакты `/tmp/aiq-wave6/` остаются вне git.
