@@ -219,9 +219,9 @@ if (gardenRecord) {
   };
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
-    leafSprigs(low) === 4 * 7 * 6);
+    leafSprigs(low) === 4 * 7 * 9);
   t('Gethsemane high detail doubles sprig density without extra trees',
-    leafSprigs(garden) === 4 * 7 * 12);
+    leafSprigs(garden) === 4 * 7 * 15);
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -249,7 +249,10 @@ if (gardenRecord) {
   const grove = buildExhibitProps(gardenRecord, true, 0, 0);
   let branches = 0;
   grove.traverse((o) => { if (o.name === 'olive-branch') branches++; });
-  t('Gethsemane four trees have independent visible structural branches', branches >= 24);
+  const branchMats = new Set<THREE.Material>();
+  grove.traverse((o) => { if (o.name === 'olive-branch' && o instanceof THREE.Mesh) branchMats.add(o.material as THREE.Material); });
+  t('Gethsemane four trees have independent tapered structural branches',
+    branches >= 24 && branchMats.size === 1);
 }
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');

@@ -8,7 +8,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; }
 
 let CACHE: { low: boolean; s: Shared } | null = null;
 export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
@@ -30,11 +30,12 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   });
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
+  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x615746, roughness: 1 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
   const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
-  const s: Shared = { stone, dark, wood, water, metal, leaf, leafSilver };
+  const s: Shared = { stone, dark, wood, oliveWood, water, metal, leaf, leafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -187,29 +188,28 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
   const random = rng(seed);
   const lean = (random() - 0.5) * 0.32;
-  const trunk = new THREE.Mesh(G.cyl(0.075, 0.17, 1.48, 7), s.wood);
+  const trunk = new THREE.Mesh(G.cyl(0.085, 0.18, 1.48, 7), s.oliveWood);
+  trunk.name = 'olive-main-trunk';
   trunk.position.set(x + lean * 0.2, 0.74, z);
   trunk.rotation.z = lean;
   g.add(trunk);
-  for (let i = 0; i < 4; i++) {
-    const a = i * Math.PI / 2 + random() * 0.5;
-    const fork = new THREE.Mesh(G.cyl(0.025, 0.065, 0.75, 5), s.wood);
-    fork.position.set(x + Math.cos(a) * 0.23, 1.33 + random() * 0.12, z + Math.sin(a) * 0.23);
-    fork.rotation.z = Math.cos(a) * 0.9;
-    fork.rotation.x = Math.sin(a) * -0.9;
-    g.add(fork);
-  }
-  // Structural lateral branches retain a readable silhouette even at dusk.
-  // Do not substitute large green balloon spheres for foliage.
+  // Each fork actually extends from the trunk to its crown. Quaternion
+  // alignment (rather than unrelated X/Z Euler rotations) prevents the
+  // floating horizontal sticks seen in the first artistic acceptance.
+  const up = new THREE.Vector3(0, 1, 0);
   for (let i = 0; i < 6; i++) {
-    const a = i * (Math.PI * 2 / 6) + random() * 0.3;
-    const b = new THREE.Mesh(G.cyl(0.017, 0.055, 0.92 + random() * 0.35, 5), s.wood);
-    b.name = 'olive-branch';
-    b.position.set(x + Math.cos(a) * 0.38, 1.52 + (random() - 0.5) * 0.24,
-      z + Math.sin(a) * 0.38);
-    b.rotation.z = Math.cos(a) * (0.9 + random() * 0.45);
-    b.rotation.x = -Math.sin(a) * (0.9 + random() * 0.45);
-    g.add(b);
+    const a = i * (Math.PI * 2 / 6) + random() * 0.27;
+    const stem = new THREE.Vector3(x + Math.cos(a) * 0.13, 1.20 + random() * 0.24,
+      z + Math.sin(a) * 0.13);
+    const reach = 0.69 + random() * 0.30;
+    const tip = stem.clone().add(new THREE.Vector3(Math.cos(a) * reach,
+      0.32 + random() * 0.43, Math.sin(a) * reach));
+    const axis = tip.clone().sub(stem);
+    const branch = new THREE.Mesh(G.cyl(0.015, 0.058, axis.length(), 6), s.oliveWood);
+    branch.name = 'olive-branch';
+    branch.position.copy(stem).addScaledVector(axis, 0.5);
+    branch.quaternion.setFromUnitVectors(up, axis.normalize());
+    g.add(branch);
   }
   for (let i = 0; i < 7; i++) {
     const a = i * Math.PI * (2 / 7) + random() * 0.35;
@@ -217,14 +217,14 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     const crown = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
     crown.name = 'olive-crown-lobe';
     crown.position.set(x + Math.cos(a) * radius + lean * 0.3,
-      1.49 + (random() - 0.5) * 0.58, z + Math.sin(a) * radius);
+      1.63 + (random() - 0.5) * 0.48, z + Math.sin(a) * radius);
     crown.rotation.set(random() * 0.32, random() * 1.2, (random() - 0.5) * 0.42);
     // Taller, offset lobes avoid the flat 'umbrella' silhouette.
     // Smaller dark core leaves space for hundreds of uneven twig-level
     // silver-green leaves, replacing the old flat, balloon-like silhouette.
-    crown.scale.set(0.36 + random() * 0.20, 0.32 + random() * 0.22, 0.40 + random() * 0.18);
+    crown.scale.set(0.30 + random() * 0.18, 0.26 + random() * 0.18, 0.34 + random() * 0.17);
     g.add(crown);
-    const leaflets = low ? 6 : 12;
+    const leaflets = low ? 9 : 15;
     for (let j = 0; j < leaflets; j++) {
       const r = 0.13 + Math.pow(random(), 0.65) * 0.44;
       const theta = random() * Math.PI * 2;
@@ -235,7 +235,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
         crown.position.y + vertical,
         crown.position.z + Math.sin(theta) * r);
       sprig.rotation.set((random() - 0.5) * 1.8, random() * Math.PI, (random() - 0.5) * 1.6);
-      sprig.scale.set(0.28 + random() * 0.36, 0.46 + random() * 0.44, 0.90 + random() * 0.60);
+      sprig.scale.set(0.22 + random() * 0.29, 0.34 + random() * 0.34, 0.82 + random() * 0.48);
       g.add(sprig);
     }
   }
