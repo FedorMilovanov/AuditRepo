@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "58a997cfc0c0c1678fb720f966163eca19621f559725087ca8dc9e8c54a1089f",
-      "bytes_normalized": 48059
+      "sha256": "56f2b76f69e53e0c7c0f627b5704f4a6213fb2fd83a412d2c3aba59d0925caa4",
+      "bytes_normalized": 48200
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "37288be761e3329e12f14f9d34ccbc1dd82b7ed535e8ce653d3d2ba4a75ef568",
-      "bytes_normalized": 9593
+      "sha256": "7039c3bab8bee19fd0a453f7e39c26e6ef4350dce902d27c8a0669b6ecbf1edc",
+      "bytes_normalized": 10143
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -240,16 +240,16 @@
       "bytes_normalized": 140842
     },
     "sozvezdie/src/components/Epilogue.tsx": {
-      "sha256": "c7cc89091d5e94ca90256dfb670996eb54ad40601f8558b91e8b8a4ffc3e6a3f",
-      "bytes_normalized": 9342
+      "sha256": "5f3a9d3f14297446fee774f3e50a45c720038117eef4461b84a16c3c5e20b8a8",
+      "bytes_normalized": 9502
     },
     "sozvezdie/src/components/Hero.tsx": {
       "sha256": "54437cbfff11e46a67fe53511dd715ae8ab790b110b6f43ba15a1eaea465d223",
       "bytes_normalized": 9646
     },
     "sozvezdie/src/components/Intro.tsx": {
-      "sha256": "024f5eaf91f31944f1191f54cc25bb9e5dc596939424f8aa9668539af0445931",
-      "bytes_normalized": 7340
+      "sha256": "f3615d076fee73d37361f76ad215c33203bee79dd4130bbbce5d706162f9a8e6",
+      "bytes_normalized": 7429
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
       "sha256": "ce1b72bb964eb64ce41b25ac1d317a3440632e92fd1d2c9dbbf7f9a6c96b720a",

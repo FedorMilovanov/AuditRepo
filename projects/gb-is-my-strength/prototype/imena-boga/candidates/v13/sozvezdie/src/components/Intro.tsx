@@ -26,7 +26,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-ui text-xs font-medium uppercase tracking-[0.3em] text-cream-500">
             <a
               href="https://gospod-bog.ru/about/"
-              className="text-gold-400 transition-colors hover:text-gold-300"
+              className="inline-flex min-h-11 items-center text-gold-400 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Фёдор Милованов
             </a>

@@ -423,7 +423,9 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       await trigger.waitFor({state:'hidden',timeout:10000}).catch(() => {
         throw Error('Atlas scripture ribbon obscures the opening hero '+width);
       });
-      await page.locator('article[data-name-id]').first().scrollIntoViewIfNeeded();
+      // Enter article reading via an editorial anchor, never via the card
+      // action zone where the unobtrusive launcher intentionally yields.
+      await page.locator('#article-introduction').scrollIntoViewIfNeeded();
       await trigger.waitFor({state:'visible',timeout:10000});
       // Long Cyrillic/Greek/Hebrew names used to inflate the persistent
       // bottom control past 100px at 320px, hiding article paragraphs.

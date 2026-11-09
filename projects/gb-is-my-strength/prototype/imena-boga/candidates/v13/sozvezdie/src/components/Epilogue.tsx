@@ -156,7 +156,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
           <div className="mt-12 flex flex-col items-center justify-center gap-4 font-ui text-xs tracking-[0.15em] text-cream-500 sm:flex-row">
             <a
               href="mailto:viktorcoy2012@gmail.com"
-              className="inline-flex items-center gap-2 transition-colors hover:text-gold-300"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
               viktorcoy2012@gmail.com
@@ -166,7 +166,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
               href="https://t.me/fedormilovanov"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 transition-colors hover:text-gold-300"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <Send className="h-3.5 w-3.5" strokeWidth={1.5} />
               t.me/fedormilovanov
