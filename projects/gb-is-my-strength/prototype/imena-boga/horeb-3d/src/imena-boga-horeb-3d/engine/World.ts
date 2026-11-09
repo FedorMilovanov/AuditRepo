@@ -65,6 +65,8 @@ export class World {
   private contextLost = false;
   private disposed = false;
   sandals: THREE.Group | null = null;
+  private shoeRemovalElapsed = 0;
+  private shoeRemovalFacing = new THREE.Vector2(0, -1);
   audio = new AmbientAudio();
   settings: WorldSettings;
   private listeners: [EventTarget, string, EventListener, AddEventListenerOptions?][] = [];
@@ -333,27 +335,30 @@ export class World {
     if (distToBush(this.pos.x, this.pos.y) > R_OUTER + 3) return false;
     this.audio.unlockFromGesture();
     this.shoes = 'removing';
-    this.keys.clear(); this.vel.set(0, 0);
-    const reduced = this.settings.reducedMotion;
-    const start = performance.now();
-    const fwd = new THREE.Vector2(-Math.sin(this.yaw), -Math.cos(this.yaw));
-    const tick = () => {
-      if (this.disposed) return;
-      const k = Math.min(1, (performance.now() - start) / 2600);
-      this.pitchOffset = reduced ? 0 : -0.55 * Math.sin(Math.PI * k);
-      if (k < 1) requestAnimationFrame(tick);
-      else {
-        this.pitchOffset = 0;
-        this.shoes = 'unshod';
-        this.block = null;
-        this.placeSandals(this.pos.x + fwd.x * -0.3, this.pos.y + fwd.y * -0.3);
-        this.onEvent('shoes-removed');
-        this.emit(true);
-      }
-    };
-    requestAnimationFrame(tick);
+    this.stopMovement();
+    this.shoeRemovalElapsed = 0;
+    this.shoeRemovalFacing.set(-Math.sin(this.yaw), -Math.cos(this.yaw));
+    this.pitchOffset = 0;
     this.emit(true);
     return true;
+  }
+  /** Advance this ritual only on an active World frame. Modal, hidden-tab
+   * and WebGL loss pause it together with the simulation; no orphan RAF can
+   * finish the action behind a hidden scene.
+   */
+  private advanceShoeRemoval(dt: number) {
+    if (this.shoes !== 'removing') return;
+    this.shoeRemovalElapsed += dt;
+    const k = Math.min(1, this.shoeRemovalElapsed / 2.6);
+    this.pitchOffset = this.settings.reducedMotion ? 0 : -0.55 * Math.sin(Math.PI * k);
+    if (k < 1) return;
+    this.pitchOffset = 0;
+    this.shoes = 'unshod';
+    this.block = null;
+    this.placeSandals(this.pos.x - this.shoeRemovalFacing.x * 0.3,
+      this.pos.y - this.shoeRemovalFacing.y * 0.3);
+    this.onEvent('shoes-removed');
+    this.emit(true);
   }
   private placeSandals(x: number, z: number) {
     const g = new THREE.Group();
@@ -411,6 +416,7 @@ export class World {
   private loop = () => {
     const dt = Math.min(0.1, this.clock.getDelta()); // коллизия аналитическая — туннелирования нет
     this.t += dt;
+    this.advanceShoeRemoval(dt);
     const motion = !this.settings.reducedMotion;
     // ── PlayerController
     let ix = this.move.x, iy = this.move.y;
@@ -418,8 +424,10 @@ export class World {
     if (this.keys.has('KeyS') || this.keys.has('ArrowDown')) iy -= 1;
     if (this.keys.has('KeyD')) ix += 1;
     if (this.keys.has('KeyA')) ix -= 1;
-    if (this.keys.has('ArrowLeft')) this.yaw += 1.6 * dt;
-    if (this.keys.has('ArrowRight')) this.yaw -= 1.6 * dt;
+    if (this.shoes !== 'removing') {
+      if (this.keys.has('ArrowLeft')) this.yaw += 1.6 * dt;
+      if (this.keys.has('ArrowRight')) this.yaw -= 1.6 * dt;
+    }
     const il = Math.hypot(ix, iy); if (il > 1) { ix /= il; iy /= il; }
     if (this.inputLocked || this.shoes === 'removing') { ix = iy = 0; }
     const shod = this.shoes !== 'unshod';
