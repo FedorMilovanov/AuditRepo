@@ -27,7 +27,7 @@ const witness = {
   timestamp: new Date().toISOString(),
   browser: chromePath,
   renderingMode: process.env.HOREB_SWIFTSHADER === '1' ? 'software-SwiftShader' : 'browser-default-not-verified-GPU',
-  desktop: [], mobile: [], closeBush: null, innerBush: null, errors: [],
+  desktop: [], mobile: [], details: [], closeBush: null, innerBush: null, errors: [],
 };
 const browser = await puppeteer.launch({
   executablePath: chromePath, headless: true, args, protocolTimeout: 90000,
@@ -87,6 +87,34 @@ try {
     const evidence = await captureZone(desktop, zone, 'desktop');
     witness.desktop.push(evidence);
     console.log('PASS desktop zone ' + zone + ' screenshot ' + evidence.screenshot);
+  }
+  // Editorial LAB art inspection only: a stable 4.6 m view of the actual
+  // Beersheba well, Hagar's spring and Gethsemane grove. These photographic
+  // camera positions do NOT certify route accessibility; the independent
+  // journey test uses only real keyboard locomotion.
+  for (const [id, slug] of [['el-olam', 'beersheba-well'],
+    ['el-roi', 'hagar-spring'], ['abba', 'gethsemane-grove']]) {
+    const before = await desktop.evaluate(() => window.__horeb.world.renderer.info.render.frame);
+    const view = await desktop.evaluate((exhibitId) => {
+      const w = window.__horeb.world;
+      const e = w.exhibitPos.find((p) => p.e.id === exhibitId);
+      if (!e) throw new Error('Missing material-detail exhibit ' + exhibitId);
+      const n = Math.hypot(e.nx, e.nz), ux = e.nx / n, uz = e.nz / n;
+      w.teleportTo(e.x + ux * 4.6, e.z + uz * 4.6);
+      const here = w.position;
+      const aimX = e.x + ux * 1.5, aimZ = e.z + uz * 1.5;
+      w.yaw = Math.atan2(-(aimX - here.x), -(aimZ - here.z));
+      w.pitch = -0.20;
+      return { id: exhibitId, zone: e.e.zone, x: here.x, z: here.z,
+        canInspect: w.canInspectExhibit(exhibitId) };
+    }, id);
+    if (!view.canInspect) throw new Error('Detail camera cannot inspect ' + id);
+    await waitForRenderedFrame(desktop, before, view.zone);
+    await desktop.waitForTimeout(500);
+    const file = 'visual-detail-' + slug + '.png';
+    await desktop.screenshot({ path: join(shots, file) });
+    witness.details.push({ ...view, screenshot: file });
+    console.log('PASS material-detail ' + slug + ' screenshot ' + file);
   }
   // The arrival screenshot is far from the bush. Capture the physical outer
   // boundary as a second, strictly shod view; never bypass the sacred perimeter.
@@ -214,6 +242,7 @@ try {
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
 }
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
+  witness.details.length === 3 &&
   witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +

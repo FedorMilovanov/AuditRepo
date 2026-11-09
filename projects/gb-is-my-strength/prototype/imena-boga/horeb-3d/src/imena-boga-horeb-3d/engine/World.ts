@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
-import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
+import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { BEACON_IDS, createNameBeacon, beaconViewFactor } from './NameBeacon';
@@ -110,7 +110,7 @@ export class World {
     const low = this.settings.quality === 'low';
     const { tex, bump } = rockTextures(low ? 256 : 512);
     tex.repeat.set(1, 1);
-    const rock = new THREE.MeshStandardMaterial({ vertexColors: true, map: tex, bumpMap: bump, bumpScale: 2.2, roughness: 0.96, metalness: 0, side: THREE.DoubleSide });
+    const rock = new THREE.MeshStandardMaterial({ vertexColors: true, map: tex, bumpMap: bump, bumpScale: 1.15, roughness: 0.96, metalness: 0, side: THREE.DoubleSide });
     this.zones = buildZones(low, rock);
     this.scene.add(this.zones.group);
     this.obstacles.push(...this.zones.obstacles);
@@ -180,7 +180,12 @@ export class World {
       // Keep its physical collider aligned with actual geometry, not the old
       // abstract props anchor (the light shaft itself needs no collider).
       if (e.id === 'elohim') this.obstacles.push({ x: bx - 1.4, z: bz - 3.0, r: 1.75 });
-      else this.obstacles.push({ x: bx, z: bz,
+      else if (e.environmentKey === 'gethsemane-garden') {
+        // Match physical tree trunks to the one authored grove layout.
+        // Preserve the clear x=0 visitor route; leaves are not solid obstacles.
+        for (const [dx, dz] of OLIVE_GROVE_OFFSETS)
+          this.obstacles.push({ x: bx + dx, z: bz + dz, r: 0.29 });
+      } else this.obstacles.push({ x: bx, z: bz,
         r: e.environmentKey === 'beersheba-well' ? 1.45 : 0.6 }); // actual stone well radius
       this.exhibitPos.push({ e, x, z, nx, nz });
     }

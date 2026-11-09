@@ -2,7 +2,7 @@
 // (which resolves extensionless TS imports) and run in Node.
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
-import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
+import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
@@ -219,9 +219,9 @@ if (gardenRecord) {
   };
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
-    leafSprigs(low) === 4 * 7 * 9);
+    leafSprigs(low) === 4 * 7 * 16);
   t('Gethsemane high detail doubles sprig density without extra trees',
-    leafSprigs(garden) === 4 * 7 * 15);
+    leafSprigs(garden) === 4 * 7 * 26);
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -243,7 +243,10 @@ if (wellRecord) {
   const well = buildExhibitProps(wellRecord, true, 0, 0);
   let stones = 0;
   well.traverse((o) => { if (o.name === 'well-rim-stone') stones++; });
-  t('Beersheba well has an irregular hand-set fourteen-stone rim', stones === 14);
+  let groundStones = 0;
+  well.traverse((o) => { if (o.name === 'well-ground-stone') groundStones++; });
+  t('Beersheba well has a hand-set stone rim and non-uniform loose scree',
+    stones === 14 && groundStones === 18);
 }
 if (gardenRecord) {
   const grove = buildExhibitProps(gardenRecord, true, 0, 0);
@@ -253,6 +256,21 @@ if (gardenRecord) {
   grove.traverse((o) => { if (o.name === 'olive-branch' && o instanceof THREE.Mesh) branchMats.add(o.material as THREE.Material); });
   t('Gethsemane four trees have independent tapered structural branches',
     branches >= 24 && branchMats.size === 1);
+  let trunks = 0, roots = 0, flatLeaves = 0;
+  grove.traverse((o) => {
+    if (o.name === 'olive-main-trunk') trunks++;
+    if (o.name === 'olive-root') roots++;
+    if (o.name === 'olive-leaf-sprig' && o instanceof THREE.Mesh &&
+      o.geometry instanceof THREE.ShapeGeometry &&
+      o.material instanceof THREE.MeshStandardMaterial &&
+      o.material.side === THREE.DoubleSide) flatLeaves++;
+  });
+  t('Gethsemane olives have segmented rooted trunks and botanically thin leaves',
+    trunks === 8 && roots === 12 && flatLeaves === 4 * 7 * 16);
+  t('grove physics and art share precisely one trunk layout',
+    OLIVE_GROVE_OFFSETS.length === 4 &&
+    OLIVE_GROVE_OFFSETS.every(([x, z]) => Number.isFinite(x) && Number.isFinite(z)) &&
+    OLIVE_GROVE_OFFSETS.every(([x]) => x - 4.6 + 1.018 < -0.75));
 }
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');

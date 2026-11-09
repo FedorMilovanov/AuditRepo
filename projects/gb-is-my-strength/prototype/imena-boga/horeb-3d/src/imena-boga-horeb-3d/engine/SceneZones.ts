@@ -242,7 +242,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     }
     stoneGeo.computeVertexNormals();
   }
-  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7560, roughness: 0.95, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 1.5 });
+  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7560, roughness: 0.95, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 0.85 });
   const flameTex = glowTexture('rgba(255,230,170,1)', 'rgba(255,90,20,0)');
   const torches: THREE.Sprite[] = [];
   const altarAt = (x: number, z: number, seed: number) => {

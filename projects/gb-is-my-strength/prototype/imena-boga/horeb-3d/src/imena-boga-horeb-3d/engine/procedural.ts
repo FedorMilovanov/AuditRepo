@@ -54,8 +54,11 @@ export function rockTextures(size = 512) {
     // Existing mirrored-repeat wrapping keeps adjacent texture tiles continuous.
     const strata = fbm(u * 0.18 + 13, v * 0.31 - 5, 1.6, 3);
     const grain = fbm(u * 1.7 - 21, v * 1.2 + 9, 3.4, 2);
-    const crack = Math.abs(fbm(u * 0.6 + 9, v * 0.6, 3, 3) - 0.5) < 0.018 ? 0.55 : 1;
-    const val = (0.52 + 0.36 * n + 0.13 * strata + 0.06 * grain) * crack;
+    const distanceToFracture = Math.abs(fbm(u * 0.6 + 9, v * 0.6, 3, 3) - 0.5);
+    const transition = Math.max(0, Math.min(1, (distanceToFracture - 0.008) / 0.052));
+    const smoothed = transition * transition * (3 - 2 * transition);
+    const fracture = 1 - 0.18 * (1 - smoothed);
+    const val = (0.52 + 0.36 * n + 0.13 * strata + 0.06 * grain) * fracture;
     const i = (y * size + x) * 4;
     img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.min(255, val * 255);
     img.data[i + 3] = 255;

@@ -8,7 +8,12 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+
+/** One authored grove layout is shared by meshes and physical trunk colliders. */
+export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
+  [-2.15, 0.32], [-0.72, -0.68], [0.98, 0.79], [2.25, -0.21],
+];
 
 let CACHE: { low: boolean; s: Shared } | null = null;
 export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
@@ -35,7 +40,10 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
   const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
-  const s: Shared = { stone, dark, wood, oliveWood, water, metal, leaf, leafSilver };
+  // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
+  const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x596947, roughness: 0.95, side: THREE.DoubleSide });
+  const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x858e70, roughness: 0.95, side: THREE.DoubleSide });
+  const s: Shared = { stone, dark, wood, oliveWood, water, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -56,6 +64,16 @@ function geoCached(type: string, params: any): THREE.BufferGeometry {
       case 'TorusGeometry': g = new THREE.TorusGeometry(params.r, params.t, params.rs, params.ts, params.arc); break;
       case 'PlaneGeometry': g = new THREE.PlaneGeometry(params.w, params.h); break;
       case 'DodecahedronGeometry': g = new THREE.DodecahedronGeometry(params.r, params.d); break;
+      case 'OliveLeafGeometry': {
+        const leaf = new THREE.Shape();
+        leaf.moveTo(0, -0.62);
+        leaf.bezierCurveTo(-0.18, -0.38, -0.22, 0.05, -0.13, 0.26);
+        leaf.quadraticCurveTo(-0.07, 0.49, 0, 0.63);
+        leaf.quadraticCurveTo(0.12, 0.45, 0.18, 0.05);
+        leaf.quadraticCurveTo(0.16, -0.35, 0, -0.62);
+        g = new THREE.ShapeGeometry(leaf, 3);
+        break;
+      }
       default: throw new Error('Unknown geometry type: ' + type);
     }
     _geoCache.set(key, g);
@@ -70,6 +88,7 @@ const G = {
   tor: (r: number, t: number, rs = 6, ts = 10, arc = Math.PI * 2) => geoCached('TorusGeometry', { r, t, rs, ts, arc }),
   plane: (w: number, h: number) => geoCached('PlaneGeometry', { w, h }),
   dodec: (r: number, d = 0) => geoCached('DodecahedronGeometry', { r, d }),
+  oliveLeaf: () => geoCached('OliveLeafGeometry', {}),
 };
 
 function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
@@ -93,6 +112,17 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
     pebble.scale.set(0.8 + random() * 0.38, 0.45 + random() * 0.27, 0.76 + random() * 0.3);
     pebble.rotation.set((random() - 0.5) * 0.4, a, (random() - 0.5) * 0.38);
     g.add(pebble);
+  }
+  // Loose rubble just outside the collar breaks a floating circular silhouette.
+  // It is strictly decorative, small enough to step over, and outside the shaft.
+  for (let i = 0; i < 18; i++) {
+    const a = random() * Math.PI * 2, rr = r + 0.34 + random() * 0.54;
+    const stone = new THREE.Mesh(G.dodec(0.11 + random() * 0.07), s.stone);
+    stone.name = 'well-ground-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.08, z + Math.sin(a) * rr);
+    stone.rotation.set(random() * 0.3, random() * Math.PI, random() * 0.3);
+    stone.scale.set(1.1 + random() * 0.3, 0.35 + random() * 0.24, 0.9 + random() * 0.4);
+    g.add(stone);
   }
 }
 function addTamarisk(g: THREE.Group, x: number, z: number, s: Shared) {
@@ -182,61 +212,69 @@ function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
   }
 }
 function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
-  // Stylised olive grove rather than identical low-poly green spheres.
-  // Irregular small silver-olive crown lobes and forked trunks read as a
-  // *living* grove from the visitor path without asserting a specific tree.
+  // Mediterranean olive, read as a gnarled tree rather than a vertical pole
+  // carrying ellipsoid pebbles. Every branch physically joins its parent.
   const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
   const random = rng(seed);
-  const lean = (random() - 0.5) * 0.32;
-  const trunk = new THREE.Mesh(G.cyl(0.085, 0.18, 1.48, 7), s.oliveWood);
-  trunk.name = 'olive-main-trunk';
-  trunk.position.set(x + lean * 0.2, 0.74, z);
-  trunk.rotation.z = lean;
-  g.add(trunk);
-  // Each fork actually extends from the trunk to its crown. Quaternion
-  // alignment (rather than unrelated X/Z Euler rotations) prevents the
-  // floating horizontal sticks seen in the first artistic acceptance.
   const up = new THREE.Vector3(0, 1, 0);
-  for (let i = 0; i < 6; i++) {
-    const a = i * (Math.PI * 2 / 6) + random() * 0.27;
-    const stem = new THREE.Vector3(x + Math.cos(a) * 0.13, 1.20 + random() * 0.24,
-      z + Math.sin(a) * 0.13);
-    const reach = 0.69 + random() * 0.30;
-    const tip = stem.clone().add(new THREE.Vector3(Math.cos(a) * reach,
-      0.32 + random() * 0.43, Math.sin(a) * reach));
-    const axis = tip.clone().sub(stem);
-    const branch = new THREE.Mesh(G.cyl(0.015, 0.058, axis.length(), 6), s.oliveWood);
-    branch.name = 'olive-branch';
-    branch.position.copy(stem).addScaledVector(axis, 0.5);
-    branch.quaternion.setFromUnitVectors(up, axis.normalize());
-    g.add(branch);
+  const leanX = (random() - 0.5) * 0.58;
+  const leanZ = (random() - 0.5) * 0.42;
+  const base = new THREE.Vector3(x, 0.02, z);
+  const knee = new THREE.Vector3(x + leanX * 0.38, 0.69, z + leanZ * 0.38);
+  const crownBase = new THREE.Vector3(x + leanX, 1.43, z + leanZ);
+  const segment = (from: THREE.Vector3, to: THREE.Vector3,
+    bottom: number, top: number, name: string) => {
+    const vector = to.clone().sub(from), length = vector.length();
+    const piece = new THREE.Mesh(G.cyl(top, bottom, length, 7), s.oliveWood);
+    piece.name = name;
+    piece.position.copy(from).addScaledVector(vector, 0.5);
+    piece.quaternion.setFromUnitVectors(up, vector.normalize());
+    g.add(piece);
+  };
+  segment(base, knee, 0.23, 0.16, 'olive-main-trunk');
+  segment(knee, crownBase, 0.16, 0.09, 'olive-main-trunk');
+  for (let i = 0; i < 3; i++) {
+    const a = (i / 3) * Math.PI * 2 + random() * 0.42;
+    const root = base.clone().add(new THREE.Vector3(Math.cos(a) * 0.27, 0.035, Math.sin(a) * 0.27));
+    segment(root, base.clone().add(new THREE.Vector3(0, 0.4, 0)), 0.10, 0.055, 'olive-root');
   }
+  // Forks end *inside* the foliage, rather than protruding as horizontal sticks.
+  for (let i = 0; i < 6; i++) {
+    const a = i * (Math.PI * 2 / 6) + random() * 0.34;
+    const stem = knee.clone().lerp(crownBase, 0.46 + random() * 0.37);
+    const reach = 0.38 + random() * 0.36;
+    const tip = crownBase.clone().add(new THREE.Vector3(
+      Math.cos(a) * reach, 0.21 + random() * 0.28, Math.sin(a) * reach));
+    segment(stem, tip, 0.065, 0.012, 'olive-branch');
+  }
+  // Seven independently placed foliage pockets, with narrow light-catching
+  // lanceolate leaves. Shared geometry/materials merge into just a few draws.
   for (let i = 0; i < 7; i++) {
-    const a = i * Math.PI * (2 / 7) + random() * 0.35;
-    const radius = i === 0 ? 0 : 0.34 + random() * 0.32;
-    const crown = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
-    crown.name = 'olive-crown-lobe';
-    crown.position.set(x + Math.cos(a) * radius + lean * 0.3,
-      1.63 + (random() - 0.5) * 0.48, z + Math.sin(a) * radius);
-    crown.rotation.set(random() * 0.32, random() * 1.2, (random() - 0.5) * 0.42);
-    // Taller, offset lobes avoid the flat 'umbrella' silhouette.
-    // Smaller dark core leaves space for hundreds of uneven twig-level
-    // silver-green leaves, replacing the old flat, balloon-like silhouette.
-    crown.scale.set(0.30 + random() * 0.18, 0.26 + random() * 0.18, 0.34 + random() * 0.17);
-    g.add(crown);
-    const leaflets = low ? 9 : 15;
+    const a = i * Math.PI * (2 / 7) + random() * 0.34;
+    const radius = i === 0 ? 0 : 0.30 + random() * 0.40;
+    const origin = crownBase.clone().add(new THREE.Vector3(
+      Math.cos(a) * radius, 0.25 + (random() - 0.5) * 0.38,
+      Math.sin(a) * radius));
+    const core = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
+    core.name = 'olive-crown-lobe';
+    core.position.copy(origin);
+    core.rotation.set(random() * 0.3, random() * 1.4, (random() - 0.5) * 0.45);
+    core.scale.set(0.24 + random() * 0.11, 0.23 + random() * 0.11, 0.28 + random() * 0.12);
+    g.add(core);
+    const leaflets = low ? 16 : 26;
     for (let j = 0; j < leaflets; j++) {
-      const r = 0.13 + Math.pow(random(), 0.65) * 0.44;
+      const spread = 0.14 + Math.pow(random(), 0.62) * 0.47;
       const theta = random() * Math.PI * 2;
-      const vertical = (random() - 0.5) * 0.48;
-      const sprig = new THREE.Mesh(G.sph(0.16, 5, 4), j % 3 === 0 ? s.leafSilver : s.leaf);
-      sprig.name = 'olive-leaf-sprig';
-      sprig.position.set(crown.position.x + Math.cos(theta) * r,
-        crown.position.y + vertical,
-        crown.position.z + Math.sin(theta) * r);
-      sprig.rotation.set((random() - 0.5) * 1.8, random() * Math.PI, (random() - 0.5) * 1.6);
-      sprig.scale.set(0.22 + random() * 0.29, 0.34 + random() * 0.34, 0.82 + random() * 0.48);
-      g.add(sprig);
+      const elevation = (random() - 0.5) * 0.54;
+      const leaf = new THREE.Mesh(G.oliveLeaf(),
+        j % 4 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+      leaf.name = 'olive-leaf-sprig';
+      leaf.position.set(origin.x + Math.cos(theta) * spread, origin.y + elevation,
+        origin.z + Math.sin(theta) * spread);
+      leaf.rotation.set((random() - 0.5) * 1.2, random() * Math.PI * 2,
+        (random() - 0.5) * 1.9);
+      leaf.scale.set(0.10 + random() * 0.07, 0.065 + random() * 0.055, 1);
+      g.add(leaf);
     }
   }
 }
@@ -508,11 +546,9 @@ function addScrolls(g: THREE.Group, x: number, z: number, s: Shared) {
 function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, n = 3) {
   // Asymmetric planted grove: vary depth and spacing rather than four
   // interpenetrating identical treetops on a straight evenly spaced line.
-  const lateral = [-2.15, -0.72, 0.98, 2.25];
-  const depth = [0.32, -0.68, 0.79, -0.21];
   for (let i = 0; i < n; i++) {
-    addOliveTree(g, x + (lateral[i] ?? (i - n / 2) * 1.55),
-      z + (depth[i] ?? ((i % 2) ? -0.5 : 0.5)), s, low);
+    const [dx, dz] = OLIVE_GROVE_OFFSETS[i] ?? [(i - n / 2) * 1.55, i % 2 ? -0.5 : 0.5];
+    addOliveTree(g, x + dx, z + dz, s, low);
   }
 }
 
