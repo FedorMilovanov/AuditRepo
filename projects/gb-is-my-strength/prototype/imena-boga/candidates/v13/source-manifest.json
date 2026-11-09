@@ -100,8 +100,8 @@
       "bytes_normalized": 5455
     },
     "atlas/src/components/SevenIAmStatements.tsx": {
-      "sha256": "c0e82ac9f562998c0e9030411aba4b5a55e063529a4ba9b3a018314f9d5a22be",
-      "bytes_normalized": 13363
+      "sha256": "c9d0ab9bf9ac69f05ac9792b7cf4fb60949739d125d779e4c1394455622b1f32",
+      "bytes_normalized": 14367
     },
     "atlas/src/components/SiteNavbar.tsx": {
       "sha256": "51a94873a5a80f8951c96af92493a25c04b2e765de60a6c5341cc4abdbbb3958",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "06826de003b7da4325beae7686e6cf0e7a4f542f017016d02ba76f82214b4a45",
-      "bytes_normalized": 1950
+      "sha256": "766f64cd2074255513f8c916ce77e708dd0f67ca828146eb99e1cf8c3fbffa3a",
+      "bytes_normalized": 3628
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
