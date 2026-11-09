@@ -159,7 +159,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        `${entry.transliteration} (${entry.original}) — ${entry.russianName}: ${entry.literalMeaning}`
+        `${entry.transliteration} (${entry.original}) — ${entry.russianName}. Тип библейского выражения: ${entry.category}. Значение и перевод: ${entry.literalMeaning}`
       );
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
@@ -190,10 +190,11 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
     window.speechSynthesis.cancel();
     const textToRead = [
       `${entry.transliteration} — ${entry.russianName}.`,
-      `Буквальное значение: ${entry.literalMeaning}.`,
+      `Тип библейского выражения: ${entry.category}.`,
+      `Значение и перевод: ${entry.literalMeaning}.`,
       entry.summary,
       ...entry.deepExegesis,
-      `Исполнение во Христе Иисусе: ${entry.christologicalFulfillment}`,
+      `Христианское прочтение во свете Христа: ${entry.christologicalFulfillment}`,
       `Пастырское применение: ${entry.pastoralApplication}`,
     ].join(' ');
 
@@ -287,7 +288,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 borderColor: isStudied ? '#2a6b4a' : 'var(--gb-border-strong)',
                 color: isStudied ? '#2a6b4a' : 'var(--gb-muted)',
               }}
-              title="Отметить статус изучения этого Имени"
+              title="Отметить изучение этой позиции"
             >
               <CheckCircle2 className="h-3.5 w-3.5" />
               <span>{isStudied ? 'Изучено' : 'Отметить'}</span>
@@ -415,6 +416,13 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               >
                 {entry.russianName}
               </p>
+              <p
+                data-atlas-expression-type
+                className="font-ui relative z-10 mx-auto mt-2 max-w-2xl break-words px-2 text-xs leading-relaxed"
+                style={{ color: 'var(--gb-muted)' }}
+              >
+                Тип библейского выражения: {entry.category}
+              </p>
 
               <div
                 className="font-ui relative z-10 mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 border-t pt-3.5 text-xs"
@@ -442,7 +450,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 className="font-body-editorial relative z-10 mt-3 text-sm sm:text-base"
                 style={{ color: 'var(--gb-ink-secondary)' }}
               >
-                <strong>Буквальное значение:</strong> {entry.literalMeaning}
+                <strong>Значение и перевод:</strong> {entry.literalMeaning}
               </p>
             </div>
           </div>
@@ -543,7 +551,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               style={{ color: 'var(--gb-accent)' }}
             >
               <Cross className="h-4 w-4" />
-              <span>Исполнение во Христе Иисусе</span>
+              <span>Христианское прочтение во свете Христа</span>
             </h3>
             <p
               className="font-body-editorial text-[15.5px] leading-relaxed"
