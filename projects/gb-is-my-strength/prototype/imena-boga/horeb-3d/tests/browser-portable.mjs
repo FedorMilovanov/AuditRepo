@@ -39,12 +39,22 @@ try {
     return !!btn;
   });
   if (!start) throw new Error('Offline WebGL start button missing');
-  await page.waitForFunction(() => !!document.querySelector('canvas'), { timeout: 90000 });
+  // Canvas exists before the asynchronous WebGL world is constructed.
+  // Wait for the actual WorldState (the loading status disappears), otherwise
+  // checking window.__horeb here could produce a false green on a slow GPU.
+  await page.waitForFunction(() => {
+    const canvas = document.querySelector('canvas');
+    const loading = [...document.querySelectorAll('[role="status"]')].some(
+      (el) => el.textContent?.includes('Камень раскрывается'));
+    const failed = [...document.querySelectorAll('[role="alert"]')].some(
+      (el) => el.textContent?.includes('Не удалось запустить 3D-сцену'));
+    return !!canvas && !loading && !failed;
+  }, { polling: 150, timeout: 90000 });
+  await new Promise((resolve) => setTimeout(resolve, 500));
   if (!await page.evaluate(() => window.__horeb === undefined))
     throw new Error('Production build leaked mutable e2e World API under ?e2e');
   // Production World remains private even with an explicit ?e2e query.
-  // A visible canvas and no script exceptions witness the portable render.
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // The canvas has entered its active rendered state, not merely mounted.
   if (errors.length) throw new Error('Offline runtime errors: ' + errors.join(' | '));
   const read = await page.goto(pathToFileURL(reader).href, { waitUntil: 'domcontentloaded' });
   if (!read || read.status() !== 200) throw new Error('Offline reader cannot load');
