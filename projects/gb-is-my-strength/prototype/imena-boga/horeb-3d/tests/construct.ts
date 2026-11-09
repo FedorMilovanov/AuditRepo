@@ -269,6 +269,18 @@ if (hagarRecord) {
     scene.getObjectByName('spring-irregular-water') instanceof THREE.Mesh &&
     scene.getObjectByName('spring-irregular-bank') instanceof THREE.Mesh &&
     edges === 13);
+  const surface = scene.getObjectByName('spring-irregular-water');
+  const bank = scene.getObjectByName('spring-irregular-bank');
+  t('Hagar spring uses distinct lit dielectric water, not black metallic deep-well water',
+    surface instanceof THREE.Mesh && bank instanceof THREE.Mesh &&
+    surface.material instanceof THREE.MeshStandardMaterial &&
+    bank.material instanceof THREE.MeshStandardMaterial &&
+    surface.material !== bank.material &&
+    surface.material.metalness === 0 &&
+    surface.material.roughness >= 0.15 && surface.material.roughness <= 0.4 &&
+    surface.material.emissiveIntensity === 1 &&
+    surface.material.emissive.getHex() === 0 &&
+    surface.material.color.g > bank.material.color.g * 1.5);
 }
 if (gardenRecord) {
   const grove = buildExhibitProps(gardenRecord, true, 0, 0);
