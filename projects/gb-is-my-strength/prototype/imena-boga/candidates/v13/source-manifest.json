@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "1339a7c2a9b7d23410c86b9abb1b61644baf58fc3b91b21b21e668d59a790a8a",
-      "bytes_normalized": 5348
+      "sha256": "af51234056dfc2b23f02b7ceff75c7bbb756994b25455c82a9a8edf6d40bcf87",
+      "bytes_normalized": 6008
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -240,8 +240,8 @@
       "bytes_normalized": 140842
     },
     "sozvezdie/src/components/Epilogue.tsx": {
-      "sha256": "ccb060a92667e36b78494e26e37b2b2da8752c0b838e0d5596e682c891ec4717",
-      "bytes_normalized": 9461
+      "sha256": "63d637e23447c55da3f054e018e8261167bc576814d4d076d3bf74052c2377f6",
+      "bytes_normalized": 9372
     },
     "sozvezdie/src/components/Hero.tsx": {
       "sha256": "b5b91cfc2a0b239d1fcca5ae0b0176299f0341808a6dbfe595f1fa2e1caa6a11",
@@ -260,8 +260,8 @@
       "bytes_normalized": 18503
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "248d4404217b5542f1432018a412d127a5259ce0fce8762a464055804ddd05e0",
-      "bytes_normalized": 18212
+      "sha256": "0decac9c61745fb3cbd8bb3c3b8af65666c16e3918f760f4501b3acdbb90dde5",
+      "bytes_normalized": 18233
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "1ef3a12a6b31117e0bd72de2dee674db0eb5bc3363fcc331b2b9df48cfce5d42",

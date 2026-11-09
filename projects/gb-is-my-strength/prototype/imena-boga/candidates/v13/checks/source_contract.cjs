@@ -72,3 +72,11 @@ if(!atlasExplorer.includes('36 исследуемых библейских вы�
    atlasExplorer.includes('36 рассмотренных имён и титулов Бога'))
  throw Error('Atlas catalogue wrongly presents 36 positions as canonical proper names');
 console.log('V13_SCOPE_LANGUAGE_CONTRACT_PASS');
+const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
+const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');
+if(readerSection.includes('«Я есмь» и составные имена') ||
+   !readerSection.includes('«Я есмь» и связанные выражения') ||
+   !readerEpilogue.includes('но не {NAMES.length}') ||
+   readerEpilogue.includes('Все имена этой страницы'))
+ throw Error('Reader related-section or epilogue reintroduced false proper-name counts');
+console.log('V13_READER_SEMANTIC_SCOPE_PASS');

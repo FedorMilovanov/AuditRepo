@@ -295,7 +295,7 @@ function NameSection({
               <Reveal delay={0.1}>
                 <div className="mt-10 border-t border-gold-500/15 pt-6">
                   <p className="font-ui text-[9px] font-medium uppercase tracking-[0.35em] text-cream-700">
-                    {name.id === "yhwh" ? "Имя в контексте: «Я есмь» и составные имена" : "Связанные темы"}
+                    {name.id === "yhwh" ? "Имя ЯХВЕ в контексте: «Я есмь» и связанные выражения" : "Связанные темы"}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {related.map((r) => (
@@ -304,7 +304,7 @@ function NameSection({
                         type="button"
                         onClick={() => jump(r.id)}
                         className="group flex items-center gap-2.5 rounded-full border border-cream-800/60 bg-ink-900/50 py-2 pl-4 pr-3 transition-all duration-300 hover:border-gold-500/50 hover:bg-ink-800 hover:shadow-[0_0_20px_-6px_rgba(212,175,55,0.4)]"
-                        aria-label={`Перейти к имени ${r.translit}`}
+                        aria-label={`Перейти к разделу ${r.translit}`}
                       >
                         <span
                           {...scriptAttrs(r)}
