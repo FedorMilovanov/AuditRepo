@@ -55,8 +55,10 @@ export class World {
   private scenicGroups: { object: THREE.Group; z: number }[] = [];
   private frameBudgetElapsed = 0;
   private activeInspection: { id: string; until: number } | null = null;
-  private zones!: ReturnType<typeof buildZones>;
-  private bush!: ReturnType<typeof buildBurningBush>;
+  // Null after disposal: the old World must not retain its heavy geometry,
+  // scene-updater closures or the Burning Bush particle graph across rebuilds.
+  private zones: ReturnType<typeof buildZones> | null = null;
+  private bush: ReturnType<typeof buildBurningBush> | null = null;
   private ambient = new THREE.AmbientLight(0xffeedd, 4.0);
   private hemi = new THREE.HemisphereLight(0x6a7cb0, 0x3a2a20, 1.0);
   private moon = new THREE.DirectionalLight(0x9fb0e0, 0.8);
@@ -308,8 +310,8 @@ export class World {
     this.renderer.setPixelRatio(choosePixelRatio(s.quality, window.devicePixelRatio || 1,
       s.autoQuality && this.autoLoweredResolution));
     this.renderer.toneMappingExposure = s.exposure;
-    this.zones.particles.forEach((p) => (p.visible = s.particles));
-    this.bush.sparks.visible = s.particles;
+    this.zones?.particles.forEach((p) => (p.visible = s.particles));
+    if (this.bush) this.bush.sparks.visible = s.particles;
     this.audio.setEnabled(s.sound);
     this.updateActiveState();
     this.resize();
@@ -436,6 +438,9 @@ export class World {
   }
 
   private loop = () => {
+    // A queued animation callback may fire once during a context teardown.
+    // Never render into or update a disposed scene.
+    if (this.disposed || this.contextLost || !this.zones || !this.bush) return;
     const slice = Math.min(0.1, this.clock.getDelta());
     this.frameBudgetElapsed += slice;
     // Limit unnecessary GPU work on 120/144/240Hz screens; the low-power
@@ -572,6 +577,7 @@ export class World {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     for (const [t, ty, fn, o] of this.listeners) t.removeEventListener(ty, fn, o);
+    this.listeners.length = 0;
     if (document.pointerLockElement === this.canvas) document.exitPointerLock();
     // A single procedural atlas/material is shared by dozens of scene props.
     // Dispose each GPU resource exactly once instead of re-disposing shared assets.
@@ -599,5 +605,17 @@ export class World {
     this.audio.dispose();
     this.renderer.dispose();
     this.renderer.forceContextLoss();
+    // Disposing GPU buffers is not sufficient: React may temporarily retain
+    // an old World via an async callback or a QA reference. Detach the owned
+    // graphs, updater closures and all navigation/art references as well.
+    this.scene.clear();
+    this.zones = null;
+    this.bush = null;
+    this.scenicGroups.length = 0;
+    this.nameBeacons.length = 0;
+    this.exhibitPos.length = 0;
+    this.obstacles.length = 0;
+    this.sandals = null;
+    this.activeInspection = null;
   }
 }

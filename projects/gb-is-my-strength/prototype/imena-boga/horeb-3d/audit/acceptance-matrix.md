@@ -17,3 +17,5 @@
 | G10 LOW_POWER_AND_SCENIC_CULL | PENDING exact-HEAD CI | Низкий профиль `low-power` 30 FPS / high 60 FPS, экономный дистанционный рендер 85/125 м, сохранение локального E и всех 42 записей; сравнение zone0 calls с 306 baseline. Реальный ПК Offline, причина его перегрузки не установлена; аппаратный стресс тест запрещён без восстановления и отдельного допуска. |
 
 | G11 LIVE_QUALITY_REBUILD | PENDING exact-HEAD CI | High↔low inside a living 3D journey must produce fresh keyed canvas/WebGL renderer, 42 correctly-sized label atlas, safe checkpoint. New `tests/browser-quality.mjs` in independent GitHub runner. GPU device-specific acceptance remains HOLD. |
+
+| G11 WEBGL_LIFECYCLE_REPEATED | PENDING exact-HEAD QA | UI-driven high→low→high→low must release previous contexts, scene graph/listeners/zone and bush closures, retain one canvas and safe shod checkpoint, with low→low GPU resource counter plateau. Per-context info.memory is NOT physical VRAM. Do not test on unstable Windows/CUDA hardware. |

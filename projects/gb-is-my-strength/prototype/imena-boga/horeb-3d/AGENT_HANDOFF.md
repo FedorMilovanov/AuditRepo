@@ -14,6 +14,12 @@
 
 Никаких стресс-тестов на пользовательском ПК: все Desktop Commander подключения `DESKTOP-O3FDOA4` Offline; возможная аппаратная перегрузка/температура не диагностирована. Границы Хорива, тёмное освещение, исходный архив, Product/Research, 42 Editorial HOLD и Draft PR не изменять.
 
+## GPU lifecycle gate — verified baseline / pending repeated switch
+
+**Last 3/3 SUCCESS baseline:** `7664ee8e7dd3dfe60f3517feecc3b851a0602389` — [HOREB QA #42617224332](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42617224332), [Validate #42617224322](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42617224322), [Preflight #42617224386](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42617224386). Live quality high→low creates a new renderer with 42 low-res atlases and a safe checkpoint. All earlier 135/135 engineer, 34/34 Chrome smoke, 42/42 E and 0→7→0 journey evidence remain from this exact SHA.
+
+**Current work (require new exact-HEAD proof, never inherit 3/3 automatically):** `World.dispose()` now releases the `scene` graph, pointer/keyboard listeners, 42 exhibits, scenic references, Bush and zone updater closures after GPU disposal. Owned objects are represented as nullable so early construction failure and late callbacks safely terminate. Browser-quality now exercises `high→low→high→low`, checks every old WebGL context is lost and the scene/handlers empty, checks low-mode GPU geometry/texture counters plateau, and preserves safe checkpoint/shod state. These counters are **per-WebGL-context resource counts, not actual VRAM measurements**. Do not execute on local `DESKTOP-O3FDOA4` while Offline; use GitHub runner only.
+
 ## GPU-sparing wave — осторожная разработка после сообщения о перегрузке ПК
 
 Локальный `DESKTOP-O3FDOA4` показан **Offline**; ни тесты, ни нагрузочные процессы на пользовательском компьютере не запускать. Вся 3D-приёмка выполняется на отдельном GitHub Ubuntu/Chromium runner; его SwiftShader не является доказательством FPS/VRAM на реальном ПК. Аппаратный стресс-тест и настройка неисправной CUDA **HOLD**.

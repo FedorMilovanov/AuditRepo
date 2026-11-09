@@ -116,6 +116,83 @@ try {
       evidence.shoes !== 'shod' || evidence.contextLost || errors.length)
     throw new Error('QUALITY REBUILD FAIL: ' + JSON.stringify({ ...evidence, errors }));
   console.log('PASS high→low graphics switch: new canvas, old renderer disposed, 42 compact atlases, safe checkpoint');
+  // A live profile change is an actual WebGL teardown/remount, not a cosmetic
+  // DPR toggle. Repeat it to detect leaked scene graphs and upward drift in
+  // resident WebGL geometry/texture counters on an identical low-quality view.
+  await page.waitForFunction(() => window.__horeb?.world?.renderer?.info?.render?.frame >= 5,
+    { polling: 200, timeout: 45000 });
+  const firstLow = await page.evaluate(() => {
+    const w = window.__horeb.world;
+    return { memory: { geometries: w.renderer.info.memory.geometries,
+      textures: w.renderer.info.memory.textures },
+      position: w.position };
+  });
+  const switchProfile = async (target) => {
+    await page.evaluate(() => { window.__qualityPreviousWorld = window.__horeb.world; });
+    const settingsOpened = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((button) =>
+        (button.textContent || '').trim() === 'Настройки');
+      b?.click(); return !!b;
+    });
+    if (!settingsOpened) throw new Error('Settings button missing for second quality switch');
+    await page.waitForSelector('[role="dialog"] input[name="q"]');
+    const selected = await page.evaluate((want) => {
+      const name = want === 'high' ? 'Высокое' : 'Низкое';
+      const radio = [...document.querySelectorAll('input[name="q"]')].find((x) =>
+        x.closest('label')?.textContent?.includes(name));
+      radio?.click(); return !!radio;
+    }, target);
+    if (!selected) throw new Error('Quality control missing for ' + target);
+    await page.waitForFunction((want) => {
+      const w = window.__horeb?.world;
+      return !!w && w !== window.__qualityPreviousWorld &&
+        w.settings.quality === want && w.renderer.info.render.frame >= 5;
+    }, { polling: 200, timeout: 90000 }, target);
+    return await page.evaluate(() => {
+      const old = window.__qualityPreviousWorld;
+      const w = window.__horeb.world;
+      return {
+        profile: w.settings.quality,
+        canvasCount: document.querySelectorAll('canvas').length,
+        freshCanvas: w.renderer.domElement !== old.renderer.domElement,
+        oldDisposed: old.disposed,
+        oldContextLost: old.renderer.getContext().isContextLost(),
+        oldChildren: old.scene.children.length,
+        oldListeners: old.listeners.length,
+        oldProps: old.scenicGroups.length,
+        oldBeacons: old.nameBeacons.length,
+        oldZonesReleased: old.zones === null && old.bush === null,
+        memory: { geometries: w.renderer.info.memory.geometries,
+          textures: w.renderer.info.memory.textures },
+        position: w.position,
+        shoes: w.shoes,
+      };
+    });
+  };
+  const highAgain = await switchProfile('high');
+  const lowAgain = await switchProfile('low');
+  for (const sample of [highAgain, lowAgain]) {
+    if (!sample.freshCanvas || sample.canvasCount !== 1 || !sample.oldDisposed ||
+        !sample.oldContextLost || sample.oldChildren !== 0 ||
+        sample.oldListeners !== 0 || sample.oldProps !== 0 ||
+        sample.oldBeacons !== 0 || !sample.oldZonesReleased ||
+        Math.abs(sample.position.x) > 0.5 ||
+        Math.abs(sample.position.z - firstLow.position.z) > 2 ||
+        sample.shoes !== 'shod')
+      throw new Error('REPEATED QUALITY RELEASE FAIL: ' +
+        JSON.stringify({ firstLow, highAgain, lowAgain, errors }));
+  }
+  // renderer.info.memory counts are per-WebGL-context, not a system VRAM
+  // reading. Identical low-scene counts must plateau after a full release.
+  if (firstLow.memory.geometries < 1 || firstLow.memory.textures < 1 ||
+      lowAgain.memory.geometries > firstLow.memory.geometries + 6 ||
+      lowAgain.memory.textures > firstLow.memory.textures + 3 ||
+      errors.length)
+    throw new Error('WEBGL MEMORY REGRESSION: ' +
+      JSON.stringify({ firstLow, highAgain, lowAgain, errors }));
+  console.log('PASS high→low→high→low: old contexts lost, scene/handlers released, one canvas, stable GPU resource counters ' +
+    JSON.stringify({ firstLow: firstLow.memory, lowAgain: lowAgain.memory }));
+
 } finally {
   await browser.close();
 }
