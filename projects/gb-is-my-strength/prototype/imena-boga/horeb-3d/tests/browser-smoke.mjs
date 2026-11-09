@@ -24,6 +24,29 @@ const check = (name, ok, detail = '') => {
   if (ok) passes++; else failures.push(name + (detail ? ': ' + detail : ''));
 };
 const errors = [];
+// Wait for *painted* intro, not merely a DOM node whose reveal animation is
+// still at opacity:0. Fail rather than saving a misleading black screenshot.
+async function waitForIntroPaint(page) {
+  await page.waitForFunction(() => {
+    const root = document.querySelector('.intro');
+    const heading = root?.querySelector('h1');
+    const landscape = root?.querySelector('.sinai');
+    const start = [...(root?.querySelectorAll('button') || [])].find(
+      (b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()));
+    if (!root || !heading || !landscape || !start) return false;
+    const painted = (element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width < 1 || rect.height < 1) return false;
+      for (let node = element; node && node !== document.documentElement; node = node.parentElement) {
+        const css = getComputedStyle(node);
+        if (css.display === 'none' || css.visibility !== 'visible' ||
+            Number(css.opacity) < 0.99) return false;
+      }
+      return true;
+    };
+    return painted(heading) && painted(start) && painted(landscape);
+  }, { polling: 100, timeout: 15000 });
+}
 try {
   const page = await browser.newPage();
   page.setDefaultTimeout(75000);
@@ -40,6 +63,8 @@ try {
   const response = await page.goto(base + '/?e2e', { waitUntil: 'domcontentloaded', timeout: 45000 });
   check('intro HTTP 200', response?.status() === 200, String(response?.status()));
   check('intro title visible', await page.$eval('h1', (h) => h.textContent.includes('ИМЕНА БОГА')).catch(() => false));
+  await waitForIntroPaint(page);
+  check('intro visibly painted after reveal', true);
   await page.screenshot({ path: join(shots, 'smoke-01-intro.png') });
 
   await page.evaluate(() => [...document.querySelectorAll('button')]
@@ -358,6 +383,8 @@ try {
   const dims = await mobile.evaluate(() => ({document:document.documentElement.scrollWidth, viewport:innerWidth}));
   check('390px intro no horizontal overflow', dims.document <= dims.viewport + 1,
     dims.document + '/' + dims.viewport);
+  await waitForIntroPaint(mobile);
+  check('390px intro visibly painted after reveal', true);
   await mobile.screenshot({path:join(shots,'smoke-04-mobile.png')});
   await mobile.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
