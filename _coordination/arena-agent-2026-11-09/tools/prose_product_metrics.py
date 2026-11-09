@@ -60,6 +60,14 @@ def words_of(s):
     return len(re.findall(r'[А-Яа-яЁёA-Za-z0-9]+(?:[-’\']\w+)*', s))
 
 
+def strip_resume(html):
+    """Убрать резюме «Коротко» и сноски: это не проза статьи."""
+    html = re.sub(r'<section[^>]*class="[^"]*summary-card[^"]*".*?</section>', '', html, flags=re.S)
+    html = re.sub(r'<ol[^>]*summary-card__body[^>]*>.*?</ol>', '', html, flags=re.S)
+    html = re.sub(r'<footer[^>]*class="[^"]*(sources|article-footer)[^"]*".*?</footer>', '', html, flags=re.S)
+    return html
+
+
 def collect(path, seen=None, depth=0):
     """Рекурсивно собрать разметку компонента и всех его дочерних секций."""
     if seen is None:
@@ -79,7 +87,7 @@ def collect(path, seen=None, depth=0):
 
 
 def analyse(path):
-    body = collect(path)
+    body = strip_resume(collect(path))
 
     paras = []
     for m in re.finditer(r'<p\b[^>]*>(.*?)</p>', body, re.S):
@@ -123,6 +131,7 @@ def analyse(path):
         'h2': h2,
         'slogan_pct': round(100 * slog / len(paras)),
         'cliche': round(1000 * cl / words, 1),
+        **_extra(all_text, lens, paras),
     }
 
 
@@ -155,6 +164,9 @@ def analyse_mdx(path):
     raw = re.sub(r'<(script|style)\b.*?</\1>', '', raw, flags=re.S | re.I)
     raw = re.sub(r'^\s*(import|export)\s.*$', '', raw, flags=re.M)
     raw = re.sub(r'```.*?```', '', raw, flags=re.S)
+    # блок «Коротко» — резюме, а не проза: в метрику абзацев не входит
+    raw = re.sub(r'<section class="summary-card".*?</section>', '', raw, flags=re.S)
+    raw = re.sub(r'<ol class="summary-card__body".*?</ol>', '', raw, flags=re.S)
 
     paras = []
     for block in re.split(r'\n\s*\n', raw):
@@ -199,6 +211,26 @@ def analyse_mdx(path):
         'h2': h2,
         'slogan_pct': round(100 * slog / len(paras)),
         'cliche': round(1000 * cl / words, 1),
+        **_extra(all_text, lens, paras),
+    }
+
+
+def _extra(all_text, lens, paras):
+    """Дополнительные признаки для градуированных критериев."""
+    low = all_text.lower()
+    mean = sum(lens) / len(lens)
+    sd = (sum((x - mean) ** 2 for x in lens) / len(lens)) ** 0.5
+    return {
+        # разброс длины абзаца: <0.35 — машинная ровность
+        'para_cv': round(sd / mean, 2) if mean else 0,
+        # «не X, а Y» на 1000 слов — любимый оборот корпуса
+        'ne_a_na': round(1000 * len(re.findall(r'\bне\s+[\w-]+[^.;]{0,25},?\s+а\s+', all_text.lower())) / max(sum(lens), 1), 1),
+        # абзац, кончающийся двоеточием (обрыв в список) — доля
+        'colon_pct': round(100 * sum(1 for p in paras if p.rstrip().endswith(':')) / len(paras)),
+        # доля абзацев из одного предложения (рубленая подача)
+        'one_sentence_pct': round(100 * sum(1 for p in paras if len(re.findall(r'[.!?…](?:\s|$)', p)) <= 1) / len(paras)),
+        # риторический вопрос в начале/конце абзаца
+        'question_pct': round(100 * sum(1 for p in paras if '?' in p and len(p.split()) < 30) / len(paras)),
     }
 
 
