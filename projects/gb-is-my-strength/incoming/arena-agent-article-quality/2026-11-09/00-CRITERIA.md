@@ -1,0 +1,275 @@
+# Критериальная база аудита статей «Господь Бог» — v1 (2026-11-09)
+
+## Agent
+
+- Agent: arena-agent (coordinator / agent A)
+- Date: 2026-11-09
+- Audited anchor: `ae3669bf7a9b87af06e999c0bb3ef5009c400d43` (AuditRepo main)
+- Evidence anchor: Product `main` tree fetched 2026-11-09 via `codeload.github.com` (113 MB tarball); 70 `src/content/articles/*.mdx` + 49 `src/components/**/*Body.astro` extracted, sha256 inventory in `01-ARTICLE_REGISTRY.md`
+- Signal class: Product content corpus (source tree) + live snapshot `https://gospod-bog.ru/baptisty-rossii/`
+- Status: `raw` — рабочая критериальная база для трёх агентов, не MASTER и не Product mutation
+- Branch/event context: `arena/c6d6c46c-auditrepo`; три агента работают в одной ветке, изоляция по файлам (см. `02-COORDINATION.md`); push/commits не производятся
+
+---
+
+## 1. Источники стандартов
+
+### 1.1 Обязательные стандарты самого проекта (Product `main`, версия 2026-09-07)
+
+| Документ | Что даёт |
+|---|---|
+| `docs/ARTICLE-STANDARD-CHARTER.md` | Зонтичная Хартия, **54 стандарта S1–S54**: верификация, аппарат, структура, слог, пасторский голос, экзегеза, типографика, чек-лист перед публикацией |
+| `docs/CONTENT-QUALITY-STANDARD.md` | 7 инвариантов «нарушение = не публиковать», semantic каркас статьи, серия, квизы, изображения, типографика, проекции, §9 pre-publication check |
+| `docs/EDITORIAL-SOURCE-POLICY.md` | Как доказательство превращается в публичную формулировку; Research→Product handoff |
+| `docs/BAPTISTY-ROSSII-EDITORIAL-ARCHITECTURE.md` | 4 уровня книги, 4 главы / 9 статей / 1 справочник / 229 мин; 17–20 статей как диапазон |
+| `data/baptisty-rossii-expansion-roadmap.json` | `minimumWordsPerArticle: 2800`, `preferredWordsPerArticle: 4200`, `chapterTargetWords.typicalMin: 4500`, `bookTargetWords.min: 90000`, `targetTotalWords: 47400`, per-article `targetWordCount: 3800–5200`, forbidden list |
+| `docs/DOCUMENT_AUTHORITY.md` | Имя/дата файла не делают его нормативным; приоритет current owner → current tree → machine owners |
+
+**Прямые цитаты, ставшие критериями:**
+
+- «Академическая проверяемость и пасторское слово работают вместе; ни красивый слог без evidence, ни безжизненный набор ссылок не считается готовой статьёй» (Хартия).
+- S19: «Опора ≥2500 слов · Основная ≥1500 · Мост ≥900 · Справочник ≥1500. **Это минимумы глубины, а не разрешение набивать текст водой**».
+- S23: «Живой литературный слог, точное слово, отсутствие канцелярита и **искусственной «ИИ-важности»**».
+- S43: «Читатель видит evidence, альтернативы и путь к выводу, **а не только вердикт**».
+- S17: «„Коротко“: 4–6 пунктов … только из уже доказанного содержания статьи и не вводят новые claims».
+- S12: «В публичном тексте не остаются repo/Drive paths, OCR filenames, workflow notes, внутренние HOLD/TODO».
+- CQS инвариант 3: «**Глубина без воды.** Существенные различения и варианты раскрыты, а не сведены к лозунгу „верно/неверно“».
+- CQS §1: «академически точный, живой русский, без канцелярита, искусственной важности и непроверенной риторики»; «механическое добивание word count водой запрещено».
+- CQS §3: «**Серия — единая система без generic-усреднения** … сохранение route/series identity».
+- CQS §5: «**AI-реконструкция не выдаётся за исторический документ** и не заменяет owner-protected изображение без прямого решения владельца».
+- CQS §8: «Summary, quiz, search description, card copy и подписи — **projections смысла статьи**. Они не имеют права вводить новый факт … или более сильный verdict».
+- Архитектура: «Расширение оценивается в **17–20 статей, а не в 17 пустых глав**»; «Существующие тексты уже содержат несколько самостоятельных статей и должны **разделяться редакционно**, а не бесконечно наращиваться внутри двух монолитов».
+
+### 1.2 Внешние стандарты (серьёзные источники)
+
+| Источник | Норма |
+|---|---|
+| GOV.UK Content and publishing guidance — «Use clear language» https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/ | Paragraphs ≤5 sentences; sentences >25 words split; plain English **mandatory**; specialist terms explained on first use |
+| GOV.UK insidegovuk — «Sentence length: why 25 words is our limit» https://insidegovuk.blog.gov.uk/2014/08/04/sentence-length-why-25-words-is-our-limit/ | «1 thought per paragraph», «paragraphs of 3–6 sentences work best», no strict rule; shorter can be effective |
+| GOV.UK — «How to write effective detailed guides» https://insidegovuk.blog.gov.uk/2014/02/24/how-to-write-effective-detailed-guides-for-gov-uk/ | Front-load, start from user need, active voice, subheadings as actions |
+| Nielsen Norman Group / JHU «Writing for the Web» https://sites.krieger.jhu.edu/using-your-site/web-writing/ | 79 % users scan, only 16 % read word-by-word; paragraphs <3 sentences, sentences <20–25 words, lists instead of paragraphs where possible |
+| NN/g-derived paragraph guidance https://lettercounter.org/blog/paragraph-length-web-content/ | 2–4 sentences / 40–70 words for web; 50–75 chars per line; academic audiences expect 100–200 words |
+| Жанровые ориентиры https://naturalwrite.com/blog/how-many-words-should-be-in-a-paragraph | Academic 5–8 sentences / 150–250 words; news 1–3 sentences / 30–60 words; blog 2–4 / 50–100 |
+| Wikipedia, WikiProject AI Cleanup https://en.wikipedia.org/wiki/Artificial_intelligence_in_Wikimedia_projects | «Signs of AI writing»: fabricated or unrelated citations, LLM-response phrasing, prompt leakage |
+| IEEE Spectrum / WikiProject AI Cleanup interview https://explainx.ai/blog/wikipedia-wikiproject-ai-cleanup-ai-generated-articles-pangram-15-percent-paste-check-2026 | **No single signal is enough**; rule of three + negative parallelism weak alone, meaningful in combination; the modern tell is **a real source that does not support the sentence** |
+| JMIR Mental Health / Deakin University (Linardon, 2025), обзор https://studyfinds.org/chatgpts-hallucination-problem-fabricated-references/ | 19.9 % of 176 AI citations fully fabricated; 45.4 % of real ones contained errors; only 43.8 % real+accurate; 64 % of fake DOIs point to real unrelated papers; 6 % → 28–29 % fabrication on less-studied topics |
+| Cabezas-Clavijo & Sidorenko-Bautista (2025), обзор https://sourceverify.ai/en/answers/latest-research-academic-reference-hallucinations | 400 references / 8 chatbots: only 26.5 % fully correct, 39.8 % fabricated or incorrect |
+| «LLM hallucinations in the wild» (Cornell/UCLA/Berkeley), обзор https://economictimes.indiatimes.com/news/new-updates/nearly-1-46-lakh-ai-hallucinated-references-entered-scientific-papers-in-2025-study/articleshow/131329519.cms | 146 932 unverifiable references in 2025; 78.8 % passed arXiv moderation, 85.3 % survived into journals |
+| OpenAI AI Text Classifier https://www.digitalapplied.com/blog/ai-text-detectors-accuracy-independent-research | withdrawn 20.07.2023 for «low rate of accuracy»: 26 % true positives, 9 % false positives |
+| Tin House https://tinhousepress.com/2026/08/16/writing-with-ai-as-a-tool/ | Tell-lists measure familiarity with a style, not origin; high false-positive on formal register, high false-negative after one real edit |
+
+---
+
+## 2. Обновлённый НЕГАТИВНЫЙ список: претензии к ИИ-статьям
+
+Легенда: **Б** = блокирующее (не публиковать), **Р** = риск (требует разбора), **С** = сигнал (учитывать только в сочетании).
+
+### A. Галлюцинации и доказательность
+
+| ID | Претензия | Как проявляется | Проверка | Тяжесть |
+|---|---|---|---|---|
+| H01 | Выдуманный источник / DOI / страница | Ссылка выглядит правдоподобно, но объекта нет | Сверить каждый URL/название с внешним каталогом | Б |
+| H02 | **Реальный источник не подтверждает предложение** (главный современный tell) | Источник существует, но в нём нет приписанного утверждения | Открыть источник, найти locator | Б |
+| H03 | Числа/даты/имена без опоры | «Исследовав около 300 публикаций» без сноски | S1, S3 | Б |
+| H04 | «По исследованиям» без авторов | Абстрактная отсылка вместо библиографии | S11 | Б |
+| H05 | Усиление формулировки | «источник сообщает» → «установлено» | S3, EDITORIAL-SOURCE-POLICY §1 | Б |
+| H06 | Склейка цитат / обрезка с изменением смысла | Прямая речь без edition/version/locator | S4, S5 | Б |
+| H07 | Два зависимых пересказа выданы за независимую корректную проверку | Один и тот же источник в двух изложениях | S6 | Б |
+| H08 | Анахронизмы, смешение событий, версий, календарей, одноимённых лиц | «1944» перепутано с «1945»; два съезда 1884 слиты | S8 | Б |
+| H09 | Слух / апокриф / discovery lead как факт | «По преданию…» без маркировки | S5, S10 | Б |
+| H10 | Заполнение пробела «правдоподобной деталью» | Вместо «скан не найден» — выдуманное описание | S10 «Пробел честнее выдумки» | Б |
+
+Внешнее обоснование: 56 % AI-ссылок ошибочны или выдуманы [2](https://studyfinds.org/chatgpts-hallucination-problem-fabricated-references/); только 26.5 % полностью корректны [4](https://sourceverify.ai/en/answers/latest-research-academic-reference-hallucinations); недоступность проверки ведёт к тому, что 85.3 % галлюцинаций доживают до публикации [3](https://economictimes.indiatimes.com/news/new-updates/nearly-1-46-lakh-ai-hallucinated-references-entered-scientific-papers-in-2025-study/articleshow/131329519.cms).
+
+### B. Языковые ИИ-особенности и «тонкости»
+
+| ID | Признак | Комментарий | Тяжесть |
+|---|---|---|---|
+| L01 | AI vocabulary: «погрузиться», «играть ключевую роль», «важно отметить», «в современном мире», «таким образом», «более того», «нельзя не отметить» | В проекте прямо запрещено как «искусственная ИИ-важность» (S23, CQS §1) | Р |
+| L02 | Negative parallelism «не X, а Y» / «не просто… а» / «это не… это» | Слабый сигнал сам по себе; дефект при плотности >2 на 1000 слов **и** отсутствии доказательства рядом | С→Р |
+| L03 | Rule of three, симметрия «с одной стороны… с другой», «и то, и другое» как замена разбору | Wikipedia: слабый сигнал, значим в комбинации | С→Р |
+| L04 | Синтетическая искренность, театральные метафоры, «идеальная посредственность» | Micah Nathan (MIT, The Guardian): «dead perfection», «faultily faultless, icily regular, splendidly null» | Р |
+| L05 | Over-hedging: «может быть», «существует точка зрения», «дальнейшее исследование необходимо» вместо вывода | Против S43 | Р |
+| L06 | Prompt leakage / «Карточка … должна включать» / TODO / HOLD / внутренние пути | Прямо запрещено S12, CQS §9; найдено в архивных MDX | Б |
+| L07 | Synonym cycling, повтор одной мысли в разных секциях, самоповторы структуры | Wikipedia AI Cleanup | Р |
+| L08 | Избыточные эм-даше (>1 на 100 слов), стилевой сдвиг середине текста | Сигнал, не вердикт | С |
+| L09 | Иноязычные вкрапления без перевода | S13, S44, CQS §6 | Б |
+| L10 | Канцелярит, пассив, абстрактные существительные вместо действия | S23, GOV.UK plain English | Р |
+| L11 | Монотонный ритм: все абзацы одной длины, все предложения одной длины | GOV.UK/NN/g допускают короткие, но не «плоский» ритм | С |
+| L12 | Непроверенная риторика / «искусственная важность» | CQS §1, S23 | Р |
+
+### C. Структурные претензии
+
+| ID | Признак | Тяжесть |
+|---|---|---|
+| F01 | Одинаковый каркас у всех статей серии **без route-specific identity** | Р (сама по себе единая система обязательна — CQS §3) |
+| F02 | «Коротко» ≠ 4–6 пунктов или вводит новые claims | Б (S17, CQS §8) |
+| F03 | Summary/quiz/card/OG/search description расходятся с телом | Б (CQS §8) |
+| F04 | Заголовок-лозунг вместо описательного H2 | Р (GOV.UK: subheads as actions) |
+| F05 | Список вместо прозы там, где нужен аргумент | Р (CQS инвариант 3) |
+| F06 | Только вердикт без evidence/альтернатив/пути к выводу | Б (S43, S28) |
+| F07 | Нет «Источников и сверки» / читательской библиографии | Б (S11) |
+| F08 | Внутренние repo/Research/Drive paths, OCR filenames, workflow notes | Б (S12) |
+
+### D. Полнота и «нехватка»
+
+| ID | Признак | Тяжесть |
+|---|---|---|
+| D01 | Конспект при большом массиве досье: раздел <150 слов при 6–13 источниках | Р |
+| D02 | Ниже минимумов S19 / roadmap (2800 / 4200) при отсутствии жанрового основания | Р |
+| D03 | Механическое добивание word count водой | Б (S19, CQS §1) |
+| D04 | Монолит, который должен быть разделён на самостоятельные статьи | Р (Архитектура §3) |
+| D05 | Редакционные ТЗ-пометки в читательском тексте | Б (S12) |
+| D06 | `????` / mojibake / потеря кириллицы | Б (существующий owner `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`) |
+
+### E. Метаданные и визуал
+
+| ID | Признак | Тяжесть |
+|---|---|---|
+| M01 | AI-реконструкция выдана за исторический документ / фото без provenance и rights | Б (CQS §5, roadmap `forbidden`) |
+| M02 | alt/figcaption описывают не показанный объект | Р |
+| M03 | Типографика: кавычки, тире/дефис, `ё`, пробел перед пунктуацией, orphan-разрывы | Р (CQS §6, S45/S47) |
+| M04 | Глоссарий/tooltip в служебных зонах (заголовки, меню, «Коротко», quiz UI) | Б (CQS §2.2) |
+| M05 | Byline/даты/статусы/навигация серии не согласованы с data projections | Р (CQS §3, S21) |
+
+---
+
+## 3. ПОЛОЖИТЕЛЬНЫЙ список: что обязано быть в профессиональной статье
+
+| ID | Требование | Источник |
+|---|---|---|
+| P01 | Каждый проверяемый факт имеет идентифицируемую опору | S1 |
+| P02 | Первоисточник приоритетен там, где отвечает на вопрос | S2 |
+| P03 | Сила утверждения ≤ evidence; «N написал» ≠ «X произошло» | S3, ESP §1 |
+| P04 | Точная цитата: edition/version + locator + контекст | S4 |
+| P05 | Корроборация пропорциональна риску claim; независимость проверена | S6 |
+| P06 | Пробел честно оставлен открытым gate | S10 |
+| P07 | Reader-facing «Источники и сверка» обязательны | S11, S12 |
+| P08 | «Коротко» 4–6 пунктов, только из доказанного тела | S17 |
+| P09 | Логичные H2/H3, устойчивые anchors, длинные разделы дробятся по смыслу | S18 |
+| P10 | Объём по роли: ≥2500 / ≥1500 / ≥900 / ≥1500; roadmap min 2800, preferred 4200; без воды | S19, roadmap, CQS §1 |
+| P11 | Semantic каркас: H1+byline, лид, «Коротко», секции, изображения с provenance, квиз по контракту, источники, авторская атрибуция | CQS §1 |
+| P12 | Термины объяснены в прозе или current glossary | S20, CQS §2 |
+| P13 | Красивый живой русский, без канцелярита и «ИИ-важности» | S23 |
+| P14 | Конфессиональная позиция может быть твёрдой, но факт/источник/позиция оппонента/наш вывод различены | S24, S33, S38 |
+| P15 | Авторское суждение, образ, пример, пасторское приложение уместны, если не подменяют аргумент | S25, S26 |
+| P16 | Противоречивые свидетельства и сложная историография не сглаживаются | S28 |
+| P17 | Читатель видит evidence, альтернативы и путь к выводу | S43 |
+| P18 | Плотность по роли текста: опорный passage разобран глубоко, мост — короче | S50 |
+| P19 | Изображения: bytes/dimensions/alt/caption/provenance/rights; AI-реконструкция не документ | CQS §5 |
+| P20 | Summary/quiz/card/search description — проекции без новых claims; один machine owner | CQS §8 |
+| P21 | Серия: единая навигация, транслитерация, статусы; **route-specific identity сохранена**; «не ради числа» | CQS §3, Архитектура |
+| P22 | Front-load: главное в начале страницы, раздела, абзаца, предложения | GOV.UK, NN/g |
+| P23 | Plain English: ≤25 слов в предложении, ≤5 предложений в абзаце; активный залог; термин объяснён при первом употреблении | GOV.UK |
+| P24 | 2–4 предложения / 40–70 слов для веб-чтения; 5–8 / 150–250 для академического разбора | NN/g, жанровые ориентиры |
+| P25 | Механизм сообщения о неточности; редакция не изображает непогрешимость | S22 |
+
+---
+
+## 4. ДИНАМИЧЕСКАЯ МОДЕЛЬ: когда короткие абзацы и лозунг допустимы
+
+**Принцип:** короткий абзац и афоризм — **не дефект сами по себе**. Дефект возникает, когда они подменяют доказательство, идут без развёрнутого ядра или одинаковы во всех статьях. Порог применяется к **жанру и роли фрагмента**, а не к файлу целиком.
+
+| Контекст / роль | Допустимая длина абзаца | Допустим ли лозунг | Обязательные условия допустимости |
+|---|---|---|---|
+| Веб-лонгрид, историческая статья (основное тело) | 2–4 предложения (NN/g), ≤5 (GOV.UK) | ≤1 афоризм на раздел | 1 мысль на абзац; front-load; не более 3 коротких подряд; **в каждом H2-разделе ≥1 развёрнутый абзац с evidence**; афоризм не заменяет S43 |
+| Академический / экзегетический разбор, «Опора» | 5–8 предложений, 150–250 слов | Практически нет | Показаны evidence, альтернативы, ход рассуждения (S43, S48); короткие абзацы — только цитата/переход |
+| Справочник, глоссарий, таймлайн, хроника | 1–2 предложения | Нет | Каждая единица имеет источник/уровень; без новых claims; 4–6 пунктов в «Коротко» (S17) |
+| Карточка «Коротко», лид, тизер, поисковое описание | 1–3 предложения, 30–60 слов | Нет | Проекция не вводит новых фактов и не усиливает verdict (CQS §8) |
+| Пасторское приложение, эссе, проповедь | Смешанный ритм | Да, как намеренный акцент | Рядом — аргумент и пример; не «верно/неверно» вместо различения (CQS инвариант 3, S25/S26) |
+| Новостная заметка, подпись, alt/caption | 1–3 предложения | Нет | Точность и provenance (CQS §5) |
+| Диалог, прямая речь, цитата документа | Любая, по источнику | Нет | Атрибуция + edition + locator (S4, S16) |
+
+**Запрещено в ЛЮБОМ жанре и при любом ритме:** H01–H10 (галлюцинации), L06 (ТЗ/TODO/HOLD/внутренние пути), L09 (иноязычие без перевода), D03 (вода ради word count), D06 (`????`), M01 (AI-реконструкция как документ), F02/F03/F06/F07/F08, неатрибутированная прямая речь (S4, S5, `GBS-BAPTISTS-DELYAKOV-DIRECT-QUOTE-UNVERIFIED`).
+
+**Как считать «сигнал», не вердикт:** метрики `avg sent/¶`, `доля ≤2`, `доля коротких предложений`, `плотность «не X, а Y»`, `число тире` сами по себе ничего не доказывают. Они становятся находкой только в связке: (a) нарушение порога для данного жанра **и** (b) отсутствие развёрнутого evidence-ядра в разделе **и/или** (c) повтор одного и того же приёма во всех статьях серии. Одиночный tell не является дефектом [3](https://explainx.ai/blog/wikipedia-wikiproject-ai-cleanup-ai-generated-articles-pangram-15-percent-paste-check-2026).
+
+---
+
+## 5. Итоговые критерии C01–C24 (чем анализируем все статьи)
+
+| ID | Критерий | Порог / правило | Поправка по жанру | Тяжесть | Основа |
+|---|---|---|---|---|---|
+| C01 | Опора у каждого проверяемого факта | 100 % дат/имён/чисел/атрибуций | — | Б | S1, H03 |
+| C02 | Claim ≤ evidence | нет усиления «сообщает»→«установлено» | — | Б | S3, ESP |
+| C03 | Цитаты сверены | edition + locator + контекст | — | Б | S4, S5 |
+| C04 | Источник подтверждает именно предложение | каждый URL/ссылка проверен на содержание | — | Б | H02, Wikipedia/JMIR |
+| C05 | Нет внутренних путей/TODO/HOLD | 0 в reader-facing тексте | — | Б | S12, CQS §9 |
+| C06 | «Коротко» 4–6 пунктов без новых claims | ровно 4–6 | справочник — по контракту | Б | S17, CQS §8 |
+| C07 | Объём по роли | ≥2500/≥1500/≥900/≥1500; min 2800, pref 4200 | мост/тизер — по роли; вода запрещена | Р | S19, roadmap |
+| C08 | Ход рассуждения | evidence → альтернативы → вывод | эссе — образ рядом с аргументом | Б | S43, S28 |
+| C09 | Различение факт / источник / позиция оппонента / наш вывод | 4 уровня не смешаны | — | Б | S24, S33, S38 |
+| C10 | Тон | живой русский, 0 канцелярита/«ИИ-важности» | проповедь допускает образ | Р | S23, CQS §1 |
+| C11 | Афоризм не вместо аргумента | ≤1 на раздел + рядом разбор | пасторское приложение — см. §4 | Р | CQS инв.3, S25 |
+| C12 | Абзацность динамическая | см. §4; `≤2`/`avg`/`one` — сигналы | жанровая таблица | С→Р | NN/g, GOV.UK, NN/g-academic |
+| C13 | Серийная идентичность | единая система **+** route-specific identity | полная идентичность формулировок = дефект | Р | CQS §3 |
+| C14 | Изображения | provenance/rights/alt/caption; AI ≠ документ | — | Б | CQS §5 |
+| C15 | Типографика | ёлочки, тире/дефис, `ё`, безorphan | — | Р | CQS §6, S45/S47 |
+| C16 | Глоссарий | термин объяснён; tooltip не в служебных зонах | — | Б | CQS §2, S20 |
+| C17 | Проекции согласованы | summary/quiz/card/OG/search = телу | — | Б | CQS §8 |
+| C18 | Серия и навигация | статусы/транслитерация/ссылки реальны; не «ради числа» | — | Р | CQS §3, Архитектура |
+| C19 | Нет mojibake | 0 `????` | — | Б | existing MASTER owner |
+| C20 | Прямая речь атрибутирована | нет HOLD-цитат в прямом виде | — | Б | S4, S5 |
+| C21 | Плотность AI-tell'ов | ≥3 разных tell **и** нет evidence = риск | одиночный tell — не дефект | С→Р | Wikipedia AI Cleanup |
+| C22 | Проверка библиографии | 100 % ссылок из «Источники и сверка» верифицированы | — | Б | JMIR, Cabezas-Clavijo |
+| C23 | Ритм предложений | ≤25 слов; коротких ≤15–20 % в аргументативном ядре | лид/карточка — выше допустимо | С | GOV.UK, NN/g |
+| C24 | Исправимость и честная атрибуция | механизм правки + наша позиция названа | — | Р | S22, S33 |
+
+---
+
+## 6. Что НЕ является критерием (защита от ложных срабатываний)
+
+1. **Не определяем авторство.** Стилевые признаки не доказывают «ИИ или человек»: классификатор OpenAI отозван за низкую точность [1](https://www.digitalapplied.com/blog/ai-text-detectors-accuracy-independent-research), Weber-Wulff — ни один инструмент не выше 80 %, Liang et al. — 61 % ложных срабатываний на не-носителях [1](https://www.digitalapplied.com/blog/ai-text-detectors-accuracy-independent-research), Tin House — tell-листы измеряют узнаваемость стиля, а не происхождение [1](https://tinhousepress.com/2026/08/16/writing-with-ai-as-a-tool/). Аудит оценивает **соответствие стандарту**, а не происхождение.
+2. **Короткий абзац ≠ ИИ.** Для веба 2–4 предложения — рекомендованная норма [1](https://lettercounter.org/blog/paragraph-length-web-content/) [1](https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/).
+3. **Конфессиональная позиция ≠ дефект** (S24). Дефект — когда позиция выдана за факт или подменяет источник.
+4. **Единый каркас серии ≠ дефект** (CQS §3 требует единой системы). Дефект — потеря route-specific identity и одинаковые формулировки.
+5. **Не требуем «добивать» word count** (S19, CQS §1). Малый объём — находка только при нераскрытой роли и избытке материала.
+6. **17–20 статей — не долг.** Это условный диапазон по готовности доказательной базы; `PROGRAM_CLOSURE_MATRIX.md:154` прямо запрещает вычитать из него текущие 9.
+7. **MDX ≠ live.** 6 Gill-MDX являются frontmatter-only оболочками, контент живёт в `Body.astro`; замер по MDX для них невалиден. Любая находка перед правкой требует `current-check` на Product HEAD.
+
+---
+
+## 7. Порядок применения
+
+1. Каждый агент берёт свой реестр (`01-ARTICLE_REGISTRY.md`), открывает **и MDX, и соответствующий Body.astro / live-страницу**.
+2. По каждому файлу —baseline из таблицы + ручная проверка C01–C24, приоритет блокирующих.
+3. Находка оформляется строкой в свою матрицу (`MATRIX-A|B|C.md`) с ID, критерием, доказательством (путь + фраза + anchor) и статусом `raw`.
+4. Одиночный tell без нарушения стандарта в матрицу **не попадает** — фиксируется как `signal-only` в комментарии.
+5. Сводка и дедупликация по системным причинам — у координатора, без правки `verified/MASTER_BUG_MATRIX.md` до отдельного решения.
+
+---
+
+## 8. Уточнение по первоисточнику Wikipedia (прочитан 2026-11-09)
+
+Прочитаны `https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing` chunks 0–1 (всего 31). Это **не политика и не правила**, а advice page WikiProject AI Cleanup; прямо на странице:
+
+- «This list is **descriptive, not prescriptive**; it consists of observations, not rules»;
+- «The patterns listed here are also only potential **signs** of a problem, **not the problem itself**»;
+- «**Please do not merely treat these signs as the problems to be fixed; that could just make detection harder**»;
+- «Not all text featuring these indicators is AI-generated … many elements of AI writing can be found in editorials, blogs, or fan fiction»;
+- «Do not rely too much on your own judgment. Humans are notoriously bad at distinguishing human and LLM-generated text» (исследование 2025 г. — не лучше случайного; немецкие диссертации — 57 % / 64 %);
+- «A high percentage of detected AI writing from the results of a detection tool is **not** a valid criterion»; детекторы имеют «non-trivial error rates» и уязвимы к парафразу/markup/unseen models.
+
+**Самое важное для нашего аудита.** На октябрь 2026 самые частые признаки нового ИИ-текста на Wikipedia — «Markdown, AI edit summaries, **hedging disclaimers about source availability and usage**, **vague expression of connection or association**, and **undue emphasis on identification by primary sources**».
+
+В проекте «Господь Бог» ровно эти три приёма являются **обязательными стандартами**:
+
+| Wikipedia tell (Oct 2026) | Обязательный стандарт проекта | Живой пример |
+|---|---|---|
+| Hedging disclaimers about source availability | S3, S6, S10, S43, `EDITORIAL-SOURCE-POLICY` §1 | «Полный визуально проверенный оригинал … пока не получен … используются как атрибутированные поздние цитаты, а не как чтение первичного экземпляра … До получения факсимиле этот источник нельзя повышать до уровня прямой архивной публикации» |
+| Undue emphasis on identification by primary sources | S1, S2, S8, CQS §5 provenance | «Public domain; физическая копия и SHA-256 сверены по MASTER»; «Датировка относится к портрету, а не к событиям в Тифлисе в 1867 году» |
+| Vague expression of connection | S6, S43, «Как читать эту главу» | «Если источник не называет Воронина, он не будет использоваться так, будто называет» |
+
+**Вывод.** Механическое применение tell-листа забраковало бы лучшие, наиболее профессиональные места этих статей. Это и есть практическое обоснование §4 и §6: мы оцениваем **соответствие стандарту проекта**, а не узнаваемость стиля. Список §2 допустимо использовать только как подсказку, где искать, и никогда — как verdict.
+
+### Добавление к §6 (п. 8)
+
+**Не является критерием:** намеренная оговорка о границе знания, атрибуция «официальное самоописание», указание уровня источника, честно оставленный открытый gate. По S10 «пробел честнее выдумки»; по S43 читатель должен видеть путь к выводу. Снимать такие места как «over-hedging / ИИ-важность» запрещено.
+
+### Жанровое исключение для справочника
+
+`baptisty-rossii/spravochnik/` прямо называет себя «рабочим узлом серии» и публикует «очередь будущих правок», «кого держать на карте», «открытый или спорный вопрос». По S12/CQS §9 внутренние HOLD/TODO в тексте не остаются — **но здесь это не мусор черновика, а намеренная читательская рубрика**, предусмотренная S10 и P25. Для жанра справочника это **положительный** признак, не C05. Отличать от архивных MDX, где «Карточка … должна включать», «ещё нужно найти» и «скан пока не верифицирован» были остатками ТЗ внутри прозы.
+
+### Дополнение к C16 / S46
+
+Найденный на live дефект глоссария (см. `MATRIX-A.md`, `AAQ-A-024`) попадает под **S46**: «Tooltip correctness разделяется на data/markup и runtime. Статика проверяет наличие/валидность данных; browser contract — позиционирование, overflow, keyboard, focus/Escape», и под CQS §2.2: «Позиционирование … — **browser/runtime contract, а не строковый lint**». Поэтому строковое свидетельство даёт статус `candidate`, а не `verified`: требуется browser-проверка визуального скрытия и screen-reader/print/PDF-представления.
