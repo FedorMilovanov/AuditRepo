@@ -164,12 +164,15 @@ function VaultTrim() {
 
 
 /**
- * A single reference-quality joinery bay at the east end of the window arcade.
+ * A contiguous four-bay carved-oak arcade (bays 3–6) adjoining the windows.
  *
- * This is deliberately a reusable architectural grammar rather than dozens
- * of custom meshes scattered across the hall.  The visible forward surface
- * stays at radius >= 14.60 m, outside the 14.5 m column circulation boundary.
- * Former shelf, book and exhibit transforms are left completely unchanged.
+ * The original reference-quality bay 5 is preserved and its joinery grammar
+ * repeated across its three neighbours. All plinths, cornices and cabinet
+ * details are GPU-instanced as just three material batches for the entire run;
+ * only the four large, shared-geometry stone arches require individual draws.
+ * The forwardmost surface stays >=14.60m from hall centre, beyond the
+ * existing 14.5m column circulation limit. Original shelves and art/editorial
+ * stations are not moved.
  */
 const ARCH_FRONT = -1.08;
 const brass = new THREE.MeshStandardMaterial({
@@ -210,8 +213,21 @@ function referenceParts(bay: number) {
   return { oak, stoneTrim, metal };
 }
 
-function ReferenceBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry }) {
-  const { oak, stoneTrim, metal } = useMemo(() => referenceParts(bay), [bay]);
+const CRAFTED_BAYS = [3, 4, 5, 6] as const;
+
+function ReferenceBays({ geometry }: { geometry: THREE.BoxGeometry }) {
+  const { oak, stoneTrim, metal } = useMemo(() => {
+    const oak: Element[] = [];
+    const stoneTrim: Element[] = [];
+    const metal: Element[] = [];
+    for (const bay of CRAFTED_BAYS) {
+      const parts = referenceParts(bay);
+      oak.push(...parts.oak);
+      stoneTrim.push(...parts.stoneTrim);
+      metal.push(...parts.metal);
+    }
+    return { oak, stoneTrim, metal };
+  }, []);
   const arch = useMemo(() => {
     // Dressed stone arch over the oak alcove. A real profiled solid in 3D,
     // not an emissive decal or a transparent painted outline.
@@ -227,18 +243,31 @@ function ReferenceBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeome
     return new THREE.TubeGeometry(curve, 48, 0.17, 9, false);
   }, []);
   useEffect(() => () => arch.dispose(), [arch]);
-  const a = bay * Math.PI * 2 / BAYS;
+  const arches = useRef<THREE.InstancedMesh>(null!);
+  useLayoutEffect(() => {
+    // One geometry and one material draw instead of four individual arches.
+    // Preserve exactly the existing reference-bay world transforms.
+    const pivot = new THREE.Object3D();
+    for (let i = 0; i < CRAFTED_BAYS.length; i++) {
+      const a = CRAFTED_BAYS[i] * Math.PI * 2 / BAYS;
+      const centre = new THREE.Vector3(Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS);
+      const offset = new THREE.Vector3(0, 0, ARCH_FRONT).applyAxisAngle(UP, a);
+      pivot.position.copy(centre).add(offset);
+      pivot.rotation.set(0, a, 0);
+      pivot.scale.set(1, 1, 1);
+      pivot.updateMatrix();
+      arches.current.setMatrixAt(i, pivot.matrix);
+    }
+    arches.current.instanceMatrix.needsUpdate = true;
+    arches.current.computeBoundingSphere();
+  }, [arch]);
   return (
     <group>
       <InstancedTrim entries={oak} material={wood} geometry={geometry} />
       <InstancedTrim entries={stoneTrim} material={marble} geometry={geometry} />
       <InstancedTrim entries={metal} material={brass} geometry={geometry} castShadow={false} />
-      <group
-        position={[Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS]}
-        rotation-y={a}
-      >
-        <mesh geometry={arch} position={[0, 0, ARCH_FRONT]} material={marble} castShadow receiveShadow />
-      </group>
+      <instancedMesh ref={arches} args={[arch, marble, CRAFTED_BAYS.length]}
+        castShadow receiveShadow dispose={null} />
     </group>
   );
 }
@@ -252,7 +281,7 @@ export function ArchitecturalPolish() {
     <InstancedTrim entries={oak} material={wood} geometry={geometry} />
     <InstancedTrim entries={stonework} material={marble} geometry={geometry} />
     <WindowArches />
-    <ReferenceBay bay={5} geometry={geometry} />
+    <ReferenceBays geometry={geometry} />
     <VaultTrim />
   </group>;
 }
