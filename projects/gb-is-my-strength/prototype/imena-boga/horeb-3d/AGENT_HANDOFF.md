@@ -6,6 +6,14 @@
 **Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
 **Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
+## 42/42 физический доступ — новая параллельная волна (PENDING exact-HEAD)
+
+Предыдущий terminal-green baseline `3dc773cc2879e52209d648961a5734ff11ca916e`: [HOREB QA #42680392328](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42680392328), Validate #42680392281 и Preflight #42680392381 — **3/3 SUCCESS**. Доказаны 7 боковых сцен через настоящий WASD/стрелки/E с возвратом в центр и независимый осевой 0→7→0, 135/135 engineer, 34/34 smoke, 42/42 dossier и 8+3+3 PNG. Это не физический доступ к остальным 35 сценам.
+
+Новая волна разделяет **все 42** на четыре независимых job GitHub CI `side-chromium` с матрицей `1-2`=10, `3-4`=18, `5`=12, `7`=2. Каждый начинает у входа и реально идёт по центральному маршруту, затем поочерёдно отходит к каждой стеле, поворачивается реальными стрелками, открывает своё досье клавишей E и возвращается. Источник идентификаторов — `world.exhibitPos` (строго 42 уникальных, распределение 6/4/7/11/12/2). Нет `teleportZone`, `teleportTo` или изменения симуляционного времени. У каждого shard свои JSON/PNG артефакты, `fail-fast=false` для сбора дефектов, срок 32 минуты. Независимый осевой `actual-chromium` не сокращён. **G13 остаётся PENDING до 4/4 side jobs + axial + source-and-geometry + Validate + Preflight SUCCESS на одном новом SHA**, и после этого нужна сверка суммарных JSON на точные 42 уникальные ID.
+
+Всё по-прежнему в Draft/Editorial HOLD: Product/Research/исходный ZIP не изменяются, свет Хорива и радиусы 14/6.5 неизменны, компьютер владельца и CUDA не используются. Искусство, права, филология, реальная мобильная и аппаратная приёмка открыты независимо от G13.
+
 ## Follow-up — расширение реального бокового прохода, HEAD ожидает новый CI
 
 **Полностью зелёная исходная доказательная база:** `6e384204d920dc170c7c460ca0e7627ca7f929b0`, [HOREB 3D QA #42669566098](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669566098), [Validate #42669566087](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669566087), [Preflight #42669565883](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42669565883) = **3/3 SUCCESS**. РЕАЛЬНЫЕ WASD/стрелки/E к `elohim`, `el-olam`, `abba` с открытием досье и возвратом к центру PASS; полный осевой keyboard маршрут 0→7→0 PASS. Все 42 E досье отдельно проверялись через controlled teleport — это НЕ реальное прохождение всех 42.

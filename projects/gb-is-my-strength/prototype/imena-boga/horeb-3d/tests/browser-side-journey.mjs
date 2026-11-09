@@ -1,8 +1,8 @@
 // Side-exhibit pedestrian witness: real player keyboard input, no teleport,
 // no world position/yaw mutation, no simulation clock manipulation.
-// Verifies seven physically different side scenes, including both sides of
-// the chasm ledge and the outdoor Horeb approach, all E dossiers and safe
-// recovery to the centre passage between interactions.
+// Four disjoint CI zone shards visit all 42 exhibits, with real WASD,
+// arrow turns and E, returning to the central aisle after every detour.
+// No teleport or simulation/position mutation, including during setup.
 import puppeteer from 'puppeteer-core';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -22,7 +22,20 @@ const base = (process.env.HOREB_BASE_URL || 'http://127.0.0.1:5173').replace(/\/
 const dir = join(process.cwd(), '.test-build');
 const shots = join(dir, 'screenshots');
 mkdirSync(shots, { recursive: true });
+const SIDE_SHARD = process.env.HOREB_SIDE_SHARD || 'sample';
+const SHARDS = {
+  '1-2': { zones: [1, 2], count: 10 },
+  '3-4': { zones: [3, 4], count: 18 },
+  '5': { zones: [5], count: 12 },
+  '7': { zones: [7], count: 2 },
+  sample: { ids: ['elohim', 'el-olam', 'el-roi', 'el-gibbor',
+    'qedosh-yisrael', 'abba', 'ehyeh'], count: 7 },
+};
+const selector = SHARDS[SIDE_SHARD];
+if (!selector) throw new Error('Invalid HOREB_SIDE_SHARD ' + SIDE_SHARD);
+const witnessFile = join(dir, 'side-journey-witness-' + SIDE_SHARD + '.json');
 const record = { source: 'real WASD / arrow turn / E only',
+  shard: SIDE_SHARD, expected: selector.count, selectedIds: [],
   teleportCalls: 0, exhibits: [], segments: [], errors: [], result: null };
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 let page;
@@ -106,15 +119,7 @@ async function axis(kind, target, label, tolerance = 0.65) {
     JSON.stringify({ target, state: await read() }));
 }
 
-const approach = [
-  { id: 'elohim', zone: 1, label: 'creation' },
-  { id: 'el-olam', zone: 2, label: 'beersheba' },
-  { id: 'el-roi', zone: 2, label: 'hagar-spring' },
-  { id: 'el-gibbor', zone: 4, label: 'right-chasm-ledge' },
-  { id: 'qedosh-yisrael', zone: 4, label: 'left-chasm-side' },
-  { id: 'abba', zone: 5, label: 'gethsemane' },
-  { id: 'ehyeh', zone: 7, label: 'horeb-inscription' },
-];
+let approach = [];
 
 try {
   page = await browser.newPage();
@@ -137,6 +142,33 @@ try {
   const initial = await read(); safe(initial, 'initial');
   if (Math.abs(initial.z + 2) > 0.6 || Math.abs(initial.x) > 0.5)
     throw new Error('SIDE unsafe/altered spawn ' + JSON.stringify(initial));
+
+  // Use the production registry, not a hand-maintained list that might omit
+  // an exhibit added later. The zone partition must exhaust all 42 IDs.
+  const registry = await page.evaluate(() => window.__horeb.world.exhibitPos.map((p) => ({
+    id: p.e.id, zone: p.e.zone, x: p.x, z: p.z,
+  })));
+  const unique = new Set(registry.map((p) => p.id));
+  const counts = [1, 2, 3, 4, 5, 7].map((zone) =>
+    registry.filter((p) => p.zone === zone).length);
+  if (registry.length !== 42 || unique.size !== 42 ||
+      counts.join(',') !== '6,4,7,11,12,2')
+    throw new Error('SIDE registry changed: ' + JSON.stringify({
+      size: registry.length, unique: unique.size, zoneCounts: counts,
+    }));
+  approach = registry.filter((p) => selector.ids
+    ? selector.ids.includes(p.id) : selector.zones.includes(p.zone))
+    .sort((a, b) => b.z - a.z || a.id.localeCompare(b.id))
+    .map((p) => ({ id: p.id, zone: p.zone, label: p.id }));
+  if (approach.length !== selector.count ||
+      new Set(approach.map((p) => p.id)).size !== selector.count ||
+      (selector.ids && selector.ids.some((id) => !approach.some((p) => p.id === id))))
+    throw new Error('SIDE shard incomplete: ' + JSON.stringify({
+      shard: SIDE_SHARD, ids: approach.map((p) => p.id),
+    }));
+  record.selectedIds = approach.map((p) => p.id);
+  console.log('SIDE SHARD ' + SIDE_SHARD + ' actual visits=' +
+    record.selectedIds.length + '/42: ' + record.selectedIds.join(','));
 
   for (const item of approach) {
     const ex = await page.evaluate((id) => {
@@ -178,7 +210,7 @@ try {
     const actual = await page.$eval('[role="dialog"]', (node) => node.textContent || '');
     if (!actual.includes(ex.label))
       throw new Error('SIDE incorrect dossier ' + item.id);
-    const file = 'journey-side-' + item.label + '.png';
+    const file = 'journey-side-' + SIDE_SHARD + '-' + item.label + '.png';
     await page.screenshot({ path: join(shots, file) });
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('[role="dialog"]'),
@@ -197,8 +229,8 @@ try {
   if (record.exhibits.length !== approach.length || record.errors.length)
     throw new Error('SIDE incomplete with runtime errors ' + JSON.stringify(record));
   record.result = 'PASS';
-  console.log('PASS ' + approach.length +
-    ' independently selected side scenes reached by actual keyboard WASD + arrow turns + E, no teleport, no collision stalls, all returned to centre');
+  console.log('PASS SHARD ' + SIDE_SHARD + ': ' + approach.length +
+    '/42 side scenes reached by keyboard WASD + arrow turns + E; no teleport or collision stalls, all returned to centre');
 } catch (error) {
   record.result = 'FAIL';
   record.failure = String(error?.stack || error);
@@ -209,6 +241,6 @@ try {
     for (const key of ['KeyW', 'KeyS', 'KeyA', 'KeyD', 'ArrowLeft', 'ArrowRight'])
       await page.keyboard.up(key).catch(() => {});
   }
-  writeFileSync(join(dir, 'side-journey-witness.json'), JSON.stringify(record, null, 2));
+  writeFileSync(witnessFile, JSON.stringify(record, null, 2));
   await browser.close();
 }
