@@ -79,8 +79,8 @@
 | 23 | `GBS-MDX-ARCHIVE-UNMARKED` | **42 MDX** — архив без пометки, аудиты меряют его вместо продукта | P1 |
 | 24 | `GBS-CONTENT-SPLIT-BRAIN` | MDX-архив и Body расходятся до 3,55× | P1 |
 | 25 | ~~`GBS-SATELLITES-DECLARED-NOT-REGISTERED`~~ | **ОТОЗВАНО**: спутники объявлены и подключены | — |
-| 26 | **`GBS-SERIES-JSON-STALE`** | `series.json` = 6, конфиг = 24; **18 статей книги не видны на хабе** | **P0** |
-| 27 | **`GBS-SHADOW-HTML-STALE`** | коммитнутые HTML-тени устарели и не попадают в прод, но выглядят как прод | **P0** |
+| 26 | ~~`GBS-SERIES-JSON-STALE`~~ | **СНЯТО**: `series.json` держит ядро по замыслу; 24/24 есть в `search-manifest` | — |
+| 27 | **`GBS-SHADOW-HTML-STALE`** | HTML-тени устарели и не попадают в прод, но выглядят как прод — **баг методологии** | **P0** |
 | 25 | `GBS-ORPHAN-MDX-NO-GUARD` | нет охраны «MDX без маршрута» | P1 |
 
 > **ПЕРЕСМОТР (см. `BODY_ASTRO_HISTORY.md`).** Два прежних вывода СНЯТЫ:
@@ -93,8 +93,11 @@
 > — `GBS-SATELLITES-DECLARED-NOT-REGISTERED` **ОТОЗВАН**: 18 спутников
 >   объявлены в `HEART_SATELLITES` и подключены через `HEART_CHAPTERS[].extras`;
 >   после перестройки в книгу они стали **статьями глав 2…N**;
-> — настоящий дефект: **`data/series.json` отстал на 18 статей** (6 против 24),
->   поэтому хаб `/hard-texts/` показывает 6 карточек из 24;
+> — `GBS-SERIES-JSON-STALE` **СНЯТО** (четвёртый пересмотр): хаб показывает ядро
+>   **намеренно** (`HardTextsCardsSection`: «intentionally presents the prologue,
+>   lead article of each chapter and the reference endpaper»); статьи 2…N
+>   доступны через оглавление главы, рельс, аккордеон и каталог `/articles/`;
+>   24 из 24 есть в `search-manifest.json`;
 > — **HTML-тени устарели**: для 52 из 53 маршрутов легаси-HTML вытесняется
 >   Astro и в прод не попадает. Все замеры «живого слоя» недействительны.
 
