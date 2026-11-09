@@ -34,3 +34,21 @@ for(const project of ['atlas','sozvezdie']){
  console.log('PASS',project,'CSS_IMPORTS',matches.length,'LICENSE_PACKAGES',counts.size);
 }
 console.log('V13_SOURCE_CONTRACT_PASS',JSON.stringify({imports,licensePackages:licenses}));
+
+// The seven Johannine predicate sayings are not seven separate Hebrew proper names.
+// Keep thematic OT references distinct from literal name-equivalences.
+const sevenIAm=fs.readFileSync(path.join(root,'atlas','src','components','SevenIAmStatements.tsx'),'utf8');
+const thematicFields=[...sevenIAm.matchAll(/otThematicParallel:\s*'/g)];
+if(thematicFields.length!==7)throw Error('Seven I-am sayings must carry seven explicit thematic OT contexts: '+thematicFields.length);
+for(const banned of [
+ 'Ветхозаветное имя-параллель',
+ 'Эль-Бетель (Врата небесные)',
+ 'Яхве-Цидкену (Путь святых',
+ 'Произнесено во дворе храма в праздник Кущей',
+ 'пастух ночью сам ложился в проёме'
+])if(sevenIAm.includes(banned))throw Error('Unsafe thematic equivalence returned: '+banned);
+if(!sevenIAm.includes('Ветхозаветный тематический контекст: {current.otThematicParallel}')||
+   !sevenIAm.includes('Слова Ин. 8:58 рассматриваются отдельно'))
+ throw Error('Seven I-am theological classification note missing');
+console.log('V13_IAM_THEMATIC_SCOPE_PASS',thematicFields.length);
+
