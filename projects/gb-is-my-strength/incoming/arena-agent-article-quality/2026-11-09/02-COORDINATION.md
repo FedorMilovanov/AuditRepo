@@ -112,3 +112,15 @@ Severity: `blocker` / `risk` / `signal-only`. `signal-only` в счёт баго
 | `arena/0b6f34f6-auditrepo` | `1cbfa19d` | без изменений |
 
 Product `main` не сдвинулся с `5e2db6f0…`. Чужие ветки читались `gh api /compare` и `/contents?ref=...` только на чтение; `checkout`, commit и push в чужие ветки не выполнялись. Локальный `HEAD` песочницы снова откатился на базовый `ae3669b` — синхронизирован `fetch` + `reset --hard` внутри `arena/c6d6c46c-auditrepo` до `d45e21f`, без смены ветки. Кандидаты строк из `FINAL_BUG_MATRIX.md` агента A остаются в его `_coordination/`; допуск в `MASTER_BUG_MATRIX.md` — только по решению владельца. Пуш — только в свою ветку.
+
+---
+
+## 11. Сверка веток, восьмой проход (2026-11-09)
+
+| Ветка | Head | Дельта |
+|---|---|---|
+| `arena/c6d6c46c-auditrepo` (я) | `de3398f` → этот коммит | §13 синтеза, §18 отчёта, `AAQ-A-055`…`060`, §11 критериев |
+| `arena/a33be340-auditrepo` | `bf44916b` | 2 коммита: `BODY_ASTRO_HISTORY.md`, снятие двух выводов и отзыв `GBS-SATELLITES-DECLARED-NOT-REGISTERED` в финальной матрице |
+| `arena/0b6f34f6-auditrepo` | `3ad38e77` | wave-5: +8 колонок в CSV (55), `REPORT.md` §11, interactive runtime и visual-parity |
+
+Product `main` не сдвинулся с `5e2db6f0…`. Локальный `HEAD` совпал с remote, `reset` не потребовался. Чужие ветки — только `gh api /compare` и `/contents?ref=...`; чужие файлы не правились, пуш — только в свою ветку. Два файла агента A на одном head расходятся (`BODY_ASTRO_HISTORY.md` §5 заявляет дефект, `FINAL_BUG_MATRIX.md` его отзывает) — при сверке брать финальную матрицу. Кандидаты строк из чужих `_coordination/` и `incoming/` в `MASTER_BUG_MATRIX.md` не переносятся без решения владельца.
