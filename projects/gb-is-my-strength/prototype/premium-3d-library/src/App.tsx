@@ -126,15 +126,15 @@ export default function App() {
 }
 
 /**
- * При переключении качества или входе в очки композер и материалы пересобираются —
- * без этой вуали это выглядит как мигание картинки.
- * Фото-режим меняет только HUD, не Canvas/материалы: сплошная вуаль
- * при входе/выходе из фото-режима не нужна и скрывает готовый 3D-кадр.
+ * Photo mode changes HUD only; the existing quality change can cause a
+ * real shader/texture compilation stall. A dedicated quality transition is
+ * shown BEFORE work begins and dismissed only after rendering resumes.
+ * The legacy beige fade remains for mode/XR changes, never photo or quality.
  */
 function FadeVeil() {
-  const quality = useStore((s) => s.quality);
   const mode = useStore((s) => s.mode);
   const xr = useStore((s) => s.xr);
+  const qualityTransitioning = useStore((s) => s.qualityTransitioning);
   const [on, setOn] = useState(false);
   const first = useRef(true);
   useEffect(() => {
@@ -145,12 +145,27 @@ function FadeVeil() {
     setOn(true);
     const t = window.setTimeout(() => setOn(false), 520);
     return () => window.clearTimeout(t);
-  }, [quality, mode, xr]);
+  }, [mode, xr]);
   return (
-    <div
-      data-gb-fade-veil
-      className="pointer-events-none fixed inset-0 z-[60] bg-[#c4c1b7] transition-opacity duration-500"
-      style={{ opacity: on ? 1 : 0 }}
-    />
+    <>
+      <div
+        data-gb-fade-veil
+        className="pointer-events-none fixed inset-0 z-[60] bg-[#c4c1b7] transition-opacity duration-500"
+        style={{ opacity: on ? 1 : 0 }}
+      />
+      {qualityTransitioning && (
+        <div
+          data-gb-quality-transition
+          role="status"
+          aria-live="polite"
+          className="pointer-events-auto fixed inset-0 z-[61] flex items-center justify-center bg-[#181c1a]/80"
+        >
+          <div className="rounded-2xl border border-[#d8b88d]/40 bg-[#181c1a]/90 px-7 py-5 text-center text-[#f5f1e7] shadow-2xl">
+            <p className="font-display text-lg">Настраиваем графику…</p>
+            <p className="mt-1 text-xs text-[#d8b88d]">Сохраняем положение в библиотеке</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -22,6 +22,7 @@ interface State {
   opened: string | null;
   sitemap: boolean;
   quality: "high" | "low";
+  qualityTransitioning: boolean;
   sound: boolean;
   tour: number | null;
   sitting: boolean;
@@ -57,6 +58,7 @@ export const useApp = create<State>(() => ({
   opened: null,
   sitemap: false,
   quality: (() => { try { const saved = localStorage.getItem("gb-hall-quality"); return saved === "high" || saved === "low" ? saved : coarse ? "low" : "high"; } catch { return coarse ? "low" : "high"; } })(),
+  qualityTransitioning: false,
   sound: (() => { try { return localStorage.getItem("gb-hall-sound") !== "0"; } catch { return true; } })(),
   tour: null,
   sitting: false,
@@ -286,14 +288,47 @@ export function setSens(v: number) {
   }
 }
 
+/**
+ * Switching shadows and GPU texture sizes can stall the browser's rendering
+ * thread on first compilation. Show the transition layer on a rendered frame
+ * BEFORE submitting the expensive quality mutation. Release it after frames
+ * resume, not after an elapsed timeout that can expire during the stall.
+ *
+ * Repeated taps are coalesced. If VR/mode or quality changes via another path
+ * during preparation, abort instead of applying a stale quality choice.
+ */
 export function toggleQuality() {
-  const q = get().quality === "high" ? "low" : "high";
-  set({ quality: q });
-  try {
-    localStorage.setItem("gb-hall-quality", q);
-  } catch {
-    /* ignore */
-  }
+  const before = get();
+  if (before.qualityTransitioning) return;
+  const next = before.quality === "high" ? "low" : "high";
+  set({ qualityTransitioning: true });
+
+  let preparationFrames = 0;
+  const prepare = () => {
+    if (++preparationFrames < 2) {
+      requestAnimationFrame(prepare);
+      return;
+    }
+    const current = get();
+    if (current.quality !== before.quality || current.mode !== before.mode || current.xr !== before.xr || current.phase !== before.phase || current.fatal !== before.fatal) {
+      set({ qualityTransitioning: false });
+      return;
+    }
+    set({ quality: next });
+    try {
+      localStorage.setItem("gb-hall-quality", next);
+    } catch {
+      /* ignore */
+    }
+    // rAF pauses when a graphics pipeline stalls, unlike setTimeout.
+    let settledFrames = 0;
+    const settle = () => {
+      if (++settledFrames >= 2) set({ qualityTransitioning: false });
+      else requestAnimationFrame(settle);
+    };
+    requestAnimationFrame(settle);
+  };
+  requestAnimationFrame(prepare);
 }
 
 export function toggleSound() {

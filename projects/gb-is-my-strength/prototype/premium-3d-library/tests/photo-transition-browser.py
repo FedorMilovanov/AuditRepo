@@ -1,7 +1,8 @@
 """V5.9: photo mode must not blank an otherwise unchanged WebGL canvas.
 
-Real toolbar/menu controls. Verifies photo in/out never triggers fade, canvas
-identity preserved, quality switch retains protection, no JS/HTTP faults.
+Public toolbar/menu handlers. Verifies photo in/out never triggers fade,
+canvas identity is preserved, and no JS/HTTP faults. Quality changes have
+their own independent lifecycle test (quality-transition-browser.py).
 """
 import asyncio,json,os,tempfile
 from pathlib import Path
@@ -53,24 +54,12 @@ async def run(browser,engine,w,h,touch):
         after=await veil.evaluate("(e)=>getComputedStyle(e).opacity")
         assert float(after)==0,("photo exit blanked view",after)
 
-        quality_test="NOT_RUN"
-        if not touch:
-            btn=page.locator('[data-gb-toolbar] button[title="Качество графики"]')
-            before_label=(await btn.inner_text()).strip()
-            await btn.evaluate("(el)=>el.click()")
-            await page.wait_for_timeout(80)
-            target_at_80=await veil.evaluate("(e)=>e.style.opacity")
-            after_label=(await btn.inner_text()).strip()
-            await page.wait_for_timeout(1150)
-            cleared=float(await veil.evaluate("(e)=>getComputedStyle(e).opacity"))
-            assert before_label!=after_label,("quality action did not change its UI state",before_label,after_label)
-            assert cleared<0.01,("quality overlay remained opaque",cleared)
-            quality_test={"changed":True,"targetAt80ms":target_at_80,
-                          "clearedAfter1s":cleared,"note":"diagnostic only; not evidence of a correctly timed protection veil"}
+        # Graphics-quality compilation now has a dedicated lifecycle regression
+        # in quality-transition-browser.py. Photo mode must not depend on it.
         assert not errors,(engine,w,h,errors)
         print(json.dumps({"engine":engine,"viewport":f"{w}x{h}","status":"PASS",
                           "photoOpacity":during,"exitOpacity":after,"sameCanvas":same,
-                          "qualityTransition":quality_test,"errors":errors,
+                          "errors":errors,
                           "screenshot":str(shot)},ensure_ascii=True),flush=True)
     finally:await ctx.close()
 

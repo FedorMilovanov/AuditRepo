@@ -1,0 +1,58 @@
+{
+  "schema": "gb-library-v510-quality-transition-evidence-v1",
+  "baseCommit": "620b1e316b11c9641a0eb551fcd7b61dd65ac317",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "purpose": "Frame-based quality-switch lifecycle, source-owned browser regression, isolated GPU diagnostics",
+  "limitations": [
+    "browser emulation only; no physical-device certification",
+    "rAF is not GPU frame time",
+    "original GPU stall remains"
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "bytes": 6854,
+      "sha256": "03538ac03e19fc9e66e4830161cd0c857b1ed2fc669bb65a498516d934fb7d78"
+    },
+    {
+      "path": "src/store.ts",
+      "bytes": 11058,
+      "sha256": "cb80eab5ecf797ff41f31f33dd0850d0570b27af1b70c44d8a28c0e5e9d56c8d"
+    },
+    {
+      "path": "tests/photo-transition-browser.py",
+      "bytes": 4213,
+      "sha256": "c6c946e72d467ae85c88e31d6f5e4f371fc535b272107eaf649903ad237bd105"
+    },
+    {
+      "path": "tests/quality-transition-browser.py",
+      "bytes": 6719,
+      "sha256": "33ff54dc57a9891a1c2efc5a223f44c528a74873e15387fd459bc594d3ed2f6c"
+    },
+    {
+      "path": "V510_QUALITY_ENGINEERING.md",
+      "bytes": 8654,
+      "sha256": "7506c1a440b1e4fcb1c90a096a4d2ccd71c1344b53d0353f7f9a93776b46468d"
+    },
+    {
+      "path": "evidence/quality-v510-observations.json",
+      "bytes": 19457,
+      "sha256": "ac271965e569bd977bbc7e38db32ba7926dcbc8ba5e5e6961af71e08cdd6ec41"
+    },
+    {
+      "path": "evidence/quality-v510-chrome-desktop-after.webp",
+      "bytes": 417292,
+      "sha256": "79a649c217974aa4549bca9e97902380a4119bc455ef66f6ebce7fb70053059e"
+    },
+    {
+      "path": "evidence/quality-v510-webkit-desktop-transition.webp",
+      "bytes": 189146,
+      "sha256": "63f622c71deae81a1f0815f5db4a49d95600939d458e9d02a75c4d0e1b0a906a"
+    },
+    {
+      "path": "evidence/quality-v510-webkit-mobile-after.webp",
+      "bytes": 107324,
+      "sha256": "8791387982a736720b67d74ddfcf89e1765b649bf2fa7f9e022ff3b5da245353"
+    }
+  ]
+}
