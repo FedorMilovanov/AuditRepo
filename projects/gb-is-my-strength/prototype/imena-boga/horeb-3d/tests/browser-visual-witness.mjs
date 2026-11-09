@@ -61,6 +61,20 @@ const waitForRenderedFrame = async (page, before, zone) => {
       debug.world.renderer.info.render.frame > previousFrame;
   }, { polling: 200, timeout: 60000 }, { previousFrame: before, expectedZone: zone });
 };
+// Camera orientation is part of the art witness. After detail captures the
+// yaw still points at Gethsemane; a mere teleport would photograph empty Horeb.
+const aimCameraAtBush = async (page) => page.evaluate(() => {
+  const w = window.__horeb?.world;
+  const bush = w?.bush?.group?.position;
+  if (!w || !bush) throw new Error('Cannot frame the living bush');
+  const here = w.position;
+  const dx = bush.x - here.x, dz = bush.z - here.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance < 6.5 || !Number.isFinite(distance))
+    throw new Error('Unsafe or invalid bush camera distance: ' + distance);
+  w.yaw = Math.atan2(-dx, -dz);
+  w.pitch = Math.atan2(bush.y + 0.85 - w.camera.position.y, distance);
+});
 const captureZone = async (page, zone, prefix) => {
   const priorFrame = await page.evaluate(() => window.__horeb.world.renderer.info.render.frame);
   await page.evaluate((index) => window.__horeb.world.teleportZone(index), zone);
@@ -145,6 +159,7 @@ try {
   // boundary as a second, strictly shod view; never bypass the sacred perimeter.
   const beforeClose = await desktop.evaluate(() => window.__horeb.world.renderer.info.render.frame);
   await desktop.evaluate(() => window.__horeb.world.teleportTo(0, -351));
+  await aimCameraAtBush(desktop);
   await desktop.waitForFunction((frame) => {
     const w = window.__horeb?.world, state = window.__horeb?.state();
     return !!w && !!state && state.zone === 7 &&
@@ -228,6 +243,7 @@ try {
   }
   const frameBefore = await desktop.evaluate(() => window.__horeb.world.renderer.info.render.frame);
   await desktop.evaluate(() => window.__horeb.world.teleportTo(0, -358));
+  await aimCameraAtBush(desktop);
   await desktop.waitForFunction((previousFrame) => {
     const s = window.__horeb?.state(), w = window.__horeb?.world;
     return !!s && !!w && s.shoes === 'unshod' && s.zone === 7 &&
