@@ -1,5 +1,19 @@
 # Handoff — GB Premium 3D Library
 
+## Latest accepted engineering handoff — 2026-11-10, V5.30 (read first)
+
+**Only working branch:** `lane/gb-premium-3d-library-lab-20261108`, existing [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545) in AuditRepo. No new branch or Product/main modifications; never merge or deploy without separate release approval. Confirm current PR SHA in GitHub before any modification.
+
+**Terminal-green on exact commit `0754519`:** [Preflight #42829675469](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675469) SUCCESS and [Validate #42829675732](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732) SUCCESS. The latter explicitly ended **nine suites / 47 cases PASS**, including six WebGL lost/restored/recovery/fallback cases, real two-tab IndexedDB cabinet, portrait/landscape UI, and bidirectional graphics quality. [59 real PNGs are attached](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732/artifacts/13773466543). Do not repeat obsolete V5.23–V5.26 claims of an unclosed WebGL/CI gate; the older section below is archival.
+
+**New architecture:** `src/scene/caseworkScale.ts` synchronizes shelf and decorative book sizes across `Architecture.tsx`, `ArchitecturalPolish.tsx` and fail-closed `scripts/verify-architecture.cjs`. 13 outer shelved bays × 12 rows × 38 volumes = **5,928 deterministic GPU instances**, correct 0.31–0.48 m tall books at a 0.59 m row pitch; preserved 20-bay hall and original input/navigation/data IDs. Not a photorealistic art certification.
+
+**Priority:** approve one source-verified high-fidelity reference architectural area / GLB-PBR prop with comparative screenshots, texture provenance and measured draw calls/VRAM; then mobile and XR hardware evidence, accessible labels, Product rights/Reader integration. At least 15 minutes sustained target-device tests for GPU frame-time/thermal. The lab has a separate light 2D cabinet route `?panel=cabinet` and real context-loss fallback. Maintain readable UI and 47/47 on **every new SHA**, no test waivers.
+
+**Everything below is a historical handoff excerpt, not current release status.**
+
+---
+
 ## Current 2026-11-10 checkpoint (read first)
 
 The sole active code is the existing [AuditRepo Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. Confirm HEAD and exact-head runs in GitHub. **Do not merge, deploy, branch or change Product.** For full details and admission decisions consult [CURRENT_STATUS.md](CURRENT_STATUS.md); older V5.14/V5.7 reports remain historical, not current accepted evidence.
