@@ -45,6 +45,52 @@ assert.doesNotMatch(world, /<Bloom|<Motes|<CloudSea|<Stars|<StainedLight/);
 assert.match(center, /titlePage\("left"\)/);
 assert.doesNotMatch(center, /orbMat|<Beam/);
 assert.match(architecture, /instancedMesh/);
+/*
+ * The shelves, volumes and carved-wood trim must use one physical unit
+ * system. Parse and execute the authored static TypeScript constants, then
+ * validate the exact world-space geometry without screenshot manipulation.
+ */
+const configSource = get('scene/caseworkScale.ts');
+const configJS = ts.transpileModule(configSource, { compilerOptions: {
+  module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
+}}).outputText;
+const caseworkModule = { exports: {} };
+new Function('module', 'exports', configJS)(
+  caseworkModule, caseworkModule.exports,
+);
+const casework = caseworkModule.exports.CASEWORK;
+assert.ok(Object.isFrozen(casework), 'casework scale must be immutable');
+assert.equal(casework.bays, 20, 'canonical colonnade/outer bay mismatch');
+assert.equal(casework.radius, 15.85);
+assert.equal(casework.shelfRows, 12);
+assert.equal(casework.booksPerShelf, 38);
+const windowBays = 6;
+const entranceBays = 1;
+const expectedVolumes = (casework.bays - windowBays - entranceBays)
+  * casework.shelfRows * casework.booksPerShelf;
+assert.equal(expectedVolumes, 5928, 'instancing layout changed');
+assert.ok(casework.minVolumeHeight > 0 && casework.minVolumeWidth > 0);
+assert.ok(casework.spineBaseAboveShelf + casework.minVolumeHeight
+  + casework.volumeHeightVariation < casework.shelfPitch,
+  'tallest folio intersects the shelf above it');
+assert.ok(casework.minVolumeWidth + casework.volumeWidthVariation
+  <= casework.shelfWidth / casework.booksPerShelf,
+  'widest folio intersects neighboring book volume');
+const highestFolio = casework.firstShelfY + casework.spineBaseAboveShelf
+  + (casework.shelfRows - 1) * casework.shelfPitch
+  + casework.minVolumeHeight + casework.volumeHeightVariation;
+const caseworkTopShelf = casework.firstShelfY
+  + casework.shelfRows * casework.shelfPitch;
+assert.ok(highestFolio < caseworkTopShelf, 'folio protrudes above casework');
+assert.ok(caseworkTopShelf < 7.7, 'upper row collides with carved cornice');
+assert.match(architecture, /SHELVES = CASEWORK\.shelfRows/);
+assert.match(architecture, /BOOKS = CASEWORK\.booksPerShelf/);
+assert.match(architecture, /CASEWORK\.firstShelfY \+ CASEWORK\.spineBaseAboveShelf/);
+const craft = get('scene/ArchitecturalPolish.tsx');
+assert.match(craft, /CASEWORK\.shelfRows/);
+assert.match(craft, /CASEWORK\.shelfPitch/);
+assert.match(craft, /CASEWORK\.trimAboveShelf/);
+
 assert.match(app, /isSessionSupported\?\.\("immersive-vr"\)/);
 for (const name of ['biografii.webp', 'nagornaya.webp', 'otstuplenie.webp']) {
   assert.ok(fs.statSync(path.join(root, 'public/covers', name)).size > 4096, `${name}: missing cover`);
