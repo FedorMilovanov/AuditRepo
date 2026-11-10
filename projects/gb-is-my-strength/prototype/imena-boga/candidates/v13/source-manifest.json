@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "f97cbf62ad8cbe43e527d9f87e1b122458e6a5183420f6bb10d7fedfcc8d5da0",
-      "bytes_normalized": 58642
+      "sha256": "e97eb2b6a5c2677c655573a0c80342658e75bbb16e59c9fc350ebce77274d9ed",
+      "bytes_normalized": 59540
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",

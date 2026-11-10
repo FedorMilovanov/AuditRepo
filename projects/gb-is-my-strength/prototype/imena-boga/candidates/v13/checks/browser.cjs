@@ -886,6 +886,23 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           }
           const letterTilt=motionPage.locator('#tetragrammaton [data-reader-tilt]').first();
           await letterTilt.scrollIntoViewIfNeeded();
+          // The containing Framer reveal translates and fades the card into view.
+          // Hovering while that reveal moves can trigger pointerleave, resetting
+          // the tilt before assertion. Wait for real entrance completion, not a
+          // fixed delay or a relaxed motion assertion.
+          await letterTilt.evaluate(async el=>{
+            await new Promise((resolve,reject)=>{
+              const start=performance.now();
+              const poll=()=>{
+                const wrapper=el.parentElement;
+                const style=wrapper&&getComputedStyle(wrapper);
+                if(style?.transform==='none'&&Number(style.opacity)>0.999){resolve();return}
+                if(performance.now()-start>5000){reject(Error('Letter reveal did not settle'));return}
+                requestAnimationFrame(poll);
+              };
+              poll();
+            });
+          });
           await letterTilt.hover({position:{x:22,y:24}});
           if(enabled){
             await motionPage.waitForFunction(neutral=>
