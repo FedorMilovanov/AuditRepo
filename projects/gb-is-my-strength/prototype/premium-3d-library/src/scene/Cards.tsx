@@ -13,6 +13,12 @@ const H = W * (660 / 1024);
 function Card({ item, index }: { item: Item; index: number }) {
   const [x, z] = itemPos(item);
   const tex = useMemo(() => createCardTexture(item), [item]);
+  useEffect(() => {
+    // A CanvasTexture is not owned by R3F's JSX material disposal.
+    // StrictMode may replay effects: re-flag the source on setup.
+    tex.needsUpdate = true;
+    return () => tex.dispose();
+  }, [tex]);
   const frame = useRef<THREE.Group>(null!);
   const hit = useRef<THREE.Mesh>(null!);
   const glow = useRef<THREE.MeshBasicMaterial>(null!);
@@ -111,6 +117,15 @@ export function VRDetail() {
   const tex = useMemo(() => (item ? detailTexture(item) : null), [item]);
   const btnOpen = useMemo(() => buttonTexture("Открыть на сайте", true), []);
   const btnClose = useMemo(() => buttonTexture("Закрыть", false), []);
+  useEffect(() => {
+    if (tex) tex.needsUpdate = true;
+    return () => tex?.dispose();
+  }, [tex]);
+  useEffect(() => {
+    btnOpen.needsUpdate = true;
+    btnClose.needsUpdate = true;
+    return () => { btnOpen.dispose(); btnClose.dispose(); };
+  }, [btnOpen, btnClose]);
 
   useEffect(() => {
     if (!item || !xr || !g.current) return;
