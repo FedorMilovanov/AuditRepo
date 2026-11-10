@@ -10,7 +10,7 @@ import os
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.environ.get("GB_LIBRARY_BOOK_EVIDENCE_DIR",
@@ -44,7 +44,7 @@ async def inspect(browser, engine, width, height, mobile):
         assert not errors, errors
         EVIDENCE.mkdir(parents=True, exist_ok=True)
         path = EVIDENCE / f"{engine}-{width}x{height}-central-book.png"
-        await page.screenshot(path=str(path), animations="disabled")
+        await capture_evidence(page, path)
         print(json.dumps({"engine": engine, "viewport": f"{width}x{height}",
                           "result": "PASS", "report": report,
                           "screenshot": str(path), "errors": errors},
