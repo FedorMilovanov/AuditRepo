@@ -553,7 +553,6 @@ function SitemapPanel() {
   const visited = useApp((s) => s.visited);
   const [q, setQ] = useState("");
   const panelRef = useRef<HTMLElement>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -564,7 +563,12 @@ function SitemapPanel() {
     // The dialog is portaled to document.body, not a child of #root.
     // Inert prevents both background keyboard focus and AT traversal.
     if (root) root.inert = true;
-    searchRef.current?.focus({ preventScroll: true });
+    // Focus the labelled dialog itself. Auto-focusing its search input
+    // scrolled the modal past the heading in touch WebKit landscape
+    // (844×390) and could open a virtual keyboard on physical phones.
+    // The search box remains the next ordinary keyboard destination.
+    panelRef.current?.focus({ preventScroll: true });
+    if (panelRef.current) panelRef.current.scrollTop = 0;
     return () => {
       if (root) root.inert = wasInert;
       if (trigger?.isConnected && trigger !== document.body) {
@@ -620,6 +624,7 @@ function SitemapPanel() {
         data-gb-sitemap-dialog
         ref={panelRef}
         role="dialog"
+        tabIndex={-1}
         aria-modal="true"
         aria-labelledby="gb-sitemap-title"
         onKeyDown={onDialogKeyDown}
@@ -643,7 +648,6 @@ function SitemapPanel() {
         <label htmlFor="gb-sitemap-search" className="mb-2 text-xs text-[#d8b88d]">Поиск по карте сайта</label>
         <input
           id="gb-sitemap-search"
-          ref={searchRef}
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
