@@ -101,9 +101,6 @@ async def measure_once(page, engine, size, touch, attempt):
     visible = await page.locator("[data-gb-fade-veil]").is_visible()
     assert visible, "Fade host unexpectedly unmounted"
     OUT.mkdir(parents=True, exist_ok=True)
-    if attempt == 1:
-        await page.screenshot(path=str(OUT / f"{engine}-{size}-after-quality.png"),
-                              animations="disabled")
     return {**trace, "canvasIdentityRetained": canvas_same, "attempt": attempt}
 
 async def run_case(browser, engine, width, height, touch):
@@ -128,6 +125,14 @@ async def run_case(browser, engine, width, height, touch):
             original.append(await measure_once(page, engine, size, touch, i))
             # The mobile menu closes on selection; quality_control opens it
             # again for the next pass, observing the persistent toolbar state.
+        # Capture AFTER the round trip: a slow software-GPU screenshot while
+        # ultra is active can legitimately trigger AutoQuality's downgrade,
+        # corrupting the second manual-transition witness.
+        assert original[0]["first"] == original[1]["last"] and (
+            original[0]["last"] == original[1]["first"]
+        ), ("Manual quality round trip interrupted", engine, size, original)
+        await page.screenshot(path=str(OUT / f"{engine}-{size}-after-quality.png"),
+                              animations="disabled")
         assert not problems, (engine, size, problems)
         print(json.dumps({"engine": engine, "viewport": size, "result": "PASS",
                           "switches": original, "errors": problems}, ensure_ascii=True), flush=True)
