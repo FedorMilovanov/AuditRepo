@@ -5,7 +5,7 @@ import ts from 'typescript';
 
 const source = readFileSync('src/imena-boga-horeb-3d/data/exhibits.ts', 'utf8');
 const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
+const { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, NARRATION_LANGUAGE_LABEL, isOriginalVoiced } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const pairs = [
   ['Традиционное русское чтение', 'traditionalRu'],
@@ -19,11 +19,19 @@ const pairs = [
   ['Издание', 'edition'],
   ['Права', 'rightsStatus'],
 ];
+const voiceStage = (e) => `<details class="voice-stage" data-audio-state="HOLD">
+<summary>Аудиогид · ${isOriginalVoiced(e) ? 'оригинал → русский' : 'написание → русский'} · запись ожидает утверждения</summary>
+<ol><li>${isOriginalVoiced(e) ? 'Сначала произношение на ' + esc(NARRATION_LANGUAGE_LABEL[e.sourceLanguage]) : 'Сначала написание без произнесения спорного Имени'}:
+<span class="voice-original" lang="${esc(e.sourceLanguage)}" dir="${e.sourceLanguage === 'grc' ? 'ltr' : 'rtl'}">${esc(e.originalUnicode)}</span></li>
+<li>Затем русский диктор: сценарий ещё проходит редакционную проверку. Традиционное русское обозначение: ${esc(e.traditionalRu)}.</li></ol>
+<p>Аудиофайлов нет: права исполнителей, фонетика и сценарии не утверждены. Это письменная схема без автозвука.</p>
+</details>`;
 const card = (e) => `<article id="${esc(e.id)}"><small>${esc(CATEGORY_RU[e.category])}${e.zone === 5 ? ' · позднейшее свидетельство' : ''}</small>
 <h3>${esc(e.displayLabelRu)}</h3><p class="original" lang="${esc(e.sourceLanguage)}" dir="${e.sourceLanguage === 'grc' ? 'ltr' : 'rtl'}">${esc(e.originalUnicode)}</p>
 <p><i>${esc(e.transliteration)}</i> · <a href="${esc(e.verseUrl)}" rel="noopener noreferrer">${esc(e.verseReference)}</a></p>
 <dl>${pairs.map(([label, key]) => `<dt>${esc(label)}</dt><dd>${esc(e[key])}</dd>`).join('')}</dl>
-<p class="status">Статус: ${esc(e.researchStatus)} · ${esc(e.publicationState)} — нет редакционного допуска · id: ${esc(e.id)}</p></article>`;
+<p class="status">Статус: ${esc(e.researchStatus)} · ${esc(e.publicationState)} — нет редакционного допуска · id: ${esc(e.id)}</p>
+${voiceStage(e)}</article>`;
 const sections = ZONES.map((z) => {
   const items = EXHIBITS.filter((e) => e.zone === z.id);
   if (!items.length && z.id !== 6) return '';
@@ -42,7 +50,11 @@ const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta n
 main{max-width:780px;padding:30px 18px 100px;margin:auto}h1,h2,h3{font-weight:500;line-height:1.1}h1{font-size:clamp(2.1rem,7vw,4rem)}h2{font-size:2rem;border-bottom:1px solid #665442;padding-bottom:12px}h3{font-size:1.7rem;margin:.25rem 0}
 a{color:#dcb377;text-underline-offset:3px}a:focus-visible{outline:2px solid #e2b877;outline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:6px;margin:25px 0}nav a{border:1px solid #675743;padding:4px 9px;border-radius:3px;text-decoration:none}
 section{margin-top:65px}article{border-bottom:1px solid #44392e;padding:26px 0}small,dt,.status{color:#c9a46a}small{text-transform:uppercase;letter-spacing:.08em}p.original{font-size:clamp(2rem,7vw,3rem);margin:.7rem 0;line-height:1.8}
-[lang=he],[lang=arc]{font-family:NotoHebrew,"Times New Roman",serif;unicode-bidi:isolate}[lang=grc]{font-family:NotoGreek,Georgia,serif}dl{display:grid;grid-template-columns:minmax(0,160px) 1fr;gap:9px 18px;font-size:.95rem}dt{text-transform:uppercase;letter-spacing:.05em;font-size:.8rem}dd{margin:0}footer,.status{font-size:.8rem}blockquote{border-left:2px solid #c9a46a;margin:24px 0;padding-left:20px}
+[lang=he],[lang=arc]{font-family:NotoHebrew,"Times New Roman",serif;unicode-bidi:isolate}[lang=grc]{font-family:NotoGreek,Georgia,serif}
+.voice-stage{border:1px solid #675743;padding:12px 15px;margin:20px 0;font-size:1rem;background:#110e0c}
+.voice-stage summary{cursor:pointer;color:#dcb377}.voice-stage summary:focus-visible{outline:2px solid #e2b877;outline-offset:3px}
+.voice-stage li{margin:10px 0}.voice-stage .voice-original{font-size:1.25rem;display:inline-block;margin:0 8px}
+dl{display:grid;grid-template-columns:minmax(0,160px) 1fr;gap:9px 18px;font-size:.95rem}dt{text-transform:uppercase;letter-spacing:.05em;font-size:.8rem}dd{margin:0}footer,.status{font-size:.8rem}blockquote{border-left:2px solid #c9a46a;margin:24px 0;padding-left:20px}
 @media(max-width:520px){dl{display:block}dt{margin-top:12px}dd{margin-top:2px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head><body><main><header><p>Лабораторный прототип · доступная HTML-экспозиция</p><h1>Имена Бога — перед Святым</h1>
 <p>География и пещеры — художественная экспозиция, а не установленная история. Карточки — рабочие черновики (HOLD), не публикационно одобренные досье. Никакой фигуры Бога в экспозиции нет.</p>
@@ -51,6 +63,9 @@ ${sections}<section id="sources"><h2>Источники и ограничени�
 <p>Все ${EXHIBITS.length} карточек имеют статус HOLD. 42 обозначения из брифа — не 42 доказанных личных имени. Рукописная колляция и редакционный допуск не выполнены.</p>
 <p>Полных стихов здесь нет, кроме Исх. 3:5 (Синодальный перевод, 1876, общественное достояние). Каждая карточка даёт короткую лексему, ссылку, говорящего и референта. Репозитории Research и Product в этой итерации не использовались.</p>
 <p>Галереи и каменные надписи — визуальный приём, не утверждение о реальной археологии Хорива. Позднейшие тексты не приписываются Моисею.</p></section></main></body></html>`;
+// Static offline/JS-off reader must not lose the bilingual HOLD status.
+const stageCount = (html.match(/data-audio-state="HOLD"/g) || []).length;
+if (stageCount !== EXHIBITS.length) throw new Error('Narration plan lost in no-JS reader: ' + stageCount);
 mkdirSync('public/fonts', { recursive: true });
 writeFileSync('public/reader.html', html);
 const fonts = [
