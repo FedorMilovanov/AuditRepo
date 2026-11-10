@@ -18,6 +18,24 @@ export function isApprovedAudioPath(path: string): boolean {
   return /^\/audio\/narration\/[a-z0-9-]+\.(mp3|ogg|wav)$/.test(path) &&
     Object.values(APPROVED_NARRATION_ASSETS).includes(path);
 }
+/** Tracks are individually signed human masters, not remote URL strings. */
+export interface ApprovedNarrationTrack { path: string; sha256: string }
+export function isApprovedAudioTrack(track: ApprovedNarrationTrack): boolean {
+  return !!track && typeof track.path === 'string' &&
+    typeof track.sha256 === 'string' &&
+    isApprovedAudioPath(track.path) && /^[a-f0-9]{64}$/i.test(track.sha256);
+}
+/** Refuse an unverified replacement even if its whitelisted URL is unchanged. */
+export async function matchesAudioSha256(bytes: ArrayBuffer, expected: string): Promise<boolean> {
+  if (!/^[a-f0-9]{64}$/i.test(expected) ||
+      typeof crypto === 'undefined' || !crypto.subtle) return false;
+  try {
+    const hash = await crypto.subtle.digest('SHA-256', bytes);
+    const actual = Array.from(new Uint8Array(hash),
+      (b) => b.toString(16).padStart(2, '0')).join('');
+    return actual === expected.toLowerCase();
+  } catch { return false; }
+}
 
 /** Offsets for source-language and Russian masters, never simultaneous. */
 export function narrationOffsets(durations: readonly number[], gap = 0.55): number[] | null {
@@ -70,12 +88,13 @@ export class NarratorBus {
 
   // One shared playback bus: original-language recording, a real pause,
   // then Russian narration. Never uses browser text-to-speech or autoplay.
-  async play(file: string, space: AcousticSpace): Promise<boolean> {
+  async play(file: ApprovedNarrationTrack, space: AcousticSpace): Promise<boolean> {
     return this.playSequence([file], space);
   }
-  async playSequence(files: readonly string[], space: AcousticSpace): Promise<boolean> {
+  async playSequence(files: readonly ApprovedNarrationTrack[], space: AcousticSpace): Promise<boolean> {
     if (this.disposed || files.length < 1 || files.length > 2 ||
-        new Set(files).size !== files.length || !files.every(isApprovedAudioPath)) return false;
+        new Set(files.map((file) => file.path)).size !== files.length ||
+        !files.every(isApprovedAudioTrack)) return false;
     this.stop();
     const gen = ++this.generation;
     const abort = new AbortController();
@@ -86,11 +105,13 @@ export class NarratorBus {
       if (this.disposed || gen !== this.generation) return false;
       const buffers: AudioBuffer[] = [];
       for (const file of files) {
-        const response = await fetch(file, { signal: abort.signal, cache: 'force-cache' });
+        const response = await fetch(file.path, { signal: abort.signal, cache: 'force-cache' });
         if (!response.ok ||
             !/^(audio\/|application\/octet-stream)/.test(response.headers.get('content-type') || '')) return false;
         const bytes = await response.arrayBuffer();
         if (bytes.byteLength === 0 || bytes.byteLength > 16 * 1024 * 1024 ||
+            this.disposed || gen !== this.generation) return false;
+        if (!(await matchesAudioSha256(bytes, file.sha256)) ||
             this.disposed || gen !== this.generation) return false;
         const buffer = await this.ctx.decodeAudioData(bytes);
         if (this.disposed || gen !== this.generation) return false;
