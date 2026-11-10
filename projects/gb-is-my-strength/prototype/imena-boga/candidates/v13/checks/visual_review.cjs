@@ -387,7 +387,16 @@ async function visit(browser,engine,app,width,base){
      await field.fill('');
     });
     await safeAction(page,engine+'-sozvezdie-'+width+'-letter-tab',async()=>{
-     await page.locator('#tetragrammaton [role="tab"]').nth(2).click();
+     const vavTab=page.locator('#tetragrammaton [role="tab"]').nth(2);
+     await vavTab.click();
+     // Animate tab state and exit text independently, so wait for the actual
+     // visible letter panel to agree before capturing the comparison.
+     await page.waitForFunction(()=>{
+       const tab=document.querySelector('#tetragrammaton [role="tab"][aria-selected="true"]');
+       const panel=document.querySelector('#letter-panel');
+       return tab?.textContent?.includes('Вав') && panel?.textContent?.includes('Вав')
+         && !panel?.textContent?.includes('Йод');
+     },null,{timeout:5000});
      await shot(page,engine+'-sozvezdie-'+width+'-07-letter-detail');
     });
     if(width===390||width===320)await safeAction(page,engine+'-sozvezdie-'+width+'-mobile-index',async()=>{
@@ -559,7 +568,7 @@ async function visit(browser,engine,app,width,base){
  await new Promise((resolve,reject)=>server.listen(0,'127.0.0.1',resolve).on('error',reject));
  const base='http://127.0.0.1:'+server.address().port;
  try{
-  for(const [engine,widths] of [['chromium',[320,360,375,390,430,768,1024,1440]],['webkit',[320,390,430,768,1440]]]){
+  for(const [engine,widths] of [['chromium',[320,360,375,390,430,768,1024,1440]],['webkit',[320,375,390,430,768,1440]]]){
    const spec={chromium,webkit}[engine],options={headless:true};
    if(engine==='chromium'&&process.env.CHROMIUM_PATH)options.executablePath=process.env.CHROMIUM_PATH;
    const browser=await spec.launch(options);

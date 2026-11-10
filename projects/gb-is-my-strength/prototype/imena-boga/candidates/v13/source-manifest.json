@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "2d21560e878ab6d9b0acc66815ff5084807ab83d54750e90482f611c9bc9432f",
-      "bytes_normalized": 66958
+      "sha256": "dea5e0bb65be9317aa765cc49fe0f19c82a4d60d3d50a9406c1db9516ab8203e",
+      "bytes_normalized": 67252
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "749a1e669bbc12ffe6c0f2429005d2e5c6cbeb1caab277277b4f24f8ea85adc2",
@@ -80,8 +80,8 @@
       "bytes_normalized": 10737
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "aea8553d7915f7f58886e5a9b463004cb383ab208ce556088687ce567c8170f1",
-      "bytes_normalized": 26771
+      "sha256": "5880a01fd6fd9ed00778c783fa1f57fb7c270e607e1bdd98c3faade549a51b6e",
+      "bytes_normalized": 27122
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "fe0e2d679e738e434e3b0901d15cb8e6ac0bca4715f01940339383b69f323381",
@@ -128,8 +128,8 @@
       "bytes_normalized": 10524
     },
     "atlas/src/main.tsx": {
-      "sha256": "577d8a6ab658c40f91c62c2f6f083eefbdc6b653bd2d65d5ec766c3d6bdb5c30",
-      "bytes_normalized": 1595
+      "sha256": "b958f86783daa9a48342c318140ed95b9cf718ae9a3c58d2ce7b7e6194385d3b",
+      "bytes_normalized": 1646
     },
     "atlas/src/utils/cn.ts": {
       "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "40595f05ed732e1adf4e9b738da8a05b9ccbf8d5b00d157ba49b1bd0c9550970",
-      "bytes_normalized": 55564
+      "sha256": "65693fe4627362104ba58bfecfb0953c2fefe8f5ac86047d3bb4cda18add1354",
+      "bytes_normalized": 58491
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -184,8 +184,8 @@
       "bytes_normalized": 14156
     },
     "checks/visual_review.cjs": {
-      "sha256": "323dd439601357a98ef4f80cb472231d06dae0b1b5a92701c62708d3eeb0ea03",
-      "bytes_normalized": 32070
+      "sha256": "9c39293e562182c47f2fb6c225b4ac3e441ef72970a46b7d73919eb2000af0a0",
+      "bytes_normalized": 32617
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

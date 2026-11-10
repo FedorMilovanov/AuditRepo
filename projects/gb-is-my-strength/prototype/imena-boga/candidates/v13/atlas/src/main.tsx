@@ -24,6 +24,7 @@ import "@fontsource/noto-serif-hebrew/hebrew-700.css";
 import "@fontsource/noto-serif/greek-400.css";
 import "@fontsource/noto-serif/greek-700.css";
 import "@fontsource/noto-serif/greek-ext-400.css";
+import "@fontsource/noto-serif/greek-ext-700.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";

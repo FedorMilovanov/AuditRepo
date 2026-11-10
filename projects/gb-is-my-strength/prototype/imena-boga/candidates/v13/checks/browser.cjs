@@ -8,7 +8,7 @@ const root=path.resolve(__dirname,'..');
 const engine=process.env.ENGINE || 'webkit';
 const selected={chromium,webkit}[engine];
 if(!selected) throw Error('Unsupported ENGINE');
-const widths=(process.env.VIEWPORTS||'320,390,430,768,1440').split(',').map(Number);
+const widths=(process.env.VIEWPORTS||'320,375,390,430,768,1440').split(',').map(Number);
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2'};
 const server=createServer((req,res)=>{
  try{
@@ -207,6 +207,24 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
          witness[1].id!=='constellation-atlas'||witness.some(x=>x.behavior!=='instant'))
         throw Error('Atlas deliberate reader navigation ignored reduced-motion setting '+JSON.stringify(witness));
     }
+    if(width<=430){
+      const brief=await page.locator('button[aria-controls="atlas-summary-theses"]').evaluate(btn=>{
+        const spans=btn.querySelectorAll('span'),svg=btn.querySelector('svg');
+        if(spans.length<2||!svg)return null;
+        const a=spans[0].getBoundingClientRect();
+        const b=spans[1].getBoundingClientRect();
+        const v=svg.getBoundingClientRect();
+        const outer=btn.getBoundingClientRect();
+        return {titleBottom:a.bottom,labelTop:b.top,
+          chevLeft:v.left,titleRight:a.right,
+          chevInside:v.left>=outer.left&&v.right<=outer.right+1
+            &&v.top>=outer.top-1&&v.bottom<=outer.bottom+1,
+          minHeight:outer.height};
+      });
+      if(!brief||!brief.chevInside||brief.labelTop<brief.titleBottom-2||
+        brief.chevLeft<brief.titleRight+2||brief.minHeight<44)
+        throw Error('Atlas summary disclosure icon orphaned '+JSON.stringify({engine,width,brief}));
+    }
     if(width===320){
       // A stale stored ID (or a corrupted non-string value) must never
       // count as an additional studied name after the corpus changes.
@@ -230,7 +248,9 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         await seededContext.close();
       }
     }
-    if(width>=1024){
+    if(width>=1440){
+      // Full-height skirting rails are desktop-only. At 1024-1439 their
+      // hidden DOM nodes have zero rects, so their connector geometry is not a visual witness.
       const rail=await page.evaluate(()=>{
         const columns=[...document.querySelectorAll('aside[aria-label*="скрижаль имён Бога"]')];
         const cards=columns.flatMap(col=>[...col.querySelectorAll('.thin-sacred-scroll > div')]);
@@ -249,6 +269,38 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       });
       if(rail.columns!==2||rail.cards!==36||rail.faded!==0||rail.placeholders!==0||rail.lineOverlaps!==0||rail.clippedButtons!==0)
         throw Error('Atlas lateral-name rails illegible/clipped '+JSON.stringify({engine,width,rail}));
+
+      // Word-level integrity is stronger than scrollWidth or clipped buttons:
+      // both Greek and Hebrew script must remain whole within all 36 rails.
+      const pillarIntegrity=await page.evaluate(()=>{
+        const labels=[...document.querySelectorAll(
+          'aside[aria-label*="скрижаль"] button .font-greek,aside[aria-label*="скрижаль"] button .font-hebrew')];
+        const failures=[];
+        let wordCount=0;
+        for(const el of labels){
+          const original=el.textContent?.trim()||'';
+          const tokens=[...el.querySelectorAll('[data-atlas-pillar-token]')];
+          if(!tokens.length){failures.push({original,reason:'original-script tokenization missing'});continue}
+          for(const token of tokens){
+            const word=token.textContent||'';
+            if(!/[\p{Script=Hebrew}\p{Script=Greek}]/u.test(word))continue;
+            wordCount++;
+            const node=token.firstChild;
+            if(!(node instanceof Text)){failures.push({original,word,reason:'no token text'});continue}
+            const range=document.createRange();
+            range.selectNodeContents(token);
+            const rects=[...range.getClientRects()].filter(r=>r.width>0.5);
+            const rows=[...new Set(rects.map(r=>Math.round(r.y)))];
+            const box=el.getBoundingClientRect();
+            if(rows.length!==1||rects.some(r=>r.left<box.left-2||r.right>box.right+2))
+              failures.push({original,word,rows,rects:rects.map(r=>[r.x,r.width])});
+          }
+        }
+        return {count:labels.length,wordCount,failures};
+      });
+      if(pillarIntegrity.count!==36||pillarIntegrity.wordCount<36||pillarIntegrity.failures.length)
+        throw Error('Atlas lateral scripts fragmented '+JSON.stringify({engine,width,pillarIntegrity}));
+
       const siteBrand=await page.locator('nav[aria-label="Основная навигация сайта"] a[aria-label*="в начало статьи"] > span').first().evaluate(el=>
         ({visible:getComputedStyle(el).display!=='none',width:el.clientWidth,scrollWidth:el.scrollWidth}));
       if(!siteBrand.visible||siteBrand.scrollWidth>siteBrand.width+1)

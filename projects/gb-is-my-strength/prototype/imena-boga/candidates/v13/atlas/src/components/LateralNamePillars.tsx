@@ -212,7 +212,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                   onClick={() => onSelectName(item)}
                   className="relative z-10 block w-full cursor-pointer px-3.5 pt-2.5 pb-1.5 text-left focus:outline-none"
                 >
-                  <div className="flex items-baseline justify-between gap-2">
+                  <div className="flex min-w-0 flex-col items-stretch gap-1">
                     <span
                       className="font-ui inline-flex items-center gap-1 text-xs font-semibold tracking-wider uppercase"
                       style={{
@@ -231,13 +231,19 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                     <span
                       className={`${
                         item.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                      } min-w-0 max-w-[60%] break-words text-right text-base xl:text-lg font-bold leading-snug transition-colors duration-300`}
+                      } block w-full min-w-0 whitespace-normal break-normal text-right text-base xl:text-lg font-bold leading-snug [overflow-wrap:normal] transition-colors duration-300`}
                       style={{
                         color: isActive ? 'var(--gb-accent)' : 'var(--gb-ink)',
                         textShadow: isActive ? '0 0 12px var(--gb-gold-glow)' : 'none',
                       }}
                     >
-                      {item.original}
+                      {item.original.split(/(\s+)/u).map((part, index) =>
+                        /\s/u.test(part) ? part : (
+                          <span key={index} data-atlas-pillar-token className="whitespace-nowrap">
+                            {part}
+                          </span>
+                        ),
+                      )}
                     </span>
                   </div>
 

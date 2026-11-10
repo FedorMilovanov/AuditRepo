@@ -715,16 +715,16 @@ export function App() {
             aria-controls="atlas-summary-theses"
             aria-expanded={summaryOpen}
             onClick={() => setSummaryOpen((open) => !open)}
-            className="flex min-h-11 w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-lg text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+            className="grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 rounded-lg text-left sm:grid-cols-[auto_minmax(0,1fr)_auto] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
             style={{ color: 'var(--gb-accent)', outlineColor: 'var(--gb-gold)' }}
           >
-            <span className="font-serif-display text-lg font-bold sm:text-xl">Коротко</span>
-            <span className="ml-auto font-ui text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--gb-gold-ink)' }}>
+            <span className="font-serif-display col-start-1 row-start-1 text-lg font-bold sm:text-xl">Коротко</span>
+            <span className="font-ui col-start-1 row-start-2 min-w-0 text-[10px] font-medium uppercase tracking-wider leading-snug sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:text-[11px]" style={{ color: 'var(--gb-gold-ink)' }}>
               Четыре тезиса исследования
             </span>
             <ChevronDown
               aria-hidden="true"
-              className={`h-4 w-4 shrink-0 transition-transform duration-500 ${summaryOpen ? 'rotate-180' : ''}`}
+              className={`col-start-2 row-span-2 row-start-1 h-4 w-4 shrink-0 justify-self-end self-center transition-transform duration-500 sm:col-start-3 sm:row-span-1 sm:row-start-1 ${summaryOpen ? 'rotate-180' : ''}`}
             />
           </button>
 
