@@ -319,7 +319,7 @@ if (gardenRecord) {
     trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 4 * 5 * 2);
   let gnarled = 0, twigs = 0, totalCrownHeight = 0;
   grove.traverse((o) => {
-    if (o.name === 'olive-twig') twigs++;
+    if (o.name === 'olive-foliage-twig') twigs++;
     if (o.name === 'olive-main-trunk' && o instanceof THREE.Mesh &&
         o.geometry instanceof THREE.CylinderGeometry &&
         o.geometry.parameters.heightSegments >= 12) {
@@ -327,8 +327,8 @@ if (gardenRecord) {
       totalCrownHeight += o.position.y + o.geometry.parameters.height / 2;
     }
   });
-  t('Gethsemane mature olive boles are subdivided, torsioned and support real branchlets',
-    gnarled === 4 && twigs === 4 * 7 * 2 && totalCrownHeight > 6.5);
+  t('Gethsemane mature boles support genuine attached foliage twigs',
+    gnarled === 4 && twigs === 4 * 7 * 4 && totalCrownHeight > 6.5);
   let maxTrunkRadius = 0, sculptedTrunks = 0;
   grove.traverse((o) => {
     if (o.name !== 'olive-main-trunk' || !(o instanceof THREE.Mesh)) return;
