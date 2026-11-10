@@ -10,6 +10,31 @@
 - Rejected visual experiments were rolled back. Remaining independent HOLD: cave/gallery composition, well, Gethsemane, exit, 42 source/phonology/rights approvals and genuine signed bilingual master recordings, Android/iOS, WebKit, assistive tech and sustained hardware performance.
 - Dark Horeb, muted HUD, outer/inner barefoot radii 14m/6.5m and nonpublished Draft boundaries must remain unchanged.
 
+## Оперативный статус — 10 ноября 2026 (приоритетнее исторической матрицы ниже)
+
+Последний полностью проверенный GitHub HEAD до этой доработки: ab35c6a6136f7bd03227ec3b9ecd1241dd643219;
+HOREB QA #42865777325, Validate и Preflight — все SUCCESS.
+В том коммите диагностический FAIL для пропасти записывался в JSON, но не блокировал CI.
+
+Новая серия (в этой же ветке, без нового PR):
+- G14 ZONE4_VISIBLE_DEPTH: противоположный склон расширен в существующей геометрии
+  непрерывного пещерного свода; путь, коллизии, 42 экспоната и границы Хорива не изменены.
+  На правильных координатах позиции x,z первая камера видит 11/63 реальных лучей
+  на глубине до -21.8 м, вторая — 17/63 на глубине до -19.6 м. На исходной геометрии
+  было 2/63 и 0/63. Повторный Chromium-witness должен БЛОКИРОВАТЬ CI при регрессии.
+  Художественная приемка всё равно HOLD до просмотра двух точных PNG.
+- G14 CONSTRUCT LOW/HIGH: два новых регрессионных теста. Локально 43+121+6=170/170 PASS.
+- G6 RTX HARDWARE: Windows 11 / Chrome ANGLE NVIDIA RTX 3060 / D3D11,
+  1440x900 DPR1 high, 8/8 зон, 54-60 FPS, browser errors=0 (короткий прогон
+  ДО новой геометрии). Реальные VRAM/thermal/endurance и телефоны — HOLD.
+- G2/G13: исходные реальные хождения 42/42 и 0→7→0 подтверждены на ab35c6a,
+  новый HEAD обязательно заново проверить в CI.
+- G4/G5/G7/G9: филология/исследования Research #379, права, 42 голосовых мастера,
+  реальный iOS/Android, Firefox/WebKit, экранные дикторы и художественная
+  приемка всех восьми зон — открытые независимые HOLD. Не выдавать за PASS.
+
+**Историческая матрица ниже не является окончательным статусом нового HEAD.**
+
 **Исторический baseline G1–G12:** `962e674b2c2c306eab96b91d4ff254be560975dc`, [HOREB 3D QA #42642009842](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009842), [AuditRepo Validate #42642009840](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009840), [Preflight #42642009839](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009839) — **3/3 SUCCESS**; 135/135 source/geometry/navigation, 34/34 Chrome smoke, 42/42 E dossiers, реальный 0→7→0, 8 desktop + 3 mobile emulation + 3 detail screenshots, 0 runtime errors.
 
 | Gate | Проверенный статус | Доказательство и оставшаяся граница |

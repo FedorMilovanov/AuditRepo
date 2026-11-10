@@ -127,6 +127,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         const disp = amp * (0.25 + n) + ridge * amp * 0.6;
         const nl = Math.hypot(x / hw, y / H) || 1;
         x += (x / hw / nl) * disp; y += (y / H / nl) * disp * 0.6;
+        // Open the opposing side of zone 4 into a proper wide ravine.
+        // The existing ~14 m wall stood so close to the safe viewing edge
+        // that every downward sightline intersected the walking floor first.
+        // Expand the SAME continuous shell, tapering smoothly to both exits;
+        // no new mesh, collider, teleport or invisible safety rail.
+        if (cf > 0 && ca > 0) {
+          const irregular = fbm(x * 0.11 + 2, y * 0.08, z * 0.10, low ? 2 : 3);
+          x += cf * Math.pow(ca, 1.35) * (8.5 + 2.1 * irregular);
+        }
         if (cf > 0 && ca > 0 && y < H * 0.45) y -= cf * 55 * (1 - Math.max(-1, y) / (H * 0.45));
         // Carve zone-6 fractures INTO the continuous cave shell. The previous
         // separate triangles looked like paper stalactites when lit. No new

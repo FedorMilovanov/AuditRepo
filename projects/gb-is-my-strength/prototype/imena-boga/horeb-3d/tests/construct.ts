@@ -625,6 +625,21 @@ for (const lowMode of [true, false]) {
     new THREE.MeshStandardMaterial({ vertexColors: true }));
   const walkingFloor = constructed.group.getObjectByName('cave-floor-continuous');
   const depthPlate = constructed.group.getObjectByName('chasm-deep-floor');
+  // The opposite rock must be far enough to reveal actual descending
+  // geology from behind the unchanged safe lip; the original ~14m wall
+  // made deep sightlines almost entirely floor-occluded.
+  const opposingVault = constructed.group.getObjectByName('cave-vault-continuous');
+  let farRockX = -Infinity;
+  if (opposingVault instanceof THREE.Mesh) {
+    const pos = opposingVault.geometry.getAttribute('position');
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      if (z > -201 && z < -199 && y < -8 && y > -27)
+        farRockX = Math.max(farRockX, x);
+    }
+  }
+  t('zone-4 opposing cliff opens real 20m+ ravine without extra geometry ' +
+    (lowMode ? 'LOW' : 'HIGH'), farRockX > 20 && farRockX < 28);
   let good = walkingFloor instanceof THREE.Mesh && depthPlate instanceof THREE.Mesh;
   if (walkingFloor instanceof THREE.Mesh) {
     const g = walkingFloor.geometry;

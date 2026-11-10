@@ -120,76 +120,82 @@ try {
     narrative: 'Camera at z=-309.5 looking toward exit; no nav certification' });
   console.log('PASS close-up zone-6 continuous roof screenshot ' + exitClose);
 
-  // Previous QA's -0.37 pitch looked horizontally toward the BACK WALL
-  // and a stele near z=-201. Two materially different down-facing
-  // compositions at z=-206, halfway between right-side steles, are required.
-  // Both positions remain strictly inside the existing x<=4.2 guard.
-  for (const [slug, x, pitch] of [
-    ['zone4-chasm-edge', 2.95, -0.42],
-    ['zone4-chasm-depth', 3.45, -0.62],
+  // Zone 4 is a ravine, not a flat wall. Both screenshots must show
+  // physically DEEP opposite rock from positions reachable on the safe ledge.
+  // The near ledge's own cliff face is naturally hidden underneath its lip;
+  // requiring that surface in camera ray hits is a false premise.
+  // Gate the actual visible negative-Y rock, not screenshot existence.
+  for (const [slug, x, z, yaw, pitch] of [
+    ['zone4-chasm-edge', 3.4, -190, -0.65, -0.25],
+    ['zone4-chasm-depth', 3.45, -206, -Math.PI / 2, -0.62],
   ]) {
-    const beforeRavine = await desktop.evaluate(({ x, pitch }) => {
+    const beforeRavine = await desktop.evaluate(({ x, z, yaw, pitch }) => {
       const w = window.__horeb.world;
       const frame = w.renderer.info.render.frame;
-      w.teleportTo(x, -206);
-      w.yaw = -Math.PI / 2;
-      w.pitch = pitch;
-      return { frame, actualX: w.position.x, actualZ: w.position.y };
-    }, { x, pitch });
-    // A line of sight steeper than the floor-edge clearance would
-    // intersect the walking slab BEFORE reaching the gorge. Such a PNG is
-    // deceptive even if Chromium draws it successfully.
-    const eyeToLip = (4.82 - beforeRavine.actualX) *
-      Math.tan(Math.abs(pitch));
-    if (beforeRavine.actualX > 3.5 ||
-        Math.abs(beforeRavine.actualZ + 206) > 0.4 ||
-        eyeToLip > 1.35)
-      throw new Error('Ravine evidence invalid: clipping or floor-occluded camera ' +
-        JSON.stringify({ ...beforeRavine, pitch, eyeToLip }));
+      w.teleportTo(x, z);
+      w.yaw = yaw; w.pitch = pitch;
+      // World.position returns {x,z}; it has NO y property. Never silently
+      // skip the coordinate guard by comparing undefined (NaN) to a number.
+      return { frame, actualX: w.position.x, actualZ: w.position.z };
+    }, { x, z, yaw, pitch });
+    if (![beforeRavine.actualX, beforeRavine.actualZ].every(Number.isFinite) ||
+        beforeRavine.actualX > 3.5 ||
+        Math.abs(beforeRavine.actualX - x) > 0.2 ||
+        Math.abs(beforeRavine.actualZ - z) > 0.2)
+      throw new Error('Ravine camera is outside the safe physical route: ' +
+        JSON.stringify({ ...beforeRavine, x, z, yaw, pitch }));
     await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
     await new Promise((resolve) => setTimeout(resolve, 330));
     const file = 'visual-detail-' + slug + '.png';
     await desktop.screenshot({ path: join(shots, file) });
-    // Image existence and a valid camera do NOT prove visible geological depth.
-    // Previous green CI captured a blank-looking face: all 63 probe rays hit
-    // ordinary floor or vault, NEVER the newly modelled connected chasm wall.
-    // Measure the actual first intersected triangle, not authored metadata.
     const geometryVisibility = await desktop.evaluate(async () => {
       const THREE = await import('/node_modules/.vite/deps/three.js');
       const w = window.__horeb.world;
       const floor = w.scene.getObjectByName('cave-floor-continuous');
       const vault = w.scene.getObjectByName('cave-vault-continuous');
       if (!floor?.geometry || !vault?.geometry)
-        throw new Error('Chasm inspection missing actual floor or cave shell');
-      const index = floor.geometry.getIndex();
-      const floorVertices = floor.userData.chasmStrata?.floorVertexCount;
-      if (!index || !Number.isInteger(floorVertices))
-        throw new Error('Chasm inspection missing connected strata index data');
+        throw new Error('Missing real chasm floor or opposing cave shell');
+      const indices = floor.geometry.getIndex();
+      const floorVertexCount = floor.userData.chasmStrata?.floorVertexCount;
+      if (!indices || !Number.isInteger(floorVertexCount))
+        throw new Error('Missing connected ravine strata indices');
       w.camera.updateMatrixWorld(true);
-      const caster = new THREE.Raycaster();
-      caster.far = 90;
-      let connectedWall = 0, visibleDeepWall = 0, ordinaryFloor = 0, caveVault = 0, misses = 0;
+      const raycaster = new THREE.Raycaster();
+      raycaster.far = 90;
+      let nearFloor = 0, connectedNearFace = 0, opposingRock = 0;
+      let deepOppositeRock = 0, misses = 0, lowestVisibleY = Infinity;
       for (let iy = 0; iy < 7; iy++) for (let ix = 0; ix < 9; ix++) {
-        caster.setFromCamera(new THREE.Vector2(-0.84 + ix * 0.21, -0.84 + iy * 0.28), w.camera);
-        const hit = caster.intersectObjects([floor, vault], false)[0];
+        raycaster.setFromCamera(new THREE.Vector2(-0.84 + ix * 0.21, -0.84 + iy * 0.28), w.camera);
+        const hit = raycaster.intersectObjects([floor, vault], false)[0];
         if (!hit) { misses++; continue; }
-        if (hit.object === vault) { caveVault++; continue; }
-        const tri = hit.faceIndex * 3;
-        const wallFace = [index.getX(tri), index.getX(tri + 1), index.getX(tri + 2)]
-          .some((vertex) => vertex >= floorVertices);
-        if (wallFace) {
-          connectedWall++;
-          if (hit.point.y < -4) visibleDeepWall++;
-        } else ordinaryFloor++;
+        lowestVisibleY = Math.min(lowestVisibleY, hit.point.y);
+        if (hit.object === floor) {
+          const face = hit.faceIndex * 3;
+          const isConnectedFace = [indices.getX(face), indices.getX(face + 1), indices.getX(face + 2)]
+            .some((id) => id >= floorVertexCount);
+          if (isConnectedFace) connectedNearFace++; else nearFloor++;
+        } else {
+          opposingRock++;
+          if (hit.point.y < -10 && hit.point.x > 10 &&
+              hit.point.z > -225 && hit.point.z < -176)
+            deepOppositeRock++;
+        }
       }
-      return { samples: 63, connectedWall, visibleDeepWall, ordinaryFloor, caveVault, misses };
+      return { samples: 63, nearFloor, connectedNearFace, opposingRock,
+        deepOppositeRock, misses, lowestVisibleY,
+        actualCameraZ: w.camera.position.z, expectedCameraZ: w.position.z };
     });
-    const artGate = geometryVisibility.visibleDeepWall >= 2
-      ? 'PENDING_HUMAN_ART_REVIEW' : 'FAIL_CHASM_DEPTH_NOT_VISIBLE';
-    witness.details.push({ id: slug, zone: 4, screenshot: file, geometryVisibility, artGate,
-      narrative: 'Camera-only visibility audit, NOT navigation or automatic aesthetic approval' });
-    console.log('CAPTURE ravine ' + slug + ': ' + file + ' artGate=' + artGate +
-      ' rays=' + JSON.stringify(geometryVisibility));
+    const geometryGate =
+      geometryVisibility.nearFloor >= 5 &&
+      geometryVisibility.deepOppositeRock >= 8 &&
+      geometryVisibility.lowestVisibleY < -14 &&
+      Math.abs(geometryVisibility.actualCameraZ - geometryVisibility.expectedCameraZ) < 0.05
+        ? 'PASS_GEOMETRIC_DEPTH' : 'FAIL_RAVINE_SIGHTLINE';
+    witness.details.push({ id: slug, zone: 4, screenshot: file,
+      geometryVisibility, geometryGate, artGate: 'HOLD_HUMAN_ART_REVIEW',
+      narrative: 'Safe-zone physical deep ravine witness; aesthetic approval separate' });
+    console.log((geometryGate.startsWith('PASS') ? 'PASS ' : 'FAIL ') +
+      'ravine ' + slug + ' ' + file + ' ' + JSON.stringify(geometryVisibility));
   }
 
   // Hardware safety witness. Compare low-quality startup draw calls to the
@@ -370,10 +376,12 @@ try {
   witness.errors.push('UNCAUGHT: ' + (error?.stack || String(error)));
 } finally {
   await browser.close();
-  witness.chasmArtGate = witness.details
-    .filter((item) => item.zone === 4)
-    .every((item) => item.artGate === 'PENDING_HUMAN_ART_REVIEW')
-    ? 'PENDING_HUMAN_ART_REVIEW' : 'FAIL_CHASM_DEPTH_NOT_VISIBLE';
+  const ravineDetails = witness.details.filter((item) => item.zone === 4);
+  witness.chasmGeometryGate = ravineDetails.length === 2 &&
+    ravineDetails.every((item) => item.geometryGate === 'PASS_GEOMETRIC_DEPTH')
+    ? 'PASS_GEOMETRIC_DEPTH' : 'FAIL_RAVINE_SIGHTLINE';
+  // Not an automatic claim that the rock or all eight scenes are premium.
+  witness.chasmArtGate = 'HOLD_HUMAN_ART_REVIEW';
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
 }
 const expectedDetailShots = [
@@ -389,12 +397,16 @@ const detailComplete = witness.details.length === 6 &&
   actualDetailShots.length === new Set(actualDetailShots).size &&
   expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
-  detailComplete &&
+  detailComplete && witness.chasmGeometryGate === 'PASS_GEOMETRIC_DEPTH' &&
   witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
   witness.mobile.length + '/3 mobile-emulated, ' + witness.details.length +
   '/6 prop/detail screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
-if (!ok) for (const error of witness.errors) console.error('FAIL ' + error);
+if (!ok) {
+  if (witness.chasmGeometryGate !== 'PASS_GEOMETRIC_DEPTH')
+    console.error('FAIL physically visible ravine depth: ' + witness.chasmGeometryGate);
+  for (const error of witness.errors) console.error('FAIL ' + error);
+}
 process.exitCode = ok ? 0 : 1;
