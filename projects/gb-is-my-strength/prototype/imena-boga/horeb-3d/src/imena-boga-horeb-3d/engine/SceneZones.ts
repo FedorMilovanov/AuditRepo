@@ -60,6 +60,9 @@ const BAKED: { p: [number, number, number]; c: [number, number, number]; r: numb
   { p: [-3.4, 1.6, -133], c: [1.6, 0.8, 0.35], r: 4 }, { p: [3.4, 1.6, -148], c: [1.6, 0.8, 0.35], r: 4 }, { p: [-3.4, 1.6, -163], c: [1.6, 0.8, 0.35], r: 4 },
   { p: [-3, 0, -200], c: [0.9, 1.05, 1.35], r: 7 }, { p: [0, 40, -200], c: [0.8, 0.95, 1.2], r: 10 },
   { p: [-5.6, 1.5, -238], c: [0.9, 0.6, 0.3], r: 2.5 }, { p: [5.6, 1.5, -254.5], c: [0.9, 0.6, 0.3], r: 2.5 }, { p: [-5.6, 1.5, -271], c: [0.9, 0.6, 0.3], r: 2.5 },
+  // Cool indirect reflection from the narrowing exit; geometry remains
+  // visibly different before the final moonlit exterior, not a new light.
+  { p: [0, 4, -306], c: [0.21, 0.28, 0.37], r: 10 },
   { p: [0, 2, -322], c: [0.7, 0.8, 1.1], r: 16 },
 ];
 function bake(x: number, y: number, z: number, out: [number, number, number]) {
@@ -305,6 +308,76 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     void id;
     const lamp = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, color: 0xffa860, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.8 }));
     lamp.position.set(p[0] * 1.18, 0.35, p[1] - 0.9); lamp.scale.set(0.18, 0.26, 1); group.add(lamp);
+  }
+
+  // ── Зона 6: структурная геология перед выходом.
+  // The old 6th zone was an undifferentiated taper of the same tunnel mesh.
+  // These irregular discontinuous roof fractures are genuinely 3D and anchored
+  // high INSIDE the existing vault, leaving >2.7m safe head clearance. They
+  // are neither a decorative arch nor a hidden collision wall. One shared
+  // vertex-colour rock material and one mesh keep draw-call cost bounded.
+  {
+    const count = low ? 11 : 17;
+    const rand = rng(61026);
+    const positions: number[] = [], colors: number[] = [], indices: number[] = [];
+    const coldStone = [0.32, 0.35, 0.40] as const;
+    const face = (points: THREE.Vector3[], tint: number) => {
+      const base = positions.length / 3;
+      for (const p of points) {
+        positions.push(p.x, p.y, p.z);
+        const grain = caveSurfaceVariation(p.x, p.y, p.z);
+        const v = tint * (0.78 + grain * 0.23);
+        colors.push(coldStone[0] * v, coldStone[1] * v, coldStone[2] * v);
+      }
+      // Flat-shaded facets: no shared normals across fractured faces.
+      indices.push(base, base + 1, base + 2);
+    };
+    const addTriangle = (a: THREE.Vector3, b: THREE.Vector3,
+      c: THREE.Vector3, tint: number) => {
+      face([a, b, c], tint);
+    };
+    for (let i = 0; i < count; i++) {
+      const z = -293.6 - (i + 0.25 + rand() * 0.45) * (21.5 / count);
+      const height = vaultHeight(z);
+      const side = i % 3 === 0 ? 0 : i % 2 === 0 ? -1 : 1;
+      const offset = side === 0 ? (rand() - 0.5) * 0.8 :
+        side * (0.65 + rand() * 0.72);
+      const width = 0.44 + rand() * 0.54;
+      const length = 0.85 + rand() * 1.35;
+      const seamHeight = Math.max(2.78, height - (1.08 + rand() * 0.84));
+      const shoulderY = Math.max(seamHeight + 0.3, height - 0.57);
+      const topY = height + 1.8;
+      const tilt = (rand() - 0.5) * 0.3;
+      const a = new THREE.Vector3(offset - width, topY, z + length);
+      const b = new THREE.Vector3(offset + width * 0.8, topY - 0.15, z + length);
+      const c = new THREE.Vector3(offset + width, topY + 0.1, z - length);
+      const d = new THREE.Vector3(offset - width * 0.8, topY, z - length);
+      const e = new THREE.Vector3(offset - width * 0.55,
+        shoulderY, z + length * 0.52);
+      const f = new THREE.Vector3(offset + width * 0.42,
+        shoulderY - 0.11, z - length * 0.52);
+      const bottom = new THREE.Vector3(offset + tilt, seamHeight,
+        z + (rand() - 0.5) * length * 0.35);
+      // Asymmetric coarse bedding ends in a short, sharp detached fracture;
+      // four differently oriented facets avoid the cone / cathedral-arch look.
+      addTriangle(a, b, e, 0.91);
+      addTriangle(b, f, e, 0.76);
+      addTriangle(b, c, f, 1.04);
+      addTriangle(c, d, f, 0.68);
+      addTriangle(d, e, f, 0.84);
+      addTriangle(e, f, bottom, 0.64);
+      addTriangle(d, a, e, 0.94);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    const fracture = new THREE.Mesh(geo, rockMat);
+    fracture.name = 'zone-6-geological-roof-fractures';
+    fracture.userData.fractureCount = count;
+    fracture.userData.collision = false;
+    group.add(fracture);
   }
 
   // ── Зона 7: открытый ландшафт у Хорива
