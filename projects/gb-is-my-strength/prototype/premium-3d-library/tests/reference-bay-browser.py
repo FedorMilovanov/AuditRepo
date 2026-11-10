@@ -49,6 +49,35 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
         await panel.wait_for(state="detached", timeout=10000)
         await page.wait_for_timeout(3450)
 
+        # A rendered screenshot can conceal fallback-font clipping.
+        # Verify *actual* local font faces were loaded in this engine and
+        # there exists a readable point size that fits all section titles.
+        type_witness = await page.evaluate("""() => {
+          const faces = [...document.fonts];
+          const actual = faces.filter(f => /Cormorant Garamond|Inter/.test(f.family));
+          const serif = actual.filter(f => /Cormorant Garamond/.test(f.family) && f.status==='loaded');
+          const sans = actual.filter(f => /Inter/.test(f.family) && f.status==='loaded');
+          const ctx = document.createElement('canvas').getContext('2d');
+          const names = ['Статьи','Серии','Биографии','Карты','Конфессии'];
+          const titles = names.map(name => {
+            let px = 142, width = Infinity;
+            for (; px>=76; px--) {
+              ctx.font = '600 ' + px + 'px "Cormorant Garamond", Georgia, serif';
+              width=ctx.measureText(name).width;
+              if (width <= 884) break;
+            }
+            return {name,px,width};
+          });
+          return {serif:serif.length, sans:sans.length,
+            check:document.fonts.check('600 142px "Cormorant Garamond"','Конфессии'),
+            titles};
+        }""")
+        assert type_witness['serif'] and type_witness['sans'] and type_witness['check'], (
+            'Local editorial fonts were not loaded before 3D textures', type_witness
+        )
+        assert all(t['px']>=76 and t['width']<=884.01
+                   for t in type_witness['titles']), type_witness
+
         paused = await page.get_by_text("Нажмите, чтобы продолжить прогулку").is_visible()
         report = await page.evaluate("""() => ({
           hasWebGL2: [...document.querySelectorAll('canvas')].some(
@@ -72,7 +101,8 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
         print(json.dumps({
             "engine": engine, "station": station, "viewport": f"{width}x{height}",
             "result": "PASS", "evidence": str(shot),
-            "screenshotMs": capture_ms, "errors": errors, **report
+            "screenshotMs": capture_ms, "errors": errors,
+            "typography":type_witness, **report
         }, ensure_ascii=False), flush=True)
     finally:
         await context.close()
