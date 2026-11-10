@@ -6,9 +6,10 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { marble, stone, wood } from './Platform';
+import { CASEWORK } from './caseworkScale';
 
-const BAYS = 20;
-const RADIUS = 15.85;
+const BAYS = CASEWORK.bays;
+const RADIUS = CASEWORK.radius;
 const WINDOWS = new Set([7, 8, 9, 10, 11, 12]);
 const UP = new THREE.Vector3(0, 1, 0);
 const loader = new THREE.TextureLoader();
@@ -84,8 +85,8 @@ function details() {
     }
     oak.push(elem(bay, 0, 7.51, -.79, 4.32, .20, .34));
     oak.push(elem(bay, 0, 7.33, -.82, 4.14, .095, .30));
-    for (let shelf = 0; shelf < 6; shelf++) {
-      const y = .58 + shelf * 1.06;
+    for (let shelf = 0; shelf < CASEWORK.shelfRows; shelf++) {
+      const y = CASEWORK.firstShelfY + CASEWORK.trimAboveShelf + shelf * CASEWORK.shelfPitch;
       oak.push(elem(bay, 0, y, -.88, 4.16, .075, .10));
     }
     // Subtle, raised lower-cabinet panels keep shelves visually grounded.
@@ -197,8 +198,8 @@ function referenceParts(bay: number) {
 
   // Recessed, solid timber shelves, stile and stepped cornice.
   part(oak, 0, 4.02, -0.94, 0.11, 7.10, 0.18);
-  for (let level = 0; level <= 6; level++) {
-    const y = 0.56 + level * 1.06;
+  for (let level = 0; level <= CASEWORK.shelfRows; level++) {
+    const y = CASEWORK.firstShelfY + level * CASEWORK.shelfPitch;
     part(oak, 0, y, -1.00, 3.84, 0.11, 0.19);
     part(metal, 0, y + 0.064, -1.099, 3.72, 0.014, 0.016);
   }
