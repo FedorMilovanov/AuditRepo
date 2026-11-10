@@ -193,6 +193,13 @@ async function wcagAudit(page,app,engine,width){
   record('axe-theme-state',{app,engine,width,theme,...themeState});
   if(app==='atlas'&&themeState.attribute!==theme)
    problem('HIGH','axe-theme-state-mismatch',{app,engine,width,theme,...themeState});
+  // WCAG measures painted pixels and colors. Let WebKit commit two frames
+  // after the persisted theme's React/CSS update before inspecting contrast.
+  // This does not waive any violation; it avoids auditing a transient repaint.
+  await page.evaluate(async()=>{
+   await document.fonts.ready;
+   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  });
   await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
   const violations=await page.evaluate(async()=>{
    const r=await window.axe.run(document,{
@@ -259,8 +266,26 @@ async function visit(browser,engine,app,width,base){
     await page.locator('#tetragrammaton').scrollIntoViewIfNeeded();
     await shot(page,engine+'-'+app+'-'+width+'-04-hebrew');
    }
-   await page.evaluate(()=>window.scrollTo({top:Math.round((document.documentElement.scrollHeight-innerHeight)*.72),behavior:'instant'}));
-   await page.waitForTimeout(180);
+   if(app==='sozvezdie'){
+    // Anchor to the SAME semantic heading in both engines. A percentage of
+    // total document height is not a comparable cross-browser screenshot.
+    const deepAnchor=page.locator('#adonai');
+    await deepAnchor.waitFor({state:'visible',timeout:10000});
+    await deepAnchor.evaluate(el=>{
+      window.scrollTo({top:Math.max(0,window.scrollY+el.getBoundingClientRect().top-150),behavior:'instant'});
+    });
+    await page.evaluate(async()=>{
+      await document.fonts.ready;
+      await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+    });
+    const nameTop=await deepAnchor.evaluate(el=>el.getBoundingClientRect().top);
+    record('semantic-deep-anchor',{engine,width,name:'adonai',top:nameTop});
+    if(Math.abs(nameTop-150)>5)
+      problem('BLOCKER','semantic-deep-anchor-mismatch',{engine,width,top:nameTop});
+   }else{
+    await page.evaluate(()=>window.scrollTo({top:Math.round((document.documentElement.scrollHeight-innerHeight)*.72),behavior:'instant'}));
+    await page.waitForTimeout(180);
+   }
    if(app==='sozvezdie'){
     if(width<1280){
      const controls=await page.evaluate(()=>{
@@ -296,6 +321,18 @@ async function visit(browser,engine,app,width,base){
     record('reader-progress-exact',{engine,width,...witness});
    }
    await shot(page,engine+'-'+app+'-'+width+'-05-deep');
+  }
+  if(width===320&&app==='atlas'){
+   await safeAction(page,engine+'-atlas-'+width+'-search',async()=>{
+    await page.getByRole('button',{name:'Открыть поиск по именам'}).click();
+    await page.locator('#constellation-search-input').fill('Элохим');
+    const hit=page.locator('[data-constellation-result]').first();
+    const top=await hit.evaluate(el=>el.getBoundingClientRect().top);
+    record('atlas-search-result-in-frame',{engine,width,resultTop:top});
+    if(top<0||top>700)
+     problem('BLOCKER','atlas-search-results-too-low',{engine,width,resultTop:top});
+    await shot(page,engine+'-atlas-'+width+'-08-search-results');
+   });
   }
   if(width===390||width===1440){
    if(app==='atlas'){
@@ -522,7 +559,7 @@ async function visit(browser,engine,app,width,base){
  await new Promise((resolve,reject)=>server.listen(0,'127.0.0.1',resolve).on('error',reject));
  const base='http://127.0.0.1:'+server.address().port;
  try{
-  for(const [engine,widths] of [['chromium',[320,360,375,390,430,768,1024,1440]],['webkit',[320,390,768,1440]]]){
+  for(const [engine,widths] of [['chromium',[320,360,375,390,430,768,1024,1440]],['webkit',[320,390,430,768,1440]]]){
    const spec={chromium,webkit}[engine],options={headless:true};
    if(engine==='chromium'&&process.env.CHROMIUM_PATH)options.executablePath=process.env.CHROMIUM_PATH;
    const browser=await spec.launch(options);

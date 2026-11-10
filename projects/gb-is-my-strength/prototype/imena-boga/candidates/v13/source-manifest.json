@@ -60,12 +60,12 @@
       "bytes_normalized": 15437
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "464fac0278a15add39bd75911f1905873aa4ae050f043de244748f11c5be70bb",
-      "bytes_normalized": 17883
+      "sha256": "f57d35f7b81a09dff1d5942bfd676b90cce5f4d9b14d4a82f9a315db99b8bc83",
+      "bytes_normalized": 17995
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "ed277f54b76f45abd6a8dedee61f56c5ca6b49f6bd4c752f3b459d8ff36a4b87",
-      "bytes_normalized": 29763
+      "sha256": "0cc5c6e62e03e6d76f63e196a7661a20767a710c112d2662994b5c768db26707",
+      "bytes_normalized": 30319
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "390a7dc86f95d332640da5ca12be90ea13579a1d7a7c85c35fffd1840718ebbc",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "9ce699b4e50d60fbd5c7eb700d22d5374b9cc6448941582e00ec728ef745eb21",
-      "bytes_normalized": 52702
+      "sha256": "40595f05ed732e1adf4e9b738da8a05b9ccbf8d5b00d157ba49b1bd0c9550970",
+      "bytes_normalized": 55564
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -184,8 +184,8 @@
       "bytes_normalized": 14156
     },
     "checks/visual_review.cjs": {
-      "sha256": "ed308ab6f0d7795a1b81396d419f6b90ccfba455486af0d94ed5ccb74cf88bff",
-      "bytes_normalized": 30105
+      "sha256": "323dd439601357a98ef4f80cb472231d06dae0b1b5a92701c62708d3eeb0ea03",
+      "bytes_normalized": 32070
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -260,8 +260,8 @@
       "bytes_normalized": 9941
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "01440b1250c2fda414fa660ec8cbb8d2008edf744b1adb8c0a771ca415e1f9c1",
-      "bytes_normalized": 18464
+      "sha256": "55596d483ceb6455b01610d8b735ba3172b49c005dabe4d047d33f407e90aa5b",
+      "bytes_normalized": 18768
     },
     "sozvezdie/src/components/NameSection.tsx": {
       "sha256": "4bf29dbea698f47958524790664b682eacc122a64a7ea352570b67dccd70eb60",
@@ -316,8 +316,8 @@
       "bytes_normalized": 1238
     },
     "sozvezdie/src/index.css": {
-      "sha256": "3b7b27e5043e86076c6a00e5ccf1170edff2aa0a98ce60a7ca0e79c99dd3416e",
-      "bytes_normalized": 8210
+      "sha256": "7cda8a348e895811c10f897683d7b1e6efd8ccdf95a711bb2b6f25723d7ae9f5",
+      "bytes_normalized": 8533
     },
     "sozvezdie/src/main.tsx": {
       "sha256": "76f104d10a14363fbeed89b8c2768741ded2849154df9c6de3dda1dca835aba8",

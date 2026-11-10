@@ -170,6 +170,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             <span className="sr-only">Найти имя Бога</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cream-700 transition-colors group-focus-within:text-gold-400" />
             <input
+              data-name-grid-search
               ref={searchRef}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && filtered.length > 0) {
@@ -295,7 +296,13 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
               <span className="hairline flex-1" />
               <span className="tracking-[0.2em] text-cream-700">{entries.length}</span>
             </p>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-3 lg:grid-cols-5">
+            <div
+              data-name-result-grid
+              data-single-result={entries.length === 1 ? "true" : "false"}
+              className={entries.length === 1
+                ? "grid grid-cols-1 justify-items-center gap-2 md:gap-3"
+                : "grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-3 lg:grid-cols-5"}
+            >
               {entries.map((name) => {
                 const n = (GLOBAL_INDEX.get(name.id) ?? 0) + 1;
                 const attrs = scriptAttrs(name);
@@ -307,7 +314,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     onClick={() => onSelect(name.id)}
                     aria-label={`Перейти к разделу: ${name.translit}${isCompleted ? ", изучено" : ""}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`group relative flex min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
+                    className={`group relative flex w-full max-w-80 min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
                       isActive
                         ? "border-gold-500/60 bg-gradient-to-b from-ink-800 to-ink-900 shadow-[0_0_35px_-8px_rgba(212,175,55,0.35)]"
                         : isCompleted

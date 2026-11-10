@@ -261,7 +261,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
       >
         {/* Top Modal Header */}
         <div
-          className="flex flex-col gap-3 border-b px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-4"
+          className="flex flex-col gap-2 border-b px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-4"
           style={{
             backgroundColor: 'var(--gb-bg)',
             borderColor: 'var(--gb-border)',
@@ -362,13 +362,13 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
         </div>
 
         {/* Scrollable Deep Study Content */}
-        <div ref={scrollBodyRef} className="thin-sacred-scroll flex-1 overflow-y-auto px-5 py-6 sm:px-8 sm:py-8">
+        <div ref={scrollBodyRef} className="thin-sacred-scroll flex-1 overflow-y-auto px-3 py-4 sm:px-8 sm:py-8">
           {/* Illuminated 3D Tilting Original Banner */}
           <div style={{ perspective: '1000px' }}>
             <div
               onMouseMove={handleBannerMove}
               onMouseLeave={handleBannerLeave}
-              className="relative overflow-hidden rounded-2xl border p-6 sm:p-7 text-center"
+              className="relative overflow-hidden rounded-2xl border p-4 text-center sm:p-7"
               style={{
                 transform: bannerTilt.active
                   ? `rotateX(${bannerTilt.rx}deg) rotateY(${bannerTilt.ry}deg)`
@@ -412,7 +412,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
 
               <h2
                 id="modal-divine-name-title"
-                className="font-serif-display relative z-10 mt-3 text-2xl sm:text-3xl font-bold"
+                className="font-serif-display relative z-10 mt-2 text-[clamp(1.125rem,5.6vw,1.5rem)] font-bold leading-snug sm:mt-3 sm:text-3xl"
                 style={{ color: 'var(--gb-ink)' }}
               >
                 {entry.language === 'greek'
@@ -420,7 +420,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                   : entry.transliteration}
               </h2>
               <p
-                className="font-serif-display relative z-10 mt-1 text-lg sm:text-xl italic font-semibold"
+                className="font-serif-display relative z-10 mt-1 text-base font-semibold italic leading-snug sm:text-xl"
                 style={{ color: 'var(--gb-accent)' }}
               >
                 {entry.russianName}
@@ -639,7 +639,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
 
         {/* Bottom Navigation Bar */}
         <div
-          className="flex flex-wrap items-center justify-between gap-2 border-t px-4 py-3.5 sm:px-8"
+          className="grid grid-cols-2 gap-2 border-t px-3 py-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:px-8 sm:py-3.5"
           style={{
             backgroundColor: 'var(--gb-bg)',
             borderColor: 'var(--gb-border)',
@@ -649,7 +649,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             type="button"
             disabled={!prevEntry}
             onClick={() => prevEntry && onSelectEntry(prevEntry)}
-            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
+            className="font-ui order-1 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:order-none sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -664,7 +664,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <a
               href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}
               aria-label={`Продолжить чтение о «${entry.transliteration}» в Созвездии`}
-              className="font-ui inline-flex min-h-10 items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="font-ui order-4 inline-flex min-h-10 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:order-none sm:w-auto sm:px-3"
               style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
             >
               <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
@@ -680,18 +680,20 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               onClose();
               onJumpToArticle(entry);
             }}
-            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
+            className={'font-ui order-3 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:order-none sm:w-auto sm:px-4 ' +
+              (counterpartId ? '' : 'col-span-2')}
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <Navigation className="h-3.5 w-3.5" />
-            <span>Перейти в статье</span>
+            <span className="sm:hidden">К статье</span>
+            <span className="hidden sm:inline">Перейти в статье</span>
           </button>
 
           <button
             type="button"
             disabled={!nextEntry}
             onClick={() => nextEntry && onSelectEntry(nextEntry)}
-            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
+            className="font-ui order-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:order-none sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',

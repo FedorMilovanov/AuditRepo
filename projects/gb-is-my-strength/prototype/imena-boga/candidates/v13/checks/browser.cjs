@@ -8,7 +8,7 @@ const root=path.resolve(__dirname,'..');
 const engine=process.env.ENGINE || 'webkit';
 const selected={chromium,webkit}[engine];
 if(!selected) throw Error('Unsupported ENGINE');
-const widths=(process.env.VIEWPORTS||'320,390,768,1440').split(',').map(Number);
+const widths=(process.env.VIEWPORTS||'320,390,430,768,1440').split(',').map(Number);
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2'};
 const server=createServer((req,res)=>{
  try{
@@ -325,6 +325,37 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const navSearch=page.getByRole('button',{name:'Открыть поиск по именам'});
     await navSearch.click();
     const input=page.locator('#constellation-search-input');
+    // Require whole original-script words on all 36 cards, rather than
+    // checking only the overall document scrollWidth. Hebrew niqqud must
+    // stay attached to its letter; a single word may not fragment over rows.
+    const scriptIntegrity=await page.locator('#constellation-atlas').evaluate(section=>{
+      const cards=[...section.querySelectorAll('[data-constellation-result]')];
+      const failures=[];
+      for(const card of cards){
+        const source=card.querySelector('[data-constellation-original]');
+        const node=source?.firstChild;
+        if(!(node instanceof Text)){failures.push({reason:'original missing'});continue}
+        const text=node.textContent||'';
+        const cell=card.getBoundingClientRect();
+        for(const match of text.matchAll(/\S+/gu)){
+          if(!/[\p{Script=Hebrew}\p{Script=Greek}]/u.test(match[0]))continue;
+          const range=document.createRange();
+          range.setStart(node,match.index);
+          range.setEnd(node,match.index+match[0].length);
+          const fragments=[...range.getClientRects()].filter(rect=>rect.width>1&&rect.height>1);
+          const lines=new Set(fragments.map(rect=>Math.round(rect.y)));
+          const clipped=fragments.some(rect=>rect.left<cell.left-2||rect.right>cell.right+2);
+          if(lines.size!==1||clipped)
+            failures.push({name:card.querySelector('h4')?.textContent,
+              word:match[0],lines:[...lines],clipped});
+        }
+      }
+      return {count:cards.length,failures};
+    });
+    if(scriptIntegrity.count!==36||scriptIntegrity.failures.length)
+      throw Error('Atlas original-script word fragmentation '+JSON.stringify({
+        engine,width,scriptIntegrity
+      }));
     if(!(await input.evaluate(el=>document.activeElement===el)))
       throw Error('Atlas navbar search did not focus immediately '+width);
          if (width <= 390) {
@@ -691,6 +722,23 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       throw Error('Reader preferences regression '+JSON.stringify({width,finalLayout,errors,requests}));
     results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true,contrastRatios:{light:lightContrast,sepia:sepiaContrast,dark:darkContrast}});
    }else{
+    // A single Constellation search hit should be centered, readable and
+    // bounded by the content measure at mobile and desktop widths.
+    const oneResultInput=page.locator('#sozvezdie input[type="search"]');
+    await oneResultInput.fill('эхье');
+    const centeredResult=await page.locator('#sozvezdie [data-name-result-grid][data-single-result="true"]')
+      .evaluate(grid=>{
+        const hit=grid.querySelector('button[aria-label^="Перейти к разделу:"]');
+        if(!hit)return null;
+        const gr=grid.getBoundingClientRect(),hr=hit.getBoundingClientRect();
+        return {count:grid.querySelectorAll('button[aria-label^="Перейти к разделу:"]').length,
+          delta:Math.abs((gr.left+gr.width/2)-(hr.left+hr.width/2)),
+          width:hr.width,within:hr.left>=gr.left-1&&hr.right<=gr.right+1};
+      });
+    if(!centeredResult||centeredResult.count!==1||centeredResult.delta>2||
+       centeredResult.width>322||!centeredResult.within)
+      throw Error('Constellation single search result not centered '+JSON.stringify({engine,width,centeredResult}));
+    await oneResultInput.fill('');
     // The prominent divine name is Hebrew, not a Russian/Latin token.
     // Keep correct reading direction and language metadata for assistive tech.
     const heroName=await page.locator('[data-hero-divine-name]').evaluate(el=>({

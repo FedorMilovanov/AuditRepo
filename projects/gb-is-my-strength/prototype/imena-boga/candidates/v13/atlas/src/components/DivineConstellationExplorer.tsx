@@ -297,7 +297,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                 <button
                   type="button"
                   onClick={() => onSelectName(item)}
-                  className="flex w-full cursor-pointer items-start justify-between gap-3 text-left focus:outline-none"
+                  className="flex w-full cursor-pointer flex-col items-stretch gap-2 text-left focus:outline-none"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -339,8 +339,9 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                   <span
                     className={`${
                       item.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                    } min-w-0 max-w-[54%] break-words text-right text-lg sm:text-2xl font-bold [overflow-wrap:anywhere]`}
-                    lang={item.language === 'greek' ? 'el' : 'he'}
+                    } block w-full min-w-0 whitespace-normal break-normal text-right text-lg font-bold leading-snug sm:text-2xl [overflow-wrap:normal]`}
+                    data-constellation-original
+                    lang={item.language === 'greek' ? 'el' : item.language === 'aramaic' ? 'arc' : 'he'}
                     dir={item.language === 'greek' ? 'ltr' : 'rtl'}
                     style={{ color: 'var(--gb-ink)' }}
                   >
