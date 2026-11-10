@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { marble, stone, wood } from "./Platform";
+import { CASEWORK } from "./caseworkScale";
 
 /**
  * Premium library envelope. Original interactive stations keep their canonical
@@ -9,12 +10,12 @@ import { marble, stone, wood } from "./Platform";
  *
  * Repeated book volumes use one draw call and deterministic per-instance colour.
  */
-const BAYS = 20;
-const RADIUS = 15.85;
+const BAYS = CASEWORK.bays;
+const RADIUS = CASEWORK.radius;
 const WINDOW_BAYS = new Set([7, 8, 9, 10, 11, 12]);
 const SHELVED_BAYS = Array.from({ length: BAYS }, (_, i) => i).filter((i) => !WINDOW_BAYS.has(i) && i !== 0);
-const SHELVES = 6;
-const BOOKS = 22;
+const SHELVES = CASEWORK.shelfRows;
+const BOOKS = CASEWORK.booksPerShelf;
 const COLOURS = ["#574537", "#62433b", "#465a51", "#695f4d", "#48484b", "#765e45", "#344c57", "#796a56"];
 
 function seeded(n: number) {
@@ -38,11 +39,11 @@ function BookInstances() {
       for (let level = 0; level < SHELVES; level++) {
         for (let b = 0; b < BOOKS; b++) {
           const seed = bay * 10000 + level * 100 + b;
-          const shift = ((b + 0.5) / BOOKS - 0.5) * 4.03;
+          const shift = ((b + 0.5) / BOOKS - 0.5) * CASEWORK.shelfWidth;
           const depth = -0.32 + (seeded(seed + 7) - 0.5) * 0.07;
-          const h = 0.60 + seeded(seed + 3) * 0.30;
-          const w = 0.15 + seeded(seed + 11) * 0.05;
-          const y = 0.66 + level * 1.06 + h * 0.5;
+          const h = CASEWORK.minVolumeHeight + seeded(seed + 3) * CASEWORK.volumeHeightVariation;
+          const w = CASEWORK.minVolumeWidth + seeded(seed + 11) * CASEWORK.volumeWidthVariation;
+          const y = CASEWORK.firstShelfY + CASEWORK.spineBaseAboveShelf + level * CASEWORK.shelfPitch + h * 0.5;
           object.position.set(sin * (RADIUS + depth) + cos * shift, y, cos * (RADIUS + depth) - sin * shift);
           object.rotation.set(0, angle, (seeded(seed + 41) - 0.5) * 0.055);
           object.scale.set(w, h, 0.37 + seeded(seed + 31) * 0.08);
@@ -77,7 +78,7 @@ function shelfParts(bay: number) {
     shelfPart(bay, 0, 3.85, -0.04, 4.27, 7.45, 0.22),
   ];
   for (let level = 0; level <= SHELVES; level++) {
-    woodParts.push(shelfPart(bay, 0, 0.56 + level * 1.06, -0.51, 4.27, 0.11, 0.71));
+    woodParts.push(shelfPart(bay, 0, CASEWORK.firstShelfY + level * CASEWORK.shelfPitch, -0.51, 4.27, 0.11, 0.71));
   }
   for (const x of [-2.13, 2.13]) {
     woodParts.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
