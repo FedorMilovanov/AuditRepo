@@ -300,12 +300,23 @@ try {
   await browser.close();
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
 }
+const expectedDetailShots = [
+  'visual-detail-zone6-exit-roof.png',
+  'visual-detail-beersheba-well.png',
+  'visual-detail-hagar-spring.png',
+  'visual-detail-gethsemane-grove.png',
+];
+const actualDetailShots = witness.details.map((item) => item.screenshot);
+const detailComplete = witness.details.length === 4 &&
+  actualDetailShots.length === new Set(actualDetailShots).size &&
+  expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
-  witness.details.length === 3 &&
+  detailComplete &&
   witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
-  witness.mobile.length + '/3 mobile-emulated screenshots; errors=' + witness.errors.length +
+  witness.mobile.length + '/3 mobile-emulated, ' + witness.details.length +
+  '/4 prop/detail screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
 if (!ok) for (const error of witness.errors) console.error('FAIL ' + error);
 process.exitCode = ok ? 0 : 1;
