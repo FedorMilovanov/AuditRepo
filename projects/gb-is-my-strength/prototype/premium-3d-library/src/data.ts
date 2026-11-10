@@ -314,13 +314,16 @@ export const itemPos = (i: Item): [number, number] => {
   return [Math.sin(a) * i.radius, Math.cos(a) * i.radius];
 };
 
+/** Physical standoff also drives the viewport-fit of editorial plaques. */
+export const SECTION_APPROACH_DISTANCE = 5.4;
+
 /** Куда встать, чтобы читать экспонат с лицевой стороны. */
 export function approachPose(it: Item) {
   const [ix, iz] = itemPos(it);
   const r = Math.hypot(ix, iz) || 1;
   const ux = ix / r;
   const uz = iz / r;
-  const dist = it.kind === "section" ? 5.4 : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? 2.5 : 4.2;
+  const dist = it.kind === "section" ? SECTION_APPROACH_DISTANCE : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? 2.5 : 4.2;
   const pitch = it.kind === "section" ? 0.08 : it.kind === "tome" ? 0.05 : 0.08;
   // не даём точке выйти за колоннаду: иначе колонна закрывает экспонат
   const cap = Math.max(0, WALK_RADIUS - 0.75);
