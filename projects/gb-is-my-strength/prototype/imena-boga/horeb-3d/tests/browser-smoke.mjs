@@ -24,6 +24,20 @@ const check = (name, ok, detail = '') => {
   if (ok) passes++; else failures.push(name + (detail ? ': ' + detail : ''));
 };
 const errors = [];
+// The actual Chromium accessibility tree, not the DOM text alone: a visible
+// button/link with an empty computed accessible name is a keyboard/AT blocker.
+// CDP audits are not substitutes for real NVDA/VoiceOver, and are named as such.
+async function anonymousAccessibleActions(page) {
+  const cdp = await page.createCDPSession();
+  try {
+    await cdp.send('Accessibility.enable');
+    const { nodes } = await cdp.send('Accessibility.getFullAXTree');
+    const namesRequired = new Set(['button', 'link', 'radio', 'checkbox', 'slider', 'textbox']);
+    return nodes.filter((node) => !node.ignored && namesRequired.has(node.role?.value) &&
+      !(node.name?.value || '').trim())
+      .map((node) => ({ role: node.role?.value, node: node.backendDOMNodeId })).slice(0, 10);
+  } finally { await cdp.detach(); }
+}
 // Wait for *painted* intro, not merely a DOM node whose reveal animation is
 // still at opacity:0. Fail rather than saving a misleading black screenshot.
 async function waitForIntroPaint(page) {
@@ -65,11 +79,17 @@ try {
   check('intro title visible', await page.$eval('h1', (h) => h.textContent.includes('ИМЕНА БОГА')).catch(() => false));
   await waitForIntroPaint(page);
   check('intro visibly painted after reveal', true);
+  const introUnnamedActions = await anonymousAccessibleActions(page);
+  check('intro Chromium AX tree has no unnamed interactive controls',
+    introUnnamedActions.length === 0, JSON.stringify(introUnnamedActions));
   await page.screenshot({ path: join(shots, 'smoke-01-intro.png') });
 
   await page.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => b.textContent.includes('Настройки доступности'))?.click());
   check('settings modal opened', (await page.$$('[role="dialog"]')).length === 1);
+  const modalUnnamedActions = await anonymousAccessibleActions(page);
+  check('settings Chromium AX tree has no unnamed interactive controls',
+    modalUnnamedActions.length === 0, JSON.stringify(modalUnnamedActions));
   check('initial focus remains in modal', await page.evaluate(() =>
     !!document.querySelector('[role="dialog"]')?.contains(document.activeElement)));
   await page.keyboard.down('Shift');
@@ -79,6 +99,19 @@ try {
     !!document.querySelector('[role="dialog"]')?.contains(document.activeElement)));
   await page.keyboard.press('Escape');
   check('Escape closes modal', (await page.$$('[role="dialog"]')).length === 0);
+
+  // Non-WebGL reader is a first-class, fully accessible route. Validate the
+  // actual browser AX tree, independent of React heading/href text assertions.
+  const axReaderPage = await browser.newPage();
+  try {
+    await axReaderPage.goto(base + '/?e2e', { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await axReaderPage.evaluate(() => [...document.querySelectorAll('button')]
+      .find((button) => (button.textContent || '').trim() === 'Режим чтения')?.click());
+    await axReaderPage.waitForSelector('main#reader h1', { timeout: 20000 });
+    const readerUnnamedActions = await anonymousAccessibleActions(axReaderPage);
+    check('42-dossier reader Chromium AX tree has no unnamed interactive controls',
+      readerUnnamedActions.length === 0, JSON.stringify(readerUnnamedActions));
+  } finally { await axReaderPage.close(); }
 
   const start = await page.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.textContent);

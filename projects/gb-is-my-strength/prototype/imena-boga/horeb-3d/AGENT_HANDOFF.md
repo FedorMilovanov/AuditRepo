@@ -1,14 +1,52 @@
-# HOREB 3D — актуальная передача разработчикам
+# HOREB 3D — каноническая передача разработчикам
 
-## Current ownership / QA handoff (10 Nov 2026)
+## АКТУАЛЬНЫЙ СТАТУС · 11 ноября 2026
 
-**Code baseline** `ab35c6a6136f7bd03227ec3b9ecd1241dd643219` on the ONE existing Draft PR #543; 3/3 exact-HEAD GitHub workflows and 6/6 QA jobs SUCCESS. Any later HEAD requires new CI. Current art gate: `FAIL_CHASM_DEPTH_NOT_VISIBLE` on both 63-ray camera witnesses (0 visible near-cliff strata hits); screenshot capture is NOT art approval. Rejected far-wall lighting/shaping experiments were discarded; preserve the source scene pending a convincing accepted composition. Hardware short smoke RTX 3060 high 8/8 at reported 60 FPS; Windows Firefox 8/8 scenes with WebGL2 and no context loss (camera-only). Do not claim full cross-browser/phone, VRAM/thermal, editorial, rights or professional audio closure. Existing 14m/6.5m guards and subdued night/HUD are immutable. No merge, Product/Research changes or branch proliferation.
+**Единственная ветка:** lane/horeb-3d-lab-20261108.
+**Единственный Draft PR:** https://github.com/FedorMilovanov/AuditRepo/pull/543.
+**Путь:** projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.
+**Последний инженерно подтверждённый код:** 79d6a6c0580a4a4c2870f3c192600d60eae2ae06.
+[GitHub HOREB QA](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42885366139)
+6/6 jobs SUCCESS, Validate и Preflight оба SUCCESS.
+Новое изменение документации/A11y требует нового exact-HEAD CI до терминального PASS.
 
-**Единственная каноническая ветка:** `lane/horeb-3d-lab-20261108`
-**Единственный Draft PR:** https://github.com/FedorMilovanov/AuditRepo/pull/543
-**Путь:** `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/`
-**Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
-**Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
+**Точное состояние ворот** — audit/acceptance-matrix.md, он заменяет все устаревшие
+начальные статусы из архивных разделов ниже. Инженерная геометрия, путь и
+все 42 E-объекта пройдены. Исследовательское, художественное и голосовое
+одобрение отдельно НЕ получено; никаких Product merge/деплоя.
+
+**Новая доказательная аппаратная проверка:** 108с реального Chrome ANGLE
+NVIDIA RTX 3060/D3D11 на Windows, high 1440×900 DPR1, 18 выборок,
+59–61 measured FPS, max 50°C, max 1764 МиБ **всей** VRAM устройства,
+0 context loss/JS ошибок. Свидетель:
+audit/RTX3060_108S_2026-11-11.json. Для повторения:
+npm run test:hardware:soak, требуется nvidia-smi. Не считать результат
+15-минутным стресс-тестом, memory-leak closure или показателем Android.
+
+**Новое A11y:** Chromium CDP AX tree на интро, модалке настроек и
+HTML-reader — 0 безымянных интерактивных контролов. Добавлены три smoke
+регрессии; Chromium 41/41 локально, новый GitHub CI обязателен.
+NVDA, VoiceOver и реальные телефоны всё ещё HOLD.
+
+**Исправлена пользовательская информация:** убрана статическая запись
+старого Research HEAD из читателя; источник Research PR #379 остаётся
+Draft, все 42 карточки HOLD. Настройки теперь правильно говорят о
+немедленном пересоздании сцены при смене low/high.
+
+**Неприкосновенно:** ночной Хорив, тёмная HUD, 14/6.5 м,
+ритуал снятия обуви, категории исследовательских обозначений.
+Original ZIP: original/arena-horeb-original.zip, SHA256
+c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9.
+Не плодить ветки, не делать force-push, не менять Research/Product,
+не сливать Draft без отдельного согласия.
+
+---
+
+## АРХИВНЫЕ ВОЛНЫ — исторический контекст, не текущие PASS/FAIL
+
+Старые сообщения «пропасть не видна», старые SHA и ожидания CI ниже
+сохранены только для истории. При любом конфликте с текущим состоянием
+приоритет имеют этот блок, матрица и exact-HEAD GitHub Actions.
 
 ## ТЕКУЩАЯ ХУДОЖЕСТВЕННАЯ ВОЛНА (10 ноября 2026) — ЛАБОРАТОРНЫЙ КАНДИДАТ
 

@@ -1,81 +1,58 @@
-# HOREB 3D — матрица приёмки
+# HOREB 3D — каноническая матрица приёмки
 
-## Current surgical checkpoint · 2026-11-10 (Draft PR #543)
+**Актуально на 11 ноября 2026 · AuditRepo Draft PR #543.**
+**Последний инженерно подтверждённый код:** 79d6a6c0580a4a4c2870f3c192600d60eae2ae06.
+**Свидетельства:** [HOREB QA 42885366139](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42885366139) — 6/6 jobs SUCCESS;
+[Validate 42885366244](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42885366244) и
+[Preflight 42885366127](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42885366127) — оба SUCCESS.
+Новые изменения документации, интерфейса и AX-тестов требуют своего exact-HEAD CI.
+**ENGINEERING PASS не означает ART APPROVAL, публикацию, одобренный голос или текстологический допуск.**
 
-**Verified engineering HEAD before this documentation update: `ab35c6a6136f7bd03227ec3b9ecd1241dd643219`.** [QA 42865777325](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42865777325), Validate 42865777299, Preflight 42865777193: **3/3 workflows SUCCESS, 6/6 HOREB jobs SUCCESS**. Any subsequent documentation HEAD needs its own CI; historical entries below are not current sign-offs.
+## Решение о выпуске
 
-- **ZONE-4 ART FAIL:** 63 real first-hit camera rays at each of two screenshots: **0 hits on connected ravine-wall triangles**, all rays intercepted by normal floor or outer cave vault. Screenshot capture itself passed; source test now records `FAIL_CHASM_DEPTH_NOT_VISIBLE` in `visual-witness.json`. Geological construction and physical walking remain engineering PASS, never claim artistic acceptance.
-- Short real Windows GPU witness: Chrome WebGL2 / RTX 3060 D3D11, high 1440x900 DPR1, 8/8 zones reported 60 FPS in ~2.4s samples, 27–163 draw calls, 0 context loss. No endurance, VRAM or thermal certification.
-- Firefox WebDriver BiDi on Windows: 8/8 camera-switched zones, WebGL2, one canvas, reported 53–60 FPS at 1366x768, no context loss. This is NOT the physical WASD route or mobile/WebKit/screen-reader certification.
-- Rejected visual experiments were rolled back. Remaining independent HOLD: cave/gallery composition, well, Gethsemane, exit, 42 source/phonology/rights approvals and genuine signed bilingual master recordings, Android/iOS, WebKit, assistive tech and sustained hardware performance.
-- Dark Horeb, muted HUD, outer/inner barefoot radii 14m/6.5m and nonpublished Draft boundaries must remain unchanged.
+**LAB / EDITORIAL HOLD.** Product merge/deploy запрещены до независимых согласований.
+42 исследовательских обозначения — НЕ 42 доказанных личных имени Бога.
 
-## Кандидат последней художественной волны (10.11.2026)
+## Ворота и доказательства
 
-- **Последний подтверждённый GitHub SHA до этой волны**: 343cec17,
-  6/6 QA jobs и 3/3 workflows SUCCESS; предыдущая зона 4 raycast PASS.
-- **Локальный новый код**: 172/172 инженерных тестов; Vite/TypeScript
-  успешно. Колодец — эродированные угловые профили и кладка с
-  разновысотными швами; Гефсимания — асимметричные развилки; Хорив —
-  скальная кромка с эрозией и несимметричными краями. Два новых guard.
-- Визуальные кадры дают материал для сравнения; **не** объявлять
-  фотореализм/доступность на настоящем телефоне/эстетическое одобрение.
-  Требуется новый exact-SHA GitHub CI и пользовательская художественная
-  оценка перед снятием ART HOLD.
-- На новом локальном кандидате Firefox и Windows WebKit проверены 8/8
-  по фактическим кадрам и состоянию WebGL2, без context loss и runtime
-  errors. Аппаратный Chromium Windows ANGLE/D3D11 на RTX 3060
-  при 1440x900/DPR1/high: 50–60 FPS по восьми зонам (короткие выборки).
-  Мобильный Safari/Android, VRAM и тепловая стабильность не подтверждены.
-- Voice, rights, Research #379, real device thermal/VRAM и A11y HOLD.
-  No merge, no deploy, no new branches.
-
-## Оперативный статус — 10 ноября 2026 (приоритетнее исторической матрицы ниже)
-
-Последний полностью проверенный GitHub HEAD до этой доработки: ab35c6a6136f7bd03227ec3b9ecd1241dd643219;
-HOREB QA #42865777325, Validate и Preflight — все SUCCESS.
-В том коммите диагностический FAIL для пропасти записывался в JSON, но не блокировал CI.
-
-Новая серия (в этой же ветке, без нового PR):
-- G14 ZONE4_VISIBLE_DEPTH: противоположный склон расширен в существующей геометрии
-  непрерывного пещерного свода; путь, коллизии, 42 экспоната и границы Хорива не изменены.
-  На правильных координатах позиции x,z первая камера видит 11/63 реальных лучей
-  на глубине до -21.8 м, вторая — 17/63 на глубине до -19.6 м. На исходной геометрии
-  было 2/63 и 0/63. Повторный Chromium-witness должен БЛОКИРОВАТЬ CI при регрессии.
-  Художественная приемка всё равно HOLD до просмотра двух точных PNG.
-- G14 CONSTRUCT LOW/HIGH: два новых регрессионных теста. Локально 43+121+6=170/170 PASS.
-- G6 RTX HARDWARE: Windows 11 / Chrome ANGLE NVIDIA RTX 3060 / D3D11,
-  1440x900 DPR1 high, 8/8 зон, 54-60 FPS, browser errors=0 (короткий прогон
-  ДО новой геометрии). Реальные VRAM/thermal/endurance и телефоны — HOLD.
-- G2/G13: исходные реальные хождения 42/42 и 0→7→0 подтверждены на ab35c6a,
-  новый HEAD обязательно заново проверить в CI.
-- G4/G5/G7/G9: филология/исследования Research #379, права, 42 голосовых мастера,
-  реальный iOS/Android, Firefox/WebKit, экранные дикторы и художественная
-  приемка всех восьми зон — открытые независимые HOLD. Не выдавать за PASS.
-
-**Историческая матрица ниже не является окончательным статусом нового HEAD.**
-
-**Исторический baseline G1–G12:** `962e674b2c2c306eab96b91d4ff254be560975dc`, [HOREB 3D QA #42642009842](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009842), [AuditRepo Validate #42642009840](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009840), [Preflight #42642009839](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42642009839) — **3/3 SUCCESS**; 135/135 source/geometry/navigation, 34/34 Chrome smoke, 42/42 E dossiers, реальный 0→7→0, 8 desktop + 3 mobile emulation + 3 detail screenshots, 0 runtime errors.
-
-| Gate | Проверенный статус | Доказательство и оставшаяся граница |
+| Gate | Статус | Конкретное доказательство / граница |
 |---|---|---|
-| G1 — REAL_3D_RENDERED | PASS Chromium and short RTX 3060 + Firefox on Windows | Chrome WebGL2 RTX 3060 ANGLE/D3D11 and Firefox WebGL2 both rendered 8/8 scenes on the code HEAD; not long-duration or smartphone performance verification. |
-| G2 — FULL_JOURNEY | PASS axial + 42 side exhibits (Chromium) | [QA #42685624277](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624277): 0→7→0 и четыре независимых side jobs 10+18+12+2; реальный keyboard/WASD/стрелки/E, возврат к центру. Доказательство именно Chromium SwiftShader, не реальный mobile/hardware. |
-| G3 — SANDALS_GUARD | PASS на модели + Chrome | Ритуал управляется симуляционным временем, паузится при скрытой вкладке/модалке и не позволяет пройти радиусы 14м/6.5м вопреки запрету. |
-| G4 — CONTENT_TYPE_SAFE | PASS автоматика; EDITORIAL HOLD | 42 Research ID — не 42 личных имени Бога. Unicode/type/provenance валидаторы работают, но независимой филологической/произносительной колляции и публикационного допуска нет. |
-| G5 — UX_A11Y | PARTIAL, Firefox 8/8 short render PASS | Chromium keyboard and accessible reader pass. Windows Firefox 8/8 camera-only render smoke passes; Firefox physical journey, WebKit, touchscreen Android/iOS and screen-reader tests remain HOLD. |
-| G6 — PERFORMANCE | Short physical RTX witness PASS; endurance/VRAM HOLD | RTX 3060 high 1440x900 DPR1: 8/8 zones reported 60 FPS in 2.4s samples, 27–163 draw calls, no lost context. No sustained VRAM/temperature or physical phone measurements. |
-| G7 — RIGHTS_PROVENANCE | PASS только собственные визуальные ассеты; CONTENT HOLD | Реестр лицензий `docs/ASSET_LICENSES.md`; текст, исследовательские свидетельства и голос требуют отдельного допущения. |
-| G8 — PRODUCT_ISOLATION | PASS | Изменения ограничены AuditRepo HOREB Draft PR #543; Product/Research, релиз и исходный Arena ZIP не менялись. |
-| G9 — JOURNEY_AND_ART | ENGINEERING PASS; ZONE-4 ART FAIL, others HOLD | Current real camera witness reports 0/63 connected ravine-wall first hits on each of two views and explicit FAIL_CHASM_DEPTH_NOT_VISIBLE. Remaining galleries, Beersheba, Gethsemane, roof and all 42 compositions are not human art accepted. |
-| G10 — LOW_POWER_SCENIC_CULL | PASS browser; DEVICE HOLD | Отсечение props/stele дальше 85м (low) /125м (high); ближние остаются, дальние не рендерятся, collider/42 E не изменены. SwiftShader evidence из #42642009842. |
-| G11 — LIVE_QUALITY_REBUILD | PASS Chromium | Настоящий UI переключает low/high с новым keyed canvas, WebGL renderer, 42 atlases нужного разрешения и безопасным checkpoint/footwear. |
-| G12 — REPEATED_WEBGL_LIFECYCLE | PASS Chromium; VRAM HOLD | high→low→high→low, old WebGL contexts lost, scene/listeners/zone/bush references detached, ровно один canvas. На двух последовательных low-моделях геометрии **57→57**, текстуры **15→15**; счётчики принадлежат отдельному WebGL-контексту и не являются измерением видеопамяти. |
-| G13 — SIDE_PEDESTRIAN_EXHIBITS | PASS 42/42 Chromium exact code HEAD | [QA 42865777325](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42865777325): four independent side jobs (10+18+12+2) and full axial journey SUCCESS, plus 42 E dossiers. Real mobile route and art HOLD. |
+| G1 3D_RENDER | PASS | Восемь зон: Chromium; Firefox 8/8 и Windows WebKit 8/8; Windows NVIDIA RTX 3060 D3D11 8/8. НЕ физический iPhone. |
+| G2 AXIAL_JOURNEY | PASS | GitHub QA: полный реальный клавиатурный проход 0→7→0, без телепорта, с безопасным снятием обуви и возвратом. |
+| G3 BUSH_SAFETY | PASS | Радиусы R_OUTER=14м и R_INNER=6.5м; запреты не обходятся восстановлением позиции, паузой или попытками движения в обуви. |
+| G4 SOURCE / PHILOLOGY | HOLD | 42 предварительные Research #379 формы и категории; независимая колляция, богословская редактура, произношение не утверждены. |
+| G5 ACCESSIBILITY | PARTIAL | Chromium keyboard, фокус в модалках, офлайн-читатель, mobile-emulated; локальный AX-audit 0 безымянных действий на старте/в настройках/читателе. Новый smoke 41/41 локально; реальные NVDA/VoiceOver и mobile AT HOLD. |
+| G6 GPU_PERFORMANCE | SHORT SOAK PASS / ENDURANCE HOLD | Windows RTX 3060, ANGLE/D3D11, high, 1440×900/DPR1, 108с, 18 выборок, 59–61 измеренных FPS, максимум 50°C, максимум 1764 МиБ общей GPU-памяти. 0 потерь WebGL/JS. Оригинал: audit/RTX3060_108S_2026-11-11.json. nvidia-smi сообщает общее потребление устройства, НЕ app-only VRAM. Нет 15 мин, 95p frametime и смартфонов. |
+| G7 RIGHTS | PARTIAL | Собственные процедурные 3D/звук, лицензии шрифтов и three.js перечислены в docs/ASSET_LICENSES.md. Права на тексты/возможные записи исполнителей HOLD. |
+| G8 ISOLATION | PASS | Одна ветка lane/horeb-3d-lab-20261108; единственный Draft PR #543, нет Product и Research-мутаций. |
+| G9 ART | PARTIAL / HOLD | Геометрические улучшения пропасти, колодца, олив и выхода; визуальная индивидуальность всех галерей и премиальность 8 пространств НЕ утверждены. Неудачный эксперимент 1–3 откатили. |
+| G10 CULL | PASS | Удалённые props не мешают обзору, ближние интерактивны, физические координаты 42 не изменены. |
+| G11 QUALITY_SWITCH | PASS | high→low→high→low немедленно пересоздаёт WebGL и безопасно восстанавливает маршрут, не требует выхода из 3D. |
+| G12 RESOURCE_LIFECYCLE | PASS / VRAM ENDURANCE HOLD | Старые контексты удалены, один canvas, стабильные low-контрольные счётчики 56 геометрий и 15 текстур. Это не аппаратный 15-минутный leak-тест. |
+| G13 SIDE_EXHIBITS | PASS | GitHub exact-SHA: реальные WASD+повороты+E, возврат к центру; 10+18+12+2=42/42; E-досье 42/42. |
+| G14 RAVINE_DEPTH | GEOMETRIC PASS / ART HOLD | Две реальные безопасные камеры: 11/63 лучей до −21.69 м и 17/63 до −19.40 м. Геометрический FAIL теперь блокирует workflow; снимок сам по себе не даёт художественный PASS. |
+| G15 NARRATION | HOLD | 42 рабочих русских сценария; 0 утверждённых мастер-аудиофайлов, прав и фонетических допусков. Тетраграмматон — письменный знак, не голос «актёра-Бога». |
 
-## Протокол продолжения
+## Закрытые волны и незакрытые внешние допуски
 
-Реальные `PASS` относятся **только** к указанному SHA и соответствующему тестовому режиму. Новый HEAD — новые проверки. Скриншоты программного рендеринга не означают художественного принятия или доказательства FPS на устройстве владельца; пользовательский ПК `DESKTOP-O3FDOA4` проверен Online 10.11.2026: короткий Chrome RTX 3060 и Firefox WebGL2 PASS; долговременная VRAM/thermal/mobile-приёмка отсутствует. Не увеличивать яркость Хорива, не менять `R_OUTER=14` и `R_INNER=6.5`, не публиковать 42 Research-досье без редакционного допуска.
+Зелёный [HOREB QA 42885366139](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42885366139):
+172/172 исходники/геометрия/навигация, 38/38 Chromium smoke, 42/42 E и боковые пешие обходы,
+0→7→0, 8 desktop + 3 mobile-emulated + 6 detail screenshots, переносимый file:// preview.
+Добавленные с 11 ноября три AX-проверки дали **41/41** локально и требуют нового CI.
 
-Дальнейший приоритет: доказать физическую доступность боковых сюжетных объектов, доработать природность пещеры/колодца/рощи по реальным крупным кадрам, провести ручную A11y и аппаратную приёмку **только после восстановления стабильности**. Голос, права и филология — самостоятельные HOLD, не смешивать с инженерными PASS.
+Следующие независимые HOLD:
+- **Редакция 42/42** по Research #379: исходный текст, референт, категории, варианты, права.
+- **Реальные голоса:** утверждённые русские реплики, произношения, лицензии и записи; не имитировать PASS.
+- **Арт 8 зон:** одинаковые ракурсы 24/12/4 м, визуальное принятие; цель >=4/5 — не измеренный результат.
+- **Устройства/A11y:** физический Android, iPhone Safari, NVDA/VoiceOver, ручной контраст и управление.
+- **Перфоманс:** 15-минутный endurance на целевых устройствах и реальное 95p frametime.
+- **Отдельное разрешение владельца** до merge/deploy.
 
+## Воспроизводимость и история
+
+Новый опциональный сценарий npm run test:hardware:soak (не часть per-commit CI) требует
+установленного Chrome, NVIDIA GPU и nvidia-smi; аппаратные данные из него не следует
+смешивать с CPU SwiftShader. Исходная контрольная запись содержит все 18 замеров.
+Основные этапы: ab35c6a — обнаружен ложный PASS пропасти;
+343cec1 — строгая геометрия/контроль; 79d6a6c — художественные улучшения и
+полностью терминально зелёный инженерный CI. Исторические файлы сохранены в Git.
