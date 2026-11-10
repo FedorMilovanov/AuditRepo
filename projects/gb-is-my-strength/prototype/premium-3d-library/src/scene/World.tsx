@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { XR } from "@react-three/xr";
@@ -104,6 +104,39 @@ function Cardboard() {
   return mode === "cardboard" && phase === "play" ? <CardboardRig /> : null;
 }
 
+/**
+ * R3F owns the renderer; this component owns *our* WebGL lifecycle listeners.
+ * Unlike callbacks attached in Canvas.onCreated, these are removed on
+ * unmount/StrictMode replay, so no stale listeners can mutate the vault UI.
+ * THREE handles restoring GPU resources for its own renderer internally.
+ */
+function WebGLContextLifecycle() {
+  const renderer = useThree((s) => s.gl);
+  useEffect(() => {
+    const canvas = renderer.domElement;
+    const onLost = (event: Event) => {
+      // Required by WebGL to mark this specific context restorable.
+      event.preventDefault();
+      input.keys.clear();
+      input.joy.x = 0;
+      input.joy.y = 0;
+      set({ glLost: true });
+    };
+    const onRestored = () => {
+      // Browser fires this only after the context is usable again.
+      // three.js' own listener reinitializes its internal graphics state.
+      set({ glLost: false });
+    };
+    canvas.addEventListener("webglcontextlost", onLost);
+    canvas.addEventListener("webglcontextrestored", onRestored);
+    return () => {
+      canvas.removeEventListener("webglcontextlost", onLost);
+      canvas.removeEventListener("webglcontextrestored", onRestored);
+    };
+  }, [renderer]);
+  return null;
+}
+
 /** Настройки контекста фиксируются один раз: WebGL не умеет менять их на ходу,
  *  а новая объектная обёртка заставила бы R3F пересоздать рендерер — и «мигнуть». */
 const GL = {
@@ -125,26 +158,9 @@ export default function World() {
       camera={CAMERA}
       shadows={q === "high" ? "percentage" : false}
       gl={GL}
-      onCreated={({ gl }) => {
-        // Потеря контекста — самая частая причина «чёрного экрана» на слабых GPU.
-        gl.domElement.addEventListener(
-          "webglcontextlost",
-          (e) => {
-            e.preventDefault();
-            set({ glLost: true });
-          },
-          false
-        );
-        gl.domElement.addEventListener(
-          "webglcontextrestored",
-          () => {
-            set({ glLost: false });
-          },
-          false
-        );
-      }}
     >
       <XR store={xrStore}>
+        <WebGLContextLifecycle />
         <color attach="background" args={["#d4e3e9"]} />
         <fog attach="fog" args={["#d9e2e2", 85, 360]} />
         <Sky sunPosition={[-36, 58, -48]} turbidity={2.8} rayleigh={0.75} mieCoefficient={0.004} mieDirectionalG={0.78} distance={380} />
