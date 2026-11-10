@@ -11,13 +11,11 @@ import asyncio
 import json
 import os
 import re
-import struct
 import tempfile
-import time
 from pathlib import Path
 
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.environ.get("GB_LIBRARY_FOCUS_EVIDENCE_DIR",
@@ -68,16 +66,8 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
         # A fully rendered frame on the CI CPU-only SwiftShader backend is
         # slower than a physical accelerated GPU. Still require a real lossless
         # screenshot with the correct dimensions; never skip the capture.
-        capture_limit_ms = 60000 if os.getenv("GB_LIBRARY_CI_SOFTWARE_GPU") == "1" else 30000
-        print(f"CAPTURE_BEGIN {engine}/{station}/{width}x{height}", flush=True)
-        capture_start = time.perf_counter()
-        await page.screenshot(path=str(shot), animations="disabled", timeout=capture_limit_ms)
-        capture_ms = round((time.perf_counter() - capture_start) * 1000)
-        with shot.open("rb") as image:
-            header = image.read(24)
-        assert header[:8] == b"\x89PNG\r\n\x1a\n", "Browser evidence is not a PNG"
-        assert struct.unpack(">II", header[16:24]) == (width, height), "Incorrect screenshot dimensions"
-        assert shot.stat().st_size > 5120, "Screenshot unexpectedly small or empty"
+        capture = await capture_evidence(page, shot)
+        capture_ms = capture["captureMs"]
         assert not errors, f"{engine}/{station}: errors during screenshot: {errors}"
         print(json.dumps({
             "engine": engine, "station": station, "viewport": f"{width}x{height}",
