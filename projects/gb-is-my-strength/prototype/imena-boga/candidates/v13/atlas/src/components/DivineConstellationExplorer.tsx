@@ -345,7 +345,13 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                     dir={item.language === 'greek' ? 'ltr' : 'rtl'}
                     style={{ color: 'var(--gb-ink)' }}
                   >
-                    {item.original}
+                    {item.original.split(/(\s+)/u).map((part, index) =>
+                      /\s/u.test(part) ? part : (
+                        <span key={index} data-constellation-original-token className="inline-block whitespace-nowrap">
+                          {part}
+                        </span>
+                      ),
+                    )}
                   </span>
                 </button>
 

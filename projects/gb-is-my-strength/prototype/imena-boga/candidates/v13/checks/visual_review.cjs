@@ -568,7 +568,7 @@ async function visit(browser,engine,app,width,base){
  await new Promise((resolve,reject)=>server.listen(0,'127.0.0.1',resolve).on('error',reject));
  const base='http://127.0.0.1:'+server.address().port;
  try{
-  for(const [engine,widths] of [['chromium',[320,360,375,390,430,768,1024,1440]],['webkit',[320,375,390,430,768,1440]]]){
+  for(const [engine,widths] of [['chromium',[320,340,350,360,361,370,375,390,430,768,1024,1440]],['webkit',[320,340,350,360,361,370,375,390,430,768,1024,1440]]]){
    const spec={chromium,webkit}[engine],options={headless:true};
    if(engine==='chromium'&&process.env.CHROMIUM_PATH)options.executablePath=process.env.CHROMIUM_PATH;
    const browser=await spec.launch(options);

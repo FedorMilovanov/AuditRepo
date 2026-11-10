@@ -60,8 +60,8 @@
       "bytes_normalized": 15437
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "f57d35f7b81a09dff1d5942bfd676b90cce5f4d9b14d4a82f9a315db99b8bc83",
-      "bytes_normalized": 17995
+      "sha256": "b4eb44c555339dffa5e3d614535e485d0b4a7c82d81d542a469dce1b8633cd6c",
+      "bytes_normalized": 18314
     },
     "atlas/src/components/DivineNameModal.tsx": {
       "sha256": "0cc5c6e62e03e6d76f63e196a7661a20767a710c112d2662994b5c768db26707",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "65693fe4627362104ba58bfecfb0953c2fefe8f5ac86047d3bb4cda18add1354",
-      "bytes_normalized": 58491
+      "sha256": "f97cbf62ad8cbe43e527d9f87e1b122458e6a5183420f6bb10d7fedfcc8d5da0",
+      "bytes_normalized": 58642
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -184,8 +184,8 @@
       "bytes_normalized": 14156
     },
     "checks/visual_review.cjs": {
-      "sha256": "9c39293e562182c47f2fb6c225b4ac3e441ef72970a46b7d73919eb2000af0a0",
-      "bytes_normalized": 32617
+      "sha256": "2dc8bd8e4b09a5aad1ca15da39b0485342ec5435a2c303b4b88a90e438516901",
+      "bytes_normalized": 32658
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

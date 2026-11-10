@@ -8,7 +8,7 @@ const root=path.resolve(__dirname,'..');
 const engine=process.env.ENGINE || 'webkit';
 const selected={chromium,webkit}[engine];
 if(!selected) throw Error('Unsupported ENGINE');
-const widths=(process.env.VIEWPORTS||'320,375,390,430,768,1440').split(',').map(Number);
+const widths=(process.env.VIEWPORTS||'320,340,350,359,360,361,370,375,390,414,430,640,768,1024,1440,1600').split(',').map(Number);
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2'};
 const server=createServer((req,res)=>{
  try{
@@ -383,28 +383,31 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const scriptIntegrity=await page.locator('#constellation-atlas').evaluate(section=>{
       const cards=[...section.querySelectorAll('[data-constellation-result]')];
       const failures=[];
+      let testedWords=0;
       for(const card of cards){
         const source=card.querySelector('[data-constellation-original]');
-        const node=source?.firstChild;
-        if(!(node instanceof Text)){failures.push({reason:'original missing'});continue}
-        const text=node.textContent||'';
-        const cell=card.getBoundingClientRect();
-        for(const match of text.matchAll(/\S+/gu)){
-          if(!/[\p{Script=Hebrew}\p{Script=Greek}]/u.test(match[0]))continue;
+        if(!source){failures.push({reason:'original missing'});continue}
+        const tokens=[...source.querySelectorAll('[data-constellation-original-token]')];
+        if(!tokens.length){failures.push({reason:'word tokens missing'});continue}
+        for(const token of tokens){
+          const word=token.textContent||'';
+          if(!/[\p{Script=Hebrew}\p{Script=Greek}]/u.test(word))continue;
+          testedWords++;
           const range=document.createRange();
-          range.setStart(node,match.index);
-          range.setEnd(node,match.index+match[0].length);
-          const fragments=[...range.getClientRects()].filter(rect=>rect.width>1&&rect.height>1);
-          const lines=new Set(fragments.map(rect=>Math.round(rect.y)));
-          const clipped=fragments.some(rect=>rect.left<cell.left-2||rect.right>cell.right+2);
-          if(lines.size!==1||clipped)
+          range.selectNodeContents(token);
+          const fragments=[...range.getClientRects()].filter(r=>r.width>1&&r.height>1);
+          const lines=[...new Set(fragments.map(r=>Math.round(r.y)))];
+          const cell=card.getBoundingClientRect();
+          const clipped=fragments.some(r=>r.left<cell.left-2||r.right>cell.right+2);
+          if(lines.length!==1||clipped)
             failures.push({name:card.querySelector('h4')?.textContent,
-              word:match[0],lines:[...lines],clipped});
+              word,lines,clipped});
         }
       }
-      return {count:cards.length,failures};
+      return {count:cards.length,testedWords,failures};
     });
-    if(scriptIntegrity.count!==36||scriptIntegrity.failures.length)
+    if(scriptIntegrity.count!==36||scriptIntegrity.testedWords<36||
+       scriptIntegrity.failures.length)
       throw Error('Atlas original-script word fragmentation '+JSON.stringify({
         engine,width,scriptIntegrity
       }));
