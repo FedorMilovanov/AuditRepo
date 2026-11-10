@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
-import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET } from './exhibitProps';
+import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET, BEERSHEBA_WELL_COLLIDER_RADIUS } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { BEACON_IDS, createNameBeacon, beaconViewFactor } from './NameBeacon';
@@ -198,7 +198,7 @@ export class World {
         for (const [dx, dz] of OLIVE_GROVE_OFFSETS)
           this.obstacles.push({ x: bx + dx, z: bz + dz, r: 0.29 });
       } else if (e.environmentKey === 'beersheba-well') {
-        this.obstacles.push({ x: bx, z: bz, r: 1.45 }); // open stone shaft
+        this.obstacles.push({ x: bx, z: bz, r: BEERSHEBA_WELL_COLLIDER_RADIUS }); // same radius as the masonry contract
         this.obstacles.push({
           x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
           z: bz + BEERSHEBA_TAMARISK_OFFSET.z, r: 0.18,
