@@ -2,6 +2,7 @@
 // A source-language performance may be Hebrew, Aramaic or Greek according to
 // Exhibit.sourceLanguage. Never infer a reading from Latin transliteration.
 import { EXHIBITS, isOriginalVoiced, type Exhibit, type Lang } from './exhibits';
+import { RUSSIAN_DRAFT_CUES } from './russianCues';
 export { NARRATION_LANGUAGE_LABEL } from './exhibits';
 import { isApprovedAudioPath, type ApprovedNarrationTrack } from '../engine/NarratorBus';
 
@@ -46,7 +47,7 @@ export interface NarrationPlan {
   status: 'HOLD' | 'approved';
 }
 
-export function narrationPlan(exhibit: Exhibit, russianDraft?: string): NarrationPlan {
+export function narrationPlan(exhibit: Exhibit, russianDraft: string = RUSSIAN_DRAFT_CUES[exhibit.id] ?? ''): NarrationPlan {
   const originalSpoken = isOriginalVoiced(exhibit);
   const approval = APPROVED_BILINGUAL_CUES[exhibit.id];
   const canonical = EXHIBITS.find((item) => item.id === exhibit.id);
