@@ -24,9 +24,17 @@ URL = os.getenv("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.getenv("GB_LIBRARY_CABINET_EVIDENCE_DIR",
                           str(Path(tempfile.gettempdir()) / "gb-library-cabinet-persistence")))
 
-async def open_cabinet(page):
-    await page.goto(URL, wait_until="domcontentloaded", timeout=45000)
-    await page.get_by_role("button", name="Моя библиотека", exact=True).click(timeout=45000)
+async def open_cabinet(page, *, via_link=False):
+    # Foreground the tab being used. In software WebGL, background animation
+    # can be throttled, but cabinet data must remain accessible without it.
+    await page.bring_to_front()
+    address = (URL + ("&" if "?" in URL else "?") + "panel=cabinet") if via_link else URL
+    await page.goto(address, wait_until="domcontentloaded", timeout=45000)
+    if not via_link:
+        # The first-tab cover-button path remains under full UI test.
+        await page.get_by_role("button", name="Моя библиотека", exact=True).click(timeout=45000)
+    # The supported ?panel=cabinet route is public, not a test-only bypass
+    # or an injected/altered application state.
     box = page.locator("[data-gb-cabinet-modal]")
     await box.wait_for(state="visible", timeout=12000)
     await box.get_by_role("status").get_by_text(
@@ -57,12 +65,13 @@ async def test_case(browser, engine):
         assert await a_box.get_by_role("button", name="Закладки (1)").count() == 1
 
         # Keep A open (stale snapshot), open a second tab sharing the same
-        # origin. B creates a collection using ordinary GUI controls.
+        # origin. B uses the public 2D cabinet deep link rather than waiting
+        # for a background WebGL intro; all writes use ordinary GUI controls.
         b = await ctx.new_page()
         b.on("pageerror", lambda err: errors.append("B: " + str(err)))
         b.on("response", lambda r: errors.append(f"B HTTP {r.status}: {r.url}")
              if r.status >= 400 else None)
-        b_box = await open_cabinet(b)
+        b_box = await open_cabinet(b, via_link=True)
         assert await b_box.get_by_role("button", name="Закладки (1)").count() == 1
 
         # Export a known-valid copy before the concurrent B write.
@@ -81,6 +90,7 @@ async def test_case(browser, engine):
         await b_box.get_by_role("button", name="Создать коллекцию").click()
         await b_box.get_by_role("button", name="Коллекции (1)").wait_for(timeout=12000)
 
+        await a.bring_to_front()
         # Import is explicitly confirmed in the GUI. A's stale vault must
         # fail atomic compare-and-swap, not erase B's new saved collection.
         a.on("dialog", lambda d: asyncio.create_task(d.accept()))
@@ -93,7 +103,7 @@ async def test_case(browser, engine):
         ).wait_for(timeout=15000)
 
         # The newer B record must survive a fresh page reload.
-        b_box = await open_cabinet(b)
+        b_box = await open_cabinet(b, via_link=True)
         await b_box.get_by_role("button", name="Коллекции (1)").click()
         assert await b_box.get_by_text("Контроль многовкладочности").count() >= 1
         assert await b_box.get_by_role("button", name="Закладки (1)").count() == 1
@@ -115,7 +125,7 @@ async def test_case(browser, engine):
         )
         try:
             c = await isolated.new_page()
-            c_box = await open_cabinet(c)
+            c_box = await open_cabinet(c, via_link=True)
             assert await c_box.get_by_role("button", name="Закладки (0)").count() == 1
             assert await c_box.get_by_role("button", name="Коллекции (0)").count() == 1
             await c.screenshot(path=str(EVIDENCE / f"{engine}-isolated-cabinet.png"),
