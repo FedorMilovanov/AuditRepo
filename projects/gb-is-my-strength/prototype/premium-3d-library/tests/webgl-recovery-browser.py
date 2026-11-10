@@ -39,20 +39,55 @@ async def recovery_case(browser, engine, width, height, mobile):
             const ext=gl?.getExtension('WEBGL_lose_context');
             if(!gl||!ext)return {supported:false};
             window.__testRecovery={canvas,gl,ext,events:[]};
-            canvas.addEventListener('webglcontextlost',() =>
-                window.__testRecovery.events.push({type:'lost',at:performance.now()}));
-            canvas.addEventListener('webglcontextrestored',() =>
-                window.__testRecovery.events.push({type:'restored',at:performance.now()}));
+            canvas.addEventListener('webglcontextlost',(event) =>
+                window.__testRecovery.events.push({
+                    type:'lost',at:performance.now(),
+                    defaultPrevented:event.defaultPrevented,cancelable:event.cancelable
+                }));
+            canvas.addEventListener('webglcontextrestored',(event) =>
+                window.__testRecovery.events.push({
+                    type:'restored',at:performance.now(),cancelable:event.cancelable
+                }));
             ext.loseContext();
             return {supported:true};
         }""")
         assert found["supported"], (engine,width,"WEBGL_lose_context not supported")
         overlay=page.get_by_text("Перезапускаю зал…",exact=True)
-        await overlay.wait_for(state="visible",timeout=15000)
+        OUT.mkdir(parents=True,exist_ok=True)
+        try:
+            await page.wait_for_function(
+                "() => window.__testRecovery?.events.some(e=>e.type==='lost')",
+                timeout=12000
+            )
+            await overlay.wait_for(state="visible",timeout=15000)
+        except Exception:
+            # Distinguish GPU fault-event delivery, React fatal boundary,
+            # and a silently lost overlay. Capture the actual browser;
+            # never ignore a failure or invent a recovery event.
+            report=await page.evaluate("""() => {
+              const p=window.__testRecovery;
+              return {
+                events:p?.events,contextLost:p?.gl?.isContextLost(),
+                canvasConnected:p?.canvas?.isConnected,
+                pageText:document.body.innerText.slice(0,1100),
+                alerts:[...document.querySelectorAll('[role=alert]')]
+                  .map(el=>el.innerText.slice(0,500)),
+                has3D:document.querySelectorAll('canvas').length,
+                hasOverlay:!![...document.querySelectorAll('div')]
+                  .find(el=>el.textContent?.trim()==='Перезапускаю зал…'),
+                ready:document.readyState
+              };
+            }""")
+            print(json.dumps({
+                "engine":engine,"viewport":f"{width}x{height}",
+                "stage":"context-loss-overlay-missing",
+                "diagnostics":report,"errors":errors
+            },ensure_ascii=False),flush=True)
+            await capture_evidence(page, OUT/f"{engine}-{width}x{height}-lost-overlay-failure.png")
+            raise
         assert await page.get_by_role("button",name="Моя библиотека · без 3D").is_visible(), (
             "WebGL loss must leave a working public 2D exit"
         )
-        OUT.mkdir(parents=True,exist_ok=True)
         if width==1440:
             await capture_evidence(page, OUT/f"{engine}-lost.png")
         restore_request = await page.evaluate("""() => {
