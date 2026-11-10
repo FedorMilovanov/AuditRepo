@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import {
   ARTICLE_SECTIONS,
   DIVINE_NAMES,
@@ -219,7 +220,7 @@ export function App() {
   });
   const [resumePercent, setResumePercent] = useState<number>(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!resumePosition) return;
     const computePct = () => {
       const d = document.documentElement.scrollHeight - window.innerHeight;
@@ -418,8 +419,11 @@ export function App() {
 
   const handleResumeReading = useCallback(() => {
     if (!resumePosition) return;
-    window.scrollTo({ top: resumePosition, behavior: readerScrollBehavior() });
-    setResumePosition(null);
+    const savedY = resumePosition;
+    // The inline card changes the document layout. Unmount it before
+    // restoring the stored coordinate to prevent a scroll-anchoring jump.
+    flushSync(() => setResumePosition(null));
+    window.scrollTo({ top: savedY, behavior: readerScrollBehavior() });
   }, [resumePosition]);
 
   const handleDismissResume = useCallback(() => {

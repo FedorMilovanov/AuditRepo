@@ -619,6 +619,29 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         if(saved!==null)
           throw Error('Dismissed reading position remained persisted');
       }finally{await resumed.close()}
+      // Removing an inline recall card must not move the final scroll position.
+      const restored=await ctx.newPage();
+      try{
+        await restored.addInitScript(()=>
+          localStorage.setItem('gb:imena:atlas:reading-position:v1',
+            JSON.stringify({y:3200,at:Date.now()})));
+        await restored.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+        await restored.locator('h1').first().waitFor({state:'visible'});
+        const recall=restored.locator('[data-resume-reading-inline]');
+        await recall.waitFor({state:'visible'});
+        const firstLabel=await recall.locator('button').first().innerText();
+        const percent=Number(firstLabel.match(/(\d+)%/)?.[1]);
+        if(!Number.isFinite(percent)||percent<1||percent>99)
+          throw Error('Reading recall percent invalid or transient '+JSON.stringify({engine,width,firstLabel,percent}));
+        await recall.locator('button').first().click();
+        await recall.waitFor({state:'detached'});
+        await restored.evaluate(()=>new Promise(done=>
+          requestAnimationFrame(()=>requestAnimationFrame(done))));
+        const actualY=await restored.evaluate(()=>scrollY);
+        if(Math.abs(actualY-3200)>3)
+          throw Error('Reading recall layout shifted scroll target '+
+            JSON.stringify({engine,width,expectedY:3200,actualY}));
+      }finally{await restored.close()}
     }
     // A link copied from the divine-name dossier must reopen that dossier
     // in a clean browser session (not merely scroll behind a closed overlay).

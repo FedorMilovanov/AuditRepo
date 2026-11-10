@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "33cb0b1c390266bce679e72c743535b007ad1e101091d022e8aa657b2f2e02f0",
-      "bytes_normalized": 66724
+      "sha256": "2d21560e878ab6d9b0acc66815ff5084807ab83d54750e90482f611c9bc9432f",
+      "bytes_normalized": 66958
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "749a1e669bbc12ffe6c0f2429005d2e5c6cbeb1caab277277b4f24f8ea85adc2",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "f26d15facc9bf7e1c3e0fdb69a470f18aab3505b1718d5432431fd8baa804693",
-      "bytes_normalized": 50129
+      "sha256": "4e9eb1cdb9d97b9806ea01436725e0c32c2167fd645074b5957de539d2fcbc13",
+      "bytes_normalized": 51522
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
