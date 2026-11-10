@@ -550,9 +550,9 @@ const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexCol
 const exitCeiling = exitVaultRelief(0.5, 5, -306, 1, 0);
 const exitSide = exitVaultRelief(2.0, 3, -306, 0.1, 1);
 t('zone-6 erosion modifies the original vault without out-of-zone artefacts',
-  exitCeiling.roofDrop > 0.18 && exitCeiling.roofDrop < 0.89 &&
-  exitCeiling.shade < 1 && exitCeiling.shade >= 0.82 &&
-  exitSide.sideOut > 0.05 && exitSide.roofDrop < 0.05 &&
+  exitCeiling.roofDrop > 0.4 && exitCeiling.roofDrop < 1.22 &&
+  exitCeiling.shade < 0.96 && exitCeiling.shade >= 0.78 &&
+  exitSide.sideOut > 0.18 && exitSide.roofDrop < 0.05 &&
   exitVaultRelief(0, 5, -285, 1, 0).roofDrop === 0 &&
   exitVaultRelief(0, 5, -325, 1, 0).roofDrop === 0);
 for (const lowMode of [true, false]) {
