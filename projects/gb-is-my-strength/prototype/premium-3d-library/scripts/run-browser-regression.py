@@ -76,9 +76,28 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
         )
         assert not summaries[0].get("failures"), summaries[0]
     if name == "quality-transition-browser.py":
-        assert all(len(r.get("switches", [])) == 2 for r in cases), (
-            "Quality regression did not test both switching directions"
-        )
+        # A count of two does not prove opposite directions: CI previously
+        # reported low→high twice as PASS after an automatic downgrade.
+        for case in cases:
+            changes = case.get("switches")
+            assert isinstance(changes, list) and len(changes) == 2, (
+                f"Quality regression requires two real switches: {case}"
+            )
+            first, second = changes
+            for change in changes:
+                assert isinstance(change, dict) and (
+                    change.get("first"), change.get("last")
+                ) in (("Лёгкая", "Ультра"), ("Ультра", "Лёгкая")), (
+                    f"Invalid quality mutation: {case}"
+                )
+                assert change.get("timedOut") is False and (
+                    change.get("canvasIdentityRetained") is True
+                ) and change.get("overlayGone") is True and (
+                    change.get("settledVisibleFrames", 0) >= 2
+                ), f"Incomplete quality transition: {case}"
+            assert second["first"] == first["last"] and (
+                second["last"] == first["first"]
+            ), f"Quality transitions did not reverse continuously: {case}"
 
 
 def run_all(evidence_root: Path) -> None:
