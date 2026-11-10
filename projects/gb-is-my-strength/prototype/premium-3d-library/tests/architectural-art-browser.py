@@ -33,11 +33,30 @@ async def one(browser, engine, width, height, mobile):
       hasWebGL2: [...document.querySelectorAll('canvas')].some(c => Boolean(c.getContext('webgl2'))),
       overflow: document.documentElement.scrollWidth > innerWidth + 2,
       pbr: ['oak-color','oak-normal','limestone-normal'].map(t => performance.getEntriesByType('resource').some(r => r.name.includes(t))),
+      floorAssets: performance.getEntriesByType('resource')
+        .filter(r=>r.name.includes('floor-tiles078-'))
+        .map(r=>r.name.split('/').pop()),
       transferBytes: performance.getEntriesByType('resource').reduce((n,r)=>n+(r.transferSize||0),0)
     })''')
     assert report['hasWebGL2'], f'{engine} {width}: missing WebGL2 context'
     assert not report['overflow'], f'{engine} {width}: horizontal overflow'
     assert all(report['pbr']), f'{engine} {width}: missing PBR resources {report}'
+    profile = '512' if mobile else '1024'
+    floor_assets = report['floorAssets']
+    assert any(f'floor-tiles078-{profile}-color' in name for name in floor_assets), (
+        f'{engine} {width}: PBR floor albedo request missing', report
+    )
+    assert all(f'floor-tiles078-{profile}-' in name for name in floor_assets), (
+        f'{engine} {width}: wrong quality-profile floor material requested', report
+    )
+    if not mobile:
+        # The two tiny 512px data maps are inlined by Vite: static SHA256
+        # verification owns their byte integrity on light/mobile builds.
+        assert all(any(f'floor-tiles078-1024-{channel}' in name
+                       for name in floor_assets)
+                   for channel in ('color','normal','roughness')), (
+            f'{engine} {width}: desktop PBR channel missing', report
+        )
     assert not errors, f'{engine} {width}: {errors}'
     OUT.mkdir(parents=True, exist_ok=True)
     await capture_evidence(page, OUT/f'{engine}-{width}x{height}.png')

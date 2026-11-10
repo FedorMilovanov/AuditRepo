@@ -332,62 +332,6 @@ export function verseTexture() {
  * Travertine tile and restrained inlay. The layout is deterministic and includes
  * no fantasy signposting or emissive rings; low mode saves 75% texture memory.
  */
-export function floorTexture(size = 2048) {
-  const S = size;
-  const scale = S / 32;
-  const seed = (n: number) => {
-    const v = Math.sin(n * 91.313 + 9.72) * 43758.5453;
-    return v - Math.floor(v);
-  };
-  return canvasTex(S, S, (c) => {
-    const cx = S * .5;
-    c.fillStyle = "#c7baa4";
-    c.fillRect(0, 0, S, S);
-    // Faint, varied natural stone slabs. A fixed seed prevents visual flicker
-    // after changing render quality or returning from XR.
-    const cells = 12;
-    const tile = S / cells;
-    for (let iy = 0; iy < cells; iy++) for (let ix = 0; ix < cells; ix++) {
-      const n = ix + iy * cells;
-      const t = Math.floor(188 + seed(n * 17 + 3) * 18);
-      c.fillStyle = `rgb(${t + 11}, ${t + 4}, ${t - 12})`;
-      c.fillRect(ix * tile + 1, iy * tile + 1, tile - 2, tile - 2);
-    }
-    c.globalAlpha = .24;
-    for (let i = 0; i < 2800; i++) {
-      const x = seed(i * 3 + 1) * S;
-      const y = seed(i * 7 + 7) * S;
-      c.fillStyle = i % 4 === 0 ? "#fff8e4" : "#897f6f";
-      c.fillRect(x, y, 0.5 + seed(i + 3) * 4, .7 + seed(i + 9) * 1.5);
-    }
-    c.globalAlpha = 1;
-    // Subtle stone vein fractures: never bright 'magical' lines.
-    c.strokeStyle = "rgba(114,99,79,.085)";
-    for (let i = 0; i < 90; i++) {
-      c.beginPath();
-      let x = seed(i * 7 + 2) * S, y = seed(i * 11 + 4) * S;
-      c.moveTo(x, y);
-      for (let k = 0; k < 5; k++) {
-        x += (seed(i * 50 + k * 2) - .5) * scale * 3;
-        y += (seed(i * 30 + k * 3) - .5) * scale * 3;
-        c.lineTo(x, y);
-      }
-      c.lineWidth = 1 + seed(i + 13) * 1.5;
-      c.stroke();
-    }
-    c.strokeStyle = "rgba(114,87,58,.55)";
-    c.lineWidth = Math.max(1.5, S / 1024);
-    for (const r of [2.55, 3.9, 13.8]) {
-      c.beginPath(); c.arc(cx, cx, r * scale, 0, Math.PI * 2); c.stroke();
-    }
-    c.strokeStyle = "rgba(230,216,187,.42)";
-    c.lineWidth = Math.max(1, S / 2048);
-    for (const r of [2.63, 13.93]) {
-      c.beginPath(); c.arc(cx, cx, r * scale, 0, Math.PI * 2); c.stroke();
-    }
-  });
-}
-
 export function tabletTextures(label: string) {
   const make = (emissive: boolean) =>
     canvasTex(256, 400, (c, w, h) => {

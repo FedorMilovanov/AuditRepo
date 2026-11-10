@@ -1,5 +1,11 @@
 # Handoff — GB Premium 3D Library
 
+## V5.31 material ownership — latest source
+
+See [PBR_FLOOR_PROVENANCE_V531.md](PBR_FLOOR_PROVENANCE_V531.md) and the exact PR HEAD checks. The lab includes a honed CC0 stone floor with correctly color-managed 1024/512 PBR channels, shared R3F texture loader cache and byte-perfect signed source manifest; the old generated Canvas floor was retired. Local NVIDIA Chrome preview and bidirectional quality-switch witnesses were green. **Full exact-head GitHub Chromium/WebKit 47/47 remains mandatory after this source change**; do not project previous greens. Draft / ART HOLD, no public deployment or Product integration. Prior V5.30 notes below are historical evidence.
+
+---
+
 ## Latest accepted engineering handoff — 2026-11-10, V5.30 (read first)
 
 **Only working branch:** `lane/gb-premium-3d-library-lab-20261108`, existing [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545) in AuditRepo. No new branch or Product/main modifications; never merge or deploy without separate release approval. Confirm current PR SHA in GitHub before any modification.

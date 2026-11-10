@@ -1,0 +1,83 @@
+{
+  "id": "ambientcg-tiles078-floor-v1",
+  "source": "https://ambientcg.com/view?id=Tiles078",
+  "source_zip_name": "Tiles078_1K-JPG.zip",
+  "source_zip_sha256": "145849a58ab5b82598e094cbef30abe51bcc0e473fa2e697115e25c1a1617829",
+  "license": "CC0 1.0",
+  "output_roughness": "Remapped for honed stone: channel = min(255,174 + floor(source*0.22)).",
+  "normal_basis": "OpenGL +Y",
+  "files": [
+    {
+      "file": "floor-tiles078-1024-color.webp",
+      "bytes": 206234,
+      "sha256": "94c5d29457755d226b0f82236c8a6ac0703d3659b313775ea611b5426bf746c8",
+      "width": 1024,
+      "height": 1024,
+      "channel": "color"
+    },
+    {
+      "file": "floor-tiles078-512-color.webp",
+      "bytes": 34836,
+      "sha256": "a8365d3a3c9d69aea338c2e11fdf6aa7f19108b685b320e5a3caa788a1330746",
+      "width": 512,
+      "height": 512,
+      "channel": "color"
+    },
+    {
+      "file": "floor-tiles078-1024-normal.webp",
+      "bytes": 310020,
+      "sha256": "4c95beb3fb95543cd000fc268cd327628730f097d0d3c6acc3c05c8ebaa822df",
+      "width": 1024,
+      "height": 1024,
+      "channel": "normal"
+    },
+    {
+      "file": "floor-tiles078-512-normal.webp",
+      "bytes": 1284,
+      "sha256": "c725b37cbc825eadf9132bac2e7001755c293f32ad70a47c76fb6d850069e4d9",
+      "width": 512,
+      "height": 512,
+      "channel": "normal"
+    },
+    {
+      "file": "floor-tiles078-1024-roughness.webp",
+      "bytes": 10854,
+      "sha256": "7859e0dcfc925c9720060027b6b4aecfb78c68619ab07a8a4d86718d0e863179",
+      "width": 1024,
+      "height": 1024,
+      "channel": "roughness"
+    },
+    {
+      "file": "floor-tiles078-512-roughness.webp",
+      "bytes": 2398,
+      "sha256": "8e49f1978db4d258068d178690fe271d45935814c01fb1f038e07f2914ef19a7",
+      "width": 512,
+      "height": 512,
+      "channel": "roughness"
+    }
+  ],
+  "source_files": [
+    {
+      "file": "Tiles078_1K-JPG_Color.jpg",
+      "bytes": 1249799,
+      "sha256": "d87fba962c0779016ae33ae266c4c4e35a274bc96b931a498729104f034a1a47"
+    },
+    {
+      "file": "Tiles078_1K-JPG_NormalGL.jpg",
+      "bytes": 361914,
+      "sha256": "817aa8de25db1e8af28c2a48a5c46b3ba3d9e8c5cb04d11f7eb5ef0b5db848f1"
+    },
+    {
+      "file": "Tiles078_1K-JPG_Roughness.jpg",
+      "bytes": 477032,
+      "sha256": "1ee3f45d9840d36df706d4ae3a48df8295334162b9e2bba92d665f5035332157"
+    }
+  ],
+  "uv_repeat": 16,
+  "roughness_intent": "Honed architectural floor: mapped glossy roughness into 0.68-0.90 range.",
+  "color_space": {
+    "color": "sRGB",
+    "normal": "linear",
+    "roughness": "linear"
+  }
+}

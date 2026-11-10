@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { Suspense, useLayoutEffect, useMemo, useRef } from "react";
+import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { useApp } from "../store";
-import { floorTexture } from "../textures";
+
 
 export const stone = new THREE.MeshStandardMaterial({ color: "#b6a995", roughness: 0.85, metalness: 0 });
 export const darkStone = new THREE.MeshStandardMaterial({ color: "#75695d", roughness: 0.84, metalness: 0 });
@@ -12,6 +13,50 @@ export const marble = new THREE.MeshStandardMaterial({ color: "#d3c6ac", roughne
 export const statue = new THREE.MeshStandardMaterial({ color: "#a8a094", roughness: 0.62, metalness: 0.02, envMapIntensity: 0.5 });
 export const wood = new THREE.MeshStandardMaterial({ color: "#593f2d", roughness: 0.78, metalness: 0 });
 export const wax = new THREE.MeshStandardMaterial({ color: "#f4ead4", roughness: 0.55, metalness: 0 });
+
+const highStoneMaps = [
+  new URL("../assets/pbr/floor-tiles078-1024-color.webp", import.meta.url).href,
+  new URL("../assets/pbr/floor-tiles078-1024-normal.webp", import.meta.url).href,
+  new URL("../assets/pbr/floor-tiles078-1024-roughness.webp", import.meta.url).href,
+];
+const lowStoneMaps = [
+  new URL("../assets/pbr/floor-tiles078-512-color.webp", import.meta.url).href,
+  new URL("../assets/pbr/floor-tiles078-512-normal.webp", import.meta.url).href,
+  new URL("../assets/pbr/floor-tiles078-512-roughness.webp", import.meta.url).href,
+];
+
+/**
+ * Source-owned CC0 ambientCG Tiles 078, remastered as honed library stone.
+ * All three UV channels share the same repeat and OpenGL normal orientation.
+ * The light 512px material never fetches the high-quality maps, and the
+ * shared Drei/R3F loader cache survives quality transitions without leaks.
+ */
+function HonedStoneFloor({ quality }: { quality: "high" | "low" }) {
+  const paths = quality === "high" ? highStoneMaps : lowStoneMaps;
+  const [colorMap, normalMap, roughnessMap] = useLoader(THREE.TextureLoader, paths);
+  useLayoutEffect(() => {
+    for (const map of [colorMap, normalMap, roughnessMap]) {
+      map.wrapS = map.wrapT = THREE.RepeatWrapping;
+      map.repeat.set(16, 16);
+      map.anisotropy = quality === "high" ? 8 : 4;
+      map.needsUpdate = true;
+    }
+    colorMap.colorSpace = THREE.SRGBColorSpace;
+    normalMap.colorSpace = THREE.NoColorSpace;
+    roughnessMap.colorSpace = THREE.NoColorSpace;
+    colorMap.needsUpdate = true;
+  }, [colorMap, normalMap, roughnessMap, quality]);
+  return (
+    <meshStandardMaterial
+      map={colorMap}
+      normalMap={normalMap}
+      roughnessMap={roughnessMap}
+      normalScale={new THREE.Vector2(0.24, 0.24)}
+      roughness={0.98}
+      metalness={0}
+    />
+  );
+}
 
 function rockGeometry() {
   const g = new THREE.ConeGeometry(16, 36, 56, 12, true);
@@ -34,13 +79,6 @@ function rockGeometry() {
 
 export function Platform() {
   const q = useApp((s) => s.quality);
-  const floorTex = useMemo(() => floorTexture(q === "high" ? 2048 : 1024), [q]);
-  // CanvasTexture is created manually; R3F does not own its lifetime. Each
-  // quality switch must release the previous 4–16 MiB RGBA texture.
-  useEffect(() => {
-    floorTex.needsUpdate = true;
-    return () => floorTex.dispose();
-  }, [floorTex]);
   const rock = useMemo(() => rockGeometry(), []);
   const N = 20;
   const R = 14.5;
@@ -73,7 +111,9 @@ export function Platform() {
       {/* пол */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.004, 0]} receiveShadow>
         <circleGeometry args={[16, 128]} />
-        <meshStandardMaterial map={floorTex} roughness={0.70} metalness={0.0} />
+        <Suspense fallback={<meshStandardMaterial color="#b7a895" roughness={0.83} metalness={0} />}>
+          <HonedStoneFloor quality={q} />
+        </Suspense>
       </mesh>
       {/* золотой кант */}
       <mesh rotation-x={Math.PI / 2} position={[0, 0.02, 0]}>

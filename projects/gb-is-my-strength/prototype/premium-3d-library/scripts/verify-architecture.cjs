@@ -95,4 +95,46 @@ assert.match(app, /isSessionSupported\?\.\("immersive-vr"\)/);
 for (const name of ['biografii.webp', 'nagornaya.webp', 'otstuplenie.webp']) {
   assert.ok(fs.statSync(path.join(root, 'public/covers', name)).size > 4096, `${name}: missing cover`);
 }
+// Provenance and byte-perfect local PBR channels, no external CI dependency.
+const floorCrypto = require('node:crypto');
+const floorDir = path.join(root, 'src/assets/pbr');
+const floorManifest = JSON.parse(fs.readFileSync(path.join(floorDir,
+  'floor-tiles078-manifest.json'), 'utf8'));
+assert.equal(floorManifest.id, 'ambientcg-tiles078-floor-v1');
+assert.equal(floorManifest.source, 'https://ambientcg.com/view?id=Tiles078');
+assert.equal(floorManifest.license, 'CC0 1.0');
+assert.equal(floorManifest.normal_basis, 'OpenGL +Y');
+assert.equal(floorManifest.uv_repeat, 16);
+assert.equal(floorManifest.files.length, 6);
+assert.equal(floorManifest.source_files.length, 3);
+const floorNames = new Set();
+let floorBytes = 0;
+const floorPlatform = get('scene/Platform.tsx');
+for (const name of [
+  'useLoader(THREE.TextureLoader, paths)',
+  'normalMap={normalMap}', 'roughnessMap={roughnessMap}',
+  'colorMap.colorSpace = THREE.SRGBColorSpace',
+  'normalMap.colorSpace = THREE.NoColorSpace',
+  'roughnessMap.colorSpace = THREE.NoColorSpace'
+]) assert.ok(floorPlatform.includes(name), 'PBR floor missing ' + name);
+assert.ok(!floorPlatform.includes('floorTexture('), 'Dead Canvas floor still used');
+for (const res of [512,1024]) for (const kind of ['color','normal','roughness']) {
+  const file = 'floor-tiles078-' + res + '-' + kind + '.webp';
+  const desc = floorManifest.files.find(x=>x.file === file);
+  assert.ok(desc, 'PBR missing channel ' + file);
+  assert.ok(!floorNames.has(file), 'Duplicated floor channel ' + file);
+  floorNames.add(file);
+  const data = fs.readFileSync(path.join(floorDir,file));
+  assert.equal(data.length, desc.bytes, file + ': bytes mismatch');
+  assert.equal(data.toString('ascii',0,4), 'RIFF', file + ': RIFF header');
+  assert.equal(data.toString('ascii',8,12), 'WEBP', file + ': image MIME');
+  assert.equal(floorCrypto.createHash('sha256').update(data).digest('hex'),
+     desc.sha256, file + ': hash mismatch');
+  assert.ok(floorPlatform.includes(file), file + ': unused/missing import');
+  floorBytes += data.length;
+}
+assert.equal(floorNames.size,6);
+assert.ok(floorBytes>200000 && floorBytes<750000,'Floor transfer budget ' + floorBytes);
+console.log('PASS: verified CC0 PBR floor 6/6 channels, SHA256, ' + floorBytes + ' bytes.');
+
 console.log(`PASS: ${count} TS/TSX source files parsed, local imports resolved, renderer/VR/3 covers verified.`);

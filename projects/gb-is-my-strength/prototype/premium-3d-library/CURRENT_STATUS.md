@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.31 floor-material candidate — current source
+
+The active Draft PR #545 now contains a source-verified ambientCG CC0 **honed stone PBR floor** (color/normal/roughness in 1024/512px presets). Provenance, roughness remapping, SHA-256, colour spaces and target-size budget: [PBR_FLOOR_PROVENANCE_V531.md](PBR_FLOOR_PROVENANCE_V531.md). Local NVIDIA RTX 3060 Chrome (1440×900 and touch-emulated 390×844) checked WebGL2, actual CDN-free material loads, viewport images and both directions of graphics quality without errors. **Do not infer the latest SHA's 47/47 from the former exact-head V5.30 green run; check current GitHub Actions.** The artistic quality gate and real mobile/XR performance remain HARD OPEN. No Product/main writes or deployment.
+
+---
+
 ## Current verified checkpoint — 2026-11-10, V5.30
 
 **Active engineering candidate:** sole existing [AuditRepo Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`; source of truth is the latest **exact PR HEAD** from GitHub. The historical 2026-11-09 and V5.23–V5.26 sections below are **superseded** and must not be read as current unclosed defects.
