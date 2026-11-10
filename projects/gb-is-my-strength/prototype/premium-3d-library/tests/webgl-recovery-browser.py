@@ -33,21 +33,41 @@ async def recovery_case(browser, engine, width, height, mobile):
         await page.get_by_role("button",name="Войти в библиотеку").click(timeout=45000)
         await page.locator("div.fixed.inset-0.z-50").wait_for(state="detached",timeout=45000)
         await page.wait_for_timeout(350)
+        # A lost software WebGL context may suspend render-frame scheduling.
+        # Subscribe first; receive genuine browser events outside the page's
+        # rAF/polling loop through a standard Playwright exposed function.
+        seen = {key: asyncio.Event() for key in ("lost", "overlay", "restored")}
+        observed = []
+        def on_browser_evidence(payload):
+            observed.append(payload)
+            signal = seen.get(payload.get("type"))
+            if signal is not None:
+                signal.set()
+        await page.expose_function("__gbRecordGlEvidence", on_browser_evidence)
         found=await page.evaluate("""() => {
             const canvas=[...document.querySelectorAll('canvas')].find(c=>c.getContext('webgl2'));
             const gl=canvas?.getContext('webgl2');
             const ext=gl?.getExtension('WEBGL_lose_context');
             if(!gl||!ext)return {supported:false};
             window.__testRecovery={canvas,gl,ext,events:[]};
+            const report = value => {
+              window.__testRecovery.events.push(value);
+              window.__gbRecordGlEvidence(value).catch(()=>{});
+            };
+            const hasRecoveryUi = () => [...document.querySelectorAll('[role=alert]')]
+              .some(el => el.textContent?.includes('Перезапускаю зал…'));
+            const observer = new MutationObserver(() => {
+              if (hasRecoveryUi()) {
+                observer.disconnect();
+                report({type:'overlay',at:performance.now()});
+              }
+            });
+            observer.observe(document.body,{childList:true,subtree:true});
             canvas.addEventListener('webglcontextlost',(event) =>
-                window.__testRecovery.events.push({
-                    type:'lost',at:performance.now(),
-                    defaultPrevented:event.defaultPrevented,cancelable:event.cancelable
-                }));
+                report({type:'lost',at:performance.now(),
+                    defaultPrevented:event.defaultPrevented,cancelable:event.cancelable}));
             canvas.addEventListener('webglcontextrestored',(event) =>
-                window.__testRecovery.events.push({
-                    type:'restored',at:performance.now(),cancelable:event.cancelable
-                }));
+                report({type:'restored',at:performance.now(),cancelable:event.cancelable}));
             ext.loseContext();
             return {supported:true};
         }""")
@@ -55,11 +75,12 @@ async def recovery_case(browser, engine, width, height, mobile):
         overlay=page.get_by_text("Перезапускаю зал…",exact=True)
         OUT.mkdir(parents=True,exist_ok=True)
         try:
-            await page.wait_for_function(
-                "() => window.__testRecovery?.events.some(e=>e.type==='lost')",
-                polling=100, timeout=12000
+            await asyncio.wait_for(seen["lost"].wait(), timeout=18)
+            await asyncio.wait_for(seen["overlay"].wait(), timeout=18)
+            assert any(e["type"] == "lost" and e["defaultPrevented"]
+                       for e in observed), (
+                "Context-loss event was not canceled for restoration", observed
             )
-            await overlay.wait_for(state="visible",timeout=15000)
         except Exception:
             # Distinguish GPU fault-event delivery, React fatal boundary,
             # and a silently lost overlay. Capture the actual browser;
@@ -81,7 +102,7 @@ async def recovery_case(browser, engine, width, height, mobile):
             print(json.dumps({
                 "engine":engine,"viewport":f"{width}x{height}",
                 "stage":"context-loss-overlay-missing",
-                "diagnostics":report,"errors":errors
+                "diagnostics":report,"observed":observed,"errors":errors
             },ensure_ascii=False),flush=True)
             await capture_evidence(page, OUT/f"{engine}-{width}x{height}-lost-overlay-failure.png")
             raise
@@ -100,6 +121,7 @@ async def recovery_case(browser, engine, width, height, mobile):
             "Restore test did not start from genuinely lost WebGL", restore_request
         )
         try:
+            await asyncio.wait_for(seen["restored"].wait(), timeout=25)
             await overlay.wait_for(state="detached",timeout=20000)
         except Exception:
             report = await page.evaluate("""() => {
@@ -116,7 +138,7 @@ async def recovery_case(browser, engine, width, height, mobile):
             print(json.dumps({
                 "engine":engine, "viewport":f"{width}x{height}",
                 "stage":"context-restore-timeout","restoreRequest":restore_request,
-                "diagnostics":report,"errors":errors
+                "diagnostics":report,"observed":observed,"errors":errors
             },ensure_ascii=False),flush=True)
             await capture_evidence(page, OUT/f"{engine}-{width}x{height}-restore-failure.png")
             raise
