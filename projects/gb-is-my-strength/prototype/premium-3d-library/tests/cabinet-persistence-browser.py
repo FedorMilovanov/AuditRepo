@@ -18,7 +18,7 @@ import tempfile
 from pathlib import Path
 
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.getenv("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.getenv("GB_LIBRARY_CABINET_EVIDENCE_DIR",
@@ -114,8 +114,7 @@ async def test_case(browser, engine):
         assert "gb-premium-library-lab-vault-v1" in names, names
 
         EVIDENCE.mkdir(parents=True, exist_ok=True)
-        await b.screenshot(path=str(EVIDENCE / f"{engine}-same-origin-cabinet.png"),
-                           animations="disabled")
+        await capture_evidence(b, EVIDENCE / f"{engine}-same-origin-cabinet.png")
 
         # A fresh, separate browser storage context must not inherit records.
         isolated = await test_context(browser,
@@ -128,8 +127,7 @@ async def test_case(browser, engine):
             c_box = await open_cabinet(c, via_link=True)
             assert await c_box.get_by_role("button", name="Закладки (0)").count() == 1
             assert await c_box.get_by_role("button", name="Коллекции (0)").count() == 1
-            await c.screenshot(path=str(EVIDENCE / f"{engine}-isolated-cabinet.png"),
-                               animations="disabled")
+            await capture_evidence(c, EVIDENCE / f"{engine}-isolated-cabinet.png")
         finally:
             await isolated.close()
 
