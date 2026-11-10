@@ -11,7 +11,7 @@ import re
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 OUT = Path(os.environ.get("GB_LIBRARY_QUALITY_EVIDENCE_DIR",
@@ -131,8 +131,7 @@ async def run_case(browser, engine, width, height, touch):
         assert original[0]["first"] == original[1]["last"] and (
             original[0]["last"] == original[1]["first"]
         ), ("Manual quality round trip interrupted", engine, size, original)
-        await page.screenshot(path=str(OUT / f"{engine}-{size}-after-quality.png"),
-                              animations="disabled")
+        await capture_evidence(page, OUT / f"{engine}-{size}-after-quality.png")
         assert not problems, (engine, size, problems)
         print(json.dumps({"engine": engine, "viewport": size, "result": "PASS",
                           "switches": original, "errors": problems}, ensure_ascii=True), flush=True)
