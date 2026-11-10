@@ -150,6 +150,19 @@ async def test_case(browser, engine):
         EVIDENCE.mkdir(parents=True, exist_ok=True)
         await capture_evidence(b, EVIDENCE / f"{engine}-same-origin-cabinet.png")
 
+        # All assertions of the concurrent two-tab IndexedDB witness are now
+        # complete. Close both foreground tabs before inspecting a fresh
+        # independent storage context. Tab A still owns the 3D WebGL scene
+        # behind its cabinet: retaining that software-GPU renderer during
+        # the unrelated 2D screenshot can exhaust SwiftShader's readback.
+        # This is a real page lifecycle boundary, not a mocked screenshot,
+        # a retry or a relaxed IndexedDB concurrency requirement.
+        await a.close()
+        await b.close()
+        assert a.is_closed() and b.is_closed(), (
+            "The concurrent tabs still own renderer resources at the isolated context boundary"
+        )
+
         # A fresh, separate browser storage context must not inherit records.
         isolated = await test_context(browser,
             viewport={"width": 390, "height": 844},
