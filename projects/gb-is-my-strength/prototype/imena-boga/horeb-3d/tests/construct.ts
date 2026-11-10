@@ -618,6 +618,54 @@ for (const lowMode of [true, false]) {
     apertureSafe);
 }
 
+// A visible ravine must descend from the exact right-hand floor vertices,
+// not be simulated by a disconnected dark plane fifty metres underneath.
+for (const lowMode of [true, false]) {
+  const constructed = buildZones(lowMode,
+    new THREE.MeshStandardMaterial({ vertexColors: true }));
+  const walkingFloor = constructed.group.getObjectByName('cave-floor-continuous');
+  const depthPlate = constructed.group.getObjectByName('chasm-deep-floor');
+  let good = walkingFloor instanceof THREE.Mesh && depthPlate instanceof THREE.Mesh;
+  if (walkingFloor instanceof THREE.Mesh) {
+    const g = walkingFloor.geometry;
+    const meta = walkingFloor.userData.chasmStrata as {
+      floorVertexCount: number; rows: number; segments: number;
+      lowestWallY: number; nearestWallX: number;
+      levels: number; integratedIntoFloor: boolean;
+    };
+    const points = g.getAttribute('position'), uv = g.getAttribute('uv');
+    const faces = g.getIndex();
+    const m = lowMode ? 16 : 28;
+    const floorCount = meta.floorVertexCount;
+    const wallVertexCount = points.count - floorCount;
+    let joinedFaces = 0, safeBoundary = true;
+    if (faces) {
+      for (let i = 0; i < faces.count; i += 3) {
+        const a = faces.getX(i), b = faces.getX(i + 1), c = faces.getX(i + 2);
+        if ([a, b, c].some((idx) => idx >= floorCount) &&
+            [a, b, c].some((idx) => idx < floorCount)) {
+          joinedFaces++;
+          // Ground-truth lip bound; never rely on a decorative invisible rail.
+          for (const idx of [a, b, c]) {
+            if (idx < floorCount && idx % (m + 1) === m &&
+                points.getX(idx) < LEDGE_X + 0.56) safeBoundary = false;
+          }
+        }
+      }
+    }
+    good = good && meta.integratedIntoFloor && meta.levels === 4 &&
+      meta.rows > 35 && meta.segments > 120 &&
+      meta.lowestWallY < -35 && meta.nearestWallX >= LEDGE_X + 0.5 &&
+      wallVertexCount === meta.rows * 4 &&
+      joinedFaces > 35 && safeBoundary &&
+      uv.count === points.count &&
+      !constructed.obstacles.some((o) => o.z < -175 && o.z > -225 &&
+        o.x > LEDGE_X && o.x < LEDGE_X + 2);
+  }
+  t('zone-4 ravine connects 4 natural strata to safe existing floor edge ' +
+    (lowMode ? 'LOW' : 'HIGH'), good);
+}
+
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
 let distantSafe = distantCrags instanceof THREE.InstancedMesh && distantCrags.count === 32;
 if (distantCrags instanceof THREE.InstancedMesh) {
