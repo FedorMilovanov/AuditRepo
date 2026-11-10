@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { marble, stone, wood } from "./Platform";
+import { marble, stone } from "./Platform";
 import { CASEWORK } from "./caseworkScale";
+import { useCaseworkWood, verticalGrainBoxGeometry } from "./CaseworkWood";
 
 /**
  * Premium library envelope. Original interactive stations keep their canonical
@@ -74,24 +75,29 @@ function shelfPart(bay: number, x: number, y: number, z: number, w: number, h: n
 }
 function shelfParts(bay: number) {
   const stoneParts = [shelfPart(bay, 0, 4.1, 0.12, 4.50, 8.2, 0.25)];
-  const woodParts: ShelfPart[] = [
+  const woodHorizontal: ShelfPart[] = [];
+  const woodVertical: ShelfPart[] = [
     shelfPart(bay, 0, 3.85, -0.04, 4.27, 7.45, 0.22),
   ];
   for (let level = 0; level <= SHELVES; level++) {
-    woodParts.push(shelfPart(bay, 0, CASEWORK.firstShelfY + level * CASEWORK.shelfPitch, -0.51, 4.27, 0.11, 0.71));
+    woodHorizontal.push(shelfPart(bay, 0, CASEWORK.firstShelfY + level * CASEWORK.shelfPitch, -0.51, 4.27, 0.11, 0.71));
   }
   for (const x of [-2.13, 2.13]) {
-    woodParts.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
+    woodVertical.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
   }
-  woodParts.push(shelfPart(bay, 0, 7.7, -0.39, 4.52, 0.22, 0.66));
-  return { stoneParts, woodParts };
+  woodHorizontal.push(shelfPart(bay, 0, 7.7, -0.39, 4.52, 0.22, 0.66));
+  return { stoneParts, woodHorizontal, woodVertical };
 }
 
 /** Per-bay instancing retains frustum culling for rooms outside the camera. */
-function InstancedShelfBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry }) {
-  const { stoneParts, woodParts } = useMemo(() => shelfParts(bay), [bay]);
+function InstancedShelfBay({ bay, geometry, verticalGeometry, casework }: {
+  bay: number; geometry: THREE.BoxGeometry; verticalGeometry: THREE.BoxGeometry;
+  casework: THREE.MeshStandardMaterial;
+}) {
+  const { stoneParts, woodHorizontal, woodVertical } = useMemo(() => shelfParts(bay), [bay]);
   const stoneRef = useRef<THREE.InstancedMesh>(null!);
-  const woodRef = useRef<THREE.InstancedMesh>(null!);
+  const woodHorizontalRef = useRef<THREE.InstancedMesh>(null!);
+  const woodVerticalRef = useRef<THREE.InstancedMesh>(null!);
   const angle = (bay / BAYS) * Math.PI * 2;
   useLayoutEffect(() => {
     const pivot = new THREE.Object3D();
@@ -107,19 +113,25 @@ function InstancedShelfBay({ bay, geometry }: { bay: number; geometry: THREE.Box
       mesh.computeBoundingSphere();
     };
     place(stoneRef.current, stoneParts);
-    place(woodRef.current, woodParts);
-  }, [stoneParts, woodParts]);
+    place(woodHorizontalRef.current, woodHorizontal);
+    place(woodVerticalRef.current, woodVertical);
+  }, [stoneParts, woodHorizontal, woodVertical]);
   return (
     <group position={[Math.sin(angle) * RADIUS, 0, Math.cos(angle) * RADIUS]} rotation-y={angle}>
       <instancedMesh ref={stoneRef} args={[geometry, stone, stoneParts.length]} receiveShadow dispose={null} />
-      <instancedMesh ref={woodRef} args={[geometry, wood, woodParts.length]} receiveShadow dispose={null} />
+      <instancedMesh ref={woodHorizontalRef} args={[geometry, casework, woodHorizontal.length]} receiveShadow dispose={null} />
+      <instancedMesh ref={woodVerticalRef} args={[verticalGeometry, casework, woodVertical.length]} receiveShadow dispose={null} />
     </group>
   );
 }
-function InstancedShelfBays({ geometry }: { geometry: THREE.BoxGeometry }) {
+function InstancedShelfBays({ geometry, verticalGeometry, casework }: {
+  geometry: THREE.BoxGeometry; verticalGeometry: THREE.BoxGeometry;
+  casework: THREE.MeshStandardMaterial;
+}) {
   return (
     <group>
-      {SHELVED_BAYS.map((bay) => <InstancedShelfBay key={bay} bay={bay} geometry={geometry} />)}
+      {SHELVED_BAYS.map((bay) => <InstancedShelfBay key={bay} bay={bay}
+        geometry={geometry} verticalGeometry={verticalGeometry} casework={casework} />)}
     </group>
   );
 }
@@ -176,11 +188,16 @@ function WindowBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry
 }
 
 export function Architecture() {
+  const casework = useCaseworkWood();
   const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+  const verticalGeometry = useMemo(verticalGrainBoxGeometry, []);
+  useEffect(() => () => {
+    geometry.dispose();
+    verticalGeometry.dispose();
+  }, [geometry, verticalGeometry]);
   return (
     <group>
-      <InstancedShelfBays geometry={geometry} />
+      <InstancedShelfBays geometry={geometry} verticalGeometry={verticalGeometry} casework={casework} />
       {Array.from(WINDOW_BAYS).map((bay) => <WindowBay key={bay} bay={bay} geometry={geometry} />)}
       {/* Original entrance remains open: this is an exploration prototype, not a sealed maze. */}
       <group position={[0, 0, RADIUS]}>

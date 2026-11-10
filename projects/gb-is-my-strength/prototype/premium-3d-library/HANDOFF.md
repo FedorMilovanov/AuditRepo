@@ -1,5 +1,11 @@
 # Handoff — GB Premium 3D Library
 
+## V5.32 handoff — separate casework from furniture, test every SHA
+
+See [CASEWORK_GRAIN_PROVENANCE_V532.md](CASEWORK_GRAIN_PROVENANCE_V532.md). The new `CaseworkWoodProvider` is a real shared PBR-material owner with quality-profile loading, not global mutation of central furniture. Horizontal shelves and vertical uprights use different UV geographies through shared instanced geometries, preserving 20 bays and editorial navigation. Source CC0 six-channel manifest, no Poly Haven GLB. Local RTX3060 A/B and two-direction graphics quality passed. Require GitHub Preflight and full exact-head 47/47 Chromium/WebKit plus real PNG art review before engineering acceptance. Keep Draft / ART HOLD, no Product deploy.
+
+---
+
 ## V5.31 material ownership — latest source
 
 See [PBR_FLOOR_PROVENANCE_V531.md](PBR_FLOOR_PROVENANCE_V531.md) and the exact PR HEAD checks. The lab includes a honed CC0 stone floor with correctly color-managed 1024/512 PBR channels, shared R3F texture loader cache and byte-perfect signed source manifest; the old generated Canvas floor was retired. Local NVIDIA Chrome preview and bidirectional quality-switch witnesses were green. **Full exact-head GitHub Chromium/WebKit 47/47 remains mandatory after this source change**; do not project previous greens. Draft / ART HOLD, no public deployment or Product integration. Prior V5.30 notes below are historical evidence.

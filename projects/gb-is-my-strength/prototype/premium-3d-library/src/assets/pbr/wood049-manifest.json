@@ -1,0 +1,80 @@
+{
+  "id": "ambientcg-wood049-casework-v1",
+  "source": "https://ambientcg.com/view?id=Wood049",
+  "license": "CC0 1.0",
+  "normal_basis": "OpenGL +Y",
+  "source_archive": {
+    "name": "Wood049_1K-JPG.zip",
+    "sha256": "74ec51bcf5ddfc2e9af6205dc5cbcc90ad51c22117e013ff8b1c7258f8ecbc69"
+  },
+  "source_files": [
+    {
+      "file": "Wood049_1K-JPG_Color.jpg",
+      "sha256": "451ee4dd719628289b4969f75dc583b5f77f8471d5d885ba5015fd90e7e5ce61",
+      "bytes": 954756
+    },
+    {
+      "file": "Wood049_1K-JPG_NormalGL.jpg",
+      "sha256": "e9aaec13f9c6199e7ec440433005a8c52a88332f26a3887fc057179089fb747a",
+      "bytes": 1559595
+    },
+    {
+      "file": "Wood049_1K-JPG_Roughness.jpg",
+      "sha256": "7683f29e71c24b987e4a7dcc74d5a9ed5ab4cac2e145d507799ba9c9c2c4ef54",
+      "bytes": 708949
+    }
+  ],
+  "derived_files": [
+    {
+      "file": "wood049-512-color.webp",
+      "sha256": "084224bf29030823763034d3ab7d5040e06793d26261a984862f097ad1e95615",
+      "bytes": 27554,
+      "width": 512,
+      "height": 512,
+      "channel": "color"
+    },
+    {
+      "file": "wood049-1024-color.webp",
+      "sha256": "bed70c302d48b119c100b98eb2910eb5e030001542469480ed04a6056192539c",
+      "bytes": 89280,
+      "width": 1024,
+      "height": 1024,
+      "channel": "color"
+    },
+    {
+      "file": "wood049-512-normal.webp",
+      "sha256": "8eeb25f443838753274cd775b89f9244432719c42b34455db844415074897dad",
+      "bytes": 35692,
+      "width": 512,
+      "height": 512,
+      "channel": "normal"
+    },
+    {
+      "file": "wood049-1024-normal.webp",
+      "sha256": "c2d246119cb2a1e47106a900d5df3dff215d305501f060cfd49998784bf0af73",
+      "bytes": 169986,
+      "width": 1024,
+      "height": 1024,
+      "channel": "normal"
+    },
+    {
+      "file": "wood049-512-roughness.webp",
+      "sha256": "33f62516a4638f90d30babed42674ad41372244b85cb09efb99eaa816d626dba",
+      "bytes": 28268,
+      "width": 512,
+      "height": 512,
+      "channel": "roughness"
+    },
+    {
+      "file": "wood049-1024-roughness.webp",
+      "sha256": "e1269187a797c20977d57304bdfc2c6b78836db18f158c119a90e6d619e9334d",
+      "bytes": 139872,
+      "width": 1024,
+      "height": 1024,
+      "channel": "roughness"
+    }
+  ],
+  "uv_long_grain_axis": "horizontal U",
+  "vertical_orientation": "Rotate vertex UV 90 degrees for upright box geometry, not the shared material",
+  "scope": "only outer and reference-bay bookcase joinery, never central furniture or books"
+}

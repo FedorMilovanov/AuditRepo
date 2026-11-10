@@ -38,6 +38,9 @@ async def one(browser, engine, width, height, mobile):
       floorAssets: performance.getEntriesByType('resource')
         .filter(r=>r.name.includes('floor-tiles078-'))
         .map(r=>r.name.split('/').pop()),
+      caseworkAssets: performance.getEntriesByType('resource')
+        .filter(r=>r.name.includes('wood049-'))
+        .map(r=>r.name.split('/').pop()),
       transferBytes: performance.getEntriesByType('resource').reduce((n,r)=>n+(r.transferSize||0),0)
     })''')
     assert report['hasWebGL2'], f'{engine} {width}: missing WebGL2 context'
@@ -68,6 +71,14 @@ async def one(browser, engine, width, height, mobile):
                    for channel in ('color','normal','roughness')), (
             f'{engine} {width}: high-quality PBR channel missing', report
         )
+    # The shared bookcase PBR must load all three channels at the actual
+    # quality label (including an automatic downgrade on Linux SwiftShader).
+    wood_assets = report['caseworkAssets']
+    assert all(any(f'wood049-{profile}-{channel}' in name
+                   for name in wood_assets)
+               for channel in ('color', 'normal', 'roughness')), (
+        f'{engine} {width}: incomplete active casework PBR channels', report
+    )
     # The tiny 512px normal and roughness WebPs are inlined by Vite.
     # Their existence, signatures and SHA256 are enforced by lab:check.
     # Both manual transition directions remain mandatory in the dedicated

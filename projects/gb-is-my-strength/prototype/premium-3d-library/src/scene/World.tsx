@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense } from "react";
+import { CaseworkWoodProvider } from "./CaseworkWood";
 import { Sky } from "@react-three/drei";
 import { XR } from "@react-three/xr";
 import { useApp, xrStore, set, get, input, toggleQuality, notify } from "../store";
@@ -185,8 +187,14 @@ export default function World() {
         <directionalLight position={[13, 13, 17]} intensity={0.35} color="#d9e7f1" />
 
         <Platform />
-        <Architecture />
-        <ArchitecturalPolish />
+        {/* Original local wood remains visible while PBR wood is decoded;
+            high/low quality changes never hide navigation or the room. */}
+        <Suspense fallback={<><Architecture /><ArchitecturalPolish /></>}>
+          <CaseworkWoodProvider>
+            <Architecture />
+            <ArchitecturalPolish />
+          </CaseworkWoodProvider>
+        </Suspense>
         <Vault />
         <Center />
         <Stations />

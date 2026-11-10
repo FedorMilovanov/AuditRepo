@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { marble, stone, wood } from './Platform';
 import { CASEWORK } from './caseworkScale';
+import { useCaseworkWood, verticalGrainBoxGeometry } from './CaseworkWood';
 
 const BAYS = CASEWORK.bays;
 const RADIUS = CASEWORK.radius;
@@ -43,6 +44,8 @@ marble.normalScale.set(0.16, 0.16);
 marble.roughness = 0.86;
 marble.needsUpdate = true;
 
+// The central lectern and furniture retain their original material: new
+// directional PBR casework is a *different* material and cannot recolour it.
 wood.color.set('#ffffff');
 wood.map = oakMap;
 wood.normalMap = oakNormal;
@@ -63,6 +66,7 @@ const elem = (bay: number, x: number, y: number, z: number, w: number, h: number
 
 function details() {
   const oak: Element[] = [];
+  const oakUprights: Element[] = [];
   const stonework: Element[] = [];
   for (let bay = 0; bay < BAYS; bay++) {
     if (WINDOWS.has(bay)) {
@@ -79,7 +83,7 @@ function details() {
     if (bay === 0) continue; // Preserve original entrance, no obstruction.
     // Front-face pilasters, a layered cornice, and gently recessed casework.
     for (const x of [-2.06, 2.06]) {
-      oak.push(elem(bay, x, 3.9, -.79, .17, 7.25, .24));
+      oakUprights.push(elem(bay, x, 3.9, -.79, .17, 7.25, .24));
       oak.push(elem(bay, x, 7.37, -.87, .25, .19, .35));
       oak.push(elem(bay, x, .33, -.83, .27, .52, .35));
     }
@@ -94,7 +98,7 @@ function details() {
       oak.push(elem(bay, x, .31, -.82, 1.72, .39, .12));
     }
   }
-  return { oak, stonework };
+  return { oak, oakUprights, stonework };
 }
 
 function InstancedTrim({ entries, material, geometry, castShadow = true }: {
@@ -181,6 +185,7 @@ const brass = new THREE.MeshStandardMaterial({
 });
 function referenceParts(bay: number) {
   const oak: Element[] = [];
+  const oakUprights: Element[] = [];
   const stoneTrim: Element[] = [];
   const metal: Element[] = [];
   const part = (into: Element[], x: number, y: number, z: number,
@@ -192,12 +197,12 @@ function referenceParts(bay: number) {
     part(stoneTrim, x, 4.08, -0.89, 0.28, 7.58, 0.38);
     part(stoneTrim, x, 0.36, -0.98, 0.43, 0.55, 0.53);
     part(stoneTrim, x, 7.12, -0.99, 0.47, 0.36, 0.45);
-    part(oak, x * 0.88, 3.83, -1.00, 0.11, 7.07, 0.16);
+    part(oakUprights, x * 0.88, 3.83, -1.00, 0.11, 7.07, 0.16);
     part(oak, x * 0.88, 7.38, -1.07, 0.29, 0.13, 0.23);
   }
 
   // Recessed, solid timber shelves, stile and stepped cornice.
-  part(oak, 0, 4.02, -0.94, 0.11, 7.10, 0.18);
+  part(oakUprights, 0, 4.02, -0.94, 0.11, 7.10, 0.18);
   for (let level = 0; level <= CASEWORK.shelfRows; level++) {
     const y = CASEWORK.firstShelfY + level * CASEWORK.shelfPitch;
     part(oak, 0, y, -1.00, 3.84, 0.11, 0.19);
@@ -211,23 +216,28 @@ function referenceParts(bay: number) {
     part(oak, x, 0.31, -1.02, 1.69, 0.38, 0.12);
     part(metal, x + (x > 0 ? -0.65 : 0.65), 0.32, -1.10, 0.045, 0.065, 0.032);
   }
-  return { oak, stoneTrim, metal };
+  return { oak, oakUprights, stoneTrim, metal };
 }
 
 const CRAFTED_BAYS = [3, 4, 5, 6] as const;
 
-function ReferenceBays({ geometry }: { geometry: THREE.BoxGeometry }) {
-  const { oak, stoneTrim, metal } = useMemo(() => {
+function ReferenceBays({ geometry, verticalGeometry, casework }: {
+  geometry: THREE.BoxGeometry; verticalGeometry: THREE.BoxGeometry;
+  casework: THREE.MeshStandardMaterial;
+}) {
+  const { oak, oakUprights, stoneTrim, metal } = useMemo(() => {
     const oak: Element[] = [];
+    const oakUprights: Element[] = [];
     const stoneTrim: Element[] = [];
     const metal: Element[] = [];
     for (const bay of CRAFTED_BAYS) {
       const parts = referenceParts(bay);
       oak.push(...parts.oak);
+      oakUprights.push(...parts.oakUprights);
       stoneTrim.push(...parts.stoneTrim);
       metal.push(...parts.metal);
     }
-    return { oak, stoneTrim, metal };
+    return { oak, oakUprights, stoneTrim, metal };
   }, []);
   const arch = useMemo(() => {
     // Dressed stone arch over the oak alcove. A real profiled solid in 3D,
@@ -264,7 +274,8 @@ function ReferenceBays({ geometry }: { geometry: THREE.BoxGeometry }) {
   }, [arch]);
   return (
     <group>
-      <InstancedTrim entries={oak} material={wood} geometry={geometry} />
+      <InstancedTrim entries={oak} material={casework} geometry={geometry} />
+      <InstancedTrim entries={oakUprights} material={casework} geometry={verticalGeometry} />
       <InstancedTrim entries={stoneTrim} material={marble} geometry={geometry} />
       <InstancedTrim entries={metal} material={brass} geometry={geometry} castShadow={false} />
       <instancedMesh ref={arches} args={[arch, marble, CRAFTED_BAYS.length]}
@@ -275,14 +286,20 @@ function ReferenceBays({ geometry }: { geometry: THREE.BoxGeometry }) {
 
 /** Adds static craftsmanship only; original interaction IDs and station positions stay intact. */
 export function ArchitecturalPolish() {
-  const { oak, stonework } = useMemo(details, []);
+  const casework = useCaseworkWood();
+  const { oak, oakUprights, stonework } = useMemo(details, []);
   const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+  const verticalGeometry = useMemo(verticalGrainBoxGeometry, []);
+  useEffect(() => () => {
+    geometry.dispose();
+    verticalGeometry.dispose();
+  }, [geometry, verticalGeometry]);
   return <group>
-    <InstancedTrim entries={oak} material={wood} geometry={geometry} />
+    <InstancedTrim entries={oak} material={casework} geometry={geometry} />
+    <InstancedTrim entries={oakUprights} material={casework} geometry={verticalGeometry} />
     <InstancedTrim entries={stonework} material={marble} geometry={geometry} />
     <WindowArches />
-    <ReferenceBays geometry={geometry} />
+    <ReferenceBays geometry={geometry} verticalGeometry={verticalGeometry} casework={casework} />
     <VaultTrim />
   </group>;
 }

@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.32 current candidate — wood grain architecture, exact-head checks required
+
+One existing Draft PR #545 contains the V5.32 authored direction-aware carpentry candidate: [CASEWORK_GRAIN_PROVENANCE_V532.md](CASEWORK_GRAIN_PROVENANCE_V532.md). Original lectern/furniture materials are kept separate. Real R3F 1024/512 color/normal/roughness wood maps are source-verified (CC0, six SHA-256; 490,652 bytes); horizontal and upright elements use distinct UV geometry while retaining GPU instancing. RTX3060 Chrome browser and bidirectional quality transitions passed locally. **Never project the previous V5.31 47/47 onto the new candidate**; new exact-head CI and screenshot inspection are mandatory. The artistic, physical-device, Product/rights and XR gates remain HARD OPEN; no merge/deployment.
+
+---
+
 ## V5.31 floor-material candidate — current source
 
 The active Draft PR #545 now contains a source-verified ambientCG CC0 **honed stone PBR floor** (color/normal/roughness in 1024/512px presets). Provenance, roughness remapping, SHA-256, colour spaces and target-size budget: [PBR_FLOOR_PROVENANCE_V531.md](PBR_FLOOR_PROVENANCE_V531.md). Local NVIDIA RTX 3060 Chrome (1440×900 and touch-emulated 390×844) checked WebGL2, actual CDN-free material loads, viewport images and both directions of graphics quality without errors. **Do not infer the latest SHA's 47/47 from the former exact-head V5.30 green run; check current GitHub Actions.** The artistic quality gate and real mobile/XR performance remain HARD OPEN. No Product/main writes or deployment.

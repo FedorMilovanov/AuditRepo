@@ -137,4 +137,49 @@ assert.equal(floorNames.size,6);
 assert.ok(floorBytes>200000 && floorBytes<750000,'Floor transfer budget ' + floorBytes);
 console.log('PASS: verified CC0 PBR floor 6/6 channels, SHA256, ' + floorBytes + ' bytes.');
 
+// Fail-closed directional grain / licensed asset provenance contract.
+const caseworkManifest=JSON.parse(fs.readFileSync(path.join(floorDir,'wood049-manifest.json'),'utf8'));
+assert.equal(caseworkManifest.id,'ambientcg-wood049-casework-v1');
+assert.equal(caseworkManifest.source,'https://ambientcg.com/view?id=Wood049');
+assert.equal(caseworkManifest.license,'CC0 1.0');
+assert.equal(caseworkManifest.normal_basis,'OpenGL +Y');
+assert.equal(caseworkManifest.derived_files.length,6);
+assert.equal(caseworkManifest.source_files.length,3);
+const caseworkOwner=get('scene/CaseworkWood.tsx');
+for (const clause of ['CaseworkContext','useLoader(THREE.TextureLoader',
+  'material.dispose()','albedo.colorSpace = THREE.SRGBColorSpace',
+  'normal.colorSpace = THREE.NoColorSpace','roughness.colorSpace = THREE.NoColorSpace',
+  'uv.setXY(i, v, 1 - u)','return useContext(CaseworkContext) ?? wood']) {
+  assert.ok(caseworkOwner.includes(clause),'Missing directional oak contract '+clause);
+}
+assert.ok(world.includes('<CaseworkWoodProvider>'));
+assert.ok(architecture.includes('woodHorizontalRef'));
+assert.ok(architecture.includes('woodVerticalRef'));
+assert.ok(architecture.includes('verticalGrainBoxGeometry'));
+assert.ok(craft.includes('oakUprights'));
+assert.ok(craft.includes('verticalGrainBoxGeometry'));
+assert.ok(craft.includes('wood.map = oakMap'),'Shared original furniture altered');
+assert.ok(craft.includes('wood.normalMap = oakNormal'),'Original furniture normals altered');
+let caseworkBytes=0;
+const caseworkNames=new Set();
+for (const res of [512,1024]) for (const ch of ['color','normal','roughness']) {
+  const name='wood049-'+res+'-'+ch+'.webp';
+  const item=caseworkManifest.derived_files.find(x=>x.file===name);
+  assert.ok(item,'Missing asset manifest '+name);
+  assert.ok(!caseworkNames.has(name),'Duplicate asset '+name);
+  caseworkNames.add(name);
+  const buf=fs.readFileSync(path.join(floorDir,name));
+  assert.equal(buf.length,item.bytes,name+' length drift');
+  assert.equal(buf.toString('ascii',0,4),'RIFF',name+' RIFF missing');
+  assert.equal(buf.toString('ascii',8,12),'WEBP',name+' WebP missing');
+  assert.equal(floorCrypto.createHash('sha256').update(buf).digest('hex'),item.sha256,
+   name+' sha mismatch');
+  assert.ok(caseworkOwner.includes(name),name+' unused source');
+  caseworkBytes+=buf.length;
+}
+assert.equal(caseworkNames.size,6);
+assert.ok(caseworkBytes>200000 && caseworkBytes<600000,
+ 'PBR oak budget exceeded '+caseworkBytes);
+console.log('PASS: CC0 oak PBR 6/6 SHA256, shared wood context, UV grain directions.');
+
 console.log(`PASS: ${count} TS/TSX source files parsed, local imports resolved, renderer/VR/3 covers verified.`);
