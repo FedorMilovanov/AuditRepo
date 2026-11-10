@@ -44,7 +44,11 @@ export const chasmF = chasmFactor;
  * Fresher chipped faces read as subdued bedding, never emissive spikes. */
 export function exitVaultRelief(x: number, y: number, z: number,
   archSin: number, archCos: number) {
-  const envelope = ss(-319, -312, z) * (1 - ss(-298, -288, z));
+  // The previous erosion faded to ZERO before the actual mouth, producing
+  // a mathematically perfect black semicircle at the very exit.
+  // Keep the same cave-shell topology and continue the weathering through
+  // its last rings, ending outside the mesh (z <-324) without detached fins.
+  const envelope = ss(-324, -319, z) * (1 - ss(-298, -288, z));
   if (envelope <= 0) return { roofDrop: 0, sideOut: 0, shade: 1 };
   const grain = fbm(x * 0.74 + 17, y * 0.31 - 2, z * 0.49 + 31, 3);
   // Geological weathering occurs on several continuous wavelengths.
@@ -55,9 +59,13 @@ export function exitVaultRelief(x: number, y: number, z: number,
   const fold = Math.max(0, Math.min(1, 0.42 * grainRelief + 0.58 * broader));
   const ceiling = Math.pow(Math.max(0, archSin), 2.3);
   const flank = Math.pow(Math.max(0, Math.abs(archCos)), 2.2);
-  const roofDrop = envelope * ceiling * (0.30 + 0.91 * fold);
-  // Move shoulders OUTWARDS; no decorative ledge can obstruct the walk.
-  const sideOut = envelope * flank * (0.14 + 0.47 * fold);
+  const asymmetricBedding = fbm(x * 0.28 + 7.1, y * 0.20 - 8.2, z * 0.23, 3);
+  const roofDrop = envelope * ceiling * (0.27 + 0.94 * fold) *
+    (0.88 + 0.26 * asymmetricBedding);
+  // Move shoulders OUTWARDS, not into the navigable passage. Nonidentical
+  // cliff flanks break the textbook semicircular silhouette at the mouth.
+  const sideOut = envelope * flank * (0.16 + 0.54 * fold) *
+    (archCos < 0 ? 1.16 : 0.82);
   return { roofDrop, sideOut, shade: 1 - envelope * (0.07 + 0.15 * fold) };
 }
 

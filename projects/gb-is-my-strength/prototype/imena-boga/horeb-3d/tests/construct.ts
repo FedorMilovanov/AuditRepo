@@ -420,6 +420,29 @@ if (wellRecord) {
     rimPieces === 14 && roundedCourses === 42 &&
     !highWell.children.some((o) => o instanceof THREE.Mesh &&
       o.geometry instanceof THREE.TorusGeometry && o.position.y > 0.7));
+  // A circle with identical curved sectors still reads as a manufactured
+  // concrete cylinder. The exposed outer cut of each limestone block must
+  // have a real irregular polygonal profile, not just noisy surface colours.
+  const sampleBlock = highWell.getObjectByName('well-course-stone');
+  let edgeErosion = 0, outerProfileSteps = 0;
+  if (sampleBlock instanceof THREE.Mesh && sampleBlock.geometry instanceof THREE.ExtrudeGeometry) {
+    const outline = sampleBlock.geometry.parameters.shapes as THREE.Shape;
+    const points = outline.getPoints(1).slice(0, 6);
+    const radii = points.map((point) => Math.hypot(point.x, point.y));
+    outerProfileSteps = points.length;
+    edgeErosion = Math.max(...radii) - Math.min(...radii);
+  }
+  let copingMinY = Infinity, copingMaxY = -Infinity;
+  highWell.traverse((object) => {
+    if (object.name !== 'well-rim-stone') return;
+    const bond = object.userData.wellBond;
+    if (!bond) return;
+    copingMinY = Math.min(copingMinY, bond.top);
+    copingMaxY = Math.max(copingMaxY, bond.top);
+  });
+  t('Beersheba individual cut stones show eroded edges and uneven coping',
+    outerProfileSteps === 6 && edgeErosion > 0.006 &&
+    copingMaxY - copingMinY > 0.012);
 }
 const hagarRecord = EXHIBITS.find((e) => e.environmentKey === 'wilderness-spring');
 if (hagarRecord) {
@@ -549,6 +572,12 @@ const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexCol
 // paper spikes or a theatrical portal, and cannot intersect walking height.
 const exitCeiling = exitVaultRelief(0.5, 5, -306, 1, 0);
 const exitSide = exitVaultRelief(2.0, 3, -306, 0.1, 1);
+const mouthRelief = exitVaultRelief(1.2, 3.4, -320, 1, 0);
+const mouthLeft = exitVaultRelief(-2.1, 3.4, -320, 0.2, -1);
+const mouthRight = exitVaultRelief(2.1, 3.4, -320, 0.2, 1);
+t('zone-6 cave mouth remains eroded and visibly asymmetric through last shell rings',
+  mouthRelief.roofDrop > 0.08 && mouthLeft.sideOut > mouthRight.sideOut * 1.25);
+
 t('zone-6 erosion modifies the original vault without out-of-zone artefacts',
   exitCeiling.roofDrop > 0.4 && exitCeiling.roofDrop < 1.22 &&
   exitCeiling.shade < 0.96 && exitCeiling.shade >= 0.78 &&

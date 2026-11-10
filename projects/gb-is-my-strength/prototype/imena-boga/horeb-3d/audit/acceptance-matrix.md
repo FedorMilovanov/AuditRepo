@@ -10,6 +10,26 @@
 - Rejected visual experiments were rolled back. Remaining independent HOLD: cave/gallery composition, well, Gethsemane, exit, 42 source/phonology/rights approvals and genuine signed bilingual master recordings, Android/iOS, WebKit, assistive tech and sustained hardware performance.
 - Dark Horeb, muted HUD, outer/inner barefoot radii 14m/6.5m and nonpublished Draft boundaries must remain unchanged.
 
+## Кандидат последней художественной волны (10.11.2026)
+
+- **Последний подтверждённый GitHub SHA до этой волны**: 343cec17,
+  6/6 QA jobs и 3/3 workflows SUCCESS; предыдущая зона 4 raycast PASS.
+- **Локальный новый код**: 172/172 инженерных тестов; Vite/TypeScript
+  успешно. Колодец — эродированные угловые профили и кладка с
+  разновысотными швами; Гефсимания — асимметричные развилки; Хорив —
+  скальная кромка с эрозией и несимметричными краями. Два новых guard.
+- Визуальные кадры дают материал для сравнения; **не** объявлять
+  фотореализм/доступность на настоящем телефоне/эстетическое одобрение.
+  Требуется новый exact-SHA GitHub CI и пользовательская художественная
+  оценка перед снятием ART HOLD.
+- На новом локальном кандидате Firefox и Windows WebKit проверены 8/8
+  по фактическим кадрам и состоянию WebGL2, без context loss и runtime
+  errors. Аппаратный Chromium Windows ANGLE/D3D11 на RTX 3060
+  при 1440x900/DPR1/high: 50–60 FPS по восьми зонам (короткие выборки).
+  Мобильный Safari/Android, VRAM и тепловая стабильность не подтверждены.
+- Voice, rights, Research #379, real device thermal/VRAM и A11y HOLD.
+  No merge, no deploy, no new branches.
+
 ## Оперативный статус — 10 ноября 2026 (приоритетнее исторической матрицы ниже)
 
 Последний полностью проверенный GitHub HEAD до этой доработки: ab35c6a6136f7bd03227ec3b9ecd1241dd643219;

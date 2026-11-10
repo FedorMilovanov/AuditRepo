@@ -8,7 +8,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; wellStoneWarm: THREE.MeshStandardMaterial; wellStoneCool: THREE.MeshStandardMaterial; wellMortar: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; wellStoneBase: THREE.MeshStandardMaterial; wellStoneWarm: THREE.MeshStandardMaterial; wellStoneCool: THREE.MeshStandardMaterial; wellMortar: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
@@ -26,7 +26,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Node construction tests may omit a texture: geometry remains fully testable.
   if (CACHE && CACHE.low === low) {
     if (surface && (CACHE.s.stone.map !== surface.map || CACHE.s.stone.bumpMap !== surface.bump)) {
-      for (const material of [CACHE.s.stone, CACHE.s.wellStoneWarm, CACHE.s.wellStoneCool]) {
+      for (const material of [CACHE.s.stone, CACHE.s.wellStoneBase, CACHE.s.wellStoneWarm, CACHE.s.wellStoneCool]) {
         material.map = surface.map;
         material.bumpMap = surface.bump;
         material.needsUpdate = true;
@@ -41,8 +41,12 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   });
   // Earth-tone alternation is material-level, not a bright painted grout
   // texture. All stones inherit the same procedural rock maps.
-  const wellStoneWarm = stone.clone(); wellStoneWarm.color.setHex(0x8c7663);
-  const wellStoneCool = stone.clone(); wellStoneCool.color.setHex(0x9a9080);
+  // The earlier base stone used the brighter generic cave material and made
+  // the well look like a uniform cream-coloured cast-concrete cylinder.
+  // Keep a dedicated triad of limestone tones without changing cave texture.
+  const wellStoneBase = stone.clone(); wellStoneBase.color.setHex(0x857968);
+  const wellStoneWarm = stone.clone(); wellStoneWarm.color.setHex(0x766654);
+  const wellStoneCool = stone.clone(); wellStoneCool.color.setHex(0x928c80);
   const wellMortar = new THREE.MeshStandardMaterial({
     color: 0x4b4037, roughness: 1, metalness: 0, side: THREE.DoubleSide,
   });
@@ -70,7 +74,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
   const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x52604c, roughness: 0.95, side: THREE.DoubleSide });
   const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x737f6c, roughness: 0.95, side: THREE.DoubleSide });
-  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, wellStoneWarm, wellStoneCool, wellMortar, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
+  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, wellStoneBase, wellStoneWarm, wellStoneCool, wellMortar, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -128,9 +132,16 @@ function wellRingUnit(innerR: number, outerR: number, from: number, to: number,
   const shape = new THREE.Shape();
   const edge = (r: number, theta: number) =>
     new THREE.Vector2(Math.cos(theta) * r, -Math.sin(theta) * r);
-  const outerSteps = 3;
+  // Deterministic, centimetre-scale erosion in each cut stone. Keep the
+  // wedge's recessed joints and shared collision footprint; do not create
+  // a perfect circular band or add decorative loose cover slabs.
+  const outerSteps = 5;
   for (let n = 0; n <= outerSteps; n++) {
-    const point = edge(outerR, from + (to - from) * n / outerSteps);
+    const angle = from + (to - from) * n / outerSteps;
+    const worn = (n === 0 || n === outerSteps) ? 0 :
+      0.013 * Math.sin(angle * 23.3 + from * 7.7) +
+      0.006 * Math.sin(angle * 42.7 + to * 12.3);
+    const point = edge(outerR + worn, angle);
     if (n === 0) shape.moveTo(point.x, point.y);
     else shape.lineTo(point.x, point.y);
   }
@@ -179,7 +190,7 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
 
   for (let layer = 0; layer < 3; layer++) {
     const halfBond = layer % 2 === 1 ? step * 0.5 : 0;
-    const bottom = 0.08 + layer * 0.275;
+    const courseBase = 0.08 + layer * 0.275;
     for (let i = 0; i < count; i++) {
       // Tiny angular differences create a handmade edge, while a guaranteed
       // minimum 0.025 rad gap keeps every radial joint visible.
@@ -189,10 +200,11 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
       const end = center + step / 2 - gap / 2 - random() * 0.002;
       const inner = r - 0.028;
       const outer = r + 0.155 + random() * 0.016;
-      const height = 0.225 + random() * 0.010;
+      const bottom = courseBase + (random() - 0.5) * 0.010;
+      const height = 0.215 + random() * 0.016;
       const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
         (i + layer * 2) % 7 === 0 ? s.wellStoneCool :
-          (i * 3 + layer) % 6 === 0 ? s.wellStoneWarm : s.stone);
+          (i * 3 + layer) % 6 === 0 ? s.wellStoneWarm : s.wellStoneBase);
       stone.name = 'well-course-stone';
       stone.position.set(x, bottom, z);
       stone.userData.wellBond = {
@@ -210,10 +222,12 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
     const end = center + step / 2 - gap / 2;
     const inner = r - 0.035;
     const outer = r + 0.17 + random() * 0.018;
-    const bottom = 0.89 + (random() - 0.5) * 0.005;
-    const height = 0.14 + random() * 0.008;
+    // Weathered coping has slight height differences, not a machine-flat
+    // torus. Individual stones remain physically fitted with open shaft.
+    const bottom = 0.89 + (random() - 0.5) * 0.018;
+    const height = 0.125 + random() * 0.021;
     const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
-      i % 7 === 0 ? s.wellStoneWarm : i % 8 === 0 ? s.wellStoneCool : s.stone);
+      i % 7 === 0 ? s.wellStoneWarm : i % 8 === 0 ? s.wellStoneCool : s.wellStoneBase);
     stone.name = 'well-rim-stone';
     stone.position.set(x, bottom, z);
     stone.userData.wellBond = {
@@ -224,11 +238,12 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
   // The small ground stones sit below ankle level; they are not invisible walls.
   for (let i = 0; i < 18; i++) {
     const a = random() * Math.PI * 2, rr = r + 0.34 + random() * 0.54;
-    const stone = new THREE.Mesh(G.dodec(0.11 + random() * 0.07), s.stone);
+    const stone = new THREE.Mesh(G.dodec(0.065 + random() * 0.068),
+      i % 3 === 0 ? s.wellStoneWarm : s.wellStoneBase);
     stone.name = 'well-ground-stone';
     stone.position.set(x + Math.cos(a) * rr, 0.08, z + Math.sin(a) * rr);
     stone.rotation.set(random() * 0.3, random() * Math.PI, random() * 0.3);
-    stone.scale.set(1.1 + random() * 0.3, 0.35 + random() * 0.24, 0.9 + random() * 0.4);
+    stone.scale.set(1.25 + random() * 0.45, 0.30 + random() * 0.24, 1.0 + random() * 0.40);
     g.add(stone);
   }
 }
@@ -415,14 +430,18 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const branchTips: THREE.Vector3[] = [];
   // Each fork is joined to the sculpted trunk and to its foliage pocket.
   for (let i = 0; i < 7; i++) {
-    const angle = i * Math.PI * 2 / 7 + (random() - 0.5) * 0.36;
-    const reach = 0.57 + random() * 0.47;
+    // Avoid seven near-identical spokes/flat Y-forks: natural olives have
+    // asymmetric crowns with branches emerging at staggered heights.
+    const angle = i * Math.PI * 2 / 7 + (random() - 0.5) * 0.76;
+    const reach = 0.49 + random() * 0.67;
     const tip = crownBase.clone().add(new THREE.Vector3(
-      Math.cos(angle) * reach, 0.31 + random() * 0.34,
+      Math.cos(angle) * reach, 0.16 + random() * 0.52,
       Math.sin(angle) * reach));
-    const stem = spine(0.68 + random() * 0.22);
-    const elbow = stem.clone().lerp(tip, 0.55).add(new THREE.Vector3(
-      -Math.sin(angle) * 0.075, 0.10, Math.cos(angle) * 0.075));
+    const stem = spine(0.57 + random() * 0.35);
+    const elbow = stem.clone().lerp(tip, 0.43 + random() * 0.17).add(new THREE.Vector3(
+      -Math.sin(angle) * (0.07 + random() * 0.11),
+      0.035 + random() * 0.16,
+      Math.cos(angle) * (0.07 + random() * 0.11)));
     segment(stem, elbow, 0.092, 0.053, 'olive-branch');
     segment(elbow, tip, 0.053, 0.014, 'olive-branch');
     branchTips.push(tip);
@@ -447,9 +466,9 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     const pairs = low ? 5 : 6;
     for (let k = 0; k < twigs; k++) {
       const theta = k * Math.PI * 2 / twigs + (random() - 0.5) * 0.34;
-      const reach = 0.34 + random() * 0.23;
+      const reach = 0.29 + random() * 0.34;
       const delta = new THREE.Vector3(Math.cos(theta) * reach,
-        -0.13 + random() * 0.30, Math.sin(theta) * reach);
+        -0.20 + random() * 0.39, Math.sin(theta) * reach);
       const end = origin.clone().add(delta);
       segment(origin, end, 0.018, 0.004, 'olive-foliage-twig');
       const lateral = new THREE.Vector3(-Math.sin(theta), 0, Math.cos(theta));
