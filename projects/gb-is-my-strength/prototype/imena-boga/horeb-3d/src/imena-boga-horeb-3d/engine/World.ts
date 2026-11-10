@@ -53,6 +53,12 @@ export class World {
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
   private storyTargets: { id: SiteClueId; x: number; z: number }[] = [];
+  // Raycast only opaque scene surfaces already produced by the same geometry builder.
+  private sightMeshes: THREE.Mesh[] = [];
+  private sightMeshesByClue = new Map<SiteClueId, THREE.Mesh[]>();
+  private sightRaycaster = new THREE.Raycaster();
+  private sightOrigin = new THREE.Vector3();
+  private sightAim = new THREE.Vector3();
   private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean, viewFactor?: number) => void }[] = [];
   // Scene objects remain in the 42-item registry/physics, but a visitor does
   // not need GPU draws for exhibits a hundred metres behind the fog.
@@ -222,6 +228,30 @@ export class World {
         this.storyTargets.push({ id: 'hagar-spring', x: bx, z: bz });
       }
       this.exhibitPos.push({ e, x, z, nx, nz });
+    }
+    // After the static props are merged, index existing opaque triangles.
+    // A conservative 8.5m world-space bounding sphere catches every surface
+    // intersecting a <=7.5m line of sight, including neighbouring props.
+    this.scene.updateMatrixWorld(true);
+    this.scene.traverse((object) => {
+      if (!(object instanceof THREE.Mesh)) return;
+      const mats = Array.isArray(object.material) ? object.material : [object.material];
+      if (mats.some((mat) => !mat.transparent || mat.opacity >= 0.98))
+        this.sightMeshes.push(object);
+    });
+    const envelope = new THREE.Sphere();
+    const bounds = new THREE.Sphere();
+    for (const target of this.storyTargets) {
+      envelope.center.set(target.x, 1.2, target.z);
+      envelope.radius = 8.5;
+      const nearby = this.sightMeshes.filter((mesh) => {
+        if (!mesh.geometry.boundingSphere) mesh.geometry.computeBoundingSphere();
+        const sphere = mesh.geometry.boundingSphere;
+        if (!sphere) return true; // cannot prove non-occlusion
+        bounds.copy(sphere).applyMatrix4(mesh.matrixWorld);
+        return bounds.intersectsSphere(envelope);
+      });
+      this.sightMeshesByClue.set(target.id, nearby);
     }
   }
 
@@ -422,6 +452,27 @@ export class World {
   }
   /** Saved references can be opened from anywhere, but their physical
    * inspection action must only work at the exhibit's actual location. */
+  // A real ray must reach the known physical silhouette before hitting
+  // an opaque rock, stele or another prop. Silhouette tolerance is deliberately
+  // target-specific (well rim / sparse branches / shallow spring), not a
+  // permission to see through unrelated geometry. This uses original meshes.
+  private storyTargetHasLineOfSight(target: { id: SiteClueId; x: number; z: number }): boolean {
+    const height = target.id === 'beersheba-tamarisk' ? 1.5 :
+      target.id === 'hagar-spring' ? 0.35 : 0.95;
+    const nearRadius = target.id === 'beersheba-well' ? 1.55 :
+      target.id === 'beersheba-tamarisk' ? 1.10 : 0.75;
+    this.sightOrigin.set(this.pos.x, EYE, this.pos.y);
+    this.sightAim.set(target.x, height, target.z);
+    const dist = this.sightOrigin.distanceTo(this.sightAim);
+    if (!Number.isFinite(dist) || dist < 1.4) return false;
+    this.sightRaycaster.ray.origin.copy(this.sightOrigin);
+    this.sightRaycaster.ray.direction.copy(this.sightAim).sub(this.sightOrigin).normalize();
+    this.sightRaycaster.near = 0.15;
+    this.sightRaycaster.far = dist - nearRadius;
+    if (this.sightRaycaster.far <= this.sightRaycaster.near) return false;
+    const occluders = this.sightMeshesByClue.get(target.id) ?? this.sightMeshes;
+    return this.sightRaycaster.intersectObjects(occluders, false).length === 0;
+  }
   // A real camera-directed encounter: near the physical feature and
   // looking at it. From a distance, looking elsewhere, in a modal, during
   // shoes removal, on lost WebGL or after disposal the action is impossible.
@@ -434,8 +485,15 @@ export class World {
       const dx = target.x - this.pos.x, dz = target.z - this.pos.y;
       const dist = Math.hypot(dx, dz);
       if (dist < 1.4 || dist > 7.5) continue;
-      const facing = (dx * fx + dz * fz) / dist;
-      if (facing < 0.94) continue; // roughly 20 degrees to crosshair
+      const targetHeight = target.id === 'beersheba-tamarisk' ? 1.5 :
+        target.id === 'hagar-spring' ? 0.35 : 0.95;
+      const dy = targetHeight - EYE;
+      const spatialDist = Math.hypot(dist, dy);
+      const pitch = this.pitch + this.pitchOffset;
+      const facing = ((dx * fx + dz * fz) * Math.cos(pitch) +
+        dy * Math.sin(pitch)) / spatialDist;
+      if (facing < 0.94) continue; // real 3D yaw/pitch cone
+      if (!this.storyTargetHasLineOfSight(target)) continue;
       const score = facing - dist * 0.003;
       if (score > best) { best = score; found = target.id; }
     }
@@ -616,6 +674,9 @@ export class World {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.sightMeshes.length = 0;
+    this.sightMeshesByClue.clear();
+    this.storyTargets.length = 0;
     this.renderer.setAnimationLoop(null);
     for (const [t, ty, fn, o] of this.listeners) t.removeEventListener(ty, fn, o);
     this.listeners.length = 0;

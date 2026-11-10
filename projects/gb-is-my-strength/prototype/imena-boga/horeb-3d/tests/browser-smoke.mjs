@@ -600,15 +600,33 @@ try {
       const world = window.__horeb.world;
       const target = world.storyTargets.find((item) => item.id === id);
       if (!target) return { error: 'missing physical mesh target' };
-      // Move to the visitor-side of existing solid props, not inside them.
-      const x = target.x + (target.x > 0 ? -4.5 : 4.5);
+      let obscured = null;
+      if (id !== 'beersheba-well') {
+        world.teleportTo(target.x - 4.5, target.z);
+        const behind = world.position;
+        world.yaw = Math.atan2(-(target.x - behind.x), -(target.z - behind.z));
+        obscured = world.focusStoryClue();
+      }
+      const x = target.x + (id === 'beersheba-well' ? -4.5 : 4.5);
       world.teleportTo(x, target.z);
       const pos = world.position;
       world.yaw = Math.atan2(-(target.x - pos.x), -(target.z - pos.z));
-      return { id, target, pos, focus: world.focusStoryClue() };
+      return { id, target, pos, focus: world.focusStoryClue(), obscured };
     }, clueId);
+    if (clueId !== 'beersheba-well')
+      check('actual scene mesh obscures ' + clueId,
+        setup.obscured !== clueId, JSON.stringify(setup));
     check('camera can investigate actual prop ' + clueId,
       setup.focus === clueId, JSON.stringify(setup));
+    const ceilingLookBlocked = await investigator.evaluate((id) => {
+      const world = window.__horeb.world;
+      world.pitch = 1.0;
+      const blocked = world.focusStoryClue() !== id;
+      world.pitch = 0;
+      return blocked && world.focusStoryClue() === id;
+    }, clueId);
+    check('looking at the cave ceiling cannot inspect ' + clueId,
+      ceilingLookBlocked);
     if (clueId === 'beersheba-well') {
       await investigator.evaluate(() => document.querySelector('nav button')?.focus());
       await investigator.keyboard.press('KeyF');
