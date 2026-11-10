@@ -150,9 +150,46 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 330));
     const file = 'visual-detail-' + slug + '.png';
     await desktop.screenshot({ path: join(shots, file) });
-    witness.details.push({ id: slug, zone: 4, screenshot: file,
-      narrative: 'Real safe ledge looking down, camera-only QA not locomotion' });
-    console.log('PASS ravine ' + slug + ' visual screenshot ' + file);
+    // Image existence and a valid camera do NOT prove visible geological depth.
+    // Previous green CI captured a blank-looking face: all 63 probe rays hit
+    // ordinary floor or vault, NEVER the newly modelled connected chasm wall.
+    // Measure the actual first intersected triangle, not authored metadata.
+    const geometryVisibility = await desktop.evaluate(async () => {
+      const THREE = await import('/node_modules/.vite/deps/three.js');
+      const w = window.__horeb.world;
+      const floor = w.scene.getObjectByName('cave-floor-continuous');
+      const vault = w.scene.getObjectByName('cave-vault-continuous');
+      if (!floor?.geometry || !vault?.geometry)
+        throw new Error('Chasm inspection missing actual floor or cave shell');
+      const index = floor.geometry.getIndex();
+      const floorVertices = floor.userData.chasmStrata?.floorVertexCount;
+      if (!index || !Number.isInteger(floorVertices))
+        throw new Error('Chasm inspection missing connected strata index data');
+      w.camera.updateMatrixWorld(true);
+      const caster = new THREE.Raycaster();
+      caster.far = 90;
+      let connectedWall = 0, visibleDeepWall = 0, ordinaryFloor = 0, caveVault = 0, misses = 0;
+      for (let iy = 0; iy < 7; iy++) for (let ix = 0; ix < 9; ix++) {
+        caster.setFromCamera(new THREE.Vector2(-0.84 + ix * 0.21, -0.84 + iy * 0.28), w.camera);
+        const hit = caster.intersectObjects([floor, vault], false)[0];
+        if (!hit) { misses++; continue; }
+        if (hit.object === vault) { caveVault++; continue; }
+        const tri = hit.faceIndex * 3;
+        const wallFace = [index.getX(tri), index.getX(tri + 1), index.getX(tri + 2)]
+          .some((vertex) => vertex >= floorVertices);
+        if (wallFace) {
+          connectedWall++;
+          if (hit.point.y < -4) visibleDeepWall++;
+        } else ordinaryFloor++;
+      }
+      return { samples: 63, connectedWall, visibleDeepWall, ordinaryFloor, caveVault, misses };
+    });
+    const artGate = geometryVisibility.visibleDeepWall >= 2
+      ? 'PENDING_HUMAN_ART_REVIEW' : 'FAIL_CHASM_DEPTH_NOT_VISIBLE';
+    witness.details.push({ id: slug, zone: 4, screenshot: file, geometryVisibility, artGate,
+      narrative: 'Camera-only visibility audit, NOT navigation or automatic aesthetic approval' });
+    console.log('CAPTURE ravine ' + slug + ': ' + file + ' artGate=' + artGate +
+      ' rays=' + JSON.stringify(geometryVisibility));
   }
 
   // Hardware safety witness. Compare low-quality startup draw calls to the
@@ -333,6 +370,10 @@ try {
   witness.errors.push('UNCAUGHT: ' + (error?.stack || String(error)));
 } finally {
   await browser.close();
+  witness.chasmArtGate = witness.details
+    .filter((item) => item.zone === 4)
+    .every((item) => item.artGate === 'PENDING_HUMAN_ART_REVIEW')
+    ? 'PENDING_HUMAN_ART_REVIEW' : 'FAIL_CHASM_DEPTH_NOT_VISIBLE';
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
 }
 const expectedDetailShots = [
