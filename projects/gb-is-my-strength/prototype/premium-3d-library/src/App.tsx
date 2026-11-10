@@ -29,7 +29,14 @@ export default function App() {
       });
       return;
     }
-    loadFonts().catch(() => {}).finally(() => setFontsReady(true));
+    void loadFonts()
+      .then(() => setFontsReady(true))
+      .catch((error: unknown) => {
+        console.error("[Library 3D] Failed to load local typefaces", error);
+        set({
+          fatal: "Шрифты библиотеки не загрузились полностью. Не запускаем 3D-зал с искажёнными надписями: обновите страницу или откройте материалы на обычном сайте.",
+        });
+      });
     // Card edition B accidentally removed VR capability detection, leaving a
     // permanently hidden button even on supported headsets. Restore safely.
     try {
