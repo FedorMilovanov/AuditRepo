@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { XROrigin, useXR, useXRControllerLocomotion } from "@react-three/xr";
 import { StereoEffect } from "three/examples/jsm/effects/StereoEffect.js";
 import * as THREE from "three";
-import { EYE, ITEMS, OBSTACLES, SPAWN, VIEWS, WALK_RADIUS, approachPose } from "../data";
+import { EYE, ITEMS, OBSTACLES, PLAYER_COLLISION_RADIUS, SPAWN, VIEWS, WALK_RADIUS, approachPose } from "../data";
 import { get, input, registry, set, openItem, type Phase } from "../store";
 import { footstep, ping } from "../audio";
 
@@ -24,7 +24,7 @@ export function collide() {
   for (const [ox, oz, or] of OBSTACLES) {
     const dx = input.x - ox, dz = input.z - oz;
     const d = Math.hypot(dx, dz);
-    const m = or + 0.35;
+    const m = or + PLAYER_COLLISION_RADIUS;
     if (d < m) {
       const nx = d > 1e-4 ? dx / d : 1;
       const nz = d > 1e-4 ? dz / d : 0;
