@@ -260,8 +260,8 @@
       "bytes_normalized": 9941
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "55596d483ceb6455b01610d8b735ba3172b49c005dabe4d047d33f407e90aa5b",
-      "bytes_normalized": 18768
+      "sha256": "4d45582fadd5fe4d789e83224e45b49bb252385abecc07cbdef6718d88409b8b",
+      "bytes_normalized": 20665
     },
     "sozvezdie/src/components/NameSection.tsx": {
       "sha256": "4bf29dbea698f47958524790664b682eacc122a64a7ea352570b67dccd70eb60",
