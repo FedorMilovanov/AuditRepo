@@ -236,12 +236,10 @@ if (wellToAudit) {
   const mortar = constructed.getObjectByName('well-recessed-mortar');
   let stones = 0;
   const materials = new Set<THREE.Material>();
-  let minTangential = Infinity;
   constructed.traverse((o) => {
     if (o.name !== 'well-course-stone' || !(o instanceof THREE.Mesh)) return;
     stones++;
     materials.add(o.material as THREE.Material);
-    minTangential = Math.min(minTangential, o.geometry.boundingBox?.max.x ?? Infinity);
   });
   t('Beersheba masonry exposes genuinely recessed dark joint backing',
     mortar instanceof THREE.Mesh &&
