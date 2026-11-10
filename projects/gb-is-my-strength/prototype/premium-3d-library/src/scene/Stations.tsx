@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Billboard } from "@react-three/drei";
 import * as THREE from "three";
-import { ITEMS, SECTION_APPROACH_DISTANCE, itemPos, type Item } from "../data";
+import { ITEMS, sectionApproachDistance, itemPos, type Item } from "../data";
 import { useApp, registry, openItem, get, set } from "../store";
 import { plaqueTexture, paperTexture, tabletTextures, glowTexture } from "../textures";
 import { Beam } from "./Center";
@@ -22,7 +22,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
   // camera standoff, preserving its texture aspect ratio and readable type.
   // No page zoom, camera teleport, HUD overlay or screenshot-only adjustment.
   const portrait = size.width < size.height && size.width <= 520;
-  const worldWidthAtStation = 2 * SECTION_APPROACH_DISTANCE
+  const worldWidthAtStation = 2 * sectionApproachDistance(item)
     * Math.tan(THREE.MathUtils.degToRad(verticalFov / 2))
     * size.width / size.height;
   const plaqueFit = portrait ? Math.min(1, worldWidthAtStation * 0.7 / 3.5) : 1;
