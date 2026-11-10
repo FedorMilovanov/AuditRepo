@@ -17,9 +17,9 @@ export function beaconOpacity(distance: number, horeb = false): number {
 
 // Readable from afar, but does not overwhelm the camera when inspected at 2m.
 export function beaconVisualScale(distance: number): number {
-  if (!Number.isFinite(distance)) return 0.78;
+  if (!Number.isFinite(distance)) return 0.68;
   const t = Math.min(1, Math.max(0, (distance - 7) / 16));
-  return 0.78 + t * 0.36;
+  return 0.68 + t * 0.44;
 }
 
 // Beacons are two-dimensional inscriptions on a side-facing stele. If the
@@ -96,7 +96,7 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   mesh.name = 'original-script-beacon';
   mesh.userData.exhibitId = e.id;
   // Affixed just above the stone witness; no floating divine script in the sky.
-  mesh.position.set(0, 2.94, 0.255);
+  mesh.position.set(0, 2.76, 0.255);
   mesh.visible = false;
   return {
     mesh,
