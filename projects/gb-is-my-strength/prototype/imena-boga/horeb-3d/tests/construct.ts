@@ -285,11 +285,12 @@ if (wellRecord) {
   highWell.traverse((o) => {
     if (o.name === 'well-rim-stone') rimPieces++;
     if (o.name === 'well-course-stone' && o instanceof THREE.Mesh &&
-        o.geometry.type === 'BoxGeometry') roundedCourses++;
+        o.geometry.type === 'RoundedBoxGeometry') roundedCourses++;
   });
   t('Beersheba coping consists of 14 individually fitted stones, not a continuous torus',
     rimPieces === 14 && roundedCourses === 42 &&
-    !highWell.getObjectByName('well-round-lip'));
+    !highWell.children.some((o) => o instanceof THREE.Mesh &&
+      o.geometry instanceof THREE.TorusGeometry && o.position.y > 0.7));
 }
 const hagarRecord = EXHIBITS.find((e) => e.environmentKey === 'wilderness-spring');
 if (hagarRecord) {
