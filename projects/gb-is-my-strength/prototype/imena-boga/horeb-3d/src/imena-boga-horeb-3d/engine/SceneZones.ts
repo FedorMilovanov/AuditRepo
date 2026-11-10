@@ -47,13 +47,18 @@ export function exitVaultRelief(x: number, y: number, z: number,
   const envelope = ss(-319, -312, z) * (1 - ss(-298, -288, z));
   if (envelope <= 0) return { roofDrop: 0, sideOut: 0, shade: 1 };
   const grain = fbm(x * 0.74 + 17, y * 0.31 - 2, z * 0.49 + 31, 3);
-  const splinter = Math.pow(Math.abs(grain - 0.5) * 2, 1.6);
+  // Geological weathering occurs on several continuous wavelengths.
+  // The previous raised-to-1.6 field suppressed the actual relief and
+  // looked identical to the original tube from a natural walking camera.
+  const grainRelief = Math.pow(Math.abs(grain - 0.5) * 2, 0.72);
+  const broader = fbm(x * 0.16 - 5, y * 0.16, z * 0.12 + 8, 3);
+  const fold = Math.max(0, Math.min(1, 0.42 * grainRelief + 0.58 * broader));
   const ceiling = Math.pow(Math.max(0, archSin), 2.3);
   const flank = Math.pow(Math.max(0, Math.abs(archCos)), 2.2);
-  const roofDrop = envelope * ceiling * (0.19 + 0.69 * splinter);
-  // Side movement is OUTWARD: no protrusion narrows the traversable width.
-  const sideOut = envelope * flank * (0.08 + 0.26 * splinter);
-  return { roofDrop, sideOut, shade: 1 - envelope * (0.04 + 0.14 * splinter) };
+  const roofDrop = envelope * ceiling * (0.30 + 0.91 * fold);
+  // Move shoulders OUTWARDS; no decorative ledge can obstruct the walk.
+  const sideOut = envelope * flank * (0.14 + 0.47 * fold);
+  return { roofDrop, sideOut, shade: 1 - envelope * (0.07 + 0.15 * fold) };
 }
 
 
