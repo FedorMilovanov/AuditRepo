@@ -38,18 +38,53 @@ async def recovery_case(browser, engine, width, height, mobile):
             const gl=canvas?.getContext('webgl2');
             const ext=gl?.getExtension('WEBGL_lose_context');
             if(!gl||!ext)return {supported:false};
-            window.__testRecovery={canvas,gl,ext};
+            window.__testRecovery={canvas,gl,ext,events:[]};
+            canvas.addEventListener('webglcontextlost',() =>
+                window.__testRecovery.events.push({type:'lost',at:performance.now()}));
+            canvas.addEventListener('webglcontextrestored',() =>
+                window.__testRecovery.events.push({type:'restored',at:performance.now()}));
             ext.loseContext();
             return {supported:true};
         }""")
         assert found["supported"], (engine,width,"WEBGL_lose_context not supported")
         overlay=page.get_by_text("Перезапускаю зал…",exact=True)
         await overlay.wait_for(state="visible",timeout=15000)
+        assert await page.get_by_role("button",name="Моя библиотека · без 3D").is_visible(), (
+            "WebGL loss must leave a working public 2D exit"
+        )
         OUT.mkdir(parents=True,exist_ok=True)
         if width==1440:
             await capture_evidence(page, OUT/f"{engine}-lost.png")
-        await page.evaluate("() => window.__testRecovery.ext.restoreContext()")
-        await overlay.wait_for(state="detached",timeout=20000)
+        restore_request = await page.evaluate("""() => {
+          const probe=window.__testRecovery;
+          const before=probe.gl.isContextLost();
+          probe.ext.restoreContext();
+          return {lostBeforeRequest:before, events:probe.events};
+        }""")
+        assert restore_request["lostBeforeRequest"], (
+            "Restore test did not start from genuinely lost WebGL", restore_request
+        )
+        try:
+            await overlay.wait_for(state="detached",timeout=20000)
+        except Exception:
+            report = await page.evaluate("""() => {
+              const p=window.__testRecovery;
+              return {
+                events:p.events, canvasConnected:p.canvas.isConnected,
+                lost:p.gl.isContextLost(), glError:p.gl.getError(),
+                webglCanvases:document.querySelectorAll('canvas').length,
+                overlay:!![...document.querySelectorAll('*')]
+                  .find(e=>e.textContent==='Перезапускаю зал…'),
+                fatal:document.body.innerText.includes('Зал закрыт на ремонт')
+              };
+            }""")
+            print(json.dumps({
+                "engine":engine, "viewport":f"{width}x{height}",
+                "stage":"context-restore-timeout","restoreRequest":restore_request,
+                "diagnostics":report,"errors":errors
+            },ensure_ascii=False),flush=True)
+            await capture_evidence(page, OUT/f"{engine}-{width}x{height}-restore-failure.png")
+            raise
         await page.wait_for_timeout(550)
         restored=await page.evaluate("""() => ({
             sameCanvas:window.__testRecovery.canvas.isConnected,
