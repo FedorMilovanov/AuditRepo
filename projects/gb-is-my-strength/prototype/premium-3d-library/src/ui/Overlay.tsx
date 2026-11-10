@@ -957,13 +957,31 @@ function Fatal({ text, onCabinet }: { text: string; onCabinet: () => void }) {
   );
 }
 
-function GlLost() {
+function GlLost({ onCabinet }: { onCabinet: () => void }) {
   return (
-    <div className="fixed inset-0 z-[65] flex items-center justify-center bg-[#181c1a]/85 backdrop-blur-sm">
-      <div className="glass rounded-3xl px-8 py-7 text-center">
-        <div className="mx-auto mb-5 h-14 w-14 animate-spin rounded-full border border-[#d8b88d]/30 border-t-[#d8b88d]" style={{ animationDuration: "1.6s" }} />
+    <div role="alert" className="fixed inset-0 z-[65] flex items-center justify-center bg-[#181c1a] p-4">
+      <div className="glass w-full max-w-md rounded-3xl px-6 py-7 text-center sm:px-8">
+        <div aria-hidden="true" className="mx-auto mb-5 h-14 w-14 animate-spin rounded-full border border-[#d8b88d]/30 border-t-[#d8b88d]" style={{ animationDuration: "1.6s" }} />
         <div className="font-display text-2xl">Перезапускаю зал…</div>
-        <p className="mt-2 max-w-sm text-sm text-[#c3c0b8]">Видеоадаптер на мгновение отключился. Обычно всё возвращается само за пару секунд.</p>
+        <p className="mt-2 text-sm leading-relaxed text-[#c3c0b8]">
+          Видеоконтекст временно недоступен. Если браузер восстановит его,
+          прогулка продолжится с прежнего места.
+          Вы можете открыть закладки без 3D прямо сейчас.
+        </p>
+        <div className="mt-5 flex flex-wrap justify-center gap-2">
+          <button type="button" onClick={onCabinet}
+            className="min-h-11 rounded-full bg-[#d8b88d] px-4 py-2.5 text-sm font-semibold text-[#24231f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]">
+            Моя библиотека · без 3D
+          </button>
+          <a href={BASE} target="_blank" rel="noreferrer"
+            className="flex min-h-11 items-center rounded-full border border-white/20 px-4 py-2.5 text-sm text-[#f5f1e7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]">
+            Обычный сайт
+          </a>
+          <button type="button" onClick={() => location.reload()}
+            className="min-h-11 rounded-full border border-white/20 px-4 py-2.5 text-sm text-[#f5f1e7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]">
+            Перезагрузить зал
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -1016,7 +1034,7 @@ export default function Overlay({ fontsReady }: { fontsReady: boolean }) {
       {body}
       {progressOpen && <ProgressPanel onClose={closeProgress} />}
       {cabinetOpen && <CabinetPanel onClose={closeProgress} />}
-      {glLost && <GlLost />}
+      {glLost && <GlLost onCabinet={openCabinet} />}
     </>
   );
 }
