@@ -624,7 +624,7 @@ function SitemapPanel() {
         aria-labelledby="gb-sitemap-title"
         onKeyDown={onDialogKeyDown}
         onClick={(e) => e.stopPropagation()}
-        className="scroll-thin fade-up flex h-full w-full max-w-md flex-col overflow-y-auto overscroll-contain border-l border-[#d8b88d]/25 bg-[#19211d] p-5 text-[#f5f1e7] shadow-2xl sm:p-6"
+        className="scroll-thin map-enter flex h-full w-full max-w-md flex-col overflow-y-auto overscroll-contain border-l border-[#d8b88d]/25 bg-[#19211d] p-5 text-[#f5f1e7] shadow-2xl sm:p-6"
       >
         <div className="mb-5 flex items-start justify-between">
           <div>
