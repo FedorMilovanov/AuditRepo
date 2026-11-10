@@ -397,16 +397,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const mist = new THREE.Sprite(new THREE.SpriteMaterial({ map: dustTex, color: 0x6f86a8, transparent: true, opacity: 0.12, depthWrite: false }));
     mist.position.set(8, -18, -200); mist.scale.set(18, 30, 1); group.add(mist);
     const cold = new THREE.PointLight(0xb8ccff, 5, 30, 1.5); cold.position.set(-3, 12, -200); group.add(cold);
-    // край уступа: низкие камни вдоль обрыва
-    const r = rng(77);
-    const ledge = new THREE.InstancedMesh(stoneGeo, stoneMat, 26);
-    const m = new THREE.Matrix4();
-    for (let i = 0; i < 26; i++) {
-      const s = 0.18 + r() * 0.22;
-      m.compose(new THREE.Vector3(LEDGE_X + 0.55 + r() * 0.15, s * 0.5, -180 - i * 1.55 - r()), new THREE.Quaternion().setFromEuler(new THREE.Euler(r() * 3, r() * 3, 0)), new THREE.Vector3(s, s * 0.7, s));
-      ledge.setMatrixAt(i, m);
-    }
-    group.add(ledge);
+    // The cliff's navigable lip is now eroded and meshed into the floor.
+    // Delete the previous 26 regularly spaced, apparently levitating rock
+    // 'potatoes': they blocked the view and were redundant false geology.
   }
 
   // ── Зона 5: ниши позднейших свидетельств с маленькими светильниками
