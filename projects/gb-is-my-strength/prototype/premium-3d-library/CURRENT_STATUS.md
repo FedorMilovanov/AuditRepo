@@ -1,5 +1,26 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## Current live checkpoint — 2026-11-10, V5.23–V5.26
+
+**Single candidate:** existing [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. The active SHA is whatever GitHub reports for that PR, **not the V5.14 historical baseline below**. No Product/main writes, new branch, deployment, merge or approved premium art release.
+
+### Verified browser evidence, not projections
+
+- [Validate #42802193147](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42802193147) on `200ece88`: **FAILURE**, but the first eight suites completed **41/41 PASS** (12 interaction, 4 architecture, 4 central book, 6 touch HUD, 5 reference bay, 4 photo, 4 true bidirectional quality transitions, 2 real-origin IndexedDB cabinet tests). 52 real screenshot artifacts. **WebGL recovery suite failed at first Chromium 1440×900 software renderer case** after a context restore attempt.
+- [Validate #42805542724](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42805542724) on `0a6d960`: **FAILURE** at the first WebGL loss overlay witness; all previous 41 browser cases were PASS again, including explicit manually-owned texture lifetime changes. This is a *different failure stage*, not a validated recovery. Browser snapshot and runtime fault-event evidence is needed to determine whether the renderer throws, the lost event is missing, or an alternate UI replaces the overlay.
+- Current later PR commits add **fail-closed lost-event diagnostics with screenshot** and a true separately loaded 2D cabinet bootstrap. Require fresh **exact-head** CI to accept those changes; do **not** combine older PASS results across SHAs or claim 47/47.
+- [Actual old-run visual audit](https://github.com/FedorMilovanov/AuditRepo/pull/545#issuecomment-6764874310) and [implementation report](https://github.com/FedorMilovanov/AuditRepo/pull/545#issuecomment-6765457215): the fixed overlay-card double lettering, portrait plaque fitting (both engines), readable opaque sitemap and tablet tour/minimap separation have source changes and 41-case browser evidence. Initial map vs search-scrolled map are now distinct screenshots. These do not imply owner-approved premium architectural art.
+- Software-GPU quality-switch latency and screenshot readback remain costly on Chromium SwiftShader; no real-device GPU frame-time, mobile thermal or VRAM certification. The production renderer uses the tested R3F/WebGL stack, not an unreviewed WebGPU swap.
+
+### Current hard-open admission gates
+
+1. **WebGL loss + restore**: retain strict evidence of actual `webglcontextlost` cancellation and `webglcontextrestored` from the same context. 2D cabinet and original-site fallback must remain functional when restoration is impossible. Six recovery cases and exact-head **47/47** remain unaccepted until a full terminal-green Validate run.
+2. **Visual premium art**: current screenshots are real but still too schematic (repetitive books, sparse authored furniture, uniform flooring, stylized displays). Build and approve a genuine glTF/UV/PBR architectural reference bay with original/CC0-licensed provenance and performance budgets, then expand it; never treat concept art as real screenshot evidence.
+3. **Physical devices/performance**: actual desktop GPU, physical iOS Safari/Android, XR, assistive technologies, thermal/VRAM, cold/warm shader compilation and sustained use remain not tested.
+4. **Product/readers/rights**: only verified Product-owned route/catalog/Reader state and publication rights may cross the lab boundary by separately approved PR; independent local IndexedDB lab demo never automatically migrates.
+
+The **V5.14 matrix that follows is historical**, and its 31-case Windows/lab measurements have been superseded by later 47-case exact-head checks.
+
 **Updated:** 2026-11-09. **One candidate:** AuditRepo [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. **Last independently confirmed pre-CI baseline:** `63db5d5347c5662ed7cb01bdfebde2267ca52158` (V5.14). For the current PR head, always query GitHub; do not infer it from a versioned report. The branch must stay Draft / LAB / ART HOLD until each release gate below passes.
 
 **Product:** [FedorMilovanov/gb-is-my-strength](https://github.com/FedorMilovanov/gb-is-my-strength). This AuditRepo lab is **not** Product, and no content, saved bookmarks, Reader or main branch has been updated by its V5.0–V5.14 lab waves. No production URL or deployment is asserted. A Windows localhost `dist/` preview is not an externally reachable deployment.
