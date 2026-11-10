@@ -1,5 +1,7 @@
 import { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, type Exhibit } from '../data/exhibits';
 import { narrationPlan, NARRATION_LANGUAGE_LABEL } from '../data/narrationPlan';
+import { SceneMoment } from './SceneMoment';
+import { PILOT_IDS, PILOT_LESSONS, type LearningChoice, type LearningJournal } from '../data/learningJourney';
 
 const LANG_RU = { he: 'древнееврейский', arc: 'арамейский', grc: 'греческий' } as const;
 const STATUS_RU = { working_draft: 'рабочий черновик', disputed: 'дискуссионно', review_in_progress: 'проверка продолжается' } as const;
@@ -109,7 +111,12 @@ export function AboutExhibition() {
   );
 }
 
-export function AccessibleReader({ onClose }: { onClose?: () => void }) {
+export function AccessibleReader({ onClose, learning, onLearningObserve, onLearningCorrect }: {
+  onClose?: () => void;
+  learning: LearningJournal;
+  onLearningObserve: (id: string) => void;
+  onLearningCorrect: (id: string, choice: LearningChoice) => void;
+}) {
   return (
     <main id="reader" className="reader min-h-screen bg-ink text-parch">
       <div className="mx-auto max-w-3xl px-4 sm:px-8 py-10">
@@ -118,6 +125,8 @@ export function AccessibleReader({ onClose }: { onClose?: () => void }) {
           <h1 className="font-display text-4xl sm:text-5xl mt-2">Имена Бога — перед Святым</h1>
           <p className="mt-4 text-parch/80 leading-relaxed">Все тексты 3D-экспозиции в доступном виде. Каждая карточка содержит исходную форму, транслитерацию, стих, говорящего, референт, категорию и статус.</p>
           {onClose && <button className="btn mt-6" onClick={onClose}>← Вернуться</button>}
+          <p className="mt-5 text-sm text-bronze" role="status">Путевой дневник: {learning.understood.length} из {PILOT_LESSONS.length} сюжетов осмыслено.</p>
+          <p className="text-sm text-parch/75">Восемь ключевых сюжетов можно проходить как вопросы по Писанию и без WebGL. Это обучающее чтение, не заменяющее личного исследования.</p>
           <nav aria-label="Зоны" className="mt-6 flex flex-wrap gap-2 text-sm">
             {ZONES.filter((z) => EXHIBITS.some((e) => e.zone === z.id)).map((z) => (
               <a key={z.id} className="chip" href={`#zone-${z.id}`}>{z.id}. {z.title}</a>
@@ -140,7 +149,13 @@ export function AccessibleReader({ onClose }: { onClose?: () => void }) {
                   «{EX_3_5_RU}»<footer className="text-sm not-italic text-muted mt-2">{EX_3_5_SOURCE}</footer>
                 </blockquote>
               )}
-              <div className="mt-6 space-y-8">{items.map((e) => <ExhibitCard key={e.id} e={e} />)}</div>
+              <div className="mt-6 space-y-8">{items.map((e) => <div key={e.id}>
+                {PILOT_IDS.includes(e.id) && <SceneMoment
+                  e={e} examined={learning.observed.includes(e.id)} understood={learning.understood.includes(e.id)}
+                  canInspect textMode onInspect={() => onLearningObserve(e.id)}
+                  onUnderstood={(choice) => onLearningCorrect(e.id, choice)} />}
+                <ExhibitCard e={e} />
+              </div>)}</div>
             </section>
           );
         })}

@@ -111,6 +111,51 @@ try {
     const readerUnnamedActions = await anonymousAccessibleActions(axReaderPage);
     check('42-dossier reader Chromium AX tree has no unnamed interactive controls',
       readerUnnamedActions.length === 0, JSON.stringify(readerUnnamedActions));
+    // Real study encounter in the accessible non-WebGL reader. A wrong
+    // response must not count, and no lesson may count before inspection.
+    const lessonSelector = 'section[aria-label^="Путь понимания:"]';
+    check('eight optional source-grounded learning chapters exist alongside all 42 dossiers',
+      (await axReaderPage.$$(lessonSelector)).length === 8 &&
+      (await axReaderPage.$$('article.exhibit-card')).length === 42);
+    const first = lessonSelector + ':first-of-type';
+    const lesson = (await axReaderPage.$$(lessonSelector))[0];
+    const locked = await lesson.evaluate((node) =>
+      !!node.querySelector('fieldset')?.disabled &&
+      !(node.querySelector('input[type="radio"]')?.checked));
+    check('learning answer remains locked until observation and comparison', locked);
+    await lesson.evaluate((node) => [...node.querySelectorAll('button')]
+      .find((b) => b.textContent.includes('Изучить описание сцены'))?.click());
+    await axReaderPage.waitForFunction(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}').observed?.includes('elohim'));
+    const afterObserve = await lesson.evaluate((node) => !!node.querySelector('fieldset')?.disabled);
+    check('observing alone cannot bypass required comparison step', afterObserve);
+    await lesson.evaluate((node) => [...node.querySelectorAll('button')]
+      .find((b) => b.textContent.includes('Сопоставить с Писанием'))?.click());
+    await axReaderPage.waitForFunction(() => {
+      const node = document.querySelector('section[aria-label^="Путь понимания:"]');
+      return !!node && !node.querySelector('fieldset')?.disabled;
+    });
+    await lesson.$('input[value="a"]').then((e) => e.click());
+    await lesson.evaluate((node) => [...node.querySelectorAll('button')]
+      .find((b) => b.textContent.includes('Проверить понимание'))?.click());
+    const wrongProgress = await axReaderPage.evaluate(() => {
+      const data = JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}');
+      return data.understood || [];
+    });
+    check('wrong interpretation never awards learning progress', wrongProgress.length === 0);
+    await lesson.$('input[value="b"]').then((e) => e.click());
+    await lesson.evaluate((node) => [...node.querySelectorAll('button')]
+      .find((b) => b.textContent.includes('Проверить понимание'))?.click());
+    await axReaderPage.waitForFunction(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}').understood?.includes('elohim'));
+    await axReaderPage.reload({ waitUntil: 'domcontentloaded' });
+    check('learned meaning persists but does not unlock or modify navigation',
+      await axReaderPage.evaluate(() => {
+        const data = JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}');
+        const p = JSON.parse(localStorage.getItem('imena-horeb.progress.v1') || '{}');
+        return data.observed?.includes('elohim') && data.understood?.includes('elohim') &&
+          !p.last;
+      }));
   } finally { await axReaderPage.close(); }
 
   const start = await page.evaluate(() => [...document.querySelectorAll('button')]

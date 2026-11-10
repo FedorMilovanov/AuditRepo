@@ -2,7 +2,10 @@
 // Статус: ЛАБОРАТОРНЫЙ ПРОТОТИП. Ни одна запись не имеет публикационного допуска
 // (Research PR #379 — draft; 0 разрешённых публикационных единиц на момент брифа).
 // Реестр содержит ровно 42 исследовательских обозначения (29 baseline + 13 extension)
-// Research #379, SHA 70442271aadf1bcae2afeaad729336218874f180. Это НЕ 42 личных имени Бога.
+// Initial HOREB snapshot from Research #379 SHA 70442271aadf1bcae2afeaad729336218874f180.
+// Research Draft HEAD on 11 Nov 2026 = 73dbbb87a005248bf51add55bf0e313d8ab7eef6;
+// newer research changes have NOT been reconciled into this HOREB dataset.
+// Это НЕ 42 личных имени Бога. Редакционный допуск: 0/42.
 
 export type Category =
   | 'personal_divine_name'
@@ -25,8 +28,16 @@ export const NARRATION_LANGUAGE_LABEL: Readonly<Record<Lang, string>> = {
   grc: 'древнегреческом',
 };
 export const WRITTEN_ONLY_DIVINE_NAME_ID = 'yhwh' as const;
-export const isOriginalVoiced = (e: { id: string }): boolean =>
-  e.id !== WRITTEN_ONLY_DIVINE_NAME_ID;
+// Tetragrammaton is embedded in eleven OTHER exhibit phrases as well.
+// Testing only e.id === 'yhwh' would accidentally authorize speculative
+// original-language playback of יהוה inside e.g. yireh or sabaoth.
+// The detection string strips only Hebrew vowel/cantillation marks for the
+// purpose of matching; the displayed originalUnicode remains byte-identical.
+export const containsTetragrammaton = (originalUnicode: string): boolean =>
+  typeof originalUnicode === 'string' &&
+  originalUnicode.replace(/[\u0591-\u05C7]/g, '').includes('יהוה');
+export const isOriginalVoiced = (e: { id: string; originalUnicode: string }): boolean =>
+  e.id !== WRITTEN_ONLY_DIVINE_NAME_ID && !containsTetragrammaton(e.originalUnicode);
 export type ZoneId = 1 | 2 | 3 | 4 | 5 | 7;
 export type Chapter = 1 | 2 | 3 | 4 | 5 | 7;
 export type HistoricalFrame = 'narrative' | 'poetry' | 'prophecy' | 'vision' | 'letter' | 'apocalyptic';

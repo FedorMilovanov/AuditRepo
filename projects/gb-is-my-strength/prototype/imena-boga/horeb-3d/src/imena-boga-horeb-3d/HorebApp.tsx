@@ -5,13 +5,14 @@ import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
 import { SceneMoment } from './ui/SceneMoment';
+import { LEARNING_STORAGE_KEY, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from './data/learningJourney';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
 
 type Screen = 'intro' | 'world' | 'reader';
-type Dialog = null | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
+type Dialog = null | { kind: 'learning' } | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
 const LS_SETTINGS = 'imena-horeb.settings.v1';
 const LS_PROGRESS = 'imena-horeb.progress.v1';
 
@@ -73,6 +74,26 @@ function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (i
   </div>;
 }
 
+function StudyJourneyPanel({ observed, understood }: { observed: readonly string[]; understood: readonly string[] }) {
+  return <section aria-label="Путевой дневник смысла" className="space-y-4">
+    <p className="text-parch/80 text-sm">Пройдите восемь ключевых исследований в любой последовательности. Все 42 досье можно читать свободно; знания не открывают запретные области.</p>
+    <p className="font-display text-xl text-bronze" role="status">Осмыслено: {understood.length} / {PILOT_LESSONS.length}</p>
+    <ol className="space-y-3">
+      {PILOT_LESSONS.map((lesson) => {
+        const e = EXHIBITS.find((item) => item.id === lesson.id);
+        const stage = understood.includes(lesson.id) ? 'Сопоставление пройдено' :
+          observed.includes(lesson.id) ? 'Место изучено — осталось различить текст' : 'Ещё предстоит исследовать';
+        return <li key={lesson.id} className="border-l-2 border-bronze/30 pl-3">
+          <p className="font-display text-lg text-parch">{lesson.title} · {e?.displayLabelRu}</p>
+          <p className="text-xs text-muted">Зона {e?.zone} · {lesson.sourceReference} · {stage}</p>
+          <p className="text-sm text-parch/75 mt-1">{lesson.mission}</p>
+        </li>;
+      })}
+    </ol>
+    <p className="text-xs text-muted">Дневник — только ваше учебное продвижение. Он не отражает духовное состояние или редакционное утверждение библейского исследования.</p>
+  </section>;
+}
+
 export default function HorebApp() {
   const [screen, setScreen] = useState<Screen>(() => (location.hash === '#read' ? 'reader' : 'intro'));
   // A failed GPU context needs a fresh canvas, not a timed intro→world race.
@@ -85,7 +106,7 @@ export default function HorebApp() {
   const [err, setErr] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
-  const [examined, setExamined] = useState<Set<string>>(() => new Set());
+  const [learning, setLearning] = useState(() => normalizeLearningJournal(readStored(LEARNING_STORAGE_KEY)));
   const [bookmarks, setBookmarks] = useState<string[]>(() => normalizeStudyBookmarks(readStored(STUDY_BOOKMARKS_KEY)));
   const [guideCaption, setGuideCaption] = useState<string | null>(null);
   const [webgl] = useState(hasWebGL);
@@ -102,6 +123,7 @@ export default function HorebApp() {
   useEffect(() => { try { localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); } catch { /* приватный режим */ } }, [settings]);
   useEffect(() => { try { localStorage.setItem(LS_PROGRESS, JSON.stringify(progress)); } catch { /* */ } }, [progress]);
   useEffect(() => { try { localStorage.setItem(STUDY_BOOKMARKS_KEY, JSON.stringify(bookmarks)); } catch { /* private mode */ } }, [bookmarks]);
+  useEffect(() => { try { localStorage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(learning)); } catch { /* private mode */ } }, [learning]);
 
   const resolved = useMemo(() => {
     const low = settings.quality === 'low' || (settings.quality === 'auto' && (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || innerWidth < 700));
@@ -262,11 +284,17 @@ export default function HorebApp() {
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
   const zoneInfo = ZONES[zone];
+  const nextLesson = nextLearningLesson(learning);
   // User-approved subdued HUD: let the bush take visual focus at close range.
   // Critical prompts and the sandal gate live outside .hud and remain opaque.
   const hudOpacity = ws && ws.zone === 7 ? Math.max(0.4, Math.min(1, (ws.distBush - 8) / 28)) : 1;
 
-  if (screen === 'reader') return <AccessibleReader onClose={() => { history.replaceState(null, '', location.pathname); setScreen('intro'); }} />;
+  if (screen === 'reader') return <AccessibleReader
+    onClose={() => { history.replaceState(null, '', location.pathname); setScreen('intro'); }}
+    learning={learning}
+    onLearningObserve={(id) => setLearning((prev) => observeLesson(prev, id))}
+    onLearningCorrect={(id, choice) => setLearning((prev) => completeLesson(prev, id, choice))}
+  />;
 
   if (screen === 'intro') return (
     <main className="intro relative min-h-screen overflow-hidden bg-ink text-parch">
@@ -288,13 +316,22 @@ export default function HorebApp() {
           Путь через каменные галереи к открытой земле у Хорива. География и пещерные переходы — художественная экспозиция;
           каждое письменное свидетельство указано книгой и стихом.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center reveal d3">
+        <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
           {webgl ? <button className="btn btn-primary" onClick={start}>{progress.last ? 'Продолжить путешествие' : 'Начать путешествие'}</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
           <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'settings' })}>Настройки доступности</button>
+          <button className="btn" onClick={() => setIntroDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>
         </div>
+        <section className="mt-6 mx-auto max-w-xl rounded-sm border border-bronze/30 bg-black/55 p-4 text-left" aria-label="Путевой дневник">
+          <p className="eyebrow">Экспедиция смыслов · свободный маршрут</p>
+          <p className="font-display text-xl text-parch mt-2">Осмыслено {learning.understood.length} из {PILOT_LESSONS.length} ключевых сюжетов</p>
+          <p className="text-sm text-parch/75 mt-2">{nextLesson
+            ? 'Следующее исследование: ' + nextLesson.title + '. Осмотрите сцену, сопоставьте текст и ответьте на вопрос.'
+            : 'Все восемь ключевых сюжетов изучены. Вы можете вернуться к любому из них.'}</p>
+          <p className="text-xs text-muted mt-2">Без баллов, штрафов и блокировки чтения. Путевой дневник хранится только в браузере.</p>
+        </section>
         {err && <p role="alert" className="mt-6 text-amber-300">{err} <button className="link" onClick={() => setScreen('reader')}>Открыть режим чтения</button></p>}
         <div className="mt-8 flex gap-5 justify-center text-sm reveal d3">
           <button className="link" onClick={() => setIntroDialog({ kind: 'about' })}>Об экспозиции</button>
@@ -306,6 +343,9 @@ export default function HorebApp() {
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
           {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
+      {introDialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setIntroDialog(null)}>
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} />
+      </Modal>}
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
       {introDialog?.kind === 'about' && <Modal wide title="Об экспозиции" onClose={() => setIntroDialog(null)}><AboutExhibition /></Modal>}
@@ -334,6 +374,7 @@ export default function HorebApp() {
         <div className="absolute top-3 left-3 sm:top-5 sm:left-6 max-w-[60vw] rounded-sm border border-parch/10 bg-black/65 px-3 py-2 shadow-lg backdrop-blur-sm" aria-live="polite">
           <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
           <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>
+          <p className="text-xs text-bronze/90 mt-1">Экспедиция смыслов: {learning.understood.length}/{PILOT_LESSONS.length}</p>
           {ws && ws.zone >= 6 && <p className="text-xs text-muted mt-1">{ws.shoes === 'shod' ? 'В обуви' : ws.shoes === 'removing' ? 'Снимаете обувь…' : 'Босиком'}</p>}
         </div>
         <nav className="absolute top-3 right-3 sm:top-5 sm:right-6 flex flex-wrap justify-end gap-1.5 max-w-[60vw]" aria-label="Управление экспозицией">
@@ -341,6 +382,7 @@ export default function HorebApp() {
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>
           <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки ({bookmarks.length})</button>
+          <button className="btn-ghost" onClick={() => setDialog({ kind: 'learning' })}>Дневник ({learning.understood.length}/8)</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'sources' })}>Источники</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'settings' })}>Настройки</button>
           <button className="btn-ghost" onClick={exitWorld}>Выйти</button>
@@ -411,9 +453,12 @@ export default function HorebApp() {
         <button className="btn mb-5" aria-pressed={bookmarks.includes(exhibit.id)} onClick={() => setBookmarks((prev) => toggleStudyBookmark(prev, exhibit.id))}>
           {bookmarks.includes(exhibit.id) ? 'Убрать из закладок' : 'Сохранить свидетельство'}
         </button>
-        <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} canInspect={worldRef.current?.canInspectExhibit(exhibit.id) ?? false} onInspect={() => {
+        <SceneMoment key={exhibit.id} e={exhibit}
+          examined={learning.observed.includes(exhibit.id)} understood={learning.understood.includes(exhibit.id)}
+          onUnderstood={(choice) => setLearning((prev) => completeLesson(prev, exhibit.id, choice))}
+          canInspect={worldRef.current?.canInspectExhibit(exhibit.id) ?? false} onInspect={() => {
           if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
-          setExamined((old) => new Set(old).add(exhibit.id));
+          setLearning((prev) => observeLesson(prev, exhibit.id));
           setGuideCaption(RUSSIAN_DRAFT_CUES[exhibit.id] ?? null);
           setDialog(null);
           setToast('Осмотрите освещённую надпись и предметы. Нажмите E снова, чтобы сопоставить с Писанием.');
@@ -424,11 +469,15 @@ export default function HorebApp() {
         <div className="grid gap-3">
           <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>
           <button className="btn" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки Писания ({bookmarks.length})</button>
+          <button className="btn" onClick={() => setDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>
           <button className="btn" onClick={() => leaveWorld('reader')}>Читать экспозицию</button>
           <button className="btn" onClick={() => setDialog({ kind: 'sources' })}>Источники и ограничения</button>
           <button className="btn" onClick={() => setDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={exitWorld}>Выйти из прогулки</button>
         </div>
+      </Modal>}
+      {dialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setDialog(null)}>
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} />
       </Modal>}
       {dialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setDialog(null)}>
         <StudyBookmarkList ids={bookmarks} onOpen={(id) => setDialog({ kind: 'exhibit', id })} />

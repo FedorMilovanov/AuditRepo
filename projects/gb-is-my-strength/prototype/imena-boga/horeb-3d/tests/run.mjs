@@ -1,8 +1,9 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
-import { EXHIBITS } from '../.test-build/data/exhibits.js';
+import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
+import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
@@ -36,6 +37,51 @@ inj('Sabaoth=sabbath', c => { c.find(e => e.id === 'sabaoth').literalGloss = 'о
 inj('missing Research id', c => { c.splice(0, 1); });
 inj('duplicate scene signature', c => { c[1].environmentKey = c[0].environmentKey; c[1].meaningfulAction = c[0].meaningfulAction; });
 inj('empty anchor props', c => { c[2].anchorProps = ['stele']; });
+// Learning-gate checks: game progress cannot make a theological assertion,
+// bypass an unseen scene, or accept a wrong / tampered answer.
+t('learning has eight distinct canonical hero IDs',
+  PILOT_IDS.length === 8 && new Set(PILOT_IDS).size === 8 &&
+  PILOT_IDS.every((id) => EXHIBITS.some((e) => e.id === id)));
+t('each hero question has exactly one valid answer within three choices',
+  PILOT_LESSONS.every((l) => l.options.length === 3 &&
+    new Set(l.options.map((x) => x.id)).size === 3 &&
+    l.options.some((c) => c.id === l.answer) &&
+    l.question.length > 20 && l.explanation.length > 30));
+const emptyStudy = normalizeLearningJournal(null);
+t('study progress starts with zero observed and understood',
+  emptyStudy.observed.length === 0 && emptyStudy.understood.length === 0);
+t('cannot complete a lesson without first observing it',
+  completeLesson(emptyStudy, 'elohim', 'b').understood.length === 0);
+const observedStudy = observeLesson(emptyStudy, 'elohim');
+t('wrong answer does not count and correct answer counts only observed',
+  completeLesson(observedStudy, 'elohim', 'a').understood.length === 0 &&
+  completeLesson(observedStudy, 'elohim', 'b').understood.includes('elohim'));
+t('learning journal refuses forged IDs and completion without observation',
+  JSON.stringify(normalizeLearningJournal({
+    observed: ['yhwh','fake','yhwh'],
+    understood: ['fake','elohim','yhwh','yhwh'],
+  })) === JSON.stringify({ observed: ['yhwh'], understood: ['yhwh'] }));
+t('next story advances after completion, free movement remains independent',
+  nextLearningLesson(completeLesson(observedStudy, 'elohim', 'b'))?.id === 'el-elyon' &&
+  nextLearningLesson(emptyStudy)?.id === 'elohim');
+t('all eight stories can be learned without changing nav or source registry',
+  PILOT_LESSONS.reduce((state, l) => completeLesson(observeLesson(state,l.id),l.id,l.answer),
+    emptyStudy).understood.length === 8);
+// Treat the Tetragrammaton as written-only even when embedded in a phrase:
+// 12 existing records contain יהוה, only one has the exact id 'yhwh'.
+const writtenNameRefs = EXHIBITS.filter((e) => containsTetragrammaton(e.originalUnicode));
+t('all twelve written Tetragrammaton occurrences are identified',
+  writtenNameRefs.length === 12 && writtenNameRefs.some((e) => e.id === 'yhwh') &&
+  writtenNameRefs.some((e) => e.id === 'sabaoth'));
+t('every source-language phrase containing יהוה is SILENT until an explicit policy revision',
+  writtenNameRefs.every((e) => !isOriginalVoiced(e)));
+t('names without the Tetragrammaton remain future phonetic-review candidates',
+  EXHIBITS.filter((e) => !containsTetragrammaton(e.originalUnicode))
+    .every((e) => isOriginalVoiced(e)));
+t('vowel points and unpointed text match the same written-only policy',
+  containsTetragrammaton('יְהוָה יִרְאֶה') &&
+  containsTetragrammaton('יהוה') &&
+  !containsTetragrammaton('אֶהְיֶה'));
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }
