@@ -92,8 +92,8 @@
       "bytes_normalized": 1283
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "15f525fecd6c6cc35e84f2a11d7c8d8f367db3b88179f28ec7b2a6a739b700a6",
-      "bytes_normalized": 26664
+      "sha256": "3071f6a2d9d9c9066125ecab46cd2c9a0f90a667eb240cb0f316a0cf3441f54c",
+      "bytes_normalized": 28702
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",

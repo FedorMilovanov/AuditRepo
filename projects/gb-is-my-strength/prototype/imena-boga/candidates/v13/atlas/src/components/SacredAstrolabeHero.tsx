@@ -73,6 +73,24 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
     let animationFrameId = 0;
     let width = 0;
     let height = 0;
+    // The celestial image follows the real medallion geometry, not a
+    // percentage of the hero's article-length-dependent total height.
+    let sceneCenter = { x: 0, y: 0 };
+    let sceneFadeEnd = 0;
+    const measureScene = () => {
+      const canvasBox = canvas.getBoundingClientRect();
+      const medallion = canvas.parentElement?.querySelector('.gb-hero-medallion-button');
+      const heading = canvas.parentElement?.querySelector('.gb-hero-title');
+      const medallionBox = medallion?.getBoundingClientRect();
+      const headingBox = heading?.getBoundingClientRect();
+      sceneCenter = {
+        x: medallionBox ? medallionBox.left + medallionBox.width / 2 - canvasBox.left : width / 2,
+        y: medallionBox ? medallionBox.top + medallionBox.height / 2 - canvasBox.top : height * 0.3,
+      };
+      sceneFadeEnd = headingBox
+        ? Math.max(0, headingBox.top - canvasBox.top - 8)
+        : height * 0.65;
+    };
     // Cap mobile raster work without compromising desktop Retina rendering.
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
     const dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.5 : 2);
@@ -84,6 +102,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
       canvas.width = Math.max(1, Math.floor(width * dpr));
       canvas.height = Math.max(1, Math.floor(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      measureScene();
     };
 
     // Initial backing-store sizing is needed before the first paint.
@@ -191,8 +210,8 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
 
       ctx.clearRect(0, 0, width, height);
 
-      const cx = width * 0.5;
-      const cy = height * 0.43;
+      const cx = sceneCenter.x;
+      const cy = sceneCenter.y;
       const baseRadius = Math.min(width * 0.36, 250);
 
       const isDark = theme === 'dark';
@@ -288,6 +307,20 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
         ctx.fill();
       });
 
+      // Preserve the full drawing around the medallion but fade it before
+      // the editorial heading. Decorative lines must not cross reading text.
+      const fadeStart = Math.max(0, sceneFadeEnd - 48);
+      if (sceneFadeEnd > fadeStart) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        const fade = ctx.createLinearGradient(0, fadeStart, 0, sceneFadeEnd);
+        fade.addColorStop(0, 'rgba(0,0,0,0)');
+        fade.addColorStop(1, 'rgba(0,0,0,1)');
+        ctx.fillStyle = fade;
+        ctx.fillRect(0, fadeStart, width, height - fadeStart);
+        ctx.restore();
+      }
+
       if (!prefersReducedMotion) {
         animationFrameId = window.requestAnimationFrame(render);
       }
@@ -313,6 +346,12 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
       : null;
     window.addEventListener('resize', handleCanvasResize);
     resizeObserver?.observe(canvas);
+    // React/font changes can move the medallion or title without changing
+    // the viewport. Observe both geometry owners and re-anchor the canvas.
+    const medallionElement = canvas.parentElement?.querySelector('.gb-hero-medallion-button');
+    const titleElement = canvas.parentElement?.querySelector('.gb-hero-title');
+    if (medallionElement) resizeObserver?.observe(medallionElement);
+    if (titleElement) resizeObserver?.observe(titleElement);
     if (prefersReducedMotion) render();
     else animationFrameId = window.requestAnimationFrame(render);
 
