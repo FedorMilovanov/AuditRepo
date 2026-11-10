@@ -565,6 +565,8 @@ for (const lowMode of [true, false]) {
     fracture instanceof THREE.Mesh &&
     fracture.userData.fractureCount === (lowMode ? 11 : 17) &&
     position != null && position.count === (lowMode ? 11 : 17) * 7 * 3 &&
+    fracture.geometry.getAttribute('uv')?.count === position.count &&
+    fracture.geometry.getAttribute('normal')?.count === position.count &&
     minY >= 2.77 && minZ > -319 && maxZ < -290 &&
     !geoScene.obstacles.some((o) => o.z < -292 && o.z > -318));
 }
