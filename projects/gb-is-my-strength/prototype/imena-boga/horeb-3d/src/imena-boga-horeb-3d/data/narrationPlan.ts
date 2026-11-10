@@ -2,7 +2,7 @@
 // A source-language performance may be Hebrew, Aramaic or Greek according to
 // Exhibit.sourceLanguage. Never infer a reading from Latin transliteration.
 import { EXHIBITS, type Exhibit, type Lang } from './exhibits';
-import { APPROVED_NARRATION_ASSETS, isApprovedAudioPath } from '../engine/NarratorBus';
+import { isApprovedAudioPath } from '../engine/NarratorBus';
 
 export const NARRATION_LANGUAGE_LABEL: Readonly<Record<Lang, string>> = {
   he: 'библейском древнееврейском',
