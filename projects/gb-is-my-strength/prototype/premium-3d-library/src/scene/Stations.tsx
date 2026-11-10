@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, type ReactNode } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Billboard } from "@react-three/drei";
 import * as THREE from "three";
-import { ITEMS, itemPos, type Item } from "../data";
+import { ITEMS, SECTION_APPROACH_DISTANCE, itemPos, type Item } from "../data";
 import { useApp, registry, openItem, get, set } from "../store";
 import { plaqueTexture, paperTexture, tabletTextures, glowTexture } from "../textures";
 import { Beam } from "./Center";
@@ -13,6 +13,19 @@ const shadowTex = glowTexture();
 /** Универсальный постамент: табличка, свет, зона клика, подсветка при наведении */
 function Station({ item, children }: { item: Item; children: ReactNode }) {
   const q = useApp((s) => s.quality);
+  const size = useThree((state) => state.size);
+  const verticalFov = useThree((state) =>
+    state.camera instanceof THREE.PerspectiveCamera ? state.camera.fov : 68
+  );
+  // Portrait viewports see much less horizontal area than desktop at the
+  // same vertical FOV. Fit the actual in-world plaque to the guaranteed
+  // camera standoff, preserving its texture aspect ratio and readable type.
+  // No page zoom, camera teleport, HUD overlay or screenshot-only adjustment.
+  const portrait = size.width < size.height && size.width <= 520;
+  const worldWidthAtStation = 2 * SECTION_APPROACH_DISTANCE
+    * Math.tan(THREE.MathUtils.degToRad(verticalFov / 2))
+    * size.width / size.height;
+  const plaqueFit = portrait ? Math.min(1, worldWidthAtStation * 0.7 / 3.5) : 1;
   const [x, z] = itemPos(item);
   const hit = useRef<THREE.Mesh>(null!);
   const plaque = useRef<THREE.Group>(null!);
@@ -66,7 +79,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
 
       <group ref={art} position={[0, 1.95, 0]}>{children}</group>
 
-      <Billboard position={[0, 3.95, 0]} lockX lockZ>
+      <Billboard position={[0, 3.95, 0]} scale={plaqueFit} lockX lockZ>
         <group ref={plaque}>
           <mesh>
             <planeGeometry args={[3.5, 3.5 * (420 / 1024)]} />
