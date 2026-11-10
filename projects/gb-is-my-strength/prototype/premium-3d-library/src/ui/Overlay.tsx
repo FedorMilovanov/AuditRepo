@@ -257,8 +257,16 @@ function Minimap() {
   const phase = useApp((s) => s.phase);
   const xr = useApp((s) => s.xr);
   const mode = useApp((s) => s.mode);
+  const tour = useApp((s) => s.tour);
+  const sitemap = useApp((s) => s.sitemap);
+  const opened = useApp((s) => s.opened);
   const cv = useRef<HTMLCanvasElement>(null);
-  const show = phase === "play" && !xr && mode === "desktop";
+  // TourCard occupies the bottom-center reading zone, including the
+  // tablet's minimap position. Hide navigation chrome while the guided
+  // reading panel (or another modal) has user focus, without running
+  // an unobserved minimap rAF loop behind it.
+  const show = phase === "play" && !xr && mode === "desktop"
+    && tour === null && !sitemap && !opened;
   useEffect(() => {
     if (!show) return;
     const c = cv.current!;
@@ -330,7 +338,7 @@ function Minimap() {
   }, [show]);
   if (!show) return null;
   return (
-    <div className="glass pointer-events-none fixed bottom-4 right-4 z-10 hidden rounded-full p-1 sm:block">
+    <div data-gb-minimap className="glass pointer-events-none fixed bottom-4 right-4 z-10 hidden rounded-full p-1 sm:block">
       <canvas ref={cv} style={{ width: 150, height: 150 }} className="rounded-full bg-[#1d211f]/70" />
     </div>
   );
@@ -848,7 +856,7 @@ function TourCard() {
   const t = TOUR[step];
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-20 flex justify-center px-3 sm:bottom-6">
-      <div className="glass fade-up pointer-events-auto w-full max-w-xl rounded-3xl p-4 sm:p-5" style={{ animationDuration: "0.4s" }}>
+      <div data-gb-tour-card className="glass fade-up pointer-events-auto w-full max-w-xl rounded-3xl p-4 sm:p-5" style={{ animationDuration: "0.4s" }}>
         <div className="mb-1 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.28em] text-[#d8b88d]">
           <span>{t.kicker}</span>
           <span>
