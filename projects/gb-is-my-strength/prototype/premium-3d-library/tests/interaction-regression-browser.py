@@ -107,6 +107,39 @@ async def assert_modal(page, opened_evidence=None):
     await dialog.locator('button[title="Ссылка на это место"]').first.wait_for(
         state="visible", timeout=10000
     )
+    # The heading must remain legible *after* the search input takes focus
+    # and rerenders its results. This exposed the old WebKit 844x390 bug,
+    # although the as-opened screenshot was correctly framed.
+    post_search = await dialog.evaluate("""panel => {
+        const title = panel.querySelector('#gb-sitemap-title')?.getBoundingClientRect();
+        const scroller = panel.querySelector('[data-gb-sitemap-scroll]');
+        const view = panel.getBoundingClientRect();
+        const initialScroll = scroller?.scrollTop;
+        if (scroller) scroller.scrollTop = scroller.scrollHeight;
+        const scrollReach = scroller?.scrollTop;
+        const headerWhileResultsScrolled =
+          panel.querySelector('#gb-sitemap-title')?.getBoundingClientRect();
+        if (scroller) scroller.scrollTop = initialScroll || 0;
+        return {
+            titleTop:title?.top,titleBottom:title?.bottom,
+            dialogTop:view.top,dialogBottom:view.bottom,
+            panelScrollTop:panel.scrollTop, scrollReach,
+            headerTopAfterScroll:headerWhileResultsScrolled?.top,
+            scrollerHeight:scroller?.clientHeight,
+            scrollerScrollHeight:scroller?.scrollHeight
+        };
+    }""")
+    assert post_search["titleTop"] is not None and (
+        post_search["titleTop"] >= -1
+        and post_search["titleBottom"] <= page.viewport_size["height"] + 1
+        and post_search["panelScrollTop"] <= 1
+        and abs(post_search["headerTopAfterScroll"]-post_search["titleTop"]) <= 1
+    ), ("Sitemap heading scrolled behind focused search/results", post_search)
+    if post_search["scrollerScrollHeight"] > post_search["scrollerHeight"] + 12:
+        assert post_search["scrollReach"] > 10, (
+            "Sitemap results do not have a functioning independent scrollport",
+            post_search
+        )
     return dialog
 
 async def run_case(browser,engine,w,h,touch):
