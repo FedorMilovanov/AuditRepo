@@ -3,7 +3,7 @@
 // Exhibit.sourceLanguage. Never infer a reading from Latin transliteration.
 import { EXHIBITS, isOriginalVoiced, type Exhibit, type Lang } from './exhibits';
 export { NARRATION_LANGUAGE_LABEL } from './exhibits';
-import { isApprovedAudioPath } from '../engine/NarratorBus';
+import { isApprovedAudioPath, type ApprovedNarrationTrack } from '../engine/NarratorBus';
 
 // The sign-off is per recording, not just per author or file name.
 // No certificates or files have been provided: do not fabricate an approval.
@@ -41,7 +41,7 @@ export interface NarrationPlan {
   originalSpoken: boolean;
   order: 'original-then-russian' | 'written-original-then-russian';
   russianDraft: string | null;
-  playback: readonly string[]; // empty unless all recordings and approvals pass
+  playback: readonly ApprovedNarrationTrack[]; // signed path + SHA-256 for each master
   ready: boolean;
   status: 'HOLD' | 'approved';
 }
@@ -61,8 +61,11 @@ export function narrationPlan(exhibit: Exhibit, russianDraft?: string): Narratio
     !!approval.approvedOn.trim() && verifiedMaster(approval.russian) &&
     (originalSpoken ? verifiedMaster(approval.original) : !approval.original) &&
     (originalSpoken ? approval.original!.path !== approval.russian.path : true);
-  const playback = approved ? (originalSpoken ?
-    [approval!.original!.path, approval!.russian.path] : [approval!.russian.path]) : [];
+  const playback: ApprovedNarrationTrack[] = approved ? (originalSpoken ?
+    [
+      { path: approval!.original!.path, sha256: approval!.original!.sha256 },
+      { path: approval!.russian.path, sha256: approval!.russian.sha256 },
+    ] : [{ path: approval!.russian.path, sha256: approval!.russian.sha256 }]) : [];
   // Preserve the original Unicode exactly, including Hebrew niqqud and Greek
   // breathing marks, for screen readers, editorial review and text export.
   return {
