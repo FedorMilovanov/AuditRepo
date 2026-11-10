@@ -12,26 +12,36 @@ import "@fontsource/inter/latin-600.css";
 export const SERIF = '"Cormorant Garamond", Georgia, serif';
 export const SANS = 'Inter, system-ui, sans-serif';
 
-/** Шрифты нужны до рисования canvas-текстур (в 3D и VR весь текст — это текстуры). */
-export async function loadFonts() {
+/** Font-dependent CanvasTextures must not initialize on unverified fallback.
+ * Fonts ship with the lab itself; no CDN, test overrides or font substitutions.
+ * A real failure must be surfaced, not silently render different typography. */
+export async function loadFonts(): Promise<void> {
   const specs = [
-    '600 48px "Cormorant Garamond"',
-    '500 48px "Cormorant Garamond"',
-    'italic 500 48px "Cormorant Garamond"',
-    "400 30px Inter",
-    "600 30px Inter",
+    { font: '600 48px "Cormorant Garamond"', text: "Конфессии" },
+    { font: '500 48px "Cormorant Garamond"', text: "Статьи" },
+    { font: 'italic 500 48px "Cormorant Garamond"', text: "История" },
+    { font: "400 30px Inter", text: "Библиотека" },
+    { font: "600 30px Inter", text: "СЕРИИ" },
+    { font: '600 48px "Cormorant Garamond"', text: "Abcdefg 0123" },
+    { font: "400 30px Inter", text: "Abcdefg 0123" },
   ];
+  let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     await Promise.race([
-      Promise.all(
-        specs.flatMap((s) => [
-          document.fonts.load(s, "Абвгдежз"),
-          document.fonts.load(s, "Abcdefg 0123"),
-        ])
-      ),
-      new Promise((r) => setTimeout(r, 4000)),
+      Promise.all(specs.map(async ({ font, text }) => {
+        const faces = await document.fonts.load(font, text);
+        if (!faces.length || faces.some((face) => face.status !== "loaded")) {
+          throw new Error(`Font unavailable: ${font}, sample ${text}`);
+        }
+        if (!document.fonts.check(font, text)) {
+          throw new Error(`Font not ready: ${font}, sample ${text}`);
+        }
+      })),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("Local typefaces exceeded 12s deadline")), 12000);
+      }),
     ]);
-  } catch {
-    /* fallback fonts */
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
   }
 }
