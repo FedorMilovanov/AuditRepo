@@ -360,6 +360,23 @@ try {
   check('no-JS reader exposes 42 dossiers', reader?.status() === 200 && count === 42,
     'HTTP ' + reader?.status() + ', cards ' + count);
   check('reader has Hebrew RTL', await page.$eval('[lang="he"][dir="rtl"]', () => true).catch(() => false));
+  const bilingual = await page.evaluate(() => {
+    const rows = [...document.querySelectorAll('article details.voice-stage')];
+    return {
+      total: rows.length,
+      holds: rows.filter((el) => el.getAttribute('data-audio-state') === 'HOLD').length,
+      drafts: rows.filter((el) => el.textContent?.includes('неутверждённый черновик:')).length,
+      el: document.querySelector('article#el details.voice-stage')?.textContent || '',
+      yhwh: document.querySelector('article#yhwh details.voice-stage')?.textContent || '',
+    };
+  });
+  check('no-JS reader shows 42 Russian scripts sourced from original 42-scene matrix',
+    bilingual.total === 42 && bilingual.holds === 42 && bilingual.drafts === 42 &&
+    bilingual.el.includes('Его значение определяется контекстом'),
+    JSON.stringify({ total: bilingual.total, holds: bilingual.holds, drafts: bilingual.drafts }));
+  check('written-only Tetragrammaton remains silent before Russian narrator',
+    bilingual.yhwh.includes('без произнесения спорного Имени') &&
+    !bilingual.yhwh.includes('Сначала произношение на'));
   await page.screenshot({ path: join(shots, 'smoke-03-reader.png') });
   await page.close(); // release the desktop WebGL context before mobile QA
 
