@@ -64,18 +64,26 @@ async def assert_modal(page):
         const link = panel.querySelector('button[title="Ссылка на это место"]');
         const external = panel.querySelector('a[title="Открыть на сайте"]');
         const close = panel.querySelector('button[aria-label="Закрыть карту сайта"]');
+        const heading = panel.querySelector('#gb-sitemap-title')?.getBoundingClientRect();
         const sizes = [link, external, close].map(el => {
             if (!el) return null;
             const r = el.getBoundingClientRect();
             return [r.width, r.height];
         });
-        return {background:bg, opacity:style.opacity, sizes};
+        return {background:bg, opacity:style.opacity, sizes,
+            scrollTop:panel.scrollTop,
+            headingTop:heading?.top, headingBottom:heading?.bottom};
     }""")
     assert presentation["background"] == "rgb(25, 33, 29)" and (
         presentation["opacity"] == "1"
     ), presentation
     assert all(s is not None and s[0] >= 43.5 and s[1] >= 43.5
                for s in presentation["sizes"]), presentation
+    assert presentation["scrollTop"] <= 1 and (
+        presentation["headingTop"] is not None
+        and presentation["headingTop"] >= -1
+        and presentation["headingBottom"] <= page.viewport_size["height"]
+    ), ("Sitemap heading clipped/scrolled on opening", presentation)
     for _ in range(18):
         await page.keyboard.press("Tab")
         assert await page.evaluate("!!document.activeElement?.closest('[data-gb-sitemap-dialog]')"),"Tab escaped"
