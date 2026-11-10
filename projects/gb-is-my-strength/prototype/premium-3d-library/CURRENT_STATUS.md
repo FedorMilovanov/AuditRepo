@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.35 — reduced motion and no-WebGL 2D entry (NEW candidate)
+
+[**V535_MOTION_2D_BOOTSTRAP.md**](V535_MOTION_2D_BOOTSTRAP.md) documents real screenshot-motion evidence, capability-first bootstrap, original WebGL recovery and explicit limitations. The existing lab Draft PR now requires **11 suites / 57 cases** on the exact **new** SHA; 6/6 WebGL/recovery and 4/4 motion cases were passed on Windows browsers in the local candidate. The new Linux GitHub CI cannot be presumed green until its final terminal status and run logs are inspected. **Keep Draft / LAB / ART HOLD; no Product/main/deploy/merge.**
+
+---
+
 ## V5.34 — crash-safe history and fail-closed Product policy candidate
 
 Current [V534_DATA_INTEGRITY_RECOVERY.md](V534_DATA_INTEGRITY_RECOVERY.md) documents two reproduced P1 failures and independently tested source fixes. Malformed visited localStorage values no longer crash the sitemap; their raw bytes are preserved instead of erased. Unknown/missing Pagefind policies can no longer admit a route. **New exact-head CI must pass 10 suites / 53 browser cases**; historical [V5.33 Validate 47/47](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42886253395) is not current acceptance. No change to private cabinet IndexedDB or Product. Art, mobile/XR/GPU and Product remain HARD OPEN. Keep one Draft PR, no merge/deployment.

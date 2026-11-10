@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { ITEMS, byId, itemPos } from "../data";
 import { get, input, openItem, registry, set } from "../store";
+import { useReducedMotion } from "../motion";
 import { lecternPage, verseTabletTexture } from "../textures";
 import { darkStone, goldMat, marble, wood } from "./Platform";
 
@@ -115,6 +116,7 @@ function Benches() {
 }
 
 function DestMark() {
+  const reduced = useReducedMotion();
   const m = useRef<THREE.Mesh>(null!);
   useFrame(({ clock }) => {
     const d = input.dest;
@@ -122,7 +124,7 @@ function DestMark() {
     m.current.visible = on;
     if (!d) return;
     m.current.position.set(d.x, 0.13, d.z);
-    const s = 1 + Math.sin(clock.elapsedTime * 4) * 0.08;
+    const s = reduced ? 1 : 1 + Math.sin(clock.elapsedTime * 4) * 0.08;
     m.current.scale.setScalar(s);
   });
   return (

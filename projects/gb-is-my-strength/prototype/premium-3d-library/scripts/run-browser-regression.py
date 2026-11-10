@@ -32,6 +32,7 @@ TESTS = (
     ("cabinet-persistence-browser.py", 2),
     ("webgl-recovery-browser.py", 6),
     ("visited-persistence-browser.py", 6),
+    ("reduced-motion-browser.py", 4),
 )
 EVIDENCE_VARIABLES = {
     "interaction-regression-browser.py": "GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -44,6 +45,7 @@ EVIDENCE_VARIABLES = {
     "cabinet-persistence-browser.py": "GB_LIBRARY_CABINET_EVIDENCE_DIR",
     "webgl-recovery-browser.py": "GB_LIBRARY_RECOVERY_EVIDENCE_DIR",
     "visited-persistence-browser.py": "GB_LIBRARY_VISITED_EVIDENCE_DIR",
+    "reduced-motion-browser.py": "GB_LIBRARY_MOTION_EVIDENCE_DIR",
 }
 
 
@@ -77,6 +79,19 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             f"{name}: missing or mismatched summary"
         )
         assert not summaries[0].get("failures"), summaries[0]
+    if name == "reduced-motion-browser.py":
+        assert {(case.get("engine"), case.get("preference")) for case in cases} == {
+            ("chromium", "reduce"), ("chromium", "no-preference"),
+            ("webkit", "reduce"), ("webkit", "no-preference"),
+        }, f"Motion regression missing an engine/preference: {cases}"
+        for case in cases:
+            assert case.get("sceneUnchanged") is (case["preference"] == "reduce"), (
+                f"Unproven reduced-motion screenshot comparison: {case}"
+            )
+            hashes = case.get("sha256")
+            assert isinstance(hashes, list) and len(hashes) == 2 and (
+                (hashes[0] == hashes[1]) is (case["preference"] == "reduce")
+            ), f"Motion witness lacks consistent screenshot hashes: {case}"
     if name == "quality-transition-browser.py":
         # A count of two does not prove opposite directions: CI previously
         # reported low→high twice as PASS after an automatic downgrade.

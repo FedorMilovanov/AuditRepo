@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { BASE, ITEMS, byId, itemPos, type Item } from "../data";
 import { useApp, registry, openItem, closeItem, get, set, xrStore } from "../store";
+import { useReducedMotion } from "../motion";
 import { createCardTexture, detailTexture, buttonTexture, glowTexture } from "../textures";
 import { goldMat, darkStone } from "./Platform";
 
@@ -11,6 +12,7 @@ const W = 3.3;
 const H = W * (660 / 1024);
 
 function Card({ item, index }: { item: Item; index: number }) {
+  const reduced = useReducedMotion();
   const [x, z] = itemPos(item);
   const tex = useMemo(() => createCardTexture(item), [item]);
   useEffect(() => {
@@ -34,10 +36,10 @@ function Card({ item, index }: { item: Item; index: number }) {
 
   useFrame(({ clock }, dt) => {
     const t = clock.elapsedTime;
-    aim.current += ((get().aimed === item.id ? 1 : 0) - aim.current) * Math.min(1, dt * 8);
-    frame.current.position.y = 2.55 + Math.sin(t * 0.8 + index * 2) * 0.05;
+    aim.current += ((get().aimed === item.id ? 1 : 0) - aim.current) * (reduced ? 1 : Math.min(1, dt * 8));
+    frame.current.position.y = 2.55 + (reduced ? 0 : Math.sin(t * 0.8 + index * 2) * 0.05);
     frame.current.scale.setScalar(1 + aim.current * 0.07);
-    glow.current.opacity = 0.18 + aim.current * 0.6 + Math.sin(t * 1.4 + index) * 0.04;
+    glow.current.opacity = 0.18 + aim.current * 0.6 + (reduced ? 0 : Math.sin(t * 1.4 + index) * 0.04);
   });
 
   return (

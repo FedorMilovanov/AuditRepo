@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useApp as useStore, get, input, set, openItem, closeItem, toggleSitemap, startTour, tourStep, endTour, toggleSit, togglePhoto, flyTo, deepLink } from "./store";
 import { loadFonts } from "./fonts";
-import World from "./scene/World";
 import { SceneBoundary } from "./scene/SceneBoundary";
 import Overlay from "./ui/Overlay";
+
+// A machine with no WebGL must never fetch the Three.js scene bundle.
+// Scene initialization starts only after a positive capability check and fonts.
+const World = lazy(() => import("./scene/World"));
 
 const MOVE_KEYS = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft", "ShiftRight"];
 
@@ -123,7 +126,9 @@ export default function App() {
     <div className="fixed inset-0 select-none overflow-hidden bg-[#c4c1b7]">
       {!fatal && fontsReady && (
         <SceneBoundary onCrash={(m) => set({ fatal: m })}>
-          <World />
+          <Suspense fallback={null}>
+            <World />
+          </Suspense>
         </SceneBoundary>
       )}
       <Overlay fontsReady={fontsReady} />

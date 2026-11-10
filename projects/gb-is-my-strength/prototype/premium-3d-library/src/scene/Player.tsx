@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { EYE, ITEMS, OBSTACLES, PLAYER_COLLISION_RADIUS, SPAWN, VIEWS, WALK_RADIUS, approachPose } from "../data";
 import { get, input, registry, set, openItem, type Phase } from "../store";
 import { footstep, ping } from "../audio";
+import { useReducedMotion } from "../motion";
 
 interface Pose {
   x: number;
@@ -59,6 +60,7 @@ function entryPitch(): number {
 }
 
 export function Player() {
+  const reduced = useReducedMotion();
   const { camera, gl } = useThree();
   /**
    * Позу держим в модуле, а не в ref: при пересоздании рендерера (смена качества,
@@ -274,12 +276,12 @@ export function Player() {
 
     const tw = tween.current;
     if (tw) {
-      tw.t += cine / tw.dur;
+      tw.t = reduced ? 1 : tw.t + cine / tw.dur;
       const k = Math.min(tw.t, 1);
       const e = ease(k);
       const to = tw.to();
       P.x = tw.from.x + (to.x - tw.from.x) * e;
-      P.y = tw.from.y + (to.y - tw.from.y) * e + Math.sin(k * Math.PI) * tw.arc;
+      P.y = tw.from.y + (to.y - tw.from.y) * e + (reduced ? 0 : Math.sin(k * Math.PI) * tw.arc);
       P.z = tw.from.z + (to.z - tw.from.z) * e;
       P.yaw = tw.from.yaw + wrapPi(to.yaw - tw.from.yaw) * e;
       P.pitch = tw.from.pitch + (to.pitch - tw.from.pitch) * e;
@@ -348,7 +350,7 @@ export function Player() {
         }
       }
       const stand = input.sitting ? 1.02 : EYE;
-      const bobY = input.sitting ? 0 : Math.sin(bob.current) * 0.022 * Math.min(speed / 3, 1.3);
+      const bobY = input.sitting || reduced ? 0 : Math.sin(bob.current) * 0.022 * Math.min(speed / 3, 1.3);
       P.x = input.x;
       P.z = input.z;
       P.y += (stand + bobY - P.y) * (1 - Math.exp(-10 * dt));

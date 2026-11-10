@@ -5,6 +5,14 @@ import "./fonts";
 
 const root = createRoot(document.getElementById("root")!);
 
+function supportsWebGL2(): boolean {
+  try {
+    return !!document.createElement("canvas").getContext("webgl2");
+  } catch {
+    return false;
+  }
+}
+
 /**
  * The 2D personal cabinet is a separate production entry path.
  * Dynamic imports keep Three.js / WebGL / XR out of the critical route
@@ -25,6 +33,13 @@ async function bootstrap() {
         <CabinetPanel onClose={closeCabinet} />
       </StrictMode>,
     );
+    return;
+  }
+  // Denied capability must bypass the 3D app/store/XR dependency graph.
+  // A two-dimensional cabinet entry is still available without WebGL2.
+  if (!supportsWebGL2()) {
+    const { default: NoWebGL } = await import("./ui/NoWebGL");
+    root.render(<StrictMode><NoWebGL /></StrictMode>);
     return;
   }
   const { default: App } = await import("./App");

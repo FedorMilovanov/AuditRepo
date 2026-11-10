@@ -23,9 +23,10 @@ expected = {
     "cabinet-persistence-browser.py": 2,
     "webgl-recovery-browser.py": 6,
     "visited-persistence-browser.py": 6,
+    "reduced-motion-browser.py": 4,
 }
 assert dict(module.TESTS) == expected
-assert sum(expected.values()) == 53
+assert sum(expected.values()) == 57
 assert len(set(module.EVIDENCE_VARIABLES.values())) == len(expected)
 assert set(module.EVIDENCE_VARIABLES) == set(expected)
 
@@ -40,6 +41,13 @@ def cases_for(name: str) -> list[dict]:
          "result": "PASS", "errors": []}
         for i in range(expected[name])
     ]
+    if name == "reduced-motion-browser.py":
+        for index, item in enumerate(records):
+            pref = ("reduce", "no-preference")[index % 2]
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["preference"] = pref
+            item["sceneUnchanged"] = pref == "reduce"
+            item["sha256"] = ["a", "a"] if pref == "reduce" else ["a", "b"]
     if name == "quality-transition-browser.py":
         for item in records:
             item["switches"] = [
@@ -158,4 +166,14 @@ except (AssertionError, ValueError):
 else:
     raise AssertionError("Malformed JSON was silently ignored")
 
-print("BROWSER_CI_CONTRACT_PASS: ten suites, 53 cases; fails on missing/SKIP/errors/bad quality direction/malformed JSON")
+# A falsely-green static scene must not satisfy the normal-motion control.
+broken_motion = cases_for("reduced-motion-browser.py")
+broken_motion[1]["sha256"] = ["a", "a"]
+try:
+    module.verify_case_records("reduced-motion-browser.py", jsonlines(broken_motion), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Normal-motion control accepted two identical screenshots")
+
+print("BROWSER_CI_CONTRACT_PASS: eleven suites, 57 cases; fails on missing/SKIP/errors/bad quality/motion directions/malformed JSON")

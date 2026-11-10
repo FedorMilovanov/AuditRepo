@@ -4,6 +4,7 @@ import { Billboard } from "@react-three/drei";
 import * as THREE from "three";
 import { ITEMS, sectionApproachDistance, itemPos, type Item } from "../data";
 import { useApp, registry, openItem, get, set } from "../store";
+import { useReducedMotion } from "../motion";
 import { plaqueTexture, paperTexture, tabletTextures, glowTexture } from "../textures";
 import { Beam } from "./Center";
 import { darkStone, goldMat, marble, statue } from "./Platform";
@@ -12,6 +13,7 @@ const shadowTex = glowTexture();
 
 /** Универсальный постамент: табличка, свет, зона клика, подсветка при наведении */
 function Station({ item, children }: { item: Item; children: ReactNode }) {
+  const reduced = useReducedMotion();
   const q = useApp((s) => s.quality);
   const size = useThree((state) => state.size);
   const verticalFov = useThree((state) =>
@@ -49,7 +51,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
 
   useFrame((_, dt) => {
     const a = get().aimed === item.id ? 1 : 0;
-    aim.current += (a - aim.current) * Math.min(1, dt * 8);
+    aim.current += (a - aim.current) * (reduced ? 1 : Math.min(1, dt * 8));
     plaque.current.scale.setScalar(1 + aim.current * 0.12);
     art.current.position.y = 1.95;
     pad.current.opacity = 0.045 + aim.current * 0.15;
@@ -116,6 +118,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
 
 /* ───────────── 01 Статьи: раскрытая книга с листающимися страницами ───────────── */
 function BookArt({ color }: { color: string }) {
+  const reduced = useReducedMotion();
   const paper = useMemo(() => new THREE.MeshStandardMaterial({ map: paperTexture(), roughness: 0.9, side: THREE.DoubleSide }), []);
   const cover = useMemo(() => new THREE.MeshStandardMaterial({ color: "#6b1f2c", roughness: 0.5, metalness: 0.25 }), []);
   useEffect(() => {
@@ -125,7 +128,7 @@ function BookArt({ color }: { color: string }) {
   const flips = useRef<THREE.Group[]>([]);
   const sheets = useRef<THREE.Group>(null!);
   useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
+    const t = reduced ? 0 : clock.elapsedTime;
     flips.current.forEach((g, i) => {
       if (!g) return;
       const k = (t / 3.4 + i / 3) % 1;
@@ -181,9 +184,10 @@ function BookArt({ color }: { color: string }) {
 /* ───────────── 02 Серии: спираль книг ───────────── */
 const PALETTE = ["#7a1f2b", "#1f3a6b", "#c99a3a", "#2d6a5b", "#5a2d7a", "#a0482a", "#2a4d8f"];
 function SeriesArt({ color }: { color: string }) {
+  const reduced = useReducedMotion();
   const g = useRef<THREE.Group>(null!);
   useFrame((_, dt) => {
-    g.current.rotation.y += dt * 0.55;
+    if (!reduced) g.current.rotation.y += dt * 0.55;
   });
   const pages = useMemo(() => new THREE.MeshStandardMaterial({ color: "#efe5cc", roughness: 0.9 }), []);
   return (
@@ -226,6 +230,7 @@ function SeriesArt({ color }: { color: string }) {
 
 /* ───────────── 03 Биографии: бюст + кольцо эпох ───────────── */
 function BustArt({ color }: { color: string }) {
+  const reduced = useReducedMotion();
   const g = useRef<THREE.Group>(null!);
   const ring = useRef<THREE.Group>(null!);
   const rim = useMemo(
@@ -244,8 +249,10 @@ function BustArt({ color }: { color: string }) {
     [color]
   );
   useFrame(({ clock }, dt) => {
-    g.current.rotation.y = Math.sin(clock.elapsedTime * 0.4) * 0.5;
-    ring.current.rotation.y += dt * 0.5;
+    if (!reduced) {
+      g.current.rotation.y = Math.sin(clock.elapsedTime * 0.4) * 0.5;
+      ring.current.rotation.y += dt * 0.5;
+    }
   });
   return (
     <group>
@@ -322,6 +329,7 @@ const ll = (lat: number, lon: number, R = 0.6) => {
 };
 
 function GlobeArt({ color }: { color: string }) {
+  const reduced = useReducedMotion();
   const g = useRef<THREE.Group>(null!);
   const sat = useRef<THREE.Mesh>(null!);
   const points = useMemo(() => {
@@ -358,8 +366,8 @@ function GlobeArt({ color }: { color: string }) {
     [color]
   );
   useFrame(({ clock }, dt) => {
-    const t = clock.elapsedTime;
-    g.current.rotation.y += dt * 0.28;
+    const t = reduced ? 0 : clock.elapsedTime;
+    if (!reduced) g.current.rotation.y += dt * 0.28;
     arcMat.uniforms.uTime.value = t;
     sat.current.position.set(Math.cos(t * 0.9) * 1.05, Math.sin(t * 0.9) * 0.35, Math.sin(t * 0.9) * 1.05);
   });
@@ -434,6 +442,7 @@ function tabletGeometry() {
 }
 
 function CreedsArt({ color }: { color: string }) {
+  const reduced = useReducedMotion();
   const geo = useMemo(tabletGeometry, []);
   const a = useMemo(() => tabletTextures("I II III IV V"), []);
   const b = useMemo(() => tabletTextures("VI VII VIII IX X"), []);
@@ -449,9 +458,11 @@ function CreedsArt({ color }: { color: string }) {
   const g = useRef<THREE.Group>(null!);
   const halo = useRef<THREE.Mesh>(null!);
   useFrame(({ clock }, dt) => {
-    const t = clock.elapsedTime;
-    g.current.rotation.y = Math.sin(t * 0.5) * 0.35;
-    halo.current.rotation.z += dt * 0.3;
+    if (!reduced) {
+      const t = clock.elapsedTime;
+      g.current.rotation.y = Math.sin(t * 0.5) * 0.35;
+      halo.current.rotation.z += dt * 0.3;
+    }
   });
   return (
     <group>

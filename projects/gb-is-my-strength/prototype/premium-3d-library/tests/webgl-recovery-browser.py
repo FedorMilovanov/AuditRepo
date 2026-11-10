@@ -177,11 +177,16 @@ async def fallback_case(browser,engine):
     })();""")
     page=await ctx.new_page()
     errors=[]
+    requested=[]
+    page.on("request",lambda req:requested.append(req.url))
     page.on("pageerror",lambda e:errors.append(str(e)))
     try:
         response=await page.goto(URL,wait_until="domcontentloaded",timeout=45000)
         assert response and response.status==200
         await page.get_by_text("Зал закрыт на ремонт",exact=True).wait_for(timeout=15000)
+        assert not any("/assets/App-" in url or "/assets/World-" in url for url in requested), (
+            "No-WebGL bootstrap loaded a 3D entry bundle", requested
+        )
         await page.get_by_role("button",name="Моя библиотека · без 3D").click(timeout=15000)
         cabinet=page.locator("[data-gb-cabinet-modal]")
         await cabinet.wait_for(state="visible",timeout=12000)
@@ -190,7 +195,8 @@ async def fallback_case(browser,engine):
         await capture_evidence(page, OUT/f"{engine}-no-webgl-cabinet.png")
         assert not errors,errors
         print(json.dumps({"engine":engine,"viewport":"390x844","result":"PASS",
-            "noWebGL2Fallback":True,"cabinetAvailable":True,"errors":errors},
+            "noWebGL2Fallback":True,"cabinetAvailable":True,
+            "no3DAppOrWorldBundle":True,"errors":errors},
             ensure_ascii=False),flush=True)
     finally:
         await ctx.close()
