@@ -1,5 +1,5 @@
 // Процедурный звук (собственный синтез Web Audio, без внешних записей и музыки).
-import { NarratorBus, type AcousticSpace } from './NarratorBus';
+import { NarratorBus, type AcousticSpace, type ApprovedNarrationTrack } from './NarratorBus';
 import type { NarrationPlan } from '../data/narrationPlan';
 export class AmbientAudio {
   ctx: AudioContext | null = null;
@@ -64,7 +64,7 @@ export class AmbientAudio {
   }
   // Only explicitly approved human-owned voice assets are passed here.
   // All current scripts remain text-only until a real licensed recording exists.
-  async playNarration(approvedAsset: string, space: AcousticSpace) {
+  async playNarration(approvedAsset: ApprovedNarrationTrack, space: AcousticSpace) {
     if (!this.enabled) return false;
     this.start();
     return this.narrator?.play(approvedAsset, space) ?? false;
