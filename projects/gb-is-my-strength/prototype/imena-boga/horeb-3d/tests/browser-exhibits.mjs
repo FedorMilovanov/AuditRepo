@@ -76,6 +76,16 @@ try {
       { timeout: 6000, polling: 100 });
     await page.keyboard.press('KeyE');
     await page.waitForSelector('[role="dialog"]');
+    const beforeScale = await page.evaluate(() => {
+      let scale = null;
+      window.__horeb.world.scene.traverse((object) => {
+        if (object.name === 'original-script-beacon' &&
+            object.userData.exhibitId === 'elohim') scale = object.scale.x;
+      });
+      return scale;
+    });
+    if (!Number.isFinite(beforeScale) || beforeScale <= 0)
+      throw new Error('Elōhîm beacon baseline unavailable before inspection');
     const clicked = await page.evaluate(() => {
       const btn = [...document.querySelectorAll('[role="dialog"] button')]
         .find((b) => b.textContent.includes('Осмотреть место в 3D'));
@@ -84,15 +94,20 @@ try {
     });
     if (!clicked) throw new Error('Missing hero inspection control');
     await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), {timeout:6000});
-    await page.waitForFunction(() => {
+    // Verify the real +8% inspection response relative to this camera's
+    // uninspected scale. Do not hardcode an art-director's old glyph size.
+    await page.waitForFunction((normalScale) => {
       const w = window.__horeb?.world;
+      if (w?.activeInspection?.id !== 'elohim') return false;
       let inspected = false;
-      w?.scene.traverse((o) => {
-        if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim' &&
-            o.scale.x > 0.83 && o.scale.x < 0.9) inspected = true;
+      w.scene.traverse((o) => {
+        if (o.name === 'original-script-beacon' &&
+            o.userData.exhibitId === 'elohim' &&
+            o.scale.x > normalScale * 1.065 &&
+            o.scale.x < normalScale * 1.105) inspected = true;
       });
       return inspected;
-    }, { timeout: 7000, polling: 100 });
+    }, { timeout: 7000, polling: 100 }, beforeScale);
     // React lock/unlock and World.emit update at different frame cadences;
     // wait for a fresh E target, not only the restored 3D render.
     await page.waitForFunction(() => window.__horeb?.state()?.prompt?.id === 'elohim',
@@ -273,7 +288,9 @@ try {
     }, { timeout: 6000 });
     console.log('PASS reset clears persisted checkpoint and restores Begin Journey action');
   } catch (error) {
-    failures.push('HERO ACTION: ' + (error?.message || error));
+    const message = 'HERO ACTION: ' + (error?.stack || error);
+    failures.push(message);
+    console.error(message);
   }
 } catch(error) {
   failures.push('UNCAUGHT '+(error?.stack||error));
