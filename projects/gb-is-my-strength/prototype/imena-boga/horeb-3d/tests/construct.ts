@@ -6,7 +6,7 @@ import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
-import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
+import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffsets } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
@@ -204,6 +204,15 @@ for (const low of [true, false]) {
     !!soil && soil.scale.x <= 0.8 && soil.scale.y <= 0.1 && soil.scale.z <= 0.8);
 }
 
+
+// Real recorded masters must play in order, never overlap or repeat.
+t('bilingual playback schedules original, pause and then Russian voice',
+  JSON.stringify(narrationOffsets([1.25, 2.5])) === '[0,1.8]' &&
+  JSON.stringify(narrationOffsets([5])) === '[0]');
+t('bilingual playback rejects missing, invalid or more-than-two clips',
+  narrationOffsets([]) === null && narrationOffsets([1, 2, 3]) === null &&
+  narrationOffsets([0, 2]) === null && narrationOffsets([Infinity]) === null &&
+  narrationOffsets([1, 2], 0) === null && narrationOffsets([1, 2], 8) === null);
 
 // 42 bilingual stages are metadata, not fabricated Hebrew or auto-TTS.
 // Language follows the actual source (Hebrew / Aramaic / Greek), including
