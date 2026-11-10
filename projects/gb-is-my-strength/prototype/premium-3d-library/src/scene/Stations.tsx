@@ -34,6 +34,10 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
   const light = useRef<THREE.PointLight>(null!);
   const aim = useRef(0);
   const tex = useMemo(() => plaqueTexture(item), [item]);
+  useEffect(() => {
+    tex.needsUpdate = true;
+    return () => tex.dispose();
+  }, [tex]);
 
   useEffect(() => {
     const o = hit.current;
@@ -114,6 +118,10 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
 function BookArt({ color }: { color: string }) {
   const paper = useMemo(() => new THREE.MeshStandardMaterial({ map: paperTexture(), roughness: 0.9, side: THREE.DoubleSide }), []);
   const cover = useMemo(() => new THREE.MeshStandardMaterial({ color: "#6b1f2c", roughness: 0.5, metalness: 0.25 }), []);
+  useEffect(() => {
+    if (paper.map) paper.map.needsUpdate = true;
+    return () => paper.map?.dispose();
+  }, [paper]);
   const flips = useRef<THREE.Group[]>([]);
   const sheets = useRef<THREE.Group>(null!);
   useFrame(({ clock }) => {
@@ -429,6 +437,11 @@ function CreedsArt({ color }: { color: string }) {
   const geo = useMemo(tabletGeometry, []);
   const a = useMemo(() => tabletTextures("I II III IV V"), []);
   const b = useMemo(() => tabletTextures("VI VII VIII IX X"), []);
+  useEffect(() => {
+    const owned = [a.map, a.emissive, b.map, b.emissive];
+    owned.forEach((tex) => { tex.needsUpdate = true; });
+    return () => owned.forEach((tex) => tex.dispose());
+  }, [a, b]);
   const side = useMemo(() => new THREE.MeshStandardMaterial({ color: "#5b5e78", roughness: 0.7 }), []);
   const mk = (t: { map: THREE.Texture; emissive: THREE.Texture }) =>
     new THREE.MeshStandardMaterial({ map: t.map, emissiveMap: t.emissive, emissive: "#ffffff", emissiveIntensity: 1.6, roughness: 0.6, metalness: 0.1 });
