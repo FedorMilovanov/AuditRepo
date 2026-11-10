@@ -4,7 +4,6 @@ import { loadFonts } from "./fonts";
 import World from "./scene/World";
 import { SceneBoundary } from "./scene/SceneBoundary";
 import Overlay from "./ui/Overlay";
-import CabinetPanel from "./cabinet/CabinetPanel";
 
 const MOVE_KEYS = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft", "ShiftRight"];
 
@@ -18,31 +17,7 @@ function webglOk() {
   }
 }
 
-/**
- * The supported ?panel=cabinet route is a genuinely independent 2D entry,
- * not a WebGL scene hiding behind an overlay. This makes personal materials
- * accessible on devices without 3D, isolates IndexedDB multi-tab editing
- * from scene/WebGL failures and avoids rendering unused GPU resources.
- *
- * Closing the cabinet transitions normally to the hall, with all other URL
- * parameters preserved. No test hooks, storage injection or separate DB.
- */
 export default function App() {
-  const [directCabinet, setDirectCabinet] = useState(
-    () => new URLSearchParams(window.location.search).get("panel") === "cabinet"
-  );
-  if (directCabinet) {
-    return <CabinetPanel onClose={() => {
-      const address = new URL(window.location.href);
-      address.searchParams.delete("panel");
-      window.history.replaceState(null, "", address.pathname + address.search + address.hash);
-      setDirectCabinet(false);
-    }} />;
-  }
-  return <HallApp />;
-}
-
-function HallApp() {
   const [fontsReady, setFontsReady] = useState(false);
   const fatal = useStore((s) => s.fatal);
 
