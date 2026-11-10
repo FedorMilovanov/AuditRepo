@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -545,30 +545,37 @@ if (gardenRecord) {
     OLIVE_GROVE_OFFSETS.every(([dx]) => Math.abs(anchorX + dx) > 0.29 + 0.35 + 0.05));
 }
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
-// Natural exit strata are genuine geological roof surfaces, not an
-// artificial gateway or invisible barrier. They must stay above head height
-// along the fully traversable zone-6 corridor in BOTH quality modes.
+// Zone-6 geometry is a literal deformation OF the cave shell, not detached
+// paper spikes or a theatrical portal, and cannot intersect walking height.
+const exitCeiling = exitVaultRelief(0.5, 5, -306, 1, 0);
+const exitSide = exitVaultRelief(2.0, 3, -306, 0.1, 1);
+t('zone-6 erosion modifies the original vault without out-of-zone artefacts',
+  exitCeiling.roofDrop > 0.18 && exitCeiling.roofDrop < 0.89 &&
+  exitCeiling.shade < 1 && exitCeiling.shade >= 0.82 &&
+  exitSide.sideOut > 0.05 && exitSide.roofDrop < 0.05 &&
+  exitVaultRelief(0, 5, -285, 1, 0).roofDrop === 0 &&
+  exitVaultRelief(0, 5, -325, 1, 0).roofDrop === 0);
 for (const lowMode of [true, false]) {
-  const geoScene = buildZones(lowMode, new THREE.MeshStandardMaterial({ vertexColors: true }));
-  const fracture = geoScene.group.getObjectByName('zone-6-geological-roof-fractures');
-  const position = fracture instanceof THREE.Mesh && fracture.geometry.getAttribute('position');
-  let minY = Infinity, minZ = Infinity, maxZ = -Infinity;
-  if (position) {
-    for (let i = 0; i < position.count; i++) {
-      minY = Math.min(minY, position.getY(i));
-      minZ = Math.min(minZ, position.getZ(i));
-      maxZ = Math.max(maxZ, position.getZ(i));
+  const sceneGeometry = buildZones(lowMode,
+    new THREE.MeshStandardMaterial({ vertexColors: true }));
+  const vault = sceneGeometry.group.getObjectByName('cave-vault-continuous');
+  const obsolete = sceneGeometry.group.getObjectByName('zone-6-geological-roof-fractures');
+  let minHeight = Infinity, inspected = 0;
+  if (vault instanceof THREE.Mesh) {
+    const vertices = vault.geometry.getAttribute('position');
+    for (let i = 0; i < vertices.count; i++) {
+      const x = vertices.getX(i), y = vertices.getY(i), z = vertices.getZ(i);
+      if (Math.abs(x) < 1.25 && z < -300 && z > -315 && y > 2.7) {
+        minHeight = Math.min(minHeight, y);
+        inspected++;
+      }
     }
   }
-  t('zone-6 geological fracture field is a single head-clear mesh ' +
+  t('zone-6 continuous rock contour keeps the safe tunnel, no detached fins ' +
     (lowMode ? 'LOW' : 'HIGH'),
-    fracture instanceof THREE.Mesh &&
-    fracture.userData.fractureCount === (lowMode ? 11 : 17) &&
-    !!position && position.count === (lowMode ? 11 : 17) * 7 * 3 &&
-    fracture.geometry.getAttribute('uv')?.count === position.count &&
-    fracture.geometry.getAttribute('normal')?.count === position.count &&
-    minY >= 2.77 && minZ > -319 && maxZ < -290 &&
-    !geoScene.obstacles.some((o) => o.z < -292 && o.z > -318));
+    vault instanceof THREE.Mesh && obsolete == null &&
+    inspected > (lowMode ? 40 : 90) && minHeight > 3.0 &&
+    !sceneGeometry.obstacles.some((o) => o.z < -292 && o.z > -318));
 }
 
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
