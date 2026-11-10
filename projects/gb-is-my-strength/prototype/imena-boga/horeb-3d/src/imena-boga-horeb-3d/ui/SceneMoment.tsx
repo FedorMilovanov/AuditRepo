@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Exhibit } from '../data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../data/russianCues';
 import { PILOT_LESSONS, type LearningChoice } from '../data/learningJourney';
+import { SITE_CLUES, SITE_CLUE_IDS, type SiteClueId } from '../data/siteClues';
 
 // These are original museum-guide paraphrases, NOT quotes from Scripture,
 // not voiced divine speech, and not approved recorded audio.
@@ -51,16 +52,17 @@ export const HERO_MOMENTS: Record<string, { object: string; observation: string;
 // Optional story: inspect, compare Scripture, answer one context question.
 // Never gate 3D movement, free source reading or the sacred barefoot boundary.
 export function SceneMoment({ e, examined, canInspect, onInspect,
-  understood = false, onUnderstood, textMode = false }: {
+  understood = false, onUnderstood, textMode = false, siteClues = [] }: {
   e: Exhibit; examined: boolean; canInspect: boolean; onInspect: () => void;
   understood?: boolean; onUnderstood?: (choice: LearningChoice) => void;
-  textMode?: boolean;
+  textMode?: boolean; siteClues?: readonly SiteClueId[];
 }) {
   const [showMeaning, setShowMeaning] = useState(false);
   const [selected, setSelected] = useState<LearningChoice | null>(null);
   const [attempt, setAttempt] = useState<'right' | 'retry' | null>(null);
   const moment = HERO_MOMENTS[e.id];
   const lesson = PILOT_LESSONS.find((entry) => entry.id === e.id);
+  const physicalClues = SITE_CLUE_IDS.filter((id) => SITE_CLUES[id].exhibitId === e.id);
   if (!moment) return null;
   const answered = understood || attempt === 'right';
   const submit = () => {
@@ -75,6 +77,16 @@ export function SceneMoment({ e, examined, canInspect, onInspect,
       <p className="eyebrow text-bronze">Экспедиция смыслов · художественная реконструкция</p>
       <p className="font-display text-xl sm:text-2xl text-parch mt-2">{moment.object}</p>
       <p className="text-sm text-parch/75 mt-3">Задача: {lesson?.mission ?? e.meaningfulAction}</p>
+      {physicalClues.length > 0 && !textMode && <div className="mt-4 rounded-sm border border-bronze/20 bg-black/35 p-3 text-sm">
+        <p className="text-bronze">Необязательная 3D-экспедиция: {physicalClues.filter((id) => siteClues.includes(id)).length} из {physicalClues.length} наблюдений</p>
+        <p className="text-xs text-parch/70 mt-1">Отыщите детали в сцене, наведите взгляд и нажмите F (или кнопку на экране). Вопрос по Писанию доступен независимо от этого.</p>
+        <ul className="mt-2 space-y-2">
+          {physicalClues.map((id) => <li key={id}>
+            {siteClues.includes(id) ? 'Изучено: ' : 'Найдите: '}{SITE_CLUES[id].label}
+            {siteClues.includes(id) && <p className="text-xs text-muted mt-1">{SITE_CLUES[id].finding}</p>}
+          </li>)}
+        </ul>
+      </div>}
       <ol className="list-decimal pl-5 text-sm text-parch/75 mt-4 space-y-1">
         <li>{examined ? 'Наблюдение выполнено' : textMode ? 'Изучить описание сцены' : 'Осмотреть сцену вблизи в 3D'}</li>
         <li>{showMeaning ? 'Контекст открыт' : 'Различить свидетельства в тексте'}</li>

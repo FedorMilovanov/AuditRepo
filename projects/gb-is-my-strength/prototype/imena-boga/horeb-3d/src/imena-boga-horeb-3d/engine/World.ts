@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
+import { SITE_CLUES, type SiteClueId } from '../data/siteClues';
 import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET, BEERSHEBA_WELL_COLLIDER_RADIUS } from './exhibitProps';
@@ -15,6 +16,8 @@ export type Prompt = null | { kind: 'exhibit'; id: string } | { kind: 'shoes' };
 export interface WorldState {
   zone: number; x: number; z: number; yaw: number; prompt: Prompt; shoes: Shoes; block: Block;
   distBush: number; fps: number; calls: number; tris: number; locked: boolean; contextLost: boolean; pixelRatio: number;
+  // Optional true spatial observations; unrelated to sacred access or quiz scores.
+  focusClue: SiteClueId | null;
 }
 export interface WorldSettings { quality: 'low' | 'high'; reducedMotion: boolean; particles: boolean; sound: boolean; exposure: number; autoQuality: boolean }
 
@@ -49,6 +52,7 @@ export class World {
   private inputLocked = false;
   private obstacles: Obstacle[] = [];
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
+  private storyTargets: { id: SiteClueId; x: number; z: number }[] = [];
   private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean, viewFactor?: number) => void }[] = [];
   // Scene objects remain in the 42-item registry/physics, but a visitor does
   // not need GPU draws for exhibits a hundred metres behind the fog.
@@ -204,6 +208,19 @@ export class World {
           z: bz + BEERSHEBA_TAMARISK_OFFSET.z, r: 0.18,
         });
       } else this.obstacles.push({ x: bx, z: bz, r: 0.6 });
+      // Register real prop centres, not invented markers or rendered HUD
+      // guesses. The two Beersheba targets use the SAME offsets as the
+      // well/tree meshes and colliders above.
+      if (e.id === 'el-olam') {
+        this.storyTargets.push({ id: 'beersheba-well', x: bx, z: bz });
+        this.storyTargets.push({
+          id: 'beersheba-tamarisk',
+          x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
+          z: bz + BEERSHEBA_TAMARISK_OFFSET.z,
+        });
+      } else if (e.id === 'el-roi') {
+        this.storyTargets.push({ id: 'hagar-spring', x: bx, z: bz });
+      }
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
   }
@@ -405,6 +422,29 @@ export class World {
   }
   /** Saved references can be opened from anywhere, but their physical
    * inspection action must only work at the exhibit's actual location. */
+  // A real camera-directed encounter: near the physical feature and
+  // looking at it. From a distance, looking elsewhere, in a modal, during
+  // shoes removal, on lost WebGL or after disposal the action is impossible.
+  // No teleport, no named-item inventory, no invisible collectible.
+  focusStoryClue(): SiteClueId | null {
+    if (this.disposed || this.contextLost || this.inputLocked || this.shoes === 'removing') return null;
+    const fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw);
+    let found: SiteClueId | null = null, best = -Infinity;
+    for (const target of this.storyTargets) {
+      const dx = target.x - this.pos.x, dz = target.z - this.pos.y;
+      const dist = Math.hypot(dx, dz);
+      if (dist < 1.4 || dist > 7.5) continue;
+      const facing = (dx * fx + dz * fz) / dist;
+      if (facing < 0.94) continue; // roughly 20 degrees to crosshair
+      const score = facing - dist * 0.003;
+      if (score > best) { best = score; found = target.id; }
+    }
+    return found;
+  }
+  observeFocusedStoryClue(): SiteClueId | null {
+    const id = this.focusStoryClue();
+    return id && SITE_CLUES[id] ? id : null;
+  }
   canInspectExhibit(id: string): boolean {
     const item = this.exhibitPos.find((p) => p.e.id === id);
     return !!item && !this.disposed &&
@@ -567,6 +607,7 @@ export class World {
       zone: zoneAt(this.pos.y), x: this.pos.x, z: this.pos.y, yaw: this.yaw, prompt, shoes: this.shoes, block: this.block,
       distBush: distToBush(this.pos.x, this.pos.y), fps: this.fps, calls: this.renderer.info.render.calls, tris: this.renderer.info.render.triangles,
       locked: document.pointerLockElement === this.canvas, contextLost: this.contextLost, pixelRatio: this.renderer.getPixelRatio(),
+      focusClue: this.focusStoryClue(),
     };
     void force;
     this.onState(s);

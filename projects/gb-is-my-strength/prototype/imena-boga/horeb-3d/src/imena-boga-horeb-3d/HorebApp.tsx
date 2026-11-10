@@ -6,6 +6,7 @@ import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Origi
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
 import { SceneMoment } from './ui/SceneMoment';
 import { LEARNING_STORAGE_KEY, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from './data/learningJourney';
+import { SITE_CLUES, SITE_CLUE_IDS, SITE_CLUE_STORAGE_KEY, normalizeSiteClues, addSiteClue, type SiteClueId } from './data/siteClues';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
@@ -74,10 +75,17 @@ function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (i
   </div>;
 }
 
-function StudyJourneyPanel({ observed, understood }: { observed: readonly string[]; understood: readonly string[] }) {
+function StudyJourneyPanel({ observed, understood, clues }: { observed: readonly string[]; understood: readonly string[]; clues: readonly SiteClueId[] }) {
   return <section aria-label="Путевой дневник смысла" className="space-y-4">
     <p className="text-parch/80 text-sm">Пройдите восемь ключевых исследований в любой последовательности. Все 42 досье можно читать свободно; знания не открывают запретные области.</p>
     <p className="font-display text-xl text-bronze" role="status">Осмыслено: {understood.length} / {PILOT_LESSONS.length}</p>
+    <p className="text-sm text-parch/80">3D-наблюдения у реальных деталей сцены: {clues.length} / {SITE_CLUE_IDS.length}. Доступное чтение не требует их собирать.</p>
+    <ul className="space-y-2 text-sm text-parch/80">
+      {SITE_CLUE_IDS.map((id) => <li key={id} className="border-l-2 border-bronze/20 pl-3">
+        <span>{clues.includes(id) ? 'Изучено: ' : 'Найдите в 3D: '}{SITE_CLUES[id].label}</span>
+        {clues.includes(id) && <p className="mt-1 text-xs text-muted">{SITE_CLUES[id].finding} · {SITE_CLUES[id].reference}</p>}
+      </li>)}
+    </ul>
     <ol className="space-y-3">
       {PILOT_LESSONS.map((lesson) => {
         const e = EXHIBITS.find((item) => item.id === lesson.id);
@@ -107,6 +115,7 @@ export default function HorebApp() {
   const [toast, setToast] = useState<string | null>(null);
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
   const [learning, setLearning] = useState(() => normalizeLearningJournal(readStored(LEARNING_STORAGE_KEY)));
+  const [siteClues, setSiteClues] = useState<SiteClueId[]>(() => normalizeSiteClues(readStored(SITE_CLUE_STORAGE_KEY)));
   const [bookmarks, setBookmarks] = useState<string[]>(() => normalizeStudyBookmarks(readStored(STUDY_BOOKMARKS_KEY)));
   const [guideCaption, setGuideCaption] = useState<string | null>(null);
   const [webgl] = useState(hasWebGL);
@@ -124,6 +133,7 @@ export default function HorebApp() {
   useEffect(() => { try { localStorage.setItem(LS_PROGRESS, JSON.stringify(progress)); } catch { /* */ } }, [progress]);
   useEffect(() => { try { localStorage.setItem(STUDY_BOOKMARKS_KEY, JSON.stringify(bookmarks)); } catch { /* private mode */ } }, [bookmarks]);
   useEffect(() => { try { localStorage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(learning)); } catch { /* private mode */ } }, [learning]);
+  useEffect(() => { try { localStorage.setItem(SITE_CLUE_STORAGE_KEY, JSON.stringify(siteClues)); } catch { /* private mode */ } }, [siteClues]);
 
   const resolved = useMemo(() => {
     const low = settings.quality === 'low' || (settings.quality === 'auto' && (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || innerWidth < 700));
@@ -223,6 +233,15 @@ export default function HorebApp() {
   // Keyboard/touch events must use the freshest World state, not React's last
   // committed render. Rapid teleport/zone changes otherwise open a stale dossier
   // or ignore E even though the visible world already offers a new target.
+  const inspectSiteClue = useCallback(() => {
+    // Revalidate actual camera orientation and distance inside World. The
+    // browser HUD / button state alone is never a grant of an observation.
+    const id = worldRef.current?.observeFocusedStoryClue();
+    if (!id) return;
+    setSiteClues((old) => addSiteClue(old, id));
+    setToast('Изучено: ' + SITE_CLUES[id].label + '. Подробности — в путевом дневнике.');
+  }, []);
+
   const interact = useCallback(() => {
     const w = worldRef.current;
     const prompt = stateRef.current?.prompt;
@@ -239,12 +258,13 @@ export default function HorebApp() {
       const tag = (document.activeElement as HTMLElement)?.tagName;
       const free = tag === 'BODY' || tag === 'CANVAS' || !tag;
       if (e.code === 'KeyE' || (e.key === 'Enter' && free)) { e.preventDefault(); interact(); }
+      else if (e.code === 'KeyF' && free) { e.preventDefault(); inspectSiteClue(); }
       else if (e.code === 'KeyM') setDialog({ kind: 'map' });
       else if (e.code === 'KeyR') worldRef.current?.resetCamera();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [screen, dialog, interact]);
+  }, [screen, dialog, interact, inspectSiteClue]);
 
   const start = () => { setErr(null); setFinale('none'); setScreen('world'); };
   const leaveWorld = (next: 'intro' | 'reader') => {
@@ -344,7 +364,7 @@ export default function HorebApp() {
           {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
       {introDialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setIntroDialog(null)}>
-        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} />
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} />
       </Modal>}
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
@@ -419,6 +439,14 @@ export default function HorebApp() {
         </button>
       )}
 
+      {ws?.focusClue && !dialog && ws.shoes !== 'removing' && (
+        <button className="absolute right-4 bottom-32 sm:right-8 sm:bottom-32 z-20 max-w-[min(70vw,19rem)] rounded-sm border border-bronze/55 bg-black/85 px-3 py-3 text-sm text-left text-parch shadow-lg"
+          onClick={inspectSiteClue} aria-label={'Изучить в 3D: ' + SITE_CLUES[ws.focusClue].label}>
+          <span className="kbd mr-2">F</span>
+          {siteClues.includes(ws.focusClue) ? 'Осмотреть ещё: ' : 'Исследовать: '}
+          {SITE_CLUES[ws.focusClue].label}
+        </button>
+      )}
       {isTouch && ws && !dialog && <>
         <Joystick onMove={(x, y) => worldRef.current?.setMoveInput(x, y)} />
         <button className="fixed right-6 bottom-8 z-20 w-20 h-20 rounded-full bg-amber-900/50 border border-parch/40 text-sm" onClick={interact} disabled={!ws.prompt}>Действие</button>
@@ -454,7 +482,7 @@ export default function HorebApp() {
           {bookmarks.includes(exhibit.id) ? 'Убрать из закладок' : 'Сохранить свидетельство'}
         </button>
         <SceneMoment key={exhibit.id} e={exhibit}
-          examined={learning.observed.includes(exhibit.id)} understood={learning.understood.includes(exhibit.id)}
+          examined={learning.observed.includes(exhibit.id)} understood={learning.understood.includes(exhibit.id)} siteClues={siteClues}
           onUnderstood={(choice) => setLearning((prev) => completeLesson(prev, exhibit.id, choice))}
           canInspect={worldRef.current?.canInspectExhibit(exhibit.id) ?? false} onInspect={() => {
           if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
@@ -477,7 +505,7 @@ export default function HorebApp() {
         </div>
       </Modal>}
       {dialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setDialog(null)}>
-        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} />
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} />
       </Modal>}
       {dialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setDialog(null)}>
         <StudyBookmarkList ids={bookmarks} onOpen={(id) => setDialog({ kind: 'exhibit', id })} />

@@ -5,6 +5,7 @@ npx tsc --outDir .test-build --module es2022 --target es2022 --moduleResolution 
   src/imena-boga-horeb-3d/data/exhibits.ts \
   src/imena-boga-horeb-3d/data/validate.ts \
   src/imena-boga-horeb-3d/data/learningJourney.ts \
+  src/imena-boga-horeb-3d/data/siteClues.ts \
   src/imena-boga-horeb-3d/engine/nav.ts \
   src/imena-boga-horeb-3d/engine/quality.ts
 echo '{"type":"module"}' > .test-build/package.json

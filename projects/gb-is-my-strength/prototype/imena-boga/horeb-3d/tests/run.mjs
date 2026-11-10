@@ -4,6 +4,7 @@ import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.
 import * as N from '../.test-build/engine/nav.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
+import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
@@ -82,6 +83,21 @@ t('vowel points and unpointed text match the same written-only policy',
   containsTetragrammaton('יְהוָה יִרְאֶה') &&
   containsTetragrammaton('יהוה') &&
   !containsTetragrammaton('אֶהְיֶה'));
+// An observational game event must be authentic and idempotent, not a
+// client-invented item, points system or route unlock.
+t('three 3D scene observations are canonical and tied to existing exhibits',
+  SITE_CLUE_IDS.length === 3 && new Set(SITE_CLUE_IDS).size === 3 &&
+  SITE_CLUE_IDS.every((id) => EXHIBITS.some((e) => e.id === SITE_CLUES[id].exhibitId)));
+t('site observation normalizer discards unknown/prototype IDs and duplicates',
+  JSON.stringify(normalizeSiteClues(['constructor','beersheba-well','bad','beersheba-well'])) ===
+  JSON.stringify(['beersheba-well']) && !isSiteClueId('constructor'));
+t('site observations record only known physical locations once',
+  JSON.stringify(addSiteClue(addSiteClue([], 'hagar-spring'), 'hagar-spring')) ===
+  JSON.stringify(['hagar-spring']) &&
+  JSON.stringify(addSiteClue([], 'invalid')) === '[]');
+t('site observations never imply an automatic educational completion',
+  normalizeLearningJournal({ observed: [], understood: [] }).understood.length === 0 &&
+  SITE_CLUES['beersheba-tamarisk'].reference === 'Быт. 21:33');
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }

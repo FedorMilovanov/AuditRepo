@@ -571,6 +571,78 @@ try {
   check('mobile low-quality renders 42 compact labels (384x540)', labels.small === 42 && labels.large === 0 && labels.quality === 'low', JSON.stringify(labels));
   await mobile.screenshot({path:join(shots,'smoke-05-mobile-world.png')});
   await mobile.close();
+
+  // Real 3D investigation uses the same well/tree/spring mesh locations;
+  // only camera setup is programmatic. Actual collection uses trusted F
+  // keyboard events, which revalidate distance and orientation in World.
+  const investigator = await browser.newPage();
+  await investigator.setViewport({ width: 1280, height: 800 });
+  investigator.on('pageerror', (e) => errors.push(String(e)));
+  await investigator.goto(base + '/?e2e', { waitUntil:'domcontentloaded', timeout:45000 });
+  await waitForIntroPaint(investigator);
+  const investigatorStarted = await investigator.evaluate(() => {
+    const btn = [...document.querySelectorAll('button')]
+      .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()));
+    btn?.click(); return !!btn;
+  });
+  check('3D investigation can start with a new or existing local route', investigatorStarted);
+  await investigator.waitForFunction(() => !!window.__horeb?.world && !!window.__horeb?.state(),
+    { timeout: 45000 });
+  check('out-of-range story clue is not focusable',
+    await investigator.evaluate(() => window.__horeb.world.focusStoryClue() === null));
+  const baselineUnderstanding = await investigator.evaluate(() => {
+    try { return JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}').understood?.length || 0; }
+    catch { return -1; }
+  });
+  const collected = [];
+  for (const clueId of ['beersheba-well','beersheba-tamarisk','hagar-spring']) {
+    const setup = await investigator.evaluate((id) => {
+      const world = window.__horeb.world;
+      const target = world.storyTargets.find((item) => item.id === id);
+      if (!target) return { error: 'missing physical mesh target' };
+      // Move to the visitor-side of existing solid props, not inside them.
+      const x = target.x + (target.x > 0 ? -4.5 : 4.5);
+      world.teleportTo(x, target.z);
+      const pos = world.position;
+      world.yaw = Math.atan2(-(target.x - pos.x), -(target.z - pos.z));
+      return { id, target, pos, focus: world.focusStoryClue() };
+    }, clueId);
+    check('camera can investigate actual prop ' + clueId,
+      setup.focus === clueId, JSON.stringify(setup));
+    if (clueId === 'beersheba-well') {
+      await investigator.evaluate(() => document.querySelector('nav button')?.focus());
+      await investigator.keyboard.press('KeyF');
+      check('F does not steal keyboard navigation from HUD buttons',
+        await investigator.evaluate(() =>
+          !JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]')
+            .includes('beersheba-well')));
+      await investigator.evaluate(() => (document.activeElement)?.blur());
+    }
+    await investigator.keyboard.press('KeyF');
+    await investigator.waitForFunction((id) => {
+      try { return JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]').includes(id); }
+      catch { return false; }
+    }, { timeout: 7500 }, clueId);
+    collected.push(clueId);
+  }
+  check('three 3D details discovered by trusted F action, without rewarding doctrinal progress',
+    await investigator.evaluate((before) => {
+      const ids=JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]');
+      const study=JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}');
+      return ids.length===3 && (study.understood || []).length === before;
+    }, baselineUnderstanding));
+  // The same F key must be inert at an unobserved distant location.
+  await investigator.evaluate(() => window.__horeb.world.teleportZone(0));
+  await investigator.keyboard.press('KeyF');
+  check('F cannot collect a clue from outside physical observation range',
+    await investigator.evaluate(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]').length === 3));
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  check('three discovered details survive a full reload in local-only storage',
+    await investigator.evaluate(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]').length === 3));
+  await investigator.close();
+
   check('no page runtime errors', errors.length === 0, errors.slice(0, 2).join(' | '));
 } catch (error) {
   failures.push('Uncaught browser-test exception: ' + (error?.stack || String(error)));
