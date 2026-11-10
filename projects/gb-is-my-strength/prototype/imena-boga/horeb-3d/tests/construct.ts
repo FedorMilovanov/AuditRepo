@@ -2,7 +2,7 @@
 // (which resolves extensionless TS imports) and run in Node.
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
-import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
+import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
@@ -259,6 +259,37 @@ if (wellRecord) {
     courses === 42 && stones === 14 && groundStones === 18);
   t('Beersheba tamarisk has airy sprays, not an opaque green canopy',
     sprays === 10 && needles === 70);
+  const highWell = buildExhibitProps(wellRecord, false, 0, 0);
+  const outerStoneRadius = (group: THREE.Group): number => {
+    group.updateMatrixWorld(true);
+    let maxRadius = 0;
+    const vertex = new THREE.Vector3();
+    group.traverse((o) => {
+      if (!(o instanceof THREE.Mesh) ||
+          !['well-course-stone', 'well-rim-stone'].includes(o.name)) return;
+      const positions = o.geometry.getAttribute('position');
+      for (let i = 0; i < positions.count; i++) {
+        vertex.fromBufferAttribute(positions, i).applyMatrix4(o.matrixWorld);
+        maxRadius = Math.max(maxRadius, Math.hypot(vertex.x, vertex.z));
+      }
+    });
+    return maxRadius;
+  };
+  const lowRadius = outerStoneRadius(well), highRadius = outerStoneRadius(highWell);
+  t('Beersheba high and low well masonry share the physical collision footprint',
+    BEERSHEBA_WELL_COLLIDER_RADIUS === 1.45 &&
+    lowRadius > 1.1 && lowRadius < BEERSHEBA_WELL_COLLIDER_RADIUS &&
+    highRadius > 1.1 && highRadius < BEERSHEBA_WELL_COLLIDER_RADIUS &&
+    Math.abs(lowRadius - highRadius) < 0.005);
+  let rimPieces = 0, roundedCourses = 0;
+  highWell.traverse((o) => {
+    if (o.name === 'well-rim-stone') rimPieces++;
+    if (o.name === 'well-course-stone' && o instanceof THREE.Mesh &&
+        o.geometry.type === 'BoxGeometry') roundedCourses++;
+  });
+  t('Beersheba coping consists of 14 individually fitted stones, not a continuous torus',
+    rimPieces === 14 && roundedCourses === 42 &&
+    !highWell.getObjectByName('well-round-lip'));
 }
 const hagarRecord = EXHIBITS.find((e) => e.environmentKey === 'wilderness-spring');
 if (hagarRecord) {
@@ -363,6 +394,18 @@ if (gardenRecord) {
   t('Gethsemane foliage is paired along joined twig sprays, with no giant opaque balls',
     foliageTwigs === 4 * 7 * 4 && biggestCore <= 0.27 &&
     flatLeaves === 4 * 7 * 4 * 5 * 2);
+  let tooLongLeaves = 0, verticalLeaves = 0, paleTrunks = 0;
+  grove.traverse((o) => {
+    if (o.name === 'olive-leaf-sprig' && o instanceof THREE.Mesh) {
+      if (o.scale.y > 0.116) tooLongLeaves++;
+      if (Math.abs(o.rotation.z) < 0.8) verticalLeaves++;
+    }
+    if (o.name === 'olive-main-trunk' && o instanceof THREE.Mesh &&
+        o.material instanceof THREE.MeshStandardMaterial &&
+        o.material.color.getHex() !== 0x777168) paleTrunks++;
+  });
+  t('Gethsemane laminae stay short and slanted, while bark is not chalk-white',
+    tooLongLeaves === 0 && verticalLeaves === 0 && paleTrunks === 0);
   const gardenX = PLACEMENTS['abba'][0];
   const inward = -Math.sign(gardenX) * 0.85;
   const anchorX = gardenX + inward * 1.2 / Math.hypot(inward, 0.53);
