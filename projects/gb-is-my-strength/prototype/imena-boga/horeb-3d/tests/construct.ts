@@ -289,6 +289,8 @@ if (wellToAudit) {
     mortar instanceof THREE.Mesh &&
     mortar.geometry instanceof THREE.CylinderGeometry &&
     mortar.geometry.parameters.openEnded === true &&
+    mortar.geometry.parameters.radiusTop > 1.20 &&
+    mortar.geometry.parameters.radiusTop < 1.23 &&
     mortar.material instanceof THREE.MeshStandardMaterial &&
     mortar.material.color.getHex() === 0x4b4037 && stones === 42);
   t('Beersheba courses use authored separate limestone tones instead of one painted barrel',
