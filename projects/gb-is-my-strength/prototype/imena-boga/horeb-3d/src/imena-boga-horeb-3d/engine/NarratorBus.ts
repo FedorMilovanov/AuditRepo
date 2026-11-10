@@ -19,8 +19,18 @@ export function isApprovedAudioPath(path: string): boolean {
     Object.values(APPROVED_NARRATION_ASSETS).includes(path);
 }
 
+/** Offsets for source-language and Russian masters, never simultaneous. */
+export function narrationOffsets(durations: readonly number[], gap = 0.55): number[] | null {
+  if (durations.length < 1 || durations.length > 2 || !Number.isFinite(gap) ||
+      gap < 0.25 || gap > 1.5 || durations.some((d) => !Number.isFinite(d) || d <= 0 || d > 180)) return null;
+  const starts: number[] = [];
+  let next = 0;
+  for (const duration of durations) { starts.push(next); next += duration + gap; }
+  return starts;
+}
+
 export class NarratorBus {
-  private current: AudioBufferSourceNode | null = null;
+  private sources: AudioBufferSourceNode[] = [];
   private activeNodes: { dry: GainNode; wet: GainNode; reverb: ConvolverNode } | null = null;
   private activeFetch: AbortController | null = null;
   private impulses = new Map<AcousticSpace, AudioBuffer>();
@@ -58,48 +68,66 @@ export class NarratorBus {
     return ir;
   }
 
+  // One shared playback bus: original-language recording, a real pause,
+  // then Russian narration. Never uses browser text-to-speech or autoplay.
   async play(file: string, space: AcousticSpace): Promise<boolean> {
-    if (this.disposed || !isApprovedAudioPath(file)) return false;
+    return this.playSequence([file], space);
+  }
+  async playSequence(files: readonly string[], space: AcousticSpace): Promise<boolean> {
+    if (this.disposed || files.length < 1 || files.length > 2 ||
+        new Set(files).size !== files.length || !files.every(isApprovedAudioPath)) return false;
     this.stop();
     const gen = ++this.generation;
     const abort = new AbortController();
     this.activeFetch = abort;
     try {
-      const response = await fetch(file, { signal: abort.signal, cache: 'force-cache' });
-      if (!response.ok || !/^(audio\/|application\/octet-stream)/.test(response.headers.get('content-type') || '')) return false;
-      const bytes = await response.arrayBuffer();
-      if (this.disposed || gen !== this.generation) return false;
-      const buffer = await this.ctx.decodeAudioData(bytes);
-      if (this.disposed || gen !== this.generation) return false;
+      // Resume in the original trusted click handler, before network awaits.
       await this.ctx.resume();
       if (this.disposed || gen !== this.generation) return false;
-      const source = this.ctx.createBufferSource();
-      source.buffer = buffer;
+      const buffers: AudioBuffer[] = [];
+      for (const file of files) {
+        const response = await fetch(file, { signal: abort.signal, cache: 'force-cache' });
+        if (!response.ok ||
+            !/^(audio\/|application\/octet-stream)/.test(response.headers.get('content-type') || '')) return false;
+        const bytes = await response.arrayBuffer();
+        if (bytes.byteLength === 0 || bytes.byteLength > 16 * 1024 * 1024 ||
+            this.disposed || gen !== this.generation) return false;
+        const buffer = await this.ctx.decodeAudioData(bytes);
+        if (this.disposed || gen !== this.generation) return false;
+        buffers.push(buffer);
+      }
+      const offsets = narrationOffsets(buffers.map((buffer) => buffer.duration));
+      if (!offsets || this.disposed || gen !== this.generation) return false;
       const dry = this.ctx.createGain(), wet = this.ctx.createGain();
-      const reverb = this.ctx.createConvolver();
-      const cfg = ACOUSTIC[space];
-      dry.gain.value = cfg.dry;
-      wet.gain.value = cfg.wet;
+      const reverb = this.ctx.createConvolver(), cfg = ACOUSTIC[space];
+      dry.gain.value = cfg.dry; wet.gain.value = cfg.wet;
       reverb.buffer = this.impulse(space);
-      source.connect(dry).connect(this.voiceOutput);
-      source.connect(reverb).connect(wet).connect(this.voiceOutput);
-      this.current = source;
+      dry.connect(this.voiceOutput);
+      reverb.connect(wet).connect(this.voiceOutput);
       this.activeNodes = { dry, wet, reverb };
+      const startAt = this.ctx.currentTime + 0.04;
+      for (let i = 0; i < buffers.length; i++) {
+        const source = this.ctx.createBufferSource();
+        source.buffer = buffers[i];
+        source.connect(dry); source.connect(reverb);
+        this.sources.push(source);
+        source.onended = () => {
+          source.disconnect();
+          if (this.disposed || gen !== this.generation || i !== buffers.length - 1) return;
+          // Preserve ambient ducking between the two clips; release at end.
+          this.sources = [];
+          this.ambience.gain.setTargetAtTime(1, this.ctx.currentTime, 0.65);
+          dry.disconnect(); wet.disconnect(); reverb.disconnect();
+          this.activeNodes = null;
+        };
+      }
       this.ambience.gain.setTargetAtTime(0.45, this.ctx.currentTime, 0.25);
-      source.onended = () => {
-        if (this.current !== source) return;
-        this.current = null;
-        this.ambience.gain.setTargetAtTime(1, this.ctx.currentTime, 0.65);
-        source.disconnect(); dry.disconnect(); wet.disconnect(); reverb.disconnect();
-        this.activeNodes = null;
-      };
-      source.start();
+      this.sources.forEach((source, i) => source.start(startAt + offsets[i]));
       return true;
     } catch (error) {
-      if (!(error instanceof DOMException && error.name === 'AbortError')) {
-        // Missing or invalid recording must NOT cause a fallback divine TTS.
-        console.warn('Human narrator recording unavailable:', error);
-      }
+      if (!(error instanceof DOMException && error.name === 'AbortError'))
+        console.warn('Approved narrator recording unavailable:', error);
+      if (gen === this.generation) this.stop();
       return false;
     } finally {
       if (this.activeFetch === abort) this.activeFetch = null;
@@ -107,20 +135,16 @@ export class NarratorBus {
   }
   stop() {
     this.generation++;
-    this.activeFetch?.abort();
-    this.activeFetch = null;
-    if (this.current) {
-      const source = this.current;
-      this.current = null;
+    this.activeFetch?.abort(); this.activeFetch = null;
+    for (const source of this.sources) {
       source.onended = null;
       try { source.stop(); } catch { /* already ended */ }
       source.disconnect();
     }
+    this.sources = [];
     if (this.activeNodes) {
-      this.activeNodes.dry.disconnect();
-      this.activeNodes.wet.disconnect();
-      this.activeNodes.reverb.disconnect();
-      this.activeNodes = null;
+      this.activeNodes.dry.disconnect(); this.activeNodes.wet.disconnect();
+      this.activeNodes.reverb.disconnect(); this.activeNodes = null;
     }
     if (this.ctx.state !== 'closed') this.ambience.gain.setTargetAtTime(1, this.ctx.currentTime, 0.3);
   }
