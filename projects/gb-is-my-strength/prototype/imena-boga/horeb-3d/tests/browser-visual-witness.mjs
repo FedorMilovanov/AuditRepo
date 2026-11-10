@@ -125,8 +125,8 @@ try {
   // compositions at z=-206, halfway between right-side steles, are required.
   // Both positions remain strictly inside the existing x<=4.2 guard.
   for (const [slug, x, pitch] of [
-    ['zone4-chasm-edge', 2.35, -0.65],
-    ['zone4-chasm-depth', 3.05, -1.04],
+    ['zone4-chasm-edge', 2.95, -0.42],
+    ['zone4-chasm-depth', 3.45, -0.62],
   ]) {
     const beforeRavine = await desktop.evaluate(({ x, pitch }) => {
       const w = window.__horeb.world;
@@ -136,9 +136,16 @@ try {
       w.pitch = pitch;
       return { frame, actualX: w.position.x, actualZ: w.position.y };
     }, { x, pitch });
-    if (beforeRavine.actualX > 3.15 ||
-        Math.abs(beforeRavine.actualZ + 206) > 0.4)
-      throw new Error('Ravine camera violated safe ledge: ' + JSON.stringify(beforeRavine));
+    // A line of sight steeper than the floor-edge clearance would
+    // intersect the walking slab BEFORE reaching the gorge. Such a PNG is
+    // deceptive even if Chromium draws it successfully.
+    const eyeToLip = (4.82 - beforeRavine.actualX) *
+      Math.tan(Math.abs(pitch));
+    if (beforeRavine.actualX > 3.5 ||
+        Math.abs(beforeRavine.actualZ + 206) > 0.4 ||
+        eyeToLip > 1.35)
+      throw new Error('Ravine evidence invalid: clipping or floor-occluded camera ' +
+        JSON.stringify({ ...beforeRavine, pitch, eyeToLip }));
     await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
     await new Promise((resolve) => setTimeout(resolve, 330));
     const file = 'visual-detail-' + slug + '.png';
