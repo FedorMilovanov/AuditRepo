@@ -1,5 +1,11 @@
 # Handoff — GB Premium 3D Library
 
+## V5.33 latest centre-lectern wave
+
+See [LECTERN_CRAFT_V533.md](LECTERN_CRAFT_V533.md). Centre lectern has one carved/fluted oak profile, solid beveled table and a horizontal rather than vertical brass rim; existing Russian text/page geometry and all input/navigation are preserved. Local RTX3060 real-browser screenshot and strict quality/context-loss/wrong-ring-negative tests PASS. **Full exact-head 47/47 Chromium/WebKit and Preflight are still required** before accepting this new SHA. No new branches, no Product/main, no deployment, maintain Draft / ART HOLD.
+
+---
+
 ## V5.32 handoff — separate casework from furniture, test every SHA
 
 See [CASEWORK_GRAIN_PROVENANCE_V532.md](CASEWORK_GRAIN_PROVENANCE_V532.md). The new `CaseworkWoodProvider` is a real shared PBR-material owner with quality-profile loading, not global mutation of central furniture. Horizontal shelves and vertical uprights use different UV geographies through shared instanced geometries, preserving 20 bays and editorial navigation. Source CC0 six-channel manifest, no Poly Haven GLB. Local RTX3060 A/B and two-direction graphics quality passed. Require GitHub Preflight and full exact-head 47/47 Chromium/WebKit plus real PNG art review before engineering acceptance. Keep Draft / ART HOLD, no Product deploy.

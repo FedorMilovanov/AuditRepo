@@ -43,6 +43,22 @@ assert.match(world, /<Architecture\s*\/>/);
 assert.match(world, /<AdaptiveResolution\s*\/>/);
 assert.doesNotMatch(world, /<Bloom|<Motes|<CloudSea|<Stars|<StainedLight/);
 assert.match(center, /titlePage\("left"\)/);
+// The main visitor focal point must be physically joinered furniture, not
+// the accidental vertical 4.2m-wide decorative hoop from the V5.32 centre.
+assert.match(center, /function lathedLecternPedestal\(/);
+assert.match(center, /new THREE\.LatheGeometry\(/);
+assert.match(center, /const flutes = Math\.sin\(Math\.atan2\(z, x\) \* 24\)/);
+assert.match(center, /geom\.computeVertexNormals\(\)/);
+assert.match(center, /function bevelledReadingTabletop\(/);
+assert.match(center, /pedestal\.dispose\(\)/);
+assert.match(center, /tabletop\.dispose\(\)/);
+assert.match(center, /geometry=\{pedestal\}/);
+assert.match(center, /geometry=\{tabletop\}/);
+assert.match(center, /rotation-x=\{Math\.PI \/ 2\} material=\{goldMat\}/);
+assert.doesNotMatch(center, /cylinderGeometry args=\{\[1\.02, 1\.35, 1\.38/);
+assert.doesNotMatch(center, /cylinderGeometry args=\{\[2\.15, 2\.05, 0\.14/);
+assert.match(center, /titlePage\("right"\)/);
+
 assert.doesNotMatch(center, /orbMat|<Beam/);
 assert.match(architecture, /instancedMesh/);
 /*

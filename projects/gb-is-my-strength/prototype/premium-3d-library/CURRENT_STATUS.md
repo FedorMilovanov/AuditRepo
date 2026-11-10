@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.33 — central lectern design, new exact-head gate required
+
+Latest [LECTERN_CRAFT_V533.md](LECTERN_CRAFT_V533.md) records replacement of the accidental standing 4.2m gold torus by a correct horizontal 9mm tabletop inlay, one genuine carved/fluted lathed oak pedestal and one beveled solid tabletop. No station/book/content/navigation/Reader moves and no extra textures. Real same-RTX3060 A/B, Chromium 1440×900 and 390×844, bidirectional quality, WebGL recovery and 2D fallback PASS locally. A new fail-closed geometry guard rejects the old vertical hoop (negative fixture PASS). **Prior V5.32 47/47 does NOT certify this new source SHA**; wait for exact-head Preflight and Chromium/WebKit 47/47 Validate. Artistic, physical-device, XR, rights and Product gates remain HARD OPEN. Keep Draft / ART HOLD.
+
+---
+
 ## V5.32 current candidate — wood grain architecture, exact-head checks required
 
 One existing Draft PR #545 contains the V5.32 authored direction-aware carpentry candidate: [CASEWORK_GRAIN_PROVENANCE_V532.md](CASEWORK_GRAIN_PROVENANCE_V532.md). Original lectern/furniture materials are kept separate. Real R3F 1024/512 color/normal/roughness wood maps are source-verified (CC0, six SHA-256; 490,652 bytes); horizontal and upright elements use distinct UV geometry while retaining GPU instancing. RTX3060 Chrome browser and bidirectional quality transitions passed locally. **Never project the previous V5.31 47/47 onto the new candidate**; new exact-head CI and screenshot inspection are mandatory. The artistic, physical-device, Product/rights and XR gates remain HARD OPEN; no merge/deployment.
