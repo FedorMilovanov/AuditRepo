@@ -545,6 +545,30 @@ if (gardenRecord) {
     OLIVE_GROVE_OFFSETS.every(([dx]) => Math.abs(anchorX + dx) > 0.29 + 0.35 + 0.05));
 }
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
+// Natural exit strata are genuine geological roof surfaces, not an
+// artificial gateway or invisible barrier. They must stay above head height
+// along the fully traversable zone-6 corridor in BOTH quality modes.
+for (const lowMode of [true, false]) {
+  const geoScene = buildZones(lowMode, new THREE.MeshStandardMaterial({ vertexColors: true }));
+  const fracture = geoScene.group.getObjectByName('zone-6-geological-roof-fractures');
+  const position = fracture instanceof THREE.Mesh && fracture.geometry.getAttribute('position');
+  let minY = Infinity, minZ = Infinity, maxZ = -Infinity;
+  if (position) {
+    for (let i = 0; i < position.count; i++) {
+      minY = Math.min(minY, position.getY(i));
+      minZ = Math.min(minZ, position.getZ(i));
+      maxZ = Math.max(maxZ, position.getZ(i));
+    }
+  }
+  t('zone-6 geological fracture field is a single head-clear mesh ' +
+    (lowMode ? 'LOW' : 'HIGH'),
+    fracture instanceof THREE.Mesh &&
+    fracture.userData.fractureCount === (lowMode ? 11 : 17) &&
+    position != null && position.count === (lowMode ? 11 : 17) * 7 * 3 &&
+    minY >= 2.77 && minZ > -319 && maxZ < -290 &&
+    !geoScene.obstacles.some((o) => o.z < -292 && o.z > -318));
+}
+
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
 let distantSafe = distantCrags instanceof THREE.InstancedMesh && distantCrags.count === 32;
 if (distantCrags instanceof THREE.InstancedMesh) {
