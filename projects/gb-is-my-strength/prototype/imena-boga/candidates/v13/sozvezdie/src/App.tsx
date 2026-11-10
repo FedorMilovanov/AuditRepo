@@ -302,7 +302,7 @@ export default function App() {
 
       {/* header */}
       <motion.header
-        initial={{ y: -60, opacity: 0 }}
+        initial={false}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
@@ -376,6 +376,7 @@ export default function App() {
       <ReaderDock
         visible={inArticle}
         progress={progress}
+        exactProgress={scrollYProgress}
         completedCount={completedIds.size}
         totalCount={NAMES.length}
         activeName={activeEntry ?? null}

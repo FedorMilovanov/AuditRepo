@@ -18,6 +18,7 @@ import type { FontSize, Measure } from "../App";
 interface ReaderDockProps {
   visible: boolean;
   progress: MotionValue<number>;
+  exactProgress: MotionValue<number>;
   completedCount: number;
   totalCount: number;
   activeName: NameEntry | null;
@@ -81,6 +82,7 @@ function ProgressRing({
 export default function ReaderDock({
   visible,
   progress,
+  exactProgress,
   completedCount,
   totalCount,
   activeName,
@@ -116,7 +118,12 @@ export default function ReaderDock({
     };
   }, [visible]);
 
-  useEffect(() => progress.on("change", (v) => setPct(Math.round(v * 100))), [progress]);
+  // The decorative ring may spring, but the numeric percentage tracks real scroll.
+  useEffect(() => {
+    const sync = (v: number) => setPct(Math.round(v * 100));
+    sync(exactProgress.get());
+    return exactProgress.on("change", sync);
+  }, [exactProgress]);
 
   // Speech must never outlive its visible control.
   useEffect(() => {

@@ -31,6 +31,29 @@ async function shot(page,label){
  await page.screenshot({path:path.join(out,file),type:'jpeg',quality:84,animations:'disabled',timeout:25000});
  shots.push({file,label,url:page.url(),scrollY:await page.evaluate(()=>Math.round(scrollY))});
 }
+// Capture only after the intended subject is inside the viewport.
+async function anchorShot(page,label,selector,top=112){
+ const loc=page.locator(selector).first();
+ await loc.waitFor({state:'visible',timeout:10000});
+ await loc.evaluate((el,offset)=>{
+  const rect=el.getBoundingClientRect();
+  scrollTo({top:Math.max(0,scrollY+rect.top-offset),behavior:'instant'});
+ },top);
+ await page.evaluate(async()=>{
+  await document.fonts.ready;
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+ });
+ const pos=await loc.evaluate(el=>{
+  const r=el.getBoundingClientRect();
+  return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight};
+ });
+ record('screenshot-anchor',{label,selector,...pos});
+ if(pos.top<52||pos.top>240||pos.bottom>pos.viewportHeight||pos.width<1){
+  problem('BLOCKER','screenshot-anchor-invalid',{label,selector,...pos});
+  throw Error('Bad screenshot anchor: '+label);
+ }
+ await shot(page,label);
+}
 async function waitVisual(page){
  await page.locator('h1').first().waitFor({state:'visible',timeout:20000});
  await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(resolve))});
@@ -212,8 +235,24 @@ async function visit(browser,engine,app,width,base){
     await page.locator('#tetragrammaton').scrollIntoViewIfNeeded();
     await shot(page,engine+'-'+app+'-'+width+'-04-hebrew');
    }
-   await page.evaluate(()=>window.scrollTo(0,Math.round((document.documentElement.scrollHeight-innerHeight)*.72)));
+   await page.evaluate(()=>window.scrollTo({top:Math.round((document.documentElement.scrollHeight-innerHeight)*.72),behavior:'instant'}));
    await page.waitForTimeout(180);
+   if(app==='sozvezdie'){
+    await page.waitForFunction(()=>{
+     const label=document.querySelector('[data-reader-dock] button[aria-label^="Прочитано"]')?.getAttribute('aria-label');
+     const pct=Number(label?.match(/Прочитано (\d+)%/)?.[1]);
+     const max=document.documentElement.scrollHeight-innerHeight;
+     const expected=max>0?Math.round(100*scrollY/max):0;
+     return Number.isFinite(pct)&&Math.abs(pct-expected)<=2;
+    },null,{timeout:5000});
+    const witness=await page.evaluate(()=>{
+     const label=document.querySelector('[data-reader-dock] button[aria-label^="Прочитано"]')?.getAttribute('aria-label');
+     const shown=Number(label?.match(/Прочитано (\d+)%/)?.[1]);
+     const max=document.documentElement.scrollHeight-innerHeight;
+     return {shown,expected:max>0?Math.round(100*scrollY/max):0,scrollY:Math.round(scrollY),maxScroll:max};
+    });
+    record('reader-progress-exact',{engine,width,...witness});
+   }
    await shot(page,engine+'-'+app+'-'+width+'-05-deep');
   }
   if(width===390||width===1440){
@@ -245,7 +284,17 @@ async function visit(browser,engine,app,width,base){
     await safeAction(page,engine+'-sozvezdie-'+width+'-search',async()=>{
      const field=page.locator('#sozvezdie input[type="search"]');
      await field.fill('эхье');
-     await shot(page,engine+'-sozvezdie-'+width+'-06-search');
+     const results=page.locator('#sozvezdie button[aria-label^="Перейти к разделу:"]');
+     await results.first().waitFor({state:'visible',timeout:10000});
+     const query=await field.inputValue(),count=await results.count();
+     record('search-evidence',{engine,width,query,count});
+     if(query!=='эхье'||count<1)throw Error('Search results absent from evidence');
+     await anchorShot(page,engine+'-sozvezdie-'+width+'-06-search',
+      '#sozvezdie input[type="search"]',145);
+     const resultTop=await results.first().evaluate(el=>el.getBoundingClientRect().top);
+     record('search-result-in-frame',{engine,width,resultTop});
+     if(resultTop>844||resultTop<0)
+      problem('BLOCKER','search-results-outside-frame',{engine,width,resultTop});
      await field.fill('');
     });
     await safeAction(page,engine+'-sozvezdie-'+width+'-letter-tab',async()=>{
@@ -386,8 +435,8 @@ async function visit(browser,engine,app,width,base){
        (result.buttonRight!==null && result.parentRight!==null &&
         result.buttonRight>result.parentRight+2))
      problem('BLOCKER','atlas-text-resize-200-overflow',{engine,width,...result});
-    await page.locator('#article-introduction').scrollIntoViewIfNeeded();
-    await shot(page,engine+'-atlas-'+width+'-text-resize-200');
+    await anchorShot(page,engine+'-atlas-'+width+'-text-resize-200',
+     '#article-introduction h2',112);
    });
   }
 
