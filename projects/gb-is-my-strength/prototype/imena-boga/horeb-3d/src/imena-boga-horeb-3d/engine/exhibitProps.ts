@@ -9,7 +9,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; wellStoneWarm: THREE.MeshStandardMaterial; wellStoneCool: THREE.MeshStandardMaterial; wellMortar: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
@@ -27,9 +27,11 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Node construction tests may omit a texture: geometry remains fully testable.
   if (CACHE && CACHE.low === low) {
     if (surface && (CACHE.s.stone.map !== surface.map || CACHE.s.stone.bumpMap !== surface.bump)) {
-      CACHE.s.stone.map = surface.map;
-      CACHE.s.stone.bumpMap = surface.bump;
-      CACHE.s.stone.needsUpdate = true;
+      for (const material of [CACHE.s.stone, CACHE.s.wellStoneWarm, CACHE.s.wellStoneCool]) {
+        material.map = surface.map;
+        material.bumpMap = surface.bump;
+        material.needsUpdate = true;
+      }
     }
     return CACHE.s;
   }
@@ -37,6 +39,13 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
     color: 0xa18b74, roughness: 0.95, metalness: 0,
     map: surface?.map ?? null, bumpMap: surface?.bump ?? null,
     bumpScale: 0.75,
+  });
+  // Earth-tone alternation is material-level, not a bright painted grout
+  // texture. All stones inherit the same procedural rock maps.
+  const wellStoneWarm = stone.clone(); wellStoneWarm.color.setHex(0x8c7663);
+  const wellStoneCool = stone.clone(); wellStoneCool.color.setHex(0x9a9080);
+  const wellMortar = new THREE.MeshStandardMaterial({
+    color: 0x4b4037, roughness: 1, metalness: 0, side: THREE.DoubleSide,
   });
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
@@ -62,7 +71,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
   const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x52604c, roughness: 0.95, side: THREE.DoubleSide });
   const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x737f6c, roughness: 0.95, side: THREE.DoubleSide });
-  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
+  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, wellStoneWarm, wellStoneCool, wellMortar, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -124,6 +133,14 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
   const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.86, low ? 24 : 36, true), interiorMaterial);
   liner.name = 'well-open-shaft';
   liner.position.set(x, 0.43, z); g.add(liner);
+  // The recessed core reveals genuine dark joints between the dressed
+  // stones, without capping the shaft or drawing a fake mortar decal.
+  const joints = new THREE.Mesh(
+    G.cyl(r - 0.055, r - 0.055, 0.86, low ? 28 : 42, true),
+    s.wellMortar,
+  );
+  joints.name = 'well-recessed-mortar';
+  joints.position.set(x, 0.43, z); g.add(joints);
   const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025, low ? 24 : 36), s.water);
   water.name = 'well-water-below-rim';
   water.position.set(x, 0.20, z); g.add(water);
@@ -135,8 +152,10 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
       // and independent tilt. Same 14-stone count in three staggered courses.
       // These are illustrative dressed blocks, not a claimed excavated artefact.
       const stone = new THREE.Mesh(new RoundedBoxGeometry(
-        0.47 + random() * 0.045, 0.265 + random() * 0.045,
-        0.26 + random() * 0.045, 2, 0.035), s.stone);
+        0.395 + random() * 0.050, 0.235 + random() * 0.035,
+        0.26 + random() * 0.045, 2, 0.027),
+        (i + layer * 2) % 5 === 0 ? s.wellStoneCool :
+        (i * 3 + layer) % 4 === 0 ? s.wellStoneWarm : s.stone);
       stone.name = 'well-course-stone';
       stone.position.set(x + Math.cos(a) * (r + 0.055),
         0.16 + layer * 0.29 + (random() - 0.5) * 0.025,
@@ -154,8 +173,9 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
     const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.11;
     const rr = r + 0.015 + (random() - 0.5) * 0.045;
     const stone = new THREE.Mesh(new RoundedBoxGeometry(
-      0.48 + random() * 0.055, 0.13 + random() * 0.035,
-      0.28 + random() * 0.035, 2, 0.028), s.stone);
+      0.415 + random() * 0.050, 0.13 + random() * 0.035,
+      0.28 + random() * 0.035, 2, 0.025),
+      i % 4 === 0 ? s.wellStoneWarm : i % 5 === 0 ? s.wellStoneCool : s.stone);
     stone.name = 'well-rim-stone';
     stone.position.set(x + Math.cos(a) * rr,
       0.94 + (random() - 0.5) * 0.045,
