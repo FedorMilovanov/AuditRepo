@@ -120,6 +120,26 @@ try {
     narrative: 'Camera at z=-309.5 looking toward exit; no nav certification' });
   console.log('PASS close-up zone-6 continuous roof screenshot ' + exitClose);
 
+  // From the documented safe LEFT ledge: unlike zone-4 spawn, this camera
+  // can see down the real connected cliff face. Teleport is screenshot-only,
+  // never evidence of walkable nav (separate real-keyboard shard handles that).
+  const beforeRavine = await desktop.evaluate(() => {
+    const w = window.__horeb.world;
+    const frame = w.renderer.info.render.frame;
+    w.teleportTo(2.45, -199.8);
+    w.yaw = -Math.PI / 2;
+    w.pitch = -0.37;
+    return frame;
+  });
+  await waitForRenderedFrame(desktop, beforeRavine, 4);
+  await new Promise((resolve) => setTimeout(resolve, 330));
+  const ravineFile = 'visual-detail-zone4-chasm-edge.png';
+  await desktop.screenshot({ path: join(shots, ravineFile) });
+  witness.details.push({ id: 'zone4-connected-chasm-wall', zone: 4,
+    screenshot: ravineFile,
+    narrative: 'Safe ledge, near edge, looking down; not a nav certification' });
+  console.log('PASS close-up zone-4 ravine screenshot ' + ravineFile);
+
   // Hardware safety witness. Compare low-quality startup draw calls to the
   // before-optimization artifact (306 calls in zone 0). This is a GPU command
   // budget check, not an FPS claim from software SwiftShader.
@@ -302,12 +322,13 @@ try {
 }
 const expectedDetailShots = [
   'visual-detail-zone6-exit-roof.png',
+  'visual-detail-zone4-chasm-edge.png',
   'visual-detail-beersheba-well.png',
   'visual-detail-hagar-spring.png',
   'visual-detail-gethsemane-grove.png',
 ];
 const actualDetailShots = witness.details.map((item) => item.screenshot);
-const detailComplete = witness.details.length === 4 &&
+const detailComplete = witness.details.length === 5 &&
   actualDetailShots.length === new Set(actualDetailShots).size &&
   expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
@@ -316,7 +337,7 @@ const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
   witness.mobile.length + '/3 mobile-emulated, ' + witness.details.length +
-  '/4 prop/detail screenshots; errors=' + witness.errors.length +
+  '/5 prop/detail screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
 if (!ok) for (const error of witness.errors) console.error('FAIL ' + error);
 process.exitCode = ok ? 0 : 1;
