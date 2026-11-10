@@ -24,7 +24,6 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
   const dialogRef = useRef<HTMLDivElement>(null);
   const restoreTriggerRef = useRef(false);
   const selectedTargetRef = useRef<string | null>(null);
-  const current = NAMES.find((n) => n.id === active);
   const idx = NAMES.findIndex((n) => n.id === active);
   const progress = idx >= 0 ? ((idx + 1) / NAMES.length) * 100 : 0;
 
