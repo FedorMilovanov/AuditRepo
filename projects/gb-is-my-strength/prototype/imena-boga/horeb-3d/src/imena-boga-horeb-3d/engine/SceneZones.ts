@@ -193,7 +193,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     fg.setAttribute('uv', new THREE.Float32BufferAttribute(fu, 2));
     fg.setIndex(fi);
     fg.computeVertexNormals();
-    group.add(new THREE.Mesh(fg, rockMat));
+    const caveFloor = new THREE.Mesh(fg, rockMat);
+    caveFloor.name = 'cave-floor-continuous';
+    group.add(caveFloor);
   }
 
   // ── Зона 1: лучи сквозь разлом свода
@@ -358,7 +360,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
     tg.rotateX(-Math.PI / 2);
-    tg.translate(0, 0, TUNNEL_END - 1 - 500);
+    // Abut the existing cave floor without overlapping it by ~3 metres.
+    // Its near edge is z=-322, while low/high cave strips end at -321.8/-322.
+    tg.translate(0, 0, TUNNEL_END - 4 - 500);
     const p = tg.attributes.position;
     const tc: number[] = [];
     for (let i = 0; i < p.count; i++) {
@@ -367,13 +371,33 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       p.setY(i, y);
       const v = 0.5 + 0.5 * fbm(x * 0.05, 5, z * 0.05, 3);
       const hcol = Math.min(1, y / 200);
-      tc.push((0.26 + hcol * 0.08) * v, (0.2 + hcol * 0.05) * v, (0.17 + hcol * 0.06) * v);
+      const outdoor = [(0.26 + hcol * 0.08) * v,
+        (0.2 + hcol * 0.05) * v, (0.17 + hcol * 0.06) * v];
+      // A physically adjacent ground plane should not switch from near-black
+      // cave floor to orange sand at the seam. Match the real cave vertex
+      // field at the lip, then fade into natural exterior earth by z=-340.
+      const mouth = ss(-340, TUNNEL_END - 4, z);
+      if (mouth > 0) {
+        const [tr, tg, tb] = tint(z);
+        bake(x, 0, z, tmp);
+        const floorN = fbm(x * 0.4, 3, z * 0.4, 3);
+        const floorWear = 1 + 0.12 * Math.exp(-(x * x) / 4);
+        const rockValue = (0.45 + 0.5 * floorN) * floorWear * 0.85 *
+          caveSurfaceVariation(x, 0, z);
+        tc.push(
+          outdoor[0] * (1 - mouth) + tr * rockValue * tmp[0] * mouth,
+          outdoor[1] * (1 - mouth) + tg * rockValue * tmp[1] * mouth,
+          outdoor[2] * (1 - mouth) + tb * rockValue * tmp[2] * mouth,
+        );
+      } else tc.push(...outdoor);
     }
     tg.setAttribute('color', new THREE.Float32BufferAttribute(tc, 3));
     tg.computeVertexNormals();
     const terrainMat = rockMat.clone();
     terrainMat.side = THREE.FrontSide;
-    group.add(new THREE.Mesh(tg, terrainMat));
+    const exteriorTerrain = new THREE.Mesh(tg, terrainMat);
+    exteriorTerrain.name = 'horeb-exterior-terrain';
+    group.add(exteriorTerrain);
 
     // Deterministic distant geology frames the narrow wilderness approach.
     // All instances are beyond x=±26m (the traversable region); no invisible
@@ -399,23 +423,30 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // Скальная стена с выходом
     const shape = new THREE.Shape();
     shape.moveTo(-260, -2); shape.lineTo(260, -2); shape.lineTo(260, 120); shape.lineTo(-260, 120); shape.lineTo(-260, -2);
+    // The old perfectly round 2.7 m doorway was NARROWER than the actual
+    // tunnel shell; it cut into the view as two brown vertical streaks.
+    // A wider, gently eroded irregular aperture surrounds the cave's real
+    // 3D end profile instead of cutting across it.
     const hole = new THREE.Path();
-    hole.moveTo(-2.7, -1);
-    hole.lineTo(2.7, -1);
-    hole.absarc(0, 2.4, 2.7, 0, Math.PI, false);
-    hole.lineTo(-2.7, -1);
+    hole.moveTo(-3.6, -1.5);
+    hole.lineTo(3.6, -1.5);
+    hole.lineTo(3.6, 1.4);
+    hole.bezierCurveTo(3.7, 3.8, 2.7, 5.6, 0.9, 6.0);
+    hole.bezierCurveTo(-1.1, 6.3, -3.1, 5.4, -3.6, 2.4);
+    hole.lineTo(-3.6, -1.5);
     shape.holes.push(hole);
     const cg = new THREE.ShapeGeometry(shape, 24);
     const cp = cg.attributes.position;
     // уплотнение: тесселяция ShapeGeometry грубая — компенсируем вертикальным сдвигом верхнего края
     for (let i = 0; i < cp.count; i++) {
       const x = cp.getX(i), y = cp.getY(i);
-      const nearHole = Math.hypot(x, Math.max(0, y - 2.4)) < 4;
+      const nearHole = Math.hypot(x, Math.max(0, y - 3)) < 6.4;
       if (y > 100) cp.setY(i, 70 + fbm(x * 0.02, 0, 0, 4) * 90);
       cp.setZ(i, nearHole ? 0 : fbm(x * 0.05, y * 0.05, 1, 3) * 8);
     }
     cg.computeVertexNormals();
-    const cliff = new THREE.Mesh(cg, new THREE.MeshStandardMaterial({ color: 0x5a4a3e, roughness: 1, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 3, side: THREE.DoubleSide }));
+    const cliff = new THREE.Mesh(cg, new THREE.MeshStandardMaterial({ color: 0x515057, roughness: 1, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 3, side: THREE.DoubleSide }));
+    cliff.name = 'horeb-outer-rock-face';
     cliff.rotation.y = Math.PI;
     cliff.position.set(0, 0, TUNNEL_END - 1.5);
     group.add(cliff);
