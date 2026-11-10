@@ -201,7 +201,7 @@ export default function ReaderDock({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         data-reader-dock
-        className={`${compact ? "relative z-10" : "fixed bottom-5 right-5 z-40"} flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] ${compact ? "" : "flex-col gap-1 py-2"}`}
+        className={`${compact ? "relative z-10 flex-row" : "fixed bottom-5 right-2 z-40 w-14 flex-col gap-1 py-2"} flex items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)]`}
         role="toolbar"
         aria-label="Настройки чтения"
       >

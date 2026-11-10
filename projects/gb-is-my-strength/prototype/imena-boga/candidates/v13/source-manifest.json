@@ -232,8 +232,8 @@
       "bytes_normalized": 1371
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "27f78a10869bc25092ed3f6c59c53c0f60574fb0d929e3ff8b690b351438cab4",
-      "bytes_normalized": 51381
+      "sha256": "8d401d29722e6ae7bcf8051593d7764d30ba64ab27191bb71f62aece1c9be155",
+      "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "8db3eae99bd8d6d59f922d1237be757b1c06151f14d2c458e4c25bdd2dc45694",
@@ -280,8 +280,8 @@
       "bytes_normalized": 6899
     },
     "sozvezdie/src/components/ReaderDock.tsx": {
-      "sha256": "764ca939f5040376bc4706e06419d84516b31e1d60cc2a790d364ff053ab3494",
-      "bytes_normalized": 13214
+      "sha256": "78102d71991408506a8701b9508f1de7f51535169572e788f940a4b4678d347c",
+      "bytes_normalized": 13199
     },
     "sozvezdie/src/components/Reveal.tsx": {
       "sha256": "a472c1df117a111b2dead67b1e782480b5cb189b1062c1df02375b2c36793240",

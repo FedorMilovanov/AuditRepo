@@ -664,14 +664,26 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   if (dockB && dockB.x + dockB.width > w + 1) bad(`dock overflows viewport @${w}`);
   else ok(`dock fits viewport @${w}`);
 
-  // dock recedes while the page is moving, returns when reading pauses
+  // Header-mounted controls are continuously available without masking
+  // article prose. The former hide-on-scroll timer is no longer relevant.
+  const inspectHeaderDock=()=>page.locator('[data-reader-dock]').evaluate(el=>{
+    const header=el.closest('header'),r=el.getBoundingClientRect(),h=header?.getBoundingClientRect();
+    return {parent:el.parentElement?.id,position:getComputedStyle(el).position,
+      top:r.top,bottom:r.bottom,headerBottom:h?.bottom,opacity:Number(getComputedStyle(el).opacity)};
+  });
   await page.evaluate(() => window.scrollBy(0, 420));
   await page.waitForTimeout(160);
-  const moving = await page.locator("[data-reader-dock]").getAttribute("data-idle");
-  moving === "false" ? ok(`dock recedes during scroll @${w}`) : bad(`dock did not recede @${w}: ${moving}`);
+  const moving=await inspectHeaderDock();
+  moving.parent==='sozvezdie-header-reader-slot'&&moving.position!=='fixed'&&
+    moving.top>=0&&moving.bottom<=moving.headerBottom+2&&moving.opacity>=.99
+    ? ok(`header controls remain clear of prose while scrolling @${w}`)
+    : bad(`reader controls obscure the reading surface during scroll @${w}: ${JSON.stringify(moving)}`);
   await page.waitForTimeout(1100);
-  const idle = await page.locator("[data-reader-dock]").getAttribute("data-idle");
-  idle === "true" ? ok(`dock returns when idle @${w}`) : bad(`dock stayed hidden @${w}: ${idle}`);
+  const idle=await inspectHeaderDock();
+  idle.parent==='sozvezdie-header-reader-slot'&&idle.position!=='fixed'&&
+    idle.top>=0&&idle.bottom<=idle.headerBottom+2&&idle.opacity>=.99
+    ? ok(`header controls stay accessible after scrolling @${w}`)
+    : bad(`header reader controls not accessible @${w}: ${JSON.stringify(idle)}`);
 
   const mobileProgress=page.locator('[data-reader-dock] button[aria-controls="reader-dock-options"]');
   (await mobileProgress.isVisible()) && (await mobileProgress.getAttribute("aria-expanded"))==="false"
