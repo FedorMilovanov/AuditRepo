@@ -41,6 +41,22 @@ const spaced = (c: Ctx, px: number) => {
   (c as any).letterSpacing = `${px}px`;
 };
 
+/** Fit real loaded glyph advances inside the editorial safe zone.
+ * Do not squish text horizontally via CanvasRenderingContext2D.fillText's
+ * maxWidth parameter: that distorts serif letterforms, especially in WebKit.
+ * The authored type hierarchy may decrease in size, never exit its border. */
+export function fitCanvasTypeface(
+  c: Ctx, text: string, opts: {
+    family: string; weight: number; maxPx: number; minPx: number; maxWidth: number
+  },
+): number {
+  for (let px = opts.maxPx; px >= opts.minPx; px -= 1) {
+    c.font = `${opts.weight} ${px}px ${opts.family}`;
+    if (c.measureText(text).width <= opts.maxWidth) return px;
+  }
+  throw new Error(`Canvas typography cannot fit: ${text}`);
+}
+
 function ornamentCorner(c: Ctx, x: number, y: number, s: number, color: string) {
   c.save();
   c.translate(x, y);
@@ -81,8 +97,12 @@ export function plaqueTexture(item: Item) {
     spaced(c, 0);
 
     c.fillStyle = "#fbf3df";
-    c.font = `600 142px ${SERIF}`;
-    c.fillText(item.title, 66, 232);
+    // Font metrics differ between Chromium and WebKit even after the same
+    // locally hosted font loads. Fit the actual glyphs to symmetric margins.
+    fitCanvasTypeface(c, item.title, {
+      family: SERIF, weight: 600, maxPx: 142, minPx: 76, maxWidth: w - 140,
+    });
+    c.fillText(item.title, 70, 232);
 
     const gl = c.createLinearGradient(70, 0, 520, 0);
     gl.addColorStop(0, item.color);
@@ -162,29 +182,35 @@ export function createCardTexture(item: Item) {
     c.fillRect(ax, ay + ah - 140, aw, 140);
     c.restore();
 
-    // чип
+    // Editorial metadata has its own strip BETWEEN the art and title.
+    // Never put badges over source cover artwork: those images can already
+    // contain large baked-in lettering that cannot be detected by a DOM test.
     c.font = `600 24px ${SANS}`;
     spaced(c, 3);
     const label = item.label.toUpperCase();
+    fitCanvasTypeface(c, label, {
+      family: SANS, weight: 600, maxPx: 24, minPx: 18, maxWidth: w - 140,
+    });
     const tw = c.measureText(label).width + 44;
-    c.fillStyle = "rgba(8,10,28,0.82)";
+    c.fillStyle = "#182126";
     c.beginPath();
-    c.roundRect(48, 46, tw, 46, 23);
+    c.roundRect(48, 365, tw, 46, 23);
     c.fill();
     c.strokeStyle = item.color;
     c.lineWidth = 2;
     c.stroke();
     c.fillStyle = item.color;
-    c.fillText(label, 70, 78);
+    c.fillText(label, 70, 397);
     spaced(c, 0);
 
-    // текст
+    // Independent editorial type zone, with sufficient ascent/descent
+    // clearance even for a two-line heading and two lines of description.
     c.fillStyle = "#fbf3df";
     c.font = `600 56px ${SERIF}`;
-    const n = wrap(c, item.title, 48, 424, w - 96, 56, 2);
+    const n = wrap(c, item.title, 48, 477, w - 96, 52, 2);
     c.fillStyle = "#b9bfdc";
     c.font = `400 25px ${SANS}`;
-    wrap(c, item.desc, 48, 424 + n * 56 + 10, w - 96, 35, n > 1 ? 3 : 4);
+    wrap(c, item.desc, 48, 477 + n * 52 + 7, w - 96, 35, n > 1 ? 2 : 3);
 
     // рамка
     c.strokeStyle = item.color;
