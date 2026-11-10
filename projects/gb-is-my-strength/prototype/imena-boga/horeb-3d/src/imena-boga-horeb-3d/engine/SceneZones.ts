@@ -319,13 +319,18 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
   {
     const count = low ? 11 : 17;
     const rand = rng(61026);
-    const positions: number[] = [], colors: number[] = [], indices: number[] = [];
+    const positions: number[] = [], colors: number[] = [], uv: number[] = [], indices: number[] = [];
     const coldStone = [0.32, 0.35, 0.40] as const;
     const face = (points: THREE.Vector3[], tint: number) => {
       const base = positions.length / 3;
       for (const p of points) {
         positions.push(p.x, p.y, p.z);
+        // The shared mineral atlas expects UVs. Without them this rock
+        // samples a single pixel and becomes a flat-colored paper polygon.
+        // World-space mapping is deliberately irregular and continuous.
         const grain = caveSurfaceVariation(p.x, p.y, p.z);
+        uv.push(p.x * 0.18 + p.z * 0.042 + grain * 0.15,
+          p.y * 0.21 + p.z * 0.24 + grain * 0.12);
         const v = tint * (0.78 + grain * 0.23);
         colors.push(coldStone[0] * v, coldStone[1] * v, coldStone[2] * v);
       }
@@ -371,6 +376,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
     geo.setIndex(indices);
     geo.computeVertexNormals();
     const fracture = new THREE.Mesh(geo, rockMat);
