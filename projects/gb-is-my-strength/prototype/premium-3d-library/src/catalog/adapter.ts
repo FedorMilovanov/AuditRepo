@@ -55,6 +55,15 @@ export function projectCatalog(policy: unknown, metadata: unknown): CatalogResul
     const p = routes[m.path];
     if (!p || typeof p !== 'object' || Array.isArray(p)) { excluded++; continue; }
     const r = p as Record<string, unknown>;
+    // Deny malformed/incomplete policy records BEFORE checking inclusion.
+    // The previous test against only "exclude" wrongly admitted undefined.
+    if ((r.indexPolicy !== 'index' && r.indexPolicy !== 'noindex') ||
+        (r.pagefindPolicy !== 'include' && r.pagefindPolicy !== 'metadata-only' && r.pagefindPolicy !== 'exclude') ||
+        (r.searchManifestPolicy !== 'include' && r.searchManifestPolicy !== 'exclude') ||
+        (r.sitemapPolicy !== 'include' && r.sitemapPolicy !== 'exclude')) {
+      errors.push('Некорректная политика публикации: ' + m.path);
+      continue;
+    }
     if (r.indexPolicy !== 'index' || r.searchManifestPolicy !== 'include' || r.sitemapPolicy !== 'include' ||
         r.pagefindPolicy === 'exclude') { excluded++; continue; }
     if (!smallText(r.librarySection, 80) || !smallText(r.topicCategory, 80) || !smallText(r.contentKind, 60)) {

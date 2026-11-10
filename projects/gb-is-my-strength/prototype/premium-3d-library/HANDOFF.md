@@ -1,5 +1,11 @@
 # Handoff — GB Premium 3D Library
 
+## V5.34 — latest data integrity and CI contract
+
+See [V534_DATA_INTEGRITY_RECOVERY.md](V534_DATA_INTEGRITY_RECOVERY.md). Fail-closed publication flags and non-destructive visit-history storage decoding/merging were added after real reproduced P1 failures. The gate is **10 browser suites / 53 cases**, including six Chromium/WebKit negative JSON fixtures; old 47/47 only certifies previous V5.33 SHA. Require new terminal exact-head CI and real screenshots before engineering acceptance. No Product/main mutation, no personal data migration, Draft / ART HOLD.
+
+---
+
 ## V5.33 latest centre-lectern wave
 
 See [LECTERN_CRAFT_V533.md](LECTERN_CRAFT_V533.md). Centre lectern has one carved/fluted oak profile, solid beveled table and a horizontal rather than vertical brass rim; existing Russian text/page geometry and all input/navigation are preserved. Local RTX3060 real-browser screenshot and strict quality/context-loss/wrong-ring-negative tests PASS. **Full exact-head 47/47 Chromium/WebKit and Preflight are still required** before accepting this new SHA. No new branches, no Product/main, no deployment, maintain Draft / ART HOLD.

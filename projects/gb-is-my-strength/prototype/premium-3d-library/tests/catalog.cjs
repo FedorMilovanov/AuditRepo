@@ -20,6 +20,32 @@ const fs=require('node:fs');const path=require('node:path');const ts=require('ty
   r=m.projectCatalog(policy,[{path:'/articles/demo/',title:'Missing ID'}]);assert.equal(r.entries.length,0);
   r=m.projectCatalog({version:1,routes:{}},rows);assert.equal(r.entries.length,0);
   assert.equal(m.projectCatalog({},rows).errors.length,1);
+
+  // Missing, null or unknown publication flags MUST NOT be treated as
+  // permission to expose a route. Previously pagefindPolicy !== 'exclude'
+  // accidentally admitted both missing and arbitrary strings.
+  const validPolicy=policy.routes['/articles/demo/'];
+  const single=[rows[0]];
+  for (const [key,bad] of [
+    ['pagefindPolicy',undefined], ['pagefindPolicy',null],
+    ['pagefindPolicy','bogus'], ['indexPolicy',undefined],
+    ['indexPolicy','public'], ['searchManifestPolicy',undefined],
+    ['searchManifestPolicy','random'], ['sitemapPolicy',undefined],
+    ['sitemapPolicy','random'],
+  ]) {
+    const altered={...validPolicy,[key]:bad};
+    const result=m.projectCatalog({
+      version:1,routes:{'/articles/demo/':altered}
+    },single);
+    assert.equal(result.entries.length,0,key+' admitted invalid value');
+    assert.equal(result.errors.length,1,key+' did not report invalid policy');
+  }
+  const metadataOnly=m.projectCatalog({
+    version:1,routes:{'/articles/demo/':{...validPolicy,pagefindPolicy:'metadata-only'}}
+  },single);
+  assert.equal(metadataOnly.entries.length,1,
+    'Valid metadata-only policy must remain a permitted enum value');
+
   // Transpile the *real* scene data module, not a duplicated geometric
   // fixture. The test supplies only the base URL needed for demo cover paths.
   const dataSource=fs.readFileSync(path.join(__dirname,'../src/data.ts'),'utf8');

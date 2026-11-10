@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.34 — crash-safe history and fail-closed Product policy candidate
+
+Current [V534_DATA_INTEGRITY_RECOVERY.md](V534_DATA_INTEGRITY_RECOVERY.md) documents two reproduced P1 failures and independently tested source fixes. Malformed visited localStorage values no longer crash the sitemap; their raw bytes are preserved instead of erased. Unknown/missing Pagefind policies can no longer admit a route. **New exact-head CI must pass 10 suites / 53 browser cases**; historical [V5.33 Validate 47/47](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42886253395) is not current acceptance. No change to private cabinet IndexedDB or Product. Art, mobile/XR/GPU and Product remain HARD OPEN. Keep one Draft PR, no merge/deployment.
+
+---
+
 ## V5.33 — central lectern design, new exact-head gate required
 
 Latest [LECTERN_CRAFT_V533.md](LECTERN_CRAFT_V533.md) records replacement of the accidental standing 4.2m gold torus by a correct horizontal 9mm tabletop inlay, one genuine carved/fluted lathed oak pedestal and one beveled solid tabletop. No station/book/content/navigation/Reader moves and no extra textures. Real same-RTX3060 A/B, Chromium 1440×900 and 390×844, bidirectional quality, WebGL recovery and 2D fallback PASS locally. A new fail-closed geometry guard rejects the old vertical hoop (negative fixture PASS). **Prior V5.32 47/47 does NOT certify this new source SHA**; wait for exact-head Preflight and Chromium/WebKit 47/47 Validate. Artistic, physical-device, XR, rights and Product gates remain HARD OPEN. Keep Draft / ART HOLD.

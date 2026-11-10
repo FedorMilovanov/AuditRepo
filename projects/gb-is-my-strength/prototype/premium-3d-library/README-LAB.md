@@ -1,5 +1,8 @@
 # Господь Бог — сила моя / Premium 3D Library Lab
 
+> **Current V5.34 candidate:** read [CURRENT_STATUS.md](CURRENT_STATUS.md) and [V534_DATA_INTEGRITY_RECOVERY.md](V534_DATA_INTEGRITY_RECOVERY.md). The mandatory browser regression is now **10 suites / 53 cases** including six malformed-history Chromium/WebKit scenarios. Old V5.14/31/47 figures below are historical. This is a Draft / LAB / ART HOLD, not a Product release.
+
+
 **Experimental candidate V5 — 8 November 2026. Prototype Lab only; not Product or production.**
 
 Original reference: `interactive-3d-card-cover(1).zip` (Arena Battle hall second edition).

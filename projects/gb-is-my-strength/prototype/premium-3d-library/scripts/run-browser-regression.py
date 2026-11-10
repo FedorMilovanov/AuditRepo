@@ -31,6 +31,7 @@ TESTS = (
     ("quality-transition-browser.py", 4),
     ("cabinet-persistence-browser.py", 2),
     ("webgl-recovery-browser.py", 6),
+    ("visited-persistence-browser.py", 6),
 )
 EVIDENCE_VARIABLES = {
     "interaction-regression-browser.py": "GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -42,6 +43,7 @@ EVIDENCE_VARIABLES = {
     "quality-transition-browser.py": "GB_LIBRARY_QUALITY_EVIDENCE_DIR",
     "cabinet-persistence-browser.py": "GB_LIBRARY_CABINET_EVIDENCE_DIR",
     "webgl-recovery-browser.py": "GB_LIBRARY_RECOVERY_EVIDENCE_DIR",
+    "visited-persistence-browser.py": "GB_LIBRARY_VISITED_EVIDENCE_DIR",
 }
 
 

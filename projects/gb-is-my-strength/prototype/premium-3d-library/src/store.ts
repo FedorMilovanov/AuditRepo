@@ -3,6 +3,7 @@ import { createXRStore } from "@react-three/xr";
 import type { Object3D } from "three";
 import { pageTurn, startAudio, setSound } from "./audio";
 import { ITEMS, TOUR } from "./data";
+import { appendVisitedRecord, parseVisited } from "./visited";
 
 export type Phase = "intro" | "play";
 export type Mode = "desktop" | "cardboard";
@@ -34,12 +35,13 @@ interface State {
   fatal: null | string;
 }
 
-function readJSON<T>(key: string, fallback: T): T {
+/** Corrupt session history must never crash the sitemap (or erase the
+ * original localStorage record without the user's explicit consent). */
+function readVisited(): string[] {
   try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
+    return parseVisited(localStorage.getItem("gb-hall-seen"), ITEMS.map((it) => it.id));
   } catch {
-    return fallback;
+    return [];
   }
 }
 function readNum(key: string, fallback: number) {
@@ -62,7 +64,7 @@ export const useApp = create<State>(() => ({
   sound: (() => { try { return localStorage.getItem("gb-hall-sound") !== "0"; } catch { return true; } })(),
   tour: null,
   sitting: false,
-  visited: readJSON<string[]>("gb-hall-seen", []),
+  visited: readVisited(),
   sens: Math.min(2.2, Math.max(0.35, readNum("gb-hall-sens", 1))),
   photo: false,
   toast: null,
@@ -195,9 +197,16 @@ export function markVisited(id: string) {
   const next = [...cur, id];
   set({ visited: next });
   try {
-    localStorage.setItem("gb-hall-seen", JSON.stringify(next));
+    // Unknown/legacy IDs are retained. Invalid raw data is never overwritten;
+    // the source-owned pure append function is independently regression-tested.
+    const nextRecord = appendVisitedRecord(localStorage.getItem("gb-hall-seen"), id);
+    if (nextRecord === null) {
+      notify("История посещений повреждена или переполнена: исходные данные не перезаписаны.");
+      return;
+    }
+    localStorage.setItem("gb-hall-seen", nextRecord);
   } catch {
-    /* ignore */
+    /* Storage is unavailable; the in-memory visited UI still works. */
   }
 }
 
