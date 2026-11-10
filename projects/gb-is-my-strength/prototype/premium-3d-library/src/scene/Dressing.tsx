@@ -8,6 +8,10 @@ import { darkStone, goldMat, marble, wood } from "./Platform";
 
 function VerseTablet() {
   const tex = useMemo(() => verseTabletTexture(), []);
+  useEffect(() => {
+    tex.needsUpdate = true;
+    return () => tex.dispose();
+  }, [tex]);
   return (
     <group position={[2.35, 0, 11.55]} rotation-y={Math.atan2(1.05 - 2.35, 9.5 - 11.55)}>
       <mesh position={[0, 0.32, 0]} material={darkStone}>
@@ -31,6 +35,10 @@ function Lectern() {
   const item = byId("c-about");
   const [x, z] = itemPos(item);
   const page = useMemo(() => lecternPage(item), [item]);
+  useEffect(() => {
+    page.needsUpdate = true;
+    return () => page.dispose();
+  }, [page]);
   const hit = useRef<THREE.Mesh>(null!);
 
   useEffect(() => {
