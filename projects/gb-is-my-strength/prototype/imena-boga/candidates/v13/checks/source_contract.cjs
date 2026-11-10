@@ -113,6 +113,16 @@ const qAtlasNavbar=fs.readFileSync(path.join(root,'atlas','src','components','Si
 const qAtlasPillars=fs.readFileSync(path.join(root,'atlas','src','components','LateralNamePillars.tsx'),'utf8');
 const qAtlasCard=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
 const qDarkDock=fs.readFileSync(path.join(root,'sozvezdie','src','components','ReaderDock.tsx'),'utf8');
+const qMobileIndex=fs.readFileSync(path.join(root,'sozvezdie','src','components','MobileIndex.tsx'),'utf8');
+const qReaderApp=fs.readFileSync(path.join(root,'sozvezdie','src','App.tsx'),'utf8');
+if(!qDarkDock.includes('createPortal(toolbar, headerSlot)')||
+   !qMobileIndex.includes('createPortal(')||
+   !qMobileIndex.includes('bg-ink-950 xl:hidden')||
+   qMobileIndex.includes('bg-ink-950/96')||
+   qMobileIndex.includes('fixed left-1/2 z-40')||
+   !qReaderApp.includes('sozvezdie-header-index-slot')||
+   !qReaderApp.includes('sozvezdie-header-reader-slot'))
+  throw Error('Sozvezdie P1: compact controls must be header-only and index opaque');
 if (!qAtlasNavbar.includes("backgroundColor: 'var(--gb-bg)'") ||
     qAtlasNavbar.includes("backdropFilter: 'blur(18px) saturate(150%)'"))
   throw Error('Visual regression: header text shines through the nav');

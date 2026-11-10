@@ -262,6 +262,24 @@ async function visit(browser,engine,app,width,base){
    await page.evaluate(()=>window.scrollTo({top:Math.round((document.documentElement.scrollHeight-innerHeight)*.72),behavior:'instant'}));
    await page.waitForTimeout(180);
    if(app==='sozvezdie'){
+    if(width<1280){
+     const controls=await page.evaluate(()=>{
+      const index=document.querySelector('#sozvezdie-mobile-index-trigger');
+      const dock=document.querySelector('[data-reader-dock]');
+      const header=document.querySelector('header');
+      return {indexParent:index?.parentElement?.id,dockParent:dock?.parentElement?.id,
+       indexBottom:index?.getBoundingClientRect().bottom,
+       dockBottom:dock?.getBoundingClientRect().bottom,
+       headerBottom:header?.getBoundingClientRect().bottom,
+       dockPosition:dock?getComputedStyle(dock).position:null};
+     });
+     record('mobile-reader-controls-outside-prose',{engine,width,...controls});
+     if(controls.indexParent!=='sozvezdie-header-index-slot'||
+        controls.dockParent!=='sozvezdie-header-reader-slot'||
+        controls.dockPosition==='fixed'||controls.indexBottom>controls.headerBottom+2||
+        controls.dockBottom>controls.headerBottom+2)
+      problem('BLOCKER','mobile-controls-cover-prose',{engine,width,controls});
+    }
     await page.waitForFunction(()=>{
      const label=document.querySelector('[data-reader-dock] button[aria-label^="Прочитано"]')?.getAttribute('aria-label');
      const pct=Number(label?.match(/Прочитано (\d+)%/)?.[1]);
@@ -325,10 +343,20 @@ async function visit(browser,engine,app,width,base){
      await page.locator('#tetragrammaton [role="tab"]').nth(2).click();
      await shot(page,engine+'-sozvezdie-'+width+'-07-letter-detail');
     });
-    if(width===390)await safeAction(page,engine+'-sozvezdie-'+width+'-mobile-index',async()=>{
+    if(width===390||width===320)await safeAction(page,engine+'-sozvezdie-'+width+'-mobile-index',async()=>{
      await page.locator('#yhwh').scrollIntoViewIfNeeded();
      await page.getByRole('button',{name:'Открыть список имён'}).click();
-     await page.getByRole('dialog',{name:'Указатель библейских выражений'}).waitFor({state:'visible'});
+     const dialog=page.getByRole('dialog',{name:'Указатель библейских выражений'});
+     await dialog.waitFor({state:'visible'});
+     await page.waitForFunction(()=>{
+       const el=document.querySelector('[data-mobile-index-dialog]');
+       return !!el&&Number(getComputedStyle(el).opacity)>=0.99;
+     },null,{timeout:5000});
+     const surface=await dialog.evaluate(el=>({color:getComputedStyle(el).backgroundColor,
+       filter:getComputedStyle(el).backdropFilter}));
+     record('mobile-index-opaque-surface',{engine,width,...surface});
+     if(!/^rgb\(/.test(surface.color)||surface.filter!=='none')
+       problem('BLOCKER','mobile-index-translucent',{engine,width,surface});
      await shot(page,engine+'-sozvezdie-'+width+'-08-mobile-index');
      await page.keyboard.press('Escape');
     });
@@ -434,8 +462,9 @@ async function visit(browser,engine,app,width,base){
      flex:getComputedStyle(el).flexDirection,top:el.getBoundingClientRect().top,screen:innerHeight
     }));
     record('tablet-reader-dock',{engine,width,...d});
-    if(d.flex!=='row'||d.top<d.screen-180)
-     problem('BLOCKER','tablet-dock-overlaps-text',{engine,width,measure:d});
+    if(d.flex!=='row'||d.top<0||d.top>85||
+       (await dock.evaluate(el=>el.parentElement?.id))!=='sozvezdie-header-reader-slot')
+     problem('BLOCKER','tablet-dock-not-in-header',{engine,width,measure:d});
     await shot(page,engine+'-sozvezdie-'+width+'-tablet-dock');
    });
   }
