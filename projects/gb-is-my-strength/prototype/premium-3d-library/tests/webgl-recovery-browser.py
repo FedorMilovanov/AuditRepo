@@ -13,7 +13,7 @@ import tempfile
 from pathlib import Path
 
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.getenv("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 OUT = Path(os.getenv("GB_LIBRARY_RECOVERY_EVIDENCE_DIR",
@@ -47,7 +47,7 @@ async def recovery_case(browser, engine, width, height, mobile):
         await overlay.wait_for(state="visible",timeout=15000)
         OUT.mkdir(parents=True,exist_ok=True)
         if width==1440:
-            await page.screenshot(path=str(OUT/f"{engine}-lost.png"),animations="disabled")
+            await capture_evidence(page, OUT/f"{engine}-lost.png")
         await page.evaluate("() => window.__testRecovery.ext.restoreContext()")
         await overlay.wait_for(state="detached",timeout=20000)
         await page.wait_for_timeout(550)
@@ -58,8 +58,7 @@ async def recovery_case(browser, engine, width, height, mobile):
         })""")
         assert all(restored.values()), (engine,width,restored)
         assert not errors, (engine,width,errors)
-        await page.screenshot(path=str(OUT/f"{engine}-{width}x{height}-restored.png"),
-                              animations="disabled")
+        await capture_evidence(page, OUT/f"{engine}-{width}x{height}-restored.png")
         print(json.dumps({"engine":engine,"viewport":f"{width}x{height}",
             "result":"PASS","recovery":restored,"errors":errors},
             ensure_ascii=False),flush=True)
@@ -89,8 +88,7 @@ async def fallback_case(browser,engine):
         await cabinet.wait_for(state="visible",timeout=12000)
         await cabinet.get_by_role("button",name="Закладки (0)").wait_for(timeout=15000)
         OUT.mkdir(parents=True,exist_ok=True)
-        await page.screenshot(path=str(OUT/f"{engine}-no-webgl-cabinet.png"),
-                              animations="disabled")
+        await capture_evidence(page, OUT/f"{engine}-no-webgl-cabinet.png")
         assert not errors,errors
         print(json.dumps({"engine":engine,"viewport":"390x844","result":"PASS",
             "noWebGL2Fallback":True,"cabinetAvailable":True,"errors":errors},
