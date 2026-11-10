@@ -258,6 +258,42 @@ if (wellToAudit) {
     mortar.material.color.getHex() === 0x4b4037 && stones === 42);
   t('Beersheba courses use authored separate limestone tones instead of one painted barrel',
     materials.size === 3 && stones === 42);
+  let ringPieces = 0, nonRadial = 0;
+  const layers = new Map<number, Array<{ start: number; end: number; bottom: number; top: number }>>();
+  constructed.traverse((o) => {
+    if (!(o instanceof THREE.Mesh) ||
+        !['well-course-stone', 'well-rim-stone'].includes(o.name)) return;
+    ringPieces++;
+    const bond = o.userData.wellBond as {
+      layer: number; start: number; end: number;
+      inner: number; outer: number; bottom: number; top: number;
+    } | undefined;
+    if (!bond || !(o.geometry instanceof THREE.ExtrudeGeometry) ||
+        bond.inner <= 1.05 || bond.outer >= BEERSHEBA_WELL_COLLIDER_RADIUS ||
+        bond.end <= bond.start || bond.end - bond.start > Math.PI * 2 / 14 ||
+        bond.top <= bond.bottom) {
+      nonRadial++; return;
+    }
+    const pieces = layers.get(bond.layer) ?? [];
+    pieces.push(bond);
+    layers.set(bond.layer, pieces);
+  });
+  const coursesBonded = [0, 1, 2, 3].every((layer) => {
+    const pieces = (layers.get(layer) ?? []).sort((a, b) => a.start - b.start);
+    return pieces.length === 14 &&
+      pieces.every((v, i) => i === pieces.length - 1 ||
+        pieces[i + 1].start - v.end >= 0.020);
+  });
+  t('Beersheba physically fitted annular wedges, 14 per layer, have recessed radial joints',
+    ringPieces === 56 && nonRadial === 0 && coursesBonded);
+  const lower = layers.get(0) ?? [], upper = layers.get(1) ?? [];
+  t('Beersheba masonry has three genuine horizontal mortar bands and staggered stone joints',
+    lower.length === 14 && upper.length === 14 &&
+    upper[0].start - lower[0].start > 0.15 &&
+    [0, 1, 2].every((layer) => {
+      const below = layers.get(layer)?.[0], above = layers.get(layer + 1)?.[0];
+      return !!below && !!above && above.bottom > below.top + 0.005;
+    }));
 }
 
 // Zone 5 used to display four identical green-ball olive trees. Ensure
@@ -341,7 +377,7 @@ if (wellRecord) {
   highWell.traverse((o) => {
     if (o.name === 'well-rim-stone') rimPieces++;
     if (o.name === 'well-course-stone' && o instanceof THREE.Mesh &&
-        o.geometry.type === 'RoundedBoxGeometry') roundedCourses++;
+        o.geometry.type === 'ExtrudeGeometry') roundedCourses++;
   });
   t('Beersheba coping consists of 14 individually fitted stones, not a continuous torus',
     rimPieces === 14 && roundedCourses === 42 &&
