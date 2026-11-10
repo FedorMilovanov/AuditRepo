@@ -7,6 +7,7 @@ import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
+import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
 import { buildZones, PLACEMENTS } from '../src/imena-boga-horeb-3d/engine/SceneZones';
@@ -203,6 +204,54 @@ for (const low of [true, false]) {
     !!soil && soil.scale.x <= 0.8 && soil.scale.y <= 0.1 && soil.scale.z <= 0.8);
 }
 
+
+// 42 bilingual stages are metadata, not fabricated Hebrew or auto-TTS.
+// Language follows the actual source (Hebrew / Aramaic / Greek), including
+// Greek-script transcriptions of Aramaic such as abba, pending human review.
+const voicePlans = EXHIBITS.map((e) => narrationPlan(e));
+t('all 42 original-language → Russian narrator plans derive from canonical exhibits',
+  voicePlans.length === 42 && new Set(voicePlans.map((p) => p.exhibitId)).size === 42 &&
+  voicePlans.every((p, i) => p.originalUnicode === EXHIBITS[i].originalUnicode &&
+    p.sourceLanguage === EXHIBITS[i].sourceLanguage &&
+    !!NARRATION_LANGUAGE_LABEL[p.sourceLanguage]));
+t('unreviewed voice is fail-closed: no Hebrew, Aramaic, Greek or Russian playback',
+  Object.keys(APPROVED_BILINGUAL_CUES).length === 0 &&
+  voicePlans.every((p) => p.status === 'HOLD' && !p.ready && p.playback.length === 0));
+t('Tetragrammaton is written only; no speculative original-language spoken track',
+  voicePlans.find((p) => p.exhibitId === 'yhwh')?.originalSpoken === false &&
+  voicePlans.find((p) => p.exhibitId === 'yhwh')?.order === 'written-original-then-russian');
+t('Aramaic and Greek exhibits retain their own languages, never silently Hebrew',
+  voicePlans.some((p) => p.sourceLanguage === 'arc' && p.originalSpoken) &&
+  voicePlans.some((p) => p.sourceLanguage === 'grc' && p.originalSpoken) &&
+  voicePlans.find((p) => p.exhibitId === 'abba')?.sourceLanguage === 'grc');
+t('unverified external exhibit or arbitrary Russian draft cannot authorize playback',
+  !narrationPlan({ ...EXHIBITS[0], originalUnicode: 'FAKE' }, 'Russian approved').ready &&
+  !narrationPlan(EXHIBITS[0], 'Russian draft').ready);
+
+// Well joints must be geometrically recessed; visual contrast cannot rely
+// solely on different tan rectangles blending into a cylinder silhouette.
+const wellToAudit = EXHIBITS.find((e) => e.environmentKey === 'beersheba-well');
+if (wellToAudit) {
+  const constructed = buildExhibitProps(wellToAudit, true, 0, 0);
+  const mortar = constructed.getObjectByName('well-recessed-mortar');
+  let stones = 0;
+  const materials = new Set<THREE.Material>();
+  let minTangential = Infinity;
+  constructed.traverse((o) => {
+    if (o.name !== 'well-course-stone' || !(o instanceof THREE.Mesh)) return;
+    stones++;
+    materials.add(o.material as THREE.Material);
+    minTangential = Math.min(minTangential, o.geometry.boundingBox?.max.x ?? Infinity);
+  });
+  t('Beersheba masonry exposes genuinely recessed dark joint backing',
+    mortar instanceof THREE.Mesh &&
+    mortar.geometry instanceof THREE.CylinderGeometry &&
+    mortar.geometry.parameters.openEnded === true &&
+    mortar.material instanceof THREE.MeshStandardMaterial &&
+    mortar.material.color.getHex() === 0x4b4037 && stones === 42);
+  t('Beersheba courses use authored separate limestone tones instead of one painted barrel',
+    materials.size === 3 && stones === 42);
+}
 
 // Zone 5 used to display four identical green-ball olive trees. Ensure
 // Gethsemane now has multiple, individually positioned crown lobes per tree.
