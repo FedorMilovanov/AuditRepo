@@ -33,7 +33,7 @@ CASES=[
     ("webkit",1440,900,False),
 ]
 
-async def assert_modal(page):
+async def assert_modal(page, opened_evidence=None):
     dialog=page.get_by_role("dialog",name="Карта сайта")
     await dialog.wait_for(state="visible",timeout=9000)
     assert await dialog.get_attribute("aria-modal")=="true"
@@ -46,6 +46,17 @@ async def assert_modal(page):
       actualFocus:document.activeElement?.tagName
     })""")
     assert state["activeInDialog"] and state["rootInert"] and state["dialogCount"]==1,state
+    # Capture the unmodified opening composition (before search focus or
+    # keyboard travel can scroll a short landscape dialog).
+    initial = await dialog.evaluate("""panel => {
+        const title=panel.querySelector('#gb-sitemap-title')?.getBoundingClientRect();
+        return {scrollTop:panel.scrollTop, titleTop:title?.top, titleBottom:title?.bottom};
+    }""")
+    assert initial["scrollTop"] <= 1 and initial["titleTop"] >= -1 and (
+        initial["titleBottom"] <= page.viewport_size["height"]
+    ), ("Map heading clipped immediately on opening", initial)
+    if opened_evidence is not None:
+        await capture_evidence(page, opened_evidence)
     # The map intentionally retains a reader's search when closed. Previous
     # assertions tested an empty search result and then reopened the map, so
     # desktop rows could be absent when the geometry probe ran. Clear the
@@ -128,10 +139,13 @@ async def run_case(browser,engine,w,h,touch):
         # Use actual UI click and keyboard from the introduction.
         opener=page.locator('[data-gb-intro] button[title="Карта сайта"]')
         await opener.click(timeout=10000)
-        dialog=await assert_modal(page)
+        witness = OUT/f"{engine}-{size}-map-open.png" if size in (
+            "844x390","390x844","1440x900"
+        ) else None
+        dialog=await assert_modal(page, opened_evidence=witness)
         OUT.mkdir(parents=True,exist_ok=True)
         if size in ("844x390","390x844","1440x900"):
-            await capture_evidence(page, OUT/f"{engine}-{size}-map.png")
+            await capture_evidence(page, OUT/f"{engine}-{size}-map-after-search.png")
         await page.keyboard.press("Escape")
         await dialog.wait_for(state="detached",timeout=10000)
         assert not await page.evaluate("document.querySelector('#root').inert"),"root stayed inert after Escape"
