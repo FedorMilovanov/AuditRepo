@@ -14,7 +14,7 @@ import tempfile
 from pathlib import Path
 
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
 EVIDENCE = Path(os.environ.get("GB_LIBRARY_HUD_EVIDENCE_DIR", tempfile.gettempdir()))
@@ -84,7 +84,7 @@ async def inspect(browser, engine, width, height):
         assert not errors, f"{engine}/{width}: {errors}"
         EVIDENCE.mkdir(parents=True, exist_ok=True)
         shot = EVIDENCE / f"gb-library-touch-{engine}-{width}x{height}.png"
-        await page.screenshot(path=str(shot))
+        await capture_evidence(page, shot)
         print(json.dumps({"engine": engine, "viewport": f"{width}x{height}",
                           "result": "PASS", "evidence": str(shot)}, ensure_ascii=False))
     finally:
