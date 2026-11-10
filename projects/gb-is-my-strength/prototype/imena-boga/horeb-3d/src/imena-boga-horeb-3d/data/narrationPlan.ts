@@ -1,14 +1,9 @@
 // Bilingual audio contract for 42 canonical Research designations, not 42 personal names.
 // A source-language performance may be Hebrew, Aramaic or Greek according to
 // Exhibit.sourceLanguage. Never infer a reading from Latin transliteration.
-import { EXHIBITS, type Exhibit, type Lang } from './exhibits';
+import { EXHIBITS, isOriginalVoiced, type Exhibit, type Lang } from './exhibits';
+export { NARRATION_LANGUAGE_LABEL } from './exhibits';
 import { isApprovedAudioPath } from '../engine/NarratorBus';
-
-export const NARRATION_LANGUAGE_LABEL: Readonly<Record<Lang, string>> = {
-  he: 'библейском древнееврейском',
-  arc: 'библейском арамейском',
-  grc: 'древнегреческом',
-};
 
 // The sign-off is per recording, not just per author or file name.
 // No certificates or files have been provided: do not fabricate an approval.
@@ -52,7 +47,7 @@ export interface NarrationPlan {
 }
 
 export function narrationPlan(exhibit: Exhibit, russianDraft?: string): NarrationPlan {
-  const originalSpoken = exhibit.id !== 'yhwh';
+  const originalSpoken = isOriginalVoiced(exhibit);
   const approval = APPROVED_BILINGUAL_CUES[exhibit.id];
   const canonical = EXHIBITS.find((item) => item.id === exhibit.id);
   const matchesCanonical = canonical != null &&
