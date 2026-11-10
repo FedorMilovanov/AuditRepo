@@ -38,6 +38,26 @@ export const PLACEMENTS: Record<string, [number, number]> = {
 const ss = (a: number, b: number, x: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 export const chasmF = chasmFactor;
 
+/** Continuous subsurface roof relief: NOT a separate stalactite mesh.
+ * The same cave-vault triangles deform smoothly from a single lithological
+ * field. Hard limits retain >3m walking clearance even in the narrow outlet.
+ * Fresher chipped faces read as subdued bedding, never emissive spikes. */
+export function exitVaultRelief(x: number, y: number, z: number,
+  archSin: number, archCos: number) {
+  const envelope = ss(-319, -312, z) * (1 - ss(-298, -288, z));
+  if (envelope <= 0) return { roofDrop: 0, sideOut: 0, shade: 1 };
+  const grain = fbm(x * 0.74 + 17, y * 0.31 - 2, z * 0.49 + 31, 3);
+  const splinter = Math.pow(Math.abs(grain - 0.5) * 2, 1.6);
+  const ceiling = Math.pow(Math.max(0, archSin), 2.3);
+  const flank = Math.pow(Math.max(0, Math.abs(archCos)), 2.2);
+  const roofDrop = envelope * ceiling * (0.19 + 0.69 * splinter);
+  // Side movement is OUTWARD: no protrusion narrows the traversable width.
+  const sideOut = envelope * flank * (0.08 + 0.26 * splinter);
+  return { roofDrop, sideOut, shade: 1 - envelope * (0.04 + 0.14 * splinter) };
+}
+
+
+
 // Цвет породы по зонам (запечённая палитра)
 const TINTS: [number, [number, number, number]][] = [
   [4, [0.42, 0.36, 0.3]], [-30, [0.58, 0.47, 0.35]], [-64, [0.55, 0.42, 0.32]], [-90, [0.62, 0.4, 0.29]],
@@ -103,9 +123,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         const nl = Math.hypot(x / hw, y / H) || 1;
         x += (x / hw / nl) * disp; y += (y / H / nl) * disp * 0.6;
         if (cf > 0 && ca > 0 && y < H * 0.45) y -= cf * 55 * (1 - Math.max(-1, y) / (H * 0.45));
+        // Carve zone-6 fractures INTO the continuous cave shell. The previous
+        // separate triangles looked like paper stalactites when lit. No new
+        // mesh, material, collision shape or draw call is needed.
+        const exit = exitVaultRelief(x, y, z, sa, ca);
+        x += Math.sign(x) * exit.sideOut;
+        y -= exit.roofDrop;
         pos.push(x, y, z);
         bake(x * 0.8, Math.max(0, y), z, tmp);
-        const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z);
+        const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z) * exit.shade;
         const ao = 0.55 + 0.45 * Math.min(1, Math.max(0, y) / 3) * (1 - 0.35 * Math.max(0, y / H - 0.7));
         let vein = 1;
         if (z < -62 && z > -118) vein = 1 + 0.35 * Math.max(0, Math.sin(y * 1.7 + n * 9) - 0.85) * 6;
@@ -128,6 +154,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     geo.setIndex(idx);
     geo.computeVertexNormals();
     const mesh = new THREE.Mesh(geo, rockMat);
+    mesh.name = 'cave-vault-continuous';
     group.add(mesh);
 
     // Пол
@@ -308,82 +335,6 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     void id;
     const lamp = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, color: 0xffa860, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.8 }));
     lamp.position.set(p[0] * 1.18, 0.35, p[1] - 0.9); lamp.scale.set(0.18, 0.26, 1); group.add(lamp);
-  }
-
-  // ── Зона 6: структурная геология перед выходом.
-  // The old 6th zone was an undifferentiated taper of the same tunnel mesh.
-  // These irregular discontinuous roof fractures are genuinely 3D and anchored
-  // high INSIDE the existing vault, leaving >2.7m safe head clearance. They
-  // are neither a decorative arch nor a hidden collision wall. One shared
-  // vertex-colour rock material and one mesh keep draw-call cost bounded.
-  {
-    const count = low ? 11 : 17;
-    const rand = rng(61026);
-    const positions: number[] = [], colors: number[] = [], uv: number[] = [], indices: number[] = [];
-    const coldStone = [0.32, 0.35, 0.40] as const;
-    const face = (points: THREE.Vector3[], tint: number) => {
-      const base = positions.length / 3;
-      for (const p of points) {
-        positions.push(p.x, p.y, p.z);
-        // The shared mineral atlas expects UVs. Without them this rock
-        // samples a single pixel and becomes a flat-colored paper polygon.
-        // World-space mapping is deliberately irregular and continuous.
-        const grain = caveSurfaceVariation(p.x, p.y, p.z);
-        uv.push(p.x * 0.18 + p.z * 0.042 + grain * 0.15,
-          p.y * 0.21 + p.z * 0.24 + grain * 0.12);
-        const v = tint * (0.78 + grain * 0.23);
-        colors.push(coldStone[0] * v, coldStone[1] * v, coldStone[2] * v);
-      }
-      // Flat-shaded facets: no shared normals across fractured faces.
-      indices.push(base, base + 1, base + 2);
-    };
-    const addTriangle = (a: THREE.Vector3, b: THREE.Vector3,
-      c: THREE.Vector3, tint: number) => {
-      face([a, b, c], tint);
-    };
-    for (let i = 0; i < count; i++) {
-      const z = -293.6 - (i + 0.25 + rand() * 0.45) * (21.5 / count);
-      const height = vaultHeight(z);
-      const side = i % 3 === 0 ? 0 : i % 2 === 0 ? -1 : 1;
-      const offset = side === 0 ? (rand() - 0.5) * 0.8 :
-        side * (0.65 + rand() * 0.72);
-      const width = 0.44 + rand() * 0.54;
-      const length = 0.85 + rand() * 1.35;
-      const seamHeight = Math.max(2.78, height - (1.08 + rand() * 0.84));
-      const shoulderY = Math.max(seamHeight + 0.3, height - 0.57);
-      const topY = height + 1.8;
-      const tilt = (rand() - 0.5) * 0.3;
-      const a = new THREE.Vector3(offset - width, topY, z + length);
-      const b = new THREE.Vector3(offset + width * 0.8, topY - 0.15, z + length);
-      const c = new THREE.Vector3(offset + width, topY + 0.1, z - length);
-      const d = new THREE.Vector3(offset - width * 0.8, topY, z - length);
-      const e = new THREE.Vector3(offset - width * 0.55,
-        shoulderY, z + length * 0.52);
-      const f = new THREE.Vector3(offset + width * 0.42,
-        shoulderY - 0.11, z - length * 0.52);
-      const bottom = new THREE.Vector3(offset + tilt, seamHeight,
-        z + (rand() - 0.5) * length * 0.35);
-      // Asymmetric coarse bedding ends in a short, sharp detached fracture;
-      // four differently oriented facets avoid the cone / cathedral-arch look.
-      addTriangle(a, b, e, 0.91);
-      addTriangle(b, f, e, 0.76);
-      addTriangle(b, c, f, 1.04);
-      addTriangle(c, d, f, 0.68);
-      addTriangle(d, e, f, 0.84);
-      addTriangle(e, f, bottom, 0.64);
-      addTriangle(d, a, e, 0.94);
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-    geo.setIndex(indices);
-    geo.computeVertexNormals();
-    const fracture = new THREE.Mesh(geo, rockMat);
-    fracture.name = 'zone-6-geological-roof-fractures';
-    fracture.userData.fractureCount = count;
-    fracture.userData.collision = false;
-    group.add(fracture);
   }
 
   // ── Зона 7: открытый ландшафт у Хорива
