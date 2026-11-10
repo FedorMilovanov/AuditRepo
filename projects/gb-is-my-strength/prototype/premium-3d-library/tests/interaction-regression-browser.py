@@ -13,7 +13,7 @@ import os
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL=os.environ.get("GB_LIBRARY_TEST_URL","http://127.0.0.1:8771/")
 OUT=Path(os.environ.get("GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -91,7 +91,7 @@ async def run_case(browser,engine,w,h,touch):
         dialog=await assert_modal(page)
         OUT.mkdir(parents=True,exist_ok=True)
         if size in ("844x390","390x844","1440x900"):
-            await page.screenshot(path=str(OUT/f"{engine}-{size}-map.png"),animations="disabled")
+            await capture_evidence(page, OUT/f"{engine}-{size}-map.png")
         await page.keyboard.press("Escape")
         await dialog.wait_for(state="detached",timeout=10000)
         assert not await page.evaluate("document.querySelector('#root').inert"),"root stayed inert after Escape"
@@ -103,7 +103,7 @@ async def run_case(browser,engine,w,h,touch):
         await page.locator("div.fixed.inset-0.z-50").wait_for(state="detached",timeout=40000)
         assert not await page.evaluate("document.querySelector('#root').inert")
         if size in ("844x390","667x375","390x844","1440x900"):
-            await page.screenshot(path=str(OUT/f"{engine}-{size}-hall.png"),animations="disabled")
+            await capture_evidence(page, OUT/f"{engine}-{size}-hall.png")
 
         # Reopen via the public game keyboard shortcut (desktop), or real
         # toolbar tap (mobile), then ensure modal isolation and restoration.
