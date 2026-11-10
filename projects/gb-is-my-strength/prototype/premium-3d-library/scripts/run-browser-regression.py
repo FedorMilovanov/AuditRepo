@@ -33,6 +33,7 @@ TESTS = (
     ("webgl-recovery-browser.py", 6),
     ("visited-persistence-browser.py", 6),
     ("reduced-motion-browser.py", 4),
+    ("reading-furniture-browser.py", 4),
 )
 EVIDENCE_VARIABLES = {
     "interaction-regression-browser.py": "GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
@@ -46,6 +47,7 @@ EVIDENCE_VARIABLES = {
     "webgl-recovery-browser.py": "GB_LIBRARY_RECOVERY_EVIDENCE_DIR",
     "visited-persistence-browser.py": "GB_LIBRARY_VISITED_EVIDENCE_DIR",
     "reduced-motion-browser.py": "GB_LIBRARY_MOTION_EVIDENCE_DIR",
+    "reading-furniture-browser.py": "GB_LIBRARY_READING_EVIDENCE_DIR",
 }
 
 
@@ -92,6 +94,18 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             assert isinstance(hashes, list) and len(hashes) == 2 and (
                 (hashes[0] == hashes[1]) is (case["preference"] == "reduce")
             ), f"Motion witness lacks consistent screenshot hashes: {case}"
+    if name == "reading-furniture-browser.py":
+        assert {(case.get("engine"), case.get("viewport")) for case in cases} == {
+            ("chromium", "1440x900"), ("chromium", "390x844"),
+            ("webkit", "1440x900"), ("webkit", "390x844"),
+        }, f"Reading regression omitted a browser or viewport: {cases}"
+        for case in cases:
+            witness = case.get("report")
+            assert isinstance(witness, dict) and witness.get("hasWebGL2") is True and (
+                witness.get("overflow") is False
+            ) and witness.get("visibleTitle") is True and (
+                bool(case.get("center")) and bool(case.get("lectern"))
+            ), f"Reading furniture lacks actual UI or screenshot evidence: {case}"
     if name == "quality-transition-browser.py":
         # A count of two does not prove opposite directions: CI previously
         # reported low→high twice as PASS after an automatic downgrade.

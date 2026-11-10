@@ -24,9 +24,10 @@ expected = {
     "webgl-recovery-browser.py": 6,
     "visited-persistence-browser.py": 6,
     "reduced-motion-browser.py": 4,
+    "reading-furniture-browser.py": 4,
 }
 assert dict(module.TESTS) == expected
-assert sum(expected.values()) == 57
+assert sum(expected.values()) == 61
 assert len(set(module.EVIDENCE_VARIABLES.values())) == len(expected)
 assert set(module.EVIDENCE_VARIABLES) == set(expected)
 
@@ -48,6 +49,13 @@ def cases_for(name: str) -> list[dict]:
             item["preference"] = pref
             item["sceneUnchanged"] = pref == "reduce"
             item["sha256"] = ["a", "a"] if pref == "reduce" else ["a", "b"]
+    if name == "reading-furniture-browser.py":
+        for index, item in enumerate(records):
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["viewport"] = ("1440x900", "390x844")[index % 2]
+            item["center"] = "actual-center.png"
+            item["lectern"] = "actual-lectern.png"
+            item["report"] = {"hasWebGL2": True, "overflow": False, "visibleTitle": True}
     if name == "quality-transition-browser.py":
         for item in records:
             item["switches"] = [
@@ -166,6 +174,16 @@ except (AssertionError, ValueError):
 else:
     raise AssertionError("Malformed JSON was silently ignored")
 
+# Reading acceptance must not silently admit an invisible text plane.
+missing_reading = cases_for("reading-furniture-browser.py")
+missing_reading[0]["report"]["visibleTitle"] = False
+try:
+    module.verify_case_records("reading-furniture-browser.py", jsonlines(missing_reading), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Missing readable lectern evidence was marked PASS")
+
 # A falsely-green static scene must not satisfy the normal-motion control.
 broken_motion = cases_for("reduced-motion-browser.py")
 broken_motion[1]["sha256"] = ["a", "a"]
@@ -176,4 +194,4 @@ except AssertionError:
 else:
     raise AssertionError("Normal-motion control accepted two identical screenshots")
 
-print("BROWSER_CI_CONTRACT_PASS: eleven suites, 57 cases; fails on missing/SKIP/errors/bad quality/motion directions/malformed JSON")
+print("BROWSER_CI_CONTRACT_PASS: twelve suites, 61 cases; fails on missing/SKIP/errors/bad quality/motion directions/malformed JSON")

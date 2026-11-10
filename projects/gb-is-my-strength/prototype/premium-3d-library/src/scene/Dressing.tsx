@@ -6,6 +6,7 @@ import { get, input, openItem, registry, set } from "../store";
 import { useReducedMotion } from "../motion";
 import { lecternPage, verseTabletTexture } from "../textures";
 import { darkStone, goldMat, marble, wood } from "./Platform";
+import { READING_GEOMETRY as R } from "./readingGeometry";
 
 function VerseTablet() {
   const tex = useMemo(() => verseTabletTexture(), []);
@@ -58,16 +59,16 @@ function Lectern() {
       <mesh position={[0, 0.66, -0.1]} rotation={[-0.24, 0, 0]} material={wood}>
         <boxGeometry args={[0.13, 1.2, 0.13]} />
       </mesh>
-      <mesh position={[0, 1.06, 0.02]} rotation={[-0.62, 0, 0]} material={wood}>
+      <mesh position={[0, 1.06, 0.02]} rotation={[R.lecternFacingTiltX, 0, 0]} material={wood}>
         <boxGeometry args={[0.74, 0.05, 0.5]} />
       </mesh>
       {/* раскрытая книга на пюпитре */}
-      <group position={[0, 1.11, 0.03]} rotation={[-0.62, 0, 0]}>
+      <group position={[0, 1.11, 0.03]} rotation={[R.lecternFacingTiltX, 0, 0]}>
         <mesh position={[0, 0.012, 0]}>
           <boxGeometry args={[0.62, 0.022, 0.44]} />
           <meshStandardMaterial color="#f7efdb" roughness={0.85} />
         </mesh>
-        <mesh position={[0, 0.026, 0]}>
+        <mesh position={[0, 0.026, 0]} rotation-x={R.lecternPageRotationX}>
           <planeGeometry args={[0.58, 0.4]} />
           <meshBasicMaterial map={page} toneMapped={false} />
         </mesh>

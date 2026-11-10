@@ -1,5 +1,11 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.36 — physical reading furniture (current LAB candidate)
+
+[**V536_READING_FURNITURE_ENGINEERING.md**](V536_READING_FURNITURE_ENGINEERING.md) records real same-camera before/after Chromium/WebKit evidence, a corrected visitor-facing lectern page, and numerical book/table/support clearances using actual Three.js transforms and negative fixtures. The 4 new browser cases passed locally; the mandatory test count is now **12 suites / 61 browser cases**. New exact-head GitHub Preflight + Validate must independently finish green. Old V5.35 **11/11 suites, 57/57 PASS** is validated but does not certify V5.36. Keep Draft / LAB / ART HOLD; no Product/main/merge/deploy.
+
+---
+
 ## V5.35 — reduced motion and no-WebGL 2D entry (NEW candidate)
 
 [**V535_MOTION_2D_BOOTSTRAP.md**](V535_MOTION_2D_BOOTSTRAP.md) documents real screenshot-motion evidence, capability-first bootstrap, original WebGL recovery and explicit limitations. The existing lab Draft PR now requires **11 suites / 57 cases** on the exact **new** SHA; 6/6 WebGL/recovery and 4/4 motion cases were passed on Windows browsers in the local candidate. The new Linux GitHub CI cannot be presumed green until its final terminal status and run logs are inspected. **Keep Draft / LAB / ART HOLD; no Product/main/deploy/merge.**

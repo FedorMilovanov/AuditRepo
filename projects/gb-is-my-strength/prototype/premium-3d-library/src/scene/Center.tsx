@@ -2,6 +2,7 @@
 import * as THREE from "three";
 import { canvasTex } from "../textures";
 import { marble, wood, goldMat, wax } from "./Platform";
+import { READING_GEOMETRY as R } from "./readingGeometry";
 
 /** Backwards-compatible export, intentionally invisible in natural-light mode. */
 export function Beam(_props: { height?: number; r0?: number; r1?: number; color?: string; opacity?: number; power?: number }) { return null; }
@@ -73,7 +74,7 @@ function bevelledReadingTabletop() {
     [0, 1.49], [1.90, 1.49], [1.99, 1.49],
     [2.045, 1.505], [2.075, 1.52], [2.105, 1.54],
     [2.135, 1.558], [2.135, 1.593], [2.11, 1.612],
-    [2.06, 1.63], [0, 1.63],
+    [2.06, R.tableTopY], [0, R.tableTopY],
   ].map(([r, y]) => new THREE.Vector2(r, y)), 128);
 }
 
@@ -108,14 +109,14 @@ export function Center() {
     {/* Two wooden back supports bear the elevated edge of the lectern.
         The front edge of the tilted volume rests just above the tabletop. */}
     {[-0.86, 0.86].map((x) => (
-      <mesh key={x} position={[x, 1.87, -0.43]} rotation-x={-0.24} material={wood} castShadow>
-        <boxGeometry args={[0.14, 0.52, 0.15]} />
+      <mesh key={x} position={[x, R.supportCenterY, R.supportCenterZ]} rotation-x={R.supportTiltX} material={wood} castShadow>
+        <boxGeometry args={[0.14, R.supportHeight, R.supportDepth]} />
       </mesh>
     ))}
     {/* The book is angled toward the visitor's start position at +Z.
         Page planes are laid across the cover, rather than standing upright. */}
-    <group position={[0, 1.95, 0.18]} rotation-x={0.35}>
-      <mesh position={[0, -0.04, 0]} material={wood} castShadow><boxGeometry args={[2.3, 0.10, 1.60]} /></mesh>
+    <group position={[0, R.bookCenterY, R.bookCenterZ]} rotation-x={R.bookTiltX}>
+      <mesh position={[0, R.coverLocalY, 0]} material={wood} castShadow><boxGeometry args={[2.3, R.coverThickness, R.coverDepth]} /></mesh>
       <mesh position={[0, 0.02, 0]} material={wax} castShadow><boxGeometry args={[2.19, 0.07, 1.50]} /></mesh>
       <mesh position={[-0.57, 0.078, 0]} rotation={[-Math.PI / 2, 0, 0.045]}>
         <planeGeometry args={[1.06, 1.42]} />
