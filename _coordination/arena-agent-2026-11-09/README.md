@@ -65,11 +65,13 @@
 
 ---
 
-## 5. Устаревшие файлы (оставлены как история)
+## 5. Устаревшее — в `legacy/`
 
-`FINAL_BUG_MATRIX.md` (22 строки, до калибровки) · `CORPUS_AUDIT_REPORT.md` ·
-`STATUS.md` (описывает волны 1–4) · `data/findings.tsv` (335 строк на
-абсолютных порогах — см. §4). Не удаляю: они показывают, как менялся вывод.
+`legacy/FINAL_BUG_MATRIX.md` · `legacy/CORPUS_AUDIT_REPORT.md` · `legacy/STATUS.md`.
+Не читать как текущий результат; причина выноса — в `legacy/README.md`.
+
+`data/findings.tsv` (335 строк на абсолютных порогах) пока оставлен на месте —
+на него ссылаются другие документы, и его статус описан в `MEASUREMENT_CONFLICTS.md` §4.
 
 ---
 
