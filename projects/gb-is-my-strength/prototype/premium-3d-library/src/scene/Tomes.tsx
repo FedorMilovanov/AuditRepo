@@ -14,6 +14,11 @@ function Tome({ item, index }: { item: Item; index: number }) {
   const [x, z] = itemPos(item);
   const spine = useMemo(() => spineTexture(item.spine || item.title, item.color, item.n), [item]);
   const plaque = useMemo(() => tomePlaque(item), [item]);
+  useEffect(() => {
+    spine.needsUpdate = true;
+    plaque.needsUpdate = true;
+    return () => { spine.dispose(); plaque.dispose(); };
+  }, [spine, plaque]);
   const leather = useMemo(
     () => new THREE.MeshStandardMaterial({ color: item.color, roughness: 0.83, metalness: 0 }),
     [item.color]
