@@ -410,42 +410,39 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     await method.locator('summary').click();
     if(!(await method.locator('details').evaluate(el=>el.hasAttribute('open'))))
       throw Error('Method disclosure not expandable '+width);
-    // Mobile/tablet scripture pillars are a true keyboard modal.
-    if(width<1024){
-      const trigger=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
-      // The compact ribbon is intentionally absent from the cover and appears
-      // only once reading begins. Verify BOTH states before opening the drawer.
-      await page.evaluate(()=>window.scrollTo(0,0));
+    // Compact-viewport pillars are opened from the real header. The former
+    // floating ribbon was removed because it obscured mobile reading text.
+    if(width<1440){
+      const trigger=page.locator('#gb-mobile-atlas-nav-trigger');
+      await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+      await trigger.waitFor({state:'visible',timeout:10000});
       await page.waitForFunction(()=>
         document.getElementById('atlas-hero')?.getBoundingClientRect().bottom>0);
-      // The IntersectionObserver fires asynchronously after the scroll paint.
-      // Wait for its React commit, but fail if the ribbon remains on the cover.
-      await trigger.waitFor({state:'hidden',timeout:10000}).catch(() => {
-        throw Error('Atlas scripture ribbon obscures the opening hero '+width);
+      const cover=await trigger.evaluate(el=>{
+        const rect=el.getBoundingClientRect();
+        const overlays=[...document.querySelectorAll('[data-atlas-mobile-ribbon],[data-atlas-launcher-shell]')]
+          .filter(node=>{const r=node.getBoundingClientRect(),css=getComputedStyle(node);
+            return r.width>0&&r.height>0&&css.visibility!=='hidden'&&css.display!=='none';});
+        return {height:rect.height,width:rect.width,top:rect.top,bottom:rect.bottom,
+          insideNav:Boolean(el.closest('nav')),overlays:overlays.length,
+          label:el.getAttribute('aria-label'),hasPopup:el.getAttribute('aria-haspopup')};
       });
-      // Enter article reading via an editorial anchor, never via the card
-      // action zone where the unobtrusive launcher intentionally yields.
+      if(!cover.insideNav||cover.overlays||cover.top<0||cover.bottom>100||
+         cover.height<40||cover.width<40||!cover.label||cover.hasPopup!=='dialog')
+        throw Error('Atlas header drawer launcher invalid on hero '+
+          JSON.stringify({engine,width,cover}));
       await page.locator('#article-introduction').scrollIntoViewIfNeeded();
       await trigger.waitFor({state:'visible',timeout:10000});
-      // Long Cyrillic/Greek/Hebrew names used to inflate the persistent
-      // bottom control past 100px at 320px, hiding article paragraphs.
-      // Full name remains inside the drawer; the trigger must stay compact.
-      const ribbonLayout=await trigger.evaluate(el=>{
+      const reading=await trigger.evaluate(el=>{
         const rect=el.getBoundingClientRect();
-        const label=el.querySelector('span.font-ui');
-        return {height:rect.height,width:rect.width,
-          label:label?.textContent?.trim(),
-          textWidth:label?.clientWidth,textScroll:label?.scrollWidth,
-          title:el.getAttribute('title')};
+        return {top:rect.top,bottom:rect.bottom,
+          overlays:[...document.querySelectorAll('[data-atlas-mobile-ribbon],[data-atlas-launcher-shell]')]
+            .filter(node=>node.getBoundingClientRect().width>0&&node.getBoundingClientRect().height>0).length};
       });
-      if(ribbonLayout.height>68||
-         (ribbonLayout.textWidth??0)+1<(ribbonLayout.textScroll??0)||
-         !ribbonLayout.title?.trim())
-        throw Error('Atlas mobile ribbon must remain compact and legible '+
-          JSON.stringify({width,ribbonLayout}));
-      // Document-bubble observer runs after the React root's click handler.
-      // A requestAnimationFrame-based focus transition must fail this witness,
-      // even if later Playwright assertions happen to run after the frame.
+      if(reading.overlays||reading.top<0||reading.bottom>100)
+        throw Error('Atlas mobile launcher obscures reading text '+
+          JSON.stringify({engine,width,reading}));
+      // Document-bubble observer runs after React's click handler.
       await page.evaluate(()=>{
         window.__atlasImmediateDrawerFocus=null;
         document.addEventListener('click',event=>{
@@ -515,7 +512,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Открыть скрижали имён Бога');
       if((await trigger.getAttribute('aria-expanded'))!=='false')
         throw Error('Pillars trigger stuck expanded '+width);
-      // The dossier captures the persistent ribbon as its restore target.
+      // The dossier restores focus to the permanent header trigger.
       await trigger.click();
       await drawer.locator('button').nth(2).click();
       // The dossier must own focus as soon as the click commits. Waiting for
