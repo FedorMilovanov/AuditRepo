@@ -102,6 +102,24 @@ try {
     witness.desktop.push(evidence);
     console.log('PASS desktop zone ' + zone + ' screenshot ' + evidence.screenshot);
   }
+  // A detail witness is essential: the zone-6 spawn is 28m from the mouth
+  // and perspective conceals real roof deformation. This is only a camera
+  // for human visual acceptance, not a pedestrian navigation witness.
+  const beforeExit = await desktop.evaluate(() => {
+    const w = window.__horeb.world;
+    const frame = w.renderer.info.render.frame;
+    w.teleportTo(0, -309.5);
+    w.yaw = 0; w.pitch = 0.22;
+    return frame;
+  });
+  await waitForRenderedFrame(desktop, beforeExit, 6);
+  await new Promise((resolve) => setTimeout(resolve, 350));
+  const exitClose = 'visual-detail-zone6-exit-roof.png';
+  await desktop.screenshot({ path: join(shots, exitClose) });
+  witness.details.push({ id: 'zone6-continuous-roof', zone: 6, screenshot: exitClose,
+    narrative: 'Camera at z=-309.5 looking toward exit; no nav certification' });
+  console.log('PASS close-up zone-6 continuous roof screenshot ' + exitClose);
+
   // Hardware safety witness. Compare low-quality startup draw calls to the
   // before-optimization artifact (306 calls in zone 0). This is a GPU command
   // budget check, not an FPS claim from software SwiftShader.
