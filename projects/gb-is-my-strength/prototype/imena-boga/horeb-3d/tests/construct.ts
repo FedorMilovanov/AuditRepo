@@ -2,6 +2,8 @@
 // (which resolves extensionless TS imports) and run in Node.
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
+import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
+import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
@@ -46,8 +48,8 @@ t('dark Horeb beacons stay below 55% brightness',
   beaconOpacity(9, true) <= 0.54 && beaconOpacity(9, true) > 0.5 &&
   beaconOpacity(9, false) > beaconOpacity(9, true));
 t('name beacons stay compact close up and grow for distant recognition',
-  beaconVisualScale(2) < 0.8 && beaconVisualScale(24) > 1.1 &&
-  beaconVisualScale(NaN) < 0.8);
+  beaconVisualScale(2) < 0.72 && beaconVisualScale(24) > 1.1 &&
+  beaconVisualScale(NaN) < 0.72);
 t('head-on original script remains visible at 8m on desktop',
   beaconViewFactor(8, 0, 0.81) > 0.9);
 t('side inscription fades before desktop frame cuts through its letters',
@@ -223,6 +225,29 @@ t('signed narration verifies downloaded SHA-256 and rejects modified bytes',
   !(await matchesAudioSha256(knownBytes, '0'.repeat(64))) &&
   !(await matchesAudioSha256(new TextEncoder().encode('abd').buffer as ArrayBuffer,
     'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')));
+
+// The editorial matrix is the canonical source; runtime and no-JS must not
+// gain a separate, drifting corpus or auto-generated unreviewed Russian lines.
+const sourceRows = readFileSync('audit/HOREB_SCENE_MATRIX_42_V1.md', 'utf8')
+  .split('\n').filter((line) => /^\|\s*\d{2}\s*·\s*`/.test(line));
+const sceneDrafts = sourceRows.map((row) => {
+  const parts = row.split('|');
+  const id = parts[1]?.match(/`([a-z0-9-]+)`/)?.[1];
+  let cue = parts[5]?.trim();
+  if (cue?.startsWith('«') && cue.endsWith('»')) cue = cue.slice(1, -1);
+  return { id, cue };
+});
+t('all 42 Russian voice drafts come from canonical exhibit matrix with no duplicate IDs',
+  sourceRows.length === 42 &&
+  Object.keys(RUSSIAN_DRAFT_CUES).length === 42 &&
+  sceneDrafts.every((item, i) => item.id === EXHIBITS[i].id &&
+    RUSSIAN_DRAFT_CUES[item.id ?? ''] === item.cue));
+t('all 42 bilingual plans show a genuine Russian editorial draft but remain HOLD',
+  EXHIBITS.every((exhibit) => {
+    const p = narrationPlan(exhibit);
+    return !!p.russianDraft && p.russianDraft === RUSSIAN_DRAFT_CUES[exhibit.id] &&
+      p.status === 'HOLD' && p.playback.length === 0;
+  }));
 
 // 42 bilingual stages are metadata, not fabricated Hebrew or auto-TTS.
 // Language follows the actual source (Hebrew / Aramaic / Greek), including
