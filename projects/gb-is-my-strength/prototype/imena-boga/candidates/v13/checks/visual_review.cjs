@@ -74,7 +74,11 @@ async function diag(page,app,engine,width,stage){
   const elements=[...document.querySelectorAll('button,a,input,[role="button"],[role="tab"]')];
   const targets=elements.map(el=>{
    const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
-   const visible=r.width>0&&r.height>0&&cs.visibility!=='hidden'&&cs.display!=='none';
+   // A 1x1 off-screen sr-only skip link is keyboard-accessible but is not
+   // a visually exposed touch target. Its intersection begins only on focus.
+   const onscreen=r.right>0&&r.left<innerWidth&&r.bottom>0&&r.top<innerHeight;
+   const visible=onscreen&&r.width>0&&r.height>0&&
+    cs.visibility!=='hidden'&&cs.display!=='none';
    return {text:(el.getAttribute('aria-label')||el.getAttribute('title')||el.textContent||'').trim().slice(0,64),
      tag:el.tagName,width:Math.round(r.width),height:Math.round(r.height),x:Math.round(r.x),y:Math.round(r.y),visible,
      tiny:visible&&(r.width<24||r.height<24)};
@@ -170,10 +174,12 @@ async function safeAction(page,label,action){
 async function wcagAudit(page,app,engine,width){
  if(![390,1440].includes(width))return;
  const storageKey='gb:imena:atlas:reader-preferences:v1';
- const themes=app==='atlas'?['light','dark']:['default'];
+ const themes=app==='atlas'?['light','sepia','dark']:['default'];
  for(const theme of themes){
-  if(theme==='dark'){
-   await page.evaluate(k=>localStorage.setItem(k,JSON.stringify({theme:'dark'})),storageKey);
+  if(app==='atlas'&&theme!=='light'){
+   await page.evaluate(({key,value})=>
+    localStorage.setItem(key,JSON.stringify({theme:value})),
+    {key:storageKey,value:theme});
    await page.reload({waitUntil:'domcontentloaded',timeout:30000});
    await waitVisual(page);
   }
@@ -204,6 +210,14 @@ async function wcagAudit(page,app,engine,width){
    nodes:violations.reduce((sum,v)=>sum+v.count,0),
    status:violations.length?'FAIL':'PASS'});
   violations.forEach(v=>problem('HIGH','axe-'+v.id,{app,engine,width,theme,...v}));
+  if(app==='atlas'){
+   // Explicit same-anchor snapshots of all three real reader themes.
+   // axe passing by itself does not prove the intended visual composition.
+   await safeAction(page,engine+'-atlas-'+width+'-theme-'+theme,async()=>{
+    await anchorShot(page,engine+'-atlas-'+width+'-theme-'+theme+'-reader',
+     '#article-introduction h2',112);
+   });
+  }
  }
  if(app==='atlas'){
   await page.evaluate(k=>localStorage.removeItem(k),storageKey);

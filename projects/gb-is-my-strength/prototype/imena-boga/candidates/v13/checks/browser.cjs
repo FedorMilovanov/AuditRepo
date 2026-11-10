@@ -584,6 +584,42 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         throw Error('Atlas Greek transliteration not grouped '+JSON.stringify({engine,width,headerText}));
       await page.getByRole('dialog').getByRole('button',{name:'Закрыть окно'}).click();
     }
+    // A returning reader must see an inline offer with usable controls,
+    // never a fixed 16px floating toast obscuring the article.
+    if(width===390){
+      const resumed=await ctx.newPage();
+      try{
+        await resumed.addInitScript(()=>
+          localStorage.setItem('gb:imena:atlas:reading-position:v1',
+            JSON.stringify({y:3200,at:Date.now()})));
+        await resumed.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+        await resumed.locator('h1').first().waitFor({state:'visible'});
+        const card=resumed.locator('[data-resume-reading-inline]');
+        await card.waitFor({state:'visible',timeout:10000});
+        const witness=await card.evaluate(el=>{
+          const box=el.getBoundingClientRect();
+          const header=document.querySelector('nav[aria-label]');
+          return {position:getComputedStyle(el).position,
+            width:box.width,viewport:document.documentElement.clientWidth,
+            headerBottom:header?.getBoundingClientRect().bottom??0,
+            controls:[...el.querySelectorAll('button')].map(b=>{
+              const r=b.getBoundingClientRect();
+              return {width:r.width,height:r.height,top:r.top};
+            })};
+        });
+        if(witness.position==='fixed'||witness.width>witness.viewport||
+           witness.controls.length!==2||
+           witness.controls.some(x=>x.height<44||x.width<44||x.top<witness.headerBottom+2))
+          throw Error('Reader resume offer blocks prose or has tiny tap targets '+
+            JSON.stringify({engine,width,witness}));
+        await card.getByRole('button',{name:'?????? ??????????? ?????????? ??????'}).click();
+        await card.waitFor({state:'detached'});
+        const saved=await resumed.evaluate(()=>
+          localStorage.getItem('gb:imena:atlas:reading-position:v1'));
+        if(saved!==null)
+          throw Error('Dismissed reading position remained persisted');
+      }finally{await resumed.close()}
+    }
     // A link copied from the divine-name dossier must reopen that dossier
     // in a clean browser session (not merely scroll behind a closed overlay).
     if(width===390){

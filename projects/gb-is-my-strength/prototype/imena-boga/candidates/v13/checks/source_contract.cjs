@@ -162,6 +162,10 @@ if (!qAtlasNavbar.includes('id="gb-mobile-atlas-nav-trigger"') ||
     qAtlasPillars.includes('text-[11px]')) {
   throw Error('VIS02/VIS03/VIS07 regression: mobile dock or editorial typography');
 }
+if (!atlasReaderText.includes('data-resume-reading-inline') ||
+    atlasReaderText.includes('no-print fixed bottom-20 left-4')) {
+  throw Error('Reader resume prompt must be inline with accessible targets');
+}
 console.log('V13_VISUAL_PROSE_AND_HEADER_TRIGGER_PASS');
 
 

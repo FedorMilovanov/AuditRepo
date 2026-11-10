@@ -628,6 +628,45 @@ export function App() {
         onPrint={handlePrint}
       />
 
+      {/* A saved reading position belongs in the editorial flow, never
+          in a fixed overlay that blocks the article or creates tiny targets. */}
+      {resumePosition !== null && !selectedModalEntry && (
+        <aside
+          data-resume-reading-inline
+          role="region"
+          aria-label="?????????? ??????"
+          className="no-print relative z-20 mx-auto mt-16 max-w-[740px] px-5 sm:px-8 min-[1440px]:max-w-[710px] 2xl:max-w-[750px]"
+        >
+          <div
+            className="flex min-w-0 items-center gap-2 rounded-2xl border px-3 py-2 shadow-sm sm:px-4"
+            style={{
+              backgroundColor: 'var(--gb-surface)',
+              borderColor: 'var(--gb-border-strong)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={handleResumeReading}
+              className="font-ui flex min-h-11 min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-left text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ color: 'var(--gb-accent)', outlineColor: 'var(--gb-gold)' }}
+            >
+              <BookOpen aria-hidden="true" className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
+              <span className="min-w-0 break-words">?????????? ?????? ? {resumePercent}%</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleDismissResume}
+              className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl transition-colors hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ color: 'var(--gb-muted)', outlineColor: 'var(--gb-gold)' }}
+              aria-label="?????? ??????????? ?????????? ??????"
+              title="??????"
+            >
+              <X aria-hidden="true" className="h-4 w-4" />
+            </button>
+          </div>
+        </aside>
+      )}
+
       {/* Left & Right Glowing Lateral Flanking Pillars of Divine Names + Luminous Ray */}
       <LateralNamePillars
         names={DIVINE_NAMES}
@@ -1377,39 +1416,6 @@ export function App() {
           </div>
         </footer>
       </main>
-
-      {/* Floating Resume-Reading Recall (appears when a saved position exists) */}
-      {resumePosition !== null && !selectedModalEntry && (
-        <div className="no-print fixed bottom-20 left-4 z-30 lg:bottom-5 lg:left-6">
-          <div
-            className="flex items-center gap-2 rounded-2xl border px-3 py-2 shadow-xl backdrop-blur-md"
-            style={{
-              backgroundColor: 'var(--gb-glass)',
-              borderColor: 'var(--gb-border-strong)',
-            }}
-          >
-            <button
-              type="button"
-              onClick={handleResumeReading}
-              className="font-ui inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-opacity hover:opacity-85"
-              style={{ color: 'var(--gb-accent)' }}
-            >
-              <BookOpen className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-              <span>Продолжить чтение · {resumePercent}%</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleDismissResume}
-              className="cursor-pointer rounded-full p-0.5 transition-opacity hover:opacity-75"
-              style={{ color: 'var(--gb-muted)' }}
-              aria-label="Скрыть предложение продолжить чтение"
-              title="Скрыть"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Toast Feedback */}
       <div aria-live="polite" aria-atomic="true" className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-4 lg:bottom-8">
