@@ -120,25 +120,33 @@ try {
     narrative: 'Camera at z=-309.5 looking toward exit; no nav certification' });
   console.log('PASS close-up zone-6 continuous roof screenshot ' + exitClose);
 
-  // From the documented safe LEFT ledge: unlike zone-4 spawn, this camera
-  // can see down the real connected cliff face. Teleport is screenshot-only,
-  // never evidence of walkable nav (separate real-keyboard shard handles that).
-  const beforeRavine = await desktop.evaluate(() => {
-    const w = window.__horeb.world;
-    const frame = w.renderer.info.render.frame;
-    w.teleportTo(2.45, -199.8);
-    w.yaw = -Math.PI / 2;
-    w.pitch = -0.37;
-    return frame;
-  });
-  await waitForRenderedFrame(desktop, beforeRavine, 4);
-  await new Promise((resolve) => setTimeout(resolve, 330));
-  const ravineFile = 'visual-detail-zone4-chasm-edge.png';
-  await desktop.screenshot({ path: join(shots, ravineFile) });
-  witness.details.push({ id: 'zone4-connected-chasm-wall', zone: 4,
-    screenshot: ravineFile,
-    narrative: 'Safe ledge, near edge, looking down; not a nav certification' });
-  console.log('PASS close-up zone-4 ravine screenshot ' + ravineFile);
+  // Previous QA's -0.37 pitch looked horizontally toward the BACK WALL
+  // and a stele near z=-201. Two materially different down-facing
+  // compositions at z=-206, halfway between right-side steles, are required.
+  // Both positions remain strictly inside the existing x<=4.2 guard.
+  for (const [slug, x, pitch] of [
+    ['zone4-chasm-edge', 2.35, -0.65],
+    ['zone4-chasm-depth', 3.05, -1.04],
+  ]) {
+    const beforeRavine = await desktop.evaluate(({ x, pitch }) => {
+      const w = window.__horeb.world;
+      const frame = w.renderer.info.render.frame;
+      w.teleportTo(x, -206);
+      w.yaw = -Math.PI / 2;
+      w.pitch = pitch;
+      return { frame, actualX: w.position.x, actualZ: w.position.y };
+    }, { x, pitch });
+    if (beforeRavine.actualX > 3.15 ||
+        Math.abs(beforeRavine.actualZ + 206) > 0.4)
+      throw new Error('Ravine camera violated safe ledge: ' + JSON.stringify(beforeRavine));
+    await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
+    await new Promise((resolve) => setTimeout(resolve, 330));
+    const file = 'visual-detail-' + slug + '.png';
+    await desktop.screenshot({ path: join(shots, file) });
+    witness.details.push({ id: slug, zone: 4, screenshot: file,
+      narrative: 'Real safe ledge looking down, camera-only QA not locomotion' });
+    console.log('PASS ravine ' + slug + ' visual screenshot ' + file);
+  }
 
   // Hardware safety witness. Compare low-quality startup draw calls to the
   // before-optimization artifact (306 calls in zone 0). This is a GPU command
@@ -323,12 +331,13 @@ try {
 const expectedDetailShots = [
   'visual-detail-zone6-exit-roof.png',
   'visual-detail-zone4-chasm-edge.png',
+  'visual-detail-zone4-chasm-depth.png',
   'visual-detail-beersheba-well.png',
   'visual-detail-hagar-spring.png',
   'visual-detail-gethsemane-grove.png',
 ];
 const actualDetailShots = witness.details.map((item) => item.screenshot);
-const detailComplete = witness.details.length === 5 &&
+const detailComplete = witness.details.length === 6 &&
   actualDetailShots.length === new Set(actualDetailShots).size &&
   expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
@@ -337,7 +346,7 @@ const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
   witness.mobile.length + '/3 mobile-emulated, ' + witness.details.length +
-  '/5 prop/detail screenshots; errors=' + witness.errors.length +
+  '/6 prop/detail screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
 if (!ok) for (const error of witness.errors) console.error('FAIL ' + error);
 process.exitCode = ok ? 0 : 1;
