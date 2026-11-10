@@ -523,24 +523,24 @@ function HelpHint() {
 function Row({ it }: { it: Item }) {
   const seen = useApp((s) => s.visited.includes(it.id));
   return (
-    <div className="group flex items-center gap-3 rounded-2xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-white/20 hover:bg-white/[0.07]">
-      <button onClick={() => flyTo(it.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left" title="Подойти в 3D">
+    <div className="group flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.035] p-3 transition hover:border-white/25 hover:bg-white/[0.08] sm:gap-3">
+      <button onClick={() => flyTo(it.id)} className="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-left focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d] sm:gap-3" title="Подойти в 3D">
         <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-semibold text-[#242824]" style={{ background: it.color, boxShadow: `0 0 18px ${it.color}77` }}>
           {it.n}
           {seen && <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border border-[#242824] bg-white" title="Уже открывали" />}
         </span>
         <span className="min-w-0">
-          <span className="block truncate font-display text-lg font-semibold leading-tight">{it.title}</span>
-          <span className="block truncate text-[11px] text-[#bcb5aa]">{it.kind === "section" ? it.desc : it.label}</span>
+          <span className="line-clamp-2 break-words font-display text-lg font-semibold leading-tight">{it.title}</span>
+          <span className="line-clamp-2 break-words text-xs leading-snug text-[#c9c6bc]">{it.kind === "section" ? it.desc : it.label}</span>
         </span>
       </button>
       <button onClick={() => flyTo(it.id)} className="hidden rounded-full border border-[#d8b88d]/50 px-3 py-1.5 text-[11px] font-medium text-[#d8b88d] transition hover:bg-[#d8b88d] hover:text-[#24231f] sm:block">
         Подойти
       </button>
-      <button onClick={() => shareStation(it.id)} className="grid h-8 w-8 place-items-center rounded-full text-[#c3c0b8] transition hover:bg-white/10 hover:text-white" title="Ссылка на это место">
+      <button onClick={() => shareStation(it.id)} aria-label={`Скопировать ссылку: ${it.title}`} className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[#ddd7c9] transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]" title="Ссылка на это место">
         <Ico d={I.link} size={15} />
       </button>
-      <a href={BASE + it.href} target="_blank" rel="noreferrer" className="grid h-8 w-8 place-items-center rounded-full text-[#c3c0b8] transition hover:bg-white/10 hover:text-white" title="Открыть на сайте">
+      <a href={BASE + it.href} target="_blank" rel="noreferrer" aria-label={`Открыть на сайте: ${it.title}`} className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[#ddd7c9] transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]" title="Открыть на сайте">
         <Ico d={I.ext} size={15} />
       </a>
     </div>
@@ -624,7 +624,7 @@ function SitemapPanel() {
         aria-labelledby="gb-sitemap-title"
         onKeyDown={onDialogKeyDown}
         onClick={(e) => e.stopPropagation()}
-        className="glass scroll-thin fade-up flex h-full w-full max-w-md flex-col overflow-y-auto !rounded-none !border-y-0 !border-r-0 p-5 sm:p-6"
+        className="scroll-thin fade-up flex h-full w-full max-w-md flex-col overflow-y-auto overscroll-contain border-l border-[#d8b88d]/25 bg-[#19211d] p-5 text-[#f5f1e7] shadow-2xl sm:p-6"
       >
         <div className="mb-5 flex items-start justify-between">
           <div>
@@ -635,7 +635,7 @@ function SitemapPanel() {
               Открыто {visited.length} из {ITEMS.length}.
             </p>
           </div>
-          <button type="button" aria-label="Закрыть карту сайта" onClick={() => toggleSitemap(false)} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-[#e0dcd1] hover:bg-white/10">
+          <button type="button" aria-label="Закрыть карту сайта" onClick={() => toggleSitemap(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/15 text-[#e0dcd1] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d]">
             <Ico d={I.x} />
           </button>
         </div>
