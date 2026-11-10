@@ -170,10 +170,16 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const xr = hw + (LEDGE_X + 0.75 - hw) * cf;
       const [tr, tg, tb] = tint(z);
       for (let j = 0; j <= M; j++) {
-        const x = -hw + (xr + hw) * (j / M);
+        let x = -hw + (xr + hw) * (j / M);
+        // The chasm lip is a single eroded floor boundary, with its nearest
+        // point still outside the existing nav/stele safety margin at 4.2m.
+        if (j === M && cf > 0) x += cf * (
+          0.075 * Math.sin(z * 0.79) + 0.065 *
+          (fbm(x * 0.4, 0.7, z * 0.32, 3) - 0.5));
         const n = fbm(x * 0.4, 3, z * 0.4, 3);
         const edge = Math.max(0, Math.abs(x) - (hw - 2.2));
-        const y = 0.06 * n + edge * 0.18 - (cf > 0 && j === M ? 0.25 : 0);
+        const y = 0.06 * n + edge * 0.18 -
+          (cf > 0 && j === M ? cf * (0.2 + 0.07 * n) : 0);
         fp.push(x, y, z);
         bake(x, 0, z, tmp);
         const wear = 1 + 0.12 * Math.exp(-(x * x) / 4);
@@ -187,6 +193,64 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const a = i * (M + 1) + j, b = a + M + 1;
       fi.push(a, a + 1, b, b, a + 1, b + 1);
     }
+    // Zone 4 is a true chasm. The former pitch-black rectangle at -52m
+    // simulated depth, but there was no continuous rock between the walking
+    // lip and the bottom. Extend THIS VERY FLOOR's right boundary into
+    // downward bedding strata, sharing the boundary vertices and material.
+    // This adds no new scene mesh, light, collision obstacle or draw call.
+    const strata = [
+      { depth: 0.85, outward: 0.11 },
+      { depth: 5.8, outward: 0.37 },
+      { depth: 18.5, outward: 0.92 },
+      { depth: 43.0, outward: 1.63 },
+    ] as const;
+    const wallRows = new Map<number, number[]>();
+    const floorVertexCount = fp.length / 3;
+    let lowestWallY = 0, nearestWallX = Infinity, wallSegments = 0;
+    for (let i = 0; i < zs.length; i++) {
+      const z = zs[i], cf = chasmF(z);
+      if (cf <= 0.00001) continue;
+      const top = i * (M + 1) + M;
+      const topX = fp[top * 3], topY = fp[top * 3 + 1];
+      const row: number[] = [];
+      for (let layer = 0; layer < strata.length; layer++) {
+        const s = strata[layer];
+        const ripple = fbm(topX * 0.31 + layer * 1.3, layer * 0.7, z * 0.29, 3);
+        const x = topX + cf * (s.outward + 0.10 * layer * ripple);
+        const depth = cf * (s.depth + (ripple - 0.5) * (0.2 + layer * 0.9));
+        const y = topY - depth;
+        const vertex = fp.length / 3;
+        fp.push(x, y, z);
+        const [tr, tg, tb] = tint(z);
+        bake(x * 0.75, Math.max(0, y), z, tmp);
+        const rockGrain = caveSurfaceVariation(x, y, z);
+        const darkness = (0.69 + 0.18 * ripple) *
+          (0.50 + 0.50 * Math.exp(-depth / 16));
+        fc.push(tr * darkness * tmp[0] * rockGrain,
+          tg * darkness * tmp[1] * rockGrain,
+          tb * darkness * tmp[2] * rockGrain);
+        const uvWarp = fbm(x * 0.2, y * 0.1, z * 0.15, 2) - 0.5;
+        fu.push(y * 0.25 + uvWarp * 0.42,
+          z * 0.27 + uvWarp * 0.55);
+        nearestWallX = Math.min(nearestWallX, x);
+        lowestWallY = Math.min(lowestWallY, y);
+        row.push(vertex);
+      }
+      wallRows.set(i, row);
+    }
+    for (let i = 0; i < zs.length - 1; i++) {
+      const next = wallRows.get(i + 1), row = wallRows.get(i);
+      if (!row || !next) continue;
+      let upperThis = i * (M + 1) + M;
+      let upperNext = (i + 1) * (M + 1) + M;
+      for (let layer = 0; layer < strata.length; layer++) {
+        // Winding faces back toward the safe LEFT ledge (negative X).
+        fi.push(upperThis, upperNext, row[layer],
+          upperNext, next[layer], row[layer]);
+        upperThis = row[layer]; upperNext = next[layer];
+        wallSegments++;
+      }
+    }
     const fg = new THREE.BufferGeometry();
     fg.setAttribute('position', new THREE.Float32BufferAttribute(fp, 3));
     fg.setAttribute('color', new THREE.Float32BufferAttribute(fc, 3));
@@ -195,6 +259,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     fg.computeVertexNormals();
     const caveFloor = new THREE.Mesh(fg, rockMat);
     caveFloor.name = 'cave-floor-continuous';
+    caveFloor.userData.chasmStrata = {
+      floorVertexCount, rows: wallRows.size, segments: wallSegments,
+      lowestWallY, nearestWallX, levels: strata.length,
+      integratedIntoFloor: true,
+    };
     group.add(caveFloor);
   }
 
@@ -319,7 +388,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
 
   // ── Зона 4: дно пропасти и холодный свет
   {
-    const pit = new THREE.Mesh(new THREE.PlaneGeometry(14, 48), new THREE.MeshBasicMaterial({ color: 0x020304 }));
+    // Deep rock face is now connected to the walking floor. A dark bottom
+    // remains beyond its deepest stratum, but it cannot replace the wall.
+    const pit = new THREE.Mesh(new THREE.PlaneGeometry(14, 48),
+      new THREE.MeshBasicMaterial({ color: 0x020304 }));
+    pit.name = 'chasm-deep-floor';
     pit.rotation.x = -Math.PI / 2; pit.position.set(11, -52, -200); group.add(pit);
     const mist = new THREE.Sprite(new THREE.SpriteMaterial({ map: dustTex, color: 0x6f86a8, transparent: true, opacity: 0.12, depthWrite: false }));
     mist.position.set(8, -18, -200); mist.scale.set(18, 30, 1); group.add(mist);
