@@ -7,7 +7,7 @@ their own independent lifecycle test (quality-transition-browser.py).
 import asyncio,json,os,tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 URL=os.environ.get("GB_LIBRARY_TEST_URL","http://127.0.0.1:8771/")
 OUT=Path(os.environ.get("GB_LIBRARY_PHOTO_EVIDENCE_DIR",str(Path(tempfile.gettempdir())/"gb-library-photo-v59")))
 CASES=[("chromium",1440,900,False),("chromium",390,844,True),
@@ -48,7 +48,7 @@ async def run(browser,engine,w,h,touch):
         assert same,"Canvas was replaced on photo entry"
         OUT.mkdir(parents=True,exist_ok=True)
         shot=OUT/f"{engine}-{w}x{h}-photo-110ms.png"
-        await page.screenshot(path=str(shot),animations="disabled")
+        await capture_evidence(page, shot)
 
         await exit_btn.click(timeout=10000)
         await page.wait_for_timeout(110)
