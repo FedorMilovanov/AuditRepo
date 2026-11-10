@@ -46,6 +46,23 @@ async def assert_modal(page):
       actualFocus:document.activeElement?.tagName
     })""")
     assert state["activeInDialog"] and state["rootInert"] and state["dialogCount"]==1,state
+    # Real computed-styles / rendered geometry, not a class-name check.
+    # The map must conceal the 3D/intro text underneath, and touch targets
+    # must remain accessible even in the narrowest supported viewports.
+    presentation = await dialog.evaluate("""panel => {
+        const bg = getComputedStyle(panel).backgroundColor;
+        const link = panel.querySelector('button[title="Ссылка на это место"]');
+        const external = panel.querySelector('a[title="Открыть на сайте"]');
+        const close = panel.querySelector('button[aria-label="Закрыть карту сайта"]');
+        const sizes = [link, external, close].map(el => {
+            const r = el.getBoundingClientRect();
+            return [r.width, r.height];
+        });
+        return {background:bg, sizes};
+    }""")
+    assert presentation["background"] == "rgb(25, 33, 29)", presentation
+    assert all(w >= 43.5 and h >= 43.5
+               for w,h in presentation["sizes"]), presentation
     for _ in range(18):
         await page.keyboard.press("Tab")
         assert await page.evaluate("!!document.activeElement?.closest('[data-gb-sitemap-dialog]')"),"Tab escaped"
