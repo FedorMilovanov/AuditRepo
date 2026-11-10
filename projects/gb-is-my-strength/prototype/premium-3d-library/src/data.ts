@@ -314,8 +314,22 @@ export const itemPos = (i: Item): [number, number] => {
   return [Math.sin(a) * i.radius, Math.cos(a) * i.radius];
 };
 
-/** Physical standoff also drives the viewport-fit of editorial plaques. */
+/** Shared player collision shape and inner reading-table obstacle. */
+export const PLAYER_COLLISION_RADIUS = 0.35;
+export const CENTER_OBSTACLE_RADIUS = 3.35;
+
+/**
+ * Section viewpoints must never stop inside the central book's collision
+ * volume. Keep a separate comfort clearance beyond the walking collision
+ * boundary and derive both camera approach and sign framing from this pose.
+ */
 export const SECTION_APPROACH_DISTANCE = 5.4;
+const SECTION_APPROACH_CLEARANCE = 0.15;
+export function sectionApproachDistance(item: Item): number {
+  const safeInnerRadius = CENTER_OBSTACLE_RADIUS + PLAYER_COLLISION_RADIUS
+    + SECTION_APPROACH_CLEARANCE;
+  return Math.max(0, Math.min(SECTION_APPROACH_DISTANCE, item.radius - safeInnerRadius));
+}
 
 /** Куда встать, чтобы читать экспонат с лицевой стороны. */
 export function approachPose(it: Item) {
@@ -323,7 +337,7 @@ export function approachPose(it: Item) {
   const r = Math.hypot(ix, iz) || 1;
   const ux = ix / r;
   const uz = iz / r;
-  const dist = it.kind === "section" ? SECTION_APPROACH_DISTANCE : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? 2.5 : 4.2;
+  const dist = it.kind === "section" ? sectionApproachDistance(it) : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? 2.5 : 4.2;
   const pitch = it.kind === "section" ? 0.08 : it.kind === "tome" ? 0.05 : 0.08;
   // не даём точке выйти за колоннаду: иначе колонна закрывает экспонат
   const cap = Math.max(0, WALK_RADIUS - 0.75);
@@ -411,7 +425,7 @@ const hitR = (k: Item["kind"]) => (k === "section" ? 1.05 : k === "card" ? 0.7 :
 
 /** круги-препятствия для столкновений: [x, z, r] */
 export const OBSTACLES: [number, number, number][] = [
-  [0, 0, 3.35],
+  [0, 0, CENTER_OBSTACLE_RADIUS],
   [-1.9, 13.32, 0.46],
   [1.9, 13.32, 0.46],
   [2.35, 11.55, 0.36],
