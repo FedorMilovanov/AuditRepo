@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "89af0a725ef522f38ad684613ee7e0b59c51e80c7bfa1b14d1888625421ece12",
-      "bytes_normalized": 65664
+      "sha256": "c2389e4250340c5b0232870d01fd18d1af3124e5a6abdb9ebea7082cd4228b60",
+      "bytes_normalized": 65824
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "749a1e669bbc12ffe6c0f2429005d2e5c6cbeb1caab277277b4f24f8ea85adc2",
@@ -104,8 +104,8 @@
       "bytes_normalized": 14381
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "f9881c889707ca7d468457dd4ee837b45090af1570de95ee3efae2f5aae5514a",
-      "bytes_normalized": 20968
+      "sha256": "7f7dea9b8174fe8ce7795bb584708d10d63e23ca312055dc17f62a7c4ac1a546",
+      "bytes_normalized": 20969
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -184,8 +184,8 @@
       "bytes_normalized": 11850
     },
     "checks/visual_review.cjs": {
-      "sha256": "7a79ac227cedbdbb9ad9c18f1c035ef1efa032401fd97323dcde7c2cddc9eac4",
-      "bytes_normalized": 23037
+      "sha256": "abc24dc8dd581c3a0f48e15eeae0e8cc72cf96ba1243847e8627e22501c280b3",
+      "bytes_normalized": 23571
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

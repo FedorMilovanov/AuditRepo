@@ -144,6 +144,16 @@ async function wcagAudit(page,app,engine,width){
    await page.reload({waitUntil:'domcontentloaded',timeout:30000});
    await waitVisual(page);
   }
+  const themeState=await page.evaluate(()=>{
+   const html=document.documentElement;
+   const computed=getComputedStyle(html);
+   return {attribute:html.getAttribute('data-reader-theme'),
+    inkSecondary:computed.getPropertyValue('--gb-ink-secondary').trim(),
+    surface:computed.getPropertyValue('--gb-surface').trim()};
+  });
+  record('axe-theme-state',{app,engine,width,theme,...themeState});
+  if(app==='atlas'&&themeState.attribute!==theme)
+   problem('HIGH','axe-theme-state-mismatch',{app,engine,width,theme,...themeState});
   await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
   const violations=await page.evaluate(async()=>{
    const r=await window.axe.run(document,{

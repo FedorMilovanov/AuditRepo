@@ -317,7 +317,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             </svg>
             <span className="tabular-nums">
               {studiedCount}
-              <span className="opacity-60">/{totalCount}</span>
+              <span className="font-medium">/{totalCount}</span>
             </span>
           </button>
 

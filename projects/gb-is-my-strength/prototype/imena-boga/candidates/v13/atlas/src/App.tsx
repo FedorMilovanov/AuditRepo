@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   ARTICLE_SECTIONS,
   DIVINE_NAMES,
@@ -231,10 +231,10 @@ export function App() {
     return () => window.removeEventListener('resize', computePct);
   }, [resumePosition, fontScale, expandedIds.size]);
 
-  // Persist reader preferences (theme + fontScale)
-  useEffect(() => {
+  // Commit theme variables before the browser paints the reader. An ordinary
+  // effect leaves a light-text/dark-surface transition in slower WebKit loads.
+  useLayoutEffect(() => {
     document.documentElement.setAttribute('data-reader-theme', theme);
-    // Reflect reading mode in mobile browser chrome, not only the React tree.
     const themeColors: Record<ReaderTheme, string> = {
       light: '#fdfcf9',
       sepia: '#f4ede0',
@@ -242,6 +242,10 @@ export function App() {
     };
     document.querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', themeColors[theme]);
+  }, [theme]);
+
+  // Preference storage is non-visual and must not delay the first paint.
+  useEffect(() => {
     try {
       const existingRaw = window.localStorage.getItem('gb:imena:atlas:reader-preferences:v1');
       const existing = existingRaw ? JSON.parse(existingRaw) : { version: 1 };
