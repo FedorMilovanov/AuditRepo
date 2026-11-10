@@ -50,7 +50,8 @@ async def assert_modal(page):
     # The map must conceal the 3D/intro text underneath, and touch targets
     # must remain accessible even in the narrowest supported viewports.
     presentation = await dialog.evaluate("""panel => {
-        const bg = getComputedStyle(panel).backgroundColor;
+        const style = getComputedStyle(panel);
+        const bg = style.backgroundColor;
         const link = panel.querySelector('button[title="Ссылка на это место"]');
         const external = panel.querySelector('a[title="Открыть на сайте"]');
         const close = panel.querySelector('button[aria-label="Закрыть карту сайта"]');
@@ -58,9 +59,11 @@ async def assert_modal(page):
             const r = el.getBoundingClientRect();
             return [r.width, r.height];
         });
-        return {background:bg, sizes};
+        return {background:bg, opacity:style.opacity, sizes};
     }""")
-    assert presentation["background"] == "rgb(25, 33, 29)", presentation
+    assert presentation["background"] == "rgb(25, 33, 29)" and (
+        presentation["opacity"] == "1"
+    ), presentation
     assert all(w >= 43.5 and h >= 43.5
                for w,h in presentation["sizes"]), presentation
     for _ in range(18):
