@@ -161,10 +161,13 @@ function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) 
   liner.name = 'well-open-shaft';
   liner.position.set(x, 0.48, z);
   g.add(liner);
-  // Backing is 0.045m inside the inner face of the visible stone units.
-  // Horizontal mortar bands and radial dark joints are genuine gaps.
-  const joints = new THREE.Mesh(G.cyl(r - 0.075, r - 0.075, 0.98,
-    low ? 28 : 42, true), s.wellMortar);
+  // Mortar rests 4–6cm behind the visible outer stone faces, not buried
+  // BEHIND the inner wall where its joints disappear into the dark shaft.
+  // This real recessed backing shows between fitted radial wedges and
+  // horizontal courses while remaining occluded by their exposed faces.
+  const mortarRadius = r + 0.115;
+  const joints = new THREE.Mesh(G.cyl(mortarRadius, mortarRadius, 0.98,
+    low ? 42 : 56, true), s.wellMortar);
   joints.name = 'well-recessed-mortar';
   joints.position.set(x, 0.49, z);
   g.add(joints);
