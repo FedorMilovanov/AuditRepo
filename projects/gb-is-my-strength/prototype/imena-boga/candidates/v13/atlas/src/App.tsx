@@ -111,6 +111,7 @@ export function App() {
 
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [illuminateAll, setIlluminateAll] = useState<boolean>(false);
+  const [mobilePillarsOpen, setMobilePillarsOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
 
   // Track which divine names have progressively appeared as the reader scrolls down
@@ -620,6 +621,8 @@ export function App() {
         totalCount={DIVINE_NAMES.length}
         activeSectionId={activeSectionId}
         onOpenAtlas={handleOpenAtlas}
+        onOpenMobilePillars={() => setMobilePillarsOpen(true)}
+        mobilePillarsOpen={mobilePillarsOpen}
         onFocusSearch={handleFocusSearch}
         onShare={handleShare}
         onPrint={handlePrint}
@@ -637,6 +640,8 @@ export function App() {
         onToggleIlluminateAll={() => setIlluminateAll((v) => !v)}
         onSelectName={handleOpenName}
         onJumpToName={handleJumpToName}
+        mobileDrawerOpen={mobilePillarsOpen}
+        onMobileDrawerOpenChange={setMobilePillarsOpen}
       />
 
       {/* Epic 3D Astrolabe & Interactive Sacred Medallion Hero */}
@@ -922,7 +927,7 @@ export function App() {
             className="font-serif-display text-2xl sm:text-3xl font-bold leading-snug break-words"
             style={{ color: 'var(--gb-ink)' }}
           >
-            Почему Бог открывает Свои имена: не заклинание, а заветное самооткровение
+            Почему Бог открывает Свои имена: не закли&shy;нание, а заветное само&shy;откровение
           </h2>
 
           <div

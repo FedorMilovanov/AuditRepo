@@ -58,7 +58,7 @@ async function anchorShot(page,label,selector,top=112){
   if(stable>=2)break;
  }
  record('screenshot-anchor',{label,selector,...pos});
- if(pos.top<52||pos.top>240||pos.bottom>pos.viewportHeight||pos.width<1){
+ if(Math.abs(pos.top-top)>3||pos.bottom>pos.viewportHeight||pos.width<1){
   problem('BLOCKER','screenshot-anchor-invalid',{label,selector,...pos});
   throw Error('Bad screenshot anchor: '+label);
  }
@@ -373,6 +373,13 @@ async function visit(browser,engine,app,width,base){
      });
      const launcher=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
      await launcher.waitFor({state:'visible',timeout:8000});
+     if(width<1440){
+      const floatingVisible=await page.locator('[data-atlas-mobile-ribbon]').isVisible();
+      const navVisible=await page.locator('#gb-mobile-atlas-nav-trigger').isVisible();
+      record('atlas-mobile-header-trigger',{engine,width,floatingVisible,navVisible});
+      if(floatingVisible||!navVisible)
+       problem('BLOCKER','atlas-mobile-launcher-obscures-prose',{engine,width,floatingVisible,navVisible});
+     }
      // Verify its real bounds do not overlap article actions.
      const overlappingCardActions=await launcher.evaluate(el=>{
       const ribbon=el.getBoundingClientRect();

@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "c2389e4250340c5b0232870d01fd18d1af3124e5a6abdb9ebea7082cd4228b60",
-      "bytes_normalized": 65824
+      "sha256": "50cc6ee55b0c1c76a8e9a61c7e5da4d05646776c4549081751dd773153a71065",
+      "bytes_normalized": 66113
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "749a1e669bbc12ffe6c0f2429005d2e5c6cbeb1caab277277b4f24f8ea85adc2",
@@ -80,8 +80,8 @@
       "bytes_normalized": 10737
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "4371ac4eb20490414e0f3265968b210ea2abbd862f2c063f653a01cbddd16856",
-      "bytes_normalized": 30398
+      "sha256": "aea8553d7915f7f58886e5a9b463004cb383ab208ce556088687ce567c8170f1",
+      "bytes_normalized": 26771
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "fe0e2d679e738e434e3b0901d15cb8e6ac0bca4715f01940339383b69f323381",
@@ -104,8 +104,8 @@
       "bytes_normalized": 14381
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "7f7dea9b8174fe8ce7795bb584708d10d63e23ca312055dc17f62a7c4ac1a546",
-      "bytes_normalized": 20969
+      "sha256": "5acb8130582ed2d021a84c8780fac01df41e6010e9a789edc643370400251450",
+      "bytes_normalized": 21272
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -124,8 +124,8 @@
       "bytes_normalized": 1238
     },
     "atlas/src/index.css": {
-      "sha256": "239dbeff6d3eda193fab1cc7e5b517d24ea99e2b6d864c82603b52b555a936e1",
-      "bytes_normalized": 10507
+      "sha256": "dab734602d944bf9fdb6c02da3ecfa1d4bb9d88a34aad5ecb34ec3cb2464bde4",
+      "bytes_normalized": 10524
     },
     "atlas/src/main.tsx": {
       "sha256": "577d8a6ab658c40f91c62c2f6f083eefbdc6b653bd2d65d5ec766c3d6bdb5c30",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "f84186df0d69befe524489af094645a3a54e84d2063842fc9beb073b0e040420",
-      "bytes_normalized": 11850
+      "sha256": "7c72bc7a1f0c37749fe9083f4eea1f4faa5d2f40784981035e7690e4cc574e6e",
+      "bytes_normalized": 12847
     },
     "checks/visual_review.cjs": {
-      "sha256": "2bb9eb32f42f1eb105d7d9d313ef15e8925f5c84b4becd3706a14b55f5e2a989",
-      "bytes_normalized": 26696
+      "sha256": "0c0223696bc24def3571522f29f7e8cc7fb4d3e091b7a838cfa931094a8b04e6",
+      "bytes_normalized": 27135
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Sparkles, BookOpen, X, ChevronRight, Sun } from 'lucide-react';
+import { BookOpen, X, Sun } from 'lucide-react';
 import { DivineNameEntry } from '../data/divineNames';
 
 interface LateralNamePillarsProps {
@@ -13,6 +13,8 @@ interface LateralNamePillarsProps {
   onToggleIlluminateAll: () => void;
   onSelectName: (entry: DivineNameEntry) => void;
   onJumpToName: (entry: DivineNameEntry) => void;
+  mobileDrawerOpen: boolean;
+  onMobileDrawerOpenChange: (open: boolean) => void;
 }
 
 interface PillarColumnProps {
@@ -83,7 +85,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
     >
       {/* Top Pillar Capital Header */}
       <div
-        className="pointer-events-auto mb-2 flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-[11px]"
+        className="pointer-events-auto mb-2 flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-xs"
         style={{
           backgroundColor: 'var(--gb-glass)',
           borderColor: 'var(--gb-border)',
@@ -98,7 +100,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           >
             {isLeft ? 'Скрижаль I' : 'Скрижаль II'}
           </span>
-          <span className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-ui text-[10px]">
+          <span className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-ui text-xs">
             <span>{isLeft ? 'Основа' : 'Завет'}</span>
             <span className="tabular-nums opacity-80">({revealedCount}/{items.length})</span>
           </span>
@@ -112,7 +114,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
               ? 'Показывать имена постепенно по мере чтения'
               : 'Подсветить все 36 исследуемых выражений на скрижалях'
           }
-          className="font-ui inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors hover:opacity-90"
+          className="font-ui inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium transition-colors hover:opacity-90"
           style={{
             backgroundColor: illuminateAll ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
             borderColor: illuminateAll ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
@@ -212,7 +214,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <span
-                      className="font-ui inline-flex items-center gap-1 text-[10px] font-semibold tracking-wider uppercase"
+                      className="font-ui inline-flex items-center gap-1 text-xs font-semibold tracking-wider uppercase"
                       style={{
                         color: isActive ? 'var(--gb-accent)' : 'var(--gb-gold-ink)',
                       }}
@@ -299,44 +301,9 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   onToggleIlluminateAll,
   onSelectName,
   onJumpToName,
+  mobileDrawerOpen,
+  onMobileDrawerOpenChange,
 }) => {
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
-  const [cardActionsNearDock, setCardActionsNearDock] = useState(false);
-  // An unobtrusive index launcher must not cover reading-card actions.
-  // Observe the bottom part of the viewport, not arbitrary page coordinates.
-  useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-card-actions]'));
-    const visibleActions = new Set<Element>();
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) visibleActions.add(entry.target);
-        else visibleActions.delete(entry.target);
-      }
-      setCardActionsNearDock(visibleActions.size > 0);
-    }, { rootMargin: '-70% 0px 0px 0px', threshold: 0 });
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-  // The fixed navigation belongs to reading, not over the first-screen
-  // editorial composition. Observe the actual hero boundary (no pixel magic).
-  useEffect(() => {
-    const hero = document.getElementById('atlas-hero');
-    if (!hero) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      const sync = () => setPastHero(hero.getBoundingClientRect().bottom <= 0);
-      sync();
-      window.addEventListener('scroll', sync, { passive: true });
-      return () => window.removeEventListener('scroll', sync);
-    }
-    const observer = new IntersectionObserver(([entry]) =>
-      setPastHero(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0),
-      { threshold: 0 },
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-  const mobileTriggerRef = useRef<HTMLButtonElement | null>(null);
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const drawerCloseRef = useRef<HTMLButtonElement | null>(null);
   const restoreDrawerFocusRef = useRef(false);
@@ -352,7 +319,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       if (event.key === 'Escape') {
         event.preventDefault();
         restoreDrawerFocusRef.current = true;
-        setMobileDrawerOpen(false);
+        onMobileDrawerOpenChange(false);
       }
       if (event.key !== 'Tab' || !drawerRef.current) return;
       const buttons = Array.from(
@@ -372,7 +339,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
     const onResize = () => {
       if (window.innerWidth >= 1440) {
         restoreDrawerFocusRef.current = false;
-        setMobileDrawerOpen(false);
+        onMobileDrawerOpenChange(false);
       }
     };
     window.addEventListener('keydown', handleKey);
@@ -381,12 +348,13 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKey);
       window.removeEventListener('resize', onResize);
-      if (restoreDrawerFocusRef.current && mobileTriggerRef.current?.getClientRects().length) {
-        mobileTriggerRef.current.focus({ preventScroll: true });
+      const trigger = document.getElementById('gb-mobile-atlas-nav-trigger');
+      if (restoreDrawerFocusRef.current && trigger instanceof HTMLElement && trigger.getClientRects().length) {
+        trigger.focus({ preventScroll: true });
       }
       restoreDrawerFocusRef.current = false;
     };
-  }, [mobileDrawerOpen]);
+  }, [mobileDrawerOpen, onMobileDrawerOpenChange]);
   const pillarCardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [beamCoords, setBeamCoords] = useState<{
     x1: number;
@@ -464,18 +432,18 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
 
   const leftItems = names.filter((n) => n.side === 'left');
   const rightItems = names.filter((n) => n.side === 'right');
-  const activeEntry = names.find((n) => n.id === activeNameId) || names[0];
   const displayRevealedCount = illuminateAll ? names.length : revealedIds.size;
   const dismissDrawer = () => {
     restoreDrawerFocusRef.current = true;
-    setMobileDrawerOpen(false);
+    onMobileDrawerOpenChange(false);
   };
   const selectFromDrawer = (entry: DivineNameEntry) => {
     restoreDrawerFocusRef.current = false;
-    setMobileDrawerOpen(false);
+    onMobileDrawerOpenChange(false);
     // The dossier captures the current focus for its own close/restore flow.
     // Hand it a persistent trigger, not a name button being unmounted.
-    mobileTriggerRef.current?.focus({ preventScroll: true });
+    const trigger = document.getElementById('gb-mobile-atlas-nav-trigger');
+    if (trigger instanceof HTMLElement) trigger.focus({ preventScroll: true });
     onSelectName(entry);
   };
 
@@ -546,51 +514,8 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
         onPillarScroll={scheduleUpdateBeam}
       />
 
-      {/* Mobile & Tablet Floating Sacred Ribbon Trigger (< lg) */}
-      <div data-atlas-launcher-shell className={`no-print fixed right-3 bottom-4 z-30 min-[1440px]:hidden ${pastHero && !cardActionsNearDock ? "block" : "hidden"} `}>
-        <button
-          ref={mobileTriggerRef}
-          type="button"
-          onClick={() => {
-            restoreDrawerFocusRef.current = true;
-            setMobileDrawerOpen(true);
-          }}
-          aria-label="Открыть скрижали имён Бога"
-          title={`${activeEntry.transliteration} (${activeEntry.original})`}
-          data-atlas-mobile-ribbon
-          aria-haspopup="dialog"
-          aria-expanded={mobileDrawerOpen}
-          aria-controls="gb-mobile-pillars-dialog"
-          className="sacred-active-glow flex min-h-12 max-w-[12rem] cursor-pointer items-center gap-2 rounded-full border px-3 py-2 shadow-xl motion-safe:transition-transform motion-safe:active:scale-[0.99]"
-          style={{
-            backgroundColor: 'var(--gb-surface)',
-            borderColor: 'var(--gb-gold)',
-            color: 'var(--gb-ink)',
-          }}
-        >
-          {/* Keep the persistent control compact even for very long names.
-              The full transliteration and original remain available inside
-              the drawer and in the native tooltip of this trigger. */}
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            <Sparkles aria-hidden="true" className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
-            <span
-              className="font-ui whitespace-nowrap text-left text-xs font-semibold tabular-nums"
-              style={{ color: 'var(--gb-gold-ink)' }}
-            >
-              №{names.indexOf(activeEntry) + 1}/{names.length}
-            </span>
-          </div>
-
-          <span
-            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-xs font-semibold gb-on-accent"
-            style={{ backgroundColor: 'var(--gb-accent)' }}
-          >
-            <span>Скрижали</span>
-            <ChevronRight className="h-3.5 w-3.5" />
-          </span>
-        </button>
-      </div>
-
+      {/* A single responsive trigger in SiteNavbar opens this shared drawer;
+          no floating duplicate may obscure the text column. */}
       {/* Mobile / Tablet Drawer Modal */}
       {mobileDrawerOpen && (
         <div
@@ -616,7 +541,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
             >
               <div>
                 <div
-                  className="font-ui text-[11px] font-semibold tracking-wider uppercase"
+                  className="font-ui text-xs font-semibold tracking-wider uppercase"
                   style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   Указатель выражений Писания · {displayRevealedCount} / {names.length} открыто

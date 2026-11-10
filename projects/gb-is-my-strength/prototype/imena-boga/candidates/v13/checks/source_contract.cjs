@@ -124,7 +124,8 @@ if (!qAtlasModal.includes('sm:flex-row sm:items-center sm:justify-between') ||
     !qAtlasModal.includes('min-h-11 min-w-11'))
   throw Error('Visual regression: narrow dossier header has inaccessible controls');
 if (!qAtlasPillars.includes('sm:flex-row sm:items-center sm:justify-between') ||
-    !qAtlasPillars.includes('cardActionsNearDock') ||
+    !qAtlasPillars.includes('onMobileDrawerOpenChange') ||
+    qAtlasPillars.includes('data-atlas-mobile-ribbon') ||
     !qAtlasPillars.includes('Указатель выражений Писания'))
   throw Error('Visual regression: mobile drawer or reading-action clearance lost');
 if (!qAtlasCard.includes('data-atlas-card-actions') ||
@@ -145,6 +146,24 @@ if (darkTiny || /text-\[(?:7|8|8\.5|9|9\.5|10|10\.5|11)px\]/.test(
  fs.readFileSync(path.join(root,'sozvezdie','src','App.tsx'),'utf8')))
   throw Error('Visual regression: metadata scale below 12px');
 console.log('V13_VISUAL_SYSTEM_CONTRACT_PASS',JSON.stringify({darkFiles,tinyUtilityCount:darkTiny}));
+
+
+// VIS-02/03/07: a desktop-only ribbon may not return over mobile prose;
+// long Russian editorial headings need actual discretionary word boundaries.
+const atlasReaderText=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
+const atlasReaderCss=fs.readFileSync(path.join(root,'atlas','src','index.css'),'utf8');
+if (!qAtlasNavbar.includes('id="gb-mobile-atlas-nav-trigger"') ||
+    qAtlasPillars.includes('data-atlas-launcher-shell') ||
+    !qAtlasNavbar.includes('min-[1440px]:hidden inline-flex') ||
+    !atlasReaderText.includes('закли&shy;нание') ||
+    !atlasReaderText.includes('само&shy;откровение') ||
+    !atlasReaderCss.includes('hyphens: auto;') ||
+    qAtlasPillars.includes('text-[10px]') ||
+    qAtlasPillars.includes('text-[11px]')) {
+  throw Error('VIS02/VIS03/VIS07 regression: mobile dock or editorial typography');
+}
+console.log('V13_VISUAL_PROSE_AND_HEADER_TRIGGER_PASS');
+
 
 const atlasCatalog=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
 const atlasTable=fs.readFileSync(path.join(root,'atlas','src','components','NamesIndexTable.tsx'),'utf8');

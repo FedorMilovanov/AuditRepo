@@ -151,6 +151,7 @@ body {
 /* Text-only enlargement must reflow editorial text inside narrow cards.
    Break an otherwise unbreakable word rather than hiding page overflow. */
 #top main :is(p, h1, h2, h3, h4, button) {
+  hyphens: auto;
   overflow-wrap: anywhere;
 }
 

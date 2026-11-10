@@ -23,6 +23,8 @@ interface SiteNavbarProps {
   totalCount: number;
   activeSectionId: string | null;
   onOpenAtlas: () => void;
+  onOpenMobilePillars: () => void;
+  mobilePillarsOpen: boolean;
   onFocusSearch: () => void;
   onShare: () => void;
   onPrint: () => void;
@@ -39,6 +41,8 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
   totalCount,
   activeSectionId,
   onOpenAtlas,
+  onOpenMobilePillars,
+  mobilePillarsOpen,
   onFocusSearch,
   onShare,
   onPrint,
@@ -456,15 +460,19 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           </div>
 
           <button
+            id="gb-mobile-atlas-nav-trigger"
             type="button"
-            onClick={onOpenAtlas}
-            className="lg:hidden inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center rounded-lg border p-1.5"
+            onClick={onOpenMobilePillars}
+            aria-haspopup="dialog"
+            aria-expanded={mobilePillarsOpen}
+            aria-controls="gb-mobile-pillars-dialog"
+            className="min-[1440px]:hidden inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border p-1.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
               color: 'var(--gb-ink)',
             }}
-            aria-label="Справочник выражений Писания"
+            aria-label="Открыть скрижали имён Бога"
           >
             <Compass className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
           </button>
