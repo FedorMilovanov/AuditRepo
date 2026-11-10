@@ -1,5 +1,26 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## Current verified checkpoint — 2026-11-10, V5.30
+
+**Active engineering candidate:** sole existing [AuditRepo Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`; source of truth is the latest **exact PR HEAD** from GitHub. The historical 2026-11-09 and V5.23–V5.26 sections below are **superseded** and must not be read as current unclosed defects.
+
+**Latest verified exact-head CI:**
+- SHA `0754519ab904d934c00b5801dd0522e12155dfd9`: [AuditRepo Workflow Preflight #42829675469](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675469) **SUCCESS**; [AuditRepo Validate #42829675732](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732) **SUCCESS**; its log explicitly reports **9/9 suites, 47/47 browser cases PASS** on one SHA. Evidence: [59 genuine PNGs](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732/artifacts/13773466543), Chromium and Playwright WebKit at desktop/portrait/landscape resolutions, including six WebGL recovery tests and genuine two-tab cabinet persistence.
+- Prior [#42824278435](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42824278435) at `e0f5b7c` was likewise **47/47 PASS** after the sitemap scrollport fix: heading remains stationary after search and independently scrollable results. Do not aggregate cases across SHAs.
+- The latest artistic-scale source introduces immutable `src/scene/caseworkScale.ts`, shared by `Architecture.tsx` and `ArchitecturalPolish.tsx`. Outer bay geometry and circulation remain unchanged. Thirteen shelved bays × twelve shelves × 38 slim books = **5,928** GPU-instanced decorative folios, rather than 1,716 oversized volumes; book heights 0.31–0.48 world metres, shelf pitch 0.59m. `scripts/verify-architecture.cjs` validates the real shared geometry: book-width/height clearance, upper cornice clearance, expected bay and instance count. **A procedural folio is decorative geometry, not a claimed source-verified title.**
+- Screenshot witness review: the increased shelf density improves scale and reduces empty gaps; portrait plaque title remains readable on both engines; site-map title remains visible in WebKit after search, and the tour/minimap no longer overlap. **These are tested code and image observations, not an approval of photorealistic design.**
+- The isolated Windows NVIDIA RTX 3060 Direct3D11 and Windows SwiftShader real-browser tests confirmed genuine WebGL loss→restoration and 2D fallback on same prior SHA. Short 180-frame rAF sampling was approximately 60Hz, but is **not GPU frame-time or sustained performance certification**.
+
+**Still HARD OPEN, without waivers:**
+1. **Art direction:** real high-fidelity licensed/owned glTF/UV/PBR reference prop(s), correct lighting/material identity, lifelike joinery and furniture, source provenance, actual side-by-side screenshots and owner's visual approval. Procedural book count is not itself a premium-art acceptance gate.
+2. **Physical-device performance:** actual iPhone Safari, Android, XR headset, assisted tech and 15+ minute cold/warm GPU frame-time, VRAM/thermal/long-session sampling on target devices. Linux CI SwiftShader and Windows RTX/Chrome are not substitutes.
+3. **Product/readers/rights:** Product-owned content route/catalog/Reader/data rights approval and migration policy remain separate; no transfer of lab-local IndexedDB profiles to real user accounts by assumption.
+4. **No live deployment, merge, main changes or additional branches**. Keep PR Draft / LAB / ART HOLD.
+
+---
+**Historical evidence below — retained for traceability, superseded as live status by V5.30 above.**
+
+
 ## Current live checkpoint — 2026-11-10, V5.23–V5.26
 
 **Single candidate:** existing [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. The active SHA is whatever GitHub reports for that PR, **not the V5.14 historical baseline below**. No Product/main writes, new branch, deployment, merge or approved premium art release.
