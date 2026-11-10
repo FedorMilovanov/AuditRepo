@@ -37,6 +37,12 @@ async def open_cabinet(page, *, via_link=False):
     # or an injected/altered application state.
     box = page.locator("[data-gb-cabinet-modal]")
     await box.wait_for(state="visible", timeout=12000)
+    if via_link:
+        # The public cabinet deep link must not boot a second software WebGL
+        # scene while the reader is accessing purely 2D personal materials.
+        assert await page.locator("canvas").count() == 0, (
+            "2D cabinet deep link unexpectedly mounted a GPU canvas"
+        )
     await box.get_by_role("status").get_by_text(
         re.compile("Данные хранятся только в этом браузере")
     ).wait_for(timeout=15000)
@@ -91,8 +97,29 @@ async def test_case(browser, engine):
         assert isinstance(exported, dict)
 
         await b.bring_to_front()
-        await b_box.wait_for(state="visible", timeout=15000)
-        await b_box.get_by_role("button", name=re.compile(r"Коллекции \(")).click(timeout=15000)
+        try:
+            await b_box.wait_for(state="visible", timeout=15000)
+            await b_box.get_by_role(
+                "button", name=re.compile(r"Коллекции \(")
+            ).click(timeout=15000)
+        except Exception:
+            # Never reclassify a real concurrency failure as PASS. Keep a
+            # diagnostic snapshot of the actual second tab and its visible
+            # public controls, then fail with the original exception.
+            report = await b.evaluate("""() => ({
+                url: location.href, ready: document.readyState,
+                modals: document.querySelectorAll('[data-gb-cabinet-modal]').length,
+                buttons: [...document.querySelectorAll('[data-gb-cabinet-modal] button')]
+                    .map(x => ({text:x.innerText, disabled:x.disabled})).slice(0, 12),
+                status: [...document.querySelectorAll('[data-gb-cabinet-modal] [role=status]')]
+                    .map(x => x.textContent?.slice(0, 400)),
+                gpuCanvas: document.querySelectorAll('canvas').length
+            })""")
+            print(json.dumps({"engine":engine, "stage":"second-tab-before-write",
+                              "ui":report,"errors":errors}, ensure_ascii=False), flush=True)
+            EVIDENCE.mkdir(parents=True, exist_ok=True)
+            await capture_evidence(b, EVIDENCE / f"{engine}-second-tab-failure.png")
+            raise
         await b_box.locator("#gb-cabinet-collection").fill("Контроль многовкладочности")
         await b_box.get_by_role("button", name="Создать коллекцию").click()
         await b_box.get_by_role("button", name="Коллекции (1)").wait_for(timeout=12000)
