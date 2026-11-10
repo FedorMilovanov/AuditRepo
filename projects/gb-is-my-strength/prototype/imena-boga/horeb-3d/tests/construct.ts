@@ -578,6 +578,46 @@ for (const lowMode of [true, false]) {
     !sceneGeometry.obstacles.some((o) => o.z < -292 && o.z > -318));
 }
 
+// The exterior terrain used to overlap the cave floor by ~3m at the mouth,
+// producing obvious brown triangles and a geometric double surface. Their
+// actual world-space edges now adjoin; the broad facade aperture is measured.
+for (const lowMode of [true, false]) {
+  const geoScene = buildZones(lowMode, new THREE.MeshStandardMaterial({ vertexColors: true }));
+  const floor = geoScene.group.getObjectByName('cave-floor-continuous');
+  const terrain = geoScene.group.getObjectByName('horeb-exterior-terrain');
+  const face = geoScene.group.getObjectByName('horeb-outer-rock-face');
+  const minZ = (mesh: THREE.Object3D) => {
+    const points = (mesh as THREE.Mesh).geometry.getAttribute('position');
+    let min = Infinity;
+    for (let i = 0; i < points.count; i++) min = Math.min(min, points.getZ(i));
+    return min;
+  };
+  const maxZ = (mesh: THREE.Object3D) => {
+    const points = (mesh as THREE.Mesh).geometry.getAttribute('position');
+    let max = -Infinity;
+    for (let i = 0; i < points.count; i++) max = Math.max(max, points.getZ(i));
+    return max;
+  };
+  t('Horeb floor and exterior earth have no overlapping surface ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+    !!floor && !!terrain &&
+    Math.abs(minZ(floor) - maxZ(terrain)) < 0.9 &&
+    maxZ(terrain) <= TUNNEL_END - 3.99);
+  let apertureSafe = false;
+  if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {
+    const shapes = face.geometry.parameters.shapes;
+    const holes = (Array.isArray(shapes) ? shapes[0] : shapes).holes;
+    const points = holes?.[0]?.getPoints(24) ?? [];
+    apertureSafe = points.length >= 6 &&
+      Math.min(...points.map((p: THREE.Vector2) => p.x)) <= -3.55 &&
+      Math.max(...points.map((p: THREE.Vector2) => p.x)) >= 3.55 &&
+      Math.max(...points.map((p: THREE.Vector2) => p.y)) > 5.9;
+  }
+  t('Horeb rock face aperture clears real wider cave shell ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+    apertureSafe);
+}
+
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
 let distantSafe = distantCrags instanceof THREE.InstancedMesh && distantCrags.count === 32;
 if (distantCrags instanceof THREE.InstancedMesh) {
