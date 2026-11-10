@@ -327,7 +327,26 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const input=page.locator('#constellation-search-input');
     if(!(await input.evaluate(el=>document.activeElement===el)))
       throw Error('Atlas navbar search did not focus immediately '+width);
-    await navSearch.focus();
+         if (width <= 390) {
+       const filterButton = page.getByRole('button', {name: /^Фильтры/});
+       const firstResult = page.locator('[data-constellation-result]').first();
+       if ((await filterButton.getAttribute('aria-expanded')) !== 'false')
+         throw Error('Atlas mobile filters must start collapsed '+width);
+       const resultTop = await firstResult.evaluate(el => el.getBoundingClientRect().top);
+       if (resultTop < 0 || resultTop > 700)
+         throw Error('Atlas first search result below mobile fold '+JSON.stringify({width,resultTop}));
+       await filterButton.click();
+       if ((await filterButton.getAttribute('aria-expanded')) !== 'true')
+         throw Error('Atlas mobile filters did not open '+width);
+       await page.getByRole('button', {name: 'Яхве', exact: true}).click();
+       if ((await input.inputValue()) !== 'Яхве')
+         throw Error('Atlas quick search tag did not populate input '+width);
+       await filterButton.click();
+       if ((await filterButton.getAttribute('aria-expanded')) !== 'false')
+         throw Error('Atlas mobile filters did not close '+width);
+       await input.fill('');
+     }
+     await navSearch.focus();
     await page.waitForTimeout(550);
     if(!(await navSearch.evaluate(el=>document.activeElement===el)))
       throw Error('Atlas navbar search stole focus after an unrelated action '+width);

@@ -311,7 +311,17 @@ async function visit(browser,engine,app,width,base){
     await safeAction(page,engine+'-atlas-'+width+'-search',async()=>{
      await page.getByRole('button',{name:'Открыть поиск по именам'}).click();
      await page.locator('#constellation-search-input').fill('Элохим');
-     await shot(page,engine+'-atlas-'+width+'-08-search-results');
+     if(width===390){
+       const filters=page.getByRole('button',{name:/^Фильтры/});
+       if((await filters.getAttribute('aria-expanded'))!=='false')
+        problem('BLOCKER','atlas-mobile-filters-not-collapsed',{engine,width});
+       const resultTop=await page.locator('[data-constellation-result]').first()
+        .evaluate(el=>el.getBoundingClientRect().top);
+       record('atlas-search-result-in-frame',{engine,width,resultTop});
+       if(resultTop<0||resultTop>700)
+        problem('BLOCKER','atlas-search-results-too-low',{engine,width,resultTop});
+      }
+      await shot(page,engine+'-atlas-'+width+'-08-search-results');
     });
     if(width===390)await safeAction(page,engine+'-atlas-mobile-drawer',async()=>{
      await page.getByRole('button',{name:'Открыть скрижали имён Бога'}).click();

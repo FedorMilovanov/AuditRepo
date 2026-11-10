@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, Sparkles, X, BookOpen, CheckCircle2, Navigation, RotateCcw, Shuffle } from 'lucide-react';
+import { Search, Sparkles, X, BookOpen, CheckCircle2, Navigation, RotateCcw, Shuffle, SlidersHorizontal } from 'lucide-react';
 import { DivineNameEntry, SOUL_NEED_LABELS, SoulNeed } from '../data/divineNames';
 
 interface DivineConstellationExplorerProps {
@@ -27,6 +27,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
   const searchRef = useRef<HTMLInputElement>(null);
   const [activeNeed, setActiveNeed] = useState<SoulNeed | 'all'>('all');
   const [onlyUnstudied, setOnlyUnstudied] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     const handleShortcut = (event: KeyboardEvent) => {
@@ -72,7 +73,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
     <section
       id="constellation-atlas"
       data-reveal
-      className="scroll-mt-24 my-16 rounded-3xl border p-6 sm:p-9 shadow-xl"
+      className="scroll-mt-24 my-16 rounded-3xl border p-4 sm:p-9 shadow-xl"
       style={{
         backgroundColor: 'var(--gb-surface)',
         borderColor: 'var(--gb-gold)',
@@ -81,7 +82,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
     >
       <div className="text-center">
         <div
-          className="font-ui inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-semibold tracking-wider uppercase"
+          className="font-ui inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase sm:px-3.5 sm:text-xs"
           style={{
             borderColor: 'var(--gb-border-strong)',
             backgroundColor: 'var(--gb-bg)',
@@ -93,7 +94,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
         </div>
 
         <h2
-          className="font-serif-display mt-3 text-2xl sm:text-3xl font-bold"
+          className="font-serif-display mt-2 text-xl font-bold leading-tight sm:mt-3 sm:text-3xl"
           style={{ color: 'var(--gb-ink)' }}
         >
           Сводная скрижаль 36 исследуемых библейских выражений
@@ -102,20 +103,23 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           className="font-body-editorial mx-auto mt-2 max-w-2xl text-sm sm:text-base"
           style={{ color: 'var(--gb-muted)' }}
         >
-          Фильтруйте выражения по богословской теме или нужде души, ищите по русскому названию,
-          оригиналу, номеру Стронга, библейскому сюжету или месту Писания.
+          <span className="sm:hidden">Ищите по названиям, стихам и номерам Стронга.</span>
+          <span className="hidden sm:inline">
+            Фильтруйте выражения по богословской теме или нужде души, ищите по русскому названию,
+            оригиналу, номеру Стронга, библейскому сюжету или месту Писания.
+          </span>
         </p>
       </div>
 
       {/* Search Bar + Random Meditation Name Trigger */}
-      <div className="mx-auto mt-6 flex max-w-2xl flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+      <div className="mx-auto mt-4 flex max-w-2xl flex-row items-stretch gap-2 sm:mt-6 sm:items-center sm:gap-2.5">
         <div className="relative flex-1">
           <Search
             className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2"
             style={{ color: 'var(--gb-muted)' }}
           />
           <input
-            id="constellation-search-input"
+            id="constellation-search-input" aria-label="Поиск по библейским выражениям"
             ref={searchRef}
             onKeyDown={(event) => {
               if (event.key === 'Enter' && filtered.length > 0) {
@@ -158,19 +162,38 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
             if (pick) onSelectName(pick);
           }}
           disabled={filtered.length === 0}
-          className="font-ui inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-4 py-3 text-xs font-semibold transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="font-ui inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-3 text-xs font-semibold transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4"
           style={{
             backgroundColor: 'var(--gb-accent-soft)',
             borderColor: 'var(--gb-gold)',
             color: 'var(--gb-accent)',
           }}
           title="Открыть случайную исследуемую позицию для вдумчивого чтения"
+           aria-label="Случайная позиция"
         >
           <Shuffle className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-          <span>Случайная позиция</span>
+          <span className="hidden sm:inline">Случайная позиция</span>
         </button>
       </div>
 
+      {/* Compact discovery first; advanced controls remain visible on larger screens. */}
+      <div className="mt-3 flex items-center justify-between gap-2 sm:hidden">
+        <p className="font-ui text-xs" role="status" aria-live="polite" style={{ color: 'var(--gb-ink-secondary)' }}>
+          Найдено: {filtered.length}
+        </p>
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((isOpen) => !isOpen)}
+          aria-expanded={filtersOpen}
+          aria-controls="constellation-filter-options"
+          className="font-ui inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-xs font-semibold transition-colors"
+          style={{ borderColor: 'var(--gb-border-strong)', color: 'var(--gb-accent)', backgroundColor: 'var(--gb-bg)' }}
+        >
+          <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+          Фильтры{activeNeed !== 'all' || onlyUnstudied ? ' · активны' : ''}
+        </button>
+      </div>
+      <div id="constellation-filter-options" className={filtersOpen ? 'block' : 'hidden sm:block'}>
       {/* Quick Search Tags + Unstudied Toggle */}
       <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
         <span className="font-ui text-[11px] mr-1" style={{ color: 'var(--gb-muted)' }}>
@@ -218,7 +241,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
               key={key}
               type="button"
               onClick={() => setActiveNeed(key)}
-              className="font-ui cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all"
+              className="font-ui min-h-11 cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all sm:min-h-0"
               style={{
                 backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-bg)',
                 borderColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
@@ -236,6 +259,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
         {studiedIds.size} из {names.length}
       </p>
 
+      </div>
       {/* Grid of Interactive Mini Sacred Plaques */}
       {filtered.length === 0 ? (
         <div
@@ -256,13 +280,14 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           </button>
         </div>
       ) : (
-        <div className="mt-7 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-3.5 sm:mt-7 sm:grid-cols-2">
           {filtered.map((item) => {
             const isRevealed = revealedIds.has(item.id);
             const isStudied = studiedIds.has(item.id);
             return (
               <div
                 key={item.id}
+                 data-constellation-result
                 className="group relative flex flex-col justify-between rounded-2xl border p-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
                   backgroundColor: 'var(--gb-bg)',
