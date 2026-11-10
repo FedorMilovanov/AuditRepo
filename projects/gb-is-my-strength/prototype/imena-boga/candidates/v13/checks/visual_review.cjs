@@ -35,18 +35,28 @@ async function shot(page,label){
 async function anchorShot(page,label,selector,top=112){
  const loc=page.locator(selector).first();
  await loc.waitFor({state:'visible',timeout:10000});
- await loc.evaluate((el,offset)=>{
-  const rect=el.getBoundingClientRect();
-  scrollTo({top:Math.max(0,scrollY+rect.top-offset),behavior:'instant'});
- },top);
- await page.evaluate(async()=>{
-  await document.fonts.ready;
-  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
- });
- const pos=await loc.evaluate(el=>{
-  const r=el.getBoundingClientRect();
-  return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight};
- });
+ // WebKit may apply asynchronous scroll anchoring after 200% font reflow.
+ // Re-measure the same DOM element over two settled frames rather than
+ // capturing a different paragraph or weakening the viewport contract.
+ let pos;
+ let stable=0;
+ for(let attempt=1;attempt<=6;attempt++){
+  await loc.evaluate((el,offset)=>{
+   const rect=el.getBoundingClientRect();
+   window.scrollTo({top:Math.max(0,window.scrollY+rect.top-offset),behavior:'instant'});
+  },top);
+  await page.evaluate(async()=>{
+   await document.fonts.ready;
+   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  });
+  pos=await loc.evaluate(el=>{
+   const r=el.getBoundingClientRect();
+   return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight};
+  });
+  record('screenshot-anchor-settle',{label,selector,attempt,actualTop:pos.top,targetTop:top});
+  stable=Math.abs(pos.top-top)<=2?stable+1:0;
+  if(stable>=2)break;
+ }
  record('screenshot-anchor',{label,selector,...pos});
  if(pos.top<52||pos.top>240||pos.bottom>pos.viewportHeight||pos.width<1){
   problem('BLOCKER','screenshot-anchor-invalid',{label,selector,...pos});
