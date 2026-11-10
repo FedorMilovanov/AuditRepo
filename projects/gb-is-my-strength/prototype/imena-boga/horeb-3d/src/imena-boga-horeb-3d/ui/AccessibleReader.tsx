@@ -1,6 +1,5 @@
 import { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, type Exhibit } from '../data/exhibits';
 import { narrationPlan, NARRATION_LANGUAGE_LABEL } from '../data/narrationPlan';
-import { HERO_MOMENTS } from './SceneMoment';
 
 const LANG_RU = { he: 'древнееврейский', arc: 'арамейский', grc: 'греческий' } as const;
 const STATUS_RU = { working_draft: 'рабочий черновик', disputed: 'дискуссионно', review_in_progress: 'проверка продолжается' } as const;
@@ -16,7 +15,7 @@ export function Original({ e, className = '' }: { e: Exhibit; className?: string
 
 export function ExhibitCard({ e, headingLevel = 3 }: { e: Exhibit; headingLevel?: 2 | 3 }) {
   const H = headingLevel === 2 ? 'h2' : 'h3';
-  const voice = narrationPlan(e, HERO_MOMENTS[e.id]?.cue);
+  const voice = narrationPlan(e);
   const rows: [string, string][] = [
     ['Традиционное русское чтение', e.traditionalRu],
     ['Буквальное значение', e.literalGloss],
