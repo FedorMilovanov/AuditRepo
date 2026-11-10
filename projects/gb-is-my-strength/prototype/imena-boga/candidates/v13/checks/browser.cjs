@@ -612,7 +612,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
            witness.controls.some(x=>x.height<44||x.width<44||x.top<witness.headerBottom+2))
           throw Error('Reader resume offer blocks prose or has tiny tap targets '+
             JSON.stringify({engine,width,witness}));
-        await card.getByRole('button',{name:'?????? ??????????? ?????????? ??????'}).click();
+        await card.getByRole('button',{name:'Скрыть предложение продолжить чтение'}).click();
         await card.waitFor({state:'detached'});
         const saved=await resumed.evaluate(()=>
           localStorage.getItem('gb:imena:atlas:reading-position:v1'));

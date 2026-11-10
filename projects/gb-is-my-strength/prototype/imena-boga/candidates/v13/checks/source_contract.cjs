@@ -166,6 +166,10 @@ if (!atlasReaderText.includes('data-resume-reading-inline') ||
     atlasReaderText.includes('no-print fixed bottom-20 left-4')) {
   throw Error('Reader resume prompt must be inline with accessible targets');
 }
+const visualAtlasBrowserContract=fs.readFileSync(path.join(root,'checks','browser.cjs'),'utf8');
+if (/\?{3,}/.test(atlasReaderText) || /\?{3,}/.test(visualAtlasBrowserContract)) {
+  throw Error('Corrupted multi-question-mark UI strings detected; preserve Cyrillic UTF-8');
+}
 console.log('V13_VISUAL_PROSE_AND_HEADER_TRIGGER_PASS');
 
 

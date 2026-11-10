@@ -634,7 +634,7 @@ export function App() {
         <aside
           data-resume-reading-inline
           role="region"
-          aria-label="?????????? ??????"
+          aria-label="Продолжить чтение"
           className="no-print relative z-20 mx-auto mt-16 max-w-[740px] px-5 sm:px-8 min-[1440px]:max-w-[710px] 2xl:max-w-[750px]"
         >
           <div
@@ -651,15 +651,15 @@ export function App() {
               style={{ color: 'var(--gb-accent)', outlineColor: 'var(--gb-gold)' }}
             >
               <BookOpen aria-hidden="true" className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
-              <span className="min-w-0 break-words">?????????? ?????? ? {resumePercent}%</span>
+              <span className="min-w-0 break-words">Продолжить чтение · {resumePercent}%</span>
             </button>
             <button
               type="button"
               onClick={handleDismissResume}
               className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl transition-colors hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               style={{ color: 'var(--gb-muted)', outlineColor: 'var(--gb-gold)' }}
-              aria-label="?????? ??????????? ?????????? ??????"
-              title="??????"
+              aria-label="Скрыть предложение продолжить чтение"
+              title="Скрыть"
             >
               <X aria-hidden="true" className="h-4 w-4" />
             </button>
