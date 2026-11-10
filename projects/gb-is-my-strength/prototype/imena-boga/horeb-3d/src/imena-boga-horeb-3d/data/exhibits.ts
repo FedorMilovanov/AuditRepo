@@ -18,6 +18,15 @@ export type Category =
   | 'intertextual_theological_interpretation';
 
 export type Lang = 'he' | 'arc' | 'grc';
+// A single language/oral-policy source for React, 3D and no-JavaScript readers.
+export const NARRATION_LANGUAGE_LABEL: Readonly<Record<Lang, string>> = {
+  he: 'библейском древнееврейском',
+  arc: 'библейском арамейском',
+  grc: 'древнегреческом',
+};
+export const WRITTEN_ONLY_DIVINE_NAME_ID = 'yhwh' as const;
+export const isOriginalVoiced = (e: { id: string }): boolean =>
+  e.id !== WRITTEN_ONLY_DIVINE_NAME_ID;
 export type ZoneId = 1 | 2 | 3 | 4 | 5 | 7;
 export type Chapter = 1 | 2 | 3 | 4 | 5 | 7;
 export type HistoricalFrame = 'narrative' | 'poetry' | 'prophecy' | 'vision' | 'letter' | 'apocalyptic';
