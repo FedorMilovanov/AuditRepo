@@ -57,7 +57,7 @@ async def recovery_case(browser, engine, width, height, mobile):
         try:
             await page.wait_for_function(
                 "() => window.__testRecovery?.events.some(e=>e.type==='lost')",
-                timeout=12000
+                polling=100, timeout=12000
             )
             await overlay.wait_for(state="visible",timeout=15000)
         except Exception:
@@ -127,6 +127,13 @@ async def recovery_case(browser, engine, width, height, mobile):
             webgl2:!!window.__testRecovery.canvas.getContext('webgl2')
         })""")
         assert all(restored.values()), (engine,width,restored)
+        events = await page.evaluate("window.__testRecovery.events")
+        kinds = [event["type"] for event in events]
+        assert "lost" in kinds and "restored" in kinds and (
+            kinds.index("lost") < kinds.index("restored")
+        ), ("WebGL extension did not deliver actual loss→restore events", events)
+        assert any(event["type"] == "lost" and event["defaultPrevented"]
+                   for event in events), ("WebGL loss was not cancelable/restorable", events)
         assert not errors, (engine,width,errors)
         await capture_evidence(page, OUT/f"{engine}-{width}x{height}-restored.png")
         print(json.dumps({"engine":engine,"viewport":f"{width}x{height}",
