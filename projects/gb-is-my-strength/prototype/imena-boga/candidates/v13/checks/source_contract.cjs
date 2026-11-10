@@ -142,9 +142,12 @@ if (!qAtlasCard.includes('data-atlas-card-actions') ||
     !qAtlasCard.includes('min-h-11') ||
     qAtlasCard.includes('<span>Исполнение во Христе Иисусе</span>'))
   throw Error('Visual regression: Atlas actions or editorial interpretation labels lost');
-if (!qDarkDock.includes('opacity-0 pointer-events-none') ||
+if (!qDarkDock.includes('createPortal(toolbar, headerSlot)') ||
+    qDarkDock.includes('opacity-0 pointer-events-none') ||
+    qDarkDock.includes('fixed bottom-[5.2rem]') ||
+    !qDarkDock.includes('relative z-10') ||
     !qDarkDock.includes('bg-ink-950 px-1.5'))
-  throw Error('Visual regression: dark reader dock obscures text while scrolling');
+  throw Error('Visual regression: reader controls must be integrated in the header, not over prose');
 let darkTiny=0, darkFiles=0;
 for (const file of fs.readdirSync(path.join(root,'sozvezdie','src','components'))) {
   if (!file.endsWith('.tsx')) continue;
