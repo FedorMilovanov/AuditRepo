@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Check, RotateCcw, Search, Shuffle, X } from "lucide-react";
+import { Check, ChevronDown, RotateCcw, Search, Shuffle, SlidersHorizontal, X } from "lucide-react";
 import { NAMES, PARTS } from "../data/names";
 import { normalizeSearch, scriptAttrs, scriptLabel } from "../utils/script";
 
@@ -74,6 +74,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
 export default function NameGrid({ active, completedIds, onSelect, onClearProgress, motionOn }: NameGridProps) {
   const [query, setQuery] = useState("");
   const [partFilter, setPartFilter] = useState(0);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -192,7 +193,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
               <button
                 type="button"
                 onClick={() => setQuery("")}
-                className="absolute right-2.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-cream-500 transition-colors hover:bg-gold-500/10 hover:text-gold-300"
+                className="absolute right-0.5 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-cream-500 transition-colors hover:bg-gold-500/10 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400"
                 aria-label="Очистить поиск"
               >
                 <X className="h-3.5 w-3.5" />
@@ -213,7 +214,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                 <button
                   type="button"
                   onClick={onClearProgress}
-                  className="inline-flex items-center gap-1 font-ui text-xs uppercase tracking-[0.18em] text-cream-700 transition-colors hover:text-gold-300"
+                  className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 font-ui text-xs uppercase tracking-[0.18em] text-cream-700 transition-colors hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 md:min-h-0"
                 >
                   <RotateCcw className="h-3 w-3" /> Сброс
                 </button>
@@ -233,7 +234,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             type="button"
             onClick={openRandomFiltered}
             disabled={filtered.length === 0}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-gold-500/30 px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/60 hover:bg-gold-500/10 disabled:cursor-not-allowed disabled:opacity-35"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-500/30 px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/60 hover:bg-gold-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 disabled:cursor-not-allowed disabled:opacity-35"
             aria-label="Открыть случайное имя из результатов поиска"
             title="Открыть случайное имя из выбранной части исследования"
           >
@@ -241,12 +242,36 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
           </button>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2" aria-label="Фильтр по частям исследования">
+        <div className="mt-4 md:hidden">
+          <button
+            type="button"
+            data-name-filters-toggle
+            aria-expanded={filtersOpen}
+            aria-controls="sozvezdie-name-filters"
+            onClick={() => setFiltersOpen((open) => !open)}
+            className="flex min-h-11 w-full items-center gap-2 rounded-xl border border-cream-800/70 bg-ink-950/55 px-3 py-2 text-left font-ui text-xs uppercase tracking-[0.15em] text-cream-300 transition-colors hover:border-gold-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400"
+          >
+            <SlidersHorizontal className="h-4 w-4 shrink-0 text-gold-400" aria-hidden />
+            <span className="shrink-0">Разделы</span>
+            <span className="min-w-0 flex-1 truncate text-right normal-case tracking-normal text-cream-500">
+              {partFilter === 0 ? "Все" : PARTS[partFilter - 1].title}
+            </span>
+            <span className="shrink-0 text-gold-300">{filtered.length}</span>
+            <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${filtersOpen ? "rotate-180" : ""}`} aria-hidden />
+          </button>
+        </div>
+
+        <div
+          id="sozvezdie-name-filters"
+          data-name-filters-options
+          className={`${filtersOpen ? "flex" : "hidden"} mt-3 flex-wrap items-center gap-2 md:mt-4 md:flex`}
+          aria-label="Фильтр по частям исследования"
+        >
           <button
             type="button"
             onClick={() => setPartFilter(0)}
             aria-pressed={partFilter === 0}
-            className={`rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.2em] transition-all ${
+            className={`min-h-11 rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.2em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 md:min-h-0 ${
               partFilter === 0
                 ? "border-gold-400/70 bg-gold-500/15 text-gold-200"
                 : "border-cream-800/60 text-cream-500 hover:border-gold-500/35 hover:text-cream-300"
@@ -263,7 +288,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                 type="button"
                 onClick={() => setPartFilter(index + 1)}
                 aria-pressed={selected}
-                className={`rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.18em] transition-all ${
+                className={`min-h-11 rounded-full border px-3.5 py-1.5 font-ui text-xs uppercase tracking-[0.18em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 md:min-h-0 ${
                   selected
                     ? "border-gold-400/70 bg-gold-500/15 text-gold-200"
                     : "border-cream-800/60 text-cream-500 hover:border-gold-500/35 hover:text-cream-300"
