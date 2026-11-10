@@ -54,6 +54,11 @@ async def inspect(browser, engine, width, height):
         assert t["width"] <= width + 1, f"{engine}/{width}: toolbar exceeds viewport"
         assert j["x"] >= 0 and j["x"] + j["width"] <= width + 1
         assert not overlap(t, j), f"{engine}/{width}: toolbar intersects joystick"
+        minimap = page.locator("[data-gb-minimap]")
+        if width >= 640:
+            await minimap.wait_for(state="visible", timeout=10000)
+        else:
+            assert not await minimap.is_visible()
 
         hint = page.locator("[data-gb-help]")
         if await hint.count() and await hint.is_visible():
