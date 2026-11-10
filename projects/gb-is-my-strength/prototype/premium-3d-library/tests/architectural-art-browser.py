@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 from playwright.async_api import async_playwright
-from browser_runtime import launch_kwargs, test_context
+from browser_runtime import launch_kwargs, test_context, capture_evidence
 
 URL = os.environ.get('GB_LIBRARY_TEST_URL', 'http://127.0.0.1:8771/')
 # An external evidence directory preserves the original V5.2 screenshot witnesses.
@@ -40,7 +40,7 @@ async def one(browser, engine, width, height, mobile):
     assert all(report['pbr']), f'{engine} {width}: missing PBR resources {report}'
     assert not errors, f'{engine} {width}: {errors}'
     OUT.mkdir(parents=True, exist_ok=True)
-    await page.screenshot(path=str(OUT/f'{engine}-{width}x{height}.png'))
+    await capture_evidence(page, OUT/f'{engine}-{width}x{height}.png')
     print(json.dumps({'engine':engine,'viewport':f'{width}x{height}','status':'PASS','result':report},ensure_ascii=False))
     await context.close()
 
