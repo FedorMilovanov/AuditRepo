@@ -6,7 +6,7 @@ import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
-import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffsets } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
+import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffsets, isApprovedAudioTrack, matchesAudioSha256 } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
@@ -213,6 +213,16 @@ t('bilingual playback rejects missing, invalid or more-than-two clips',
   narrationOffsets([]) === null && narrationOffsets([1, 2, 3]) === null &&
   narrationOffsets([0, 2]) === null && narrationOffsets([Infinity]) === null &&
   narrationOffsets([1, 2], 0) === null && narrationOffsets([1, 2], 8) === null);
+t('narrator rejects absent SHA, unsigned paths and arbitrary external tracks',
+  !isApprovedAudioTrack({ path: '/audio/narration/elohim.mp3', sha256: '' }) &&
+  !isApprovedAudioTrack({ path: '/audio/narration/elohim.mp3', sha256: '1'.repeat(64) }) &&
+  !isApprovedAudioTrack({ path: 'https://not-approved.example/test.mp3', sha256: '1'.repeat(64) }));
+const knownBytes = new TextEncoder().encode('abc').buffer as ArrayBuffer;
+t('signed narration verifies downloaded SHA-256 and rejects modified bytes',
+  await matchesAudioSha256(knownBytes, 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad') &&
+  !(await matchesAudioSha256(knownBytes, '0'.repeat(64))) &&
+  !(await matchesAudioSha256(new TextEncoder().encode('abd').buffer as ArrayBuffer,
+    'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')));
 
 // 42 bilingual stages are metadata, not fabricated Hebrew or auto-TTS.
 // Language follows the actual source (Hebrew / Aramaic / Greek), including
