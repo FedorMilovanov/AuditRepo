@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { rng, fbm, glowTexture } from './procedural';
 import type { Exhibit } from '../data/exhibits';
 
@@ -121,68 +120,102 @@ const G = {
   oliveLeaf: () => geoCached('OliveLeafGeometry', {}),
 };
 
+// Annular-sector stone units, not rotated cuboids glued to a round barrel.
+// Each stone has an actual recessed radial joint, staggered bond and bevel.
+// Coordinates are in the XZ plane; extrusion is rotated into +Y.
+function wellRingUnit(innerR: number, outerR: number, from: number, to: number,
+  height: number): THREE.ExtrudeGeometry {
+  const shape = new THREE.Shape();
+  const edge = (r: number, theta: number) =>
+    new THREE.Vector2(Math.cos(theta) * r, -Math.sin(theta) * r);
+  const outerSteps = 3;
+  for (let n = 0; n <= outerSteps; n++) {
+    const point = edge(outerR, from + (to - from) * n / outerSteps);
+    if (n === 0) shape.moveTo(point.x, point.y);
+    else shape.lineTo(point.x, point.y);
+  }
+  for (let n = outerSteps; n >= 0; n--) {
+    const point = edge(innerR, from + (to - from) * n / outerSteps);
+    shape.lineTo(point.x, point.y);
+  }
+  shape.closePath();
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: height, steps: 1, bevelEnabled: true,
+    bevelSegments: 1, bevelThickness: 0.009, bevelSize: 0.009,
+    curveSegments: 1,
+  });
+  geometry.rotateX(-Math.PI / 2);
+  return geometry;
+}
+
 function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
-  // Low/high change mesh tessellation only, never the physical well footprint.
-  const r = 1.10;
+  // The rim's exact radius is fixed in both visual LODs and fits the 1.45m
+  // collider shared with World. No artificial "safety cylinder" is added.
+  const r = 1.10, count = 14, step = Math.PI * 2 / count;
   const random = rng((Math.round(x * 131 + z * 173) ^ 0x57211) >>> 0);
-  // A WELL is a hollow shaft, not a capped solid cylinder with a dark lid.
-  // The double-sided inner wall masks gaps in the hand-laid exterior courses.
   const interiorMaterial = new THREE.MeshStandardMaterial({
     color: 0x2d241d, roughness: 1, side: THREE.DoubleSide,
   });
-  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.86, low ? 24 : 36, true), interiorMaterial);
+  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.96,
+    low ? 24 : 36, true), interiorMaterial);
   liner.name = 'well-open-shaft';
-  liner.position.set(x, 0.43, z); g.add(liner);
-  // The recessed core reveals genuine dark joints between the dressed
-  // stones, without capping the shaft or drawing a fake mortar decal.
-  const joints = new THREE.Mesh(
-    G.cyl(r - 0.055, r - 0.055, 0.86, low ? 28 : 42, true),
-    s.wellMortar,
-  );
+  liner.position.set(x, 0.48, z);
+  g.add(liner);
+  // Backing is 0.045m inside the inner face of the visible stone units.
+  // Horizontal mortar bands and radial dark joints are genuine gaps.
+  const joints = new THREE.Mesh(G.cyl(r - 0.075, r - 0.075, 0.98,
+    low ? 28 : 42, true), s.wellMortar);
   joints.name = 'well-recessed-mortar';
-  joints.position.set(x, 0.43, z); g.add(joints);
-  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025, low ? 24 : 36), s.water);
+  joints.position.set(x, 0.49, z);
+  g.add(joints);
+  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025,
+    low ? 24 : 36), s.water);
   water.name = 'well-water-below-rim';
-  water.position.set(x, 0.20, z); g.add(water);
+  water.position.set(x, 0.20, z);
+  g.add(water);
+
   for (let layer = 0; layer < 3; layer++) {
-    for (let i = 0; i < 14; i++) {
-      const a = (i + (layer % 2) * 0.5) * Math.PI * 2 / 14 +
-        (random() - 0.5) * 0.065;
-      // Each limestone piece has worn edges, slightly different proportions,
-      // and independent tilt. Same 14-stone count in three staggered courses.
-      // These are illustrative dressed blocks, not a claimed excavated artefact.
-      const stone = new THREE.Mesh(new RoundedBoxGeometry(
-        0.395 + random() * 0.050, 0.235 + random() * 0.035,
-        0.26 + random() * 0.045, 2, 0.027),
-        (i + layer * 2) % 5 === 0 ? s.wellStoneCool :
-        (i * 3 + layer) % 4 === 0 ? s.wellStoneWarm : s.stone);
+    const halfBond = layer % 2 === 1 ? step * 0.5 : 0;
+    const bottom = 0.08 + layer * 0.275;
+    for (let i = 0; i < count; i++) {
+      // Tiny angular differences create a handmade edge, while a guaranteed
+      // minimum 0.025 rad gap keeps every radial joint visible.
+      const center = (i + 0.5) * step + halfBond;
+      const gap = 0.028 + random() * 0.012;
+      const start = center - step / 2 + gap / 2 + random() * 0.002;
+      const end = center + step / 2 - gap / 2 - random() * 0.002;
+      const inner = r - 0.028;
+      const outer = r + 0.155 + random() * 0.016;
+      const height = 0.225 + random() * 0.010;
+      const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
+        (i + layer * 2) % 7 === 0 ? s.wellStoneCool :
+          (i * 3 + layer) % 6 === 0 ? s.wellStoneWarm : s.stone);
       stone.name = 'well-course-stone';
-      stone.position.set(x + Math.cos(a) * (r + 0.055),
-        0.16 + layer * 0.29 + (random() - 0.5) * 0.025,
-        z + Math.sin(a) * (r + 0.055));
-      stone.rotation.set((random() - 0.5) * 0.052,
-        -a - Math.PI / 2 + (random() - 0.5) * 0.066,
-        (random() - 0.5) * 0.052);
+      stone.position.set(x, bottom, z);
+      stone.userData.wellBond = {
+        layer, index: i, start, end, inner, outer, bottom, top: bottom + height,
+      };
       g.add(stone);
     }
   }
-  // The upper coping is a course of smaller worn stone blocks. An earlier
-  // geometric torus and boulder-like rim made a manufactured black doughnut;
-  // no artificial seamless ring now masks the open vertical shaft.
-  for (let i = 0; i < 14; i++) {
-    const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.11;
-    const rr = r + 0.015 + (random() - 0.5) * 0.045;
-    const stone = new THREE.Mesh(new RoundedBoxGeometry(
-      0.415 + random() * 0.050, 0.13 + random() * 0.035,
-      0.28 + random() * 0.035, 2, 0.025),
-      i % 4 === 0 ? s.wellStoneWarm : i % 5 === 0 ? s.wellStoneCool : s.stone);
+  // A smaller staggered coping course, also an annular arc instead of
+  // overlapping rectangular plates or a perfect torus. The well stays open.
+  for (let i = 0; i < count; i++) {
+    const center = (i + 0.5) * step + step * 0.25;
+    const gap = 0.024 + random() * 0.010;
+    const start = center - step / 2 + gap / 2;
+    const end = center + step / 2 - gap / 2;
+    const inner = r - 0.035;
+    const outer = r + 0.17 + random() * 0.018;
+    const bottom = 0.89 + (random() - 0.5) * 0.005;
+    const height = 0.14 + random() * 0.008;
+    const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
+      i % 7 === 0 ? s.wellStoneWarm : i % 8 === 0 ? s.wellStoneCool : s.stone);
     stone.name = 'well-rim-stone';
-    stone.position.set(x + Math.cos(a) * rr,
-      0.94 + (random() - 0.5) * 0.045,
-      z + Math.sin(a) * rr);
-    stone.rotation.set((random() - 0.5) * 0.048,
-      -a - Math.PI / 2 + (random() - 0.5) * 0.045,
-      (random() - 0.5) * 0.048);
+    stone.position.set(x, bottom, z);
+    stone.userData.wellBond = {
+      layer: 3, index: i, start, end, inner, outer, bottom, top: bottom + height,
+    };
     g.add(stone);
   }
   // The small ground stones sit below ankle level; they are not invisible walls.
