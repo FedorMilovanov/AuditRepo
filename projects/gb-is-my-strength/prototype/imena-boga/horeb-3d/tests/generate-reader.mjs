@@ -9,7 +9,7 @@ const { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, NARRATION_LANGUA
 // Single editorial source of all 42 Russian draft lines.
 // Generate the typed runtime index and the static reader from the same matrix.
 const matrix = readFileSync('audit/HOREB_SCENE_MATRIX_42_V1.md', 'utf8');
-const draftRows = matrix.split('\\n').filter((line) => /^\\|\\s*\\d{2}\\s*·\\s*`/.test(line));
+const draftRows = matrix.split('\n').filter((line) => /^\|\s*\d{2}\s*·\s*`/.test(line));
 const entries = draftRows.map((line) => {
   const cols = line.split('|');
   const id = cols[1]?.match(/`([a-z0-9-]+)`/)?.[1];
@@ -32,7 +32,7 @@ const cuesSrc = [
   ...entries.map(([id, text]) => '  ' + JSON.stringify(id) + ': ' + JSON.stringify(text) + ','),
   '});',
   '',
-].join('\\n');
+].join('\n');
 writeFileSync('src/imena-boga-horeb-3d/data/russianCues.ts', cuesSrc);
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const pairs = [
