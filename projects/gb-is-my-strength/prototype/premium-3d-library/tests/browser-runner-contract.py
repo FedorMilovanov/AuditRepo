@@ -41,7 +41,14 @@ def cases_for(name: str) -> list[dict]:
     ]
     if name == "quality-transition-browser.py":
         for item in records:
-            item["switches"] = [{}, {}]
+            item["switches"] = [
+                {"first": "Лёгкая", "last": "Ультра", "timedOut": False,
+                 "canvasIdentityRetained": True, "overlayGone": True,
+                 "settledVisibleFrames": 2},
+                {"first": "Ультра", "last": "Лёгкая", "timedOut": False,
+                 "canvasIdentityRetained": True, "overlayGone": True,
+                 "settledVisibleFrames": 2},
+            ]
     if name == "interaction-regression-browser.py":
         records.append({"passed": 12, "failures": []})
     return records
@@ -107,6 +114,40 @@ except AssertionError:
     pass
 else:
     raise AssertionError("Quality switching accepted one direction only")
+
+# Reproduce the formerly accepted Linux false green: an automatic
+# downgrade caused two independent low→high transitions, not a round trip.
+double_forward = cases_for("quality-transition-browser.py")
+double_forward[0]["switches"] = [
+    {**double_forward[0]["switches"][0]},
+    {**double_forward[0]["switches"][0]},
+]
+try:
+    module.verify_case_records("quality-transition-browser.py", jsonlines(double_forward), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Accepted two low-to-high quality transitions")
+
+# Likewise an unsupported/empty witness must not count as a real transition.
+empty_switch = cases_for("quality-transition-browser.py")
+empty_switch[0]["switches"] = [{}, {}]
+try:
+    module.verify_case_records("quality-transition-browser.py", jsonlines(empty_switch), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Accepted two empty quality transition records")
+
+# Do not count a pair missing settled frames or having replaced the canvas.
+incomplete = cases_for("quality-transition-browser.py")
+incomplete[0]["switches"][1]["canvasIdentityRetained"] = False
+try:
+    module.verify_case_records("quality-transition-browser.py", jsonlines(incomplete), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Accepted a replaced WebGL canvas during quality change")
 
 # A JSON parsing failure is fatal rather than silently ignored.
 try:
