@@ -74,6 +74,11 @@ async def test_case(browser, engine):
         b_box = await open_cabinet(b, via_link=True)
         assert await b_box.get_by_role("button", name="Закладки (1)").count() == 1
 
+        # A user must foreground the tab before using its controls.
+        # Background software-WebGL tabs may be throttled by the browser.
+        # Both GUI actions still occur in independent *live* tabs; no reload
+        # or direct IndexedDB/store mutation changes the stale A snapshot.
+        await a.bring_to_front()
         # Export a known-valid copy before the concurrent B write.
         async with a.expect_download() as download_info:
             await a_box.get_by_role("button", name="Экспорт JSON").click()
@@ -85,7 +90,9 @@ async def test_case(browser, engine):
         exported = json.loads(backup.decode("utf8"))
         assert isinstance(exported, dict)
 
-        await b_box.get_by_role("button", name=re.compile(r"Коллекции \(")).click()
+        await b.bring_to_front()
+        await b_box.wait_for(state="visible", timeout=15000)
+        await b_box.get_by_role("button", name=re.compile(r"Коллекции \(")).click(timeout=15000)
         await b_box.locator("#gb-cabinet-collection").fill("Контроль многовкладочности")
         await b_box.get_by_role("button", name="Создать коллекцию").click()
         await b_box.get_by_role("button", name="Коллекции (1)").wait_for(timeout=12000)
