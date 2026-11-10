@@ -1,3 +1,5 @@
+> **2026-11-07 LATEST OWNER DIRECTIVE — READ FIRST:** [Mandatory visual acceptance, screenshot matrix, and future-agent handoff](../OWNER-VISUAL-ACCEPTANCE-2026-11-07.md). Product V27 passed release but FAILED owner visual acceptance: standalone rounded TOC box and detached lower-right library must not be replicated. Start from actual V26 integrated collapsible rail, not last Product screenshot. Require side-by-side real reference/candidate/production screenshots and owner's approval. The older Stage2 status below is not current.
+
 **CI correction, 2026-11-07:** Product PR #2284 Route Registry WebKit was cancelled after 45 minutes while Playwright installed Ubuntu packages, before executing tests. A rerun of exact-head workflow 42291188144 was requested. AuditRepo [Stage 2 witness](STAGE2-PRODUCT-WITNESS-2026-11-07.md) has the detailed addendum; do not merge without fresh green CI.
 
 ## 2026-11-07 Product Stage 2 — READ FIRST

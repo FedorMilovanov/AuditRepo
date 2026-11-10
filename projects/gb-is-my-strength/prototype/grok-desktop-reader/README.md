@@ -1,4 +1,4 @@
-> **CURRENT DESIGN / HANDOFF: [V25](v25/README.md) · [interactive V25 HTML](v25/REFERENCE-V25.html) · [V25 safe rollout](v25/PRODUCT-ROLLOUT-V25.md).** Original V24/V23 below are historical comparisons. Product Library V3 #2283 is merged. Product deployment workflow on exact head 717efc5 succeeded; real public release SHA remains to be independently confirmed.
+> **CURRENT OWNER ACCEPTANCE — 2026-11-07:** [mandatory visual/screenshot contract](OWNER-VISUAL-ACCEPTANCE-2026-11-07.md) → [interactive V26 reference](v26/REFERENCE-V26.html) → [V26 decisions](v26/DECISIONS-V26.md) → [V26 next-agent](v26/NEXT-AGENT-V26.md). **Product V27 shipped but its visual composition was rejected by the owner.** Existing V25/V23 content below is preserved for historical comparison only.
 
 > V23 content below is retained as historical provenance, NOT the current instructions.
 
