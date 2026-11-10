@@ -4,7 +4,8 @@ import { validateExhibits } from './data/validate';
 import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
-import { SceneMoment, HERO_MOMENTS } from './ui/SceneMoment';
+import { SceneMoment } from './ui/SceneMoment';
+import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
@@ -413,7 +414,7 @@ export default function HorebApp() {
         <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} canInspect={worldRef.current?.canInspectExhibit(exhibit.id) ?? false} onInspect={() => {
           if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
           setExamined((old) => new Set(old).add(exhibit.id));
-          setGuideCaption(HERO_MOMENTS[exhibit.id]?.cue ?? null);
+          setGuideCaption(RUSSIAN_DRAFT_CUES[exhibit.id] ?? null);
           setDialog(null);
           setToast('Осмотрите освещённую надпись и предметы. Нажмите E снова, чтобы сопоставить с Писанием.');
         }} />
