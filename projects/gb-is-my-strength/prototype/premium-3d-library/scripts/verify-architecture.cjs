@@ -32,6 +32,13 @@ const world = get('scene/World.tsx');
 const architecture = get('scene/Architecture.tsx');
 const center = get('scene/Center.tsx');
 const app = get('App.tsx');
+const entry = get('main.tsx');
+// A public ?panel=cabinet request must not statically pull the WebGL app.
+// The separate production entry uses real dynamic module boundaries.
+assert.match(entry, /await import\(["']\.\/cabinet\/CabinetPanel["']\)/);
+assert.match(entry, /await import\(["']\.\/App["']\)/);
+assert.doesNotMatch(entry, /import\s+App\s+from\s+["']\.\/App["']/);
+assert.doesNotMatch(app, /import CabinetPanel from/);
 assert.match(world, /<Architecture\s*\/>/);
 assert.match(world, /<AdaptiveResolution\s*\/>/);
 assert.doesNotMatch(world, /<Bloom|<Motes|<CloudSea|<Stars|<StainedLight/);
