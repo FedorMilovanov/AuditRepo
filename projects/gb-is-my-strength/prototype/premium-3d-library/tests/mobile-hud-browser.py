@@ -78,6 +78,19 @@ async def inspect(browser, engine, width, height):
         await page.get_by_role("navigation", name="Дополнительные действия").get_by_role(
             "button", name="Экскурсия").click()
         await joystick.wait_for(state="detached")
+        tour = page.locator("[data-gb-tour-card]")
+        await tour.wait_for(state="visible", timeout=10000)
+        # A guided reading panel is the primary bottom overlay. The
+        # navigation minimap must not remain visible underneath it at
+        # tablet width or consume frames out of sight.
+        minimap = page.locator("[data-gb-minimap]")
+        assert not await minimap.is_visible(), (
+            f"{engine}/{width}: minimap overlaps a guided tour panel"
+        )
+        card = await tour.bounding_box()
+        assert card and card["x"] >= -1 and (
+            card["x"] + card["width"] <= width + 1
+        ), (engine, width, card)
 
         assert not await page.evaluate("document.documentElement.scrollWidth > innerWidth + 2"), (
             f"{engine}/{width}: horizontal overflow")
