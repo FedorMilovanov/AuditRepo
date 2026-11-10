@@ -46,6 +46,15 @@ async def assert_modal(page):
       actualFocus:document.activeElement?.tagName
     })""")
     assert state["activeInDialog"] and state["rootInert"] and state["dialogCount"]==1,state
+    # The map intentionally retains a reader's search when closed. Previous
+    # assertions tested an empty search result and then reopened the map, so
+    # desktop rows could be absent when the geometry probe ran. Clear the
+    # actual visible search control and wait for the first real row.
+    search = dialog.get_by_role("searchbox", name="Поиск по карте сайта")
+    await search.fill("")
+    await dialog.locator('button[title="Ссылка на это место"]').first.wait_for(
+        state="visible", timeout=10000
+    )
     # Real computed-styles / rendered geometry, not a class-name check.
     # The map must conceal the 3D/intro text underneath, and touch targets
     # must remain accessible even in the narrowest supported viewports.
@@ -56,6 +65,7 @@ async def assert_modal(page):
         const external = panel.querySelector('a[title="Открыть на сайте"]');
         const close = panel.querySelector('button[aria-label="Закрыть карту сайта"]');
         const sizes = [link, external, close].map(el => {
+            if (!el) return null;
             const r = el.getBoundingClientRect();
             return [r.width, r.height];
         });
@@ -64,18 +74,20 @@ async def assert_modal(page):
     assert presentation["background"] == "rgb(25, 33, 29)" and (
         presentation["opacity"] == "1"
     ), presentation
-    assert all(w >= 43.5 and h >= 43.5
-               for w,h in presentation["sizes"]), presentation
+    assert all(s is not None and s[0] >= 43.5 and s[1] >= 43.5
+               for s in presentation["sizes"]), presentation
     for _ in range(18):
         await page.keyboard.press("Tab")
         assert await page.evaluate("!!document.activeElement?.closest('[data-gb-sitemap-dialog]')"),"Tab escaped"
     for _ in range(18):
         await page.keyboard.press("Shift+Tab")
         assert await page.evaluate("!!document.activeElement?.closest('[data-gb-sitemap-dialog]')"),"Shift+Tab escaped"
-    search=dialog.get_by_role("searchbox",name="Поиск по карте сайта")
     await search.fill("xxxxx-несуществующий-раздел")
-    assert await dialog.get_by_text("В зале такого нет.").count()>=1
+    await dialog.get_by_text("В зале такого нет.").wait_for(state="visible", timeout=10000)
     await search.fill("")
+    await dialog.locator('button[title="Ссылка на это место"]').first.wait_for(
+        state="visible", timeout=10000
+    )
     return dialog
 
 async def run_case(browser,engine,w,h,touch):
