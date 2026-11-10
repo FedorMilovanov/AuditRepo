@@ -1,5 +1,9 @@
 # HOREB 3D — актуальная передача разработчикам
 
+## Current ownership / QA handoff (10 Nov 2026)
+
+**Code baseline** `ab35c6a6136f7bd03227ec3b9ecd1241dd643219` on the ONE existing Draft PR #543; 3/3 exact-HEAD GitHub workflows and 6/6 QA jobs SUCCESS. Any later HEAD requires new CI. Current art gate: `FAIL_CHASM_DEPTH_NOT_VISIBLE` on both 63-ray camera witnesses (0 visible near-cliff strata hits); screenshot capture is NOT art approval. Rejected far-wall lighting/shaping experiments were discarded; preserve the source scene pending a convincing accepted composition. Hardware short smoke RTX 3060 high 8/8 at reported 60 FPS; Windows Firefox 8/8 scenes with WebGL2 and no context loss (camera-only). Do not claim full cross-browser/phone, VRAM/thermal, editorial, rights or professional audio closure. Existing 14m/6.5m guards and subdued night/HUD are immutable. No merge, Product/Research changes or branch proliferation.
+
 **Единственная каноническая ветка:** `lane/horeb-3d-lab-20261108`
 **Единственный Draft PR:** https://github.com/FedorMilovanov/AuditRepo/pull/543
 **Путь:** `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/`

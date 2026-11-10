@@ -14,7 +14,8 @@
     "test:browser:visual": "node tests/browser-visual-witness.mjs",
     "test:browser:journey": "node tests/browser-journey.mjs",
     "test:browser:side": "node tests/browser-side-journey.mjs",
-    "test:browser:quality": "node tests/browser-quality.mjs"
+    "test:browser:quality": "node tests/browser-quality.mjs",
+    "test:browser:firefox": "node tests/browser-firefox-smoke.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
