@@ -637,9 +637,9 @@ function SitemapPanel() {
         aria-labelledby="gb-sitemap-title"
         onKeyDown={onDialogKeyDown}
         onClick={(e) => e.stopPropagation()}
-        className="scroll-thin map-enter flex h-full w-full max-w-md flex-col overflow-y-auto overscroll-contain border-l border-[#d8b88d]/25 bg-[#19211d] p-5 text-[#f5f1e7] shadow-2xl sm:p-6"
+        className="map-enter flex h-full w-full max-w-md flex-col overflow-hidden border-l border-[#d8b88d]/25 bg-[#19211d] p-5 text-[#f5f1e7] shadow-2xl sm:p-6"
       >
-        <div className="mb-5 flex items-start justify-between">
+        <div className="mb-5 flex shrink-0 items-start justify-between">
           <div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-[#d8b88d]">Навигация</div>
             <h2 id="gb-sitemap-title" className="font-display text-4xl font-semibold leading-none">Карта сайта</h2>
@@ -653,6 +653,10 @@ function SitemapPanel() {
           </button>
         </div>
 
+        {/* Heading and dismiss stay outside the scrollport. Touch WebKit
+            otherwise scrolls the entire dialog past its heading when
+            search gets focus, particularly in 390px-tall landscape. */}
+        <div data-gb-sitemap-scroll className="scroll-thin min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1">
         <label htmlFor="gb-sitemap-search" className="mb-2 text-xs text-[#d8b88d]">Поиск по карте сайта</label>
         <input
           id="gb-sitemap-search"
@@ -689,6 +693,7 @@ function SitemapPanel() {
           ))}
         </div>
         <div className="mt-auto pt-4 text-center font-display text-sm italic text-[#d8b88d]/70">Soli Deo Gloria</div>
+        </div>
       </aside>
     </div>,
     document.body
