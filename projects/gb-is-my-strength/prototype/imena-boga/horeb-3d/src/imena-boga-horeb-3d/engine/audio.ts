@@ -1,5 +1,6 @@
 // Процедурный звук (собственный синтез Web Audio, без внешних записей и музыки).
 import { NarratorBus, type AcousticSpace } from './NarratorBus';
+import type { NarrationPlan } from '../data/narrationPlan';
 export class AmbientAudio {
   ctx: AudioContext | null = null;
   private master!: GainNode;
@@ -67,6 +68,12 @@ export class AmbientAudio {
     if (!this.enabled) return false;
     this.start();
     return this.narrator?.play(approvedAsset, space) ?? false;
+  }
+  // The cue is playable only after phonetic, transcript and rights sign-off.
+  async playNarrationPlan(plan: NarrationPlan, space: AcousticSpace) {
+    if (!this.enabled || !plan.ready || plan.playback.length < 1) return false;
+    this.unlockFromGesture();
+    return this.narrator?.playSequence(plan.playback, space) ?? false;
   }
   stopNarration() { this.narrator?.stop(); }
   suspend() { this.narrator?.stop(); this.ctx?.suspend(); }
