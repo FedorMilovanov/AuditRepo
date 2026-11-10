@@ -8,7 +8,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
@@ -38,6 +38,11 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
   const oliveWood = new THREE.MeshStandardMaterial({ color: 0x504e46, roughness: 1 });
+  // Vertex-coloured bark needs no additional texture atlas or GPU upload.
+  // The same material is shared by all four grooved boles for safe batching.
+  const oliveBark = new THREE.MeshStandardMaterial({
+    color: 0xffffff, roughness: 1, metalness: 0, vertexColors: true,
+  });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   // A shallow seep is translucent water over sediment, not an opaque colored
   // painted polygon. No expensive transmission pass or metal-like reflections.
@@ -54,7 +59,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
   const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x596947, roughness: 0.95, side: THREE.DoubleSide });
   const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x858e70, roughness: 0.95, side: THREE.DoubleSide });
-  const s: Shared = { stone, dark, wood, oliveWood, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
+  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -285,20 +290,37 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     0.02 + t * trunkHeight,
     z + leanZ * t * t + 0.022 * Math.cos(t * 5.1 + barkPhase) * t,
   );
-  const bole = new THREE.CylinderGeometry(0.105, 0.235, trunkHeight, 12, 14);
+  const bole = new THREE.CylinderGeometry(0.105, 0.235, trunkHeight,
+    low ? 12 : 18, low ? 14 : 20);
   const vertices = bole.getAttribute('position') as THREE.BufferAttribute;
+  const barkColors = new Float32Array(vertices.count * 3);
+  const shadeDark = new THREE.Color(0x47463f);
+  const shadeLight = new THREE.Color(0xa29e8d);
+  const localColor = new THREE.Color();
   for (let i = 0; i < vertices.count; i++) {
     const px = vertices.getX(i), py = vertices.getY(i), pz = vertices.getZ(i);
     const t = Math.max(0, Math.min(1, (py + trunkHeight / 2) / trunkHeight));
     const angle = Math.atan2(pz, px);
-    const grooves = 1 + 0.085 * Math.sin(angle * 6 + t * 9 + barkPhase) +
-      0.04 * Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const furrow = Math.sin(angle * 6 + t * 9 + barkPhase);
+    const finer = Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const grooves = 1 + 0.085 * furrow + 0.04 * finer;
     const center = spine(t);
     vertices.setXYZ(i, (center.x - x) + px * grooves, py,
       (center.z - z) + pz * grooves);
+    // Vertical fissures follow the same procedural coordinates as the mesh
+    // folds. Soft brown-grey tones, not alternating flat stripes or a texture
+    // whose seams will tear where the trunk twists.
+    const fissure = Math.pow(0.5 + 0.5 * Math.sin(angle * 9 + t * 3.8 + barkPhase), 4);
+    const shade = THREE.MathUtils.clamp(
+      0.52 + 0.22 * furrow + 0.09 * finer - 0.24 * fissure, 0.12, 0.82);
+    localColor.copy(shadeDark).lerp(shadeLight, shade);
+    barkColors[i * 3] = localColor.r;
+    barkColors[i * 3 + 1] = localColor.g;
+    barkColors[i * 3 + 2] = localColor.b;
   }
+  bole.setAttribute('color', new THREE.BufferAttribute(barkColors, 3));
   bole.computeVertexNormals();
-  const boleMesh = new THREE.Mesh(bole, s.oliveWood);
+  const boleMesh = new THREE.Mesh(bole, s.oliveBark);
   boleMesh.name = 'olive-main-trunk';
   boleMesh.position.set(x, 0.02 + trunkHeight / 2, z);
   g.add(boleMesh);
@@ -336,40 +358,49 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     segment(elbow, tip, 0.053, 0.014, 'olive-branch');
     branchTips.push(tip);
   }
-  // Seven crowns are supported by seven real forks. The small muted lobes
-  // supply volume while lanceolate two-sided leaves supply the silhouette.
-  // Geometry/materials remain shared so mergePropsGroup keeps draw calls low.
+  // Compact interior cores supply shadow, not visible green balloons.
+  // Most of the canopy is constructed from paired lanceolate leaves on
+  // fine, physically joined twigs. Keep both materials reusable for merging.
   for (let i = 0; i < branchTips.length; i++) {
     const origin = branchTips[i];
     const core = new THREE.Mesh(G.sph(0.5, 9, 6),
       i % 3 === 0 ? s.leafSilver : s.leaf);
     core.name = 'olive-crown-lobe';
     core.position.copy(origin);
-    core.rotation.set((random() - 0.5) * 0.55, random() * Math.PI * 2,
-      (random() - 0.5) * 0.48);
-    core.scale.set(0.49 + random() * 0.13, 0.32 + random() * 0.11,
-      0.39 + random() * 0.13);
+    core.rotation.set((random() - 0.5) * 0.35, random() * Math.PI * 2,
+      (random() - 0.5) * 0.35);
+    core.scale.set(0.19 + random() * 0.07, 0.13 + random() * 0.045,
+      0.19 + random() * 0.07);
     g.add(core);
-    for (let j = 0; j < 2; j++) {
-      const end = origin.clone().add(new THREE.Vector3(
-        (random() - 0.5) * 0.48, (random() - 0.5) * 0.19,
-        (random() - 0.5) * 0.48));
-      segment(origin, end, 0.018, 0.006, 'olive-twig');
-    }
-    const leaflets = low ? 24 : 36;
-    for (let j = 0; j < leaflets; j++) {
-      const spread = 0.07 + Math.pow(random(), 0.72) * 0.39;
-      const theta = random() * Math.PI * 2;
-      const elevation = (random() - 0.5) * 0.48;
-      const leaf = new THREE.Mesh(G.oliveLeaf(),
-        j % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
-      leaf.name = 'olive-leaf-sprig';
-      leaf.position.set(origin.x + Math.cos(theta) * spread,
-        origin.y + elevation, origin.z + Math.sin(theta) * spread);
-      leaf.rotation.set((random() - 0.5) * 1.1, random() * Math.PI * 2,
-        (random() - 0.5) * 1.7);
-      leaf.scale.set(0.11 + random() * 0.075, 0.07 + random() * 0.055, 1);
-      g.add(leaf);
+    // Every leaf pair is anchored along a twig instead of floating around
+    // a random spherical volume. A few downward arcs evoke olive sprays.
+    const twigs = low ? 4 : 5;
+    const pairs = low ? 5 : 6;
+    for (let k = 0; k < twigs; k++) {
+      const theta = k * Math.PI * 2 / twigs + (random() - 0.5) * 0.34;
+      const reach = 0.34 + random() * 0.23;
+      const delta = new THREE.Vector3(Math.cos(theta) * reach,
+        -0.13 + random() * 0.30, Math.sin(theta) * reach);
+      const end = origin.clone().add(delta);
+      segment(origin, end, 0.018, 0.004, 'olive-foliage-twig');
+      const lateral = new THREE.Vector3(-Math.sin(theta), 0, Math.cos(theta));
+      for (let j = 0; j < pairs; j++) {
+        const along = 0.18 + 0.73 * (j + 1) / pairs;
+        const node = origin.clone().addScaledVector(delta, along);
+        for (const side of [-1, 1]) {
+          const leaf = new THREE.Mesh(G.oliveLeaf(),
+            (j + k + (side > 0 ? 1 : 0)) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+          leaf.name = 'olive-leaf-sprig';
+          const spread = 0.075 + random() * 0.046;
+          leaf.position.copy(node).addScaledVector(lateral, side * spread);
+          leaf.rotation.set((random() - 0.5) * 0.65,
+            theta + side * 0.50 + Math.PI * 0.5,
+            (random() - 0.5) * 0.55);
+          leaf.scale.set(0.085 + random() * 0.035,
+            0.16 + random() * 0.065, 1);
+          g.add(leaf);
+        }
+      }
     }
   }
 }
