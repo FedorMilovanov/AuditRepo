@@ -38,7 +38,11 @@ export function Center() {
   const right = useMemo(() => titlePage("right"), []);
   // Canvas textures are constructed outside R3F's JSX ownership and must be
   // released explicitly when the central exhibit unmounts.
-  useEffect(() => () => { left.dispose(); right.dispose(); }, [left, right]);
+  useEffect(() => {
+    left.needsUpdate = true;
+    right.needsUpdate = true;
+    return () => { left.dispose(); right.dispose(); };
+  }, [left, right]);
   return <group>
     <mesh position={[0, 0.12, 0]} material={marble} receiveShadow>
       <cylinderGeometry args={[2.55, 2.6, 0.24, 80]} />
