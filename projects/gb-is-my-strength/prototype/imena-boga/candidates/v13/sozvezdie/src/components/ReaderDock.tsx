@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion, type MotionValue } from "framer-motion";
 import {
   ArrowUp,
@@ -98,25 +99,35 @@ export default function ReaderDock({
   const [pct, setPct] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [showKeys, setShowKeys] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
+  const [headerSlot, setHeaderSlot] = useState<HTMLElement | null>(null);
+  const [compact, setCompact] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 1279px)").matches
+  );
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
 
-  // On touch screens a floating panel always sits over the text column.
-  // Fade it back while the page moves, restore it as soon as reading pauses.
+  useLayoutEffect(() => {
+    const media = window.matchMedia("(max-width: 1279px)");
+    const update = () => {
+      setCompact(media.matches);
+      setHeaderSlot(document.getElementById("sozvezdie-header-reader-slot"));
+    };
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  // The compact toolbar lives inside the site header and never obscures prose.
   useEffect(() => {
-    if (!visible) return;
-    if (!window.matchMedia("(pointer: coarse)").matches) return;
-    let timer = 0;
-    const onScroll = () => {
-      setScrolling(true);
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => setScrolling(false), 700);
+    if (!compact || !expanded) return;
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setExpanded(false);
+      mobileTriggerRef.current?.focus({ preventScroll: true });
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [visible]);
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [compact, expanded]);
 
   // The decorative ring may spring, but the numeric percentage tracks real scroll.
   useEffect(() => {
@@ -181,26 +192,23 @@ export default function ReaderDock({
   if (!visible) return null;
 
   const btn =
-    "flex h-9 w-9 xl:h-10 xl:w-10 items-center justify-center rounded-full text-cream-400 transition-all duration-300 hover:bg-gold-500/15 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 disabled:pointer-events-none disabled:opacity-30";
+    "flex h-11 w-11 items-center justify-center rounded-full text-cream-400 transition-all duration-300 hover:bg-gold-500/15 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 disabled:pointer-events-none disabled:opacity-30";
   const divider = <span aria-hidden="true" className="hidden h-px w-7 shrink-0 bg-cream-800/60 xl:block" />;
 
-  return (
-    <>
+  const toolbar = (
       <motion.div
         initial={{ opacity: 0, y: 18, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         data-reader-dock
-        data-idle={scrolling && !expanded ? "false" : "true"}
-        className={`fixed bottom-[5.2rem] right-3 z-40 flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] backdrop-blur-md transition-all duration-500 xl:bottom-5 xl:right-5 xl:flex-col xl:gap-1 xl:py-2 ${
-          scrolling && !expanded ? "scale-90 opacity-0 pointer-events-none" : "scale-100 opacity-100"
-        }`}
+        className={`${compact ? "relative z-10" : "fixed bottom-5 right-5 z-40"} flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] ${compact ? "" : "flex-col gap-1 py-2"}`}
         role="toolbar"
         aria-label="Настройки чтения"
       >
         {/* Mobile: a real disclosure button controlling the compact tools. */}
         <button
           type="button"
+          ref={mobileTriggerRef}
           onClick={() => setExpanded((v) => !v)}
           aria-controls="reader-dock-options"
           aria-expanded={expanded}
@@ -220,7 +228,7 @@ export default function ReaderDock({
           <ProgressRing progress={progress} pct={pct} completedCount={completedCount} />
         </div>
 
-        <div id="reader-dock-options" className={`${expanded ? "grid" : "hidden"} absolute bottom-full right-0 mb-2 grid-cols-3 items-center gap-1 rounded-2xl border border-gold-500/25 bg-ink-950 p-2 shadow-xl xl:static xl:mb-0 xl:flex xl:flex-col xl:gap-1 xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none`}>
+        <div id="reader-dock-options" className={`${expanded ? "grid" : "hidden"} absolute top-full right-0 mt-2 grid-cols-3 items-center gap-1 rounded-2xl border border-gold-500/25 bg-ink-950 p-2 shadow-xl xl:static xl:mt-0 xl:flex xl:flex-col xl:gap-1 xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none`}>
           {divider}
           <button type="button" className={btn} onClick={() => stepFont(1)} disabled={font === "lg"} title="Крупнее шрифт" aria-label="Увеличить шрифт">
             <Plus className="h-4 w-4" strokeWidth={1.5} />
@@ -278,6 +286,11 @@ export default function ReaderDock({
           </button>
         </div>
       </motion.div>
+  );
+
+  return (
+    <>
+      {compact && headerSlot ? createPortal(toolbar, headerSlot) : toolbar}
 
       <AnimatePresence>
         {showKeys && (

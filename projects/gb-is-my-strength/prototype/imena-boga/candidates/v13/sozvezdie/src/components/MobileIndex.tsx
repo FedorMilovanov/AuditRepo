@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotionConfig } from "framer-motion";
 import { Check, List, X } from "lucide-react";
 import { NAMES, PARTS } from "../data/names";
@@ -13,6 +14,10 @@ interface MobileIndexProps {
 
 export default function MobileIndex({ active, completedIds, onSelect, visible }: MobileIndexProps) {
   const [open, setOpen] = useState(false);
+  const [headerSlot, setHeaderSlot] = useState<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    setHeaderSlot(document.getElementById("sozvezdie-header-index-slot"));
+  }, []);
   const reducedMotion = useReducedMotionConfig();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -81,28 +86,28 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
 
   return (
     <>
-      {/* floating pill */}
-      {visible && <button
-        ref={triggerRef}
-        onClick={() => {
-          restoreTriggerRef.current = true;
-          selectedTargetRef.current = null;
-          setOpen(true);
-        }}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        className="fixed left-1/2 z-40 flex min-h-11 max-w-[calc(100vw-2rem)] min-w-0 -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/40 bg-ink-950 px-4 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.7)] transition-colors hover:border-gold-300/65 motion-safe:active:scale-[0.98] motion-reduce:transition-none xl:hidden"
-        style={{ bottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))" }}
-        aria-label="Открыть список имён"
-      >
-        <List className="h-4 w-4 shrink-0 text-gold-300" strokeWidth={1.5} />
-        <span className="font-ui min-w-0 break-words text-center text-xs font-medium uppercase leading-snug tracking-[0.15em] text-cream-200">
-          {current ? current.translit : "Разделы"}
-        </span>
-        <span className="shrink-0 font-hebrew text-xs text-cream-500">
-          {idx >= 0 ? `${String(idx + 1).padStart(2, "0")}/${NAMES.length}` : ""}
-        </span>
-      </button>}
+      {/* Header action and dialog remain in separate stacking contexts. */}
+      {visible && headerSlot && createPortal(
+        <button
+          id="sozvezdie-mobile-index-trigger"
+          ref={triggerRef}
+          type="button"
+          onClick={() => {
+            restoreTriggerRef.current = true;
+            selectedTargetRef.current = null;
+            setOpen(true);
+          }}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-controls="sozvezdie-mobile-index-dialog"
+          aria-label="Открыть список имён"
+          title="Указатель имён"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold-500/20 text-gold-300 transition-colors hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+        >
+          <List className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+        </button>,
+        headerSlot
+      )}
 
       {/* overlay */}
       <AnimatePresence onExitComplete={() => {
@@ -120,6 +125,8 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
         {open && (
           <motion.div
             ref={dialogRef}
+            id="sozvezdie-mobile-index-dialog"
+            data-mobile-index-dialog
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -127,7 +134,7 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
             role="dialog"
             aria-modal="true"
             aria-label="Указатель библейских выражений"
-            className="fixed inset-0 z-50 flex flex-col bg-ink-950/96 backdrop-blur-xl xl:hidden"
+            className="fixed inset-0 z-50 flex flex-col bg-ink-950 xl:hidden"
           >
             <div className="flex min-w-0 items-center justify-between gap-3 px-5 pt-6 sm:px-6"
               style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top, 0px))" }}>

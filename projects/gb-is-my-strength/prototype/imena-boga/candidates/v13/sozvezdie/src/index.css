@@ -317,9 +317,5 @@ h1, h2, h3 {
   #tsentr, [role="status"], [aria-label="Продолжить чтение"] { display: none !important; }
 }
 
-/* The mobile reader controls share one safe-area-aware vertical rhythm. */
-@media (max-width: 1279px) {
-  [data-reader-dock] {
-    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
-  }
-}
+/* On compact viewports both reading controls occupy the main header.
+   They do not need floating offsets over editorial text. */

@@ -314,7 +314,8 @@ export default function App() {
             href="https://gospod-bog.ru"
             className="flex min-h-11 min-w-0 shrink items-center whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
-            Господь Бог — Сила Моя
+            <span className="sm:hidden">Господь Бог</span>
+            <span className="hidden sm:inline">Господь Бог — Сила Моя</span>
           </a>
 
           {/* live current-section state */}
@@ -323,7 +324,7 @@ export default function App() {
               type="button"
               onClick={() => scrollTo("sozvezdie")}
               title="Открыть указатель всех имён"
-              className="group hidden min-w-0 items-center gap-3 rounded-full border border-gold-500/20 bg-ink-900/70 px-4 py-1.5 transition-colors hover:border-gold-400/50 sm:flex"
+              className="group hidden min-w-0 items-center gap-3 rounded-full border border-gold-500/20 bg-ink-900/70 px-4 py-1.5 transition-colors hover:border-gold-400/50 xl:flex"
             >
               <span
                 className="font-hebrew text-sm leading-none text-gold-300"
@@ -343,7 +344,10 @@ export default function App() {
             <span className="hidden font-hebrew text-sm text-gold-400/90 sm:block">שְׁמוֹת</span>
           )}
 
-          <a
+          <div className="flex shrink-0 items-center gap-1">
+            <div id="sozvezdie-header-index-slot" className="xl:hidden" />
+            <div id="sozvezdie-header-reader-slot" className="xl:hidden" />
+            <a
             href="https://gospod-bog.ru/articles/"
             aria-label="Библиотека статей"
             className="group flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
@@ -352,6 +356,7 @@ export default function App() {
             <span className="hidden min-[400px]:inline">Библиотека</span>
             <span aria-hidden="true" className="hidden h-1 w-1 rotate-45 bg-gold-500 transition-transform duration-300 group-hover:rotate-[135deg] min-[400px]:inline-block" />
           </a>
+          </div>
         </div>
       </motion.header>
 
