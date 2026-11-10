@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { rng, fbm, glowTexture } from './procedural';
 import type { Exhibit } from '../data/exhibits';
 
@@ -16,6 +17,8 @@ export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
 ];
 /** The well's tree is rooted away from both the stone rim and front inscription. */
 export const BEERSHEBA_TAMARISK_OFFSET = { x: 2.15, z: -0.75 } as const;
+/** The visible well masonry must stay inside this shared physical footprint. */
+export const BEERSHEBA_WELL_COLLIDER_RADIUS = 1.45;
 
 let CACHE: { low: boolean; s: Shared } | null = null;
 export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
@@ -41,7 +44,7 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   // Vertex-coloured bark needs no additional texture atlas or GPU upload.
   // The same material is shared by all four grooved boles for safe batching.
   const oliveBark = new THREE.MeshStandardMaterial({
-    color: 0xffffff, roughness: 1, metalness: 0, vertexColors: true,
+    color: 0x777168, roughness: 1, metalness: 0, vertexColors: true,
   });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   // A shallow seep is translucent water over sediment, not an opaque colored
@@ -57,8 +60,8 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
   const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
   // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
-  const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x596947, roughness: 0.95, side: THREE.DoubleSide });
-  const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x858e70, roughness: 0.95, side: THREE.DoubleSide });
+  const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x52604c, roughness: 0.95, side: THREE.DoubleSide });
+  const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x737f6c, roughness: 0.95, side: THREE.DoubleSide });
   const s: Shared = { stone, dark, wood, oliveWood, oliveBark, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
   CACHE = { low, s };
   return s;
@@ -110,47 +113,57 @@ const G = {
 };
 
 function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
-  const r = low ? 1.1 : 1.3;
+  // Low/high change mesh tessellation only, never the physical well footprint.
+  const r = 1.10;
   const random = rng((Math.round(x * 131 + z * 173) ^ 0x57211) >>> 0);
   // A WELL is a hollow shaft, not a capped solid cylinder with a dark lid.
   // The double-sided inner wall masks gaps in the hand-laid exterior courses.
   const interiorMaterial = new THREE.MeshStandardMaterial({
     color: 0x2d241d, roughness: 1, side: THREE.DoubleSide,
   });
-  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.86, 24, true), interiorMaterial);
+  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.86, low ? 24 : 36, true), interiorMaterial);
   liner.name = 'well-open-shaft';
   liner.position.set(x, 0.43, z); g.add(liner);
-  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025, 24), s.water);
+  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025, low ? 24 : 36), s.water);
   water.name = 'well-water-below-rim';
   water.position.set(x, 0.20, z); g.add(water);
   for (let layer = 0; layer < 3; layer++) {
     for (let i = 0; i < 14; i++) {
       const a = (i + (layer % 2) * 0.5) * Math.PI * 2 / 14 +
         (random() - 0.5) * 0.065;
-      const stone = new THREE.Mesh(G.box(0.47, 0.30, 0.28), s.stone);
+      // Each limestone piece has worn edges, slightly different proportions,
+      // and independent tilt. Same 14-stone count in three staggered courses.
+      // These are illustrative dressed blocks, not a claimed excavated artefact.
+      const stone = new THREE.Mesh(new RoundedBoxGeometry(
+        0.47 + random() * 0.045, 0.265 + random() * 0.045,
+        0.26 + random() * 0.045, 2, 0.035), s.stone);
       stone.name = 'well-course-stone';
-      stone.position.set(x + Math.cos(a) * (r + 0.065),
+      stone.position.set(x + Math.cos(a) * (r + 0.055),
         0.16 + layer * 0.29 + (random() - 0.5) * 0.025,
-        z + Math.sin(a) * (r + 0.065));
-      stone.rotation.y = -a - Math.PI / 2 + (random() - 0.5) * 0.07;
-      stone.scale.set(0.91 + random() * 0.20, 0.89 + random() * 0.16,
-        0.9 + random() * 0.16);
+        z + Math.sin(a) * (r + 0.055));
+      stone.rotation.set((random() - 0.5) * 0.052,
+        -a - Math.PI / 2 + (random() - 0.5) * 0.066,
+        (random() - 0.5) * 0.052);
       g.add(stone);
     }
   }
-  // Thin embedded lip behind each irregular upper course: no torus "donut".
-  const lip = new THREE.Mesh(G.tor(r + 0.025, 0.075, 6, 24), s.stone);
-  lip.rotation.x = Math.PI / 2; lip.position.set(x, 0.91, z); g.add(lip);
+  // The upper coping is a course of smaller worn stone blocks. An earlier
+  // geometric torus and boulder-like rim made a manufactured black doughnut;
+  // no artificial seamless ring now masks the open vertical shaft.
   for (let i = 0; i < 14; i++) {
-    const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.17;
-    const rr = r + 0.02 + (random() - 0.5) * 0.12;
-    const pebble = new THREE.Mesh(G.dodec(0.24, 0), s.stone);
-    pebble.name = 'well-rim-stone';
-    pebble.position.set(x + Math.cos(a) * rr, 0.97 + (random() - 0.5) * 0.11,
+    const a = (i / 14) * Math.PI * 2 + (random() - 0.5) * 0.11;
+    const rr = r + 0.015 + (random() - 0.5) * 0.045;
+    const stone = new THREE.Mesh(new RoundedBoxGeometry(
+      0.48 + random() * 0.055, 0.13 + random() * 0.035,
+      0.28 + random() * 0.035, 2, 0.028), s.stone);
+    stone.name = 'well-rim-stone';
+    stone.position.set(x + Math.cos(a) * rr,
+      0.94 + (random() - 0.5) * 0.045,
       z + Math.sin(a) * rr);
-    pebble.scale.set(0.8 + random() * 0.38, 0.45 + random() * 0.27, 0.76 + random() * 0.3);
-    pebble.rotation.set((random() - 0.5) * 0.4, a, (random() - 0.5) * 0.38);
-    g.add(pebble);
+    stone.rotation.set((random() - 0.5) * 0.048,
+      -a - Math.PI / 2 + (random() - 0.5) * 0.045,
+      (random() - 0.5) * 0.048);
+    g.add(stone);
   }
   // The small ground stones sit below ankle level; they are not invisible walls.
   for (let i = 0; i < 18; i++) {
@@ -393,11 +406,13 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
           leaf.name = 'olive-leaf-sprig';
           const spread = 0.075 + random() * 0.046;
           leaf.position.copy(node).addScaledVector(lateral, side * spread);
-          leaf.rotation.set((random() - 0.5) * 0.65,
-            theta + side * 0.50 + Math.PI * 0.5,
-            (random() - 0.5) * 0.55);
-          leaf.scale.set(0.085 + random() * 0.035,
-            0.16 + random() * 0.065, 1);
+          // Tilt the narrow lamina away from vertical; the previous 0.2 m
+          // upright shapes resembled grass spikes rather than olive foliage.
+          leaf.rotation.set((random() - 0.5) * 1.05,
+            theta + side * 0.45 + Math.PI * 0.5,
+            side * (0.82 + random() * 0.38));
+          leaf.scale.set(0.070 + random() * 0.024,
+            0.084 + random() * 0.031, 1);
           g.add(leaf);
         }
       }
