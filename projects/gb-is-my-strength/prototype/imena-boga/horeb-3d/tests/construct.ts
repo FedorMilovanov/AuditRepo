@@ -219,9 +219,9 @@ if (gardenRecord) {
   };
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
-    leafSprigs(low) === 4 * 7 * 24);
+    leafSprigs(low) === 4 * 7 * 4 * 5 * 2);
   t('Gethsemane high detail increases sprig density without extra trees',
-    leafSprigs(garden) === 4 * 7 * 36);
+    leafSprigs(garden) === 4 * 7 * 5 * 6 * 2);
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -316,7 +316,7 @@ if (gardenRecord) {
       o.material.side === THREE.DoubleSide) flatLeaves++;
   });
   t('Gethsemane olives have segmented rooted trunks and botanically thin leaves',
-    trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 24);
+    trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 4 * 5 * 2);
   let gnarled = 0, twigs = 0, totalCrownHeight = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-twig') twigs++;
@@ -341,6 +341,28 @@ if (gardenRecord) {
   });
   t('Gethsemane deformed wooden boles stay inside the shared 0.29m trunk collider',
     sculptedTrunks === 4 && maxTrunkRadius <= 0.29);
+  let barkVertices = 0, shadeRange = 0, foliageTwigs = 0, biggestCore = 0;
+  grove.traverse((o) => {
+    if (o.name === 'olive-foliage-twig') foliageTwigs++;
+    if (o.name === 'olive-crown-lobe' && o instanceof THREE.Mesh) {
+      biggestCore = Math.max(biggestCore, o.scale.x, o.scale.y, o.scale.z);
+    }
+    if (o.name === 'olive-main-trunk' && o instanceof THREE.Mesh) {
+      const colors = o.geometry.getAttribute('color');
+      if (colors && o.material instanceof THREE.MeshStandardMaterial &&
+          o.material.vertexColors === true) {
+        barkVertices += colors.count;
+        const channels: number[] = [];
+        for (let i = 0; i < colors.count; i++) channels.push(colors.getX(i));
+        shadeRange = Math.max(shadeRange, Math.max(...channels) - Math.min(...channels));
+      }
+    }
+  });
+  t('Gethsemane bark has continuous vertex-colour fissures, not a flat trunk material',
+    barkVertices >= 4 * 180 && shadeRange > 0.045);
+  t('Gethsemane foliage is paired along joined twig sprays, with no giant opaque balls',
+    foliageTwigs === 4 * 7 * 4 && biggestCore <= 0.27 &&
+    flatLeaves === 4 * 7 * 4 * 5 * 2);
   const gardenX = PLACEMENTS['abba'][0];
   const inward = -Math.sign(gardenX) * 0.85;
   const anchorX = gardenX + inward * 1.2 / Math.hypot(inward, 0.53);
