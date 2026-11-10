@@ -1,4 +1,6 @@
 import { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, type Exhibit } from '../data/exhibits';
+import { narrationPlan, NARRATION_LANGUAGE_LABEL } from '../data/narrationPlan';
+import { HERO_MOMENTS } from './SceneMoment';
 
 const LANG_RU = { he: 'древнееврейский', arc: 'арамейский', grc: 'греческий' } as const;
 const STATUS_RU = { working_draft: 'рабочий черновик', disputed: 'дискуссионно', review_in_progress: 'проверка продолжается' } as const;
@@ -14,6 +16,7 @@ export function Original({ e, className = '' }: { e: Exhibit; className?: string
 
 export function ExhibitCard({ e, headingLevel = 3 }: { e: Exhibit; headingLevel?: 2 | 3 }) {
   const H = headingLevel === 2 ? 'h2' : 'h3';
+  const voice = narrationPlan(e, HERO_MOMENTS[e.id]?.cue);
   const rows: [string, string][] = [
     ['Традиционное русское чтение', e.traditionalRu],
     ['Буквальное значение', e.literalGloss],
@@ -49,6 +52,26 @@ export function ExhibitCard({ e, headingLevel = 3 }: { e: Exhibit; headingLevel?
           </div>
         ))}
       </dl>
+      <details className="mt-5 rounded-sm border border-bronze/25 bg-black/25 p-4">
+        <summary className="cursor-pointer text-bronze text-sm">
+          Аудиогид · {voice.originalSpoken ? 'оригинал → русский' : 'написание → русский'} · {voice.status === 'HOLD' ? 'запись ожидает утверждения' : 'запись утверждена'}
+        </summary>
+        <ol className="list-decimal list-inside text-sm text-parch/85 space-y-3 mt-3">
+          <li>
+            <strong>{voice.originalSpoken ? 'Сначала произношение на ' + NARRATION_LANGUAGE_LABEL[voice.sourceLanguage] : 'Сначала написание — без реконструированного произношения'}.</strong>{' '}
+            <Original e={e} className="text-lg mx-2" />
+          </li>
+          <li>
+            <strong>Затем русский рассказчик.</strong>{' '}
+            {voice.russianDraft ?? 'Текст этой экспозиции ещё должен пройти написание и редакционную проверку.'}
+          </li>
+        </ol>
+        <p className="mt-3 text-xs text-muted">
+          {voice.status === 'HOLD'
+            ? 'Аудиозаписей нет: проверка произношения, русского сценария, прав исполнителей и исходников не завершена. Это письменная схема, не кнопка воспроизведения.'
+            : 'Редакционные аудиофайлы разрешены в реестре. Воспроизведение допускается только по действию посетителя.'}
+        </p>
+      </details>
       <p className="mt-5 text-xs text-muted border-t border-white/10 pt-3">
         Статус исследования: <b className="text-parch/80">{STATUS_RU[e.researchStatus]}</b> · публикационное состояние:{' '}
         <b className="text-amber-300/80">{e.publicationState}</b> (нет редакционного допуска) · id: <code>{e.id}</code>
