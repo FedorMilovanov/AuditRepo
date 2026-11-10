@@ -1012,7 +1012,7 @@ export function App() {
               style={{
                 backgroundColor: allExpanded ? 'var(--gb-accent)' : 'var(--gb-accent-soft)',
                 borderColor: allExpanded ? 'var(--gb-accent)' : 'var(--gb-gold)',
-                color: allExpanded ? '#ffffff' : 'var(--gb-accent)',
+                color: allExpanded ? 'var(--gb-on-accent)' : 'var(--gb-accent)',
               }}
             >
               <ChevronsUpDown className="h-3.5 w-3.5 shrink-0" />
@@ -1266,7 +1266,7 @@ export function App() {
               href="https://t.me/fedormilovanov"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-ui inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+              className="font-ui inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
               style={{ backgroundColor: 'var(--gb-accent)' }}
             >
               <Send className="h-3.5 w-3.5" />

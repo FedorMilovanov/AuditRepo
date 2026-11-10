@@ -222,7 +222,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
               style={{
                 backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-bg)',
                 borderColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
-                color: isSelected ? '#ffffff' : 'var(--gb-ink-secondary)',
+                color: isSelected ? 'var(--gb-on-accent)' : 'var(--gb-ink-secondary)',
               }}
             >
               {SOUL_NEED_LABELS[key].label}
@@ -248,7 +248,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           <button
             type="button"
             onClick={resetAllFilters}
-            className="font-ui mt-4 inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+            className="font-ui mt-4 inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <RotateCcw className="h-3.5 w-3.5" />

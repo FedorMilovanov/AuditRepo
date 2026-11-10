@@ -15,6 +15,7 @@
   --gb-accent-strong: #5f2323;
   --gb-accent-dim: #9b3c3c;
   --gb-accent-soft: #f6ece8;
+  --gb-on-accent: #ffffff;
   --gb-gold: #b8936a;
   --gb-gold-ink: #855a2c; /* WCAG AA small text on light paper */
   --gb-gold-bright: #cfa36e;
@@ -41,6 +42,7 @@
   --gb-accent-strong: #581e1e;
   --gb-accent-dim: #993b3b;
   --gb-accent-soft: #ead9cf;
+  --gb-on-accent: #ffffff;
   --gb-gold: #9e733b;
   --gb-gold-ink: #78501f; /* contrast-safe sepia text; decorative gold unchanged */
   --gb-gold-bright: #b88848;
@@ -67,6 +69,7 @@
   --gb-accent-strong: #e89285;
   --gb-accent-dim: #b85c4f;
   --gb-accent-soft: #261b19;
+  --gb-on-accent: #13161c;
   --gb-gold: #d4a574;
   --gb-gold-ink: #d4a574; /* already passes on the dark reader surface */
   --gb-gold-bright: #e8be8c;
@@ -138,6 +141,11 @@ body {
 
 .font-greek {
   font-family: var(--f-greek);
+}
+
+/* Accent-filled controls need a contrast-safe foreground in every theme. */
+.gb-on-accent {
+  color: var(--gb-on-accent);
 }
 
 /* Text-only enlargement must reflow editorial text inside narrow cards.

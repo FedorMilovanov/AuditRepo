@@ -148,7 +148,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             title="Процент прочтения статьи"
           >
             <span style={{ color: 'var(--gb-accent)' }}>{Math.round(progress * 100)}%</span>
-            <span className="opacity-70">прочитано</span>
+            <span className="font-medium">прочитано</span>
           </span>
 
           {/* Quick Search Trigger */}

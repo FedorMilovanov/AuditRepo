@@ -130,7 +130,12 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
       </div>
 
       {/* Responsive Matrix Table */}
-      <div className="mt-5 overflow-x-auto">
+      <div
+        className="mt-5 overflow-x-auto rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
+        role="region"
+        aria-label="Горизонтальная прокрутка сравнительной таблицы переводов"
+        tabIndex={0}
+      >
         <table className="w-full border-collapse text-left">
           <thead>
             <tr
@@ -212,7 +217,7 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
         <button
           type="button"
           onClick={() => onSelectName(linkedEntry)}
-          className="font-ui inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+          className="font-ui inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
           style={{ backgroundColor: 'var(--gb-accent)' }}
         >
           <BookOpen className="h-3.5 w-3.5" />

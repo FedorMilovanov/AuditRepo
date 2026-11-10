@@ -52,60 +52,60 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "3c5517091760035b78dd3c1e04ec682e7a59e74e7935463f2211172ec4b4eee6",
-      "bytes_normalized": 65650
+      "sha256": "89af0a725ef522f38ad684613ee7e0b59c51e80c7bfa1b14d1888625421ece12",
+      "bytes_normalized": 65664
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "d7dedd3edcc96c422d376a9212b7c99f262cb96684c7716d89581653abd13596",
-      "bytes_normalized": 15411
+      "sha256": "749a1e669bbc12ffe6c0f2429005d2e5c6cbeb1caab277277b4f24f8ea85adc2",
+      "bytes_normalized": 15437
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "f77d6fcb07f3a610a35c9f36a43b5c180fc4460cf8477e649fa7d4e47d65c47a",
-      "bytes_normalized": 16180
+      "sha256": "e08c7cd13ee5f1b6c2ae809cc2dba625fa50d9e2b43c63e0d90e35c742359485",
+      "bytes_normalized": 16194
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "2bc616c0b5311637f4e70eb972b6c742081c85711fd5bf006e345a1f6492ff06",
-      "bytes_normalized": 29761
+      "sha256": "ed277f54b76f45abd6a8dedee61f56c5ca6b49f6bd4c752f3b459d8ff36a4b87",
+      "bytes_normalized": 29763
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
-      "sha256": "42971ca00620855a62922c638f8bb458b7b1b059e3498936ab53a3fd70fa942c",
-      "bytes_normalized": 16616
+      "sha256": "390a7dc86f95d332640da5ca12be90ea13579a1d7a7c85c35fffd1840718ebbc",
+      "bytes_normalized": 16576
     },
     "atlas/src/components/FeatureLoadBoundary.tsx": {
       "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
       "bytes_normalized": 1410
     },
     "atlas/src/components/HebrewGreekLexiconMatrix.tsx": {
-      "sha256": "71524ad0f56c56458315ff2c558d9f96491450245f5e9cc17836dd903a339f2a",
-      "bytes_normalized": 10418
+      "sha256": "80ea82ce5e9bd714ac68b0fca8de37d0b4ceb03217eff3ec133c1c844cbe1d14",
+      "bytes_normalized": 10737
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "038624fe6baee77ffb36963c5d116122593a9c6f51c99aaebff595cc5365070f",
-      "bytes_normalized": 30396
+      "sha256": "4371ac4eb20490414e0f3265968b210ea2abbd862f2c063f653a01cbddd16856",
+      "bytes_normalized": 30398
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "fe0e2d679e738e434e3b0901d15cb8e6ac0bca4715f01940339383b69f323381",
       "bytes_normalized": 8975
     },
     "atlas/src/components/NearViewport.tsx": {
-      "sha256": "d407272d44a0dae124adfa90d94915b10f3d0abf1f945805a65f3e5c21ed2e66",
-      "bytes_normalized": 1260
+      "sha256": "f8102fd1196cb21d23a34eed7889c7f93c221bc96a9202498b80f44c44cb0b4d",
+      "bytes_normalized": 1283
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "7a3b4f3243633223dc71ad2ba9eb91329fd4ebf5c6523f9842d5e8962f17c053",
-      "bytes_normalized": 26662
+      "sha256": "15f525fecd6c6cc35e84f2a11d7c8d8f367db3b88179f28ec7b2a6a739b700a6",
+      "bytes_normalized": 26664
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",
       "bytes_normalized": 5542
     },
     "atlas/src/components/SevenIAmStatements.tsx": {
-      "sha256": "c9d0ab9bf9ac69f05ac9792b7cf4fb60949739d125d779e4c1394455622b1f32",
-      "bytes_normalized": 14367
+      "sha256": "e01434ff295df21fcce2c8172a70555062387496eba1ef59c0ecc1bc9b149667",
+      "bytes_normalized": 14381
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "26f70eb24a072621726e06c54a712a8f0b9656884b69c27f41e3e7f98ebd17b6",
-      "bytes_normalized": 20967
+      "sha256": "f9881c889707ca7d468457dd4ee837b45090af1570de95ee3efae2f5aae5514a",
+      "bytes_normalized": 20968
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -124,8 +124,8 @@
       "bytes_normalized": 1238
     },
     "atlas/src/index.css": {
-      "sha256": "3000f33bb2d58c8a8efbada480cf42ce6c425da296793a6df770eba0773b756d",
-      "bytes_normalized": 10300
+      "sha256": "239dbeff6d3eda193fab1cc7e5b517d24ea99e2b6d864c82603b52b555a936e1",
+      "bytes_normalized": 10507
     },
     "atlas/src/main.tsx": {
       "sha256": "577d8a6ab658c40f91c62c2f6f083eefbdc6b653bd2d65d5ec766c3d6bdb5c30",
@@ -164,12 +164,12 @@
       "bytes_normalized": 2717
     },
     "checks/package-lock.json": {
-      "sha256": "0d59ded844672fe83dedb6b266a6658884c397f8cc748ba88ebb1a01185b9b25",
-      "bytes_normalized": 742
+      "sha256": "385daa36b6b844fd34ed87c5b3bdbfc36af0a4ac5ef8563ad2ce6dfd2b74f2a2",
+      "bytes_normalized": 1130
     },
     "checks/package.json": {
-      "sha256": "202070277c15bd00771673e3497cf4bd05dbf4c8ae257ef5d8e5fa7cb1105540",
-      "bytes_normalized": 424
+      "sha256": "dfaa81f395596a1fe7198dfe84d6bbc06e1b8cfc84d5cdae3b1f6be321655b04",
+      "bytes_normalized": 450
     },
     "checks/preload_contract.cjs": {
       "sha256": "9c361cd6690f8c3fa7a3ccb7a12569cbcbcb8ea1fb29eaaa7399e75346623c36",
@@ -184,8 +184,8 @@
       "bytes_normalized": 11850
     },
     "checks/visual_review.cjs": {
-      "sha256": "0c9e304496ab28e061d19d5482a3fef20afc58d878b871424e551787b5d521e9",
-      "bytes_normalized": 21451
+      "sha256": "7a79ac227cedbdbb9ad9c18f1c035ef1efa032401fd97323dcde7c2cddc9eac4",
+      "bytes_normalized": 23037
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

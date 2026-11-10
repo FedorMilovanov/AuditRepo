@@ -545,7 +545,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
           <button
             type="button"
             onClick={onStartReading}
-            className="gb-hero-action font-ui inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:opacity-95 motion-safe:active:scale-[0.99] motion-reduce:transition-none"
+            className="gb-hero-action font-ui inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold gb-on-accent shadow-md transition-all hover:opacity-95 motion-safe:active:scale-[0.99] motion-reduce:transition-none"
             style={{
               backgroundColor: 'var(--gb-accent)',
               boxShadow: '0 8px 24px var(--gb-crimson-glow)',

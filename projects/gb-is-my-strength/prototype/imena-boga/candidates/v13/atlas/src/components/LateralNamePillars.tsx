@@ -582,7 +582,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           </div>
 
           <span
-            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-xs font-semibold text-white"
+            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-xs font-semibold gb-on-accent"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <span>Скрижали</span>

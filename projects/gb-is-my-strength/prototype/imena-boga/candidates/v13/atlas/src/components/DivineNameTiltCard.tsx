@@ -75,7 +75,6 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
       className="scroll-mt-24 my-9 transition-all duration-700"
       style={{
         perspective: '1150px',
-        opacity: isRevealed ? 1 : 0.72,
         transform: isRevealed ? 'translateY(0px)' : 'translateY(14px)',
       }}
     >

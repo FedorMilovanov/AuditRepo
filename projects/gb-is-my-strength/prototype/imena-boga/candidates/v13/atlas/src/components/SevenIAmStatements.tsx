@@ -160,12 +160,12 @@ export const SevenIAmStatements: React.FC = () => {
               style={{
                 backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-bg)',
                 borderColor: isSelected ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
-                color: isSelected ? '#ffffff' : 'var(--gb-ink)',
+                color: isSelected ? 'var(--gb-on-accent)' : 'var(--gb-ink)',
               }}
             >
               <div
                 className="font-serif-display text-xs font-bold"
-                style={{ color: isSelected ? 'var(--gb-gold-bright)' : 'var(--gb-gold)' }}
+                style={{ color: isSelected ? 'var(--gb-on-accent)' : 'var(--gb-gold-ink)' }}
               >
                 {item.numeral}
               </div>

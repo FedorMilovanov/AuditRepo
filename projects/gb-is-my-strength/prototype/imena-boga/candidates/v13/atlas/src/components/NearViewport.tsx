@@ -37,6 +37,7 @@ export function NearViewport({ children, ariaLabel, minimumHeight = 220 }: Props
       {ready ? children : (
         <div
           className="no-print"
+          role="group"
           aria-label={ariaLabel}
           aria-busy="true"
           style={{ minHeight: minimumHeight }}

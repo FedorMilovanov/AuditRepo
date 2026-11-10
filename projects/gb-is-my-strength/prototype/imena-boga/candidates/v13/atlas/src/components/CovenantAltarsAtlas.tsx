@@ -120,7 +120,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               style={{
                 backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-bg)',
                 borderColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
-                color: isSelected ? '#ffffff' : 'var(--gb-ink-secondary)',
+                color: isSelected ? 'var(--gb-on-accent)' : 'var(--gb-ink-secondary)',
               }}
             >
               {idx + 1}. {altar.placeName.split(' (')[0]}
@@ -232,7 +232,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
                   style={{
                     backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-surface)',
                     borderColor: 'var(--gb-gold)',
-                    color: isSelected ? '#ffffff' : 'var(--gb-accent)',
+                    color: isSelected ? 'var(--gb-on-accent)' : 'var(--gb-accent)',
                   }}
                 >
                   <MapPin className="h-3.5 w-3.5" />
@@ -312,7 +312,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <button
               type="button"
               onClick={() => onSelectName(linkedName)}
-              className="font-ui inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+              className="font-ui inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
               style={{ backgroundColor: 'var(--gb-accent)' }}
             >
               <BookOpen className="h-3.5 w-3.5" />

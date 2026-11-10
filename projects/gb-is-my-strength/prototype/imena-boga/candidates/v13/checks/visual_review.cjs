@@ -131,6 +131,44 @@ async function safeAction(page,label,action){
  try{await action();record('interaction',{label,status:'PASS'});}
  catch(e){problem('HIGH','interaction-failed',{label,error:String(e).slice(0,480)});record('interaction',{label,status:'FAIL'});}
 }
+
+// Automated WCAG A/AA audits supplement physical keyboard/AT review.
+// Atlas tests its persisted reader theme instead of repainting CSS by hand.
+async function wcagAudit(page,app,engine,width){
+ if(![390,1440].includes(width))return;
+ const storageKey='gb:imena:atlas:reader-preferences:v1';
+ const themes=app==='atlas'?['light','dark']:['default'];
+ for(const theme of themes){
+  if(theme==='dark'){
+   await page.evaluate(k=>localStorage.setItem(k,JSON.stringify({theme:'dark'})),storageKey);
+   await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+   await waitVisual(page);
+  }
+  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  const violations=await page.evaluate(async()=>{
+   const r=await window.axe.run(document,{
+    runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},
+    resultTypes:['violations']
+   });
+   return r.violations.map(v=>({
+    id:v.id,impact:v.impact,count:v.nodes.length,
+    examples:v.nodes.slice(0,4).map(n=>({
+     selector:n.target,summary:(n.failureSummary||'').slice(0,180)
+    }))
+   }));
+  });
+  record('axe-wcag-a-aa',{app,engine,width,theme,rules:violations.length,
+   nodes:violations.reduce((sum,v)=>sum+v.count,0),
+   status:violations.length?'FAIL':'PASS'});
+  violations.forEach(v=>problem('HIGH','axe-'+v.id,{app,engine,width,theme,...v}));
+ }
+ if(app==='atlas'){
+  await page.evaluate(k=>localStorage.removeItem(k),storageKey);
+  await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+  await waitVisual(page);
+ }
+}
+
 async function visit(browser,engine,app,width,base){
  const ctx=await browser.newContext({viewport:{width,height:844},deviceScaleFactor:1,
   isMobile:width<768,hasTouch:width<768,locale:'ru-RU',reducedMotion:'reduce'});
@@ -140,6 +178,7 @@ async function visit(browser,engine,app,width,base){
  try{
   await page.goto(base+'/'+app+'/',{waitUntil:'domcontentloaded',timeout:30000});
   await waitVisual(page);
+  await wcagAudit(page,app,engine,width);
   await layoutContract(page,app,engine,width);
   await diag(page,app,engine,width,'hero');
   await shot(page,engine+'-'+app+'-'+width+'-01-hero');

@@ -680,7 +680,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               onClose();
               onJumpToArticle(entry);
             }}
-            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+            className="font-ui inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <Navigation className="h-3.5 w-3.5" />
