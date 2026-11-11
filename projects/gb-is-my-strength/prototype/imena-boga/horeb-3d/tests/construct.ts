@@ -795,6 +795,10 @@ for (const lowMode of [true, false]) {
       uv.count === points.count &&
       !constructed.obstacles.some((o) => o.z < -175 && o.z > -225 &&
         o.x > LEDGE_X && o.x < LEDGE_X + 2);
+    if (!good) console.log('CHASM_GEOMETRY_DIAGNOSTIC', JSON.stringify({
+      lowMode, meta, floorCount, wallVertexCount, terracedAtMidspan,
+      joinedFaces, safeBoundary, uvCount: uv.count, pointCount: points.count,
+    }));
   }
   t('zone-4 ravine connects 4 natural strata to safe existing floor edge ' +
     (lowMode ? 'LOW' : 'HIGH'), good);
