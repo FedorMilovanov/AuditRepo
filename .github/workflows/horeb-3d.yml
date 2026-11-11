@@ -129,17 +129,77 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:visual
-      - name: Preserve successful screenshot evidence for human art review
+      # PNG files are already compressed. One ~25 MiB artifact previously
+      # stalled/failed after ALL browser/visual checks had passed. Publish
+      # three independent, mandatory evidence packages: each is small enough
+      # to diagnose independently, none is best-effort or allowed to be absent.
+      - name: Validate complete on-disk visual evidence inventory
+        if: success()
+        run: |
+          set -euo pipefail
+          node --input-type=commonjs <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const root = '.test-build';
+          const w = JSON.parse(fs.readFileSync(path.join(root, 'visual-witness.json'), 'utf8'));
+          if (w.desktop?.length !== 8 || w.mobile?.length !== 3 ||
+              w.details?.length !== 6 || w.errors?.length !== 0 ||
+              w.chasmGeometryGate !== 'PASS_UNOBSTRUCTED_RAVINE')
+            throw new Error('Missing or failed visual evidence manifest');
+          const required = [...w.desktop, ...w.mobile, ...w.details];
+          const files = new Set();
+          for (const entry of required) {
+            const name = entry.screenshot;
+            if (typeof name !== 'string' || !name.startsWith('visual-') ||
+                files.has(name)) throw new Error('Duplicate or invalid visual: ' + name);
+            files.add(name);
+            const file = path.join(root, 'screenshots', name);
+            if (!fs.existsSync(file) || fs.statSync(file).size < 12000)
+              throw new Error('Missing/empty image: ' + name);
+            const signature = fs.readFileSync(file).subarray(0, 8).toString('hex');
+            if (signature !== '89504e470d0a1a0a')
+              throw new Error('Invalid PNG header: ' + name);
+          }
+          const group = fs.readdirSync(path.join(root, 'screenshots'));
+          if (!group.some(s => s.startsWith('smoke-') && s.endsWith('.png')) ||
+              !group.some(s => s.startsWith('journey-') && s.endsWith('.png')) ||
+              !fs.existsSync(path.join(root, 'journey-witness.json')))
+            throw new Error('Missing mandatory smoke or pedestrian witnesses');
+          console.log('Verified', files.size, 'independent PNG visual witnesses, plus smoke and journey evidence');
+          NODE
+      - name: Preserve gallery and mobile evidence
         if: success()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: horeb-visual-${{ github.run_id }}
+          name: horeb-gallery-${{ github.run_id }}
           path: |
-            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-desktop-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-mobile-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve all six exhibit and geology detail screenshots
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-details-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-detail-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve browser smoke and real pedestrian evidence
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-chromium-witness-${{ github.run_id }}
+          path: |
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/journey-witness.json
-            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          compression-level: 0
           retention-days: 7
           if-no-files-found: error
       - name: Preserve browser evidence if any test fails
