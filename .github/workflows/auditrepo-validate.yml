@@ -239,13 +239,14 @@ jobs:
 
       - name: Install Premium 3D Library test browsers
         if: env.RUN_GB_LIBRARY == '1'
+        timeout-minutes: 20
         shell: bash
         run: |
           set -euo pipefail
           python3 -m pip install --disable-pip-version-check 'playwright==1.62.0'
           python3 -m playwright install --with-deps chromium webkit
 
-      - name: Premium 3D Library public browser regression (47 cases)
+      - name: Premium 3D Library public browser regression (65 cases)
         if: env.RUN_GB_LIBRARY == '1'
         timeout-minutes: 45
         shell: bash

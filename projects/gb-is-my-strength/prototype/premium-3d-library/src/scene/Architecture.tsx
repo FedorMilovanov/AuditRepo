@@ -4,6 +4,7 @@ import { marble, stone } from "./Platform";
 import { CASEWORK } from "./caseworkScale";
 import { useCaseworkWood, verticalGrainBoxGeometry } from "./CaseworkWood";
 import { EntrancePortico } from "./EntrancePortico";
+import { SPINE_DETAIL, gildedVolume } from "./spineDetail";
 
 /**
  * Premium library envelope. Original interactive stations keep their canonical
@@ -28,13 +29,27 @@ function seeded(n: number) {
 function BookInstances() {
   const count = SHELVED_BAYS.length * SHELVES * BOOKS;
   const ref = useRef<THREE.InstancedMesh>(null!);
+  const gildedRef = useRef<THREE.InstancedMesh>(null!);
   const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  // A single additional GPU draw for selected fine raised spine bands;
+  // never a separate mesh or texture allocation for each book.
+  const bandGeometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
   const material = useMemo(() => new THREE.MeshStandardMaterial({ color: "#ffffff", roughness: 0.83, metalness: 0 }), []);
-  useEffect(() => () => { geometry.dispose(); material.dispose(); }, [geometry, material]);
+  const bandMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: "#a88e67", roughness: 0.50, metalness: 0.42,
+  }), []);
+  const maxBands = SHELVED_BAYS.length * SHELVES
+    * Math.ceil(BOOKS / SPINE_DETAIL.cadence) * SPINE_DETAIL.bandsPerVolume;
+  useEffect(() => () => {
+    geometry.dispose(); material.dispose(); bandGeometry.dispose(); bandMaterial.dispose();
+  }, [geometry, material, bandGeometry, bandMaterial]);
   useLayoutEffect(() => {
     const mesh = ref.current;
+    const bands = gildedRef.current;
     const object = new THREE.Object3D();
-    let index = 0;
+    const band = new THREE.Object3D();
+    const worldBand = new THREE.Matrix4();
+    let index = 0, bandIndex = 0;
     for (const bay of SHELVED_BAYS) {
       const angle = (bay / BAYS) * Math.PI * 2;
       const sin = Math.sin(angle), cos = Math.cos(angle);
@@ -52,6 +67,20 @@ function BookInstances() {
           object.updateMatrix();
           mesh.setMatrixAt(index, object.matrix);
           mesh.setColorAt(index, new THREE.Color(COLOURS[Math.floor(seeded(seed + 17) * COLOURS.length)]));
+          // Book-space transform places each band ON the actual visible
+          // spine, retaining any authentic irregular tilt of that volume.
+          // The inner band face intersects the cover by ~2mm; no floating
+          // decal or z-fighting on its front surface.
+          if (gildedVolume(bay, level, b)) {
+            for (const y of [-SPINE_DETAIL.heightOffset, SPINE_DETAIL.heightOffset]) {
+              band.position.set(0, y, SPINE_DETAIL.faceOffset);
+              band.rotation.set(0, 0, 0);
+              band.scale.set(SPINE_DETAIL.bandWidth, SPINE_DETAIL.bandHeight, SPINE_DETAIL.bandDepth);
+              band.updateMatrix();
+              worldBand.multiplyMatrices(object.matrix, band.matrix);
+              bands.setMatrixAt(bandIndex++, worldBand);
+            }
+          }
           index++;
         }
       }
@@ -59,8 +88,17 @@ function BookInstances() {
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     mesh.computeBoundingSphere();
+    bands.count = bandIndex;
+    bands.instanceMatrix.needsUpdate = true;
+    bands.computeBoundingSphere();
   }, []);
-  return <instancedMesh ref={ref} args={[geometry, material, count]} castShadow={false} receiveShadow={false} />;
+  return <group>
+    <instancedMesh ref={ref} args={[geometry, material, count]}
+      castShadow={false} receiveShadow={false} />
+    <instancedMesh name="gilded-spine-bands" ref={gildedRef}
+      args={[bandGeometry, bandMaterial, maxBands]}
+      castShadow={false} receiveShadow={false} />
+  </group>;
 }
 
 /**

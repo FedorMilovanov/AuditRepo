@@ -85,6 +85,56 @@ const entranceBays = 1;
 const expectedVolumes = (casework.bays - windowBays - entranceBays)
   * casework.shelfRows * casework.booksPerShelf;
 assert.equal(expectedVolumes, 5928, 'instancing layout changed');
+
+/* Raised spine accents: verify the REAL selection function and geometry,
+ * so the optional gilding cannot float, intersect the next volume, repeat
+ * uniformly across rows, or become thousands of individually drawn meshes. */
+const gildingSource = get('scene/spineDetail.ts');
+const gildingJS = ts.transpileModule(gildingSource, { compilerOptions: {
+  module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
+}}).outputText;
+const gildingModule = { exports: {} };
+new Function('module','exports',gildingJS)(gildingModule,gildingModule.exports);
+const detail = gildingModule.exports.SPINE_DETAIL;
+const gildedVolume = gildingModule.exports.gildedVolume;
+assert(Object.isFrozen(detail));
+assert.equal(detail.bandsPerVolume, 2);
+assert(detail.bandWidth > .55 && detail.bandWidth < 1);
+assert(detail.heightOffset + detail.bandHeight / 2 < .5,
+  'Gold bands overlap upper or lower page edges');
+assert(detail.faceOffset + detail.bandDepth / 2 > -.5
+  && detail.faceOffset + detail.bandDepth / 2 < -.48,
+  'Spine band is floating or buried inside the book cover');
+assert(detail.faceOffset - detail.bandDepth / 2 < -.515,
+  'Raised band fails to protrude from the visible spine');
+let gildedCount = 0, minGildedShelf = Infinity, maxGildedShelf = 0;
+for (let bay = 1; bay < casework.bays; bay++) {
+  if ([7,8,9,10,11,12].includes(bay)) continue;
+  for (let row = 0; row < casework.shelfRows; row++) {
+    let inShelf = 0;
+    for (let book = 0; book < casework.booksPerShelf; book++) {
+      if (gildedVolume(bay, row, book)) { gildedCount++; inShelf++; }
+    }
+    minGildedShelf = Math.min(minGildedShelf, inShelf);
+    maxGildedShelf = Math.max(maxGildedShelf, inShelf);
+  }
+}
+assert(minGildedShelf >= 3 && maxGildedShelf <= 4,
+  'A cabinet shelf has missing/overdense bands');
+assert(gildedCount >= 450 && gildedCount <= 650,
+  'Gilded details dominate the original neutral book collection');
+assert.equal(architecture.includes('name="gilded-spine-bands"'), true);
+for (const token of [
+  'gildedVolume(bay, level, b)',
+  'worldBand.multiplyMatrices(object.matrix, band.matrix)',
+  'bands.setMatrixAt(bandIndex++, worldBand)',
+  'bands.count = bandIndex',
+  'bandGeometry.dispose(); bandMaterial.dispose()',
+]) assert(architecture.includes(token), 'Actual instanced gilding contract missing: '+token);
+assert.equal(gildedCount * detail.bandsPerVolume <=
+  13 * casework.shelfRows * Math.ceil(casework.booksPerShelf/detail.cadence)
+  * detail.bandsPerVolume, true);
+
 assert.ok(casework.minVolumeHeight > 0 && casework.minVolumeWidth > 0);
 assert.ok(casework.spineBaseAboveShelf + casework.minVolumeHeight
   + casework.volumeHeightVariation < casework.shelfPitch,
