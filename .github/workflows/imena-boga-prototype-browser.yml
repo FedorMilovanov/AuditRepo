@@ -96,13 +96,20 @@ jobs:
         run: |
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie
-          # The standalone Constellation QA is deliberately pinned to
-          # playwright-core 1.49.1, while shared contracts use 1.62.1.
-          # Install ONLY that older Chromium binary; the Noble container
-          # already supplies all OS packages. Keep the original QA version.
-          node -p "require('playwright-core/package.json').version"
+          # Shared checks use Playwright 1.62.1's container browsers in
+          # /ms-playwright. The independent Sozvezdie QA is pinned to 1.49.1.
+          # Playwright's installer garbage-collects browser builds it thinks
+          # are unused: installing 1.49 into /ms-playwright deleted 1.62.
+          # Isolate the old browser cache for this step, including its full
+          # executable override, and leave the $GITHUB_ENV 1.62 path intact
+          # for subsequent Chromium/WebKit visual evidence capture.
+          export PLAYWRIGHT_BROWSERS_PATH="${RUNNER_TEMP:?}/imena-sozvezdie-pw149"
+          mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          test "$(node -p "require('playwright-core/package.json').version")" = "1.49.1"
           npx playwright-core install chromium
-          test -x "$(node -p "require('playwright-core').chromium.executablePath()")"
+          export CHROMIUM_PATH
+          CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+          test -x "$CHROMIUM_PATH"
           npm run qa
 
       - name: Capture visual audit screenshots and interaction evidence
