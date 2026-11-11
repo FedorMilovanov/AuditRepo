@@ -421,3 +421,20 @@ const nov11MappedBlock=nov11MapData.split('export const COVENANT_ALTARS:')[1]?.s
 const nov11MappedCount=(nov11MappedBlock.match(/\n\s+id:\s+'altar-/g)||[]).length;
 if(nov11MappedCount!==9)throw Error('Atlas expected nine schematized places: '+nov11MappedCount);
 console.log('V13_ATLAS_CARTOGRAPHY_SEMANTIC_GATE_PASS',nov11MappedCount);
+
+
+// Mobile map labels cannot obscure one another; its complete 44px waypoint
+// strip and labelled pins preserve access to all nine biblical places.
+const mapControlsNov11=fs.readFileSync(path.join(root,'atlas','src','components','CovenantAltarsAtlas.tsx'),'utf8');
+for(const needle of [
+ 'data-covenant-map-stage',
+ 'data-covenant-map-pin',
+ 'data-covenant-pin-label',
+ 'data-covenant-waypoint',
+ 'aria-pressed={isSelected}',
+ 'hidden sm:block font-ui pointer-events-none absolute',
+ 'min-h-11 items-center cursor-pointer',
+ 'flex h-9 w-9 items-center justify-center'
+])if(!mapControlsNov11.includes(needle))
+ throw Error('Atlas schematic mobile control regression: '+needle);
+console.log('V13_ATLAS_MAP_MOBILE_ACCESS_SCOPE_PASS');

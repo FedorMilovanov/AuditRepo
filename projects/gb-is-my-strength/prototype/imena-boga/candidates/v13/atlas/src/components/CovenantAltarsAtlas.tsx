@@ -115,8 +115,10 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <button
               key={altar.id}
               type="button"
+              data-covenant-waypoint
+              aria-pressed={isSelected}
               onClick={() => setSelectedAltarId(altar.id)}
-              className="font-ui cursor-pointer rounded-full border px-2.5 py-1 text-[11px] font-medium transition-all"
+              className="font-ui inline-flex min-h-11 items-center cursor-pointer rounded-full border px-3 py-2 text-[11px] font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               style={{
                 backgroundColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-bg)',
                 borderColor: isSelected ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
@@ -132,6 +134,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
       <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Stylized Cartographic Map Canvas */}
         <div
+          data-covenant-map-stage
           className="relative min-h-[360px] sm:min-h-[400px] overflow-hidden rounded-2xl border lg:col-span-7"
           style={{
             borderColor: 'var(--gb-gold)',
@@ -203,9 +206,11 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               <button
                 key={altar.id}
                 type="button"
+                data-covenant-map-pin
+                aria-pressed={isSelected}
                 onClick={() => setSelectedAltarId(altar.id)}
                 style={{ left: `${altar.x}%`, top: `${altar.y}%`, zIndex: isSelected ? 20 : 10 }}
-                className="group absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer focus:outline-none"
+                className="group absolute flex h-9 w-9 items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 aria-label={`${idx + 1}. ${altar.placeName} — ${altar.scriptureRef}`}
               >
                 {/* Pulsing Halo for Selected Pin */}
@@ -231,7 +236,8 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
 
                 {/* Floating Place Label with Smart Non-Overlapping Alignment */}
                 <span
-                  className={`font-ui pointer-events-none absolute whitespace-nowrap rounded px-1.5 py-0.5 text-[10px] font-semibold shadow-sm transition-opacity ${getLabelPositionClasses(
+                  data-covenant-pin-label
+                  className={`hidden sm:block font-ui pointer-events-none absolute whitespace-nowrap rounded px-1.5 py-0.5 text-[10px] font-semibold shadow-sm transition-opacity ${getLabelPositionClasses(
                     altar.labelAlign
                   )} ${isSelected ? 'opacity-100' : 'opacity-85 group-hover:opacity-100'}`}
                   style={{

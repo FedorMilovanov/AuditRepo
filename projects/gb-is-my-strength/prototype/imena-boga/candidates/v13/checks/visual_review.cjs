@@ -420,6 +420,35 @@ async function visit(browser,engine,app,width,base){
   }
 
   if(app==='atlas' && [320,390,768,1440].includes(width)){
+   // Capture the historical schematic itself in both engines. Unlike the
+   // old percentage-scroll images, this is an exact semantic anchor.
+   await safeAction(page,engine+'-atlas-'+width+'-map-stage',async()=>{
+     const actual=await page.evaluate(()=>{
+       const root=document.querySelector('#covenant-altars-atlas');
+       const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
+       const waypoints=[...root.querySelectorAll('[data-covenant-waypoint]')];
+       const labels=[...root.querySelectorAll('[data-covenant-pin-label]')];
+       return {pins:pins.length,waypoints:waypoints.length,labels:labels.length,
+         selectedPins:pins.filter(el=>el.getAttribute('aria-pressed')==='true').length,
+         selectedWaypoints:waypoints.filter(el=>el.getAttribute('aria-pressed')==='true').length,
+         pinMinHeight:Math.min(...pins.map(el=>el.getBoundingClientRect().height)),
+         waypointMinHeight:Math.min(...waypoints.map(el=>el.getBoundingClientRect().height)),
+         visibleLabels:labels.filter(el=>getComputedStyle(el).display!=='none').length,
+         labelsAccessible:pins.every(el=>!!el.getAttribute('aria-label'))};
+     });
+     record('atlas-nine-place-controls',{engine,width,...actual});
+     if(actual.pins!==9||actual.waypoints!==9||actual.labels!==9||
+        actual.selectedPins!==1||actual.selectedWaypoints!==1||
+        actual.pinMinHeight<35||actual.waypointMinHeight<43||
+        !actual.labelsAccessible||(width<640&&actual.visibleLabels!==0))
+       problem('BLOCKER','atlas-nine-place-controls-failed',{engine,width,...actual});
+     await anchorShot(page,engine+'-atlas-'+width+'-11-map-stage',
+       '[data-covenant-map-stage]',145);
+     await page.locator('[data-covenant-waypoint]').first().click();
+     const selected=await page.locator('[data-covenant-map-pin]').first().getAttribute('aria-pressed');
+     if(selected!=='true')
+       problem('BLOCKER','atlas-waypoint-selection-failed',{engine,width,selected});
+   });
    // Historical bug V-02 was captured on a percentage-of-page screenshot
    // and the after image landed on a different name. Pin a reproducible,
    // exact record (ordinal 32) in both engines for visual before/after review.
