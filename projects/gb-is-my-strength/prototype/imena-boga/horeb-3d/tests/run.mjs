@@ -7,6 +7,7 @@ import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, comp
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
 import { EXPEDITION_EVIDENCE, EXPEDITION_CHRONOLOGY, EXPEDITION_CONTRAST, expeditionReady, normalizeExpeditionCompletion, canCompleteExpedition, completeExpedition } from '../.test-build/data/expedition.js';
 import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy, markFieldStudy } from '../.test-build/data/fieldStudies.js';
+import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
@@ -87,8 +88,8 @@ t('vowel points and unpointed text match the same written-only policy',
   !containsTetragrammaton('אֶהְיֶה'));
 // An observational game event must be authentic and idempotent, not a
 // client-invented item, points system or route unlock.
-t('three 3D scene observations are canonical and tied to existing exhibits',
-  SITE_CLUE_IDS.length === 3 && new Set(SITE_CLUE_IDS).size === 3 &&
+t('seven 3D scene observations are canonical and tied to existing exhibits',
+  SITE_CLUE_IDS.length === 7 && new Set(SITE_CLUE_IDS).size === 7 &&
   SITE_CLUE_IDS.every((id) => EXHIBITS.some((e) => e.id === SITE_CLUES[id].exhibitId)));
 t('site observation normalizer discards unknown/prototype IDs and duplicates',
   JSON.stringify(normalizeSiteClues(['constructor','beersheba-well','bad','beersheba-well'])) ===
@@ -100,6 +101,36 @@ t('site observations record only known physical locations once',
 t('site observations never imply an automatic educational completion',
   normalizeLearningJournal({ observed: [], understood: [] }).understood.length === 0 &&
   SITE_CLUES['beersheba-tamarisk'].reference === 'Быт. 21:33');
+// The two new hero slices require actual spatial observations as distinct
+// proof of attention, AND a source-grounded answer shared with FieldStudy.
+// Completion booleans alone may not survive lost/forged observation journals.
+const groveWitness = ['gethsemane-olive', 'gethsemane-prayer-stone'];
+const jeremiahWitness = ['jeremiah-royal-sign', 'jeremiah-city-view'];
+t('two hero studies reuse canonical source choices and seven physical meshes',
+  HERO_STUDY_IDS.length === 2 && HERO_STUDIES.length === 2 &&
+  HERO_STUDIES.every((study) => study.evidence.length === 2 &&
+    study.evidence.every((id) => SITE_CLUE_IDS.includes(id)) &&
+    FIELD_STUDIES.some((t) => t.id === study.id && t.correctAnswer)));
+t('a hero study cannot pass without both sighted details',
+  !heroStudyReady('abba', [groveWitness[0]]) &&
+  !canCompleteHeroStudy('abba', [groveWitness[0]], 'b') &&
+  !heroStudyReady('tsidkenu', [jeremiahWitness[0]]) &&
+  !canCompleteHeroStudy('tsidkenu', [jeremiahWitness[0]], 'c'));
+t('Gethsemane and Jeremiah are two independently grounded interpretations',
+  heroStudyReady('abba', groveWitness) && heroStudyReady('tsidkenu', jeremiahWitness) &&
+  canCompleteHeroStudy('abba', groveWitness, 'b') &&
+  !canCompleteHeroStudy('abba', groveWitness, 'c') &&
+  canCompleteHeroStudy('tsidkenu', jeremiahWitness, 'c') &&
+  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, 'a') &&
+  !canCompleteHeroStudy('abba', jeremiahWitness, 'b'));
+t('hero records require verified physical clues after reload and reject invented IDs',
+  JSON.stringify(markHeroStudy([], 'abba', groveWitness, 'b')) === '["abba"]' &&
+  JSON.stringify(markHeroStudy([], 'tsidkenu', jeremiahWitness, 'c')) === '["tsidkenu"]' &&
+  JSON.stringify(markHeroStudy([], 'fake', [...groveWitness, ...jeremiahWitness], 'b')) === '[]' &&
+  normalizeHeroStudyJournal(['abba', 'abba', 'fake'], groveWitness).join('|') === 'abba' &&
+  normalizeHeroStudyJournal(['abba', 'tsidkenu'], groveWitness).join('|') === 'abba' &&
+  normalizeHeroStudyJournal(['abba'], []).length === 0 &&
+  markHeroStudy(['abba'], 'tsidkenu', groveWitness, 'c').join('|') === 'abba');
 // Four different source-analysis interactions (16 authored investigations).
 const kindCounts = Object.fromEntries(['voices','named-object','parallel-witness','written-form']
   .map((kind) => [kind, FIELD_STUDIES.filter((task) => task.kind === kind).length]));
