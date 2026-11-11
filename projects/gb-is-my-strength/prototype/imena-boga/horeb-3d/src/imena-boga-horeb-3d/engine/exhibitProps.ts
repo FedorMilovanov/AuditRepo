@@ -362,7 +362,7 @@ function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
     gate.position.set(x + sgn * 1.1, 0.4, z); g.add(gate);
   }
 }
-function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
+function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, silhouette = 0) {
   // Mature Mediterranean olive: a squat, irregular, torsioned bole, spreading
   // structural forks and an open silver-green canopy, not cone-trunk topiary.
   // Physical trunk radius stays within the separately tested 0.29m collider.
@@ -372,7 +372,17 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const leanX = (random() - 0.5) * 0.20;
   const leanZ = (random() - 0.5) * 0.18;
   const barkPhase = random() * Math.PI * 2;
-  const trunkHeight = 1.66;
+  // Four intentionally distinct mature silhouettes: uneven height and
+  // lateral reach, not four copies with merely different random noise.
+  // Trunk colliders/positions remain the single canonical layout.
+  const forms = [
+    { height: 1.78, spread: 1.05, crownLift: 0.02 },
+    { height: 1.60, spread: 0.90, crownLift: -0.04 },
+    { height: 1.90, spread: 1.12, crownLift: 0.08 },
+    { height: 1.73, spread: 0.83, crownLift: -0.06 },
+  ] as const;
+  const form = forms[((silhouette % forms.length) + forms.length) % forms.length];
+  const trunkHeight = form.height;
   const spine = (t: number) => new THREE.Vector3(
     x + leanX * t * t + 0.022 * Math.sin(t * 6.5 + barkPhase) * t,
     0.02 + t * trunkHeight,
@@ -462,9 +472,9 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     // Avoid seven near-identical spokes/flat Y-forks: natural olives have
     // asymmetric crowns with branches emerging at staggered heights.
     const angle = i * Math.PI * 2 / 7 + (random() - 0.5) * 0.76;
-    const reach = 0.49 + random() * 0.67;
+    const reach = (0.49 + random() * 0.67) * form.spread;
     const tip = crownBase.clone().add(new THREE.Vector3(
-      Math.cos(angle) * reach, 0.16 + random() * 0.52,
+      Math.cos(angle) * reach, 0.16 + random() * 0.52 + form.crownLift,
       Math.sin(angle) * reach));
     const stem = spine(0.57 + random() * 0.35);
     const elbow = stem.clone().lerp(tip, 0.43 + random() * 0.17).add(new THREE.Vector3(
@@ -623,9 +633,16 @@ function addSheepfold(g: THREE.Group, x: number, z: number, s: Shared) {
     post.position.set(x + Math.cos(a) * 1.4, 0.5, z + Math.sin(a) * 1.4); g.add(post);
   }
 }
-function addPrayerSpot(g: THREE.Group, x: number, z: number, s: Shared) {
-  const stone = new THREE.Mesh(G.box(0.8, 0.2, 0.6), s.stone);
-  stone.position.set(x, 0.1, z); stone.rotation.y = 0.3; g.add(stone);
+function addPrayerSpot(g: THREE.Group, x: number, z: number, s: Shared, natural = false) {
+  // The Gethsemane viewpoint is an intentionally modest, irregular stone,
+  // NOT a square platform, altar or identified archaeological relic.
+  const stone = new THREE.Mesh(
+    natural ? G.dodec(0.51) : G.box(0.8, 0.2, 0.6), s.stone);
+  stone.name = natural ? 'gethsemane-prayer-stone' : 'prayer-rest-stone';
+  stone.position.set(x, natural ? 0.10 : 0.1, z);
+  stone.rotation.set(natural ? 0.08 : 0, 0.3, natural ? -0.11 : 0);
+  if (natural) stone.scale.set(1.02, 0.28, 0.76);
+  g.add(stone);
 }
 function addRoyalSign(g: THREE.Group, x: number, z: number, s: Shared) {
   const stand = new THREE.Mesh(G.box(0.3, 1.2, 0.3), s.dark); stand.position.set(x, 0.6, z); g.add(stand);
@@ -844,7 +861,7 @@ function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, low: boo
   // interpenetrating identical treetops on a straight evenly spaced line.
   for (let i = 0; i < n; i++) {
     const [dx, dz] = OLIVE_GROVE_OFFSETS[i] ?? [(i - n / 2) * 1.55, i % 2 ? -0.5 : 0.5];
-    addOliveTree(g, x + dx, z + dz, s, low);
+    addOliveTree(g, x + dx, z + dz, s, low, i);
   }
 }
 
@@ -887,7 +904,7 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
     case 'vision-abstract': addDistantGlow(g, px, pz); addUnfoldingBorders(g, px, pz, s); break;
     case 'night-shelter': addScrolls(g, px, pz, s); addStarWindow(g, px, pz, s); break;
     case 'gethsemane-garden': addOliveTrees(g, px, pz, s, low, 4);
-      addPrayerSpot(g, px + GETHSEMANE_PRAYER_OFFSET.x, pz + GETHSEMANE_PRAYER_OFFSET.z, s); break;
+      addPrayerSpot(g, px + GETHSEMANE_PRAYER_OFFSET.x, pz + GETHSEMANE_PRAYER_OFFSET.z, s, true); break;
     case 'apocalyptic-architecture': addLightStoneSpace(g, px, pz, s); break;
     case 'scroll-alpha-omega': addEditorialScroll(g, px, pz, s); break;
     case 'two-windows': addPublicPlace(g, px, pz, s); addArch(g, px + 1.5, pz, s, 1.8); break;
