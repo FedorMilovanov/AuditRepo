@@ -1,4 +1,4 @@
-import { normalizeSiteClues, type SiteClueId } from './siteClues';
+import { normalizeSiteClues, type SiteClueId } from './siteClues.js';
 
 // Non-coercive 3D investigation, not a spiritual score or editorial verdict.
 // Evidence can be collected in ANY walking order; historical order is a
