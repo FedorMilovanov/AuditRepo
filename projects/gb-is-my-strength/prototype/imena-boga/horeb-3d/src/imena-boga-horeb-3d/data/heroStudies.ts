@@ -36,16 +36,22 @@ export function normalizeHeroStudyJournal(raw: unknown, rawClues: unknown): Hero
   return Array.isArray(raw) ? HERO_STUDY_IDS.filter((id) =>
     raw.includes(id) && heroStudyReady(id, rawClues)) : [];
 }
-export function canCompleteHeroStudy(id: string, clues: unknown, answer: string | null): boolean {
-  if (!heroStudyReady(id, clues)) return false;
+export function canCompleteHeroStudy(
+  id: string, clues: unknown, openedFirst: boolean, openedSecond: boolean,
+  answer: string | null,
+): boolean {
+  // Both original textual perspectives must be inspected, independently
+  // of two physically witnessed scene details; mere guessing cannot pass.
+  if (!heroStudyReady(id, clues) || openedFirst !== true || openedSecond !== true) return false;
   const sourceTask = FIELD_STUDIES.find((s) => s.id === id);
   return !!sourceTask?.answerOptions?.some((option) => option.id === answer) &&
     sourceTask.correctAnswer === answer;
 }
 export function markHeroStudy(
-  existing: unknown, id: string, clues: unknown, answer: string | null,
+  existing: unknown, id: string, clues: unknown, openedFirst: boolean,
+  openedSecond: boolean, answer: string | null,
 ): HeroStudyId[] {
   const journal = normalizeHeroStudyJournal(existing, clues);
-  if (!canCompleteHeroStudy(id, clues, answer)) return journal;
+  if (!canCompleteHeroStudy(id, clues, openedFirst, openedSecond, answer)) return journal;
   return normalizeHeroStudyJournal([...journal, id], clues);
 }
