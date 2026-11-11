@@ -22,8 +22,10 @@ export function expeditionReady(raw: unknown): boolean {
   const seen = normalizeSiteClues(raw);
   return EXPEDITION_EVIDENCE.every((id) => seen.includes(id));
 }
-export function normalizeExpeditionCompletion(raw: unknown): boolean {
-  return raw === true;
+export function normalizeExpeditionCompletion(raw: unknown, clues: unknown): boolean {
+  // A saved boolean by itself is not evidence: the three canonical, physical
+  // observations must still exist in the separately validated site journal.
+  return raw === true && expeditionReady(clues);
 }
 export function canCompleteExpedition(
   clues: unknown, chronology: string | null, contrast: string | null,
@@ -33,6 +35,6 @@ export function canCompleteExpedition(
 export function completeExpedition(
   existing: unknown, clues: unknown, chronology: string | null, contrast: string | null,
 ): boolean {
-  return normalizeExpeditionCompletion(existing) ||
+  return normalizeExpeditionCompletion(existing, clues) ||
     canCompleteExpedition(clues, chronology, contrast);
 }
