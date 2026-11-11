@@ -175,6 +175,6 @@ Research `c604895fa217df20ffc2f9b32a4fe14dca34fb76`, досье `ИМЕНА БО
 
 ### Актуальное состояние редакционного допуска
 
-`CARD_COVERAGE_29_36_AND_RESEARCH_EXTENSION_13_COMPLETE` / `TARGETED_41_PLUS_12_SEMANTIC_EDITS_DONE` / `SOURCE_HASHES_SYNCED` / `SCHOLARLY_PEER_REVIEW_ZERO` / `CRITICAL_MANUSCRIPT_COLLATIONS_ZERO` / `PRODUCT_APPROVAL_ZERO` / `RIGHTS_HOLD`.
+`CARD_COVERAGE_29_36_AND_RESEARCH_EXTENSION_13_COMPLETE` / `TARGETED_29_PLUS_12_EQUALS_41_SEMANTIC_EDITS_DONE` / `SOURCE_HASHES_SYNCED` / `SCHOLARLY_PEER_REVIEW_ZERO` / `CRITICAL_MANUSCRIPT_COLLATIONS_ZERO` / `PRODUCT_APPROVAL_ZERO` / `RIGHTS_HOLD`.
 
 Все не затронутые в этой волне строки продолжают считаться черновыми исследовательскими презентациями. Следующая поимённая рецензия должна опираться на первичный локус, категорию (собственное имя / титул / метафора / предикация / объект), говорящего, адресата и правовой статус издания, а не только на совпадение `ID` или русское тематическое название.
