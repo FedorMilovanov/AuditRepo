@@ -804,6 +804,44 @@ try {
   check('three discovered details survive a full reload in local-only storage',
     await investigator.evaluate(() =>
       JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]').length === 3));
+  // Genuine 3D clue collection flows into one source-grounded investigation.
+  // Wrong ordering or conflated stories never complete it, even after reload.
+  await investigator.evaluate(() => [...document.querySelectorAll('button')]
+    .find((b) => (b.textContent || '').startsWith('Путевой дневник ('))?.click());
+  await investigator.waitForSelector('[data-expedition-quest]', { timeout: 12000 });
+  check('all three physically collected clues unlock linked expedition',
+    await investigator.evaluate(() => {
+      const q = document.querySelector('[data-expedition-quest]');
+      return !!q && !q.querySelector('fieldset')?.disabled &&
+        !q.querySelector('[data-expedition-feedback="locked"]');
+    }));
+  await investigator.$('[name="beersheba-hagar-chronology"][value="c"]').then((b) => b.click());
+  await investigator.$('[name="beersheba-hagar-contrast"][value="c"]').then((b) => b.click());
+  await investigator.$('button[data-expedition-submit]').then((b) => b.click());
+  check('wrong event chronology never completes linked investigation',
+    await investigator.evaluate(() =>
+      !!document.querySelector('[data-expedition-feedback="retry"]') &&
+      !document.querySelector('[data-expedition-feedback="accepted"]') &&
+      localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') !== 'true'));
+  await investigator.$('[name="beersheba-hagar-chronology"][value="b"]').then((b) => b.click());
+  await investigator.$('[name="beersheba-hagar-contrast"][value="a"]').then((b) => b.click());
+  await investigator.$('button[data-expedition-submit]').then((b) => b.click());
+  check('false conflation of Genesis narratives also fails',
+    await investigator.evaluate(() =>
+      !!document.querySelector('[data-expedition-feedback="retry"]') &&
+      localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') !== 'true'));
+  await investigator.$('[name="beersheba-hagar-contrast"][value="c"]').then((b) => b.click());
+  await investigator.$('button[data-expedition-submit]').then((b) => b.click());
+  await investigator.waitForFunction(() =>
+    localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'true', { timeout: 6000 });
+  check('correct source distinction saves one optional expedition result',
+    await investigator.evaluate(() =>
+      !!document.querySelector('[data-expedition-feedback="accepted"]') &&
+      !document.querySelector('[data-expedition-feedback="retry"]')));
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  check('source-grounded expedition survives reload independently of navigation',
+    await investigator.evaluate(() =>
+      localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'true'));
   await investigator.close();
 
   check('no page runtime errors', errors.length === 0, errors.slice(0, 2).join(' | '));
