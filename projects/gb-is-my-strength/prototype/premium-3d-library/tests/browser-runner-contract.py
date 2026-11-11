@@ -49,6 +49,14 @@ def cases_for(name: str) -> list[dict]:
             item["preference"] = pref
             item["sceneUnchanged"] = pref == "reduce"
             item["sha256"] = ["a", "a"] if pref == "reduce" else ["a", "b"]
+    if name == "photo-transition-browser.py":
+        for index, item in enumerate(records):
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["viewport"] = ("1440x900", "390x844")[index % 2]
+            item["sameCanvas"] = True
+            item["cleanControlHidden"] = True
+            item["revealAfterInput"] = True
+            item["cleanScreenshot"] = "actual-clean-frame.png"
     if name == "reading-furniture-browser.py":
         for index, item in enumerate(records):
             item["engine"] = ("chromium", "webkit")[index // 2]
@@ -102,6 +110,35 @@ for name, count in expected.items():
         pass
     else:
         raise AssertionError(f"{name}: accepted JS page error")
+
+# Photo fixtures must carry actual engine/viewport and clean-frame
+# witnesses. Reject an unproven clean frame instead of weakening the runner.
+missing_photo = cases_for("photo-transition-browser.py")
+missing_photo[0]["cleanScreenshot"] = ""
+try:
+    module.verify_case_records("photo-transition-browser.py", jsonlines(missing_photo), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Missing photo clean-frame screenshot was accepted")
+
+hidden_control = cases_for("photo-transition-browser.py")
+hidden_control[2]["cleanControlHidden"] = False
+try:
+    module.verify_case_records("photo-transition-browser.py", jsonlines(hidden_control), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Visible photo exit chip was marked clean")
+
+unusable_exit = cases_for("photo-transition-browser.py")
+unusable_exit[3]["revealAfterInput"] = False
+try:
+    module.verify_case_records("photo-transition-browser.py", jsonlines(unusable_exit), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Photo exit button that cannot be restored was accepted")
 
 # Architectural art intentionally carries technical measurements in "result"
 # and the test verdict in "status"; a truthy result dict is not a PASS.
