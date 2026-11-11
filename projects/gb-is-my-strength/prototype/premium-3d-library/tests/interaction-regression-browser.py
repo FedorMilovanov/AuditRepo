@@ -148,13 +148,48 @@ async def run_case(browser,engine,w,h,touch):
         is_mobile=touch,has_touch=touch,device_scale_factor=1,reduced_motion="reduce")
     page=await context.new_page()
     errors=[]
+    logs=[]
     page.on("pageerror",lambda e:errors.append(str(e)))
     page.on("response",lambda r: errors.append(f"HTTP {r.status}: {r.url}") if r.status>=400 else None)
+    page.on("console",lambda m: logs.append(m.text[:800]) if m.type=="error" else None)
     try:
         response=await page.goto(URL,wait_until="domcontentloaded",timeout=40000)
         assert response and response.status==200
         button=page.get_by_role("button",name="Войти в библиотеку")
-        await button.wait_for(state="visible",timeout=45000)
+        try:
+            await button.wait_for(state="visible",timeout=45000)
+        except Exception:
+            # Preserve the real WebKit failure. The original check must
+            # still FAIL, but report the rendered bootstrap branch and
+            # font/WebGL state instead of an opaque locator timeout.
+            try:
+                boot=await page.evaluate("""() => ({
+                  state:document.readyState,url:location.href,
+                  visibleText:document.body?.innerText?.slice(0,1400),
+                  intro:!!document.querySelector('[data-gb-intro]'),
+                  fatal:document.querySelector('[role="alert"]')?.innerText?.slice(0,800),
+                  fonts:document.fonts?.status,
+                  localFontsReady:document.fonts?.check('600 48px "Cormorant Garamond"', 'Конфессии'),
+                  canvasCount:document.querySelectorAll('canvas').length,
+                  loader:document.body?.innerText?.includes('Загружаем шрифты'),
+                  title:document.title
+                })""")
+                print(json.dumps({"engine":engine,"viewport":size,
+                    "stage":"entry-bootstrap-failure","boot":boot,
+                    "pageErrors":errors,"consoleErrors":logs[-12:]},
+                    ensure_ascii=False),flush=True)
+            except Exception as boot_error:
+                print(json.dumps({"engine":engine,"viewport":size,
+                    "stage":"entry-diagnostic-unavailable","error":str(boot_error)[:700],
+                    "pageErrors":errors,"consoleErrors":logs[-12:]},
+                    ensure_ascii=False),flush=True)
+            try:
+                await capture_evidence(page,OUT/f"{engine}-{size}-entry-failure.png")
+            except Exception as screenshot_error:
+                print(json.dumps({"engine":engine,"viewport":size,
+                    "stage":"entry-failure-screenshot-unavailable",
+                    "error":str(screenshot_error)[:600]},ensure_ascii=False),flush=True)
+            raise
         await page.locator("div.fixed.inset-0.z-50").wait_for(state="detached",timeout=45000)
         await page.wait_for_timeout(300)
         geometry=await page.evaluate("""() => {
@@ -281,7 +316,9 @@ async def run_case(browser,engine,w,h,touch):
 async def main():
     failures=[]
     async with async_playwright() as pw:
-        for engine in ("chromium","webkit"):
+        # Isolate WebKit's first-visit boot before CPU-heavy Chromium capture.
+        # Every original viewport and assertion still executes.
+        for engine in ("webkit","chromium"):
             browser = await getattr(pw,engine).launch(**launch_kwargs(engine))
             try:
                 for e,w,h,touch in CASES:
