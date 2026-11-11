@@ -873,6 +873,19 @@ try {
   check('source-grounded expedition survives reload independently of navigation',
     await investigator.evaluate(() =>
       localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'true'));
+  // A stale/forged completion boolean must not count once its spatial evidence
+  // has disappeared from the canonical, separately validated observation log.
+  await investigator.evaluate(() => {
+    localStorage.setItem('imena-horeb.site-observations.v1',
+      JSON.stringify(['beersheba-well']));
+  });
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  await investigator.waitForFunction(() =>
+    localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'false',
+    { timeout: 7000 });
+  check('linked investigation fails closed if stored physical evidence is missing',
+    await investigator.evaluate(() =>
+      localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'false'));
   await investigator.close();
 
   check('no page runtime errors', errors.length === 0, errors.slice(0, 2).join(' | '));
