@@ -403,7 +403,7 @@ export default function HorebApp() {
           Последняя точка сохранена. При продолжении границы у куста остаются обязательными.
         </p>}
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
-          {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
+          {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Начать маршрут заново</button> (дневник исследований, наблюдения и закладки сохранятся)</>}</p>
       </div>
       {introDialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setIntroDialog(null)}>
         <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} fields={fieldJournal}
