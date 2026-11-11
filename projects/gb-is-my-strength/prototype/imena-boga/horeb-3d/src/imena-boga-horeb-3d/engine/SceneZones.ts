@@ -90,6 +90,21 @@ const TINTS: [number, [number, number, number]][] = [
  * ~50m down the ravine across just a handful of contour samples. Blending
  * by actual world coordinates preserves the existing floor, visitor ledge
  * and all seven other zones without second textures or a special material. */
+/** Actual continuous, bounded geology on the opposing *deep* ravine wall.
+ * The existing rock used largely planar triangles and relied on a stretched
+ * texture to imply fractures. Displace its real vertices, not billboard
+ * fissures, mesh overlays, procedural fake lights or new collision shapes.
+ * Relief is zero at the navigable ledge, above the deep wall, and outside
+ * the chasm's existing axial envelope. */
+export function opposingRavineRelief(x: number, y: number, z: number, chasm: number): number {
+  if (chasm <= 0 || x <= 12 || y >= -7) return 0;
+  const gate = Math.min(1, Math.max(0, chasm)) *
+    ss(12, 19, x) * ss(7, 23, -y);
+  const broad = fbm(z * 0.075 + 7.7, y * 0.052 - 4.1, x * 0.025, 3);
+  const fracture = fbm(z * 0.19 - 5.3, y * 0.11 + 8.4, x * 0.065, 3);
+  const signed = (broad - 0.5) * 3.25 + (fracture - 0.5) * 1.4;
+  return gate * Math.max(-1.15, Math.min(1.15, signed));
+}
 export function ravineMetricUvWeight(x: number, y: number, chasm: number): number {
   if (chasm <= 0 || x <= 12 || y >= -4) return 0;
   return Math.min(1, chasm) * ss(12, 18, x) * ss(4, 14, -y);
@@ -150,6 +165,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const zs: number[] = [];
     for (let z = 4; z >= TUNNEL_END - 4; z -= step) zs.push(z);
     const pos: number[] = [], col: number[] = [], uv: number[] = [], idx: number[] = [];
+    let weatheredCliffVertices = 0, weatheredCliffMin = Infinity, weatheredCliffMax = -Infinity;
     for (let i = 0; i < zs.length; i++) {
       const z = zs[i], hw = halfWidth(z), H = vaultHeight(z), cf = chasmF(z);
       const amp = 0.6 + Math.min(2.6, (hw - 4) * 0.22) + (H > 20 ? 1.4 : 0);
@@ -175,6 +191,13 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
           x += cf * Math.pow(ca, 1.35) * (8.5 + 2.1 * irregular);
         }
         if (cf > 0 && ca > 0 && y < H * 0.45) y -= cf * 55 * (1 - Math.max(-1, y) / (H * 0.45));
+        const cliffRelief = opposingRavineRelief(x, y, z, cf);
+        if (Math.abs(cliffRelief) > 0.001) {
+          weatheredCliffVertices++;
+          weatheredCliffMin = Math.min(weatheredCliffMin, cliffRelief);
+          weatheredCliffMax = Math.max(weatheredCliffMax, cliffRelief);
+        }
+        x += cliffRelief;
         // Carve zone-6 fractures INTO the continuous cave shell. The previous
         // separate triangles looked like paper stalactites when lit. No new
         // mesh, material, collision shape or draw call is needed.
@@ -217,6 +240,13 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     geo.computeVertexNormals();
     const mesh = new THREE.Mesh(geo, rockMat);
     mesh.name = 'cave-vault-continuous';
+    // One-time construction witness: confirms LOW and HIGH really received
+    // physical variation. No per-frame work, new meshes or draw calls.
+    mesh.userData.opposingCliffRelief = {
+      affectedVertices: weatheredCliffVertices,
+      min: weatheredCliffMin,
+      max: weatheredCliffMax,
+    };
     group.add(mesh);
 
     // Пол
