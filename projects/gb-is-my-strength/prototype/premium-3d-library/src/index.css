@@ -83,6 +83,10 @@ canvas {
   border-radius: 6px;
 }
 
+/* Center the default hint with intrinsic margins, not a persistent
+   translation that can shift a portrait phone chip back onto the joystick. */
+[data-gb-help] { left: 0; right: 0; margin-inline: auto; }
+
 /* A 375px-high touch landscape is a navigation surface, not a poster.
    Keep the 128px joystick and the accessible toolbar map, but do not place
    another 150px minimap in the opposite corner or a full-width help bubble
@@ -132,8 +136,7 @@ canvas {
     width: auto;
     max-width: none;
     bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
-    translate: none !important;
-    transform: none !important;
+    margin-inline: 0;
     padding-inline: 0;
   }
   [data-gb-help][data-gb-hint-mode="desktop"] > .glass {

@@ -236,6 +236,12 @@ assert.match(hudCss, /\(max-width: 600px\)/,
 assert.match(hudCss, /\(orientation: portrait\) and \(max-width: 480px\)/,
   'Portrait reading-page help layout missing');
 assert.match(hudCss, /left: 10rem !important;/);
-assert.match(hudCss, /translate: none !important;/);
+const helpLine=hudSource.split('\n').find(line=>line.includes('data-gb-help data-gb-hint-mode={mode}'));
+assert.ok(helpLine && !helpLine.includes('-translate-x-1/2'),
+  'Mobile hint must not keep a Tailwind translation after intrinsic centering');
+assert.ok(hudCss.includes('[data-gb-help] { left: 0; right: 0; margin-inline: auto; }'),
+  'Default help centering must use intrinsic margins');
+assert.ok(hudCss.includes('margin-inline: 0;'),
+  'Portrait chip must reset margins to remain right of 128px joystick');
 
 console.log(`PASS: ${count} TS/TSX source files parsed, local imports resolved, renderer/VR/3 covers verified.`);
