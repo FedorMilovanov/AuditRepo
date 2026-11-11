@@ -450,7 +450,8 @@ for(const guard of [
  'min-h-11 min-w-11',
  'data-covenant-card-actions',
  'sm:flex-row lg:flex-col',
- 'whitespace-nowrap sm:w-auto lg:w-full'
+ 'whitespace-nowrap',
+ 'sm:w-auto lg:w-full'
 ])if(!schematicPostAudit.includes(guard))
  throw Error('Atlas label/button collision regression: '+guard);
 console.log('V13_ATLAS_LABEL_AND_CARD_ACTION_GEOMETRY_PASS');
