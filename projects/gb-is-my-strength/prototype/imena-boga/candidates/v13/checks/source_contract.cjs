@@ -203,3 +203,38 @@ if((readerEpilogueContacts.match(/inline-flex min-h-11 items-center gap-2 rounde
    !readerIntroduction.includes('inline-flex min-h-11 items-center text-gold-400'))
   throw Error('Reader footer/contact touch targets must remain 44px accessible');
 console.log('V13_FOOTER_TOUCH_CONTRACT_PASS');
+
+
+// Research #379 content alignment: keep exact Hebrew referents and the
+// boundary between lexical form, biblical witness and theological reading.
+// These checks protect already verified corrections; they are not independent
+// scholarly peer review or a grant of publication rights.
+const researchAtlasData=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const researchReaderData=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const researchNegative=[
+ ['atlas Adonai misquote',researchAtlasData,'«Сказал Яхве Адонаю моему»'],
+ ['atlas Exodus 6 certainty',researchAtlasData,'Патриархи знали сам звук этого имени'],
+ ['atlas Sabaoth Ark claim',researchAtlasData,'в 1 Цар. 1:3 у ковчега завета'],
+ ['atlas Isaiah epithet origin',researchAtlasData,'родившееся из его видения в храме'],
+ ['reader Jacob return claim',researchReaderData,'Иакову — возвращение в землю (Быт 35:11)'],
+ ['reader nine proper names',researchReaderData,'Девять имён Писания прямо содержат ЯХВЕ'],
+ ['reader Yireh forced etymology',researchReaderData,'Усмотреть здесь значит «увидеть заранее и приготовить»'],
+ ['reader Adonai chronology',researchReaderData,'с глубокой древности не произносили тетраграмматон'],
+];
+for(const [name,source,unsafe] of researchNegative){
+ if(source.includes(unsafe))throw Error('Research content regression '+name);
+}
+for(const [name,source,required] of [
+ ['Psalm 110 Hebrew form',researchAtlasData,'לַאדֹנִי (adoni), а не אֲדֹנָי'],
+ ['Exodus 6 differing interpretations',researchAtlasData,'толкователи объясняют по-разному'],
+ ['Isaiah 1:4 epithet locus',researchAtlasData,'встречается уже в Ис. 1:4'],
+ ['1 Samuel 1:3 scope',researchAtlasData,'поклонение Господу Саваофу в Силоме'],
+ ['Genesis 35 promise verses',researchReaderData,'обещание земли следует в стихе 12'],
+ ['Genesis 22 verb distinction',researchReaderData,'во второй части 22:14 употреблена иная глагольная форма'],
+ ['Jeremiah Old Greek omission',researchReaderData,'Иер. 33:14–26 отсутствует в древнегреческой версии'],
+ ['Sabaoth historical uncertainty',researchReaderData,'историческое происхождение титула'],
+ ['Site proper-name classification',researchReaderData,'не образуют девять новых собственных имён Бога'],
+]){
+ if(!source.includes(required))throw Error('Research content evidence guard missing '+name);
+}
+console.log('V13_RESEARCH_CONTENT_RECONCILIATION_PASS',JSON.stringify({negative:researchNegative.length,positive:9,source:'Research PR379 ledger ad62d11b; digital verse context; unapproved for Product'}));
