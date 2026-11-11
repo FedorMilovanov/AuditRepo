@@ -1,5 +1,19 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.58 — complete walkable hall topology and sustained render characterization (local candidate)
+
+The preceding published LAB HEAD was `66b1953f066302b6730ca99b18bbb1450006875c` in the same Draft PR #545. **Exact-head GitHub Preflight [43118344367](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344367) SUCCESS and Linux Validate [43118344563](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344563) terminal SUCCESS**, with `browser_suites: 13, browser_cases: 65` verified in its log. Its independent Windows full browser suite is also **13/13 suites, 65/65 cases PASS**, runtime 415.94 s. **This is V5.57 acceptance, not acceptance of the following V5.58 topology test until that new HEAD independently completes CI.**
+
+**Route continuity, not just one piece of furniture:** a new extension of the existing `tests/reading-furniture-geometry.mjs` loads the **real** `data.ts` collision disks, player radius, canonical spawn and every `approachPose`. Flood-fill/BFS uses a 0.22 m occupancy grid, prevents diagonal corner-cutting, tests target clearance against the exact analytic collision circles, and limits grid-to-pose snapping. **All 20/20 interactive station approaches are reachable** from spawn, with 9,225 connected grid cells. `HALL_ROUTE_TOPOLOGY_PASS` and `lab:check` passed locally. This is a source-level LAB candidate, not a substitute for a real mobile/XR pedestrian route or exact-new-HEAD GitHub CI.
+
+**Measured 60-second steady-frame characterization (read-only Windows Playwright, 1440×900, DPR=1, same built source):** real **RTX 3060 / Chrome / D3D11** stayed at **59.9–60.0 rAF/s** across five ten-second bins, p95 16.8ms, zero `>100 ms` stalls; quality remained `Ультра`. **Windows Playwright WebKit** yielded 25.5 and 24.2 rAF/s in the first two ten-second bins, downgraded via legitimate AutoQuality to `Лёгкая`, then maintained 28.9–29.3 rAF/s, p95 41–42ms. Two >100ms stalls occurred during the downgrade bin; no JavaScript page errors. These are browser animation-frame interval measurements, **not GPU timings**, a physical Mac/iPhone test, or 15-minute thermal/VRAM evidence. The WebKit `Apple GPU` renderer string does not establish physical Apple hardware.
+
+**Shader investigation:** `KHR_parallel_shader_compile` is available in both tested browser contexts. Official [Three.js WebGLRenderer.compileAsync docs](https://threejs.org/docs/pages/WebGLRenderer) describe asynchronous shader preparation, but it should be studied only as a measured option for compilation stalls, **not assumed to fix the persistent slow WebKit frame rate**. No speculative renderer changes have been applied.
+
+**Admission unchanged:** DRAFT / LAB / ART HOLD. Do not merge/deploy/change Product or main. Verify exact-new-head CI after this candidate is committed, physical Android/iOS/XR, owner reference-art acceptance, production catalogue/rights, and sustained GPU frame-time/VRAM/thermals.
+
+---
+
 ## V5.57 — source-owned 3D chair collision synchronization (local candidate)
 
 The first real CC0 armchair exposed a distinct pedestrian bug: the old procedural Article bench collision at radius 6.15m had survived after that bench's renderer was removed, while the new GLB had no collision. The visitor could have been stopped by invisible furniture and could walk through the visible chair. The actual player collision path uses `OBSTACLES` and a 0.35m player radius; a rendering-only fix would not resolve either defect.

@@ -144,5 +144,69 @@ const furnitureProof = { x: +chairX.toFixed(3), z: +chairZ.toFixed(3),
   collisionRadius: chair.collisionRadius,
   wallClearance: +wallClearance.toFixed(3),
   stationPassage: +stationPassage.toFixed(3), ghostRemoved: true };
+// A collision can be locally correct yet strand another exhibit. Verify the
+// entire visitor floor is connected from SPAWN to every actual approachPose.
+// The 22cm grid is finer than the 35cm player radius; diagonal moves cannot
+// cut through solid corners. This is a navigation topology gate, not art QA.
+const step = 0.22;
+const side = Math.ceil(2 * D.WALK_RADIUS / step) + 3;
+const half = (side - 1) / 2;
+const xy = (n) => (n - half) * step;
+const walkableAt = (x, z) =>
+  Math.hypot(x, z) <= D.WALK_RADIUS - 0.05 &&
+  D.OBSTACLES.every(([ox, oz, radius]) =>
+    Math.hypot(x - ox, z - oz) >= radius + D.PLAYER_COLLISION_RADIUS + 0.01);
+const walkable = new Uint8Array(side * side);
+for (let z = 0; z < side; z++) for (let x = 0; x < side; x++) {
+  if (walkableAt(xy(x), xy(z))) walkable[z * side + x] = 1;
+}
+const closestCell = (x, z) => {
+  const ix = Math.round(x / step + half), iz = Math.round(z / step + half);
+  if (ix < 0 || iz < 0 || ix >= side || iz >= side) return -1;
+  for (let radius = 0; radius <= 2; radius++) {
+    for (let dx = -radius; dx <= radius; dx++)
+      for (let dz = -radius; dz <= radius; dz++) {
+        const a = ix + dx, b = iz + dz;
+        if (a >= 0 && b >= 0 && a < side && b < side && walkable[b * side + a])
+          return b * side + a;
+      }
+  }
+  return -1;
+};
+assert(walkableAt(D.SPAWN.x, D.SPAWN.z), "Real initial spawn is blocked");
+const queue = new Int32Array(side * side), visited = new Uint8Array(side * side);
+let readIndex = 0, writeIndex = 0;
+const start = closestCell(D.SPAWN.x, D.SPAWN.z);
+assert(start >= 0, "Spawn has no walkable grid cell");
+queue[writeIndex++] = start; visited[start] = 1;
+const moves = [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+while (readIndex < writeIndex) {
+  const index = queue[readIndex++], x = index % side, z = (index - x) / side;
+  for (const [dx,dz] of moves) {
+    const nx = x + dx, nz = z + dz;
+    if (nx < 0 || nz < 0 || nx >= side || nz >= side) continue;
+    const next = nz * side + nx;
+    if (!walkable[next] || visited[next]) continue;
+    if (dx !== 0 && dz !== 0 &&
+      (!walkable[z * side + nx] || !walkable[nz * side + x])) continue;
+    visited[next] = 1; queue[writeIndex++] = next;
+  }
+}
+for (const exhibit of D.ITEMS) {
+  const approach = D.approachPose(exhibit);
+  assert(walkableAt(approach.x, approach.z),
+    `Target viewpoint intersects real collider: ${exhibit.id}`);
+  const cell = closestCell(approach.x, approach.z);
+  assert(cell >= 0 && visited[cell],
+    `No continuous walkable path from SPAWN to ${exhibit.id}`);
+  const cx = cell % side, cz = (cell - cx) / side;
+  assert(Math.hypot(xy(cx) - approach.x, xy(cz) - approach.z) <=
+    step * Math.SQRT2 / 2 + 0.02,
+    `Arrival to ${exhibit.id} snaps too far from the actual approach pose`);
+}
+console.log("HALL_ROUTE_TOPOLOGY_PASS " + JSON.stringify({
+  reachableExhibits: D.ITEMS.length, reachableCells: writeIndex,
+  gridStepMetres: step, diagonalCornerCutting: false,
+}));
 console.log("FURNITURE_COLLISION_PASS " + JSON.stringify(furnitureProof));
 console.log("READING_GEOMETRY_PASS " + JSON.stringify(real));
