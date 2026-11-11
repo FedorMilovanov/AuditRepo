@@ -759,6 +759,19 @@ for (const lowMode of [true, false]) {
     const m = lowMode ? 16 : 28;
     const floorCount = meta.floorVertexCount;
     const wallVertexCount = points.count - floorCount;
+    // The four actual connected strata must recede across the chasm;
+    // a nearly vertical, uniformly dark extrusion is not acceptable.
+    let terracedAtMidspan = false;
+    for (let k = 0; k < Math.floor(wallVertexCount / 4); k++) {
+      const first = floorCount + 4 * k, deepest = first + 3;
+      const z = points.getZ(first);
+      if (z < -207 && z > -193 &&
+          points.getX(deepest) - points.getX(first) > 3.3 &&
+          points.getY(deepest) < -35) {
+        terracedAtMidspan = true;
+        break;
+      }
+    }
     let joinedFaces = 0, safeBoundary = true;
     if (faces) {
       for (let i = 0; i < faces.count; i += 3) {
@@ -777,7 +790,7 @@ for (const lowMode of [true, false]) {
     good = good && meta.integratedIntoFloor && meta.levels === 4 &&
       meta.rows > 35 && meta.segments > 120 &&
       meta.lowestWallY < -35 && meta.nearestWallX >= LEDGE_X + 0.5 &&
-      wallVertexCount === meta.rows * 4 &&
+      wallVertexCount === meta.rows * 4 && terracedAtMidspan &&
       joinedFaces > 35 && safeBoundary &&
       uv.count === points.count &&
       !constructed.obstacles.some((o) => o.z < -175 && o.z > -225 &&
