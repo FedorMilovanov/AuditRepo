@@ -318,3 +318,47 @@ if (!namesQuizScope20261111.includes('обозначение Бога «Элох
     namesQuizScope20261111.includes('в Бытии 1:1 имя Элохим'))
   throw Error('Quiz must not call Elohim a personal divine name on grammar alone');
 console.log('V13_LXX_LOCUS_QUOTATION_AND_NAMING_SCOPE_PASS');
+
+// Flagship content verification 2026-11-11: Research PR379 Wave44 and
+// primary biblical editions; distinguish original speakers/lexemes from
+// editorial typology on both Reader and Atlas. This guards known reversions,
+// not the independently reviewed scholarly or rights release gates.
+const flagshipReaderNov11=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const flagshipAtlasNov11=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const flagshipRequired=[
+  [flagshipReaderNov11, 'В Дан. 4:29 слова о власти Всевышнего над царствами произносит небесный голос'],
+  [flagshipReaderNov11, 'сам царь благословляет Всевышнего после своего смирения (Дан. 4:31–32)'],
+  [flagshipReaderNov11, 'именно это обозначение Бога встречается в начале книги Бытия'],
+  [flagshipAtlasNov11, 'не является актом наречения Бога новым личным именем'],
+  [flagshipAtlasNov11, 'не означают, что греческий текст Иоанна буквально называет Иисуса еврейским словом'],
+  [flagshipAtlasNov11, 'царское именование ребёнка включает אֵל גִּבּוֹר'],
+  [flagshipAtlasNov11, 'В стихе 18 его впервые в данном повествовании сообщает рассказчик'],
+  [flagshipAtlasNov11, 'собственное исповедание Навуходоносора после наказания начинается в Дан. 4:31–32'],
+  [flagshipAtlasNov11, 'эту этимологическую реконструкцию нельзя выдавать за бесспорную'],
+  [flagshipAtlasNov11, 'В повествовании Исх. 15:2 краткая форма звучит'],
+  [flagshipAtlasNov11, 'Пс. 21 прямо не называет страдающего «Пастырем»'],
+  [flagshipAtlasNov11, 'Павел не воспроизводит еврейское название жертвенника'],
+  [flagshipAtlasNov11, 'название жертвенника Моисея в Исх. 17:15 не является дословным пророчеством'],
+  [flagshipAtlasNov11, 'Гал. 6:16 имеет обсуждаемые толкования'],
+  [flagshipAtlasNov11, 'точная историческая этимология не доказана']
+];
+const flagshipForbidden=[
+  [flagshipReaderNov11, 'Навуходоносор впоследствии признаёт, что «Бог Всевышний»'],
+  [flagshipReaderNov11, 'именно это имя открывает книгу Бытия'],
+  [flagshipAtlasNov11, 'в первом же стихе Библии имя Элохим встречается'],
+  [flagshipAtlasNov11, 'Сам вечный Элохим, через Которого'],
+  [flagshipAtlasNov11, 'прямо называет грядущего Младенца'],
+  [flagshipAtlasNov11, 'Впервые звучит из уст таинственного царя'],
+  [flagshipAtlasNov11, 'вынужден признать, что «Всевышний владычествует'],
+  [flagshipAtlasNov11, 'עוֹלָם (олам) происходит от корня'],
+  [flagshipAtlasNov11, 'Впервые оно рождается на устах спасённого'],
+  [flagshipAtlasNov11, 'в Пс. 21 Пастырь отдаёт душу'],
+  [flagshipAtlasNov11, 'Апостол Павел прямо называет Христа этим именем'],
+  [flagshipAtlasNov11, 'стал тем самым Знаменем для всех народов'],
+  [flagshipAtlasNov11, 'Иисус Христос открывает Себя как истинный Израиль и Глава нового Израиля Божия']
+];
+for(const [src,needle] of flagshipRequired)if(!src.includes(needle))
+  throw Error('Flagship Research guard missing required scoped formulation: '+needle);
+for(const [src,needle] of flagshipForbidden)if(src.includes(needle))
+  throw Error('Flagship Research guard found disproven formulation: '+needle);
+console.log('V13_FLAGSHIP_RESEARCH_RECHECK_20261111_PASS',flagshipRequired.length,flagshipForbidden.length);
