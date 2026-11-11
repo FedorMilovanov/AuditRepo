@@ -134,7 +134,7 @@ export function SceneMoment({ e, examined, canInspect, onInspect,
       {attempt === 'retry' && <p data-learning-feedback="retry" role="status" className="mt-3 text-sm text-amber-200">
         Это не соответствует приведённому контексту. Сравните формулировки и попробуйте снова, без штрафов.
         {understood && ' Ранее подтверждённый ответ остаётся в дневнике.'}
-      </p>
+      </p>}
       {answered && attempt !== 'retry' && lesson && <div data-learning-feedback="accepted" className="mt-3 rounded-sm border border-bronze/30 p-3" role="status">
         <p className="text-sm text-parch/90">{lesson.explanation}</p>
         <p className="text-xs text-bronze mt-2">Исследование отмечено в вашем локальном путевом дневнике, не как богословское или редакционное утверждение.</p>
