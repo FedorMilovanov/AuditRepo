@@ -237,11 +237,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // lip and the bottom. Extend THIS VERY FLOOR's right boundary into
     // downward bedding strata, sharing the boundary vertices and material.
     // This adds no new scene mesh, light, collision obstacle or draw call.
+    // Recess deeper bedding to reveal actual geological relief. The old
+    // 1.63m total recession over 43m produced an almost planar dark wall.
+    // Keep the original floor-boundary vertices and same four rock strata:
+    // no extra draw calls, physical rail, platform or floating billboard.
     const strata = [
       { depth: 0.85, outward: 0.11 },
-      { depth: 5.8, outward: 0.37 },
-      { depth: 18.5, outward: 0.92 },
-      { depth: 43.0, outward: 1.63 },
+      { depth: 5.8, outward: 0.73 },
+      { depth: 18.5, outward: 2.30 },
+      { depth: 43.0, outward: 4.80 },
     ] as const;
     const wallRows = new Map<number, number[]>();
     const floorVertexCount = fp.length / 3;
@@ -263,8 +267,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         const [tr, tg, tb] = tint(z);
         bake(x * 0.75, Math.max(0, y), z, tmp);
         const rockGrain = caveSurfaceVariation(x, y, z);
-        const darkness = (0.69 + 0.18 * ripple) *
-          (0.50 + 0.50 * Math.exp(-depth / 16));
+        // Preserve real depth attenuation while keeping far bedding just
+        // legible under the existing cool vertex-baked light. Increasing
+        // ambient light for the entire tunnel would flatten zone 4 and 7.
+        const darkness = (0.60 + 0.28 * ripple) *
+          (0.55 + 0.45 * Math.exp(-depth / 21));
         fc.push(tr * darkness * tmp[0] * rockGrain,
           tg * darkness * tmp[1] * rockGrain,
           tb * darkness * tmp[2] * rockGrain);
