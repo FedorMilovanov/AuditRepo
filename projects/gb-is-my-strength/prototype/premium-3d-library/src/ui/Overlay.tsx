@@ -913,20 +913,35 @@ function TourCard() {
 function PhotoMode() {
   const photo = useApp((s) => s.photo);
   const [hint, setHint] = useState(true);
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reveal = useCallback(() => {
+    setHint(true);
+    if (timeout.current) clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => setHint(false), 3500);
+  }, []);
   useEffect(() => {
     if (!photo) return;
-    setHint(true);
-    const t = setTimeout(() => setHint(false), 3500);
-    return () => clearTimeout(t);
-  }, [photo]);
+    reveal();
+    // A tap anywhere restores the exit control on phones without covering
+    // the WebGL image with an invisible full-screen pointer interceptor.
+    // Desktop keyboard H remains available even after chrome disappears.
+    window.addEventListener("pointerdown", reveal, { passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", reveal);
+      if (timeout.current) clearTimeout(timeout.current);
+      timeout.current = null;
+    };
+  }, [photo, reveal]);
   if (!photo) return null;
   return (
     <>
-      <div className="pointer-events-none fixed inset-0 z-40 ring-1 ring-inset ring-white/10" />
-      <div className="pointer-events-none fixed inset-x-0 bottom-6 z-40 flex justify-center px-4">
+      <div data-gb-photo-frame className={`pointer-events-none fixed inset-0 z-40 ring-1 ring-inset ${hint ? "ring-white/10" : "ring-transparent"}`} />
+      <div data-gb-photo-controls className={`pointer-events-none fixed inset-x-0 bottom-6 z-40 flex justify-center px-4 transition-opacity duration-300 ${hint ? "opacity-100" : "opacity-0"}`}>
         <button
+          data-gb-photo-exit
+          onFocus={reveal}
           onClick={() => togglePhoto(false)}
-          className={`glass pointer-events-auto flex items-center gap-2 rounded-full px-5 py-2.5 text-sm text-[#f5f1e7] transition-opacity duration-500 ${hint ? "opacity-100" : "opacity-35 hover:opacity-100"}`}
+          className={`glass flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm text-[#f5f1e7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d8b88d] ${hint ? "pointer-events-auto" : "pointer-events-none"}`}
         >
           <Ico d={I.cam} size={16} /> Фото-режим · выйти (H)
         </button>

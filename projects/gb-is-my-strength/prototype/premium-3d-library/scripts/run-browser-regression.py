@@ -94,6 +94,17 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             assert isinstance(hashes, list) and len(hashes) == 2 and (
                 (hashes[0] == hashes[1]) is (case["preference"] == "reduce")
             ), f"Motion witness lacks consistent screenshot hashes: {case}"
+    if name == "photo-transition-browser.py":
+        assert {(case.get("engine"), case.get("viewport")) for case in cases} == {
+            ("chromium","1440x900"), ("chromium","390x844"),
+            ("webkit","1440x900"), ("webkit","390x844"),
+        }, f"Photo screenshots omitted a browser/viewport: {cases}"
+        for case in cases:
+            assert case.get("sameCanvas") is True and (
+                case.get("cleanControlHidden") is True
+            ) and case.get("revealAfterInput") is True and (
+                bool(case.get("cleanScreenshot"))
+            ), f"Photo clean-frame/recovery evidence incomplete: {case}"
     if name == "reading-furniture-browser.py":
         assert {(case.get("engine"), case.get("viewport")) for case in cases} == {
             ("chromium", "1440x900"), ("chromium", "390x844"),

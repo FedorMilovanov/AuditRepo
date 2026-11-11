@@ -50,6 +50,41 @@ async def run(browser,engine,w,h,touch):
         shot=OUT/f"{engine}-{w}x{h}-photo-110ms.png"
         await capture_evidence(page, shot)
 
+        # A genuinely clean photo frame must contain no visible exit chip
+        # or decorative ring after the initial 3.5s. The accessible exit
+        # control remains reachable by keyboard and by touching the screen.
+        controls=page.locator("[data-gb-photo-controls]")
+        frame=page.locator("[data-gb-photo-frame]")
+        await page.wait_for_function("""() => {
+          const c=document.querySelector('[data-gb-photo-controls]');
+          const f=document.querySelector('[data-gb-photo-frame]');
+          return !!c && !!f
+            && getComputedStyle(c).opacity === '0'
+            && f.classList.contains('ring-transparent');
+        }""",timeout=9000,polling=150)
+        assert await exit_btn.count()==1, "Photo exit control disappeared from DOM"
+        assert await exit_btn.evaluate(
+            "(el)=>getComputedStyle(el).pointerEvents")=="none",(
+            engine,w,h,"Hidden photo button intercepts touch")
+        clean=OUT/f"{engine}-{w}x{h}-photo-clean.png"
+        await capture_evidence(page, clean)
+        assert float(await veil.evaluate("(e)=>getComputedStyle(e).opacity"))==0
+        assert await page.evaluate("""() => window.__gbPhotoCanvas ===
+            [...document.querySelectorAll('canvas')].find(c=>c.getContext('webgl2'))"""), (
+            engine,w,h,"Photo clean-frame replaced the WebGL canvas")
+
+        # No invisible full-screen blocker. Touching the scene restores
+        # the exit button on mobile; keyboard focus restores it on desktop.
+        if touch:
+            await page.touchscreen.tap(w-24,h-24)
+        else:
+            await exit_btn.focus()
+        await page.wait_for_function("""() => {
+          const c=document.querySelector('[data-gb-photo-controls]');
+          const b=document.querySelector('[data-gb-photo-exit]');
+          return !!c && !!b && getComputedStyle(c).opacity === '1'
+            && getComputedStyle(b).pointerEvents === 'auto';
+        }""",timeout=3000,polling=100)
         await exit_btn.click(timeout=10000)
         await page.wait_for_timeout(110)
         after=await veil.evaluate("(e)=>getComputedStyle(e).opacity")
@@ -61,7 +96,8 @@ async def run(browser,engine,w,h,touch):
         print(json.dumps({"engine":engine,"viewport":f"{w}x{h}","status":"PASS",
                           "photoOpacity":during,"exitOpacity":after,"sameCanvas":same,
                           "errors":errors,
-                          "screenshot":str(shot)},ensure_ascii=True),flush=True)
+                          "screenshot":str(shot),"cleanScreenshot":str(clean),
+                          "cleanControlHidden":True,"revealAfterInput":True},ensure_ascii=True),flush=True)
     finally:await ctx.close()
 
 async def main():
