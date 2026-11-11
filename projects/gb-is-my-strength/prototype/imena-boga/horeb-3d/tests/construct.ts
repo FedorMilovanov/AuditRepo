@@ -785,17 +785,34 @@ for (const lowMode of [true, false]) {
   // geology from behind the unchanged safe lip; the original ~14m wall
   // made deep sightlines almost entirely floor-occluded.
   const opposingVault = constructed.group.getObjectByName('cave-vault-continuous');
-  let farRockX = -Infinity;
+  let farRockX = -Infinity, intersectedRockEdges = 0;
   if (opposingVault instanceof THREE.Mesh) {
     const pos = opposingVault.geometry.getAttribute('position');
-    for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
-      if (z > -201 && z < -199 && y < -8 && y > -27)
-        farRockX = Math.max(farRockX, x);
+    const columns = (lowMode ? 36 : 60) + 1;
+    // A vertical line at y=-18 must cross ACTUAL mesh edges even when the
+    // coarser LOW tessellation has zero vertices inside the old hard-coded
+    // [-27,-8] sample band. Interpolate along connected angular neighbours
+    // of the original continuous shell instead of weakening the >20m gate.
+    for (let row = 0; row + columns <= pos.count; row += columns) {
+      const z = pos.getZ(row);
+      if (z <= -201 || z >= -199) continue;
+      for (let col = 1; col < columns; col++) {
+        const first = row + col - 1, second = row + col;
+        const y0 = pos.getY(first), y1 = pos.getY(second);
+        if ((y0 + 18) * (y1 + 18) > 0 || Math.abs(y1 - y0) < 1e-7) continue;
+        const fraction = (-18 - y0) / (y1 - y0);
+        const x = pos.getX(first) + fraction *
+          (pos.getX(second) - pos.getX(first));
+        if (x > 0) {
+          intersectedRockEdges++;
+          farRockX = Math.max(farRockX, x);
+        }
+      }
     }
   }
   t('zone-4 opposing cliff opens real 20m+ ravine without extra geometry ' +
-    (lowMode ? 'LOW' : 'HIGH'), farRockX > 20 && farRockX < 28);
+    (lowMode ? 'LOW' : 'HIGH'),
+    intersectedRockEdges >= 2 && farRockX > 20 && farRockX < 28);
   // Physically measured cliff length, not arbitrary j/N surface indices:
   // enforce texture frequency remains comparable on LOW and HIGH.
   if (opposingVault instanceof THREE.Mesh) {
