@@ -102,6 +102,26 @@ try {
     const s = await travel(label, 'w', target, -1);
     if (s.zone !== zone) throw new Error('Wrong zone at ' + label + ': ' + JSON.stringify(s));
     if (Math.abs(s.x) > 2.5) throw new Error('Unexpected lateral displacement at ' + label + ': ' + s.x);
+    if (zone === 6) {
+      await page.waitForFunction(() =>
+        !!document.querySelector('[data-testid="quiet-menu"]') &&
+        !document.querySelector('[data-testid="journey-progress-hud"]') &&
+        !document.querySelector('[data-testid="world-keyboard-help"]'), { timeout: 5000 });
+      // Keep all secondary features reachable even when the scene is calmer.
+      await page.click('[data-testid="quiet-menu"]');
+      await page.waitForFunction(() => !!document.querySelector('[role="dialog"][aria-label="Управление экспозицией"]'),
+        { timeout: 5000 });
+      const access = await page.evaluate(() => {
+        const menu = document.querySelector('[role="dialog"][aria-label="Управление экспозицией"]');
+        const labels = [...menu.querySelectorAll('button')].map((b) => (b.textContent || '').trim());
+        return ['Схема маршрута','Настройки доступности','Источники и ограничения',
+          'Читать экспозицию','Выйти из прогулки'].every((name) => labels.includes(name));
+      });
+      if (!access) throw new Error('QUIET HUD blocked accessible navigation');
+      await page.click('[role="dialog"] button[aria-label="Закрыть (Esc)"]');
+      await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 5000 });
+      console.log('PASS zone-six calm HUD with full accessible menu in physical journey');
+    }
     const file = 'journey-forward-' + label + '.png';
     await page.screenshot({ path: join(screenshots, file) });
     evidence.screenshots.push(file);
@@ -137,6 +157,12 @@ try {
   for (const [label, target, zone] of reverse) {
     const s = await travel(label, 's', target, 1);
     if (s.zone !== zone) throw new Error('Wrong return zone ' + label + ': ' + JSON.stringify(s));
+    if (zone === 5) {
+      await page.waitForFunction(() =>
+        !document.querySelector('[data-testid="quiet-menu"]') &&
+        !!document.querySelector('[data-testid="journey-progress-hud"]'), { timeout: 5000 });
+      console.log('PASS normal navigation restored after returning from quiet passage');
+    }
     console.log('PASS physical return ' + label + ' z=' + s.z.toFixed(2));
   }
   const finish = await state();
