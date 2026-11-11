@@ -271,3 +271,34 @@ for(const [id,text,required] of [
  if(!text.includes(required))throw Error('Second-pass Research assertion missing: '+id);
 }
 console.log('V13_RESEARCH_SECOND_PASS_PASS',JSON.stringify({negative:8,positive:10,authority:'Research #379 draft, 11 Nov 2026, no independent approval'}));
+
+// Training surfaces must preserve exact verse-level translation, not replace
+// Hebrew words by thematically adjacent Greek titles.
+const trainingQuiz=fs.readFileSync(path.join(root,'atlas','src','components','TheologicalQuiz.tsx'),'utf8');
+const trainingMatrix=fs.readFileSync(path.join(root,'atlas','src','components','HebrewGreekLexiconMatrix.tsx'),'utf8');
+const trainingRequired=[
+ ['Genesis17 LXX textual form',trainingQuiz,'ἐγώ εἰμι ὁ θεός σου'],
+ ['Jeremiah33 Old Greek omission',trainingQuiz,'33:14–26 отсутствует в древнегреческой версии'],
+ ['Abba differing speakers',trainingQuiz,'в Гал. 4:6 в их сердцах взывает Дух Сына'],
+ ['Revelation22:13 speaker',trainingQuiz,'имя Иисуса прямо названо в стихе 16'],
+ ['LXX Genesis17 Greek matrix',trainingMatrix,"lxxGreek: 'ἐγώ εἰμι ὁ θεός σου'"],
+ ['Psalm109 adoni vs Adonai',trainingMatrix,'לַאדֹנִי (adoni), не אֲדֹנָי'],
+ ['Greek translation rows source scope',trainingMatrix,'примеры не всегда буквальные эквиваленты'],
+ ['Accessible table choice',trainingMatrix,'aria-pressed={isSelected} onClick={() => setSelectedRowId(row.id)}'],
+ ['No uninspected BHS apparatus claim',trainingMatrix,'Еврейский текст (MT)']
+];
+for(const [name,source,value] of trainingRequired){
+ if(!source.includes(value))throw Error('V13 research training regression: '+name);
+}
+const trainingForbidden=[
+ ['Genesis17 false LXX title',trainingQuiz,'в Септуагинте — Пантократор'],
+ ['Matrix false Genesis17 equivalence',trainingMatrix,"lxxGreek: 'Παντοκράτωρ'"],
+ ['Single lineage LXX to Synodal',trainingQuiz,'откуда в Синодальный перевод пришло слово «Господь»'],
+ ['Thomas false Hebrew citation',trainingMatrix,'соединяет Адонай и Элохим'],
+ ['Revelation unqualified attribution',trainingQuiz,'Иисус Христос прямо относит к Себе'],
+ ['Mouse only row click',trainingMatrix,'onClick={() => setSelectedRowId(row.id)}\n                  className="cursor-pointer']
+];
+for(const [name,source,value] of trainingForbidden){
+ if(source.includes(value))throw Error('V13 research training reintroduced error: '+name);
+}
+console.log('V13_RESEARCH_TRAINING_SURFACES_PASS',JSON.stringify({positive:trainingRequired.length,negative:trainingForbidden.length,study:'LXX Genesis17:1, MT psalm, independent review pending'}));
