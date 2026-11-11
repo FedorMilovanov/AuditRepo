@@ -636,7 +636,19 @@ t('zone-6 erosion modifies the original vault without out-of-zone artefacts',
   exitCeiling.shade < 0.96 && exitCeiling.shade >= 0.78 &&
   exitSide.sideOut > 0.18 && exitSide.roofDrop < 0.05 &&
   exitVaultRelief(0, 5, -285, 1, 0).roofDrop === 0 &&
-  exitVaultRelief(0, 5, -325, 1, 0).roofDrop === 0);
+  exitVaultRelief(0, 5, -327, 1, 0).roofDrop === 0);
+const lastRingRoof = exitVaultRelief(0.5, 5, -322, 1, 0);
+const lastRingFlank = exitVaultRelief(-2.1, 2.5, -322, 0.2, -1);
+const priorLastRingRoof = exitVaultRelief(0.5, 5, -320, 1, 0);
+t('zone-six eroded roof and shoulders persist to final rendered shell ring',
+  lastRingRoof.roofDrop > 0.40 &&
+  lastRingRoof.roofDrop > priorLastRingRoof.roofDrop * 0.60 &&
+  lastRingFlank.sideOut > 0.24);
+t('zone-six mouth erodes only within old rock shell and safe profile',
+  lastRingRoof.roofDrop < 1.25 &&
+  lastRingFlank.sideOut < 0.95 &&
+  exitVaultRelief(0, 5, -330, 1, 0).roofDrop === 0 &&
+  exitVaultRelief(0, 5, -287, 1, 0).roofDrop === 0);
 for (const lowMode of [true, false]) {
   const sceneGeometry = buildZones(lowMode,
     new THREE.MeshStandardMaterial({ vertexColors: true }));
