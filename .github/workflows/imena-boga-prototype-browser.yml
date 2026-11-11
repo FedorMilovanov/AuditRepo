@@ -68,6 +68,12 @@ jobs:
           node -e 'const fs=require("node:fs"); const p=require("playwright-core"); for(const name of ["chromium","webkit"]){ const exe=p[name].executablePath(); if(!fs.existsSync(exe)) throw Error("Missing pinned "+name+" browser: "+exe); console.log("BROWSER_IMAGE_VERIFIED",name,exe); }'
           export CHROMIUM_PATH
           CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+          test -x "$CHROMIUM_PATH"
+          # Later visual_review.cjs runs in another Actions step; a shell export
+          # alone disappears at the step boundary, leaving chromium.launch()
+          # targeting the absent headless-shell binary of the container image.
+          # Persist the already-verified full Chromium binary path across steps.
+          printf 'CHROMIUM_PATH=%s\n' "$CHROMIUM_PATH" >> "$GITHUB_ENV"
           npm run qa:source
           npm run qa:delivery
           npm run qa:failure
