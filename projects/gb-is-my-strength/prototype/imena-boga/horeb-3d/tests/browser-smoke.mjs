@@ -886,6 +886,124 @@ try {
   check('linked investigation fails closed if stored physical evidence is missing',
     await investigator.evaluate(() =>
       localStorage.getItem('imena-horeb.expedition.beersheba-hagar.v1') === 'false'));
+
+  // D2: physically distinct authored props, not phantom collectables or a
+  // second source-question database. Camera is positioned only for test setup:
+  // the F action still rechecks its genuine opaque-mesh sight ray each time.
+  await waitForIntroPaint(investigator);
+  await investigator.evaluate(() => [...document.querySelectorAll('button')]
+    .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
+  await investigator.waitForFunction(() => !!window.__horeb?.world && !!window.__horeb?.state(),
+    { timeout: 45000 });
+  const heroEvidenceIds = [
+    'gethsemane-olive', 'gethsemane-prayer-stone',
+    'jeremiah-royal-sign', 'jeremiah-city-view',
+  ];
+  for (const clueId of heroEvidenceIds) {
+    const setup = await investigator.evaluate((id) => {
+      const world = window.__horeb.world;
+      const target = world.storyTargets.find((entry) => entry.id === id);
+      if (!target) return { error: 'physical target missing', id };
+      // Search honest, navigable camera locations near the *actual prop*.
+      // No direct state writes, looking through other meshes or bypassing
+      // the collision solver; focusStoryClue performs the authoritative test.
+      let attempts = 0;
+      for (const radius of [4.5, 5.3, 3.8, 6.3]) {
+        for (let i = 0; i < 24; i++) {
+          const angle = 2 * Math.PI * i / 24;
+          const x = target.x + Math.cos(angle) * radius;
+          const z = target.z + Math.sin(angle) * radius;
+          world.teleportTo(x, z);
+          const pos = world.position;
+          if (Math.hypot(pos.x - x, pos.z - z) > 0.25) continue;
+          const dx = target.x - pos.x, dz = target.z - pos.z;
+          const d = Math.hypot(dx, dz);
+          world.yaw = Math.atan2(-dx, -dz);
+          const height = id === 'gethsemane-olive' ? 1.5 :
+            id === 'gethsemane-prayer-stone' ? 0.15 :
+            id === 'jeremiah-royal-sign' ? 1.25 : 0.9;
+          world.pitch = Math.atan2(height - 1.62, d);
+          attempts++;
+          if (world.focusStoryClue() === id) {
+            world.emit(true);
+            return { id, attempts, target, pos, focused: id };
+          }
+        }
+      }
+      return { id, target, attempts, error: 'no visible navigable vantage' };
+    }, clueId);
+    check('authored physical hero detail can be observed: ' + clueId,
+      setup.focused === clueId, JSON.stringify(setup));
+    if (setup.focused !== clueId) continue;
+    await investigator.keyboard.press('KeyF');
+    await investigator.waitForFunction((id) => {
+      try { return JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]').includes(id); }
+      catch { return false; }
+    }, { timeout: 10000 }, clueId);
+  }
+  // Merely pressing F never writes a completed source conclusion.
+  check('four new physical observations do not grant source conclusions',
+    await investigator.evaluate(() => {
+      const seen = JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]');
+      const done = JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]');
+      return seen.includes('gethsemane-olive') && seen.includes('gethsemane-prayer-stone') &&
+        seen.includes('jeremiah-royal-sign') && seen.includes('jeremiah-city-view') &&
+        done.length === 0;
+    }));
+  // At the intro the diary remains accessible without a WebGL world.
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  await waitForIntroPaint(investigator);
+  await investigator.evaluate(() => [...document.querySelectorAll('button')]
+    .find((b) => (b.textContent || '').startsWith('Путевой дневник ('))?.click());
+  await investigator.waitForSelector('[data-hero-studies]', { timeout: 12000 });
+  await investigator.evaluate(() => { document.querySelector('[data-hero-studies]').open = true; });
+  check('both 3D-gated context studies unlock only with real observations',
+    await investigator.evaluate(() =>
+      [...document.querySelectorAll('[data-hero-study] fieldset')].length === 2 &&
+      [...document.querySelectorAll('[data-hero-study] fieldset')].every((f) => !f.disabled)));
+  await investigator.$('[name="hero-choice-abba"][value="a"]').then((el) => el.click());
+  await investigator.$('[data-hero-submit="abba"]').then((el) => el.click());
+  check('false Gethsemane speaker claim never advances hero journal',
+    await investigator.evaluate(() =>
+      !!document.querySelector('[data-hero-study="abba"] [data-hero-feedback="retry"]') &&
+      localStorage.getItem('imena-horeb.hero-context.v1') === '[]'));
+  await investigator.$('[name="hero-choice-abba"][value="b"]').then((el) => el.click());
+  await investigator.$('[data-hero-submit="abba"]').then((el) => el.click());
+  await investigator.waitForFunction(() =>
+    JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').includes('abba'),
+    { timeout: 6500 });
+  await investigator.$('[name="hero-choice-tsidkenu"][value="a"]').then((el) => el.click());
+  await investigator.$('[data-hero-submit="tsidkenu"]').then((el) => el.click());
+  check('false Jeremiah referent claim never advances hero journal',
+    await investigator.evaluate(() => {
+      const done = JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]');
+      return done.join('|') === 'abba' &&
+        !!document.querySelector('[data-hero-study="tsidkenu"] [data-hero-feedback="retry"]');
+    }));
+  await investigator.$('[name="hero-choice-tsidkenu"][value="c"]').then((el) => el.click());
+  await investigator.$('[data-hero-submit="tsidkenu"]').then((el) => el.click());
+  await investigator.waitForFunction(() =>
+    JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').length === 2,
+    { timeout: 6500 });
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  check('two physically witnessed context conclusions survive normal reload',
+    await investigator.evaluate(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').join('|') ===
+        'abba|tsidkenu'));
+  // A missing observation revokes only its dependent local study,
+  // not the unrelated Jeremiah study nor access to the 42 free dossiers.
+  await investigator.evaluate(() => {
+    const seen = JSON.parse(localStorage.getItem('imena-horeb.site-observations.v1') || '[]');
+    localStorage.setItem('imena-horeb.site-observations.v1',
+      JSON.stringify(seen.filter((id) => id !== 'gethsemane-olive')));
+  });
+  await investigator.reload({ waitUntil: 'domcontentloaded' });
+  await investigator.waitForFunction(() =>
+    JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').join('|') ===
+      'tsidkenu', { timeout: 6500 });
+  check('removing Gethsemane spatial evidence revokes only its completed source study',
+    await investigator.evaluate(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').join('|') === 'tsidkenu'));
   await investigator.close();
 
   check('no page runtime errors', errors.length === 0, errors.slice(0, 2).join(' | '));
