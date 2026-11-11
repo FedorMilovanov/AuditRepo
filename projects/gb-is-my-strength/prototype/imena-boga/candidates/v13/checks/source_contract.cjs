@@ -128,6 +128,7 @@ if (!qAtlasNavbar.includes("backgroundColor: 'var(--gb-bg)'") ||
   throw Error('Visual regression: header text shines through the nav');
 if (!qAtlasModal.includes('inline-block max-w-full whitespace-normal [overflow-wrap:anywhere]') ||
     !qAtlasModal.includes('data-modal-original') ||
+    !qAtlasModal.includes('data-greek-original-token') ||
     !qAtlasModal.includes("entry.original.replace(/(τὸ|"))
   throw Error('Visual regression: Greek articles can become orphan glyphs');
 if (!qAtlasModal.includes('sm:flex-row sm:items-center sm:justify-between') ||

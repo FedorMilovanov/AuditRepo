@@ -678,7 +678,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       await last.getByRole('button',{name:'Открыть полное досье'}).click();
       const original=page.locator('[data-modal-original]');
       await original.waitFor({state:'visible'});
-      const greekPhrases=await original.locator('span.whitespace-nowrap').allTextContents();
+      const greekPhrases=await original.locator('[data-greek-original-token]').allTextContents();
       if(!greekPhrases.includes('τὸ\u00a0Ὦ') ||
          !greekPhrases.includes('τὸ\u00a0Ἄλφα'))
         throw Error('Atlas Greek article split exposes orphan symbol '+JSON.stringify({engine,width,greekPhrases}));
