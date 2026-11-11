@@ -432,6 +432,10 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
           y, positions.getZ(v) + envelope * bendZ);
       }
       geometry.computeVertexNormals();
+      // Unique deformed branch buffers belong to this scene only. When a
+      // successful batch merge detaches their meshes, they must be released.
+      // Cached cylinders and other shared shapes do NOT carry this flag.
+      geometry.userData.horebOwnedBeforeMerge = true;
     }
     const piece = new THREE.Mesh(geometry, s.oliveWood);
     piece.name = name;
@@ -956,6 +960,15 @@ export function mergePropsGroup(group: THREE.Group): void {
   }
   for (const mesh of meshes) group.remove(mesh);
   for (const mesh of mergedMeshes) group.add(mesh);
-  // Only temporary clones are disposed; the original geometry may be shared/cached.
+  // The temporary clones are disposable. Source geometry may be shared by
+  // dozens of props, so release ONLY explicitly owned, detached sources
+  // after a complete successful merge (never on the failure path).
   for (const g of temporary) g.dispose();
+  const released = new Set<THREE.BufferGeometry>();
+  for (const mesh of meshes) {
+    if (mesh.geometry.userData.horebOwnedBeforeMerge && !released.has(mesh.geometry)) {
+      mesh.geometry.dispose();
+      released.add(mesh.geometry);
+    }
+  }
 }
