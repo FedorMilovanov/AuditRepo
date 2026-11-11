@@ -126,7 +126,9 @@ export const COVENANT_ALTARS: CovenantAltarLocation[] = [
     eventSummary: 'Авраам садит рощу у колодца клятвы и призывает имя Господа, Бога Вечного (Эль-Олам).',
     x: 37,
     y: 62,
-    labelAlign: 'left',
+    // Keep the selected title clear of Beer-lahai-roi (65x2px in both engines).
+    // The actual historical schematic marker position stays unchanged.
+    labelAlign: 'top',
   },
   {
     id: 'altar-moriah',

@@ -464,3 +464,13 @@ const mappedRephidimNov11=nov11MappedBlock.split("id: 'altar-rephidim'")[1]?.spl
 if(!mappedRephidimNov11.includes("labelAlign: 'bottom'"))
  throw Error('Atlas schematic labels Horeb/Rephidim alignment regressed');
 console.log('V13_ATLAS_HOREB_REPHIDIM_LABEL_ALIGNMENT_PASS');
+
+// Wide 1440px state index 1: Beersheba label overlapped Beer-lahai-roi in
+// Chromium and WebKit (65x2 px); the strict selected-state browser check
+// and a dedicated Beersheba JPG remain mandatory.
+const w54Beersheba=nov11MappedBlock.split("id: 'altar-beersheba'")[1]?.split('\n  },')[0]||'';
+if(!w54Beersheba.includes('x: 37,')||
+   !w54Beersheba.includes('y: 62,')||
+   !w54Beersheba.includes("labelAlign: 'top'"))
+ throw Error('W54 Beersheba label / fixed-coordinate source regression');
+console.log('V13_W54_BEERSHEBA_GEOMETRY_SOURCE_PASS');

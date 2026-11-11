@@ -496,6 +496,9 @@ async function visit(browser,engine,app,width,base){
           state.selectedWaypoints.length!==1||
           state.selectedPins[0]!==activeIndex||state.selectedWaypoints[0]!==activeIndex)
          problem('BLOCKER','atlas-wide-map-selection-label-overlap',{engine,width,...state});
+       if(activeIndex===1)await anchorShot(page,
+         engine+'-atlas-'+width+'-14-beersheba-selected',
+         '[data-covenant-map-stage]',145);
        if(activeIndex===7)await anchorShot(page,
          engine+'-atlas-'+width+'-13-rephidim-selected',
          '[data-covenant-map-stage]',145);

@@ -116,8 +116,8 @@
       "bytes_normalized": 17309
     },
     "atlas/src/data/divineNames.ts": {
-      "sha256": "e0c0b5160c642a1cff8222d2710beeb44ce88ab784c18d8b0d018769d37d7c49",
-      "bytes_normalized": 150227
+      "sha256": "4774ca2094db8f4c555b71156298f4036f7284a39d58045a88f66465733d9c44",
+      "bytes_normalized": 150379
     },
     "atlas/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "e2277803eb8aab235df5e7ef9903bac9d4cd6b9f63f7346d4fc6c70f6ce88abc",
-      "bytes_normalized": 35858
+      "sha256": "9f04bf221dd2dd005731c33c3610bdb5c0481bdb7d74054d908b90a1c706dfb8",
+      "bytes_normalized": 36407
     },
     "checks/visual_review.cjs": {
-      "sha256": "133dcf49d7c9b53acd88ca7082faf203357a805a0832fd6cc590da1856d637ec",
-      "bytes_normalized": 38368
+      "sha256": "fa99b057cd04abbd55ecde0b6cd248473c1278136efc84f3ddb29a7202763b50",
+      "bytes_normalized": 38518
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
