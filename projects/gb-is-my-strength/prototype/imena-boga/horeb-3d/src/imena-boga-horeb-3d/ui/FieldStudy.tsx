@@ -17,6 +17,10 @@ export function FieldStudy({ e, completed, onComplete }: {
   const isObject = task.kind === 'named-object';
   const isScript = task.kind === 'written-form';
   const needsChoice = isObject || isScript;
+  const kindTitle = task.kind === 'voices' ? 'Кто говорит и кто назван' :
+    isObject ? 'Что получает название' :
+      task.kind === 'parallel-witness' ? 'Два библейских контекста' :
+        'Исходная письменная форма';
   const options = isObject ? NAMED_OBJECT_CHOICES : isScript ? WRITTEN_LANGUAGE_CHOICES : [];
   const leftTitle = task.kind === 'voices' ? 'Кто говорит' : isObject ? 'Событие' :
     task.kind === 'parallel-witness' ? 'Первый контекст' : 'Письменный оригинал';
@@ -36,7 +40,7 @@ export function FieldStudy({ e, completed, onComplete }: {
   };
   return <section data-field-study={e.id} aria-label={'Полевое исследование: ' + e.displayLabelRu}
     className="mb-6 rounded-sm border border-bronze/40 bg-black/30 p-4 sm:p-5">
-    <p className="eyebrow text-bronze">Полевое исследование · {task.kind} · Редакционный HOLD</p>
+    <p className="eyebrow text-bronze">Полевое исследование · {kindTitle} · учебный черновик</p>
     <h3 className="mt-2 font-display text-xl text-parch">{task.prompt}</h3>
     <p className="mt-2 text-sm text-muted">Откройте оба свидетельства. Данные относятся к рабочему реестру; исходный библейский текст проверьте отдельно.</p>
     <div className="mt-4 grid gap-3 sm:grid-cols-2">

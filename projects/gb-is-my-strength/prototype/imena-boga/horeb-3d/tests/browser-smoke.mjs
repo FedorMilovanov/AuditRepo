@@ -164,6 +164,11 @@ try {
     const fieldSelector = 'section[data-field-study]';
     check('sixteen curated studies appear in the 42-dossier accessible reader',
       (await axReaderPage.$$(fieldSelector)).length === 16);
+    const fieldHeadings = await axReaderPage.$$eval(
+      fieldSelector + ' .eyebrow', (els) => els.map((node) => node.textContent || ''));
+    check('all four fieldwork modes use human-readable Russian headings',
+      fieldHeadings.length === 16 && fieldHeadings.every((heading) =>
+        !/named-object|written-form|parallel-witness|voices|HOLD/i.test(heading)));
     const checkJournal = (id) => axReaderPage.evaluate((value) => {
       try { return JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes(value); }
       catch { return false; }
