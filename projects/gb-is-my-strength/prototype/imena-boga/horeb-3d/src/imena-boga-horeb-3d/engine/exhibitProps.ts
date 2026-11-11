@@ -412,7 +412,28 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const segment = (from: THREE.Vector3, to: THREE.Vector3,
     bottom: number, top: number, name: string) => {
     const vector = to.clone().sub(from), length = vector.length();
-    const piece = new THREE.Mesh(G.cyl(top, bottom, length, low ? 7 : 10), s.oliveWood);
+    // Structural olive forks must not read as sharp, straight, angular poles.
+    // Use tapered, gently bent rings that join at the SAME endpoints. Roots
+    // and tiny twigs retain the cached simple mesh for the low-power budget.
+    const structural = name === 'olive-branch';
+    const geometry = structural
+      ? new THREE.CylinderGeometry(top, bottom, length, low ? 9 : 12, 6)
+      : G.cyl(top, bottom, length, low ? 7 : 10);
+    if (structural) {
+      const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+      const bendX = (random() - 0.5) * 0.19;
+      const bendZ = (random() - 0.5) * 0.14;
+      for (let v = 0; v < positions.count; v++) {
+        const y = positions.getY(v);
+        // Sinusoidal envelope is zero at both ends: no floating joins.
+        const t = THREE.MathUtils.clamp(y / length + 0.5, 0, 1);
+        const envelope = Math.sin(Math.PI * t);
+        positions.setXYZ(v, positions.getX(v) + envelope * bendX,
+          y, positions.getZ(v) + envelope * bendZ);
+      }
+      geometry.computeVertexNormals();
+    }
+    const piece = new THREE.Mesh(geometry, s.oliveWood);
     piece.name = name;
     piece.position.copy(from).addScaledVector(vector, 0.5);
     piece.quaternion.setFromUnitVectors(up, vector.normalize());
@@ -479,7 +500,9 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
           const leaf = new THREE.Mesh(G.oliveLeaf(),
             (j + k + (side > 0 ? 1 : 0)) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
           leaf.name = 'olive-leaf-sprig';
-          const spread = 0.075 + random() * 0.046;
+          // The old 7–12 cm offsets detached tiny leaves from their twigs,
+          // producing a floating spiky fringe instead of a living spray.
+          const spread = 0.024 + random() * 0.023;
           leaf.position.copy(node).addScaledVector(lateral, side * spread);
           // Tilt the narrow lamina away from vertical; the previous 0.2 m
           // upright shapes resembled grass spikes rather than olive foliage.
