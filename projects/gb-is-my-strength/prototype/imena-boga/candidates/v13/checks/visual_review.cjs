@@ -723,6 +723,37 @@ async function visit(browser,engine,app,width,base){
    });
   }
 
+  // Wave61: root-font scaling reflow on both candidates (not native UI zoom).
+  if([320,390].includes(width))await safeAction(page,engine+'-'+app+'-'+width+'-root-font-200',async()=>{
+   const selector=app==='atlas'?'#article-introduction h2':'#yhwh h3';
+   const heading=page.locator(selector).first();
+   await heading.waitFor({state:'visible'});
+   await page.evaluate(()=>document.documentElement.style.setProperty('font-size','200%','important'));
+   await page.evaluate(async()=>{await document.fonts.ready;await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)))});
+   await heading.scrollIntoViewIfNeeded();
+   const d=await page.evaluate(({app,selector})=>{
+    const root=document.documentElement,target=document.querySelector(selector);
+    const h=target?.getBoundingClientRect();
+    const menu=document.querySelector(app==='atlas'?'[data-covenant-map-nav]':'#sozvezdie-mobile-index-trigger');
+    const m=menu?.getBoundingClientRect();
+    return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
+      viewport:root.clientWidth,documentWidth:root.scrollWidth,
+      headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
+      headingClientWidth:target?.clientWidth??null,headingScrollWidth:target?.scrollWidth??null,
+      controlFound:!!m,controlLeft:m?.left??null,controlRight:m?.right??null,
+      controlWidth:m?.width??null};
+   },{app,selector});
+   record('root-font-resize-200-reflow',{app,engine,width,...d});
+   if(d.rootFontPx<30||!d.headingFound||d.documentWidth>d.viewport+2||
+      d.headingLeft< -2||d.headingRight>d.viewport+2||
+      d.headingScrollWidth>d.headingClientWidth+2||
+      !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24)
+    problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
+   await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
+   await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
+   await page.evaluate(async()=>{await document.fonts.ready});
+  });
+
   if(app==='atlas' && [320,390].includes(width)){
    // WCAG text-only resize stress. Unlike browser page zoom, this keeps
    // responsive breakpoints unchanged while enlarging text to 200%.

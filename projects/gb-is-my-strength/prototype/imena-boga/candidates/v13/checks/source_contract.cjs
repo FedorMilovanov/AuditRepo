@@ -510,3 +510,15 @@ for(const token of [
 ])if(!nov11MapUi.includes(token))
  throw Error('Wave59 accessible caption or motion preference regressed: '+token);
 console.log('V13_W59_MOTION_KEYBOARD_SCREEN_READER_SOURCE_PASS');
+
+// W61: 200% rem-root text reflow is explicitly covered in BOTH candidates.
+// This is not a substitute for native mobile OS/browser UI zoom.
+const w61Script=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+for(const term of [
+ 'root-font-resize-200-reflow','root-font-resize-200-reflow-failed',
+ "app==='atlas'?'#article-introduction h2':'#yhwh h3'",
+ "style.setProperty('font-size','200%','important')",
+ 'd.headingScrollWidth>d.headingClientWidth+2'
+])if(!w61Script.includes(term))
+ throw Error('W61 root-font witness missing: '+term);
+console.log('V13_W61_BOTH_CANDIDATES_ROOT_FONT_200_PASS');
