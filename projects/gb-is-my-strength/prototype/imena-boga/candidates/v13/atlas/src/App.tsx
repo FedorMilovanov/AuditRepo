@@ -859,10 +859,10 @@ export function App() {
                   <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold-ink)' }}>
                     VI.
                   </strong>
-                  Карта жертвенников и мест явления Имён Божьих
+                  Места библейских событий и связанные выражения
                 </span>
                 <span className="font-ui shrink-0 text-[11px]" style={{ color: 'var(--gb-muted)' }}>
-                  10 мест
+                  9 мест
                 </span>
               </a>
             </li>
@@ -898,7 +898,7 @@ export function App() {
             {[
               { value: '36', label: 'библейских выражений', sub: 'иврит · арамейский · греческий' },
               { value: '5', label: 'частей-эпох', sub: 'от Творения до Троицы' },
-              { value: '10', label: 'мест откровения', sub: 'на библейской карте' },
+              { value: '9', label: 'мест библейских событий', sub: 'на условной схеме' },
               { value: '4', label: 'режима чтения', sub: 'бумага · сепия · ночь · печать' },
             ].map((stat) => (
               <div

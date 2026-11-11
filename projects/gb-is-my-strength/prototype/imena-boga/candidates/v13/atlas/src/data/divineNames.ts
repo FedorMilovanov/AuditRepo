@@ -131,8 +131,8 @@ export const COVENANT_ALTARS: CovenantAltarLocation[] = [
   {
     id: 'altar-moriah',
     nameId: 'yhwh-yireh',
-    placeName: 'Гора Мориа (Иерусалим)',
-    biblicalRegion: 'Иудейские горы',
+    placeName: 'Гора Мориа'
+    biblicalRegion: 'Иудейские горы (традиционная локализация)'
     era: '3 · Эпоха патриархов · Быт. 22',
     scriptureRef: 'Бытие 22:14',
     eventSummary: 'Бог останавливает нож над Исааком и даёт заместительного овна: Авраам нарекает место Яхве-Ире («Господь усмотрит»).',
@@ -211,18 +211,6 @@ export const COVENANT_ALTARS: CovenantAltarLocation[] = [
     x: 56,
     y: 16,
     labelAlign: 'left',
-  },
-  {
-    id: 'altar-babylon-patmos',
-    nameId: 'alpha-omega-pantokrator',
-    placeName: 'Ховар и Патмос',
-    biblicalRegion: 'Пророческое и апостольское завершение канона',
-    era: '10 · Плен и Новое Творение · Иез. 48 / Откр. 1',
-    scriptureRef: 'Иезекииль 48:35 · Откровение 1:8',
-    eventSummary: 'Пророческое имя города «Господь там» (Яхве-Шамма) венчается откровением Христа как Альфы и Омеги, Вседержителя.',
-    x: 80,
-    y: 25,
-    labelAlign: 'bottom',
   },
 ];
 

@@ -62,7 +62,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <span className="min-w-0 break-words">Библейская география откровения · В духе раздела «Карты»</span>
           </div>
           <h2 className="font-serif-display mt-1 min-w-0 text-2xl sm:text-3xl font-bold break-words" style={{ color: 'var(--gb-ink)' }}>
-            Карта жертвенников и мест явления Имён Божьих
+            Места библейских событий и связанные выражения
           </h2>
         </div>
 
@@ -102,9 +102,9 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
       </div>
 
       <p className="font-body-editorial mt-3 text-[15px] leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
-        В Писании имена Бога открывались не в отвлечённых философских диспутах, а в конкретных
-        точках земли — у колодцев пустыни, на горных вершинах и у жертвенников завета. Нажмите на
-        любой маяк на карте или выберите этап пути завета ниже.
+        Некоторые выражения связаны с конкретными библейскими повествованиями о местах,
+        жертвенниках и обращениях к Богу. Девять точек размещены условно: это схема событий,
+        а не точная географическая реконструкция и не маршрут древних путешествий.
       </p>
 
       {/* Quick Chronological Waypoint Strip */}
@@ -178,15 +178,6 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               opacity="0.6"
             />
 
-            {/* Connecting Covenant Pilgrim Path */}
-            <polyline
-              points={COVENANT_ALTARS.map((a) => `${a.x},${a.y}`).join(' ')}
-              fill="none"
-              stroke="var(--gb-accent)"
-              strokeWidth="0.45"
-              strokeDasharray="1.4 1.2"
-              opacity="0.65"
-            />
           </svg>
 
           {/* Regional Watermark Labels */}
@@ -278,7 +269,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               {activeAltar.eventSummary}
             </p>
 
-            {/* Linked Divine Name Mini Plaque */}
+            {/* Linked expression may be a name, an altar/place title or a predication */}
             <div
               className="mt-5 rounded-xl border p-4"
               style={{
@@ -287,7 +278,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               }}
             >
               <div className="font-ui text-[10px] font-semibold uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
-                Открытое здесь Имя Бога (№ {linkedName.number})
+                Связанное библейское выражение (№ {linkedName.number})
               </div>
               <div className="mt-1.5 flex items-baseline justify-between gap-2">
                 <div>
@@ -334,6 +325,21 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             </button>
           </div>
         </div>
+      </div>
+      <div
+        className="mt-5 rounded-xl border p-4"
+        style={{ borderColor: 'var(--gb-border)', backgroundColor: 'var(--gb-bg)' }}
+      >
+        <p className="font-ui text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--gb-gold-ink)' }}>
+          За пределами схемы · Ховар и Патмос
+        </p>
+        <p className="font-body-editorial mt-2 text-sm leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
+          Видение Иезекииля относится к реке Ховар в земле халдеев (Иез. 1:1–3), а Иоанн
+          находится на острове Патмос (Откр. 1:9). Это разные географические области:
+          одна общая точка на схеме Палестины и Синая была бы неверной. Образы «Господь там»
+          (Иез. 48:35) и «Альфа и Омега» (Откр. 1:8) следует рассматривать в отдельных
+          текстовых контекстах, не объявляя их единым географическим именованием.
+        </p>
       </div>
     </section>
   );

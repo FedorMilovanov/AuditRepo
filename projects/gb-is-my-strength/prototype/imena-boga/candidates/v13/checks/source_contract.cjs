@@ -401,3 +401,23 @@ const secondMustNot=[
 for(const [textValue,snippet] of secondMust)if(!textValue.includes(snippet))throw Error('Second source boundary absent: '+snippet);
 for(const [textValue,snippet] of secondMustNot)if(textValue.includes(snippet))throw Error('Second source boundary reverted: '+snippet);
 console.log('V13_FLAGSHIP_SECOND_PASS_QERE_NAMING_PASS', secondMust.length, secondMustNot.length);
+
+
+// Geographic/editorial evidence gate: Chebar in Babylonia and Patmos in the
+// Aegean cannot share one coordinate on a stylized Palestine/Sinai diagram.
+const nov11MapData=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const nov11MapUi=fs.readFileSync(path.join(root,'atlas','src','components','CovenantAltarsAtlas.tsx'),'utf8');
+const nov11MapApp=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
+if(nov11MapData.includes("id: 'altar-babylon-patmos'") ||
+   nov11MapData.includes("placeName: 'Ховар и Патмос'") ||
+   nov11MapUi.includes('Connecting Covenant Pilgrim Path') ||
+   nov11MapUi.includes('Открытое здесь Имя Бога') ||
+   !nov11MapUi.includes('За пределами схемы · Ховар и Патмос') ||
+   !nov11MapUi.includes('Места библейских событий и связанные выражения') ||
+   !nov11MapApp.includes("value: '9', label: 'мест библейских событий'") ||
+   !nov11MapApp.includes('9 мест'))
+ throw Error('Atlas historical geography / expression-classification regression');
+const nov11MappedBlock=nov11MapData.split('export const COVENANT_ALTARS:')[1]?.split('\n];')[0] || '';
+const nov11MappedCount=(nov11MappedBlock.match(/\n\s+id:\s+'altar-/g)||[]).length;
+if(nov11MappedCount!==9)throw Error('Atlas expected nine schematized places: '+nov11MappedCount);
+console.log('V13_ATLAS_CARTOGRAPHY_SEMANTIC_GATE_PASS',nov11MappedCount);
