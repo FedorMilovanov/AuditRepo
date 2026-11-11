@@ -475,7 +475,7 @@ export default function HorebApp() {
         <section role="alert" className={`gate absolute left-1/2 -translate-x-1/2 ${isTouch ? 'top-24' : 'bottom-4 sm:bottom-6'} w-[min(94vw,36rem)] text-center p-4`}>
           <p className="font-display text-lg sm:text-xl italic leading-snug">«{EX_3_5_RU}»</p>
           <p className="text-xs text-muted mt-2">{EX_3_5_SOURCE}</p>
-          <button className="btn btn-primary mt-4" onClick={() => worldRef.current?.removeShoes()}>Снять обувь <span className="opacity-60 text-xs ml-1">E</span></button>
+          <button data-testid="sandal-action" className="btn btn-primary mt-4" onClick={() => worldRef.current?.removeShoes()}>Снять обувь {!isTouch && <span className="opacity-60 text-xs ml-1">E</span>}</button>
         </section>
       )}
       {ws?.shoes === 'removing' && <p role="status" className="absolute inset-x-0 bottom-36 text-center font-display text-2xl italic text-parch/90">Обувь снимается…</p>}
