@@ -131,10 +131,11 @@ export function SceneMoment({ e, examined, canInspect, onInspect,
         {!examined && <p className="mt-2 text-xs text-muted">Сперва осмотрите сюжет или изучите его описание в доступном режиме.</p>}
         {examined && !showMeaning && <p className="mt-2 text-xs text-muted">Прежде чем выбирать, откройте сравнение библейских контекстов.</p>}
       </fieldset>}
-      {attempt === 'retry' && <p role="status" className="mt-3 text-sm text-amber-200">
+      {attempt === 'retry' && <p data-learning-feedback="retry" role="status" className="mt-3 text-sm text-amber-200">
         Это не соответствует приведённому контексту. Сравните формулировки и попробуйте снова, без штрафов.
-      </p>}
-      {answered && lesson && <div className="mt-3 rounded-sm border border-bronze/30 p-3" role="status">
+        {understood && ' Ранее подтверждённый ответ остаётся в дневнике.'}
+      </p>
+      {answered && attempt !== 'retry' && lesson && <div data-learning-feedback="accepted" className="mt-3 rounded-sm border border-bronze/30 p-3" role="status">
         <p className="text-sm text-parch/90">{lesson.explanation}</p>
         <p className="text-xs text-bronze mt-2">Исследование отмечено в вашем локальном путевом дневнике, не как богословское или редакционное утверждение.</p>
         <details className="mt-3 text-sm text-parch/75">
