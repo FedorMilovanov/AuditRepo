@@ -52,10 +52,10 @@ jobs:
             echo "RUN_REF_FORENSIC=0" >> "${GITHUB_ENV}"
           fi
 
-          # The existing required AuditRepo Validate check also gates the
-          # library's own build and browser journeys on changes to this lab.
-          # Other projects never install 3D dependencies or browsers.
-          if grep -Eq '^projects/gb-is-my-strength/prototype/premium-3d-library/' "${changed_file}"; then
+          # Workflow-only repair must also prove the real lab's build and
+          # Chromium/WebKit tests rather than reporting a false green gate.
+          # Other projects do not pay for the experimental lab.
+          if grep -Eq '^projects/gb-is-my-strength/prototype/premium-3d-library/|^\.github/workflows/auditrepo-validate\.yml$' "${changed_file}"; then
             echo "RUN_GB_LIBRARY=1" >> "${GITHUB_ENV}"
           else
             echo "RUN_GB_LIBRARY=0" >> "${GITHUB_ENV}"
@@ -244,6 +244,17 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          # Hosted Ubuntu's APT mirror list can contain an Azure endpoint
+          # that failed to resolve and fetch WebKit libsoup3 on 2026-11-11.
+          # Canonical's official archive served packages in the same job.
+          # Replace only the failing mirror URL: preserve signed sources,
+          # actual OS dependencies and BOTH real browser engines.
+          for apt_source in /etc/apt/apt-mirrors.txt /etc/apt/sources.list.d/ubuntu.sources; do
+            if [ -f "${apt_source}" ] && grep -q 'azure.archive.ubuntu.com' "${apt_source}"; then
+              sudo sed -i -E 's#https?://azure[.]archive[.]ubuntu[.]com/ubuntu/?#https://archive.ubuntu.com/ubuntu/#g' "${apt_source}"
+              echo "Using official Ubuntu archive in ${apt_source}"
+            fi
+          done
           python3 -m playwright install --with-deps chromium webkit
 
       - name: Premium 3D Library public browser regression (65 cases)
