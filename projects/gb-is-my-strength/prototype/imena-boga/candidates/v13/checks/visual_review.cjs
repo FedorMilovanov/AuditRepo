@@ -469,6 +469,37 @@ async function visit(browser,engine,app,width,base){
        '[data-covenant-map-stage]',145);
      if(width===390||width===1440)await anchorShot(page,
        engine+'-atlas-'+width+'-12-map-actions','[data-covenant-card-actions]',300);
+     // Exercise all nine selected states at the wide breakpoint. An
+     // initially clean map can still collide once a different label becomes
+     // active. Geometry is measured after the state update, never guessed
+     // from schematic coordinates.
+     if(width===1440)for(let activeIndex=0;activeIndex<9;activeIndex++){
+       await page.locator('[data-covenant-waypoint]').nth(activeIndex).click();
+       const state=await page.evaluate(expected=>{
+         const root=document.querySelector('#covenant-altars-atlas');
+         const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
+         const waypoints=[...root.querySelectorAll('[data-covenant-waypoint]')];
+         const labels=[...root.querySelectorAll('[data-covenant-pin-label]')]
+           .filter(el=>getComputedStyle(el).display!=='none')
+           .map(el=>el.getBoundingClientRect());
+         const overlaps=[];
+         for(let i=0;i<labels.length;i++)for(let j=i+1;j<labels.length;j++){
+           const x=Math.min(labels[i].right,labels[j].right)-Math.max(labels[i].left,labels[j].left);
+           const y=Math.min(labels[i].bottom,labels[j].bottom)-Math.max(labels[i].top,labels[j].top);
+           if(x>1&&y>1)overlaps.push([i,j,Math.round(x),Math.round(y)]);
+         }
+         return {expected,overlaps,selectedPins:pins.flatMap((el,i)=>el.getAttribute('aria-pressed')==='true'?[i]:[]),
+           selectedWaypoints:waypoints.flatMap((el,i)=>el.getAttribute('aria-pressed')==='true'?[i]:[])};
+       },activeIndex);
+       record('atlas-wide-map-each-selection',{engine,width,...state});
+       if(state.overlaps.length||state.selectedPins.length!==1||
+          state.selectedWaypoints.length!==1||
+          state.selectedPins[0]!==activeIndex||state.selectedWaypoints[0]!==activeIndex)
+         problem('BLOCKER','atlas-wide-map-selection-label-overlap',{engine,width,...state});
+       if(activeIndex===7)await anchorShot(page,
+         engine+'-atlas-'+width+'-13-rephidim-selected',
+         '[data-covenant-map-stage]',145);
+     }
      await page.locator('[data-covenant-waypoint]').first().click();
      const selected=await page.locator('[data-covenant-map-pin]').first().getAttribute('aria-pressed');
      if(selected!=='true')

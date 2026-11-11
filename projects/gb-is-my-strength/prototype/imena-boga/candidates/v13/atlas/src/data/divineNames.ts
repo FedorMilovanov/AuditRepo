@@ -198,7 +198,9 @@ export const COVENANT_ALTARS: CovenantAltarLocation[] = [
     eventSummary: 'Когда руки Моисея подняты к небу над битвой с Амаликом, Израиль побеждает, а жертвенник назван Яхве-Нисси.',
     x: 29,
     y: 87,
-    labelAlign: 'top',
+    // The Horeb label is above its nearby marker: keep Rephidim below
+    // so both are readable on the wider Atlas schematic.
+    labelAlign: 'bottom',
   },
   {
     id: 'altar-ophrah',

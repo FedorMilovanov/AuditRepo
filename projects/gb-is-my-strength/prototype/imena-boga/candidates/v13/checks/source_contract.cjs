@@ -455,3 +455,12 @@ for(const guard of [
 ])if(!schematicPostAudit.includes(guard))
  throw Error('Atlas label/button collision regression: '+guard);
 console.log('V13_ATLAS_LABEL_AND_CARD_ACTION_GEOMETRY_PASS');
+
+
+// Browser screenshot evidence 04b69f95: the large-screen default labels for
+// Horeb and Rephidim intersected by 26–27 × 5–6 px in both browser engines.
+// This is a purely diagram-label layout constraint, not a geographical claim.
+const mappedRephidimNov11=nov11MappedBlock.split("id: 'altar-rephidim'")[1]?.split('\n  },')[0] || '';
+if(!mappedRephidimNov11.includes("labelAlign: 'bottom'"))
+ throw Error('Atlas schematic labels Horeb/Rephidim alignment regressed');
+console.log('V13_ATLAS_HOREB_REPHIDIM_LABEL_ALIGNMENT_PASS');
