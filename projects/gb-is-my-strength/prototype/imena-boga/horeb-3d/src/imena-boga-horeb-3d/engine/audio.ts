@@ -1,6 +1,7 @@
 // Процедурный звук (собственный синтез Web Audio, без внешних записей и музыки).
 import { NarratorBus, type AcousticSpace, type ApprovedNarrationTrack } from './NarratorBus';
 import type { NarrationPlan } from '../data/narrationPlan';
+import { soundscapeMixAt } from './soundscape';
 export class AmbientAudio {
   ctx: AudioContext | null = null;
   private master!: GainNode;
@@ -85,15 +86,17 @@ export class AmbientAudio {
     if (id === 'el-olam' || id === 'el-roi') this.drip(0.08);
     if (id === 'ehyeh' || id === 'yhwh') this.quietUntil = Math.max(this.quietUntil, t + 4.5);
   }
-  update(t: number, zone: number, distBush: number, nearPool: number) {
+  update(t: number, zone: number, z: number, distBush: number, nearPool: number) {
     const c = this.ctx; if (!c || !this.enabled) return;
-    const outside = zone >= 7;
+    const mix = soundscapeMixAt(z, zone);
     const gust = 0.6 + 0.4 * Math.sin(t * 0.21) * Math.sin(t * 0.077 + 1);
-    const hush = t < this.quietUntil ? 0.35 : 1;
-    this.windGain.gain.setTargetAtTime((outside ? 0.11 : zone === 6 ? 0.08 : 0.045) * gust * hush, c.currentTime, 0.4);
-    this.windFilter.frequency.setTargetAtTime(outside ? 650 : zone === 4 ? 180 : 280, c.currentTime, 0.6);
+    const shortQuiet = t < this.quietUntil ? 0.35 : 1;
+    // The passage is intentionally quieter than the galleries. Wind fades
+    // by actual position in either travel direction, then returns outside.
+    this.windGain.gain.setTargetAtTime(mix.windBed * gust * shortQuiet, c.currentTime, 0.4);
+    this.windFilter.frequency.setTargetAtTime(mix.windCutoff, c.currentTime, 0.6);
     const fire = distBush < 60 ? Math.min(0.22, 3 / (distBush * distBush * 0.25 + 10)) : 0;
-    this.fireGain.gain.setTargetAtTime(fire * (0.5 + Math.random()), c.currentTime, 0.03);
+    this.fireGain.gain.setTargetAtTime(fire * mix.hush * (0.5 + Math.random()), c.currentTime, 0.03);
     if (nearPool < 30 && t > this.nextDrip) { this.drip(Math.max(0.02, 0.25 - nearPool * 0.008)); this.nextDrip = t + 4 + Math.random() * 4; }
   }
   private drip(vol: number) {
