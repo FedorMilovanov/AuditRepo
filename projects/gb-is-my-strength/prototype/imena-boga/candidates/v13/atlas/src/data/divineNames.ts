@@ -131,8 +131,8 @@ export const COVENANT_ALTARS: CovenantAltarLocation[] = [
   {
     id: 'altar-moriah',
     nameId: 'yhwh-yireh',
-    placeName: 'Гора Мориа'
-    biblicalRegion: 'Иудейские горы (традиционная локализация)'
+    placeName: 'Гора Мориа',
+    biblicalRegion: 'Иудейские горы (традиционная локализация)',
     era: '3 · Эпоха патриархов · Быт. 22',
     scriptureRef: 'Бытие 22:14',
     eventSummary: 'Бог останавливает нож над Исааком и даёт заместительного овна: Авраам нарекает место Яхве-Ире («Господь усмотрит»).',
