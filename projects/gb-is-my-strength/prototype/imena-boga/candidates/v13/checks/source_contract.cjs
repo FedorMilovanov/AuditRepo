@@ -432,7 +432,7 @@ for(const needle of [
  'data-covenant-pin-label',
  'data-covenant-waypoint',
  'aria-pressed={isSelected}',
- 'hidden sm:block font-ui pointer-events-none absolute',
+ 'font-ui pointer-events-none absolute whitespace-nowrap rounded',
  'min-h-11 items-center cursor-pointer',
  'flex h-9 w-9 items-center justify-center'
 ])if(!mapControlsNov11.includes(needle))
