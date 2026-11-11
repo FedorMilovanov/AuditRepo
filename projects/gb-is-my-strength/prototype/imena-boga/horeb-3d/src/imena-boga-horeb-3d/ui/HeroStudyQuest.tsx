@@ -10,8 +10,10 @@ export function HeroStudyQuest({ id, observed, completed, onComplete }: {
   id: HeroStudyId;
   observed: readonly SiteClueId[];
   completed: boolean;
-  onComplete: (id: HeroStudyId, answer: string) => void;
+  onComplete: (id: HeroStudyId, first: boolean, second: boolean, answer: string) => void;
 }) {
+  const [openedFirst, setOpenedFirst] = useState(false);
+  const [openedSecond, setOpenedSecond] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
   const [attempt, setAttempt] = useState<'accepted' | 'retry' | null>(null);
   const study = HERO_STUDIES.find((x) => x.id === id);
@@ -20,13 +22,13 @@ export function HeroStudyQuest({ id, observed, completed, onComplete }: {
   if (!study || !sourceTask || !sourceTask.answerOptions || !exhibit) return null;
   const ready = heroStudyReady(id, observed);
   const submit = () => {
-    if (!ready || !answer) return;
-    if (!canCompleteHeroStudy(id, observed, answer)) {
+    if (!ready || !openedFirst || !openedSecond || !answer) return;
+    if (!canCompleteHeroStudy(id, observed, openedFirst, openedSecond, answer)) {
       setAttempt('retry');
       return;
     }
     setAttempt('accepted');
-    onComplete(id, answer);
+    onComplete(id, openedFirst, openedSecond, answer);
   };
   return <section data-hero-study={id} aria-label={'Пространственное исследование: ' + study.title}
     className="rounded-sm border border-bronze/30 bg-black/30 p-4">
@@ -43,7 +45,29 @@ export function HeroStudyQuest({ id, observed, completed, onComplete }: {
       Смысловое сопоставление доступно после осмотра обеих деталей в настоящей 3D-сцене.
       Полное досье можно читать без выполнения маршрута.
     </p>}
-    <fieldset disabled={!ready} className="mt-4">
+    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="rounded-sm border border-bronze/20 p-3">
+        <button type="button" data-hero-lens="a" aria-expanded={openedFirst}
+          aria-controls={'hero-first-' + id} className="btn w-full text-left"
+          onClick={() => setOpenedFirst(v => !v)}>Первое текстовое свидетельство</button>
+        <div id={'hero-first-' + id} hidden={!openedFirst}
+          className="mt-3 text-sm text-parch/85">
+          <p>{sourceTask.lensA}</p>
+          <p className="mt-2 text-muted">{sourceTask.kind === 'voices' ? exhibit.speaker : exhibit.verseReference}</p>
+        </div>
+      </div>
+      <div className="rounded-sm border border-bronze/20 p-3">
+        <button type="button" data-hero-lens="b" aria-expanded={openedSecond}
+          aria-controls={'hero-second-' + id} className="btn w-full text-left"
+          onClick={() => setOpenedSecond(v => !v)}>Второе текстовое свидетельство</button>
+        <div id={'hero-second-' + id} hidden={!openedSecond}
+          className="mt-3 text-sm text-parch/85">
+          <p>{sourceTask.lensB}</p>
+          <p className="mt-2 text-muted">{sourceTask.kind === 'voices' ? exhibit.referent : exhibit.interpretiveNotes}</p>
+        </div>
+      </div>
+    </div>
+    <fieldset disabled={!ready || !openedFirst || !openedSecond} className="mt-4">
       <legend className="font-display text-base text-bronze">{sourceTask.prompt}</legend>
       <div className="mt-3 space-y-2">
         {sourceTask.answerOptions.map((option) => <label key={option.id}
@@ -58,7 +82,7 @@ export function HeroStudyQuest({ id, observed, completed, onComplete }: {
     </fieldset>
     <div className="mt-4 flex flex-wrap gap-3 items-center">
       <button data-hero-submit={id} type="button" className="btn"
-        disabled={!ready || !answer} onClick={submit}>
+        disabled={!ready || !openedFirst || !openedSecond || !answer} onClick={submit}>
         {completed ? 'Повторно проверить контекст' : 'Сохранить сопоставление'}
       </button>
       <a className="link text-sm" href={exhibit.verseUrl} target="_blank" rel="noopener noreferrer">
