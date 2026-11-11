@@ -795,10 +795,24 @@ for (const lowMode of [true, false]) {
       uv.count === points.count &&
       !constructed.obstacles.some((o) => o.z < -175 && o.z > -225 &&
         o.x > LEDGE_X && o.x < LEDGE_X + 2);
-    if (!good) console.log('CHASM_GEOMETRY_DIAGNOSTIC', JSON.stringify({
-      lowMode, meta, floorCount, wallVertexCount, terracedAtMidspan,
-      joinedFaces, safeBoundary, uvCount: uv.count, pointCount: points.count,
-    }));
+    if (!good) {
+      const mid: Array<{ z: number; dx: number; y: number }> = [];
+      for (let k = 0; k < Math.floor(wallVertexCount / 4); k++) {
+        const first = floorCount + 4 * k, deepest = first + 3;
+        const z = points.getZ(first);
+        if (z < -207 && z > -193) mid.push({
+          z, dx: points.getX(deepest) - points.getX(first),
+          y: points.getY(deepest),
+        });
+      }
+      console.log('CHASM_GEOMETRY_DIAGNOSTIC', JSON.stringify({
+        lowMode, meta, floorCount, wallVertexCount, terracedAtMidspan,
+        joinedFaces, safeBoundary, uvCount: uv.count, pointCount: points.count,
+        middleSample: mid.slice(0, 3), middleSampleCount: mid.length,
+        maximumMiddleRecession: Math.max(...mid.map((x) => x.dx)),
+        lowestMiddleY: Math.min(...mid.map((x) => x.y)),
+      }));
+    }
   }
   t('zone-4 ravine connects 4 natural strata to safe existing floor edge ' +
     (lowMode ? 'LOW' : 'HIGH'), good);
