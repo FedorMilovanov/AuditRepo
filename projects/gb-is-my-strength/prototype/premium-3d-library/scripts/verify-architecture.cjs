@@ -62,6 +62,14 @@ for (const document of confessions) {
     'Archival cover title exceeds cross-engine line-length budget');
 }
 assert.match(stationSource, /creeds: ConfessionArchive/);
+const overlaySource = get('ui/Overlay.tsx');
+assert.match(overlaySource, /import \{ CONFESSION_DOCUMENTS \} from "\.\.\/scene\/confessionDocuments";/);
+assert.match(overlaySource, /it\.id === "creeds"/);
+assert.match(overlaySource, /data-gb-confessions-list/);
+assert.match(overlaySource, /data-gb-confession-entry/);
+assert.match(overlaySource, /data-gb-confession-title/);
+assert.match(overlaySource, /doc\.lines\.join\(" "\)/);
+
 assert.match(stationSource, /art\.current\.position\.y = 1\.95;/);
 const documentPlinthTop=1.04+0.1/2;
 const archiveSupportBottom=1.95-0.745-0.24/2;

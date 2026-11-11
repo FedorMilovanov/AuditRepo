@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { BASE, ITEMS, TOUR, byId, itemPos, type Item } from "../data";
 import ProgressPanel from "../progression/ProgressPanel";
 import CabinetPanel from "../cabinet/CabinetPanel";
+import { CONFESSION_DOCUMENTS } from "../scene/confessionDocuments";
 import { exitLock } from "../store";
 import {
   useApp,
@@ -784,6 +785,45 @@ function Detail() {
               <span key={t} className="rounded-full border px-3 py-1 text-xs" style={{ borderColor: it.color + "66", color: it.color }}>{t}</span>
             ))}
           </div>
+          {it.id === "creeds" && (
+            <section
+              data-gb-confessions-list
+              aria-label="Исторические документы"
+              className="mt-6 rounded-2xl border border-white/15 bg-[#151c19]/80 p-4 sm:p-5"
+            >
+              <h3 className="font-display text-2xl font-semibold text-[#f0e1be] sm:text-3xl">
+                Исторические исповедания
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#cbc8bc]">
+                Даты и названия документов. Обложки в зале — современная
+                музейная интерпретация, а не воспроизведение оригинальных изданий.
+              </p>
+              <ol className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {CONFESSION_DOCUMENTS.map((doc) => (
+                  <li
+                    key={doc.date}
+                    data-gb-confession-entry
+                    className="min-w-0 rounded-xl border border-[#c6b38e]/25 bg-[#202927] p-3.5"
+                  >
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="font-display text-lg font-semibold tabular-nums text-[#e8cfaa]">
+                        {doc.date}
+                      </span>
+                      <span className="text-[11px] font-semibold tracking-wide text-[#c2c8bf]">
+                        {doc.tradition}
+                      </span>
+                    </div>
+                    <p
+                      data-gb-confession-title
+                      className="mt-2 break-words text-[16px] font-medium leading-relaxed text-[#f5f1e7]"
+                    >
+                      {doc.lines.join(" ")}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
           <div className="mt-7 flex flex-wrap gap-3">
             <a
               href={BASE + it.href}

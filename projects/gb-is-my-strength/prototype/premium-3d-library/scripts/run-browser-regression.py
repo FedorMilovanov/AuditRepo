@@ -123,6 +123,26 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             ) and case.get("revealAfterInput") is True and (
                 bool(case.get("cleanScreenshot"))
             ), f"Photo clean-frame/recovery evidence incomplete: {case}"
+    if name == "reference-bay-browser.py":
+        creeds = [case for case in cases if case.get("station") == "creeds"]
+        assert {(case.get("engine"), case.get("viewport")) for case in creeds} == {
+            ("chromium", "1440x900"), ("chromium", "390x844"),
+            ("webkit", "1440x900"), ("webkit", "390x844"),
+        }, f"Confessional archive missing engine or viewport: {cases}"
+        assert len(cases) == 5 and len(creeds) == 4, (
+            f"Reference bays missing the unrelated source witness: {cases}"
+        )
+        for case in creeds:
+            archive = case.get("archive")
+            assert isinstance(archive, dict) and (
+                archive.get("focused") is True and archive.get("count") == 4
+            ) and archive.get("minFontPx", 0) >= 16 and (
+                archive.get("allInside") is True
+            ) and archive.get("overflow") is False and (
+                len(archive.get("titleTexts") or []) == 4
+            ) and bool(case.get("detailScreenshot")) and (
+                bool(case.get("bottomScreenshot"))
+            ), f"Confessional archive is not actually readable: {case}"
     if name == "reading-furniture-browser.py":
         assert {(case.get("engine"), case.get("viewport")) for case in cases} == {
             ("chromium", "1440x900"), ("chromium", "390x844"),

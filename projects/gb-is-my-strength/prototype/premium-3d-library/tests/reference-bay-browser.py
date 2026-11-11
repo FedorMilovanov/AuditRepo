@@ -97,11 +97,63 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
         # screenshot with the correct dimensions; never skip the capture.
         capture = await capture_evidence(page, shot)
         capture_ms = capture["captureMs"]
+        archive = None
+        detail_shot = None
+        lower_shot = None
+        if station == "creeds":
+            # A physical 3D cover need not have microscopic text enlarged.
+            # Visitors must be able to use the REAL public Open action for
+            # readable museum metadata sourced from the exact same TS model.
+            aim = page.locator("[data-gb-aim]")
+            await aim.get_by_role("button", name=re.compile("Открыть")).click(timeout=15000)
+            detail = page.get_by_role("dialog", name="Конфессии")
+            await detail.wait_for(state="visible", timeout=12000)
+            region = detail.get_by_role("region", name="Исторические документы")
+            await region.wait_for(state="visible", timeout=12000)
+            entries = region.locator("[data-gb-confession-entry]")
+            assert await entries.count() == 4, "Wrong number of archival records"
+            historical_dates = ["1530", "1563", "1646", "1677/1689"]
+            for i, date in enumerate(historical_dates):
+                item = entries.nth(i)
+                assert date in await item.inner_text(), (engine, width, date)
+                assert await item.locator("[data-gb-confession-title]").count() == 1
+            archive = await page.evaluate("""() => {
+              const d=document.querySelector('[role="dialog"][aria-labelledby="gb-detail-title"]');
+              const r=d?.querySelector('[data-gb-confessions-list]');
+              const titles=[...(r?.querySelectorAll('[data-gb-confession-title]') || [])];
+              const entries=[...(r?.querySelectorAll('[data-gb-confession-entry]') || [])];
+              const width=innerWidth;
+              return {focused:document.activeElement===d,
+                count:entries.length,
+                minFontPx:titles.length ? Math.min(...titles.map(
+                  n=>parseFloat(getComputedStyle(n).fontSize))) : 0,
+                allInside:entries.every(n=>{
+                  const b=n.getBoundingClientRect();
+                  return b.left>=-1 && b.right<=width+1;
+                }),
+                overflow:document.documentElement.scrollWidth>innerWidth+2,
+                titleTexts:titles.map(n=>n.innerText.trim())
+              };
+            }""")
+            assert archive["focused"] and archive["count"] == 4 and (
+                archive["minFontPx"] >= 16 and archive["allInside"]
+                and not archive["overflow"]
+            ), (engine, width, archive)
+            detail_shot = EVIDENCE / f"{engine}-creeds-{width}x{height}-readable-archive.png"
+            await capture_evidence(page, detail_shot)
+            await entries.last.scroll_into_view_if_needed(timeout=10000)
+            assert await entries.last.is_visible(), "Baptist archive is not reachable by scrolling"
+            lower_shot = EVIDENCE / f"{engine}-creeds-{width}x{height}-archive-bottom.png"
+            await capture_evidence(page, lower_shot)
+            await detail.get_by_role("button", name="Вернуться в зал").click(timeout=12000)
+            await detail.wait_for(state="detached", timeout=10000)
         assert not errors, f"{engine}/{station}: errors during screenshot: {errors}"
         print(json.dumps({
             "engine": engine, "station": station, "viewport": f"{width}x{height}",
             "result": "PASS", "evidence": str(shot),
             "screenshotMs": capture_ms, "errors": errors,
+            "archive": archive, "detailScreenshot": str(detail_shot) if detail_shot else None,
+            "bottomScreenshot": str(lower_shot) if lower_shot else None,
             "typography":type_witness, **report
         }, ensure_ascii=False), flush=True)
     finally:

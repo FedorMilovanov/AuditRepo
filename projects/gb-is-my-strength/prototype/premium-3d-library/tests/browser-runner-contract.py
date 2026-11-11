@@ -67,6 +67,19 @@ def cases_for(name: str) -> list[dict]:
             item["tourArrived"] = True
             item["report"] = {"hasWebGL2": True, "overflow": False,
                               "tourGone": True, "paused": False}
+    if name == "reference-bay-browser.py":
+        for index, item in enumerate(records[:4]):
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["viewport"] = ("1440x900", "390x844")[index % 2]
+            item["station"] = "creeds"
+            item["archive"] = {
+                "focused": True, "count": 4, "minFontPx": 16,
+                "allInside": True, "overflow": False,
+                "titleTexts": ["a", "b", "c", "d"],
+            }
+            item["detailScreenshot"] = "real-detail.png"
+            item["bottomScreenshot"] = "real-bottom.png"
+        records[4]["station"] = "c-otst"
     if name == "reading-furniture-browser.py":
         for index, item in enumerate(records):
             item["engine"] = ("chromium", "webkit")[index // 2]
@@ -125,6 +138,26 @@ for name, count in expected.items():
         pass
     else:
         raise AssertionError(f"{name}: accepted JS page error")
+
+# An apparently healthy 3D screenshot is NOT archival readability
+# evidence. Missing dialog screenshot or miniature text must fail closed.
+missing_archive = cases_for("reference-bay-browser.py")
+missing_archive[0]["detailScreenshot"] = ""
+try:
+    module.verify_case_records("reference-bay-browser.py", jsonlines(missing_archive), 5)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Reference bay accepted no readable archive screenshot")
+
+tiny_archive = cases_for("reference-bay-browser.py")
+tiny_archive[1]["archive"]["minFontPx"] = 10
+try:
+    module.verify_case_records("reference-bay-browser.py", jsonlines(tiny_archive), 5)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Reference bay accepted 10px document titles")
 
 # The entrance test must reject a missing screenshot, simulated tour
 # success or an improperly closed tour overlay.
