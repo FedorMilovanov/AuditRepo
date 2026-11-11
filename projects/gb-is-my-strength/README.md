@@ -12,8 +12,21 @@ AuditRepo project for `FedorMilovanov/gb-is-my-strength`.
 4. [`verified/SYSTEM_THEMES.md`](./verified/SYSTEM_THEMES.md) — reusable root-cause context.
 5. `incoming/`, `verification/`, `reverify/` — evidence and current-check material.
 6. `legacy/` — retired material available for later forensic lookup, not an active backlog.
+7. [Редакционный аудит E0–E7: единый вход](./verification/2026-11-11-editorial-evidence-decision-index.md) — архив, решения, калибровка 12 статей, handoff владельцам; **не второй backlog**.
 
 General model: [`../../AUDITREPO_OPERATING_MODEL.md`](../../AUDITREPO_OPERATING_MODEL.md).
+
+## Редакционное качество — инструкция следующему агенту (11.11.2026)
+
+**Точка входа:** [единый индекс E0–E7](./verification/2026-11-11-editorial-evidence-decision-index.md). В нём собраны исторические исследования трёх агентов (AuditRepo #548, 61 файл), [дедуплицированные 21 тема](./verification/2026-11-11-three-agent-article-decision-crosswalk.md) (#551), волны 4–7 (#552), калибровка 12 реальных статей и распределение владельцев E5/E7 (#553). Это *evidence и provenance*, а не 21 новая задача и не разрешение массово переписывать статьи.
+
+**Правила, обязательные для редактора, находятся в Product.** Начать с [AGENTS-REFERENCE.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/AGENTS-REFERENCE.md), далее — [ARTICLE-STANDARD-CHARTER.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/docs/ARTICLE-STANDARD-CHARTER.md), [CONTENT-QUALITY-STANDARD.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/docs/CONTENT-QUALITY-STANDARD.md) и [EDITORIAL-SOURCE-POLICY.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/docs/EDITORIAL-SOURCE-POLICY.md). Изменения стандартов слиты Product [#2299](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2299); [workflow #43050451190 (attempt 3)](https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/43050451190) удостоверяет успешные build, deploy, generic live и TTS на **историческом** SHA `9618e8240731bd20e634506b4c975b154892c7ba`. Не переносить этот witness на будущий SHA и не объявлять все статьи исправленными.
+
+**Что ещё исправлять:** [MASTER](./verified/MASTER_BUG_MATRIX.md) — единственная матрица *текущей подтверждённой необходимой* работы; [PROGRAM CLOSURE MATRIX](./PROGRAM_CLOSURE_MATRIX.md) — более широкая программа завершения сайта, [WORK_QUEUE](./WORK_QUEUE.md) — необязательные улучшения. Старые сырые количества, короткие абзацы, риторические тройки, «ИИ-похожесть» сами по себе не являются багами. Нельзя создавать вторую редакционную MASTER или новые автоматические AI-score/длины абзацев.
+
+**Последовательность:** (1) проверить актуальные Product `main`, relevant open PR/branches и смыслового владельца; (2) открыть точную находку E0–E7 и первоисточник/издание; (3) получить current-source witness, сузить или опровергнуть claim; (4) если найден реальный незакрытый дефект, привязать его к существующему MASTER-owner (без дубля); (5) редактировать только в согласованном Product lane с применимыми exact-head checks и, если заявлен production, live witness. Архивные доказательства сами по себе не разрешают Product mutation.
+
+**Известный охраняемый handoff:** документы издательства «Христианин» от 5 и 10 июня 1971 года — опубликованные репродукции обнаружены (AuditRepo #549), но сверка с подлинниками отделена от обнаружения текстов. Уникальная несмерженная правка — [закрытый Product #2298](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2298); на якоре E7 файл `BaptistyRossiiSpravochnikBody.astro` принадлежал [открытому Product #2292](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292). Перед новой работой проверить текущий owner; не перетирать чужую ветку, не удалять уникальную правку и не считать передачу исправлением.
 
 ## Stable project facts
 
