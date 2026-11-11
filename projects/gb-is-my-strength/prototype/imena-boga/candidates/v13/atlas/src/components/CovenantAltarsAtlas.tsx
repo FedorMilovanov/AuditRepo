@@ -69,8 +69,9 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
         <div className="flex items-center gap-1.5">
           <button
             type="button"
+            data-covenant-map-nav
             onClick={handlePrevAltar}
-            className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+            className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1 rounded-lg border px-3 py-2 text-xs font-medium transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-bg)',
@@ -86,8 +87,9 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           </span>
           <button
             type="button"
+            data-covenant-map-nav
             onClick={handleNextAltar}
-            className="font-ui inline-flex cursor-pointer items-center gap-1 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+            className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1 rounded-lg border px-3 py-2 text-xs font-medium transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-bg)',
@@ -237,7 +239,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
                 {/* Floating Place Label with Smart Non-Overlapping Alignment */}
                 <span
                   data-covenant-pin-label
-                  className={`hidden sm:block font-ui pointer-events-none absolute whitespace-nowrap rounded px-1.5 py-0.5 text-[10px] font-semibold shadow-sm transition-opacity ${getLabelPositionClasses(
+                  className={`${isSelected ? 'hidden sm:block' : 'hidden xl:block'} font-ui pointer-events-none absolute whitespace-nowrap rounded px-1.5 py-0.5 text-[10px] font-semibold shadow-sm transition-opacity ${getLabelPositionClasses(
                     altar.labelAlign
                   )} ${isSelected ? 'opacity-100' : 'opacity-85 group-hover:opacity-100'}`}
                   style={{
@@ -305,11 +307,11 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             </div>
           </div>
 
-          <div className="mt-5 flex flex-wrap gap-2.5 pt-3 border-t" style={{ borderColor: 'var(--gb-border)' }}>
+          <div data-covenant-card-actions className="mt-5 flex flex-col gap-2.5 border-t pt-3 sm:flex-row lg:flex-col" style={{ borderColor: 'var(--gb-border)' }}>
             <button
               type="button"
               onClick={() => onSelectName(linkedName)}
-              className="font-ui inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90"
+              className="font-ui inline-flex min-h-11 min-w-0 w-full flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap gb-on-accent transition-opacity hover:opacity-90 sm:w-auto lg:w-full lg:flex-none"
               style={{ backgroundColor: 'var(--gb-accent)' }}
             >
               <BookOpen className="h-3.5 w-3.5" />
@@ -319,7 +321,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <button
               type="button"
               onClick={() => onJumpToName(linkedName)}
-              className="font-ui inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex min-h-11 min-w-0 w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-xs font-medium whitespace-nowrap transition-colors hover:opacity-85 sm:w-auto lg:w-full"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',

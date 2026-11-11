@@ -428,7 +428,24 @@ async function visit(browser,engine,app,width,base){
        const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
        const waypoints=[...root.querySelectorAll('[data-covenant-waypoint]')];
        const labels=[...root.querySelectorAll('[data-covenant-pin-label]')];
-       return {pins:pins.length,waypoints:waypoints.length,labels:labels.length,
+       const nav=[...root.querySelectorAll('[data-covenant-map-nav]')];
+       const actions=[...root.querySelectorAll('[data-covenant-card-actions] button')];
+       const visibleRects=labels.filter(el=>getComputedStyle(el).display!=='none')
+         .map(el=>el.getBoundingClientRect());
+       const overlaps=[];
+       for(let a=0;a<visibleRects.length;a++)for(let b=a+1;b<visibleRects.length;b++){
+         const first=visibleRects[a],second=visibleRects[b];
+         const intersectionW=Math.min(first.right,second.right)-Math.max(first.left,second.left);
+         const intersectionH=Math.min(first.bottom,second.bottom)-Math.max(first.top,second.top);
+         if(intersectionW>1&&intersectionH>1)overlaps.push([a,b,Math.round(intersectionW),Math.round(intersectionH)]);
+       }
+       return {labelOverlaps:overlaps,navCount:nav.length,
+         navMinHeight:Math.min(...nav.map(el=>el.getBoundingClientRect().height)),
+         actionCount:actions.length,
+         actionMinHeight:Math.min(...actions.map(el=>el.getBoundingClientRect().height)),
+         actionTextFits:actions.every(el=>el.scrollWidth<=el.clientWidth+2),
+         actionNoWrap:actions.every(el=>getComputedStyle(el).whiteSpace==='nowrap'),
+         pins:pins.length,waypoints:waypoints.length,labels:labels.length,
          selectedPins:pins.filter(el=>el.getAttribute('aria-pressed')==='true').length,
          selectedWaypoints:waypoints.filter(el=>el.getAttribute('aria-pressed')==='true').length,
          pinMinHeight:Math.min(...pins.map(el=>el.getBoundingClientRect().height)),
@@ -440,10 +457,18 @@ async function visit(browser,engine,app,width,base){
      if(actual.pins!==9||actual.waypoints!==9||actual.labels!==9||
         actual.selectedPins!==1||actual.selectedWaypoints!==1||
         actual.pinMinHeight<35||actual.waypointMinHeight<43||
-        !actual.labelsAccessible||(width<640&&actual.visibleLabels!==0))
+        actual.navCount!==2||actual.navMinHeight<43||
+        actual.actionCount!==2||actual.actionMinHeight<43||
+        !actual.actionTextFits||!actual.actionNoWrap||actual.labelOverlaps.length>0||
+        !actual.labelsAccessible||
+        (width<640&&actual.visibleLabels!==0)||
+        (width>=640&&width<1280&&actual.visibleLabels!==1)||
+        (width>=1280&&actual.visibleLabels!==9))
        problem('BLOCKER','atlas-nine-place-controls-failed',{engine,width,...actual});
      await anchorShot(page,engine+'-atlas-'+width+'-11-map-stage',
        '[data-covenant-map-stage]',145);
+     if(width===390||width===1440)await anchorShot(page,
+       engine+'-atlas-'+width+'-12-map-actions','[data-covenant-card-actions]',300);
      await page.locator('[data-covenant-waypoint]').first().click();
      const selected=await page.locator('[data-covenant-map-pin]').first().getAttribute('aria-pressed');
      if(selected!=='true')

@@ -438,3 +438,19 @@ for(const needle of [
 ])if(!mapControlsNov11.includes(needle))
  throw Error('Atlas schematic mobile control regression: '+needle);
 console.log('V13_ATLAS_MAP_MOBILE_ACCESS_SCOPE_PASS');
+
+
+// The exact visual audit caught labels 1/2 overlapping at 768 px and the
+// cramped 'Open analysis' CTA wrapping vertically in the 1440 px rail layout.
+// Ensure adaptive labels and full-width card actions are kept together.
+const schematicPostAudit=fs.readFileSync(path.join(root,'atlas','src','components','CovenantAltarsAtlas.tsx'),'utf8');
+for(const guard of [
+ "isSelected ? 'hidden sm:block' : 'hidden xl:block'",
+ 'data-covenant-map-nav',
+ 'min-h-11 min-w-11',
+ 'data-covenant-card-actions',
+ 'sm:flex-row lg:flex-col',
+ 'whitespace-nowrap sm:w-auto lg:w-full'
+])if(!schematicPostAudit.includes(guard))
+ throw Error('Atlas label/button collision regression: '+guard);
+console.log('V13_ATLAS_LABEL_AND_CARD_ACTION_GEOMETRY_PASS');
