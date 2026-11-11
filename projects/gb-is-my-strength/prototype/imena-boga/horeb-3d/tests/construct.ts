@@ -362,9 +362,9 @@ if (gardenRecord) {
   };
   const low = buildExhibitProps(gardenRecord, true, 0, 0);
   t('Gethsemane grove has individually shaped olive leaf sprigs in low mode',
-    leafSprigs(low) === 4 * 7 * 4 * 5 * 2);
+    leafSprigs(low) === 4 * 7 * 5 * 6 * 2);
   t('Gethsemane high detail increases sprig density without extra trees',
-    leafSprigs(garden) === 4 * 7 * 5 * 6 * 2);
+    leafSprigs(garden) === 4 * 7 * 7 * 7 * 2);
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -572,7 +572,36 @@ if (gardenRecord) {
     if (mid.distanceTo(root.clone().lerp(end, 0.5)) > 0.016 &&
         maxTurn < 0.65) smoothForks++;
   });
-  t('Gethsemane all four trees use 28 individually continuous branches',
+  // A foliage twig must emerge from an actual nearby living branch,
+  // not from an arbitrary terminal starburst or an ungrounded point.
+  const branchCurves: THREE.CatmullRomCurve3[] = [];
+  grove.traverse((o) => {
+    if (o.name === 'olive-branch' && o instanceof THREE.Mesh &&
+        o.geometry instanceof THREE.TubeGeometry &&
+        o.geometry.parameters.path instanceof THREE.CatmullRomCurve3)
+      branchCurves.push(o.geometry.parameters.path);
+  });
+  let attachedLeafTwigs = 0, spreadAlongBranch = 0;
+  grove.traverse((o) => {
+    if (o.name !== 'olive-foliage-twig' || !(o instanceof THREE.Mesh) ||
+        !(o.geometry instanceof THREE.CylinderGeometry)) return;
+    const from = o.position.clone().add(new THREE.Vector3(
+      0, -o.geometry.parameters.height / 2, 0).applyQuaternion(o.quaternion));
+    let nearest = Infinity, nearestT = 0;
+    for (const curve of branchCurves) for (let k = 11; k <= 20; k++) {
+      const t = k / 20;
+      const d = curve.getPointAt(t).distanceTo(from);
+      if (d < nearest) { nearest = d; nearestT = t; }
+    }
+    if (nearest < 0.042) {
+      attachedLeafTwigs++;
+      if (nearestT < 0.86) spreadAlongBranch++;
+    }
+  });
+  t('Gethsemane foliage twigs attach across sculpted branch trajectories',
+    attachedLeafTwigs === 4 * 7 * 5 &&
+    spreadAlongBranch >= 4 * 7 * 2);
+    t('Gethsemane all four trees use 28 individually continuous branches',
     branches === 28 && organicForks === branches);
   t('Gethsemane structural tube ends meet original rooted path endpoints',
     anchoredForks === branches);
@@ -612,7 +641,7 @@ if (gardenRecord) {
       o.material.side === THREE.DoubleSide) flatLeaves++;
   });
   t('Gethsemane olives have segmented rooted trunks and botanically thin leaves',
-    trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 4 * 5 * 2);
+    trunks === 4 && roots === 12 && flatLeaves === 4 * 7 * 5 * 6 * 2);
   let gnarled = 0, twigs = 0, totalCrownHeight = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-foliage-twig') twigs++;
@@ -624,7 +653,7 @@ if (gardenRecord) {
     }
   });
   t('Gethsemane mature boles support genuine attached foliage twigs',
-    gnarled === 4 && twigs === 4 * 7 * 4 && totalCrownHeight > 6.5);
+    gnarled === 4 && twigs === 4 * 7 * 5 && totalCrownHeight > 6.5);
   let maxTrunkRadius = 0, sculptedTrunks = 0;
   grove.traverse((o) => {
     if (o.name !== 'olive-main-trunk' || !(o instanceof THREE.Mesh)) return;
@@ -657,8 +686,8 @@ if (gardenRecord) {
   t('Gethsemane bark has continuous vertex-colour fissures, not a flat trunk material',
     barkVertices >= 4 * 180 && shadeRange > 0.045);
   t('Gethsemane foliage is paired along joined twig sprays, with no giant opaque balls',
-    foliageTwigs === 4 * 7 * 4 && biggestCore <= 0.27 &&
-    flatLeaves === 4 * 7 * 4 * 5 * 2);
+    foliageTwigs === 4 * 7 * 5 && biggestCore <= 0.14 &&
+    flatLeaves === 4 * 7 * 5 * 6 * 2);
   let tooLongLeaves = 0, verticalLeaves = 0, paleTrunks = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-leaf-sprig' && o instanceof THREE.Mesh) {
