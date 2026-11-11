@@ -105,7 +105,18 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
             # Visitors must be able to use the REAL public Open action for
             # readable museum metadata sourced from the exact same TS model.
             aim = page.locator("[data-gb-aim]")
-            await aim.get_by_role("button", name=re.compile("Открыть")).click(timeout=15000)
+            open_button = aim.get_by_role("button", name=re.compile("Открыть"))
+            await open_button.wait_for(state="visible", timeout=12000)
+            # Pointer Lock routes physical desktop clicks to the WebGL canvas.
+            # The documented desktop control is the real E key; a touch user
+            # instead activates the visible HTML button with a genuine tap.
+            # Neither path injects DOM click handlers or mutates store state.
+            if mobile:
+                await open_button.click(timeout=15000)
+                open_input = "touch-button"
+            else:
+                await page.keyboard.press("e")
+                open_input = "desktop-key-E"
             detail = page.get_by_role("dialog", name="Конфессии")
             await detail.wait_for(state="visible", timeout=12000)
             region = detail.get_by_role("region", name="Исторические документы")
@@ -154,7 +165,7 @@ async def inspect(browser, engine, station, station_label, width, height, mobile
             "screenshotMs": capture_ms, "errors": errors,
             "archive": archive, "detailScreenshot": str(detail_shot) if detail_shot else None,
             "bottomScreenshot": str(lower_shot) if lower_shot else None,
-            "typography":type_witness, **report
+            "typography":type_witness, "openInput": open_input if station == "creeds" else None, **report
         }, ensure_ascii=False), flush=True)
     finally:
         await context.close()
