@@ -302,3 +302,19 @@ for(const [name,source,value] of trainingForbidden){
  if(source.includes(value))throw Error('V13 research training reintroduced error: '+name);
 }
 console.log('V13_RESEARCH_TRAINING_SURFACES_PASS',JSON.stringify({positive:trainingRequired.length,negative:trainingForbidden.length,study:'LXX Genesis17:1, MT psalm, independent review pending'}));
+// LXX locus-accurate display: don't print generic dictionary nominatives or
+// mix separate translation traditions into one supposed verse quotation.
+const greekLocusAtlas20261111=fs.readFileSync(path.join(root,'atlas','src','components','HebrewGreekLexiconMatrix.tsx'),'utf8');
+const namesQuizScope20261111=fs.readFileSync(path.join(root,'atlas','src','components','TheologicalQuiz.tsx'),'utf8');
+if (!greekLocusAtlas20261111.includes("lxxGreek: 'τοῦ θεοῦ τοῦ ὑψίστου'") ||
+    !greekLocusAtlas20261111.includes("Быт. 14:18 LXX") ||
+    greekLocusAtlas20261111.includes("lxxGreek: 'Θεὸς Ὕψιστος'"))
+  throw Error('LXX Gen 14:18 must show its actual genitive phrase, not a dictionary nominative');
+if (!greekLocusAtlas20261111.includes("lxxGreek: 'κύριος σαβαωθ'") ||
+    !greekLocusAtlas20261111.includes("Ис. 6:3 LXX") ||
+    greekLocusAtlas20261111.includes("lxxGreek: 'Κύριος Σαβαώθ / τῶν δυνάμεων'"))
+  throw Error('LXX Isa 6:3 must be verse-specific, not a conflation of translation traditions');
+if (!namesQuizScope20261111.includes('обозначение Бога «Элохим»') ||
+    namesQuizScope20261111.includes('в Бытии 1:1 имя Элохим'))
+  throw Error('Quiz must not call Elohim a personal divine name on grammar alone');
+console.log('V13_LXX_LOCUS_QUOTATION_AND_NAMING_SCOPE_PASS');
