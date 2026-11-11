@@ -3,7 +3,7 @@ import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { SITE_CLUES, type SiteClueId } from '../data/siteClues';
 import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
-import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET, BEERSHEBA_WELL_COLLIDER_RADIUS } from './exhibitProps';
+import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET, BEERSHEBA_WELL_COLLIDER_RADIUS, GETHSEMANE_PRAYER_OFFSET, JEREMIAH_CITY_WALL_OFFSET } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { BEACON_IDS, createNameBeacon, beaconViewFactor } from './NameBeacon';
@@ -233,6 +233,25 @@ export class World {
         });
       } else if (e.id === 'el-roi') {
         this.storyTargets.push({ id: 'hagar-spring', x: bx, z: bz });
+      } else if (e.id === 'abba') {
+        // Distinct visible olive and empty prayer-stone; neither is a
+        // claim of archaeological exactness or an embodied biblical figure.
+        const [oliveX, oliveZ] = OLIVE_GROVE_OFFSETS[2];
+        this.storyTargets.push({ id: 'gethsemane-olive', x: bx + oliveX, z: bz + oliveZ });
+        this.storyTargets.push({
+          id: 'gethsemane-prayer-stone',
+          x: bx + GETHSEMANE_PRAYER_OFFSET.x,
+          z: bz + GETHSEMANE_PRAYER_OFFSET.z,
+        });
+      } else if (e.id === 'tsidkenu') {
+        // The actual kingly emblem and the right-hand stretch of the
+        // constructed city wall represent DIFFERENT referents in Jeremiah.
+        this.storyTargets.push({ id: 'jeremiah-royal-sign', x: bx, z: bz });
+        this.storyTargets.push({
+          id: 'jeremiah-city-view',
+          x: bx + JEREMIAH_CITY_WALL_OFFSET.x,
+          z: bz + JEREMIAH_CITY_WALL_OFFSET.z,
+        });
       }
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
@@ -464,10 +483,7 @@ export class World {
   // target-specific (well rim / sparse branches / shallow spring), not a
   // permission to see through unrelated geometry. This uses original meshes.
   private storyTargetHasLineOfSight(target: { id: SiteClueId; x: number; z: number }): boolean {
-    const height = target.id === 'beersheba-tamarisk' ? 1.5 :
-      target.id === 'hagar-spring' ? 0.35 : 0.95;
-    const nearRadius = target.id === 'beersheba-well' ? 1.55 :
-      target.id === 'beersheba-tamarisk' ? 1.10 : 0.75;
+    const { targetHeight: height, silhouetteTolerance: nearRadius } = SITE_CLUES[target.id];
     this.sightOrigin.set(this.pos.x, EYE, this.pos.y);
     this.sightAim.set(target.x, height, target.z);
     const dist = this.sightOrigin.distanceTo(this.sightAim);
@@ -492,8 +508,7 @@ export class World {
       const dx = target.x - this.pos.x, dz = target.z - this.pos.y;
       const dist = Math.hypot(dx, dz);
       if (dist < 1.4 || dist > 7.5) continue;
-      const targetHeight = target.id === 'beersheba-tamarisk' ? 1.5 :
-        target.id === 'hagar-spring' ? 0.35 : 0.95;
+      const targetHeight = SITE_CLUES[target.id].targetHeight;
       const dy = targetHeight - EYE;
       const spatialDist = Math.hypot(dist, dy);
       const pitch = this.pitch + this.pitchOffset;
