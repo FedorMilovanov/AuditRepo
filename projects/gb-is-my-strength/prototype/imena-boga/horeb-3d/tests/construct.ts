@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -732,6 +732,25 @@ t('metric cliff UV is restricted to far geological strata, never walkable floor'
   ravineMetricUvWeight(22, -8, 1) > 0 &&
   ravineMetricUvWeight(22, -8, 1) < 1);
 const ravineUvDensity: Record<string, number> = {};
+// The raw drop itself must be C1-smooth. The former branch at 0.45 H
+// generated a visible horizontal seam; switching quality MUST NOT reintroduce
+// a first-derivative discontinuity at either end of the 55m descent.
+const H = 40, crest = H * 0.45;
+t('zone-4 deep cliff transitions smoothly from actual untouched upper vault',
+  opposingRavineDrop(crest, H, 1) === 0 &&
+  opposingRavineDrop(crest + 0.1, H, 1) === 0 &&
+  opposingRavineDrop(crest - 0.1, H, 1) < 0.015 &&
+  opposingRavineDrop(crest - 0.2, H, 1) < 0.04);
+t('zone-4 cliff reaches real 55m depth without bottom-slope discontinuity',
+  opposingRavineDrop(-1, H, 1) === 55 &&
+  opposingRavineDrop(-1.1, H, 1) === 55 &&
+  55 - opposingRavineDrop(-0.9, H, 1) < 0.015 &&
+  opposingRavineDrop(-5, H, 0) === 0 &&
+  opposingRavineDrop(-5, H, 0.5) === 27.5);
+t('zone-4 cliff profile descends monotonically through the actual full height',
+  Array.from({ length: 190 }, (_, i) => crest - i * 0.1)
+    .every((y) => opposingRavineDrop(y - 0.1, H, 1) + 1e-10 >=
+      opposingRavineDrop(y, H, 1)));
 // The new cliff relief is physically continuous and limited to the *far*
 // wall. It must not change the safe ledge, another gallery, the top lip,
 // collision obstacles or the sacred perimeter.
