@@ -114,8 +114,10 @@ try {
       const access = await page.evaluate(() => {
         const menu = document.querySelector('[role="dialog"][aria-label="Управление экспозицией"]');
         const labels = [...menu.querySelectorAll('button')].map((b) => (b.textContent || '').trim());
+        const help = menu.querySelector('[data-testid="world-controls-help"]')?.textContent || '';
         return ['Схема маршрута','Настройки доступности','Источники и ограничения',
-          'Читать экспозицию','Выйти из прогулки'].every((name) => labels.includes(name));
+          'Читать экспозицию','Выйти из прогулки'].every((name) => labels.includes(name)) &&
+          help.includes('W A S D') && help.includes('Esc') && help.includes('F');
       });
       if (!access) throw new Error('QUIET HUD blocked accessible navigation');
       await page.click('[role="dialog"] button[aria-label="Закрыть (Esc)"]');
