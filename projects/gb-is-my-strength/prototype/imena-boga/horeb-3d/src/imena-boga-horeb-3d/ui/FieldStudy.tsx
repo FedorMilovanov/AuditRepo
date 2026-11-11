@@ -78,10 +78,11 @@ export function FieldStudy({ e, completed, onComplete }: {
         onClick={submit}>{completed ? 'Повторить исследование' : 'Записать сопоставление'}</button>
       <a className="link text-sm" href={e.verseUrl} target="_blank" rel="noopener noreferrer">Библейский источник: {e.verseReference}</a>
     </div>
-    {retry && <p role="status" className="mt-3 text-sm text-amber-200">
+    {retry && <p data-study-feedback="retry" role="status" className="mt-3 text-sm text-amber-200">
       Выбранный вывод не подтверждается двумя контекстами рабочего реестра. Проверьте ссылки на Писание и попробуйте снова, без штрафов.
-    </p>}
-    {completed && <div role="status" className="mt-4 border-l-2 border-bronze/50 pl-3 text-sm text-parch/90">
+      {completed && ' Ранее сохранённое правильное сопоставление остаётся в дневнике.'}
+    </p>
+    {completed && !retry && <div data-study-feedback="accepted" role="status" className="mt-4 border-l-2 border-bronze/50 pl-3 text-sm text-parch/90">
       <p>{task.takeaway}</p>
       <p className="mt-2 text-xs text-muted">Сохранено в локальном учебном дневнике, не является филологическим или богословским утверждением к публикации.</p>
     </div>}
