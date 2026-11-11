@@ -98,10 +98,19 @@ async def test_case(browser, engine):
 
         await b.bring_to_front()
         try:
-            await b_box.wait_for(state="visible", timeout=15000)
+            # The B modal was already proved visible, populated and
+            # independent of WebGL in open_cabinet(). Re-waiting for its
+            # parent visibility after a Linux software-GPU focus switch
+            # can time out even though the real cabinet remains visible.
+            # Click the actual public control instead: Playwright's action
+            # requires a visible, enabled, event-receiving button and still
+            # fails hard if the user could not open the collections tab.
             await b_box.get_by_role(
                 "button", name=re.compile(r"Коллекции \(")
-            ).click(timeout=15000)
+            ).click(timeout=30000)
+            assert await b_box.locator(
+                "#gb-cabinet-collection"
+            ).is_visible(), "Collections tab did not become interactive"
         except Exception:
             # Never reclassify a real concurrency failure as PASS. Keep a
             # diagnostic snapshot of the actual second tab and its visible
@@ -113,7 +122,17 @@ async def test_case(browser, engine):
                     .map(x => ({text:x.innerText, disabled:x.disabled})).slice(0, 12),
                 status: [...document.querySelectorAll('[data-gb-cabinet-modal] [role=status]')]
                     .map(x => x.textContent?.slice(0, 400)),
-                gpuCanvas: document.querySelectorAll('canvas').length
+                gpuCanvas: document.querySelectorAll('canvas').length,
+                pageVisible: document.visibilityState,
+                modalLayout: (() => {
+                  const el=document.querySelector('[data-gb-cabinet-modal]');
+                  if (!el) return null;
+                  const r=el.getBoundingClientRect();
+                  const style=getComputedStyle(el);
+                  return {width:r.width,height:r.height,display:style.display,
+                    visibility:style.visibility,opacity:style.opacity,
+                    pointerEvents:style.pointerEvents};
+                })()
             })""")
             print(json.dumps({"engine":engine, "stage":"second-tab-before-write",
                               "ui":report,"errors":errors}, ensure_ascii=False), flush=True)
