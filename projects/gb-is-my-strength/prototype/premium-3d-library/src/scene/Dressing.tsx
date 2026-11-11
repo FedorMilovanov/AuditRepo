@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { ITEMS, byId, itemPos } from "../data";
+import { ARTICLE_CHAIR_PLACEMENT, SECTION_BENCH_RING_RADIUS, ITEMS, byId, itemPos } from "../data";
 import { get, input, openItem, registry, set } from "../store";
 import { useReducedMotion } from "../motion";
 import { lecternPage, verseTabletTexture } from "../textures";
@@ -136,10 +136,12 @@ function Benches() {
   return <group>
     {ITEMS.filter((i) => i.kind === "section").map((it) => {
       const a = (it.angle * Math.PI) / 180;
-      const r = it.id === "articles" ? 9.4 : 6.15;
+      const r = it.id === "articles" ? ARTICLE_CHAIR_PLACEMENT.ringRadius : SECTION_BENCH_RING_RADIUS;
       return <group key={it.id} position={[Math.sin(a) * r, 0, Math.cos(a) * r]} rotation={[0, a, 0]}>
         {it.id === "articles"
-          ? <group position={[2.2, 0, 0.7]} rotation-y={-0.4}>
+          ? <group
+              position={[ARTICLE_CHAIR_PLACEMENT.offsetX, 0, ARTICLE_CHAIR_PLACEMENT.offsetZ]}
+              rotation-y={ARTICLE_CHAIR_PLACEMENT.localYaw}>
               <ReferenceArmchair />
             </group>
           : <BenchGeometry />}

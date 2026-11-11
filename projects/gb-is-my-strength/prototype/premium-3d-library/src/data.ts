@@ -316,6 +316,29 @@ export const itemPos = (i: Item): [number, number] => {
   return [Math.sin(a) * i.radius, Math.cos(a) * i.radius];
 };
 
+/**
+ * The visible section furniture and movement collisions share one source.
+ * The Article chair is an authored 0.85 × 0.77 m CC0 GLB moved away from the
+ * arrival camera; the 0.62 m footprint conservatively encloses its local mesh.
+ */
+export const SECTION_BENCH_RING_RADIUS = 6.15;
+export const ARTICLE_CHAIR_PLACEMENT = Object.freeze({
+  ringRadius: 9.4,
+  offsetX: 2.5,
+  offsetZ: 0.7,
+  localYaw: -0.4,
+  collisionRadius: 0.62,
+});
+
+export function articleChairXZ(): [number, number] {
+  const a = (byId("articles").angle * Math.PI) / 180;
+  const p = ARTICLE_CHAIR_PLACEMENT;
+  return [
+    Math.sin(a) * p.ringRadius + Math.cos(a) * p.offsetX + Math.sin(a) * p.offsetZ,
+    Math.cos(a) * p.ringRadius - Math.sin(a) * p.offsetX + Math.cos(a) * p.offsetZ,
+  ];
+}
+
 /** Shared player collision shape and inner reading-table obstacle. */
 export const PLAYER_COLLISION_RADIUS = 0.35;
 export const CENTER_OBSTACLE_RADIUS = 3.35;
@@ -448,10 +471,16 @@ export const OBSTACLES: [number, number, number][] = [
     const [x, z] = itemPos(i);
     return [x, z, hitR(i.kind)] as [number, number, number];
   }),
-  ...ITEMS.filter((i) => i.kind === "section").map((i) => {
+  ...ITEMS.filter((i) => i.kind === "section" && i.id !== "articles").map((i) => {
     const a = (i.angle * Math.PI) / 180;
-    return [Math.sin(a) * 6.15, Math.cos(a) * 6.15, 0.42] as [number, number, number];
+    return [
+      Math.sin(a) * SECTION_BENCH_RING_RADIUS,
+      Math.cos(a) * SECTION_BENCH_RING_RADIUS,
+      0.42,
+    ] as [number, number, number];
   }),
+  // Collision now follows the real CC0 chair, not the removed Article bench.
+  [...articleChairXZ(), ARTICLE_CHAIR_PLACEMENT.collisionRadius],
 ];
 
 export const WALK_RADIUS = 13.55;

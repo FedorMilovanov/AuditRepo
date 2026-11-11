@@ -91,4 +91,58 @@ assert.throws(() => assess({ ...R, bookCenterY: 1.95 }), /tabletop/);
 assert.throws(() => assess({ ...R, supportCenterY: 1.87 }), /support/);
 assert.throws(() => assess({ ...R, lecternPageRotationX: 0 }), /text plane/);
 assert.throws(() => assess({ ...R, lecternFacingTiltX: -0.62 }), /away from the visitor/);
+// The chair must have a *real* matching collision volume, while the removed
+// Article bench must leave no invisible blocker on the visitor's path.
+const dataJS = ts.transpileModule(data, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS },
+}).outputText;
+const dataModule = { exports: {} };
+const requireData = (name) => {
+  assert.equal(name, "./scene/readingGeometry");
+  return { READING_GEOMETRY: R };
+};
+new Function("require", "module", "exports", "document", dataJS)(
+  requireData, dataModule, dataModule.exports, { baseURI: "https://example.invalid/" });
+const D = dataModule.exports;
+assert(Object.isFrozen(D.ARTICLE_CHAIR_PLACEMENT),
+  "Art furniture placement must be immutable");
+for (const field of ["ringRadius", "offsetX", "offsetZ", "localYaw"]) {
+  assert(dressing.includes("ARTICLE_CHAIR_PLACEMENT." + field),
+    "Rendered chair disconnected from shared collision placement: " + field);
+}
+assert(dressing.includes("SECTION_BENCH_RING_RADIUS"),
+  "Other section benches no longer use the shared radius");
+assert(read("scene/Player.tsx").includes("for (const [ox, oz, or] of OBSTACLES)"),
+  "Player movement does not honor the canonical obstacle list");
+const chair = D.ARTICLE_CHAIR_PLACEMENT;
+const [chairX, chairZ] = D.articleChairXZ();
+const chairOutline = Math.hypot(0.42422, 0.41731); // verified original glTF bbox
+assert(chair.collisionRadius > chairOutline + 0.01,
+  "Chair collision does not enclose the real 0.85 × 0.77 m mesh");
+const near = (obstacle, x, z) =>
+  Math.hypot(obstacle[0] - x, obstacle[1] - z) < 0.001;
+const realCollider = D.OBSTACLES.filter((o) => near(o, chairX, chairZ));
+assert.equal(realCollider.length, 1, "Art chair must have exactly one collision volume");
+assert.equal(realCollider[0][2], chair.collisionRadius,
+  "Chair and collision use a different physical footprint");
+const article = D.byId("articles");
+const a = article.angle * Math.PI / 180;
+const ghostX = Math.sin(a) * D.SECTION_BENCH_RING_RADIUS;
+const ghostZ = Math.cos(a) * D.SECTION_BENCH_RING_RADIUS;
+assert(!D.OBSTACLES.some((o) => near(o, ghostX, ghostZ)),
+  "Old Article bench collision remains after that bench was replaced");
+const wallClearance = D.WALK_RADIUS - Math.hypot(chairX, chairZ)
+  - chair.collisionRadius - D.PLAYER_COLLISION_RADIUS;
+assert(wallClearance > 1.0,
+  "Furniture blocks pedestrian passage between chair and outer wall");
+const [articleX, articleZ] = D.itemPos(article);
+const stationPassage = Math.hypot(chairX - articleX, chairZ - articleZ)
+  - chair.collisionRadius - 1.05 - 2 * D.PLAYER_COLLISION_RADIUS;
+assert(stationPassage > 0.35,
+  "Chair collides with walkable two-sided clearance at the Article station");
+const furnitureProof = { x: +chairX.toFixed(3), z: +chairZ.toFixed(3),
+  collisionRadius: chair.collisionRadius,
+  wallClearance: +wallClearance.toFixed(3),
+  stationPassage: +stationPassage.toFixed(3), ghostRemoved: true };
+console.log("FURNITURE_COLLISION_PASS " + JSON.stringify(furnitureProof));
 console.log("READING_GEOMETRY_PASS " + JSON.stringify(real));

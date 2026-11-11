@@ -1,5 +1,17 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.57 — source-owned 3D chair collision synchronization (local candidate)
+
+The first real CC0 armchair exposed a distinct pedestrian bug: the old procedural Article bench collision at radius 6.15m had survived after that bench's renderer was removed, while the new GLB had no collision. The visitor could have been stopped by invisible furniture and could walk through the visible chair. The actual player collision path uses `OBSTACLES` and a 0.35m player radius; a rendering-only fix would not resolve either defect.
+
+**Scoped correction:** `src/data.ts` now defines one immutable `ARTICLE_CHAIR_PLACEMENT` (9.4m ring, 2.5m lateral, 0.7m longitudinal offset, -0.4rad turn, 0.62m collision radius) and `SECTION_BENCH_RING_RADIUS` (6.15m). `Dressing.tsx` consumes exactly these coordinates, while `OBSTACLES` replaces the deleted Article bench's collision with the transformed real chair footprint. Other section benches remain in their original positions, with their collisions unchanged.
+
+**Independent geometry witness:** `tests/reading-furniture-geometry.mjs` executes the real TypeScript data module, checks that its placement feeds the actual JSX and player collision loop, matches the original GLB 0.85×0.77m bounds, verifies exactly one chair collider and zero ghost bench collider, then proves 2.175m radial free passage to the wall and 0.448m spare width between the two player-expanded obstacles at the Article station. `FURNITURE_COLLISION_PASS`, `lab:check`, TypeScript and production build passed locally. Visual navigation screenshots and the current candidate's exact-head CI remain independent admission gates.
+
+**Status:** this V5.57 step is a LAB candidate only until committed and its own CI is terminal-green. Never transfer the previous-head CI status to this change. Draft / ART HOLD remains; no Product/main changes or deployment.
+
+---
+
 ## V5.56 — one source-verified chair reference; LAB candidate, ART HOLD
 
 **Preceding exact-head functional gate is terminal green:** commit `39e1d5711667136f78defb806422a409f202bd50`: [Workflow Preflight SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793273), [Linux Validate SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793225), **13/13 real-browser suites and 65/65 cases PASS on Linux**, independently **65/65 PASS on Windows**. The corrected desktop-keyboard E / mobile-touch Open witness does not bypass input handlers. **Do not project these results to this V5.56 asset commit; exact-new-head CI must run again.**
