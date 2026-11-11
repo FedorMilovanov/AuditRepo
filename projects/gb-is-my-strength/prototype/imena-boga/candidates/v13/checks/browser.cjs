@@ -872,6 +872,23 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           // OS preferences and reset immediately when OS reduce activates.
           const verseTilt=motionPage.locator('#yhwh [data-reader-tilt]').first();
           await verseTilt.scrollIntoViewIfNeeded();
+          // As with the letter card below, wait for Framer's reveal to settle
+          // before hovering. During its translating/fading entrance, a mouse
+          // can leave the moving element and reset its tilt even though the
+          // component correctly handles pointer movement.
+          await verseTilt.evaluate(async el=>{
+            await new Promise((resolve,reject)=>{
+              const start=performance.now();
+              const poll=()=>{
+                const wrapper=el.parentElement;
+                const style=wrapper&&getComputedStyle(wrapper);
+                if(style?.transform==='none'&&Number(style.opacity)>0.999){resolve();return}
+                if(performance.now()-start>5000){reject(Error('Verse reveal did not settle'));return}
+                requestAnimationFrame(poll);
+              };
+              poll();
+            });
+          });
           await verseTilt.hover({position:{x:22,y:24}});
           const neutral='perspective(900px) rotateX(0deg) rotateY(0deg)';
           if(enabled){
