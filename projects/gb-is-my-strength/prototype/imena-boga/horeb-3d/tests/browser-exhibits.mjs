@@ -272,12 +272,14 @@ try {
     await page.waitForFunction(() => !!document.querySelector('h1')?.textContent?.includes('ИМЕНА БОГА'),
       { timeout: 7500 });
     const resetClicked = await page.evaluate(() => {
-      const button = [...document.querySelectorAll('button')]
-        .find((b) => b.textContent?.trim() === 'Сбросить прогресс');
-      button?.click();
-      return !!button;
+      const button = document.querySelector('[data-testid="restart-route"]');
+      const hasCorrectLabel = button?.textContent?.trim() === 'Начать маршрут заново';
+      const preservesJournal = button?.parentElement?.textContent?.includes(
+        'дневник исследований, наблюдения и закладки сохранятся');
+      if (hasCorrectLabel && preservesJournal) button.click();
+      return !!hasCorrectLabel && !!preservesJournal;
     });
-    if (!resetClicked) throw new Error('Reset saved checkpoint control unavailable');
+    if (!resetClicked) throw new Error('Route restart control or preservation notice unavailable');
     await page.waitForFunction(() => {
       const start = [...document.querySelectorAll('button')]
         .some((b) => b.textContent?.trim() === 'Начать путешествие');
