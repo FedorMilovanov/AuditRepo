@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { marble, stone } from "./Platform";
 import { CASEWORK } from "./caseworkScale";
 import { useCaseworkWood, verticalGrainBoxGeometry } from "./CaseworkWood";
+import { EntrancePortico } from "./EntrancePortico";
 
 /**
  * Premium library envelope. Original interactive stations keep their canonical
@@ -199,17 +200,9 @@ export function Architecture() {
     <group>
       <InstancedShelfBays geometry={geometry} verticalGeometry={verticalGeometry} casework={casework} />
       {Array.from(WINDOW_BAYS).map((bay) => <WindowBay key={bay} bay={bay} geometry={geometry} />)}
-      {/* Original entrance remains open: this is an exploration prototype, not a sealed maze. */}
-      <group position={[0, 0, RADIUS]}>
-        {[-1.72, 1.72].map(x => (
-          <mesh key={x} position={[x, 4.1, 0]} material={marble} receiveShadow>
-            <boxGeometry args={[0.75, 8.2, 0.58]} />
-          </mesh>
-        ))}
-        <mesh position={[0, 7.18, 0]} material={marble} receiveShadow>
-          <boxGeometry args={[4.3, 2.0, 0.54]} />
-        </mesh>
-      </group>
+      {/* Continuously open stone arch and exterior loggia: no mesh at the
+          walking path centre and no change to the existing navigation map. */}
+      <EntrancePortico />
       <BookInstances />
     </group>
   );

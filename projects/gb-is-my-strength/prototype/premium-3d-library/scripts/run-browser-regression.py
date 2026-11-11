@@ -24,6 +24,7 @@ DIST = ROOT / "dist"
 TESTS = (
     ("interaction-regression-browser.py", 12),
     ("architectural-art-browser.py", 4),
+    ("entrance-portico-browser.py", 4),
     ("central-book-browser.py", 4),
     ("mobile-hud-browser.py", 6),
     ("reference-bay-browser.py", 5),
@@ -38,6 +39,7 @@ TESTS = (
 EVIDENCE_VARIABLES = {
     "interaction-regression-browser.py": "GB_LIBRARY_INTERACTION_EVIDENCE_DIR",
     "architectural-art-browser.py": "GB_LIBRARY_ART_EVIDENCE_DIR",
+    "entrance-portico-browser.py": "GB_LIBRARY_ENTRANCE_EVIDENCE_DIR",
     "central-book-browser.py": "GB_LIBRARY_BOOK_EVIDENCE_DIR",
     "mobile-hud-browser.py": "GB_LIBRARY_HUD_EVIDENCE_DIR",
     "reference-bay-browser.py": "GB_LIBRARY_FOCUS_EVIDENCE_DIR",
@@ -94,6 +96,22 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             assert isinstance(hashes, list) and len(hashes) == 2 and (
                 (hashes[0] == hashes[1]) is (case["preference"] == "reduce")
             ), f"Motion witness lacks consistent screenshot hashes: {case}"
+    if name == "entrance-portico-browser.py":
+        assert {(case.get("engine"),case.get("viewport")) for case in cases} == {
+            ("chromium","1440x900"),("chromium","390x844"),
+            ("webkit","1440x900"),("webkit","390x844"),
+        },f"Entrance portal missed a browser/viewport: {cases}"
+        for case in cases:
+            witness=case.get("report")
+            assert case.get("tourArrived") is True and (
+                bool(case.get("before")) and bool(case.get("entrance"))
+            ) and isinstance(witness,dict) and (
+                witness.get("hasWebGL2") is True
+            ) and witness.get("overflow") is False and (
+                witness.get("tourGone") is True
+            ) and witness.get("paused") is False, (
+                f"Portico public-route screenshot/entry witness incomplete: {case}"
+            )
     if name == "photo-transition-browser.py":
         assert {(case.get("engine"), case.get("viewport")) for case in cases} == {
             ("chromium","1440x900"), ("chromium","390x844"),

@@ -369,6 +369,9 @@ function look(x: number, z: number, tx: number, tz: number, pitch: number): View
 /** Точки, которые не привязаны к экспонату: порог и сердце зала. */
 export const VIEWS: Record<string, View> = {
   gate: { ...look(0.15, 8.7, 2.35, 11.55, 0), pitch: -0.16 },
+  // A genuine public-view stop looking out through the open arch, not a
+  // camera injection or change to the visitor's spawn/navigation bounds.
+  portico: { ...look(0, 6.7, 0, 14.45, 0.23), pitch: 0.23 },
   heart: { ...look(2.4, 6.6, 0, 2.6, 0.34), pitch: 0.05 },
 };
 
@@ -377,6 +380,11 @@ export const TOUR: { goto: string; kicker: string; text: string }[] = [
     goto: "gate",
     kicker: "Порог",
     text: "«Господь Бог — сила моя: Он сделает ноги мои как у оленя и на высоты мои возведёт меня». Аввакум 3:19. Зал стоит на этих высотах: отсюда видна вся библиотека, и спешить некуда.",
+  },
+  {
+    goto: "portico",
+    kicker: "Входной портал",
+    text: "Каменная арка, глубокие откосы и ступенчатый карниз отмечают вход в библиотеку. За открытым проходом видна колоннада — архитектура впускает дневной свет, не заменяя его нарисованной декорацией.",
   },
   {
     goto: "heart",

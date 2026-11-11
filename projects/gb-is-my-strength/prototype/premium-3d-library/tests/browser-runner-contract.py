@@ -15,6 +15,7 @@ spec.loader.exec_module(module)
 expected = {
     "interaction-regression-browser.py": 12,
     "architectural-art-browser.py": 4,
+    "entrance-portico-browser.py": 4,
     "central-book-browser.py": 4,
     "mobile-hud-browser.py": 6,
     "reference-bay-browser.py": 5,
@@ -27,7 +28,7 @@ expected = {
     "reading-furniture-browser.py": 4,
 }
 assert dict(module.TESTS) == expected
-assert sum(expected.values()) == 61
+assert sum(expected.values()) == 65
 assert len(set(module.EVIDENCE_VARIABLES.values())) == len(expected)
 assert set(module.EVIDENCE_VARIABLES) == set(expected)
 
@@ -57,6 +58,15 @@ def cases_for(name: str) -> list[dict]:
             item["cleanControlHidden"] = True
             item["revealAfterInput"] = True
             item["cleanScreenshot"] = "actual-clean-frame.png"
+    if name == "entrance-portico-browser.py":
+        for index, item in enumerate(records):
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["viewport"] = ("1440x900", "390x844")[index % 2]
+            item["before"] = "actual-before.png"
+            item["entrance"] = "actual-portico.png"
+            item["tourArrived"] = True
+            item["report"] = {"hasWebGL2": True, "overflow": False,
+                              "tourGone": True, "paused": False}
     if name == "reading-furniture-browser.py":
         for index, item in enumerate(records):
             item["engine"] = ("chromium", "webkit")[index // 2]
@@ -115,6 +125,26 @@ for name, count in expected.items():
         pass
     else:
         raise AssertionError(f"{name}: accepted JS page error")
+
+# The entrance test must reject a missing screenshot, simulated tour
+# success or an improperly closed tour overlay.
+missing_portico = cases_for("entrance-portico-browser.py")
+missing_portico[0]["entrance"] = ""
+try:
+    module.verify_case_records("entrance-portico-browser.py", jsonlines(missing_portico), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Missing entrance screenshot was accepted")
+
+blocked_portico = cases_for("entrance-portico-browser.py")
+blocked_portico[2]["report"]["tourGone"] = False
+try:
+    module.verify_case_records("entrance-portico-browser.py", jsonlines(blocked_portico), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Entrance tour overlay obscured scene and was accepted")
 
 # Photo fixtures must carry actual engine/viewport and clean-frame
 # witnesses. Reject an unproven clean frame instead of weakening the runner.
@@ -257,4 +287,4 @@ except AssertionError:
 else:
     raise AssertionError("Normal-motion control accepted two identical screenshots")
 
-print("BROWSER_CI_CONTRACT_PASS: twelve suites, 61 cases; fails on missing/SKIP/errors/bad quality/motion directions/malformed JSON")
+print("BROWSER_CI_CONTRACT_PASS: thirteen suites, 65 cases; fails on missing/SKIP/errors/bad quality/motion directions/malformed JSON")
