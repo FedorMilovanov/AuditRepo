@@ -490,6 +490,30 @@ if (gardenRecord) {
   grove.traverse((o) => { if (o.name === 'olive-branch' && o instanceof THREE.Mesh) branchMats.add(o.material as THREE.Material); });
   t('Gethsemane four trees have independent tapered structural branches',
     branches >= 24 && branchMats.size === 1);
+  // Structural forks must actually BEND, not merely use more cylinder faces.
+  // Their first and last rings still touch the original connected branch
+  // endpoints; the existing trunk colliders and walkable path are unchanged.
+  let curvedForks = 0, groundedForkEnds = 0;
+  grove.traverse((o) => {
+    if (o.name !== 'olive-branch' || !(o instanceof THREE.Mesh) ||
+        !(o.geometry instanceof THREE.CylinderGeometry)) return;
+    const geo = o.geometry, pos = geo.getAttribute('position');
+    const width = geo.parameters.radialSegments + 1;
+    const centroid = (row: number) => {
+      let xx = 0, zz = 0;
+      for (let j = 0; j < width - 1; j++) {
+        xx += pos.getX(row * width + j);
+        zz += pos.getZ(row * width + j);
+      }
+      return Math.hypot(xx, zz) / (width - 1);
+    };
+    if (geo.parameters.heightSegments < 6) return;
+    if (centroid(Math.floor(geo.parameters.heightSegments / 2)) > 0.007) curvedForks++;
+    if (centroid(0) < 0.002 && centroid(geo.parameters.heightSegments) < 0.002)
+      groundedForkEnds++;
+  });
+  t('Gethsemane structural forks bend naturally with joined endpoints',
+    curvedForks >= 28 && groundedForkEnds === branches);
   let trunks = 0, roots = 0, flatLeaves = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-main-trunk') trunks++;
