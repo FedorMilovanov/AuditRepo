@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -724,6 +724,14 @@ t('ravine local reflectance cannot alter walkable lip or other zones',
   ravineStrataReflectance(22, -22, -88, 0) === 1 &&
   ravineStrataReflectance(22, -22, -340, 0) === 1);
 
+t('metric cliff UV is restricted to far geological strata, never walkable floor',
+  ravineMetricUvWeight(22, -22, 1) === 1 &&
+  ravineMetricUvWeight(22, -22, 0) === 0 &&
+  ravineMetricUvWeight(2.8, -22, 1) === 0 &&
+  ravineMetricUvWeight(22, 1, 1) === 0 &&
+  ravineMetricUvWeight(22, -8, 1) > 0 &&
+  ravineMetricUvWeight(22, -8, 1) < 1);
+const ravineUvDensity: Record<string, number> = {};
 // A visible ravine must descend from the exact right-hand floor vertices,
 // not be simulated by a disconnected dark plane fifty metres underneath.
 for (const lowMode of [true, false]) {
@@ -746,6 +754,36 @@ for (const lowMode of [true, false]) {
   }
   t('zone-4 opposing cliff opens real 20m+ ravine without extra geometry ' +
     (lowMode ? 'LOW' : 'HIGH'), farRockX > 20 && farRockX < 28);
+  // Physically measured cliff length, not arbitrary j/N surface indices:
+  // enforce texture frequency remains comparable on LOW and HIGH.
+  if (opposingVault instanceof THREE.Mesh) {
+    const position = opposingVault.geometry.getAttribute('position');
+    const texcoord = opposingVault.geometry.getAttribute('uv');
+    const segments = lowMode ? 36 : 60;
+    const rowWidth = segments + 1;
+    let summedU = 0, summedLength = 0, measuredEdges = 0;
+    for (let i = 0; i + rowWidth < position.count; i += rowWidth) {
+      const z = position.getZ(i);
+      if (z < -205 || z > -195) continue;
+      for (let j = 1; j < rowWidth; j++) {
+        const a = i + j - 1, b = i + j;
+        if (position.getX(a) < 19 || position.getX(b) < 19 ||
+            position.getY(a) > -14 || position.getY(b) > -14) continue;
+        const length = Math.hypot(position.getX(a) - position.getX(b),
+          position.getY(a) - position.getY(b));
+        if (length < 0.15 || length > 10) continue;
+        summedLength += length;
+        summedU += Math.abs(texcoord.getX(b) - texcoord.getX(a));
+        measuredEdges++;
+      }
+    }
+    const density = summedU / summedLength;
+    ravineUvDensity[lowMode ? 'low' : 'high'] = density;
+    t('zone-4 physically scaled deep rock UV has real arc-length sampling ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+      measuredEdges > 12 && Number.isFinite(density) &&
+      density > 0.12 && density < 0.55);
+  }
   let good = walkingFloor instanceof THREE.Mesh && depthPlate instanceof THREE.Mesh;
   if (walkingFloor instanceof THREE.Mesh) {
     const g = walkingFloor.geometry;
@@ -825,6 +863,9 @@ for (const lowMode of [true, false]) {
     (lowMode ? 'LOW' : 'HIGH'), good);
 }
 
+t('deep rock UV density consistent between independent low and high meshes',
+  Number.isFinite(ravineUvDensity.low) && Number.isFinite(ravineUvDensity.high) &&
+  Math.abs(ravineUvDensity.low - ravineUvDensity.high) < 0.13);
 const distantCrags = zoneGeometry.group.getObjectByName('horeb-distant-crags');
 let distantSafe = distantCrags instanceof THREE.InstancedMesh && distantCrags.count === 32;
 if (distantCrags instanceof THREE.InstancedMesh) {
