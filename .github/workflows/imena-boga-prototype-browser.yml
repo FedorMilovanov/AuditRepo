@@ -19,7 +19,11 @@ concurrency:
 jobs:
   candidate-browser:
     name: Vite builds, browser contracts and CLS witness
-    runs-on: ubuntu-latest
+    # Pin the same supported image as AuditRepo Validate/Preflight. ubuntu-latest
+    # moved to resolute in the failed 2026-11-11 witness; apt dependency
+    # downloads stalled on Ubuntu archive DNS until the 30m job deadline.
+    # Keep the real Playwright browsers, apt dependencies and strict QA.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
       PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
