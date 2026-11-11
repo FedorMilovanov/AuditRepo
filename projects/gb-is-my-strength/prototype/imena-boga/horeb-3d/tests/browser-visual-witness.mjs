@@ -125,13 +125,26 @@ try {
   // The near ledge's own cliff face is naturally hidden underneath its lip;
   // requiring that surface in camera ray hits is a false premise.
   // Gate the actual visible negative-Y rock, not screenshot existence.
-  for (const [slug, x, z, yaw, pitch] of [
-    // Between right-hand steles (z=-191 and -201), not directly behind
-    // the monumental plaque at z=-191 that blocked the previous snapshot.
-    ['zone4-chasm-edge', 3.1, -195.5, -1.2, -0.50],
-    ['zone4-chasm-depth', 3.45, -206, -Math.PI / 2, -0.62],
+  // Distinct authored viewing sectors, all on the real safe visitor ledge.
+  // Reject obstructed perspectives rather than falsely certifying props-only
+  // ray tests that miss opaque merged scenery (shown in old screenshots).
+  for (const [slug, candidates] of [
+    ['zone4-chasm-edge', [
+      [3.1, -195.5, -1.2, -0.50],
+      [3.1, -195.5, -Math.PI / 2, -0.54],
+      [2.85, -194.7, -Math.PI / 2, -0.56],
+      [2.9, -196.8, -Math.PI / 2, -0.52],
+    ]],
+    ['zone4-chasm-depth', [
+      [3.45, -206, -Math.PI / 2, -0.62],
+      [3.1, -205, -Math.PI / 2, -0.58],
+      [2.9, -207, -Math.PI / 2, -0.60],
+    ]],
   ]) {
-    const beforeRavine = await desktop.evaluate(({ x, z, yaw, pitch }) => {
+    let accepted = null;
+    const rejected = [];
+    for (const [x, z, yaw, pitch] of candidates) {
+      const beforeRavine = await desktop.evaluate(({ x, z, yaw, pitch }) => {
       const w = window.__horeb.world;
       const frame = w.renderer.info.render.frame;
       w.teleportTo(x, z);
@@ -143,18 +156,16 @@ try {
         .map((p) => Math.hypot(p.x - w.position.x, p.z - w.position.z)));
       return { frame, actualX: w.position.x, actualZ: w.position.z, nearestExhibit };
     }, { x, z, yaw, pitch });
-    if (![beforeRavine.actualX, beforeRavine.actualZ].every(Number.isFinite) ||
-        beforeRavine.actualX > 3.5 ||
-        Math.abs(beforeRavine.actualX - x) > 0.2 ||
-        Math.abs(beforeRavine.actualZ - z) > 0.2 ||
-        beforeRavine.nearestExhibit < 3.5)
-      throw new Error('Ravine camera is outside the safe physical route: ' +
-        JSON.stringify({ ...beforeRavine, x, z, yaw, pitch }));
-    await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
-    await new Promise((resolve) => setTimeout(resolve, 330));
-    const file = 'visual-detail-' + slug + '.png';
-    await desktop.screenshot({ path: join(shots, file) });
-    const geometryVisibility = await desktop.evaluate(async () => {
+      if (![beforeRavine.actualX, beforeRavine.actualZ].every(Number.isFinite) ||
+          beforeRavine.actualX > 3.5 ||
+          Math.abs(beforeRavine.actualX - x) > 0.2 ||
+          Math.abs(beforeRavine.actualZ - z) > 0.2 ||
+          beforeRavine.nearestExhibit < 3.5) {
+        rejected.push({ x, z, yaw, pitch, reason: 'UNSAFE_CAMERA', ...beforeRavine });
+        continue;
+      }
+      await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
+      const geometryVisibility = await desktop.evaluate(async () => {
       const THREE = await import('/node_modules/.vite/deps/three.js');
       const w = window.__horeb.world;
       const floor = w.scene.getObjectByName('cave-floor-continuous');
@@ -187,35 +198,63 @@ try {
             deepOppositeRock++;
         }
       }
-      // A genuine chasm screenshot must not be a closeup of the neighbouring
-      // inscription slab. The older z=-190 camera stood directly behind the
-      // shammah stela and technically passed rock-only rays while the REAL
-      // image was mostly blocked by the foreground prop.
-      const placards = w.scene.children.filter((object) =>
-        typeof object.userData?.exhibitId === 'string');
-      raycaster.far = 9;
-      let foregroundPlacards = 0;
-      for (const sx of [-0.25, 0, 0.25]) for (const sy of [-0.2, 0, 0.2]) {
+      // Reuse exactly the World registry of opaque triangles used by F
+      // visibility. Merged exhibit props lack root exhibitId: the former
+      // "placards only" ray test passed a frame mostly blocked by brown rock.
+      const opaqueProps = w.sightMeshes.filter((mesh) => {
+        if (mesh === floor || mesh === vault) return false;
+        for (let parent = mesh; parent; parent = parent.parent)
+          if (!parent.visible) return false;
+        return true;
+      });
+      raycaster.far = 90;
+      let foregroundOpaqueProps = 0;
+      const foregroundNames = {};
+      for (const sx of [-0.25, 0, 0.25]) for (const sy of [-0.20, 0, 0.20]) {
         raycaster.setFromCamera(new THREE.Vector2(sx, sy), w.camera);
-        if (raycaster.intersectObjects(placards, true).some((hit) => hit.distance < 9))
-          foregroundPlacards++;
+        const rock = raycaster.intersectObjects([floor, vault], false)[0];
+        const block = raycaster.intersectObjects(opaqueProps, false).find((hit) =>
+          hit.distance < 12 && hit.distance < (rock?.distance ?? 90) - 0.12);
+        if (block) {
+          foregroundOpaqueProps++;
+          const name = block.object.name || block.object.parent?.name || 'unnamed-prop';
+          foregroundNames[name] = (foregroundNames[name] || 0) + 1;
+        }
       }
       return { samples: 63, nearFloor, connectedNearFace, opposingRock,
-        deepOppositeRock, misses, lowestVisibleY, foregroundPlacards,
+        deepOppositeRock, misses, lowestVisibleY,
+        foregroundOpaqueProps, foregroundNames, checkedOpaqueMeshes: opaqueProps.length,
         actualCameraZ: w.camera.position.z, expectedCameraZ: w.position.z };
     });
-    const geometryGate =
-      geometryVisibility.nearFloor >= 5 &&
-      geometryVisibility.deepOppositeRock >= 8 &&
-      geometryVisibility.lowestVisibleY < -14 &&
-      geometryVisibility.foregroundPlacards === 0 &&
-      Math.abs(geometryVisibility.actualCameraZ - geometryVisibility.expectedCameraZ) < 0.05
-        ? 'PASS_GEOMETRIC_DEPTH' : 'FAIL_RAVINE_SIGHTLINE';
+      const geometryGate =
+        geometryVisibility.nearFloor >= 5 &&
+        geometryVisibility.deepOppositeRock >= 8 &&
+        geometryVisibility.lowestVisibleY < -14 &&
+        geometryVisibility.foregroundOpaqueProps === 0 &&
+        geometryVisibility.checkedOpaqueMeshes > 42 &&
+        Math.abs(geometryVisibility.actualCameraZ - geometryVisibility.expectedCameraZ) < 0.05
+          ? 'PASS_UNOBSTRUCTED_RAVINE' : 'FAIL_RAVINE_SIGHTLINE';
+      if (geometryGate !== 'PASS_UNOBSTRUCTED_RAVINE') {
+        rejected.push({ x, z, yaw, pitch, reason: geometryGate, ...geometryVisibility });
+        continue;
+      }
+      accepted = { x, z, yaw, pitch, geometryVisibility, geometryGate };
+      break;
+    }
+    if (!accepted) {
+      throw new Error('No safe, genuinely unobstructed ravine view ' +
+        slug + ': ' + JSON.stringify(rejected));
+    }
+    await new Promise((resolve) => setTimeout(resolve, 330));
+    const file = 'visual-detail-' + slug + '.png';
+    await desktop.screenshot({ path: join(shots, file) });
     witness.details.push({ id: slug, zone: 4, screenshot: file,
-      geometryVisibility, geometryGate, artGate: 'HOLD_HUMAN_ART_REVIEW',
-      narrative: 'Safe-zone physical deep ravine witness; aesthetic approval separate' });
-    console.log((geometryGate.startsWith('PASS') ? 'PASS ' : 'FAIL ') +
-      'ravine ' + slug + ' ' + file + ' ' + JSON.stringify(geometryVisibility));
+      camera: { x: accepted.x, z: accepted.z, yaw: accepted.yaw, pitch: accepted.pitch },
+      geometryVisibility: accepted.geometryVisibility, geometryGate: accepted.geometryGate,
+      artGate: 'HOLD_HUMAN_ART_REVIEW',
+      narrative: 'Full opaque-mesh raycast from real safe ledge; separate human art review' });
+    console.log('PASS unobstructed ravine ' + slug + ' ' + file +
+      ' ' + JSON.stringify(accepted.geometryVisibility));
   }
 
   // Hardware safety witness. Compare low-quality startup draw calls to the
@@ -398,8 +437,8 @@ try {
   await browser.close();
   const ravineDetails = witness.details.filter((item) => item.zone === 4);
   witness.chasmGeometryGate = ravineDetails.length === 2 &&
-    ravineDetails.every((item) => item.geometryGate === 'PASS_GEOMETRIC_DEPTH')
-    ? 'PASS_GEOMETRIC_DEPTH' : 'FAIL_RAVINE_SIGHTLINE';
+    ravineDetails.every((item) => item.geometryGate === 'PASS_UNOBSTRUCTED_RAVINE')
+    ? 'PASS_UNOBSTRUCTED_RAVINE' : 'FAIL_RAVINE_SIGHTLINE';
   // Not an automatic claim that the rock or all eight scenes are premium.
   witness.chasmArtGate = 'HOLD_HUMAN_ART_REVIEW';
   writeFileSync(join(output, 'visual-witness.json'), JSON.stringify(witness, null, 2) + '\n');
@@ -417,7 +456,7 @@ const detailComplete = witness.details.length === 6 &&
   actualDetailShots.length === new Set(actualDetailShots).size &&
   expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
-  detailComplete && witness.chasmGeometryGate === 'PASS_GEOMETRIC_DEPTH' &&
+  detailComplete && witness.chasmGeometryGate === 'PASS_UNOBSTRUCTED_RAVINE' &&
   witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
 console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
@@ -425,7 +464,7 @@ console.log('Visual witness: ' + witness.desktop.length + '/8 desktop, ' +
   '/6 prop/detail screenshots; errors=' + witness.errors.length +
   '. Software/remote browser snapshots are NOT art-direction approval.');
 if (!ok) {
-  if (witness.chasmGeometryGate !== 'PASS_GEOMETRIC_DEPTH')
+  if (witness.chasmGeometryGate !== 'PASS_UNOBSTRUCTED_RAVINE')
     console.error('FAIL physically visible ravine depth: ' + witness.chasmGeometryGate);
   for (const error of witness.errors) console.error('FAIL ' + error);
 }
