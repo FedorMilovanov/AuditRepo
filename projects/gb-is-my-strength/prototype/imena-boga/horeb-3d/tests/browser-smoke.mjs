@@ -670,6 +670,37 @@ try {
     return {small,large,quality:window.__horeb.world.settings.quality};
   });
   check('mobile low-quality renders 42 compact labels (384x540)', labels.small === 42 && labels.large === 0 && labels.quality === 'low', JSON.stringify(labels));
+  // A real 390px-width touchscreen can show the sandal prompt at the same
+  // time as both bottom corner controls. No touch target may cover another.
+  await mobile.evaluate(() => {
+    const world = window.__horeb.world;
+    world.teleportTo(0, -350.2); // safe 15.8m perimeter, no sandals bypass
+    world.emit(true);
+  });
+  await mobile.waitForFunction(() => !!document.querySelector('[data-testid="interaction-prompt"]') &&
+    !!document.querySelector('[data-testid="touch-action"]'), { timeout: 10000 });
+  const touchLayout = await mobile.evaluate(() => {
+    const rect = (selector) => {
+      const node = document.querySelector(selector);
+      const r = node?.getBoundingClientRect();
+      return r && { x: r.x, y: r.y, right: r.right, bottom: r.bottom, width: r.width, height: r.height };
+    };
+    const prompt = rect('[data-testid="interaction-prompt"]');
+    const joystick = rect('[data-testid="movement-joystick"]');
+    const action = rect('[data-testid="touch-action"]');
+    const overlap = (a, b, gap = 8) => !!a && !!b &&
+      a.x < b.right + gap && a.right + gap > b.x &&
+      a.y < b.bottom + gap && a.bottom + gap > b.y;
+    const clue = rect('[data-testid="focus-story-clue"]');
+    return { prompt, joystick, action, clue,
+      accessible: !!prompt && !!joystick && !!action &&
+        !overlap(prompt, joystick) && !overlap(prompt, action) &&
+        !overlap(clue, prompt) && !overlap(clue, joystick) &&
+        !overlap(clue, action) &&
+        prompt.y >= 0 && prompt.bottom <= innerHeight };
+  });
+  check('390px touch prompts and sandal action clear joystick by at least 8px',
+    touchLayout.accessible, JSON.stringify(touchLayout));
   await mobile.screenshot({path:join(shots,'smoke-05-mobile-world.png')});
   await mobile.close();
 
