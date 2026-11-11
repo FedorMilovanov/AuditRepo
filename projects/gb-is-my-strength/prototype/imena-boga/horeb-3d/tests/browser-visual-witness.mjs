@@ -187,14 +187,28 @@ try {
             deepOppositeRock++;
         }
       }
+      // A genuine chasm screenshot must not be a closeup of the neighbouring
+      // inscription slab. The older z=-190 camera stood directly behind the
+      // shammah stela and technically passed rock-only rays while the REAL
+      // image was mostly blocked by the foreground prop.
+      const placards = w.scene.children.filter((object) =>
+        typeof object.userData?.exhibitId === 'string');
+      raycaster.far = 9;
+      let foregroundPlacards = 0;
+      for (const sx of [-0.25, 0, 0.25]) for (const sy of [-0.2, 0, 0.2]) {
+        raycaster.setFromCamera(new THREE.Vector2(sx, sy), w.camera);
+        if (raycaster.intersectObjects(placards, true).some((hit) => hit.distance < 9))
+          foregroundPlacards++;
+      }
       return { samples: 63, nearFloor, connectedNearFace, opposingRock,
-        deepOppositeRock, misses, lowestVisibleY,
+        deepOppositeRock, misses, lowestVisibleY, foregroundPlacards,
         actualCameraZ: w.camera.position.z, expectedCameraZ: w.position.z };
     });
     const geometryGate =
       geometryVisibility.nearFloor >= 5 &&
       geometryVisibility.deepOppositeRock >= 8 &&
       geometryVisibility.lowestVisibleY < -14 &&
+      geometryVisibility.foregroundPlacards === 0 &&
       Math.abs(geometryVisibility.actualCameraZ - geometryVisibility.expectedCameraZ) < 0.05
         ? 'PASS_GEOMETRIC_DEPTH' : 'FAIL_RAVINE_SIGHTLINE';
     witness.details.push({ id: slug, zone: 4, screenshot: file,
