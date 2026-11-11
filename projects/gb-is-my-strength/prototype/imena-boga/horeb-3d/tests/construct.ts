@@ -761,17 +761,24 @@ for (const lowMode of [true, false]) {
     const wallVertexCount = points.count - floorCount;
     // The four actual connected strata must recede across the chasm;
     // a nearly vertical, uniformly dark extrusion is not acceptable.
-    let terracedAtMidspan = false;
-    for (let k = 0; k < Math.floor(wallVertexCount / 4); k++) {
-      const first = floorCount + 4 * k, deepest = first + 3;
-      const z = points.getZ(first);
-      if (z < -207 && z > -193 &&
-          points.getX(deepest) - points.getX(first) > 3.3 &&
-          points.getY(deepest) < -35) {
-        terracedAtMidspan = true;
-        break;
-      }
+    // Compare actual shallow and deep vertices at the SAME Z slice.
+    // World geometry may interleave rows when its tessellation changes:
+    // never infer adjacent vertices are necessarily the four layer IDs.
+    const crossSections = new Map<string, { rim: number; deep: number }>();
+    for (let i = floorCount; i < points.count; i++) {
+      const z = points.getZ(i);
+      if (z <= -207 || z >= -193) continue;
+      const key = z.toFixed(2);
+      const section = crossSections.get(key) ?? { rim: Infinity, deep: -Infinity };
+      const y = points.getY(i), x = points.getX(i);
+      if (y > -3) section.rim = Math.min(section.rim, x);
+      if (y < -35) section.deep = Math.max(section.deep, x);
+      crossSections.set(key, section);
     }
+    const maxMidspanRecession = Math.max(0, ...[...crossSections.values()]
+      .map((section) => section.deep - section.rim)
+      .filter(Number.isFinite));
+    const terracedAtMidspan = maxMidspanRecession > 3.3;
     let joinedFaces = 0, safeBoundary = true;
     if (faces) {
       for (let i = 0; i < faces.count; i += 3) {
@@ -807,7 +814,7 @@ for (const lowMode of [true, false]) {
       }
       console.log('CHASM_GEOMETRY_DIAGNOSTIC', JSON.stringify({
         lowMode, meta, floorCount, wallVertexCount, terracedAtMidspan,
-        joinedFaces, safeBoundary, uvCount: uv.count, pointCount: points.count,
+        maxMidspanRecession, joinedFaces, safeBoundary, uvCount: uv.count, pointCount: points.count,
         middleSample: mid.slice(0, 3), middleSampleCount: mid.length,
         maximumMiddleRecession: Math.max(...mid.map((x) => x.dx)),
         lowestMiddleY: Math.min(...mid.map((x) => x.y)),
