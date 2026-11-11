@@ -53,6 +53,16 @@ for (const document of confessions) {
   assert(document.lines.every((line) => line.length > 6 && !/^([IVX ]+)$/.test(line)));
 }
 assert.match(stationSource, /creeds: ConfessionArchive/);
+assert.match(stationSource, /art\.current\.position\.y = 1\.95;/);
+const documentPlinthTop=1.04+0.1/2;
+const archiveSupportBottom=1.95-0.745-0.24/2;
+const archiveSupportTop=1.95-0.745+0.24/2;
+const lowerShelfBottom=1.95-0.615-0.045/2;
+assert(Math.abs(archiveSupportBottom-documentPlinthTop)<0.012,
+  'Archival display is floating above its physical stone plinth');
+assert(archiveSupportTop>=lowerShelfBottom,
+  'Archival display lacks contact with its wooden shelf');
+
 assert.match(stationSource, /import \{ ConfessionArchive \} from "\.\/ConfessionArchive"/);
 assert.doesNotMatch(stationSource, /tabletTextures\(|tabletGeometry\(|function CreedsArt/);
 const textureSource = get('textures.ts');
@@ -66,8 +76,13 @@ for (const sign of [
   'atlas.dispose();',
   'planes.forEach((geometry) => geometry.dispose());',
 ]) assert(confessionSource.includes(sign),'Physical archival exhibit missing '+sign);
-assert.doesNotMatch(confessionSource, /useFrame|emissive|<Beam|<torusGeometry|Math\.random/,
-  'Confessions must not recreate fantasy glowing law tablets or moving orbits');
+// Check executable implementation, not comments describing removed effects.
+const archiveImplementation = confessionSource
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/^\s*\/\/.*$/gm, '');
+assert.doesNotMatch(archiveImplementation,
+  /\buseFrame\s*\(|\bemissive(?:Map|Intensity)?\s*[:=]|<Beam|<torusGeometry|Math\.random\s*\(/,
+  'Confessions must not recreate glowing tablets or moving orbits');
 
 const entry = get('main.tsx');
 // A public ?panel=cabinet request must not statically pull the WebGL app.

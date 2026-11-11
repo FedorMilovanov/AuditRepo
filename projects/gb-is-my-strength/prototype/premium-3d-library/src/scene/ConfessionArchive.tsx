@@ -106,6 +106,11 @@ export function ConfessionArchive({ color: _color }: { color: string }) {
     <mesh position={[0, -0.615, -0.03]} material={wood} receiveShadow>
       <boxGeometry args={[2.38, 0.045, 0.58]} />
     </mesh>
+    {/* The support physically touches the existing station plinth:
+        art height 1.95m; pedestal top 1.09m; support bottom 1.085m. */}
+    <mesh position={[0, -0.745, -0.03]} material={wood} castShadow receiveShadow>
+      <boxGeometry args={[1.55, 0.24, 0.45]} />
+    </mesh>
     {CONFESSION_DOCUMENTS.map((doc, index) => {
       const x = (index - 1.5) * 0.61;
       const yaw = (index - 1.5) * 0.075;
