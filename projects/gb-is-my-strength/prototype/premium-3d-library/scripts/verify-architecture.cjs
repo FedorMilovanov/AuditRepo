@@ -168,6 +168,30 @@ for (const clause of ['CaseworkContext','useLoader(THREE.TextureLoader',
   'uv.setXY(i, v, 1 - u)','return useContext(CaseworkContext) ?? wood']) {
   assert.ok(caseworkOwner.includes(clause),'Missing directional oak contract '+clause);
 }
+// Texture swaps must not suspend/re-mount the entire cabinet ensemble.
+const materialBoundary = caseworkOwner.indexOf('<CaseworkContext.Provider value={material}>');
+const stableChildren = caseworkOwner.indexOf('{children}', materialBoundary);
+const localSuspense = caseworkOwner.indexOf('<Suspense fallback={null}>', stableChildren);
+assert.ok(materialBoundary > 0 && stableChildren > materialBoundary && localSuspense > stableChildren,
+  'Casework geometry was placed inside a suspending material loader');
+for (const clause of [
+  'const material = useMemo(() => new THREE.MeshStandardMaterial({',
+  '<CaseworkMaps key={quality} quality={quality} material={material} />',
+  'material.map = albedo;', 'material.normalMap = normal;',
+  'material.roughnessMap = roughness;', 'material.needsUpdate = true;',
+]) assert.ok(caseworkOwner.includes(clause), 'Unstable casework map/material contract ' + clause);
+
+// The support column must remain behind the framed content, unlike the old
+// 0m front-intersecting post. Local Z faces the visitor; full-front radius
+// also includes the rear bracket, rather than hiding its visual overlap.
+const cardSource = get('scene/Cards.tsx');
+const postMatch = cardSource.match(/<mesh position=\{\[0, 1\.0, (-?\d+(?:\.\d+)?)\]\} material=\{goldMat\}>\s*<cylinderGeometry args=\{\[0\.05, 0\.07, 1\.8, 12\]\}/);
+const bracketMatch = cardSource.match(/<mesh position=\{\[0, 1\.87, (-?\d+(?:\.\d+)?)\]\} material=\{goldMat\}>\s*<boxGeometry args=\{\[0\.34, 0\.12, 0\.18\]\}/);
+assert.ok(postMatch && bracketMatch, 'Card rear post and bracket missing from source');
+const rearFace = zFront => zFront < -0.04;
+assert.ok(!rearFace(0 + 0.07), 'Negative fixture: old post does not overlap text');
+assert.ok(rearFace(Number(postMatch[1]) + 0.07), 'Card post protrudes through lettering');
+assert.ok(rearFace(Number(bracketMatch[1]) + 0.18/2), 'Card bracket protrudes through lettering');
 assert.ok(world.includes('<CaseworkWoodProvider>'));
 assert.ok(architecture.includes('woodHorizontalRef'));
 assert.ok(architecture.includes('woodVerticalRef'));

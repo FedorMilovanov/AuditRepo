@@ -189,6 +189,32 @@ async def run_case(browser,engine,w,h,touch):
         await page.locator('[data-gb-intro]').wait_for(state="detached",timeout=10000)
         await page.locator("div.fixed.inset-0.z-50").wait_for(state="detached",timeout=40000)
         assert not await page.evaluate("document.querySelector('#root').inert")
+        if touch and h <= 430:
+            # Real computed geometry: short landscape must retain the 128px
+            # joystick and site-map toolbar while clearing the scene's
+            # central reading zone. Hints may expire after 9s on slow GPUs.
+            hud = await page.evaluate("""() => {
+              const rect = el => { const r=el.getBoundingClientRect(); return {
+                left:r.left,right:r.right,top:r.top,bottom:r.bottom}; };
+              const joystick=document.querySelector('[data-gb-joystick]');
+              const minimap=document.querySelector('[data-gb-minimap]');
+              const help=document.querySelector('[data-gb-help]');
+              const nav=document.querySelector('[data-gb-toolbar] button[title="Карта сайта"]');
+              const visible=el=>!!el && getComputedStyle(el).display!=='none';
+              return {
+                joystick:joystick && rect(joystick), visibleJoystick:visible(joystick),
+                minimapHidden:!visible(minimap), mapAccessible:visible(nav),
+                help:visible(help) ? rect(help) : null,
+                compact:visible(help) && visible(help.querySelector('[data-gb-help-compact]')),
+                fullHidden:!visible(help) || !visible(help.querySelector('[data-gb-help-full]')),
+              };
+            }""")
+            assert hud["visibleJoystick"] and hud["minimapHidden"] and hud["mapAccessible"], hud
+            if hud["help"]:
+                assert hud["compact"] and hud["fullHidden"], hud
+                assert hud["help"]["top"] > h * .75, hud
+                assert hud["help"]["left"] > hud["joystick"]["right"] + 2, hud
+                assert hud["help"]["bottom"] <= h + 1, hud
         if size in ("844x390","667x375","390x844","1440x900"):
             await capture_evidence(page, OUT/f"{engine}-{size}-hall.png")
 

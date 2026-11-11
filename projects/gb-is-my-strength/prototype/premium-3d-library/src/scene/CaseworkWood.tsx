@@ -1,16 +1,13 @@
 /**
- * Source-owned casework wood, independent of the furniture and central lectern.
+ * Shared, persistent PBR casework. Geometry and its material identity must
+ * never be replaced while switching texture quality: the next preset is
+ * loaded behind an internal Suspense boundary and applied atomically when
+ * all three channels are ready.
  *
- * One shared, color-managed PBR material under a React provider: normal/rough
- * maps follow the albedo and the same GPU textures are used across all 13
- * bookcases + decorative architectural trim. Genuine quality-specific assets
- * load only for the user-selected preset, with a real low-profile budget.
- *
- * A second shared BoxGeometry rotates UV, not object orientation. As a result,
- * horizontal shelves and tall uprights render grain along their long axes
- * without creating individual mesh draw calls or changing collision geometry.
+ * A single 512/1024 texture triplet serves all 13 cases and decorative trim.
+ * No application-specific WebGL monkey patches or fabricated draw calls.
  */
-import { createContext, useContext, useEffect, useLayoutEffect, useMemo, type ReactNode } from "react";
+import { Suspense, createContext, useContext, useEffect, useLayoutEffect, useMemo, type ReactNode } from "react";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { useApp } from "../store";
@@ -30,13 +27,14 @@ const lowMaps = [
 const CaseworkContext = createContext<THREE.MeshStandardMaterial | null>(null);
 
 export function useCaseworkWood(): THREE.MeshStandardMaterial {
-  // With no provider, show original casework (real progressive-load fallback).
-  // This does not change the original shared wood used by central furniture.
+  // A real fallback for initial offline/slow network; never a hidden cabinet.
   return useContext(CaseworkContext) ?? wood;
 }
 
-export function CaseworkWoodProvider({ children }: { children: ReactNode }) {
-  const quality = useApp((s) => s.quality);
+function CaseworkMaps({ quality, material }: {
+  quality: "high" | "low";
+  material: THREE.MeshStandardMaterial;
+}) {
   const [albedo, normal, roughness] = useLoader(THREE.TextureLoader,
     quality === "high" ? highMaps : lowMaps);
   useLayoutEffect(() => {
@@ -50,16 +48,35 @@ export function CaseworkWoodProvider({ children }: { children: ReactNode }) {
     normal.colorSpace = THREE.NoColorSpace;
     roughness.colorSpace = THREE.NoColorSpace;
     albedo.needsUpdate = true;
-  }, [albedo, normal, roughness, quality]);
 
+    // Apply all channels in one React commit; keep the same GPU material and
+    // instanced geometry while the new quality preset is decoded/uploaded.
+    material.map = albedo;
+    material.normalMap = normal;
+    material.roughnessMap = roughness;
+    material.needsUpdate = true;
+  }, [albedo, normal, roughness, quality, material]);
+  return null;
+}
+
+export function CaseworkWoodProvider({ children }: { children: ReactNode }) {
+  const quality = useApp((s) => s.quality);
   const material = useMemo(() => new THREE.MeshStandardMaterial({
     color: new THREE.Color("#c2ab93"),
-    map: albedo, normalMap: normal, roughnessMap: roughness,
     normalScale: new THREE.Vector2(0.20, 0.20),
     roughness: 0.94, metalness: 0,
-  }), [albedo, normal, roughness]);
+  }), []);
   useEffect(() => () => material.dispose(), [material]);
-  return <CaseworkContext.Provider value={material}>{children}</CaseworkContext.Provider>;
+  return (
+    <CaseworkContext.Provider value={material}>
+      {children}
+      {/* Only the map loader can suspend. Books, shelves, uprights and
+          stonework remain mounted throughout either graphics transition. */}
+      <Suspense fallback={null}>
+        <CaseworkMaps key={quality} quality={quality} material={material} />
+      </Suspense>
+    </CaseworkContext.Provider>
+  );
 }
 
 export function verticalGrainBoxGeometry(): THREE.BoxGeometry {

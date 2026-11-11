@@ -51,8 +51,13 @@ function Card({ item, index }: { item: Item; index: number }) {
       <mesh position={[0, 0.1, 0]} material={darkStone}>
         <cylinderGeometry args={[0.55, 0.65, 0.2, 32]} />
       </mesh>
-      <mesh position={[0, 1.0, 0]} material={goldMat}>
+      {/* The post is physically behind the framed panel, not intersecting
+          its lettered front face. Its upper bracket bears on the back rail. */}
+      <mesh position={[0, 1.0, -0.18]} material={goldMat}>
         <cylinderGeometry args={[0.05, 0.07, 1.8, 12]} />
+      </mesh>
+      <mesh position={[0, 1.87, -0.18]} material={goldMat}>
+        <boxGeometry args={[0.34, 0.12, 0.18]} />
       </mesh>
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.11, 0]} renderOrder={3}>
         <ringGeometry args={[0.8, 0.9, 48]} />

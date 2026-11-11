@@ -517,11 +517,16 @@ function HelpHint() {
   return (
     <div data-gb-help className={`pointer-events-none fixed left-1/2 z-10 w-full max-w-md -translate-x-1/2 px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
       <div className="glass fade-up rounded-full px-5 py-2 text-xs text-[#e0dcd1]">
-        {mode === "cardboard"
-          ? "Поверните телефон и вставьте в очки · удерживайте экран, чтобы идти · задержите взгляд — откроется"
-          : coarse
-          ? "Стик — идти · перетаскивание — смотреть · касание книги открывает её"
-          : "Клик по полу — идти · клик по книге — открыть · T — экскурсия · C — присесть"}
+        <span data-gb-help-full>
+          {mode === "cardboard"
+            ? "Поверните телефон и вставьте в очки · удерживайте экран, чтобы идти · задержите взгляд — откроется"
+            : coarse
+            ? "Стик — идти · перетаскивание — смотреть · касание книги открывает её"
+            : "Клик по полу — идти · клик по книге — открыть · T — экскурсия · C — присесть"}
+        </span>
+        {coarse && mode !== "cardboard" && (
+          <span data-gb-help-compact className="hidden">Стик — идти · экран — обзор · книга — открыть</span>
+        )}
       </div>
     </div>
   );
