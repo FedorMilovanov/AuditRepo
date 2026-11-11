@@ -16,6 +16,10 @@ export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
 ];
 /** The well's tree is rooted away from both the stone rim and front inscription. */
 export const BEERSHEBA_TAMARISK_OFFSET = { x: 2.15, z: -0.75 } as const;
+// Physical story viewpoints reuse the authored prop offsets, never guess
+// invisible target coordinates unrelated to the actual mesh.
+export const GETHSEMANE_PRAYER_OFFSET = { x: 0, z: -0.8 } as const;
+export const JEREMIAH_CITY_WALL_OFFSET = { x: 1.0, z: -2.55 } as const;
 /** The visible well masonry must stay inside this shared physical footprint. */
 export const BEERSHEBA_WELL_COLLIDER_RADIUS = 1.45;
 
@@ -882,7 +886,8 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
     case 'tablets-scene': addTablets(g, px, pz, s); addQuietStone(g, px, pz - 1, s); break;
     case 'vision-abstract': addDistantGlow(g, px, pz); addUnfoldingBorders(g, px, pz, s); break;
     case 'night-shelter': addScrolls(g, px, pz, s); addStarWindow(g, px, pz, s); break;
-    case 'gethsemane-garden': addOliveTrees(g, px, pz, s, low, 4); addPrayerSpot(g, px, pz - 0.8, s); break;
+    case 'gethsemane-garden': addOliveTrees(g, px, pz, s, low, 4);
+      addPrayerSpot(g, px + GETHSEMANE_PRAYER_OFFSET.x, pz + GETHSEMANE_PRAYER_OFFSET.z, s); break;
     case 'apocalyptic-architecture': addLightStoneSpace(g, px, pz, s); break;
     case 'scroll-alpha-omega': addEditorialScroll(g, px, pz, s); break;
     case 'two-windows': addPublicPlace(g, px, pz, s); addArch(g, px + 1.5, pz, s, 1.8); break;
