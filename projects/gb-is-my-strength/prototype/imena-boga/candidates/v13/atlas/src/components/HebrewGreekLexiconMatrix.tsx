@@ -25,7 +25,7 @@ const LEXICON_BRIDGES: LexiconBridgeRow[] = [
     synodalRendering: 'Господь',
     countNote: 'Статистика и варианты передачи имени зависят от текстовой традиции и издания.',
     theologicalBridge:
-      'Апостолы взяли титул Κύριος из Септуагинты и исповедали им воскресшего Иисуса (Рим. 10:9; Флп. 2:11), прямо отождествив Христа с Яхве Ветхого Завета.',
+      'В Новом Завете титул Κύριος используется при исповедании воскресшего Иисуса (Рим. 10:9; Флп. 2:11). Это важный христианский богословский мост, но история передачи יהוה в древних греческих рукописях неоднородна и не сводится к одному обязательному написанию.',
   },
   {
     id: 'bridge-elohim',
@@ -35,7 +35,7 @@ const LEXICON_BRIDGES: LexiconBridgeRow[] = [
     lxxGreek: 'Θεός',
     lxxTranslit: 'Теос',
     synodalRendering: 'Бог',
-    countNote: 'В Быт. 1:1 форма Элохим согласована с глаголом в единственном числе.',
+    countNote: 'В Быт. 1:1 еврейское Элохим согласуется с глаголом в единственном числе; LXX здесь использует ὁ θεός.',
     theologicalBridge:
       'В прологе Иоанна 1:1 («и Слово было Бог» — Θεὸς ἦν ὁ Λόγος) евангелист связывает Божество Христа с Творцом Бытия 1:1.',
   },
@@ -44,24 +44,24 @@ const LEXICON_BRIDGES: LexiconBridgeRow[] = [
     targetNameId: 'adonai',
     hebrew: 'אֲדֹנָי',
     hebrewTranslit: 'Адонай',
-    lxxGreek: 'Κύριος / Δεσπότης',
-    lxxTranslit: 'Кюриос / Деспотес',
-    synodalRendering: 'Владыка / Господь',
-    countNote: 'В сочетании אֲדֹנָי יְהוִה переводится «Владыка Господи»',
+    lxxGreek: 'Κύριος (Ис. 6:1)',
+    lxxTranslit: 'Кюриос (пример из Ис. 6:1)',
+    synodalRendering: 'Владыка / Господь (по стиху)',
+    countNote: 'В Пс. 109:1 «господину моему» = לַאדֹנִי (adoni), не אֲדֹנָי (Адонай)',
     theologicalBridge:
-      'Исповедание Фомы «Господь мой и Бог мой!» (ὁ Κύριός μου καὶ ὁ Θεός μου, Ин. 20:28) соединяет Адонай и Элохим в поклонении Воскресшему.',
+      'Фома называет воскресшего Иисуса «Господь мой и Бог мой» (Ин. 20:28), используя греческие слова Κύριος и Θεός. Это христианское исповедание, а не буквальная цитата еврейских форм אֲדֹנָי и אֱלֹהִים.',
   },
   {
     id: 'bridge-shaddai',
     targetNameId: 'el-shaddai',
     hebrew: 'אֵל שַׁדַּי',
     hebrewTranslit: 'Эль-Шаддай',
-    lxxGreek: 'Παντοκράτωρ',
-    lxxTranslit: 'Пантократор',
+    lxxGreek: 'ἐγώ εἰμι ὁ θεός σου',
+    lxxTranslit: 'Эго эйми хо Теос су (Быт. 17:1 LXX)',
     synodalRendering: 'Бог Всемогущий',
-    countNote: 'В Новом Завете Παντοκράτωρ переведено как «Вседержитель»',
+    countNote: 'В греческом Быт. 17:1 нет Παντοκράτωρ; в Откровении это отдельный титул',
     theologicalBridge:
-      'Бог обетования патриархам (Быт. 17:1) открывается в Откровении (1:8; 19:6) как Вседержитель, завершающий историю искупления.',
+      'Христианское сопоставление Быт. 17:1 с образом Вседержителя в Откр. 1:8 и 19:6 — богословская связь. В греческом Быт. 17:1 сказано «Я Бог твой», а не «Я Пантократор»; прямую лексическую цепочку здесь утверждать нельзя.',
   },
   {
     id: 'bridge-elyon',
@@ -71,7 +71,7 @@ const LEXICON_BRIDGES: LexiconBridgeRow[] = [
     lxxGreek: 'Θεὸς Ὕψιστος',
     lxxTranslit: 'Теос Хюпсистос',
     synodalRendering: 'Бог Всевышний',
-    countNote: 'Титул священства Мелхиседека (Быт. 14:18)',
+    countNote: 'Быт. 14:18–20: Мелхиседек — священник Бога Всевышнего',
     theologicalBridge:
       'При Благовещении Иисус назван «Сыном Всевышнего» (Лк. 1:32) и вечным Первосвященником по чину Мелхиседека (Евр. 7:1).',
   },
@@ -85,7 +85,7 @@ const LEXICON_BRIDGES: LexiconBridgeRow[] = [
     synodalRendering: 'Господь Саваоф / Господь сил',
     countNote: 'Транслитерировано без перевода в Рим. 9:29 и Иак. 5:4',
     theologicalBridge:
-      'Слава Господа Саваофа в храме Исаии (Ис. 6:3) прямо названа славой Иисуса Христа в Евангелии от Иоанна 12:41.',
+      'Ин. 12:41 связывает славу, о которой говорил Исаия, с Иисусом. Это каноническое толкование Ис. 6, но не утверждение, что в еврейском Ис. 6:3 буквально названо имя Иисуса.',
   },
 ];
 
@@ -121,11 +121,11 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
             <span>Лексикографический мост Заветов</span>
           </div>
           <h3 className="font-serif-display mt-1 text-xl sm:text-2xl font-bold" style={{ color: 'var(--gb-ink)' }}>
-            От еврейского оригинала через Септуагинту к Новому Завету
+            Еврейские выражения, греческие передачи и христианское прочтение
           </h3>
         </div>
         <span className="font-ui text-xs" style={{ color: 'var(--gb-muted)' }}>
-          Нажмите на строку для христологического комментария
+          Выберите строку: примеры не всегда буквальные эквиваленты
         </span>
       </div>
 
@@ -142,9 +142,9 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
               className="font-ui border-b text-[11px] font-bold tracking-wider uppercase"
               style={{ borderColor: 'var(--gb-border-strong)', color: 'var(--gb-muted)' }}
             >
-              <th className="py-2.5 pr-3">Оригинал (BHS)</th>
-              <th className="py-2.5 px-3">Септуагинта / НЗ</th>
-              <th className="py-2.5 pl-3">Синодальный перевод</th>
+              <th className="py-2.5 pr-3">Еврейский текст (MT)</th>
+              <th className="py-2.5 px-3">Пример греческой передачи</th>
+              <th className="py-2.5 pl-3">Русская передача</th>
             </tr>
           </thead>
           <tbody className="divide-y" style={{ borderColor: 'var(--gb-border)' }}>
@@ -153,19 +153,20 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
               return (
                 <tr
                   key={row.id}
-                  onClick={() => setSelectedRowId(row.id)}
-                  className="cursor-pointer transition-colors"
+                  className="transition-colors"
                   style={{
                     backgroundColor: isSelected ? 'var(--gb-accent-soft)' : 'transparent',
                   }}
                 >
                   <td className="py-3 pr-3 align-middle">
+                    <button type="button" aria-pressed={isSelected} onClick={() => setSelectedRowId(row.id)} className="inline-flex min-h-11 w-full cursor-pointer flex-col justify-center rounded-lg text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]">
                     <div className="font-hebrew text-lg sm:text-xl font-bold" style={{ color: 'var(--gb-ink)' }}>
                       {row.hebrew}
                     </div>
                     <div className="font-ui text-xs font-medium" style={{ color: isSelected ? 'var(--gb-accent)' : 'var(--gb-muted)' }}>
                       {row.hebrewTranslit}
                     </div>
+                    </button>
                   </td>
 
                   <td className="py-3 px-3 align-middle">
@@ -207,7 +208,7 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
       >
         <div className="space-y-1">
           <div className="font-ui text-[11px] font-bold tracking-wider uppercase" style={{ color: 'var(--gb-accent)' }}>
-            Новозаветная преемственность · {activeRow.hebrewTranslit} → {activeRow.lxxTranslit}
+            Богословское сопоставление · {activeRow.hebrewTranslit} / {activeRow.lxxTranslit}
           </div>
           <p className="font-body-editorial text-[14.5px] leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
             {activeRow.theologicalBridge}
