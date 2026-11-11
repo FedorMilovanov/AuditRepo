@@ -2,6 +2,7 @@
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
+import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
@@ -217,6 +218,37 @@ t('linked expedition rejects forged completion without supporting observations',
   !normalizeExpeditionCompletion(true, ['fake', 'hagar-spring', 'beersheba-well']) &&
   !completeExpedition(true, [], 'a', 'a') &&
   !completeExpedition(true, ['beersheba-well', 'hagar-spring'], 'a', 'a'));
+// D3 acoustic dramaturgy: the zone-six passage is ACTUALLY quieter than
+// the preceding gallery, fades in both directions and has no zone boundary
+// gain spike. Sound is synthesized only and optional; no spoken divine cues.
+const galleryAudio = soundscapeMixAt(-265, 5);
+const middleAudio = soundscapeMixAt(-305, 6);
+const outsideAudio = soundscapeMixAt(-342, 7);
+t('zone-six passage is acoustically quieter than adjacent gallery and outdoors',
+  middleAudio.windBed < galleryAudio.windBed * 0.27 &&
+  middleAudio.windBed < outsideAudio.windBed * 0.2 &&
+  middleAudio.hush < 0.25 &&
+  Math.abs(outsideAudio.windBed - 0.11) < 1e-9);
+t('acoustic transition never jumps across zone-5/6 or zone-6/7 boundaries',
+  Math.abs(soundscapeMixAt(-288.0001, 6).windBed -
+    soundscapeMixAt(-287.9999, 5).windBed) < 0.0001 &&
+  Math.abs(soundscapeMixAt(-318.0001, 7).windBed -
+    soundscapeMixAt(-317.9999, 6).windBed) < 0.0001 &&
+  Math.abs(soundscapeMixAt(-318.0001, 7).windCutoff -
+    soundscapeMixAt(-317.9999, 6).windCutoff) < 0.01);
+t('quiet passage fade is bounded, reversible and does not alter zone-four acoustics',
+  Array.from({ length: 561 }, (_, i) => -280 - i * 0.1).every((z) => {
+    const a = soundscapeMixAt(z, N.zoneAt(z));
+    const b = soundscapeMixAt(z - 0.1, N.zoneAt(z - 0.1));
+    return a.hush >= 0.18 - 1e-9 && a.hush <= 1 &&
+      Math.abs(a.windBed - b.windBed) < 0.004 &&
+      a.windBed >= 0 && a.windBed <= 0.11;
+  }) &&
+  soundscapeMixAt(-195, 4).windCutoff === 180 &&
+  soundscapeMixAt(N.ZONE_SPAWN[5].z, 5).windBed >
+    soundscapeMixAt(N.ZONE_SPAWN[6].z, 6).windBed &&
+  soundscapeMixAt(N.ZONE_SPAWN[7].z, 7).windBed >
+    soundscapeMixAt(N.ZONE_SPAWN[6].z, 6).windBed);
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }
