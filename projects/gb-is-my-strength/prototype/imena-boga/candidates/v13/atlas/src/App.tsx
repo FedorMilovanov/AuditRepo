@@ -767,7 +767,7 @@ export function App() {
             Never treat draft linguistic claims as approved publication evidence. */}
         <section
           aria-labelledby="gb-methodology-title"
-          className="mb-10 rounded-2xl border p-5 sm:p-6"
+          className="mb-10 min-w-0 rounded-2xl border p-5 [overflow-wrap:anywhere] sm:p-6"
           style={{ backgroundColor: 'var(--gb-surface)', borderColor: 'var(--gb-border)' }}
         >
           <h2
@@ -967,7 +967,7 @@ export function App() {
         {/* Introduction Essay */}
         <section id="article-introduction" className="scroll-mt-24 space-y-5">
           <h2
-            className="font-serif-display text-2xl sm:text-3xl font-bold leading-snug break-words"
+            className="font-serif-display min-w-0 break-words text-2xl font-bold leading-snug [overflow-wrap:anywhere] sm:text-3xl"
             style={{ color: 'var(--gb-ink)' }}
           >
             Почему Бог открывает Свои имена: не закли&shy;нание, а заветное само&shy;откровение

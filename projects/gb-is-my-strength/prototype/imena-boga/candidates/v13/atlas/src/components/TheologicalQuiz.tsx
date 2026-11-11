@@ -160,12 +160,12 @@ export const TheologicalQuiz: React.FC = () => {
       }}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
-        <div>
-          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-accent)' }}>
+        <div className="min-w-0 max-w-full">
+          <div className="font-ui flex min-w-0 flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-accent)' }}>
             <HelpCircle className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
-            <span>Самопроверка экзегета · 7 вопросов</span>
+            <span className="min-w-0 break-words [overflow-wrap:anywhere]">Самопроверка экзегета · 7 вопросов</span>
           </div>
-          <h2 className="font-serif-display mt-1 text-2xl sm:text-3xl font-bold" style={{ color: 'var(--gb-ink)' }}>
+          <h2 className="font-serif-display mt-1 min-w-0 break-words text-2xl font-bold [overflow-wrap:anywhere] sm:text-3xl" style={{ color: 'var(--gb-ink)' }}>
             Проверьте своё понимание Имён Божьих
           </h2>
         </div>

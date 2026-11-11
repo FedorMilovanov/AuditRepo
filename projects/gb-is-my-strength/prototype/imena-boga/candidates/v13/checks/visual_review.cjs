@@ -51,18 +51,41 @@ async function anchorShot(page,label,selector,top=112){
   });
   pos=await loc.evaluate(el=>{
    const r=el.getBoundingClientRect();
-   return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight};
+   return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight,
+    scrollWidth:el.scrollWidth,clientWidth:el.clientWidth};
   });
   record('screenshot-anchor-settle',{label,selector,attempt,actualTop:pos.top,targetTop:top});
   stable=Math.abs(pos.top-top)<=2?stable+1:0;
   if(stable>=2)break;
  }
  record('screenshot-anchor',{label,selector,...pos});
- if(Math.abs(pos.top-top)>3||pos.bottom>pos.viewportHeight||pos.width<1){
+ if(Math.abs(pos.top-top)>3||pos.width<1||pos.scrollWidth>pos.clientWidth+2){
   problem('BLOCKER','screenshot-anchor-invalid',{label,selector,...pos});
   throw Error('Bad screenshot anchor: '+label);
  }
  await shot(page,label);
+ if(pos.bottom>pos.viewportHeight){
+  // A 200%-resized heading may be taller than one viewport. The first
+  // capture proves its top, and this second capture proves its final lines.
+  await loc.evaluate(el=>{
+   const r=el.getBoundingClientRect();
+   window.scrollTo({top:Math.max(0,window.scrollY+r.bottom-(innerHeight-80)),behavior:'instant'});
+  });
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const tail=await loc.evaluate(el=>{
+   const r=el.getBoundingClientRect();
+   return {top:r.top,bottom:r.bottom,width:r.width,viewportHeight:innerHeight,
+    scrollWidth:el.scrollWidth,clientWidth:el.clientWidth};
+  });
+  record('screenshot-anchor-tail',{label,selector,...tail});
+  if(Math.abs(tail.bottom-(tail.viewportHeight-80))>3||
+     tail.top>=tail.viewportHeight||tail.width<1||
+     tail.scrollWidth>tail.clientWidth+2){
+   problem('BLOCKER','screenshot-anchor-tail-invalid',{label,selector,...tail});
+   throw Error('Bad screenshot anchor tail: '+label);
+  }
+  await shot(page,label+'-tail');
+ }
 }
 async function waitVisual(page){
  await page.locator('h1').first().waitFor({state:'visible',timeout:20000});

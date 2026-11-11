@@ -52,12 +52,12 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "41b3a49be6feb8ceed36a3aee7c2be486135801dd6790d2809fc516ff62f6cd9",
-      "bytes_normalized": 67292
+      "sha256": "1599ba9a75a2aeeb1a3e429cdcbab122b6a3e322cc05350eaaea7c8f4737db8d",
+      "bytes_normalized": 67358
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "33cd54f553a86e82a4a6b427427b26309e58fb8e92f962028ecc040c3bffbd30",
-      "bytes_normalized": 18890
+      "sha256": "aadf84915157324787fb8b464f937a25777ba0118344dec0037e81762bdde07b",
+      "bytes_normalized": 19064
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
       "sha256": "bb946c13c6c2d81190481531ae17436c0907bc351f8145a5fa3b0f7bd0f2844f",
@@ -112,8 +112,8 @@
       "bytes_normalized": 9972
     },
     "atlas/src/components/TheologicalQuiz.tsx": {
-      "sha256": "742137ab898198ff540c7d2c0726a919a11edc3615ee53367f15d36251d965c6",
-      "bytes_normalized": 17309
+      "sha256": "0b164466c03d789f463cae5656e403c74d006d286c32eba1c31973d60ab2d47e",
+      "bytes_normalized": 17460
     },
     "atlas/src/data/divineNames.ts": {
       "sha256": "4774ca2094db8f4c555b71156298f4036f7284a39d58045a88f66465733d9c44",
@@ -184,8 +184,8 @@
       "bytes_normalized": 38912
     },
     "checks/visual_review.cjs": {
-      "sha256": "3cceda932fc1f9b46102c5ef0c12fee4b8ced44efb0640a11f73549111aac656",
-      "bytes_normalized": 49005
+      "sha256": "52251680d1b5c0b64b4b49c3e2740146a86c06247fc425197808b4ba8775fef5",
+      "bytes_normalized": 50140
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

@@ -337,17 +337,17 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <button
               type="button"
               onClick={() => onSelectName(linkedName)}
-              className="font-ui inline-flex min-h-11 min-w-0 w-full flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap gb-on-accent transition-opacity hover:opacity-90 sm:w-auto lg:w-full lg:flex-none"
+              className="font-ui inline-flex min-h-11 min-w-0 w-full flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap text-center gb-on-accent transition-opacity hover:opacity-90 sm:w-auto lg:w-full lg:flex-none"
               style={{ backgroundColor: 'var(--gb-accent)' }}
             >
               <BookOpen className="h-3.5 w-3.5" />
-              <span>Открыть разбор</span>
+              <span className="min-w-0 whitespace-normal break-words [overflow-wrap:anywhere]">Открыть разбор</span>
             </button>
 
             <button
               type="button"
               onClick={() => onJumpToName(linkedName)}
-              className="font-ui inline-flex min-h-11 min-w-0 w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-xs font-medium whitespace-nowrap transition-colors hover:opacity-85 sm:w-auto lg:w-full"
+              className="font-ui inline-flex min-h-11 min-w-0 w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-xs font-medium whitespace-nowrap text-center transition-colors hover:opacity-85 sm:w-auto lg:w-full"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
@@ -355,7 +355,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               }}
             >
               <Navigation className="h-3.5 w-3.5" />
-              <span>В тексте</span>
+              <span className="min-w-0 whitespace-normal break-words [overflow-wrap:anywhere]">В тексте</span>
             </button>
           </div>
         </div>
