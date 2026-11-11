@@ -27,7 +27,10 @@ export const CONFESSION_DOCUMENTS = Object.freeze([
   {
     date: "1677/1689",
     tradition: "БАПТИСТСКАЯ",
-    lines: ["ВТОРОЕ ЛОНДОНСКОЕ", "БАПТИСТСКОЕ", "ИСПОВЕДАНИЕ"],
+    // WebKit's real Cormorant glyph metrics exceed the atlas safe zone
+    // for "ВТОРОЕ ЛОНДОНСКОЕ" even at 16px. Two genuine title lines
+    // preserve the full name instead of shrinking/stretching serif text.
+    lines: ["ВТОРОЕ", "ЛОНДОНСКОЕ", "БАПТИСТСКОЕ", "ИСПОВЕДАНИЕ"],
     cover: "#66503e",
   },
 ] as const);

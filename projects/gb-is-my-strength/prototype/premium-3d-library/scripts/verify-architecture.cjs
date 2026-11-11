@@ -48,9 +48,18 @@ const confessions = metadataModule.exports.CONFESSION_DOCUMENTS;
 assert.equal(confessions.length, 4, 'Archive must include four distinct documentary traditions');
 assert.deepEqual(confessions.map((x) => x.date), ['1530','1563','1646','1677/1689']);
 assert.equal(new Set(confessions.map((x) => x.tradition)).size, 4);
+assert.deepEqual(confessions[3].lines,
+  ['ВТОРОЕ', 'ЛОНДОНСКОЕ', 'БАПТИСТСКОЕ', 'ИСПОВЕДАНИЕ'],
+  'The Second London title must fit WebKit without discarding words');
 for (const document of confessions) {
-  assert(document.lines.length >= 2 && document.lines.length <= 3);
-  assert(document.lines.every((line) => line.length > 6 && !/^([IVX ]+)$/.test(line)));
+  assert(document.lines.length >= 2 && document.lines.length <= 4);
+  // Conservative real-script safety bound for the narrow 256px atlas
+  // cell. Chromium's font metrics masked the long-title failure; WebKit
+  // threw at render and blocked the entire library. Do not downscale below
+  // the authored 16px minimum or hide render errors.
+  assert(document.lines.every((line) =>
+    line.length >= 5 && line.length <= 15 && !/^([IVX ]+)$/.test(line)),
+    'Archival cover title exceeds cross-engine line-length budget');
 }
 assert.match(stationSource, /creeds: ConfessionArchive/);
 assert.match(stationSource, /art\.current\.position\.y = 1\.95;/);
