@@ -92,6 +92,10 @@ const BAKED: { p: [number, number, number]; c: [number, number, number]; r: numb
   { p: [-17, 6, -88], c: [1.5, 0.95, 0.55], r: 14 }, { p: [10, 1, -104], c: [0.3, 0.4, 0.5], r: 4 },
   { p: [-3.4, 1.6, -133], c: [1.6, 0.8, 0.35], r: 4 }, { p: [3.4, 1.6, -148], c: [1.6, 0.8, 0.35], r: 4 }, { p: [-3.4, 1.6, -163], c: [1.6, 0.8, 0.35], r: 4 },
   { p: [-3, 0, -200], c: [0.9, 1.05, 1.35], r: 7 }, { p: [0, 40, -200], c: [0.8, 0.95, 1.2], r: 10 },
+  // A weak, local cold bounce reveals actual ravine strata on the distant
+  // rock face. Vertex-baked only: no extra GPU light/draw call, no overall
+  // cave exposure increase and no contribution at the sacred outer Horeb.
+  { p: [17, 0, -200], c: [0.24, 0.29, 0.38], r: 14 },
   { p: [-5.6, 1.5, -238], c: [0.9, 0.6, 0.3], r: 2.5 }, { p: [5.6, 1.5, -254.5], c: [0.9, 0.6, 0.3], r: 2.5 }, { p: [-5.6, 1.5, -271], c: [0.9, 0.6, 0.3], r: 2.5 },
   // Cool indirect reflection from the narrowing exit; geometry remains
   // visibly different before the final moonlit exterior, not a new light.
@@ -297,7 +301,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
   addShaft(1, 9, -30, 3.2, 20, 0, 0.12, 0xffd9a0, 0.22);
   addShaft(-0.5, 9, -27, 1.4, 20, 0, 0.1, 0xffe2b0, 0.14);
   addShaft(-11, 6, -88, 4, 14, 0, -0.9, 0xffb878, 0.12); // зона 2: тёплый боковой свет
-  addShaft(-2.5, 22, -200, 3, 46, 0, 0.03, 0xbcd4ff, 0.2); // зона 4: холодный луч
+  // Diffuse reflected fissure light above the gorge, not a bright blue
+  // laser-like column reaching the walking floor.
+  addShaft(-2.5, 19, -200, 6, 33, 0, 0.03, 0xbcd4ff, 0.075);
   updaters.push((t) => shafts.forEach((m) => (m.uniforms.uT.value = t)));
 
   // ── Пыль в лучах (зоны 1, 2, 4) и сквозняк (зона 6)
