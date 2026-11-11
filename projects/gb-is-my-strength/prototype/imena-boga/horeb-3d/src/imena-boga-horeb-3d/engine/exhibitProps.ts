@@ -56,7 +56,9 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   });
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
-  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x504e46, roughness: 1 });
+  // Roots and tiny twigs share this lower-cost wood material. The original
+  // light grey tone made roots resemble detached bright support struts.
+  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x39372f, roughness: 1 });
   // Vertex-coloured bark needs no additional texture atlas or GPU upload.
   // The same material is shared by all four grooved boles for safe batching.
   const oliveBark = new THREE.MeshStandardMaterial({
@@ -372,6 +374,16 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const leanX = (random() - 0.5) * 0.20;
   const leanZ = (random() - 0.5) * 0.18;
   const barkPhase = random() * Math.PI * 2;
+  // One material and the SAME deterministic bark field for trunk and all
+  // major forks. Previously the fork material was a uniform light cylinder,
+  // visibly disconnected from the darker grooved bole in actual screenshots.
+  const barkTone = (angle: number, t: number) => {
+    const furrow = Math.sin(angle * 6 + t * 9 + barkPhase);
+    const finer = Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const fissure = Math.pow(0.5 + 0.5 * Math.sin(angle * 9 + t * 3.8 + barkPhase), 4);
+    return THREE.MathUtils.clamp(
+      0.52 + 0.22 * furrow + 0.09 * finer - 0.24 * fissure, 0.12, 0.82);
+  };
   // Four intentionally distinct mature silhouettes: uneven height and
   // lateral reach, not four copies with merely different random noise.
   // Trunk colliders/positions remain the single canonical layout.
@@ -408,10 +420,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     // Vertical fissures follow the same procedural coordinates as the mesh
     // folds. Soft brown-grey tones, not alternating flat stripes or a texture
     // whose seams will tear where the trunk twists.
-    const fissure = Math.pow(0.5 + 0.5 * Math.sin(angle * 9 + t * 3.8 + barkPhase), 4);
-    const shade = THREE.MathUtils.clamp(
-      0.52 + 0.22 * furrow + 0.09 * finer - 0.24 * fissure, 0.12, 0.82);
-    localColor.copy(shadeDark).lerp(shadeLight, shade);
+    localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
     barkColors[i * 3] = localColor.r;
     barkColors[i * 3 + 1] = localColor.g;
     barkColors[i * 3 + 2] = localColor.b;
@@ -446,12 +455,27 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
           y, positions.getZ(v) + envelope * bendZ);
       }
       geometry.computeVertexNormals();
+      // Structural branches match the boles' vertex-coloured, fissured bark.
+      // This is baked once into the existing cylinder vertices, uses the
+      // *same* oliveBark material as the trunk, and merges into the same
+      // draw-call batch. No texture or per-frame shader work is introduced.
+      const barkColors = new Float32Array(positions.count * 3);
+      for (let v = 0; v < positions.count; v++) {
+        const y = positions.getY(v);
+        const t = THREE.MathUtils.clamp(y / length + 0.5, 0, 1);
+        const angle = Math.atan2(positions.getZ(v), positions.getX(v));
+        localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
+        barkColors[v * 3] = localColor.r;
+        barkColors[v * 3 + 1] = localColor.g;
+        barkColors[v * 3 + 2] = localColor.b;
+      }
+      geometry.setAttribute('color', new THREE.BufferAttribute(barkColors, 3));
       // Unique deformed branch buffers belong to this scene only. When a
       // successful batch merge detaches their meshes, they must be released.
       // Cached cylinders and other shared shapes do NOT carry this flag.
       geometry.userData.horebOwnedBeforeMerge = true;
     }
-    const piece = new THREE.Mesh(geometry, s.oliveWood);
+    const piece = new THREE.Mesh(geometry, structural ? s.oliveBark : s.oliveWood);
     piece.name = name;
     piece.position.copy(from).addScaledVector(vector, 0.5);
     piece.quaternion.setFromUnitVectors(up, vector.normalize());
