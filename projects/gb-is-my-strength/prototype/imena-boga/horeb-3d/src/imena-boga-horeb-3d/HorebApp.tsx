@@ -87,7 +87,7 @@ function StudyJourneyPanel({ observed, understood, clues, fields, expeditionComp
   expeditionCompleted: boolean;
   onExpeditionComplete: (chronology: string, contrast: string) => void;
   heroJournal: readonly HeroStudyId[];
-  onHeroComplete: (id: HeroStudyId, answer: string) => void;
+  onHeroComplete: (id: HeroStudyId, first: boolean, second: boolean, answer: string) => void;
 }) {
   return <section aria-label="Путевой дневник смысла" className="space-y-4">
     <p className="text-parch/80 text-sm">Пройдите восемь ключевых исследований в любой последовательности. Все 42 досье можно читать свободно; знания не открывают запретные области.</p>
@@ -410,7 +410,8 @@ export default function HorebApp() {
           expeditionCompleted={expeditionCompleted}
           onExpeditionComplete={(order, contrast) => setExpeditionCompleted((old) => completeExpedition(old, siteClues, order, contrast))}
           heroJournal={heroJournal}
-          onHeroComplete={(id, answer) => setHeroJournal((old) => markHeroStudy(old, id, siteClues, answer))} />
+          onHeroComplete={(id, first, second, answer) => setHeroJournal((old) =>
+            markHeroStudy(old, id, siteClues, first, second, answer))} />
       </Modal>}
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
@@ -558,7 +559,8 @@ export default function HorebApp() {
           expeditionCompleted={expeditionCompleted}
           onExpeditionComplete={(order, contrast) => setExpeditionCompleted((old) => completeExpedition(old, siteClues, order, contrast))}
           heroJournal={heroJournal}
-          onHeroComplete={(id, answer) => setHeroJournal((old) => markHeroStudy(old, id, siteClues, answer))} />
+          onHeroComplete={(id, first, second, answer) => setHeroJournal((old) =>
+            markHeroStudy(old, id, siteClues, first, second, answer))} />
       </Modal>}
       {dialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setDialog(null)}>
         <StudyBookmarkList ids={bookmarks} onOpen={(id) => setDialog({ kind: 'exhibit', id })} />
