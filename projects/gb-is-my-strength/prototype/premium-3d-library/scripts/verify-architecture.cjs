@@ -32,6 +32,43 @@ const world = get('scene/World.tsx');
 const architecture = get('scene/Architecture.tsx');
 const center = get('scene/Center.tsx');
 const app = get('App.tsx');
+
+/* A confessional collection must depict church documents, never the
+ * Decalogue tablets I–X or a glowing orbit. Execute the real TS metadata
+ * and verify distinct historical traditions, dates and source-owned atlas. */
+const stationSource = get('scene/Stations.tsx');
+const confessionSource = get('scene/ConfessionArchive.tsx');
+const confessionMetadata = get('scene/confessionDocuments.ts');
+const metadataJs = ts.transpileModule(confessionMetadata, { compilerOptions: {
+  module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
+}}).outputText;
+const metadataModule = { exports: {} };
+new Function('module','exports',metadataJs)(metadataModule,metadataModule.exports);
+const confessions = metadataModule.exports.CONFESSION_DOCUMENTS;
+assert.equal(confessions.length, 4, 'Archive must include four distinct documentary traditions');
+assert.deepEqual(confessions.map((x) => x.date), ['1530','1563','1646','1677/1689']);
+assert.equal(new Set(confessions.map((x) => x.tradition)).size, 4);
+for (const document of confessions) {
+  assert(document.lines.length >= 2 && document.lines.length <= 3);
+  assert(document.lines.every((line) => line.length > 6 && !/^([IVX ]+)$/.test(line)));
+}
+assert.match(stationSource, /creeds: ConfessionArchive/);
+assert.match(stationSource, /import \{ ConfessionArchive \} from "\.\/ConfessionArchive"/);
+assert.doesNotMatch(stationSource, /tabletTextures\(|tabletGeometry\(|function CreedsArt/);
+const textureSource = get('textures.ts');
+assert.doesNotMatch(textureSource, /export function tabletTextures\(/);
+for (const sign of [
+  'name="confession-archive"',
+  'canvasTex(1024, 512',
+  'atlasPlanes()',
+  'new THREE.MeshStandardMaterial',
+  'roughness: 0.88, metalness: 0',
+  'atlas.dispose();',
+  'planes.forEach((geometry) => geometry.dispose());',
+]) assert(confessionSource.includes(sign),'Physical archival exhibit missing '+sign);
+assert.doesNotMatch(confessionSource, /useFrame|emissive|<Beam|<torusGeometry|Math\.random/,
+  'Confessions must not recreate fantasy glowing law tablets or moving orbits');
+
 const entry = get('main.tsx');
 // A public ?panel=cabinet request must not statically pull the WebGL app.
 // The separate production entry uses real dynamic module boundaries.

@@ -5,7 +5,8 @@ import * as THREE from "three";
 import { ITEMS, sectionApproachDistance, itemPos, type Item } from "../data";
 import { useApp, registry, openItem, get, set } from "../store";
 import { useReducedMotion } from "../motion";
-import { plaqueTexture, paperTexture, tabletTextures, glowTexture } from "../textures";
+import { plaqueTexture, paperTexture, glowTexture } from "../textures";
+import { ConfessionArchive } from "./ConfessionArchive";
 import { Beam } from "./Center";
 import { darkStone, goldMat, marble, statue } from "./Platform";
 
@@ -424,73 +425,15 @@ function GlobeArt({ color }: { color: string }) {
   );
 }
 
-/* ───────────── 05 Конфессии: скрижали ───────────── */
-function tabletGeometry() {
-  const w = 0.62, h = 0.9;
-  const s = new THREE.Shape();
-  s.moveTo(-w / 2, -h / 2);
-  s.lineTo(w / 2, -h / 2);
-  s.lineTo(w / 2, h / 2 - w / 2);
-  s.absarc(0, h / 2 - w / 2, w / 2, 0, Math.PI, false);
-  s.lineTo(-w / 2, -h / 2);
-  const g = new THREE.ExtrudeGeometry(s, { depth: 0.09, bevelEnabled: true, bevelSize: 0.015, bevelThickness: 0.015, bevelSegments: 2, curveSegments: 20 });
-  const p = g.attributes.position;
-  const uv = g.attributes.uv;
-  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / w + 0.5, (p.getY(i) + h / 2) / h);
-  g.translate(0, 0, -0.045);
-  return g;
-}
-
-function CreedsArt({ color }: { color: string }) {
-  const reduced = useReducedMotion();
-  const geo = useMemo(tabletGeometry, []);
-  const a = useMemo(() => tabletTextures("I II III IV V"), []);
-  const b = useMemo(() => tabletTextures("VI VII VIII IX X"), []);
-  useEffect(() => {
-    const owned = [a.map, a.emissive, b.map, b.emissive];
-    owned.forEach((tex) => { tex.needsUpdate = true; });
-    return () => owned.forEach((tex) => tex.dispose());
-  }, [a, b]);
-  const side = useMemo(() => new THREE.MeshStandardMaterial({ color: "#5b5e78", roughness: 0.7 }), []);
-  const mk = (t: { map: THREE.Texture; emissive: THREE.Texture }) =>
-    new THREE.MeshStandardMaterial({ map: t.map, emissiveMap: t.emissive, emissive: "#ffffff", emissiveIntensity: 1.6, roughness: 0.6, metalness: 0.1 });
-  const mats = useMemo(() => [[mk(a), side], [mk(b), side]], [a, b, side]);
-  const g = useRef<THREE.Group>(null!);
-  const halo = useRef<THREE.Mesh>(null!);
-  useFrame(({ clock }, dt) => {
-    if (!reduced) {
-      const t = clock.elapsedTime;
-      g.current.rotation.y = Math.sin(t * 0.5) * 0.35;
-      halo.current.rotation.z += dt * 0.3;
-    }
-  });
-  return (
-    <group>
-      <group ref={g} scale={1.3}>
-        <mesh geometry={geo} material={mats[0]} position={[-0.36, 0, 0]} rotation={[0, 0.16, 0.04]} />
-        <mesh geometry={geo} material={mats[1]} position={[0.36, 0, 0]} rotation={[0, -0.16, -0.04]} />
-      </group>
-      <mesh ref={halo} position={[0, 0, -0.5]}>
-        <torusGeometry args={[1.05, 0.012, 8, 100]} />
-        <meshBasicMaterial color={color} toneMapped={false} />
-      </mesh>
-      <mesh position={[0, 0, -0.5]} rotation-z={0.5}>
-        <torusGeometry args={[0.9, 0.006, 8, 6]} />
-        <meshBasicMaterial color={color} transparent opacity={0.7} toneMapped={false} />
-      </mesh>
-      <group position={[0, -0.7, 0]}>
-        <Beam height={1.6} r0={0.8} r1={0.1} color={color} opacity={0.22} />
-      </group>
-    </group>
-  );
-}
-
+/* ───────────── 05 Конфессии: исторические исповедальные документы ───────────── */
+// The archive is physically grounded and non-emissive; the old Decalogue
+// tablets I–X and orbiting sacred-glow geometry were semantically incorrect.
 const ART: Record<string, (p: { color: string }) => ReactNode> = {
   articles: BookArt,
   series: SeriesArt,
   bio: BustArt,
   maps: GlobeArt,
-  creeds: CreedsArt,
+  creeds: ConfessionArchive,
 };
 
 export function Stations() {

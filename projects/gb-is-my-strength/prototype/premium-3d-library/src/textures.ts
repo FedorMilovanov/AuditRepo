@@ -332,29 +332,6 @@ export function verseTexture() {
  * Travertine tile and restrained inlay. The layout is deterministic and includes
  * no fantasy signposting or emissive rings; low mode saves 75% texture memory.
  */
-export function tabletTextures(label: string) {
-  const make = (emissive: boolean) =>
-    canvasTex(256, 400, (c, w, h) => {
-      c.fillStyle = emissive ? "#000" : "#6c6f86";
-      c.fillRect(0, 0, w, h);
-      if (!emissive) {
-        for (let i = 0; i < 1400; i++) {
-          c.fillStyle = `rgba(${Math.random() > 0.5 ? 255 : 0},${Math.random() > 0.5 ? 255 : 0},255,0.03)`;
-          c.fillRect(Math.random() * w, Math.random() * h, 2, 2);
-        }
-      }
-      c.textAlign = "center";
-      c.fillStyle = emissive ? "#ffd58a" : "#2a2c3d";
-      c.font = `600 54px ${SERIF}`;
-      const nums = label.split(" ");
-      nums.forEach((n, i) => c.fillText(n, w / 2, 90 + i * 62));
-      c.strokeStyle = emissive ? "#ffd58a" : "#2a2c3d";
-      c.lineWidth = 3;
-      c.strokeRect(18, 18, w - 36, h - 36);
-    });
-  return { map: make(false), emissive: make(true) };
-}
-
 export function paperTexture() {
   return canvasTex(256, 256, (c, w, h) => {
     c.fillStyle = "#f3ead3";
