@@ -76,8 +76,8 @@
       "bytes_normalized": 1410
     },
     "atlas/src/components/HebrewGreekLexiconMatrix.tsx": {
-      "sha256": "80ea82ce5e9bd714ac68b0fca8de37d0b4ceb03217eff3ec133c1c844cbe1d14",
-      "bytes_normalized": 10737
+      "sha256": "3769b3516fc5c7689e7a8837db4b446313e57735d560abcb51902cad01444389",
+      "bytes_normalized": 11833
     },
     "atlas/src/components/LateralNamePillars.tsx": {
       "sha256": "5880a01fd6fd9ed00778c783fa1f57fb7c270e607e1bdd98c3faade549a51b6e",
@@ -112,8 +112,8 @@
       "bytes_normalized": 9972
     },
     "atlas/src/components/TheologicalQuiz.tsx": {
-      "sha256": "04316febcaf086a4f6f507ed86c1ec354a04194dc8ec18e00d2d8993073c3258",
-      "bytes_normalized": 16788
+      "sha256": "18d8c6744a4880929ccfdd9cebaae10abb7a2236cb23b5a244739014a9653c0e",
+      "bytes_normalized": 17280
     },
     "atlas/src/data/divineNames.ts": {
       "sha256": "e079fb8e5418f23dc821dc59cc07d6c4fee2e5e6c1a279e2cd640b2edafed066",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "4bd03e86e2112bbc741eafcbe85dc233c1adf10a3e611376e0d6fe6e462ea58d",
-      "bytes_normalized": 20289
+      "sha256": "5eab8dadfa75d3f92a9b38243395e0e357186f38cd5d56ff1dfb004e1a252aaa",
+      "bytes_normalized": 22858
     },
     "checks/visual_review.cjs": {
       "sha256": "2dc8bd8e4b09a5aad1ca15da39b0485342ec5435a2c303b4b88a90e438516901",
