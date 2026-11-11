@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -732,6 +732,29 @@ t('metric cliff UV is restricted to far geological strata, never walkable floor'
   ravineMetricUvWeight(22, -8, 1) > 0 &&
   ravineMetricUvWeight(22, -8, 1) < 1);
 const ravineUvDensity: Record<string, number> = {};
+// The new cliff relief is physically continuous and limited to the *far*
+// wall. It must not change the safe ledge, another gallery, the top lip,
+// collision obstacles or the sacred perimeter.
+const reliefSamples: number[] = [];
+for (const z of [-223, -217, -211, -205, -199, -193, -187, -181])
+  for (const y of [-12, -20, -28, -42]) {
+    const value = opposingRavineRelief(23, y, z, 1);
+    reliefSamples.push(value);
+  }
+t('zone-4 deep cliff relief is bounded, variable and grounded in real rock',
+  reliefSamples.every((v) => Number.isFinite(v) && Math.abs(v) <= 1.15 + 1e-9) &&
+  Math.max(...reliefSamples) - Math.min(...reliefSamples) > 0.20);
+t('zone-4 rock relief cannot move any navigable lip or other zone',
+  opposingRavineRelief(3.4, -29, -200, 1) === 0 &&
+  opposingRavineRelief(23, -5, -200, 1) === 0 &&
+  opposingRavineRelief(23, -29, -200, 0) === 0 &&
+  opposingRavineRelief(23, -29, -88, 0) === 0 &&
+  opposingRavineRelief(23, -29, -348, 0) === 0);
+t('zone-4 relief changes smoothly across adjacent 3D samples',
+  [-195, -200, -205].every((z) =>
+    Math.abs(opposingRavineRelief(23, -24, z + 0.04, 1) -
+      opposingRavineRelief(23, -24, z - 0.04, 1)) < 0.25) &&
+  Math.abs(opposingRavineRelief(23, -23, -200, 0.02)) < 0.024);
 // A visible ravine must descend from the exact right-hand floor vertices,
 // not be simulated by a disconnected dark plane fifty metres underneath.
 for (const lowMode of [true, false]) {
@@ -757,6 +780,13 @@ for (const lowMode of [true, false]) {
   // Physically measured cliff length, not arbitrary j/N surface indices:
   // enforce texture frequency remains comparable on LOW and HIGH.
   if (opposingVault instanceof THREE.Mesh) {
+    const relief = opposingVault.userData.opposingCliffRelief as
+      { affectedVertices: number; min: number; max: number };
+    t('zone-4 relief is embedded in actual cave triangles ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+      relief?.affectedVertices > (lowMode ? 25 : 40) &&
+      Number.isFinite(relief.min) && Number.isFinite(relief.max) &&
+      relief.max - relief.min > 0.20);
     const position = opposingVault.geometry.getAttribute('position');
     const texcoord = opposingVault.geometry.getAttribute('uv');
     const segments = lowMode ? 36 : 60;
