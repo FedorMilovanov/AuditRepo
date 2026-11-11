@@ -462,7 +462,7 @@ export default function HorebApp() {
       </div>
 
       {ws && !ws.locked && !isTouch && !dialog && !ws.block && ws.zone < 6 && (
-        <p className="absolute bottom-24 inset-x-0 px-3 text-center pointer-events-none">
+        <p data-testid="world-keyboard-help" className="absolute bottom-24 inset-x-0 px-3 text-center pointer-events-none">
           <span className="inline-block max-w-[95vw] rounded-sm border border-parch/15 bg-black/70 px-4 py-2 text-sm leading-snug text-parch/90 shadow-lg backdrop-blur-sm">
             Кликните по сцене, чтобы осмотреться мышью · W A S D — шаг · Esc — отпустить
           </span>
