@@ -77,6 +77,18 @@ const TINTS: [number, [number, number, number]][] = [
   [-118, [0.55, 0.38, 0.27]], [-145, [0.6, 0.38, 0.23]], [-172, [0.4, 0.39, 0.4]], [-200, [0.33, 0.36, 0.42]],
   [-230, [0.39, 0.42, 0.46]], [-260, [0.38, 0.41, 0.45]], [-292, [0.33, 0.33, 0.36]], [-322, [0.36, 0.37, 0.42]],
 ];
+/** Very local, directional-looking mineral reflectance on the opposite
+ * ravine wall. Existing cave-shell triangles and textured material only:
+ * no detached stratum billboards, new lights, collider or draw calls.
+ * The safe left-hand path and other seven zones are unaffected. */
+export function ravineStrataReflectance(x: number, y: number, z: number, chasm: number): number {
+  if (chasm <= 0 || x < 12 || y >= -4) return 1;
+  const depth = Math.min(1, Math.max(0, (-y - 4) / 24));
+  // Gentle geological irregularity rather than repeated evenly spaced lines.
+  const warp = fbm(x * 0.13 + 8, y * 0.17, z * 0.10 - 3, 3);
+  const bedding = 0.5 + 0.5 * Math.sin(y * 0.91 + z * 0.045 + warp * 2.5);
+  return 1 + chasm * depth * (0.36 + 0.18 * bedding);
+}
 function tint(z: number): [number, number, number] {
   for (let i = 0; i < TINTS.length - 1; i++) {
     const [za, a] = TINTS[i], [zb, b] = TINTS[i + 1];
@@ -158,7 +170,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         pos.push(x, y, z);
         bake(x * 0.8, Math.max(0, y), z, tmp);
         const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z) * exit.shade;
-        const ao = 0.55 + 0.45 * Math.min(1, Math.max(0, y) / 3) * (1 - 0.35 * Math.max(0, y / H - 0.7));
+        const ao = (0.55 + 0.45 * Math.min(1, Math.max(0, y) / 3) *
+          (1 - 0.35 * Math.max(0, y / H - 0.7))) *
+          ravineStrataReflectance(x, y, z, cf);
         let vein = 1;
         if (z < -62 && z > -118) vein = 1 + 0.35 * Math.max(0, Math.sin(y * 1.7 + n * 9) - 0.85) * 6;
         col.push(tr * v * ao * tmp[0] * vein, tg * v * ao * tmp[1] * vein, tb * v * ao * tmp[2] * (vein > 1 ? 1.05 : 1));
