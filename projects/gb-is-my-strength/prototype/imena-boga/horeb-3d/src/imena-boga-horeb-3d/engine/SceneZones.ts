@@ -46,9 +46,13 @@ export function exitVaultRelief(x: number, y: number, z: number,
   archSin: number, archCos: number) {
   // The previous erosion faded to ZERO before the actual mouth, producing
   // a mathematically perfect black semicircle at the very exit.
-  // Keep the same cave-shell topology and continue the weathering through
-  // its last rings, ending outside the mesh (z <-324) without detached fins.
-  const envelope = ss(-324, -319, z) * (1 - ss(-298, -288, z));
+  // Keep weathering at FULL strength through the last physical ring
+  // (HIGH ends at z=-322, LOW at ~-321.8). The old fade [-324,-319]
+  // weakened the relief precisely at the silhouette, reconstructing a
+  // textbook semicircle in the final metre. The falloff now ends BEYOND
+  // the existing mesh, where no new geometry/draw call is created.
+  // Continuous shell, no hanging spike meshes or new collision surface.
+  const envelope = ss(-326, -323, z) * (1 - ss(-298, -288, z));
   if (envelope <= 0) return { roofDrop: 0, sideOut: 0, shade: 1 };
   const grain = fbm(x * 0.74 + 17, y * 0.31 - 2, z * 0.49 + 31, 3);
   // Geological weathering occurs on several continuous wavelengths.
