@@ -91,23 +91,61 @@ canvas {
   [data-gb-minimap] {
     display: none !important;
   }
-  [data-gb-help] {
+  /* Cardboard must retain its independent headset safety instructions. */
+  [data-gb-help][data-gb-hint-mode="desktop"] {
     bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)) !important;
     width: min(16.75rem, calc(100vw - 19rem));
     max-width: none;
     padding-inline: 0;
   }
-  [data-gb-help] > .glass {
+  [data-gb-help][data-gb-hint-mode="desktop"] > .glass {
     padding: 0.35rem 0.55rem;
     font-size: 0.625rem;
     line-height: 1.15;
     box-shadow: none;
     backdrop-filter: blur(10px);
   }
-  [data-gb-help-full] {
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-full] {
     display: none;
   }
-  [data-gb-help-compact] {
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-compact] {
+    display: inline;
+  }
+}
+
+/* Below 600px wide the landscape hint would collapse to a narrow,
+   unreadable sliver between fixed navigation controls. Suppress only the
+   optional introductory hint; joystick and accessible toolbar remain. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 430px) and (max-width: 600px) {
+  [data-gb-help][data-gb-hint-mode="desktop"] {
+    display: none !important;
+  }
+}
+
+/* Phone portrait reading station: move the short instructional text
+   beside (never above) the 128px joystick. Otherwise the long hint
+   covers the real lectern's page from the standard public camera. */
+@media (pointer: coarse) and (orientation: portrait) and (max-width: 480px) {
+  [data-gb-help][data-gb-hint-mode="desktop"] {
+    left: 10rem !important;
+    right: 0.75rem;
+    width: auto;
+    max-width: none;
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    translate: none !important;
+    transform: none !important;
+    padding-inline: 0;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] > .glass {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.625rem;
+    line-height: 1.2;
+    box-shadow: none;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-full] {
+    display: none;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-compact] {
     display: inline;
   }
 }

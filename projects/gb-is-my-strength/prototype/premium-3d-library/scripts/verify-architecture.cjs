@@ -222,4 +222,20 @@ assert.ok(caseworkBytes>200000 && caseworkBytes<600000,
  'PBR oak budget exceeded '+caseworkBytes);
 console.log('PASS: CC0 oak PBR 6/6 SHA256, shared wood context, UV grain directions.');
 
+// The short-landscape hint is optional. Never hide Cardboard's mandatory
+// headset instructions, and never leave a collapsed desktop hint in 480px.
+// On phone portrait it belongs to the right of the movement joystick.
+const hudCss=fs.readFileSync(path.join(src,'index.css'),'utf8');
+const hudSource=get('ui/Overlay.tsx');
+assert.ok(hudSource.includes('data-gb-help data-gb-hint-mode={mode}'),
+  'Explicit Cardboard-vs-desktop hint mode not rendered');
+assert.match(hudCss, /\[data-gb-help\]\[data-gb-hint-mode="desktop"\]/,
+  'Touch help CSS must be restricted to desktop navigation mode');
+assert.match(hudCss, /\(max-width: 600px\)/,
+  'Narrow landscape help suppression missing');
+assert.match(hudCss, /\(orientation: portrait\) and \(max-width: 480px\)/,
+  'Portrait reading-page help layout missing');
+assert.match(hudCss, /left: 10rem !important;/);
+assert.match(hudCss, /translate: none !important;/);
+
 console.log(`PASS: ${count} TS/TSX source files parsed, local imports resolved, renderer/VR/3 covers verified.`);

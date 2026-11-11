@@ -64,6 +64,17 @@ async def inspect(browser, engine, width, height):
         if await hint.count() and await hint.is_visible():
             h = await hint.bounding_box()
             assert h and not overlap(h, j), f"{engine}/{width}: help overlaps joystick: {h} vs {j}"
+            if width <= 390:
+                # Portrait help must be an unobtrusive compact chip to the
+                # RIGHT of the joystick, not over the in-world reading page.
+                assert await hint.get_attribute("data-gb-hint-mode") == "desktop"
+                assert h["x"] >= j["x"] + j["width"] + 8, (engine, width, h, j)
+                assert h["y"] >= height * 0.77, (engine, width, h)
+                assert h["x"] + h["width"] <= width + 1, (engine, width, h)
+                assert await hint.locator("[data-gb-help-compact]").is_visible()
+                assert not await hint.locator("[data-gb-help-full]").is_visible()
+                await capture_evidence(page, EVIDENCE /
+                    f"gb-library-touch-{engine}-{width}x{height}-help.png")
 
         more = page.get_by_role("button", name="Дополнительные действия")
         await more.click()

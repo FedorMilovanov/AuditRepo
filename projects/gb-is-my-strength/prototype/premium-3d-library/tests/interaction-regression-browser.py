@@ -217,6 +217,32 @@ async def run_case(browser,engine,w,h,touch):
                 assert hud["help"]["bottom"] <= h + 1, hud
         if size in ("844x390","667x375","390x844","1440x900"):
             await capture_evidence(page, OUT/f"{engine}-{size}-hall.png")
+        if touch and size == "667x375":
+            # Regression for very narrow landscape: the old 19rem subtraction
+            # produced a nearly zero-width multi-line hint. The optional
+            # hint must disappear, not the functional movement/map controls.
+            await page.set_viewport_size({"width":480,"height":320})
+            await page.wait_for_function("innerWidth === 480 && innerHeight === 320")
+            narrow = await page.evaluate("""() => {
+              const shown = selector => {
+                const el=document.querySelector(selector);
+                return !!el && getComputedStyle(el).display!=='none';
+              };
+              return {
+                help:shown('[data-gb-help]'),
+                joystick:shown('[data-gb-joystick]'),
+                map:shown('[data-gb-toolbar] button[title="Карта сайта"]'),
+                minimap:shown('[data-gb-minimap]'),
+                overflow:document.documentElement.scrollWidth>innerWidth+2,
+              };
+            }""")
+            assert not narrow["help"] and narrow["joystick"] and narrow["map"], narrow
+            assert not narrow["minimap"] and not narrow["overflow"], narrow
+            await capture_evidence(page, OUT/f"{engine}-480x320-narrow-hall.png")
+            await page.set_viewport_size({"width":w,"height":h})
+            await page.wait_for_function(
+                "([width,height]) => innerWidth === width && innerHeight === height",
+                arg=[w,h])
 
         # Reopen via the public game keyboard shortcut (desktop), or real
         # toolbar tap (mobile), then ensure modal isolation and restoration.

@@ -515,7 +515,7 @@ function HelpHint() {
   const aimed = useApp((s) => s.aimed);
   if (phase !== "play" || xr || !on || tour !== null || aimed) return null;
   return (
-    <div data-gb-help className={`pointer-events-none fixed left-1/2 z-10 w-full max-w-md -translate-x-1/2 px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
+    <div data-gb-help data-gb-hint-mode={mode} className={`pointer-events-none fixed left-1/2 z-10 w-full max-w-md -translate-x-1/2 px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
       <div className="glass fade-up rounded-full px-5 py-2 text-xs text-[#e0dcd1]">
         <span data-gb-help-full>
           {mode === "cardboard"
