@@ -96,6 +96,21 @@ const TINTS: [number, [number, number, number]][] = [
  * fissures, mesh overlays, procedural fake lights or new collision shapes.
  * Relief is zero at the navigable ledge, above the deep wall, and outside
  * the chasm's existing axial envelope. */
+/** C1-continuous fall from upper ravine face into its real abyss.
+ * The old piecewise y - cf*55*(1-max(-1,y)/(0.45*H)) had an abrupt
+ * derivative change at 45% vault height. This produced a mechanically
+ * flat horizontal crease and an elongated texture fan in every frame.
+ * Hermite interpolation keeps the same ~55m depth but zero slope at
+ * both ends, while preserving the exact original cave mesh topology.
+ * Does not affect navigable floor, colliders or the Bush boundary. */
+export function opposingRavineDrop(y: number, height: number, chasm: number): number {
+  if (!Number.isFinite(y) || !Number.isFinite(height) || !Number.isFinite(chasm) ||
+      height <= 0 || chasm <= 0) return 0;
+  const crest = height * 0.45;
+  const t = THREE.MathUtils.clamp((crest - y) / (crest + 1), 0, 1);
+  const hermite = t * t * (3 - 2 * t);
+  return 55 * Math.min(1, chasm) * hermite;
+}
 export function opposingRavineRelief(x: number, y: number, z: number, chasm: number): number {
   if (chasm <= 0 || x <= 12 || y >= -7) return 0;
   const gate = Math.min(1, Math.max(0, chasm)) *
@@ -190,7 +205,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
           const irregular = fbm(x * 0.11 + 2, y * 0.08, z * 0.10, low ? 2 : 3);
           x += cf * Math.pow(ca, 1.35) * (8.5 + 2.1 * irregular);
         }
-        if (cf > 0 && ca > 0 && y < H * 0.45) y -= cf * 55 * (1 - Math.max(-1, y) / (H * 0.45));
+        if (cf > 0 && ca > 0) y -= opposingRavineDrop(y, H, cf);
         const cliffRelief = opposingRavineRelief(x, y, z, cf);
         if (Math.abs(cliffRelief) > 0.001) {
           weatheredCliffVertices++;
