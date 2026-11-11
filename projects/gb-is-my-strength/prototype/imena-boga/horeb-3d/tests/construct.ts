@@ -514,6 +514,21 @@ if (gardenRecord) {
   });
   t('Gethsemane structural forks bend naturally with joined endpoints',
     curvedForks >= 28 && groundedForkEnds === branches);
+  // Regression: a curved branch is an individually owned BufferGeometry.
+  // Batched prop scenes discard those source meshes, so their buffers must be
+  // explicitly released, while shared cached cylinders stay intact.
+  const batchableGarden = buildExhibitProps(gardenRecord, true, 0, 0);
+  let ownedBranches = 0, disposedOwnedBranches = 0;
+  batchableGarden.traverse((object) => {
+    if (object.name !== 'olive-branch' || !(object instanceof THREE.Mesh) ||
+        !object.geometry.userData.horebOwnedBeforeMerge) return;
+    ownedBranches++;
+    object.geometry.addEventListener('dispose', () => { disposedOwnedBranches++; });
+  });
+  mergePropsGroup(batchableGarden);
+  t('Gethsemane merged branch buffers are disposed once after batching',
+    ownedBranches >= 28 && disposedOwnedBranches === ownedBranches &&
+    !batchableGarden.children.some((object) => object.name === 'olive-branch'));
   let trunks = 0, roots = 0, flatLeaves = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-main-trunk') trunks++;
