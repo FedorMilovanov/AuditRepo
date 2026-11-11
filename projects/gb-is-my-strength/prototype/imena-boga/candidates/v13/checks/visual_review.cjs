@@ -465,8 +465,9 @@ async function visit(browser,engine,app,width,base){
          visibleLabels:labels.filter(el=>getComputedStyle(el).display!=='none').length,
          labelsAccessible:pins.every(el=>!!el.getAttribute('aria-label')),
           badgeVisible,badgeText:badge?.textContent?.trim()||'',
-          badgeInsideStage:!!badgeRect&&badgeRect.left>=stage.left-1&&
-            badgeRect.right<=stage.right+1&&badgeRect.top>=stage.top-1&&badgeRect.bottom<=stage.bottom+1,
+          badgeOutsideStage:!!badgeRect&&badgeRect.bottom<=stage.top-1&&
+            badgeRect.left>=root.getBoundingClientRect().left-1&&
+            badgeRect.right<=root.getBoundingClientRect().right+1,
           badgeOverlapsSea:!!badgeOverlapsSea,
           bilingualStackFits:!!original&&!!russian&&!!card&&
             original.top>=russian.bottom-2&&original.left>=card.left-1&&original.right<=card.right+1};
@@ -479,7 +480,7 @@ async function visit(browser,engine,app,width,base){
         actual.actionCount!==2||actual.actionMinHeight<43||
         !actual.actionTextFits||!actual.actionNoWrap||actual.labelOverlaps.length>0||
         !actual.labelsAccessible||!actual.bilingualStackFits||
-        (width<640&&(!actual.badgeVisible||!actual.badgeInsideStage||
+        (width<640&&(!actual.badgeVisible||!actual.badgeOutsideStage||
           actual.badgeOverlapsSea||!actual.badgeText.includes('Гора Мориа')))||
         (width>=640&&actual.badgeVisible)||
         (width<640&&actual.visibleLabels!==0)||
@@ -490,7 +491,7 @@ async function visit(browser,engine,app,width,base){
        '[data-covenant-map-stage]',145);
      if(width===390||width===1440)await anchorShot(page,
        engine+'-atlas-'+width+'-12-map-actions','[data-covenant-card-actions]',300);
-     // Exercise all nine small-screen selected captions against map bounds,
+     // Exercise all nine small-screen selected captions above the map,
      // sea watermark and the same pin/waypoint state as the wide map.
      if(width===320||width===390)for(let activeIndex=0;activeIndex<9;activeIndex++){
        await page.locator('[data-covenant-waypoint]').nth(activeIndex).click();
@@ -506,8 +507,9 @@ async function visit(browser,engine,app,width,base){
          const expectedName=raw.slice(raw.indexOf('.')+1).trim();
          return {expected,expectedName,caption:badge.textContent?.trim()||'',
            visible:getComputedStyle(badge).display!=='none',
-           contained:a.left>=stage.left-1&&a.right<=stage.right+1&&
-             a.top>=stage.top-1&&a.bottom<=stage.bottom+1,
+           aboveMap:a.bottom<=stage.top-1&&
+             a.left>=root.getBoundingClientRect().left-1&&
+             a.right<=root.getBoundingClientRect().right+1,
            seaOverlap:Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&
              Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1,
            visibleLabels:[...root.querySelectorAll('[data-covenant-pin-label]')].filter(el=>getComputedStyle(el).display!=='none').length,
@@ -515,7 +517,7 @@ async function visit(browser,engine,app,width,base){
            selectedWaypoints:wp.flatMap((el,i)=>el.getAttribute('aria-pressed')==='true'?[i]:[])};
        },activeIndex);
        record('atlas-mobile-map-selected-caption',{engine,width,...m});
-       if(!m.visible||!m.contained||m.seaOverlap||m.visibleLabels!==0||
+       if(!m.visible||!m.aboveMap||m.seaOverlap||m.visibleLabels!==0||
           !m.caption.includes(m.expectedName)||
           !m.caption.includes('Место '+(activeIndex+1)+' из 9')||
           m.selectedPins.length!==1||m.selectedWaypoints.length!==1||

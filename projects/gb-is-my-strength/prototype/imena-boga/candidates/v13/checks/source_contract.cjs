@@ -480,7 +480,7 @@ console.log('V13_W54_BEERSHEBA_GEOMETRY_SOURCE_PASS');
 // pin tooltips remain visually hidden; languages in the rail do not compete
 // for a narrow horizontal row.
 for(const token of [
- 'data-covenant-mobile-selection','max-w-[55%]',
+ 'data-covenant-mobile-selection','justify-between gap-2',
  'data-covenant-sea-watermark','aria-live="polite"',
  'data-covenant-linked-expression','data-covenant-linked-original',
  'data-covenant-linked-transliteration','data-covenant-linked-russian',
@@ -488,3 +488,13 @@ for(const token of [
 ])if(!nov11MapUi.includes(token))
  throw Error('Wave55 mobile-caption / bilingual-card regression: '+token);
 console.log('V13_W55_SELECTED_MOBILE_CAPTION_BILINGUAL_CARD_PASS');
+
+
+// Wave56: selected caption is outside the map canvas. Names at the top
+// (especially Ophrah) must remain interactive and never be overlaid.
+const w56Badge=nov11MapUi.indexOf('data-covenant-mobile-selection');
+const w56Stage=nov11MapUi.indexOf('data-covenant-map-stage');
+if(w56Badge<0||w56Stage<0||w56Badge>=w56Stage||
+   !nov11MapUi.includes('mt-3 flex min-w-0 flex-wrap items-center justify-between gap-2'))
+ throw Error('Wave56 separate mobile caption row regressed');
+console.log('V13_W56_MOBILE_CAPTION_OUTSIDE_MAP_PASS');

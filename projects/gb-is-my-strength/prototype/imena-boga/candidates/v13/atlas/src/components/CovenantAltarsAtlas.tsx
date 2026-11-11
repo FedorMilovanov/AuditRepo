@@ -133,6 +133,25 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
         })}
       </div>
 
+      {/* Selected place as a separate narrow-screen map caption: never cover
+          the actual schematic pins, even when long place names wrap. */}
+      <div
+        data-covenant-mobile-selection
+        aria-live="polite"
+        aria-atomic="true"
+        className="font-ui mt-3 flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2 text-[11px] font-medium sm:hidden"
+        style={{
+          borderColor: 'var(--gb-border-strong)',
+          backgroundColor: 'var(--gb-bg)',
+          color: 'var(--gb-ink)',
+        }}
+      >
+        <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: 'var(--gb-gold-ink)' }}>
+          Место {safeIdx + 1} из {COVENANT_ALTARS.length}
+        </span>
+        <span className="font-semibold">{activeAltar.placeName.split(' (')[0]}</span>
+      </div>
+
       <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Stylized Cartographic Map Canvas */}
         <div
@@ -201,24 +220,6 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           >
             Полуостров Синай
           </span>
-
-          {/* A fixed mobile caption avoids neighbouring pin collisions. */}
-          <div
-            data-covenant-mobile-selection
-            aria-live="polite"
-            aria-atomic="true"
-            className="font-ui pointer-events-none absolute right-3 top-3 z-30 max-w-[55%] rounded-lg border px-2.5 py-1.5 text-right text-[10px] font-semibold leading-snug shadow-sm sm:hidden"
-            style={{
-              borderColor: 'var(--gb-border-strong)',
-              backgroundColor: 'var(--gb-surface)',
-              color: 'var(--gb-ink)',
-            }}
-          >
-            <span className="block text-[9px] font-medium uppercase tracking-wide" style={{ color: 'var(--gb-gold-ink)' }}>
-              Место {safeIdx + 1} из {COVENANT_ALTARS.length}
-            </span>
-            <span className="block">{activeAltar.placeName.split(' (')[0]}</span>
-          </div>
 
           {/* Interactive Altar Pins */}
           {COVENANT_ALTARS.map((altar, idx) => {
