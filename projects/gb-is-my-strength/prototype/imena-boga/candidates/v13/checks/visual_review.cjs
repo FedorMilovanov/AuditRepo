@@ -430,6 +430,18 @@ async function visit(browser,engine,app,width,base){
        const labels=[...root.querySelectorAll('[data-covenant-pin-label]')];
        const nav=[...root.querySelectorAll('[data-covenant-map-nav]')];
        const actions=[...root.querySelectorAll('[data-covenant-card-actions] button')];
+        const badge=root.querySelector('[data-covenant-mobile-selection]');
+        const sea=root.querySelector('[data-covenant-sea-watermark]');
+        const stage=root.querySelector('[data-covenant-map-stage]').getBoundingClientRect();
+        const badgeRect=badge?.getBoundingClientRect();
+        const seaRect=sea?.getBoundingClientRect();
+        const badgeVisible=!!badge&&getComputedStyle(badge).display!=='none';
+        const original=root.querySelector('[data-covenant-linked-original]')?.getBoundingClientRect();
+        const russian=root.querySelector('[data-covenant-linked-russian]')?.getBoundingClientRect();
+        const card=root.querySelector('[data-covenant-linked-expression]')?.getBoundingClientRect();
+        const badgeOverlapsSea=badgeVisible&&seaRect&&badgeRect&&
+          Math.min(badgeRect.right,seaRect.right)-Math.max(badgeRect.left,seaRect.left)>1&&
+          Math.min(badgeRect.bottom,seaRect.bottom)-Math.max(badgeRect.top,seaRect.top)>1;
        const visibleRects=labels.filter(el=>getComputedStyle(el).display!=='none')
          .map(el=>el.getBoundingClientRect());
        const overlaps=[];
@@ -451,7 +463,13 @@ async function visit(browser,engine,app,width,base){
          pinMinHeight:Math.min(...pins.map(el=>el.getBoundingClientRect().height)),
          waypointMinHeight:Math.min(...waypoints.map(el=>el.getBoundingClientRect().height)),
          visibleLabels:labels.filter(el=>getComputedStyle(el).display!=='none').length,
-         labelsAccessible:pins.every(el=>!!el.getAttribute('aria-label'))};
+         labelsAccessible:pins.every(el=>!!el.getAttribute('aria-label')),
+          badgeVisible,badgeText:badge?.textContent?.trim()||'',
+          badgeInsideStage:!!badgeRect&&badgeRect.left>=stage.left-1&&
+            badgeRect.right<=stage.right+1&&badgeRect.top>=stage.top-1&&badgeRect.bottom<=stage.bottom+1,
+          badgeOverlapsSea:!!badgeOverlapsSea,
+          bilingualStackFits:!!original&&!!russian&&!!card&&
+            original.top>=russian.bottom-2&&original.left>=card.left-1&&original.right<=card.right+1};
      });
      record('atlas-nine-place-controls',{engine,width,...actual});
      if(actual.pins!==9||actual.waypoints!==9||actual.labels!==9||
@@ -460,7 +478,10 @@ async function visit(browser,engine,app,width,base){
         actual.navCount!==2||actual.navMinHeight<43||
         actual.actionCount!==2||actual.actionMinHeight<43||
         !actual.actionTextFits||!actual.actionNoWrap||actual.labelOverlaps.length>0||
-        !actual.labelsAccessible||
+        !actual.labelsAccessible||!actual.bilingualStackFits||
+        (width<640&&(!actual.badgeVisible||!actual.badgeInsideStage||
+          actual.badgeOverlapsSea||!actual.badgeText.includes('Гора Мориа')))||
+        (width>=640&&actual.badgeVisible)||
         (width<640&&actual.visibleLabels!==0)||
         (width>=640&&width<1280&&actual.visibleLabels!==1)||
         (width>=1280&&actual.visibleLabels!==9))
@@ -469,6 +490,41 @@ async function visit(browser,engine,app,width,base){
        '[data-covenant-map-stage]',145);
      if(width===390||width===1440)await anchorShot(page,
        engine+'-atlas-'+width+'-12-map-actions','[data-covenant-card-actions]',300);
+     // Exercise all nine small-screen selected captions against map bounds,
+     // sea watermark and the same pin/waypoint state as the wide map.
+     if(width===320||width===390)for(let activeIndex=0;activeIndex<9;activeIndex++){
+       await page.locator('[data-covenant-waypoint]').nth(activeIndex).click();
+       const m=await page.evaluate(expected=>{
+         const root=document.querySelector('#covenant-altars-atlas');
+         const badge=root.querySelector('[data-covenant-mobile-selection]');
+         const sea=root.querySelector('[data-covenant-sea-watermark]');
+         const stage=root.querySelector('[data-covenant-map-stage]').getBoundingClientRect();
+         const a=badge.getBoundingClientRect(),b=sea.getBoundingClientRect();
+         const wp=[...root.querySelectorAll('[data-covenant-waypoint]')];
+         const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
+         const raw=(wp[expected]?.textContent||'').trim();
+         const expectedName=raw.slice(raw.indexOf('.')+1).trim();
+         return {expected,expectedName,caption:badge.textContent?.trim()||'',
+           visible:getComputedStyle(badge).display!=='none',
+           contained:a.left>=stage.left-1&&a.right<=stage.right+1&&
+             a.top>=stage.top-1&&a.bottom<=stage.bottom+1,
+           seaOverlap:Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&
+             Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1,
+           visibleLabels:[...root.querySelectorAll('[data-covenant-pin-label]')].filter(el=>getComputedStyle(el).display!=='none').length,
+           selectedPins:pins.flatMap((el,i)=>el.getAttribute('aria-pressed')==='true'?[i]:[]),
+           selectedWaypoints:wp.flatMap((el,i)=>el.getAttribute('aria-pressed')==='true'?[i]:[])};
+       },activeIndex);
+       record('atlas-mobile-map-selected-caption',{engine,width,...m});
+       if(!m.visible||!m.contained||m.seaOverlap||m.visibleLabels!==0||
+          !m.caption.includes(m.expectedName)||
+          !m.caption.includes('Место '+(activeIndex+1)+' из 9')||
+          m.selectedPins.length!==1||m.selectedWaypoints.length!==1||
+          m.selectedPins[0]!==activeIndex||m.selectedWaypoints[0]!==activeIndex)
+         problem('BLOCKER','atlas-mobile-caption-selection-failed',{engine,width,...m});
+       if(width===390&&activeIndex===1)await anchorShot(page,
+         engine+'-atlas-'+width+'-14-beersheba-mobile',
+         '[data-covenant-map-stage]',145);
+     }
      // Exercise all nine selected states at the wide breakpoint. An
      // initially clean map can still collide once a different label becomes
      // active. Geometry is measured after the state update, never guessed

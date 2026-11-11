@@ -188,6 +188,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           {/* Regional Watermark Labels */}
           <span
             aria-hidden="true"
+            data-covenant-sea-watermark
             className="font-serif-display pointer-events-none absolute top-4 left-4 text-[11px] italic tracking-widest uppercase opacity-50"
             style={{ color: 'var(--gb-muted)' }}
           >
@@ -200,6 +201,24 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           >
             Полуостров Синай
           </span>
+
+          {/* A fixed mobile caption avoids neighbouring pin collisions. */}
+          <div
+            data-covenant-mobile-selection
+            aria-live="polite"
+            aria-atomic="true"
+            className="font-ui pointer-events-none absolute right-3 top-3 z-30 max-w-[55%] rounded-lg border px-2.5 py-1.5 text-right text-[10px] font-semibold leading-snug shadow-sm sm:hidden"
+            style={{
+              borderColor: 'var(--gb-border-strong)',
+              backgroundColor: 'var(--gb-surface)',
+              color: 'var(--gb-ink)',
+            }}
+          >
+            <span className="block text-[9px] font-medium uppercase tracking-wide" style={{ color: 'var(--gb-gold-ink)' }}>
+              Место {safeIdx + 1} из {COVENANT_ALTARS.length}
+            </span>
+            <span className="block">{activeAltar.placeName.split(' (')[0]}</span>
+          </div>
 
           {/* Interactive Altar Pins */}
           {COVENANT_ALTARS.map((altar, idx) => {
@@ -279,6 +298,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
 
             {/* Linked expression may be a name, an altar/place title or a predication */}
             <div
+              data-covenant-linked-expression
               className="mt-5 rounded-xl border p-4"
               style={{
                 backgroundColor: 'var(--gb-surface)',
@@ -288,17 +308,20 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
               <div className="font-ui text-[10px] font-semibold uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
                 Связанное библейское выражение (№ {linkedName.number})
               </div>
-              <div className="mt-1.5 flex items-baseline justify-between gap-2">
-                <div>
-                  <div className="font-serif-display text-lg font-bold" style={{ color: 'var(--gb-ink)' }}>
+              <div className="mt-1.5 flex min-w-0 flex-col gap-2">
+                <div className="min-w-0">
+                  <div data-covenant-linked-transliteration className="font-serif-display text-lg font-bold leading-snug break-words" style={{ color: 'var(--gb-ink)' }}>
                     {linkedName.transliteration}
                   </div>
-                  <div className="font-ui text-xs font-medium" style={{ color: 'var(--gb-accent)' }}>
+                  <div data-covenant-linked-russian className="font-ui mt-1 text-xs font-medium leading-relaxed" style={{ color: 'var(--gb-accent)' }}>
                     {linkedName.russianName}
                   </div>
                 </div>
                 <span
-                  className={`${linkedName.language === 'greek' ? 'font-greek' : 'font-hebrew'} text-2xl font-bold`}
+                  data-covenant-linked-original
+                  lang={linkedName.language === 'greek' ? 'el' : 'he'}
+                  dir={linkedName.language === 'greek' ? 'ltr' : 'rtl'}
+                  className={`${linkedName.language === 'greek' ? 'font-greek' : 'font-hebrew'} block w-full min-w-0 text-right text-2xl font-bold leading-relaxed break-words`}
                   style={{ color: 'var(--gb-ink)' }}
                 >
                   {linkedName.original}

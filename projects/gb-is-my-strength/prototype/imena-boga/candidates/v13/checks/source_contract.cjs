@@ -474,3 +474,17 @@ if(!w54Beersheba.includes('x: 37,')||
    !w54Beersheba.includes("labelAlign: 'top'"))
  throw Error('W54 Beersheba label / fixed-coordinate source regression');
 console.log('V13_W54_BEERSHEBA_GEOMETRY_SOURCE_PASS');
+
+
+// Wave55: pin selection remains legible on small screens while all nine
+// pin tooltips remain visually hidden; languages in the rail do not compete
+// for a narrow horizontal row.
+for(const token of [
+ 'data-covenant-mobile-selection','max-w-[55%]',
+ 'data-covenant-sea-watermark','aria-live="polite"',
+ 'data-covenant-linked-expression','data-covenant-linked-original',
+ 'data-covenant-linked-transliteration','data-covenant-linked-russian',
+ 'mt-1.5 flex min-w-0 flex-col gap-2'
+])if(!nov11MapUi.includes(token))
+ throw Error('Wave55 mobile-caption / bilingual-card regression: '+token);
+console.log('V13_W55_SELECTED_MOBILE_CAPTION_BILINGUAL_CARD_PASS');
