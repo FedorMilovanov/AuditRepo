@@ -15,6 +15,8 @@ export const READING_GEOMETRY = Object.freeze({
   supportTiltX: -0.24,
   supportHeight: 0.52,
   supportDepth: 0.15,
+  lecternPageCenterY: 1.11,
+  lecternApproachDistance: 2.5,
   lecternPageRotationX: -Math.PI / 2,
   lecternFacingTiltX: 0.62,
 });

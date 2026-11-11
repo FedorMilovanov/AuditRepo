@@ -34,6 +34,17 @@ assert.equal(dressing.split("rotation={[R.lecternFacingTiltX, 0, 0]}").length - 
   "Both the wooden board and the page group must face the visitor.");
 assert(dressing.includes('rotation-x={R.lecternPageRotationX}'),
   "The actual lectern text page is not aligned by the shared physical contract.");
+assert(dressing.includes('position={[0, R.lecternPageCenterY, 0.03]}'),
+  "Lectern page must use the canonical reading height.");
+const data = read("data.ts");
+assert(data.includes('R.lecternApproachDistance') &&
+  data.includes('Math.atan2(R.lecternPageCenterY - EYE, dist)'),
+  "Public navigation must calculate the downward sightline from real reading geometry.");
+const approachPitch=Math.atan2(R.lecternPageCenterY-1.65,R.lecternApproachDistance);
+assert(approachPitch < -0.15 && approachPitch > -0.4,
+  "Reading sightline should aim at the actual page, not the upper bookcase.");
+assert(R.lecternApproachDistance > 1.5,
+  "Reading viewpoint must not clip into the physical lectern.");
 
 function assess(g) {
   const belowCover = g.coverLocalY - g.coverThickness / 2;

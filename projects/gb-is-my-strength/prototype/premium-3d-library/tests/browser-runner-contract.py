@@ -64,6 +64,11 @@ def cases_for(name: str) -> list[dict]:
             item["center"] = "actual-center.png"
             item["lectern"] = "actual-lectern.png"
             item["report"] = {"hasWebGL2": True, "overflow": False, "visibleTitle": True}
+            item["readingScreenshot"] = "actual-readable-detail.png"
+            item["readingPanelReadable"] = {
+                "focused": True, "fontPx": 15, "textWidth": 310,
+                "left": 24, "right": 334, "overflow": False,
+            }
     if name == "quality-transition-browser.py":
         for item in records:
             item["switches"] = [
@@ -220,6 +225,27 @@ except AssertionError:
     pass
 else:
     raise AssertionError("Missing readable lectern evidence was marked PASS")
+
+# The physical lectern is not proven readable by an existing 3D screenshot
+# or a title elsewhere in the document. Missing the focusable text view
+# must fail even when the WebGL canvas and geometry both exist.
+missing_detail = cases_for("reading-furniture-browser.py")
+missing_detail[0]["readingScreenshot"] = ""
+try:
+    module.verify_case_records("reading-furniture-browser.py", jsonlines(missing_detail), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Reading furniture accepted missing accessible detail evidence")
+
+unfocused_detail = cases_for("reading-furniture-browser.py")
+unfocused_detail[1]["readingPanelReadable"]["focused"] = False
+try:
+    module.verify_case_records("reading-furniture-browser.py", jsonlines(unfocused_detail), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Reading furniture accepted unfocusable detail modal")
 
 # A falsely-green static scene must not satisfy the normal-motion control.
 broken_motion = cases_for("reduced-motion-browser.py")

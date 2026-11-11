@@ -1,3 +1,5 @@
+import { READING_GEOMETRY as R } from "./scene/readingGeometry";
+
 export const BASE = "https://gospod-bog.ru";
 
 /**
@@ -337,8 +339,13 @@ export function approachPose(it: Item) {
   const r = Math.hypot(ix, iz) || 1;
   const ux = ix / r;
   const uz = iz / r;
-  const dist = it.kind === "section" ? sectionApproachDistance(it) : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? 2.5 : 4.2;
-  const pitch = it.kind === "section" ? 0.08 : it.kind === "tome" ? 0.05 : 0.08;
+  const dist = it.kind === "section" ? sectionApproachDistance(it) : it.kind === "tome" ? 2.9 : it.kind === "lectern" ? R.lecternApproachDistance : 4.2;
+  // The lectern page sits below visitor eye level. Aim at its physical
+  // reading surface, otherwise the public map arrival stares above the book
+  // and never exposes the actual interactive read/open affordance.
+  const pitch = it.kind === "lectern"
+    ? Math.atan2(R.lecternPageCenterY - EYE, dist)
+    : it.kind === "section" ? 0.08 : it.kind === "tome" ? 0.05 : 0.08;
   // не даём точке выйти за колоннаду: иначе колонна закрывает экспонат
   const cap = Math.max(0, WALK_RADIUS - 0.75);
   const px = ix - ux * dist;

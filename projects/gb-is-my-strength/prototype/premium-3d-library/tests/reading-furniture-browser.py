@@ -58,9 +58,41 @@ async def inspect(browser,engine,width,height,touch):
         assert not errors,errors
         lectern=OUT/f"{engine}-{width}x{height}-lectern.png"
         await capture_evidence(page,lectern)
+
+        # Public map arrival must aim at the ACTUAL interactive lectern page
+        # rather than the bookshelves over it. Visitors can use the visible
+        # 'Открыть' action for full-size readable text on touch and desktop.
+        aim=page.locator("[data-gb-aim]")
+        await aim.wait_for(state="visible",timeout=12000)
+        assert "Библиотека, где содержание важнее шума" in await aim.inner_text()
+        await aim.get_by_role("button",name=re.compile("Открыть")).click(timeout=10000)
+        detail=page.get_by_role("dialog",name="Библиотека, где содержание важнее шума")
+        await detail.wait_for(state="visible",timeout=10000)
+        title=detail.get_by_role("heading",name="Библиотека, где содержание важнее шума")
+        assert await title.is_visible()
+        body=detail.locator("p").first
+        assert "Авторские статьи" in await body.inner_text()
+        readable=await page.evaluate("""() => {
+          const d=document.querySelector('[role="dialog"][aria-labelledby="gb-detail-title"]');
+          const p=d?.querySelector('p');
+          if (!d || !p) return null;
+          const r=p.getBoundingClientRect();
+          return {focused:document.activeElement===d,
+            fontPx:parseFloat(getComputedStyle(p).fontSize),
+            textWidth:r.width, left:r.left, right:r.right,
+            overflow:document.documentElement.scrollWidth > innerWidth + 2};
+        }""")
+        assert readable and readable["focused"] and readable["fontPx"]>=15,readable
+        assert readable["textWidth"]>=200 and readable["left"]>=-1 and readable["right"]<=width+1,readable
+        assert not readable["overflow"],readable
+        detailShot=OUT/f"{engine}-{width}x{height}-readable-detail.png"
+        await capture_evidence(page,detailShot)
+        await detail.get_by_role("button",name="Вернуться в зал").click(timeout=10000)
+        await detail.wait_for(state="detached",timeout=10000)
         assert not errors,errors
         print(json.dumps({"engine":engine,"viewport":f"{width}x{height}",
             "result":"PASS","center":str(center),"lectern":str(lectern),
+            "readingScreenshot":str(detailShot),"readingPanelReadable":readable,
             "report":report,"errors":errors},ensure_ascii=True),flush=True)
     finally:
         await context.close()

@@ -729,10 +729,25 @@ function SitemapPanel() {
 function Detail() {
   const opened = useApp((s) => s.opened);
   const xr = useApp((s) => s.xr);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (opened && !xr) dialogRef.current?.focus();
+  }, [opened, xr]);
   if (!opened || xr) return null;
   const it = byId(opened);
   return (
-    <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => closeItem(true)}>
+    <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gb-detail-title"
+      tabIndex={-1}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") { event.stopPropagation(); closeItem(true); }
+      }}
+      className="fixed inset-0 z-30 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+      onClick={() => closeItem(true)}
+    >
       <div
         onClick={(e) => e.stopPropagation()}
         className="glass fade-up scroll-thin relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl"
@@ -762,7 +777,7 @@ function Detail() {
         )}
         <div className="p-6 sm:p-8">
           <div className="mb-2 text-[11px] uppercase tracking-[0.3em]" style={{ color: it.color }}>{it.label}</div>
-          <h2 className="font-display text-4xl font-semibold leading-[1.02] sm:text-5xl">{it.title}</h2>
+          <h2 id="gb-detail-title" className="font-display text-4xl font-semibold leading-[1.02] sm:text-5xl">{it.title}</h2>
           <p className="mt-4 text-[15px] leading-relaxed text-[#e0dcd1]">{it.desc}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {it.tags.map((t) => (

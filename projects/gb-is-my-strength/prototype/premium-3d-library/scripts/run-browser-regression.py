@@ -112,11 +112,19 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
         }, f"Reading regression omitted a browser or viewport: {cases}"
         for case in cases:
             witness = case.get("report")
+            readable = case.get("readingPanelReadable")
             assert isinstance(witness, dict) and witness.get("hasWebGL2") is True and (
                 witness.get("overflow") is False
             ) and witness.get("visibleTitle") is True and (
                 bool(case.get("center")) and bool(case.get("lectern"))
             ), f"Reading furniture lacks actual UI or screenshot evidence: {case}"
+            assert bool(case.get("readingScreenshot")) and isinstance(readable, dict) and (
+                readable.get("focused") is True
+            ) and readable.get("fontPx", 0) >= 15 and (
+                readable.get("textWidth", 0) >= 200
+            ) and readable.get("overflow") is False and (
+                readable.get("left", -10) >= -1
+            ), f"Lectern detailed reading view is not legible or focused: {case}"
     if name == "quality-transition-browser.py":
         # A count of two does not prove opposite directions: CI previously
         # reported low→high twice as PASS after an automatic downgrade.

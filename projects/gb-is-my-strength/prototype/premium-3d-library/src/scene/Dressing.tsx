@@ -63,7 +63,7 @@ function Lectern() {
         <boxGeometry args={[0.74, 0.05, 0.5]} />
       </mesh>
       {/* раскрытая книга на пюпитре */}
-      <group position={[0, 1.11, 0.03]} rotation={[R.lecternFacingTiltX, 0, 0]}>
+      <group position={[0, R.lecternPageCenterY, 0.03]} rotation={[R.lecternFacingTiltX, 0, 0]}>
         <mesh position={[0, 0.012, 0]}>
           <boxGeometry args={[0.62, 0.022, 0.44]} />
           <meshStandardMaterial color="#f7efdb" roughness={0.85} />
