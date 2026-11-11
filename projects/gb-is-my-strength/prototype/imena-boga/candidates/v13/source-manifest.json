@@ -56,8 +56,8 @@
       "bytes_normalized": 67264
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "b0ee9aa8d874ae38759966d38b9f75cabfca3bb350167b3fdb27ab5e4c2a8689",
-      "bytes_normalized": 18702
+      "sha256": "9c1c56fd84696260c665ad6d6d4e645513673f778c44b27046929d6358a869b4",
+      "bytes_normalized": 18805
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
       "sha256": "b4eb44c555339dffa5e3d614535e485d0b4a7c82d81d542a469dce1b8633cd6c",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "dbe7e053da4f1e84e623f2e0fe3306d170e57eaa4500fe0dd09d1ee6e9c5759c",
-      "bytes_normalized": 37611
+      "sha256": "d250106783df541d9682bb95af2d1332f8aa0cae2efdf4f2c82ca05c517e1513",
+      "bytes_normalized": 38198
     },
     "checks/visual_review.cjs": {
-      "sha256": "1641baacae9862c3503eae6197d19642c98000970e0802969ec0d30033d1f683",
-      "bytes_normalized": 42703
+      "sha256": "5e153b2bf2bd1ee59d9a8a580618fd4bfd597a8559bc311be72e60ef233a22c0",
+      "bytes_normalized": 45993
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",

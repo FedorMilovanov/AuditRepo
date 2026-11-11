@@ -527,6 +527,58 @@ async function visit(browser,engine,app,width,base){
          engine+'-atlas-'+width+'-14-beersheba-mobile',
          '[data-covenant-map-stage]',145);
      }
+     // Reduce-motion is not proven by screenshots alone: explicitly compare
+     // the live selected-halo animation under both OS preference values.
+     // Keyboard testing verifies native Enter/Space activation of the map,
+     // selected state and mobile status-announcement separation.
+     if(width===390){
+       const halo=page.locator('[data-covenant-selected-halo]');
+       await page.emulateMedia({reducedMotion:'no-preference'});
+       const normal=await halo.evaluate(el=>({
+         name:getComputedStyle(el).animationName,
+         duration:getComputedStyle(el).animationDuration,
+         iterations:getComputedStyle(el).animationIterationCount
+       }));
+       await page.emulateMedia({reducedMotion:'reduce'});
+       const reduced=await halo.evaluate(el=>({
+         name:getComputedStyle(el).animationName,
+         duration:getComputedStyle(el).animationDuration
+       }));
+       record('atlas-reduced-motion-halo',{engine,width,normal,reduced});
+       if(normal.name==='none'||normal.iterations!=='infinite'||reduced.name!=='none')
+         problem('BLOCKER','atlas-reduced-motion-halo-failed',{engine,width,normal,reduced});
+       await page.locator('[data-covenant-map-pin]').nth(1).focus();
+       await page.keyboard.press('Enter');
+       const byPin=await page.evaluate(()=>{
+         const root=document.querySelector('#covenant-altars-atlas');
+         const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
+         const waypoints=[...root.querySelectorAll('[data-covenant-waypoint]')];
+         const status=root.querySelector('[data-covenant-mobile-selection]');
+         return {pin:pins.findIndex(x=>x.getAttribute('aria-pressed')==='true'),
+           waypoint:waypoints.findIndex(x=>x.getAttribute('aria-pressed')==='true'),
+           focusOnPin:document.activeElement===pins[1],text:status?.textContent||'',
+           role:status?.getAttribute('role'),live:status?.getAttribute('aria-live')};
+       });
+       await page.locator('[data-covenant-map-nav]').nth(1).focus();
+       await page.keyboard.press('Space');
+       const byNext=await page.evaluate(()=>{
+         const root=document.querySelector('#covenant-altars-atlas');
+         const pins=[...root.querySelectorAll('[data-covenant-map-pin]')];
+         const waypoints=[...root.querySelectorAll('[data-covenant-waypoint]')];
+         const next=[...root.querySelectorAll('[data-covenant-map-nav]')][1];
+         const status=root.querySelector('[data-covenant-mobile-selection]');
+         return {pin:pins.findIndex(x=>x.getAttribute('aria-pressed')==='true'),
+           waypoint:waypoints.findIndex(x=>x.getAttribute('aria-pressed')==='true'),
+           focusOnNext:document.activeElement===next,text:status?.textContent||''};
+       });
+       record('atlas-keyboard-map-and-live-status',{engine,width,byPin,byNext});
+       if(byPin.pin!==1||byPin.waypoint!==1||!byPin.focusOnPin||
+          byPin.role!=='status'||byPin.live!=='polite'||
+          !byPin.text.includes('Место 2 из 9. Вирсавия')||
+          byNext.pin!==2||byNext.waypoint!==2||!byNext.focusOnNext||
+          !byNext.text.includes('Место 3 из 9. Гора Мориа'))
+         problem('BLOCKER','atlas-keyboard-live-status-failed',{engine,width,byPin,byNext});
+     }
      // Exercise all nine selected states at the wide breakpoint. An
      // initially clean map can still collide once a different label becomes
      // active. Geometry is measured after the state update, never guessed

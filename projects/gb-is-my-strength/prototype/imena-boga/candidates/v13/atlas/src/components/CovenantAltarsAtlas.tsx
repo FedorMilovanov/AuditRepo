@@ -137,6 +137,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           the actual schematic pins, even when long place names wrap. */}
       <div
         data-covenant-mobile-selection
+        role="status"
         aria-live="polite"
         aria-atomic="true"
         className="font-ui mt-3 flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2 text-[11px] font-medium sm:hidden"
@@ -147,7 +148,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
         }}
       >
         <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: 'var(--gb-gold-ink)' }}>
-          Место {safeIdx + 1} из {COVENANT_ALTARS.length}
+          Место {safeIdx + 1} из {COVENANT_ALTARS.length}.{' '}
         </span>
         <span className="font-semibold">{activeAltar.placeName.split(' (')[0]}</span>
       </div>
@@ -239,7 +240,8 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
                 {isSelected && (
                   <span
                     aria-hidden="true"
-                    className="absolute -inset-2.5 animate-ping rounded-full opacity-55"
+                    data-covenant-selected-halo
+                    className="absolute -inset-2.5 animate-ping motion-reduce:animate-none rounded-full opacity-55"
                     style={{ backgroundColor: 'var(--gb-gold)' }}
                   />
                 )}

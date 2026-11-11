@@ -498,3 +498,15 @@ if(w56Badge<0||w56Stage<0||w56Badge>=w56Stage||
    !nov11MapUi.includes('mt-3 flex min-w-0 flex-wrap items-center justify-between gap-2'))
  throw Error('Wave56 separate mobile caption row regressed');
 console.log('V13_W56_MOBILE_CAPTION_OUTSIDE_MAP_PASS');
+
+
+// Wave59: the mobile status message must have an audible punctuation boundary
+// between the ordinal and the selected place; the animated halo must stop
+// for OS users requesting reduced motion. Do not remove pin keyboard focus.
+for(const token of [
+ 'data-covenant-mobile-selection','role="status"',
+ "из {COVENANT_ALTARS.length}.{' '}",
+ 'data-covenant-selected-halo','motion-reduce:animate-none'
+])if(!nov11MapUi.includes(token))
+ throw Error('Wave59 accessible caption or motion preference regressed: '+token);
+console.log('V13_W59_MOTION_KEYBOARD_SCREEN_READER_SOURCE_PASS');
