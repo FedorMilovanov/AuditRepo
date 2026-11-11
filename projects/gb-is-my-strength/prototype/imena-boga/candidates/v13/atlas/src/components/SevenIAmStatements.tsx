@@ -234,11 +234,11 @@ export const SevenIAmStatements: React.FC = () => {
             borderColor: 'var(--gb-border)',
           }}
         >
-          <span className="font-ui flex items-center gap-1.5 font-semibold" style={{ color: 'var(--gb-accent)' }}>
+          <span className="font-ui flex min-w-0 flex-wrap items-center gap-1.5 font-semibold" style={{ color: 'var(--gb-accent)' }}>
             <Cross className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-            <span>Ветхозаветный тематический контекст: {current.otThematicParallel}</span>
+            <span className="min-w-0 [overflow-wrap:anywhere]">Ветхозаветный тематический контекст: {current.otThematicParallel}</span>
           </span>
-          <span className="font-ui flex items-center gap-1" style={{ color: 'var(--gb-muted)' }}>
+          <span className="font-ui flex min-w-0 flex-wrap items-center gap-1" style={{ color: 'var(--gb-muted)' }}>
             <BookOpen className="h-3.5 w-3.5" />
             <span>Связанные тексты ВЗ: {current.otBackgroundRef}</span>
           </span>

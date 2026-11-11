@@ -139,7 +139,7 @@ function NameSection({
           </div>
         </Reveal>
 
-        <div data-reading-grid className="mt-10 grid items-start gap-10 md:mt-14 lg:grid-cols-12 md:gap-8">
+        <div data-reading-grid className="mt-10 grid min-w-0 grid-cols-[minmax(0,1fr)] items-start gap-10 md:mt-14 md:gap-8 lg:grid-cols-12">
           {/* left / name block */}
           <Reveal className={`min-w-0 lg:col-span-5 lg:sticky lg:top-24 ${flip ? "lg:order-2" : ""}`}>
             <div data-reading-titles className={flip ? "lg:text-right" : ""}>
@@ -168,9 +168,9 @@ function NameSection({
               <p data-research-classification className="mt-2 min-w-0 break-words font-ui text-xs leading-relaxed text-cream-400">
                 Тип выражения: {name.classification}
               </p>
-              <div className={`mt-6 flex items-center gap-3 ${flip ? "lg:justify-end" : ""}`}>
+              <div className={`mt-6 flex min-w-0 flex-wrap items-center gap-3 ${flip ? "lg:justify-end" : ""}`}>
                 <span className="h-px w-8 bg-gold-500/50" />
-                <p className="font-ui text-xs uppercase tracking-[0.3em] text-gold-400">
+                <p className="min-w-0 break-words font-ui text-xs uppercase tracking-[0.3em] text-gold-400">
                   {name.meaning}
                 </p>
               </div>
@@ -180,7 +180,7 @@ function NameSection({
               {counterpartId && (
                 <a
                   href={`/imena-boga/atlas/#name-${encodeURIComponent(counterpartId)}`}
-                  className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-500/35 bg-gold-500/[0.07] px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/70 hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
+                  className="mt-5 inline-flex min-h-11 max-w-full min-w-0 flex-wrap items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-gold-500/[0.07] px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/70 hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
                   aria-label={`Перейти к соответствующему разделу «${name.translit}» в Астролябии`}
                 >
                   <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
@@ -228,7 +228,7 @@ function NameSection({
           </Reveal>
 
           {/* right / content */}
-          <div className={`lg:col-span-7 ${flip ? "lg:order-1" : ""}`}>
+          <div className={`min-w-0 lg:col-span-7 ${flip ? "lg:order-1" : ""}`}>
             {name.paragraphs.map((p, i) => (
               <Reveal key={i} delay={0.08 + i * 0.08}>
                 <p
@@ -303,16 +303,16 @@ function NameSection({
                         key={r.id}
                         type="button"
                         onClick={() => jump(r.id)}
-                        className="group flex items-center gap-2.5 rounded-full border border-cream-800/60 bg-ink-900/50 py-2 pl-4 pr-3 transition-all duration-300 hover:border-gold-500/50 hover:bg-ink-800 hover:shadow-[0_0_20px_-6px_rgba(212,175,55,0.4)]"
+                        className="group flex max-w-full min-w-0 flex-wrap items-center gap-2.5 rounded-full border border-cream-800/60 bg-ink-900/50 py-2 pl-4 pr-3 transition-all duration-300 hover:border-gold-500/50 hover:bg-ink-800 hover:shadow-[0_0_20px_-6px_rgba(212,175,55,0.4)]"
                         aria-label={`Перейти к разделу ${r.translit}`}
                       >
                         <span
                           {...scriptAttrs(r)}
-                          className="font-hebrew text-sm text-gold-400/80 transition-colors group-hover:text-gold-300"
+                          className="min-w-0 break-words font-hebrew text-sm text-gold-400/80 transition-colors group-hover:text-gold-300"
                         >
                           {r.hebrew}
                         </span>
-                        <span className="font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-colors group-hover:text-cream-200">
+                        <span className="min-w-0 break-words font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-colors group-hover:text-cream-200">
                           {r.translit}
                         </span>
                         <ArrowRight className="h-3 w-3 text-cream-800 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-gold-400" strokeWidth={1.5} />

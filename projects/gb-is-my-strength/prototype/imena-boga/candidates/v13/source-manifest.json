@@ -52,20 +52,20 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "368c6dbb5464831707fc05fccb1e8377f0d65fedd523653565166dfa2a977d98",
-      "bytes_normalized": 67264
+      "sha256": "41b3a49be6feb8ceed36a3aee7c2be486135801dd6790d2809fc516ff62f6cd9",
+      "bytes_normalized": 67292
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "9c1c56fd84696260c665ad6d6d4e645513673f778c44b27046929d6358a869b4",
-      "bytes_normalized": 18805
+      "sha256": "33cd54f553a86e82a4a6b427427b26309e58fb8e92f962028ecc040c3bffbd30",
+      "bytes_normalized": 18890
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "b4eb44c555339dffa5e3d614535e485d0b4a7c82d81d542a469dce1b8633cd6c",
-      "bytes_normalized": 18314
+      "sha256": "bb946c13c6c2d81190481531ae17436c0907bc351f8145a5fa3b0f7bd0f2844f",
+      "bytes_normalized": 18388
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "0cc5c6e62e03e6d76f63e196a7661a20767a710c112d2662994b5c768db26707",
-      "bytes_normalized": 30319
+      "sha256": "243cfe26e3f16a1c248eddcc222567b4a13844e5221d0a8c403b6e2ed330db37",
+      "bytes_normalized": 30355
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "390a7dc86f95d332640da5ca12be90ea13579a1d7a7c85c35fffd1840718ebbc",
@@ -76,8 +76,8 @@
       "bytes_normalized": 1410
     },
     "atlas/src/components/HebrewGreekLexiconMatrix.tsx": {
-      "sha256": "61eb6dd564a6344a46518abbfdddf22d659c402b3bfa83d2e711e3d80d113038",
-      "bytes_normalized": 11948
+      "sha256": "3c99e208447b51e15261b54d797e094d7987d67a7e673bdfe0a7aff17d959dfb",
+      "bytes_normalized": 12075
     },
     "atlas/src/components/LateralNamePillars.tsx": {
       "sha256": "5880a01fd6fd9ed00778c783fa1f57fb7c270e607e1bdd98c3faade549a51b6e",
@@ -100,8 +100,8 @@
       "bytes_normalized": 5542
     },
     "atlas/src/components/SevenIAmStatements.tsx": {
-      "sha256": "e01434ff295df21fcce2c8172a70555062387496eba1ef59c0ecc1bc9b149667",
-      "bytes_normalized": 14381
+      "sha256": "7654aef2ad3e818beaedf65537cc302514ac810856a294e742acfc1b7e97da6d",
+      "bytes_normalized": 14462
     },
     "atlas/src/components/SiteNavbar.tsx": {
       "sha256": "5acb8130582ed2d021a84c8780fac01df41e6010e9a789edc643370400251450",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "8cfa4b28bac1dc2f7eb9597320f90640f628eedbfc202e8936649bb6cb8f6893",
-      "bytes_normalized": 38818
+      "sha256": "1fa0bc29b4d8602df4f43db78e2c25d115ebc642c216edda83cf44bc5a62a301",
+      "bytes_normalized": 38854
     },
     "checks/visual_review.cjs": {
       "sha256": "3cceda932fc1f9b46102c5ef0c12fee4b8ced44efb0640a11f73549111aac656",
@@ -252,20 +252,20 @@
       "bytes_normalized": 9646
     },
     "sozvezdie/src/components/Intro.tsx": {
-      "sha256": "f3615d076fee73d37361f76ad215c33203bee79dd4130bbbce5d706162f9a8e6",
-      "bytes_normalized": 7429
+      "sha256": "7d1bf9cc32db87f64b08d32c1eb03da6e7482862883506b42a1ae6350e8a19e5",
+      "bytes_normalized": 7639
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
       "sha256": "c3793c1970f0bb2739ab4fb7e77c952199a24911f5da69b6853e18ef2d7050b5",
       "bytes_normalized": 9941
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "4d45582fadd5fe4d789e83224e45b49bb252385abecc07cbdef6718d88409b8b",
-      "bytes_normalized": 20665
+      "sha256": "2588b395c901b99b855646a575de0bd9630320c3bdf5b9f1cbfb6a358c879ee0",
+      "bytes_normalized": 20968
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "4bf29dbea698f47958524790664b682eacc122a64a7ea352570b67dccd70eb60",
-      "bytes_normalized": 18188
+      "sha256": "fec08d70e5d9e03dbc98285e8a006793833b57892bfd07a500f35b706c13e7d8",
+      "bytes_normalized": 18381
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "305e1c9939c96958010f50f842fd0fc933926d4504a159bfe1ef82c2fdcb8b80",

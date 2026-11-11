@@ -150,7 +150,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
     >
       {/* header */}
       <div className="mb-8 flex flex-col items-center text-center">
-        <p className="flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.45em] text-gold-400">
+        <p className="flex max-w-full flex-wrap items-center justify-center gap-2 font-ui text-xs font-medium uppercase tracking-[0.2em] text-gold-400">
           <span className="hairline w-10" />
           Созвездие имён
           <span className="hairline w-10" />
@@ -167,7 +167,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
       {/* search and study progress */}
       <div className="mx-auto mb-10 max-w-4xl rounded-3xl border border-gold-500/15 bg-ink-900/45 p-4 shadow-[0_24px_70px_-35px_rgba(0,0,0,0.9)] backdrop-blur-sm sm:p-5">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
-          <label className="group relative flex-1">
+          <label className="group relative w-full min-w-0 flex-1">
             <span className="sr-only">Найти имя Бога</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cream-700 transition-colors group-focus-within:text-gold-400" />
             <input
@@ -187,7 +187,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
               onChange={(event) => setQuery(event.target.value)}
               type="search"
               placeholder="Найти: целитель, пастырь, Исход 3, ἐγώ εἰμι…"
-              className="h-12 w-full rounded-full border border-cream-800/70 bg-ink-950/75 pl-11 pr-11 font-body text-base text-cream-100 outline-none transition-all placeholder:text-cream-700 focus:border-gold-500/60 focus:shadow-[0_0_0_4px_rgba(212,175,55,0.08)]"
+              className="h-12 w-full min-w-0 rounded-full border border-cream-800/70 bg-ink-950/75 pl-11 pr-11 font-body text-base text-cream-100 outline-none transition-all placeholder:text-cream-700 focus:border-gold-500/60 focus:shadow-[0_0_0_4px_rgba(212,175,55,0.08)]"
             />
             {query ? (
               <button
@@ -205,9 +205,9 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             )}
           </label>
 
-          <div className="min-w-44 md:text-right">
-            <div className="flex items-center justify-between gap-3 md:justify-end">
-              <p className="font-ui text-xs uppercase tracking-[0.28em] text-cream-500">
+          <div className="w-full min-w-0 md:w-auto md:min-w-44 md:text-right">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 md:justify-end">
+              <p className="min-w-0 break-words font-ui text-xs uppercase tracking-[0.28em] text-cream-500">
                 Изучено {completedIds.size}/{NAMES.length}
               </p>
               {completedIds.size > 0 && (
@@ -249,11 +249,11 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
             aria-expanded={filtersOpen}
             aria-controls="sozvezdie-name-filters"
             onClick={() => setFiltersOpen((open) => !open)}
-            className="flex min-h-11 w-full items-center gap-2 rounded-xl border border-cream-800/70 bg-ink-950/55 px-3 py-2 text-left font-ui text-xs uppercase tracking-[0.15em] text-cream-300 transition-colors hover:border-gold-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400"
+            className="flex min-h-11 w-full min-w-0 flex-wrap items-center gap-2 rounded-xl border border-cream-800/70 bg-ink-950/55 px-3 py-2 text-left font-ui text-xs uppercase tracking-[0.15em] text-cream-300 transition-colors hover:border-gold-500/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400"
           >
             <SlidersHorizontal className="h-4 w-4 shrink-0 text-gold-400" aria-hidden />
-            <span className="shrink-0">Разделы</span>
-            <span className="min-w-0 flex-1 truncate text-right normal-case tracking-normal text-cream-500">
+            <span className="min-w-0 break-words [overflow-wrap:anywhere]">Разделы</span>
+            <span className="min-w-0 flex-1 break-words text-right normal-case tracking-normal text-cream-500">
               {partFilter === 0 ? "Все" : PARTS[partFilter - 1].title}
             </span>
             <span className="shrink-0 text-gold-300">{filtered.length}</span>
@@ -314,12 +314,13 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
         const entries = filtered.filter((name) => name.part === pi + 1);
         if (entries.length === 0) return null;
         return (
-          <div key={part.id} className="mb-8">
-            <p className="mb-4 flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.4em] text-cream-500">
-              <span className="font-display text-lg italic text-gold-500">{part.numeral}</span>
-              {part.title}
-              <span className="hairline flex-1" />
-              <span className="tracking-[0.2em] text-cream-700">{entries.length}</span>
+          <div key={part.id} className="mb-8 min-w-0">
+            <p className="mb-4 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 font-ui text-xs font-medium uppercase tracking-[0.2em] text-cream-500">
+              <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+                <span className="mr-2 font-display text-lg italic text-gold-500">{part.numeral}</span>
+                {part.title}
+              </span>
+              <span className="justify-self-end tracking-[0.1em] text-cream-700">{entries.length}</span>
             </p>
             <div
               data-name-result-grid

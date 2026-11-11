@@ -112,7 +112,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
       </div>
 
       {/* Search Bar + Random Meditation Name Trigger */}
-      <div className="mx-auto mt-4 flex max-w-2xl flex-row items-stretch gap-2 sm:mt-6 sm:items-center sm:gap-2.5">
+      <div className="mx-auto mt-4 flex max-w-2xl min-w-0 flex-row flex-wrap items-stretch gap-2 sm:mt-6 sm:items-center sm:gap-2.5">
         <div className="relative flex-1">
           <Search
             className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2"
@@ -162,7 +162,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
             if (pick) onSelectName(pick);
           }}
           disabled={filtered.length === 0}
-          className="font-ui inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-3 text-xs font-semibold transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4"
+          className="font-ui inline-flex min-h-11 min-w-11 max-w-full min-w-0 flex-wrap cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-3 text-xs font-semibold transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4"
           style={{
             backgroundColor: 'var(--gb-accent-soft)',
             borderColor: 'var(--gb-gold)',
@@ -347,7 +347,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                   >
                     {item.original.split(/(\s+)/u).map((part, index) =>
                       /\s/u.test(part) ? part : (
-                        <span key={index} data-constellation-original-token className="inline-block whitespace-nowrap">
+                        <span key={index} data-constellation-original-token className="inline-block max-w-full whitespace-normal [overflow-wrap:anywhere]">
                           {part}
                         </span>
                       ),

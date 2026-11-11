@@ -821,7 +821,7 @@ export function App() {
             className="font-ui mb-3 flex flex-col items-start gap-1 text-xs font-bold tracking-wider uppercase sm:flex-row sm:items-center sm:justify-between"
             style={{ color: 'var(--gb-gold-ink)' }}
           >
-            <span className="flex min-w-0 items-start gap-2">
+            <span className="flex min-w-0 flex-wrap items-start gap-2">
               <BookOpen className="h-4 w-4 shrink-0" />
               Структура исследования (5 частей · 36 позиций)
             </span>
@@ -1180,7 +1180,7 @@ export function App() {
           }}
         >
           <div
-            className="font-ui mb-2 flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
+            className="font-ui mb-2 flex min-w-0 flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase"
             style={{ color: 'var(--gb-accent)' }}
           >
             <Sparkles className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />

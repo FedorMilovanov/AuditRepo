@@ -126,7 +126,7 @@ if(!qDarkDock.includes('createPortal(toolbar, headerSlot)')||
 if (!qAtlasNavbar.includes("backgroundColor: 'var(--gb-bg)'") ||
     qAtlasNavbar.includes("backdropFilter: 'blur(18px) saturate(150%)'"))
   throw Error('Visual regression: header text shines through the nav');
-if (!qAtlasModal.includes('inline-block whitespace-nowrap') ||
+if (!qAtlasModal.includes('inline-block max-w-full whitespace-normal [overflow-wrap:anywhere]') ||
     !qAtlasModal.includes('data-modal-original') ||
     !qAtlasModal.includes("entry.original.replace(/(τὸ|"))
   throw Error('Visual regression: Greek articles can become orphan glyphs');

@@ -55,7 +55,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
         boxShadow: 'var(--gb-shadow-xl)',
       }}
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
+      <div className="flex min-w-0 flex-col items-stretch gap-3 border-b pb-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between" style={{ borderColor: 'var(--gb-border)' }}>
         <div className="min-w-0 flex-1">
           <div className="font-ui flex min-w-0 flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
             <Compass className="h-4 w-4" />
@@ -66,7 +66,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           </h2>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex min-w-0 flex-wrap items-center justify-center gap-1.5">
           <button
             type="button"
             data-covenant-map-nav

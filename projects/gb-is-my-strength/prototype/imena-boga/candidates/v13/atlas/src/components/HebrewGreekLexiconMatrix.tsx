@@ -115,12 +115,12 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
       }}
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
-        <div>
-          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
+        <div className="min-w-0 max-w-full">
+          <div className="font-ui flex min-w-0 flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
             <Languages className="h-4 w-4" />
-            <span>Лексикографический мост Заветов</span>
+            <span className="min-w-0 [overflow-wrap:anywhere]">Лексикографический мост Заветов</span>
           </div>
-          <h3 className="font-serif-display mt-1 text-xl sm:text-2xl font-bold" style={{ color: 'var(--gb-ink)' }}>
+          <h3 className="font-serif-display mt-1 min-w-0 text-xl font-bold [overflow-wrap:anywhere] sm:text-2xl" style={{ color: 'var(--gb-ink)' }}>
             Еврейские выражения, греческие передачи и христианское прочтение
           </h3>
         </div>

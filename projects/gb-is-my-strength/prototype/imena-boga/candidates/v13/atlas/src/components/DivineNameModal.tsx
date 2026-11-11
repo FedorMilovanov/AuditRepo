@@ -404,7 +404,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                   ? entry.original.replace(/(τὸ|Τὸ|ὁ|ἡ|τοῦ|τῶν)\s+/gu, '$1\u00A0').trim().split(/[ \t\r\n]+/u).map((word, index) => (
                       <React.Fragment key={index}>
                         {index > 0 ? ' ' : null}
-                        <span className="inline-block whitespace-nowrap">{word}</span>
+                        <span className="inline-block max-w-full whitespace-normal [overflow-wrap:anywhere]">{word}</span>
                       </React.Fragment>
                     ))
                   : entry.original}

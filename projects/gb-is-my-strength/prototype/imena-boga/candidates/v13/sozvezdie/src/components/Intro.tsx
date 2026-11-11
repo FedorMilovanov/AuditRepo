@@ -9,10 +9,10 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
   );
   const minutes = Math.max(5, Math.round(totalWords / 170));
   return (
-    <section id="intro" className="relative scroll-mt-24 py-28 md:py-36">
+    <section id="intro" className="relative scroll-mt-24 py-28 [overflow-wrap:anywhere] md:py-36">
       <div className="mx-auto max-w-3xl px-6">
         <Reveal>
-          <p className="flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.45em] text-gold-400">
+          <p className="flex min-w-0 flex-wrap items-center gap-2 font-ui text-xs font-medium uppercase tracking-[0.1em] text-gold-400 sm:gap-4 sm:tracking-[0.45em]">
             <span className="hairline w-10" />
             Введение
           </p>
@@ -23,7 +23,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
           </h2>
         </Reveal>
         <Reveal delay={0.15}>
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-ui text-xs font-medium uppercase tracking-[0.3em] text-cream-500">
+          <div className="mt-6 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 font-ui text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.3em] text-cream-500">
             <a
               href="https://gospod-bog.ru/about/"
               className="inline-flex min-h-11 items-center text-gold-400 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -31,7 +31,7 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
               Фёдор Милованов
             </a>
             <span className="h-1 w-1 rotate-45 bg-cream-700" />
-            <span>Исследование</span>
+            <span className="min-w-0 break-words [overflow-wrap:anywhere]">Исследование</span>
             <span className="h-1 w-1 rotate-45 bg-cream-700" />
             <span>{NAMES.length} именований</span>
             <span className="h-1 w-1 rotate-45 bg-cream-700" />
@@ -103,11 +103,11 @@ export default function Intro({ onSelect }: { onSelect: (id: string) => void }) 
                   key={part.id}
                   type="button"
                   onClick={() => onSelect(first.id)}
-                  className="group flex min-h-16 w-full items-center gap-6 border-b border-gold-500/15 py-4 text-left transition-colors hover:border-gold-400/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
+                  className="group flex min-h-16 w-full min-w-0 items-center gap-3 border-b border-gold-500/15 py-4 text-left transition-colors hover:border-gold-400/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
                 >
-                  <span className="w-8 font-display text-2xl italic text-gold-500">{part.numeral}</span>
-                  <span className="font-display text-2xl text-cream-100 transition-colors group-hover:text-gold-300">{part.title}</span>
-                  <span className="ml-auto font-ui text-xs text-cream-500 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold-300">↗</span>
+                  <span className="w-8 shrink-0 font-display text-2xl italic text-gold-500">{part.numeral}</span>
+                  <span className="min-w-0 flex-1 break-words font-display text-2xl text-cream-100 transition-colors group-hover:text-gold-300">{part.title}</span>
+                  <span className="ml-auto shrink-0 font-ui text-xs text-cream-500 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold-300">↗</span>
                 </button>
               );
             })}
