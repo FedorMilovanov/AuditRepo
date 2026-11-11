@@ -441,11 +441,14 @@ export default function HorebApp() {
         <div className="absolute top-3 left-3 sm:top-5 sm:left-6 max-w-[60vw] rounded-sm border border-parch/10 bg-black/65 px-3 py-2 shadow-lg backdrop-blur-sm" aria-live="polite">
           <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
           <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>
-          <p className="text-xs text-bronze/90 mt-1">Экспедиция смыслов: {learning.understood.length}/{PILOT_LESSONS.length}</p>
+          {zone !== 6 && <p data-testid="journey-progress-hud" className="text-xs text-bronze/90 mt-1">Экспедиция смыслов: {learning.understood.length}/{PILOT_LESSONS.length}</p>}
           {ws && ws.zone >= 6 && <p className="text-xs text-muted mt-1">{ws.shoes === 'shod' ? 'В обуви' : ws.shoes === 'removing' ? 'Снимаете обувь…' : 'Босиком'}</p>}
         </div>
         <nav className="absolute top-3 right-3 sm:top-5 sm:right-6 flex flex-wrap justify-end gap-1.5 max-w-[60vw]" aria-label="Управление экспозицией">
-          {isTouch ? <button className="btn-ghost" onClick={() => setDialog({ kind: 'menu' })}>Меню</button> : <>
+          {isTouch || zone === 6 ? <>
+            <button data-testid="quiet-menu" className="btn-ghost" onClick={() => setDialog({ kind: 'menu' })}>Меню</button>
+            {!isTouch && <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>}
+          </> : <>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>
           <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки ({bookmarks.length})</button>
@@ -458,7 +461,7 @@ export default function HorebApp() {
         {settings.showStats && ws && <p className="absolute top-20 right-4 text-[11px] font-mono text-muted text-right">{ws.fps} fps · {ws.calls} calls · {(ws.tris / 1000).toFixed(0)}k tris · dpr {ws.pixelRatio}<br />x {ws.x.toFixed(1)} z {ws.z.toFixed(1)} · куст {ws.distBush.toFixed(1)} м · {ws.shoes}</p>}
       </div>
 
-      {ws && !ws.locked && !isTouch && !dialog && !ws.block && ws.zone < 7 && (
+      {ws && !ws.locked && !isTouch && !dialog && !ws.block && ws.zone < 6 && (
         <p className="absolute bottom-24 inset-x-0 px-3 text-center pointer-events-none">
           <span className="inline-block max-w-[95vw] rounded-sm border border-parch/15 bg-black/70 px-4 py-2 text-sm leading-snug text-parch/90 shadow-lg backdrop-blur-sm">
             Кликните по сцене, чтобы осмотреться мышью · W A S D — шаг · Esc — отпустить
