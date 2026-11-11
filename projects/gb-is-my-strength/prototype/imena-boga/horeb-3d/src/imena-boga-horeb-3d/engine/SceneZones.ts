@@ -85,6 +85,15 @@ const TINTS: [number, [number, number, number]][] = [
  * ravine wall. Existing cave-shell triangles and textured material only:
  * no detached stratum billboards, new lights, collider or draw calls.
  * The safe left-hand path and other seven zones are unaffected. */
+/** Transition to metric arc-length UVs only on the deep OPPOSITE rock face.
+ * Original angular UVs are suitable for the gallery vault but stretched
+ * ~50m down the ravine across just a handful of contour samples. Blending
+ * by actual world coordinates preserves the existing floor, visitor ledge
+ * and all seven other zones without second textures or a special material. */
+export function ravineMetricUvWeight(x: number, y: number, chasm: number): number {
+  if (chasm <= 0 || x <= 12 || y >= -4) return 0;
+  return Math.min(1, chasm) * ss(12, 18, x) * ss(4, 14, -y);
+}
 export function ravineStrataReflectance(x: number, y: number, z: number, chasm: number): number {
   if (chasm <= 0 || x < 12 || y >= -4) return 1;
   const depth = Math.min(1, Math.max(0, (-y - 4) / 24));
@@ -145,6 +154,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const z = zs[i], hw = halfWidth(z), H = vaultHeight(z), cf = chasmF(z);
       const amp = 0.6 + Math.min(2.6, (hw - 4) * 0.22) + (H > 20 ? 1.4 : 0);
       const [tr, tg, tb] = tint(z);
+      let physicalArc = 0, prevX = 0, prevY = 0;
       for (let j = 0; j <= N; j++) {
         const a = -0.07 * Math.PI + (j / N) * 1.14 * Math.PI;
         const ca = Math.cos(a), sa = Math.sin(a);
@@ -171,6 +181,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         const exit = exitVaultRelief(x, y, z, sa, ca);
         x += Math.sign(x) * exit.sideOut;
         y -= exit.roofDrop;
+        // Accumulate true 3D profile length before assigning UVs. Both LODs
+        // sample the same physical field and therefore get matching texture
+        // density on very steep cliff faces, instead of lengthened streaks.
+        if (j > 0) physicalArc += Math.hypot(x - prevX, y - prevY);
+        prevX = x; prevY = y;
         pos.push(x, y, z);
         bake(x * 0.8, Math.max(0, y), z, tmp);
         const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z) * exit.shade;
@@ -183,7 +198,10 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         // World-space domain warp breaks the long UV-aligned bands in gallery walls.
         // Both components are continuous across z slices and keep one shared atlas.
         const warp = fbm(x * 0.11 + 4, y * 0.13, z * 0.11 + 8, 2) - 0.5;
-        uv.push((j / N) * (hw + H) * 0.5 + warp * 0.9,
+        const angularU = (j / N) * (hw + H) * 0.5;
+        const metricU = physicalArc * 0.25;
+        const cliffUv = ravineMetricUvWeight(x, y, cf);
+        uv.push(angularU + (metricU - angularU) * cliffUv + warp * 0.9,
           z * 0.25 + warp * 1.1);
       }
     }
