@@ -432,54 +432,61 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   boleMesh.position.set(x, 0.02 + trunkHeight / 2, z);
   g.add(boleMesh);
   const base = spine(0);
+  // Small roots and foliage twigs reuse shared cylinders. Only structural
+  // forks need an individually constructed continuous curved surface.
   const segment = (from: THREE.Vector3, to: THREE.Vector3,
     bottom: number, top: number, name: string) => {
     const vector = to.clone().sub(from), length = vector.length();
-    // Structural olive forks must not read as sharp, straight, angular poles.
-    // Use tapered, gently bent rings that join at the SAME endpoints. Roots
-    // and tiny twigs retain the cached simple mesh for the low-power budget.
-    const structural = name === 'olive-branch';
-    const geometry = structural
-      ? new THREE.CylinderGeometry(top, bottom, length, low ? 9 : 12, 6)
-      : G.cyl(top, bottom, length, low ? 7 : 10);
-    if (structural) {
-      const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
-      const bendX = (random() - 0.5) * 0.19;
-      const bendZ = (random() - 0.5) * 0.14;
-      for (let v = 0; v < positions.count; v++) {
-        const y = positions.getY(v);
-        // Sinusoidal envelope is zero at both ends: no floating joins.
-        const t = THREE.MathUtils.clamp(y / length + 0.5, 0, 1);
-        const envelope = Math.sin(Math.PI * t);
-        positions.setXYZ(v, positions.getX(v) + envelope * bendX,
-          y, positions.getZ(v) + envelope * bendZ);
-      }
-      geometry.computeVertexNormals();
-      // Structural branches match the boles' vertex-coloured, fissured bark.
-      // This is baked once into the existing cylinder vertices, uses the
-      // *same* oliveBark material as the trunk, and merges into the same
-      // draw-call batch. No texture or per-frame shader work is introduced.
-      const barkColors = new Float32Array(positions.count * 3);
-      for (let v = 0; v < positions.count; v++) {
-        const y = positions.getY(v);
-        const t = THREE.MathUtils.clamp(y / length + 0.5, 0, 1);
-        const angle = Math.atan2(positions.getZ(v), positions.getX(v));
-        localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
-        barkColors[v * 3] = localColor.r;
-        barkColors[v * 3 + 1] = localColor.g;
-        barkColors[v * 3 + 2] = localColor.b;
-      }
-      geometry.setAttribute('color', new THREE.BufferAttribute(barkColors, 3));
-      // Unique deformed branch buffers belong to this scene only. When a
-      // successful batch merge detaches their meshes, they must be released.
-      // Cached cylinders and other shared shapes do NOT carry this flag.
-      geometry.userData.horebOwnedBeforeMerge = true;
-    }
-    const piece = new THREE.Mesh(geometry, structural ? s.oliveBark : s.oliveWood);
+    const piece = new THREE.Mesh(
+      G.cyl(top, bottom, length, low ? 7 : 10), s.oliveWood);
     piece.name = name;
     piece.position.copy(from).addScaledVector(vector, 0.5);
     piece.quaternion.setFromUnitVectors(up, vector.normalize());
     g.add(piece);
+  };
+  const structuralFork = (stem: THREE.Vector3, elbow: THREE.Vector3,
+    tip: THREE.Vector3) => {
+    // A single C1-continuous pipe replaces TWO separately capped cylinders
+    // with a hard visible V junction. Centripetal interpolation suppresses
+    // overshoot while a gradually decreasing radius follows the full curve.
+    // Start center is embedded inside the existing trunk; end is anchored in
+    // the existing foliage pocket. No offsets/colliders or new materials.
+    const path = new THREE.CatmullRomCurve3(
+      [stem.clone(), elbow.clone(), tip.clone()], false, 'centripetal');
+    const tubular = low ? 12 : 18;
+    const radial = low ? 9 : 12;
+    const geometry = new THREE.TubeGeometry(path, tubular, 1, radial, false);
+    const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+    const colors = new Float32Array(positions.count * 3);
+    for (let ring = 0; ring <= tubular; ring++) {
+      const t = ring / tubular;
+      const center = path.getPointAt(t);
+      const taper = THREE.MathUtils.lerp(0.092, 0.014, t);
+      for (let side = 0; side <= radial; side++) {
+        const i = ring * (radial + 1) + side;
+        const dx = positions.getX(i) - center.x;
+        const dy = positions.getY(i) - center.y;
+        const dz = positions.getZ(i) - center.z;
+        // Narrow organic bark furrows, never large detached branch bumps.
+        const angle = Math.atan2(dz, dx);
+        const grooved = taper * (1 + 0.045 *
+          Math.sin(angle * 7 + t * 12 + barkPhase));
+        positions.setXYZ(i, center.x + dx * grooved,
+          center.y + dy * grooved, center.z + dz * grooved);
+        localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
+        colors[i * 3] = localColor.r;
+        colors[i * 3 + 1] = localColor.g;
+        colors[i * 3 + 2] = localColor.b;
+      }
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.computeVertexNormals();
+    // One owned buffer per completed branch. It is disposed ONLY after the
+    // normal safe material-group merge, never while referenced elsewhere.
+    geometry.userData.horebOwnedBeforeMerge = true;
+    const mesh = new THREE.Mesh(geometry, s.oliveBark);
+    mesh.name = 'olive-branch';
+    g.add(mesh);
   };
   // Buttress roots are shallow ground details; they do not widen the colliding
   // trunk or add invisible collision walls.
@@ -505,8 +512,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
       -Math.sin(angle) * (0.07 + random() * 0.11),
       0.035 + random() * 0.16,
       Math.cos(angle) * (0.07 + random() * 0.11)));
-    segment(stem, elbow, 0.092, 0.053, 'olive-branch');
-    segment(elbow, tip, 0.053, 0.014, 'olive-branch');
+    structuralFork(stem, elbow, tip);
     branchTips.push(tip);
   }
   // Compact interior cores supply shadow, not visible green balloons.
