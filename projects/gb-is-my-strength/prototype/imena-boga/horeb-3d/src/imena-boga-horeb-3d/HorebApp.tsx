@@ -129,7 +129,8 @@ export default function HorebApp() {
   const [learning, setLearning] = useState(() => normalizeLearningJournal(readStored(LEARNING_STORAGE_KEY)));
   const [siteClues, setSiteClues] = useState<SiteClueId[]>(() => normalizeSiteClues(readStored(SITE_CLUE_STORAGE_KEY)));
   const [expeditionCompleted, setExpeditionCompleted] = useState(() =>
-    normalizeExpeditionCompletion(readStored(EXPEDITION_STORAGE_KEY)));
+    normalizeExpeditionCompletion(readStored(EXPEDITION_STORAGE_KEY),
+      readStored(SITE_CLUE_STORAGE_KEY)));
   const [fieldJournal, setFieldJournal] = useState<string[]>(() => normalizeFieldJournal(readStored(FIELD_STORAGE_KEY)));
   const [bookmarks, setBookmarks] = useState<string[]>(() => normalizeStudyBookmarks(readStored(STUDY_BOOKMARKS_KEY)));
   const [guideCaption, setGuideCaption] = useState<string | null>(null);
