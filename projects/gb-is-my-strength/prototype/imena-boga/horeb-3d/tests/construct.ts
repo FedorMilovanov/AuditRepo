@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -685,6 +685,18 @@ for (const lowMode of [true, false]) {
       (lowMode ? 'LOW' : 'HIGH'),
     apertureSafe);
 }
+
+// Local mineral shading is attached to the ORIGINAL shell, not a giant
+// light that bleaches the floor, nearby testimony, or sacred final scene.
+const deepBedding = ravineStrataReflectance(22, -22, -200, 1);
+t('deep opposing ravine has subdued depth-sensitive mineral reflectance',
+  deepBedding > 1.25 && deepBedding < 1.55 &&
+  ravineStrataReflectance(22, -6, -200, 1) < deepBedding);
+t('ravine local reflectance cannot alter walkable lip or other zones',
+  ravineStrataReflectance(2.8, -22, -200, 1) === 1 &&
+  ravineStrataReflectance(22, 0, -200, 1) === 1 &&
+  ravineStrataReflectance(22, -22, -88, 0) === 1 &&
+  ravineStrataReflectance(22, -22, -340, 0) === 1);
 
 // A visible ravine must descend from the exact right-hand floor vertices,
 // not be simulated by a disconnected dark plane fifty metres underneath.
