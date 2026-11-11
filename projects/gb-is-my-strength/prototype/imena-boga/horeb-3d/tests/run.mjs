@@ -5,6 +5,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
+import { EXPEDITION_EVIDENCE, EXPEDITION_CHRONOLOGY, EXPEDITION_CONTRAST, expeditionReady, normalizeExpeditionCompletion, canCompleteExpedition, completeExpedition } from '../.test-build/data/expedition.js';
 import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy, markFieldStudy } from '../.test-build/data/fieldStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -149,6 +150,28 @@ t('wrong context evidence never updates journal',
 t('forged IDs duplicates and unknown journal keys remain excluded',
   JSON.stringify(normalizeFieldJournal(['constructor','nissi','nissi','fake'])) === JSON.stringify(['nissi']) &&
   !canCompleteFieldStudy('constructor', true, true, 'altar_name'));
+// L7: a linked expedition requires three real spatial clues AND two
+// independent source decisions. Merely opening dossier cards is not enough.
+t('linked 3D expedition includes all and only the three canonical clues',
+  EXPEDITION_EVIDENCE.length === 3 &&
+  EXPEDITION_EVIDENCE.every((id) => SITE_CLUE_IDS.includes(id)) &&
+  EXPEDITION_CHRONOLOGY.length === 3 && EXPEDITION_CONTRAST.length === 3);
+t('linked expedition cannot complete from one or two observations',
+  !expeditionReady(['beersheba-well', 'beersheba-tamarisk']) &&
+  !canCompleteExpedition(['beersheba-well', 'beersheba-tamarisk'], 'b', 'c') &&
+  !completeExpedition(false, ['beersheba-well', 'beersheba-tamarisk'], 'b', 'c'));
+t('linked expedition refuses wrong chronology and false context conflation',
+  !canCompleteExpedition(SITE_CLUE_IDS, 'c', 'c') &&
+  !canCompleteExpedition(SITE_CLUE_IDS, 'b', 'a') &&
+  !canCompleteExpedition(SITE_CLUE_IDS, null, 'c') &&
+  !completeExpedition(false, SITE_CLUE_IDS, 'b', 'a'));
+t('linked expedition persists only after all three clues and both answers',
+  expeditionReady(SITE_CLUE_IDS) &&
+  canCompleteExpedition(SITE_CLUE_IDS, 'b', 'c') &&
+  completeExpedition(false, SITE_CLUE_IDS, 'b', 'c') &&
+  completeExpedition(true, [], 'a', 'a') &&
+  normalizeExpeditionCompletion(true) && !normalizeExpeditionCompletion('true') &&
+  !normalizeExpeditionCompletion({ completed: true }));
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }
