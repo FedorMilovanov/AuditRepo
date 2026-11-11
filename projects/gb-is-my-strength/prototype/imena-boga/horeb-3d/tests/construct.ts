@@ -525,30 +525,61 @@ if (gardenRecord) {
   t('Gethsemane structural wood shares true bark material and varied colors',
     trunkBark !== null && barkedBranches === branches &&
     maxBark - minBark > 0.06 && branchMats.size === 1);
-  // Structural forks must actually BEND, not merely use more cylinder faces.
-  // Their first and last rings still touch the original connected branch
-  // endpoints; the existing trunk colliders and walkable path are unchanged.
-  let curvedForks = 0, groundedForkEnds = 0;
+  // One C1-continuous taper must connect each old two-piece Y fork.
+  // Test the REAL triangulated rings against the parametric curve rather
+  // than relying on primitive counts or names. A loose joint, open gap at
+  // the bole, reversed taper or conspicuous sharp elbow must fail CI.
+  let organicForks = 0, anchoredForks = 0, taperedForks = 0, smoothForks = 0;
   grove.traverse((o) => {
     if (o.name !== 'olive-branch' || !(o instanceof THREE.Mesh) ||
-        !(o.geometry instanceof THREE.CylinderGeometry)) return;
+        !(o.geometry instanceof THREE.TubeGeometry)) return;
     const geo = o.geometry, pos = geo.getAttribute('position');
-    const width = geo.parameters.radialSegments + 1;
-    const centroid = (row: number) => {
-      let xx = 0, zz = 0;
-      for (let j = 0; j < width - 1; j++) {
-        xx += pos.getX(row * width + j);
-        zz += pos.getZ(row * width + j);
+    const { tubularSegments, radialSegments, path } = geo.parameters;
+    if (tubularSegments < 12 || radialSegments < 9 ||
+        pos.count !== (tubularSegments + 1) * (radialSegments + 1)) return;
+    organicForks++;
+    const ring = (k: number) => {
+      const centre = new THREE.Vector3();
+      for (let j = 0; j < radialSegments; j++) {
+        const i = k * (radialSegments + 1) + j;
+        centre.add(new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i)));
       }
-      return Math.hypot(xx, zz) / (width - 1);
+      return centre.divideScalar(radialSegments);
     };
-    if (geo.parameters.heightSegments < 6) return;
-    if (centroid(Math.floor(geo.parameters.heightSegments / 2)) > 0.007) curvedForks++;
-    if (centroid(0) < 0.002 && centroid(geo.parameters.heightSegments) < 0.002)
-      groundedForkEnds++;
+    const root = ring(0), mid = ring(tubularSegments / 2), end = ring(tubularSegments);
+    if (root.distanceTo(path.getPointAt(0)) < 0.008 &&
+        end.distanceTo(path.getPointAt(1)) < 0.008 &&
+        mid.distanceTo(path.getPointAt(0.5)) < 0.008) anchoredForks++;
+    const radius = (k: number) => {
+      const centre = ring(k);
+      let total = 0;
+      for (let j = 0; j < radialSegments; j++) {
+        const i = k * (radialSegments + 1) + j;
+        total += centre.distanceTo(new THREE.Vector3(
+          pos.getX(i), pos.getY(i), pos.getZ(i)));
+      }
+      return total / radialSegments;
+    };
+    if (radius(0) > 0.085 && radius(tubularSegments) < 0.018 &&
+        radius(0) > radius(tubularSegments) * 4 &&
+        radius(tubularSegments / 2) < radius(0)) taperedForks++;
+    let maxTurn = 0;
+    for (let k = 1; k < tubularSegments; k++) {
+      const incoming = ring(k).sub(ring(k - 1)).normalize();
+      const outgoing = ring(k + 1).sub(ring(k)).normalize();
+      maxTurn = Math.max(maxTurn, incoming.angleTo(outgoing));
+    }
+    if (mid.distanceTo(root.clone().lerp(end, 0.5)) > 0.016 &&
+        maxTurn < 0.65) smoothForks++;
   });
-  t('Gethsemane structural forks bend naturally with joined endpoints',
-    curvedForks >= 28 && groundedForkEnds === branches);
+  t('Gethsemane all four trees use 28 individually continuous branches',
+    branches === 28 && organicForks === branches);
+  t('Gethsemane structural tube ends meet original rooted path endpoints',
+    anchoredForks === branches);
+  t('Gethsemane sculpted forks continuously taper from trunk to live tip',
+    taperedForks === branches);
+  t('Gethsemane mature structural branches curve without sharp elbow joints',
+    smoothForks >= 24);
   // Regression: a curved branch is an individually owned BufferGeometry.
   // Batched prop scenes discard those source meshes, so their buffers must be
   // explicitly released, while shared cached cylinders stay intact.
