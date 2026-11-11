@@ -126,7 +126,9 @@ try {
   // requiring that surface in camera ray hits is a false premise.
   // Gate the actual visible negative-Y rock, not screenshot existence.
   for (const [slug, x, z, yaw, pitch] of [
-    ['zone4-chasm-edge', 3.4, -190, -0.65, -0.25],
+    // Between right-hand steles (z=-191 and -201), not directly behind
+    // the monumental plaque at z=-191 that blocked the previous snapshot.
+    ['zone4-chasm-edge', 3.1, -195.5, -1.2, -0.50],
     ['zone4-chasm-depth', 3.45, -206, -Math.PI / 2, -0.62],
   ]) {
     const beforeRavine = await desktop.evaluate(({ x, z, yaw, pitch }) => {
@@ -136,12 +138,16 @@ try {
       w.yaw = yaw; w.pitch = pitch;
       // World.position returns {x,z}; it has NO y property. Never silently
       // skip the coordinate guard by comparing undefined (NaN) to a number.
-      return { frame, actualX: w.position.x, actualZ: w.position.z };
+      const nearestExhibit = Math.min(...w.exhibitPos
+        .filter((p) => p.e.zone === 4)
+        .map((p) => Math.hypot(p.x - w.position.x, p.z - w.position.z)));
+      return { frame, actualX: w.position.x, actualZ: w.position.z, nearestExhibit };
     }, { x, z, yaw, pitch });
     if (![beforeRavine.actualX, beforeRavine.actualZ].every(Number.isFinite) ||
         beforeRavine.actualX > 3.5 ||
         Math.abs(beforeRavine.actualX - x) > 0.2 ||
-        Math.abs(beforeRavine.actualZ - z) > 0.2)
+        Math.abs(beforeRavine.actualZ - z) > 0.2 ||
+        beforeRavine.nearestExhibit < 3.5)
       throw new Error('Ravine camera is outside the safe physical route: ' +
         JSON.stringify({ ...beforeRavine, x, z, yaw, pitch }));
     await waitForRenderedFrame(desktop, beforeRavine.frame, 4);
