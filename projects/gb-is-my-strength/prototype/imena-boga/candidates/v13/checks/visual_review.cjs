@@ -741,7 +741,20 @@ async function visit(browser,engine,app,width,base){
       headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
       headingClientWidth:target?.clientWidth??null,headingScrollWidth:target?.scrollWidth??null,
       controlFound:!!m,controlLeft:m?.left??null,controlRight:m?.right??null,
-      controlWidth:m?.width??null};
+      controlWidth:m?.width??null,
+      // Strict evidence: record the actual DOM boxes that force document width.
+      // Do not infer offenders from a screenshot of a different scroll anchor.
+      overflowCandidates:[...document.body.querySelectorAll('*')].map(el=>{
+       const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+       return {tag:el.tagName,cls:String(el.className).slice(0,110),
+        id:el.id||null,role:el.getAttribute('role'),
+        x:Math.round(r.x),right:Math.round(r.right),
+        width:Math.round(r.width),scrollWidth:el.scrollWidth,
+        minWidth:cs.minWidth,position:cs.position,
+        parentClass:String(el.parentElement?.className||'').slice(0,95),
+        text:(el.textContent||'').trim().slice(0,50)};
+      }).filter(el=>el.width>0&&el.right>root.clientWidth+2&&
+        el.position!=='fixed').sort((a,b)=>b.right-a.right).slice(0,20)};
    },{app,selector});
    record('root-font-resize-200-reflow',{app,engine,width,...d});
    if(d.rootFontPx<30||!d.headingFound||d.documentWidth>d.viewport+2||
@@ -751,7 +764,10 @@ async function visit(browser,engine,app,width,base){
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
-   await page.evaluate(async()=>{await document.fonts.ready});
+   await page.evaluate(async()=>{
+     await document.fonts.ready;
+     await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+   });
   });
 
   if(app==='atlas' && [320,390].includes(width)){
