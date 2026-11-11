@@ -178,8 +178,15 @@ try {
         [...section.querySelectorAll('button[data-field-lens]')].forEach((b) => b.click()));
       await axReaderPage.waitForFunction((name) => {
         const el = document.querySelector('[data-field-study="' + name + '"]');
-        return !!el && !el.querySelector('button[data-field-submit]')?.disabled;
+        const lenses = [...(el?.querySelectorAll('button[data-field-lens]') || [])];
+        return lenses.length === 2 && lenses.every((button) =>
+          button.getAttribute('aria-expanded') === 'true');
       }, {}, id);
+      if (id === 'nissi' || id === 'atiq-yomin') {
+        check('named object and written language need an actual answer: ' + id,
+          await node.evaluate((section) =>
+            !!section.querySelector('button[data-field-submit]')?.disabled));
+      }
       return node;
     }
     const nissi = await revealField('nissi');
