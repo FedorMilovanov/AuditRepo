@@ -187,8 +187,8 @@ try {
         return lenses.length === 2 && lenses.every((button) =>
           button.getAttribute('aria-expanded') === 'true');
       }, {}, id);
-      if (id === 'nissi' || id === 'atiq-yomin') {
-        check('named object and written language need an actual answer: ' + id,
+      if (['nissi', 'atiq-yomin', 'ego-eimi', 'tsidkenu'].includes(id)) {
+        check('all task families need a selected answer after two sources: ' + id,
           await node.evaluate((section) =>
             !!section.querySelector('button[data-field-submit]')?.disabled));
       }
@@ -212,13 +212,16 @@ try {
     await axReaderPage.waitForFunction(() =>
       JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes('atiq-yomin'));
     check('correct written-language investigation persists', await checkJournal('atiq-yomin'));
-    for (const id of ['ego-eimi', 'tsidkenu']) {
+    for (const [id, correct] of [['ego-eimi', 'b'], ['tsidkenu', 'c']]) {
       const node = await revealField(id);
+      await node.$('input[value="a"]').then((e) => e.click());
+      await node.$('button[data-field-submit]').then((e) => e.click());
+      check('unsupported evidence conclusion not recorded: ' + id, !(await checkJournal(id)));
+      await node.$('input[value="' + correct + '"]').then((e) => e.click());
       await node.$('button[data-field-submit]').then((e) => e.click());
       await axReaderPage.waitForFunction((name) =>
         JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes(name), {}, id);
-      check('source-contrast study recorded after inspecting both perspectives: ' + id,
-        await checkJournal(id));
+      check('supported source-contrast decision recorded: ' + id, await checkJournal(id));
     }
     await axReaderPage.reload({ waitUntil: 'domcontentloaded' });
     check('four differentiated source inquiries persist across reader reload',

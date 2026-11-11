@@ -127,9 +127,25 @@ t('correct source-grounded category and language allow a local study record',
   canCompleteFieldStudy('nissi', true, true, 'altar_name') &&
   canCompleteFieldStudy('atiq-yomin', true, true, 'arc') &&
   markFieldStudy([], 'nissi', true, true, 'altar_name').includes('nissi'));
-t('contrast and speaker mapping need both facets but no invented doctrinal choice',
-  canCompleteFieldStudy('tsidkenu', true, true, null) &&
-  canCompleteFieldStudy('ego-eimi', true, true, null));
+t('voice and parallel context studies require a supported response, not clicks',
+  !canCompleteFieldStudy('tsidkenu', true, true, null) &&
+  !canCompleteFieldStudy('ego-eimi', true, true, null) &&
+  !canCompleteFieldStudy('tsidkenu', true, true, 'b') &&
+  !canCompleteFieldStudy('ego-eimi', true, true, 'a') &&
+  canCompleteFieldStudy('tsidkenu', true, true, 'c') &&
+  canCompleteFieldStudy('ego-eimi', true, true, 'b'));
+t('all eight context studies have three distinct choices and one keyed answer',
+  FIELD_STUDIES.filter((t) => t.kind === 'voices' || t.kind === 'parallel-witness').length === 8 &&
+  FIELD_STUDIES.filter((t) => t.kind === 'voices' || t.kind === 'parallel-witness').every((t) =>
+    t.answerOptions?.length === 3 &&
+    new Set(t.answerOptions.map((o) => o.id)).size === 3 &&
+    new Set(t.answerOptions.map((o) => o.label)).size === 3 &&
+    t.answerOptions.every((o) => o.label.length > 20) &&
+    t.answerOptions.some((o) => o.id === t.correctAnswer)));
+t('wrong context evidence never updates journal',
+  markFieldStudy([], 'tsur', true, true, null).length === 0 &&
+  markFieldStudy([], 'tsur', true, true, 'a').length === 0 &&
+  markFieldStudy([], 'tsur', true, true, 'b').includes('tsur'));
 t('forged IDs duplicates and unknown journal keys remain excluded',
   JSON.stringify(normalizeFieldJournal(['constructor','nissi','nissi','fake'])) === JSON.stringify(['nissi']) &&
   !canCompleteFieldStudy('constructor', true, true, 'altar_name'));

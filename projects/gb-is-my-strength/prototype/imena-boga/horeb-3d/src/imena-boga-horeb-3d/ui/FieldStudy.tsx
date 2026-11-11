@@ -16,12 +16,13 @@ export function FieldStudy({ e, completed, onComplete }: {
   if (!task) return null;
   const isObject = task.kind === 'named-object';
   const isScript = task.kind === 'written-form';
-  const needsChoice = isObject || isScript;
+  // All four modes require an actual evidence decision, not simply two clicks.
+  const needsChoice = true;
   const kindTitle = task.kind === 'voices' ? 'Кто говорит и кто назван' :
     isObject ? 'Что получает название' :
       task.kind === 'parallel-witness' ? 'Два библейских контекста' :
         'Исходная письменная форма';
-  const options = isObject ? NAMED_OBJECT_CHOICES : isScript ? WRITTEN_LANGUAGE_CHOICES : [];
+  const options = isObject ? NAMED_OBJECT_CHOICES : isScript ? WRITTEN_LANGUAGE_CHOICES : task.answerOptions ?? [];
   const leftTitle = task.kind === 'voices' ? 'Кто говорит' : isObject ? 'Событие' :
     task.kind === 'parallel-witness' ? 'Первый контекст' : 'Письменный оригинал';
   const rightTitle = task.kind === 'voices' ? 'Кто именуется' : isObject ? 'Что получает название' :
@@ -60,8 +61,9 @@ export function FieldStudy({ e, completed, onComplete }: {
       </div>
     </div>
     {needsChoice && <fieldset className="mt-4" disabled={!a || !b}>
-      <legend className="font-display text-lg text-bronze">{isObject ? 'Что именно названо?' : 'Какой язык у исходной записи?'}</legend>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+      <legend className="font-display text-lg text-bronze">{isObject ? 'Что именно названо?' :
+        isScript ? 'Какой язык у исходной записи?' : 'Какой вывод подтверждают оба свидетельства?'}</legend>
+      <div className={'mt-3 grid gap-2 ' + (isObject || isScript ? 'sm:grid-cols-2' : '')}>
         {options.map((choice) => <label key={choice.id} className="flex gap-2 p-2.5 border border-white/15 rounded-sm text-sm cursor-pointer">
           <input type="radio" name={'study-choice-' + e.id} value={choice.id}
             checked={selection === choice.id} className="mt-1 accent-amber-600"
@@ -77,7 +79,7 @@ export function FieldStudy({ e, completed, onComplete }: {
       <a className="link text-sm" href={e.verseUrl} target="_blank" rel="noopener noreferrer">Библейский источник: {e.verseReference}</a>
     </div>
     {retry && <p role="status" className="mt-3 text-sm text-amber-200">
-      Такой ответ не совпадает с категорией или языком в рабочем реестре. Сопоставьте обе стороны ещё раз.
+      Выбранный вывод не подтверждается двумя контекстами рабочего реестра. Проверьте ссылки на Писание и попробуйте снова, без штрафов.
     </p>}
     {completed && <div role="status" className="mt-4 border-l-2 border-bronze/50 pl-3 text-sm text-parch/90">
       <p>{task.takeaway}</p>
