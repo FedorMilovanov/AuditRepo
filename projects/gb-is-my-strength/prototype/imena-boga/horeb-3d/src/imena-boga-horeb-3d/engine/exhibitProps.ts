@@ -487,6 +487,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     const mesh = new THREE.Mesh(geometry, s.oliveBark);
     mesh.name = 'olive-branch';
     g.add(mesh);
+    return path;
   };
   // Buttress roots are shallow ground details; they do not widen the colliding
   // trunk or add invisible collision walls.
@@ -498,6 +499,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   }
   const crownBase = spine(1);
   const branchTips: THREE.Vector3[] = [];
+  const branchPaths: THREE.CatmullRomCurve3[] = [];
   // Each fork is joined to the sculpted trunk and to its foliage pocket.
   for (let i = 0; i < 7; i++) {
     // Avoid seven near-identical spokes/flat Y-forks: natural olives have
@@ -512,7 +514,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
       -Math.sin(angle) * (0.07 + random() * 0.11),
       0.035 + random() * 0.16,
       Math.cos(angle) * (0.07 + random() * 0.11)));
-    structuralFork(stem, elbow, tip);
+    branchPaths.push(structuralFork(stem, elbow, tip));
     branchTips.push(tip);
   }
   // Compact interior cores supply shadow, not visible green balloons.
@@ -526,24 +528,32 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     core.position.copy(origin);
     core.rotation.set((random() - 0.5) * 0.35, random() * Math.PI * 2,
       (random() - 0.5) * 0.35);
-    core.scale.set(0.19 + random() * 0.07, 0.13 + random() * 0.045,
-      0.19 + random() * 0.07);
+    // A small interior shade is acceptable; visible green disks are not.
+    // Open crown mass comes from real two-sided leaf sprays below.
+    core.scale.set(0.100 + random() * 0.035, 0.067 + random() * 0.025,
+      0.100 + random() * 0.035);
     g.add(core);
     // Every leaf pair is anchored along a twig instead of floating around
     // a random spherical volume. A few downward arcs evoke olive sprays.
-    const twigs = low ? 4 : 5;
-    const pairs = low ? 5 : 6;
+    const twigs = low ? 5 : 7;
+    const pairs = low ? 6 : 7;
     for (let k = 0; k < twigs; k++) {
-      const theta = k * Math.PI * 2 / twigs + (random() - 0.5) * 0.34;
-      const reach = 0.29 + random() * 0.34;
+      // Start leaf-bearing twigs on several points along the existing live
+      // branch, not all at its very end. This eliminates starburst rosettes
+      // and distributes foliage into the open, asymmetric crown volume.
+      const attachment = 0.55 + 0.43 * ((k + 0.5) / twigs);
+      const twigOrigin = branchPaths[i].getPointAt(attachment);
+      const theta = k * Math.PI * 2 / twigs +
+        i * 0.44 + (random() - 0.5) * 0.61;
+      const reach = 0.29 + random() * 0.29;
       const delta = new THREE.Vector3(Math.cos(theta) * reach,
-        -0.20 + random() * 0.39, Math.sin(theta) * reach);
-      const end = origin.clone().add(delta);
-      segment(origin, end, 0.018, 0.004, 'olive-foliage-twig');
+        -0.23 + random() * 0.38, Math.sin(theta) * reach);
+      const end = twigOrigin.clone().add(delta);
+      segment(twigOrigin, end, 0.016, 0.0035, 'olive-foliage-twig');
       const lateral = new THREE.Vector3(-Math.sin(theta), 0, Math.cos(theta));
       for (let j = 0; j < pairs; j++) {
         const along = 0.18 + 0.73 * (j + 1) / pairs;
-        const node = origin.clone().addScaledVector(delta, along);
+        const node = twigOrigin.clone().addScaledVector(delta, along);
         for (const side of [-1, 1]) {
           const leaf = new THREE.Mesh(G.oliveLeaf(),
             (j + k + (side > 0 ? 1 : 0)) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
