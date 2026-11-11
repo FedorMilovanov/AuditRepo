@@ -455,7 +455,7 @@ export default function HorebApp() {
       {/* Подсказка взаимодействия — кликабельна */}
       {ws?.prompt && !dialog && ws.shoes !== 'removing' && !(ws.prompt.kind === 'shoes' && gateOuter) && (
         <button data-testid="interaction-prompt" className={`prompt absolute left-1/2 -translate-x-1/2 ${isTouch ? 'bottom-44' : 'bottom-8 sm:bottom-10'}`} onClick={interact}>
-          <span className="kbd">E</span>
+          {!isTouch && <span className="kbd">E</span>}
           {ws.prompt.kind === 'shoes' ? 'Снять обувь' : <>Контекст и источники: <b className="font-normal text-parch">{promptEx?.displayLabelRu}</b> · {promptEx?.verseReference}</>}
         </button>
       )}
@@ -463,7 +463,7 @@ export default function HorebApp() {
       {ws?.focusClue && !dialog && ws.shoes !== 'removing' && (
         <button data-testid="focus-story-clue" className={`absolute right-4 ${isTouch ? 'bottom-64' : 'bottom-32'} sm:right-8 z-20 max-w-[min(70vw,19rem)] rounded-sm border border-bronze/55 bg-black/85 px-3 py-3 text-sm text-left text-parch shadow-lg`}
           onClick={inspectSiteClue} aria-label={'Изучить в 3D: ' + SITE_CLUES[ws.focusClue].label}>
-          <span className="kbd mr-2">F</span>
+          {!isTouch && <span className="kbd mr-2">F</span>}
           {siteClues.includes(ws.focusClue) ? 'Осмотреть ещё: ' : 'Исследовать: '}
           {SITE_CLUES[ws.focusClue].label}
         </button>
