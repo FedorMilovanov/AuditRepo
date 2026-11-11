@@ -556,6 +556,11 @@ export default function HorebApp() {
           <button className="btn" onClick={() => setDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={exitWorld}>Выйти из прогулки</button>
         </div>
+        <p data-testid="world-controls-help" className="mt-5 text-xs leading-relaxed text-parch/75">
+          {isTouch
+            ? 'Касание: левый джойстик — идти; движение пальца по сцене — осмотреться; экранные кнопки — взаимодействовать и исследовать.'
+            : 'Клавиатура: W A S D — идти; клик по сцене — осмотреться мышью; Esc — освободить курсор; E — открыть досье; F — исследовать деталь; M — схема; R — выровнять взгляд.'}
+        </p>
       </Modal>}
       {dialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setDialog(null)}>
         <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} fields={fieldJournal}
