@@ -116,8 +116,8 @@
       "bytes_normalized": 17309
     },
     "atlas/src/data/divineNames.ts": {
-      "sha256": "13b60a15d6b679a9e10e158e8cd80a94a634c4c4288e852486405fbd49815797",
-      "bytes_normalized": 150305
+      "sha256": "f7fc9fb42f2b49b2a8fbf859a3fbe6e5b52a8a5fd3e4d2827d43c1eef60dc344",
+      "bytes_normalized": 150733
     },
     "atlas/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "4f1f0c1a559821bca686921a897fc22af418150d4b1345baf8f32ea3c0263c2c",
-      "bytes_normalized": 28698
+      "sha256": "984c01bbb714ccf2d1c51dc2711308c6f58cda18666e7b21aaa653a4729c0906",
+      "bytes_normalized": 32329
     },
     "checks/visual_review.cjs": {
       "sha256": "2dc8bd8e4b09a5aad1ca15da39b0485342ec5435a2c303b4b88a90e438516901",
@@ -308,8 +308,8 @@
       "bytes_normalized": 13928
     },
     "sozvezdie/src/data/names.ts": {
-      "sha256": "3551895c3f81d7928fde46805d0e434d5999d480c78dd9f413bde1994d2cc0bc",
-      "bytes_normalized": 72678
+      "sha256": "141b8d46ee77be49c6aa2f1e923e3f1303d22c0154e38ab9313ebb6a6c3b3872",
+      "bytes_normalized": 73144
     },
     "sozvezdie/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
