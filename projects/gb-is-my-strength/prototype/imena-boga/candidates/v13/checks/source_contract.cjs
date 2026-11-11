@@ -225,7 +225,7 @@ for(const [name,source,unsafe] of researchNegative){
  if(source.includes(unsafe))throw Error('Research content regression '+name);
 }
 for(const [name,source,required] of [
- ['Psalm 110 Hebrew form',researchAtlasData,'לַאדֹנִי (adoni), а не אֲדֹנָי'],
+ ['Psalm 110 Hebrew form',researchAtlasData,'לַאדֹנִי («моему господину», adoni), а не אֲדֹנָי'],
  ['Exodus 6 differing interpretations',researchAtlasData,'толкователи объясняют по-разному'],
  ['Isaiah 1:4 epithet locus',researchAtlasData,'встречается уже в Ис. 1:4'],
  ['1 Samuel 1:3 scope',researchAtlasData,'поклонение Господу Саваофу в Силоме'],
