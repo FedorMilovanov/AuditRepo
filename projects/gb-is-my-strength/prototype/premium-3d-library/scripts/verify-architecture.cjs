@@ -37,19 +37,19 @@ const center = get('scene/Center.tsx');
 // Its former additive plane produced a hard-edged glowing orange box on
 // genuine Chromium/WebKit reference-bay screenshots. Source-owned check
 // prevents quietly reintroducing this geometry while retaining interaction.
-const cardSource=get('scene/Cards.tsx');
-assert.match(cardSource, /<boxGeometry args=\{\[W \+ 0\.2, H \+ 0\.2, 0\.06\]\} \/>/,
+const posterPresentationSource=get('scene/Cards.tsx');
+assert.match(posterPresentationSource, /<boxGeometry args=\{\[W \+ 0\.2, H \+ 0\.2, 0\.06\]\} \/>/,
   'Real card picture frame was removed');
-assert.match(cardSource, /<cylinderGeometry args=\{\[0\.05, 0\.07, 1\.8, 12\]\} \/>/,
+assert.match(posterPresentationSource, /<cylinderGeometry args=\{\[0\.05, 0\.07, 1\.8, 12\]\} \/>/,
   'The poster lost its physical supporting post');
-assert.match(cardSource, /frame\.current\.scale\.setScalar\(1 \+ aim\.current \* 0\.07\)/,
+assert.match(posterPresentationSource, /frame\.current\.scale\.setScalar\(1 \+ aim\.current \* 0\.07\)/,
   'Actual hover/focus feedback of the card was removed');
 for (const oldGlare of [
   'W + 0.7, H + 0.7',
   'glow.current.opacity',
   'ref={glow}',
   'renderOrder={9}',
-]) assert(!cardSource.includes(oldGlare), 'Oversized flat glowing poster backdrop returned: '+oldGlare);
+]) assert(!posterPresentationSource.includes(oldGlare), 'Oversized flat glowing poster backdrop returned: '+oldGlare);
 
 const app = get('App.tsx');
 
