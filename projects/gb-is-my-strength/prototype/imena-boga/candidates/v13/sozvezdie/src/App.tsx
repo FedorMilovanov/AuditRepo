@@ -312,10 +312,11 @@ export default function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
           <a
             href="https://gospod-bog.ru"
-            className="flex min-h-11 min-w-0 shrink items-center whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
+            aria-label="Господь Бог — Сила Моя"
+            className="flex min-h-11 min-w-0 shrink items-center overflow-hidden whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
-            <span className="sm:hidden">Господь Бог</span>
-            <span className="hidden sm:inline">Господь Бог — Сила Моя</span>
+            <span className="min-w-0 truncate sm:hidden">Господь Бог</span>
+            <span className="hidden min-w-0 truncate sm:inline">Господь Бог — Сила Моя</span>
           </a>
 
           {/* live current-section state */}

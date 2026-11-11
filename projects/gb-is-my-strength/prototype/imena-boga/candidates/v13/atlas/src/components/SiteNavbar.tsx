@@ -159,7 +159,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           <button
             type="button"
             onClick={onFocusSearch}
-            className="font-ui inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-medium transition-colors hover:opacity-90"
+            className="font-ui inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-[9px] py-[9px] text-xs font-medium transition-colors hover:opacity-90"
             style={{
               backgroundColor: 'var(--gb-surface)',
               borderColor: 'var(--gb-border)',
@@ -168,7 +168,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             title="Быстрый поиск по именам и стихам (клавиша /)"
             aria-label="Открыть поиск по именам"
           >
-            <Search className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
+            <Search className="h-[18px] w-[18px]" style={{ color: 'var(--gb-gold)' }} />
             <kbd className="hidden font-mono text-[10px] opacity-80 sm:inline">/</kbd>
           </button>
 
@@ -183,14 +183,14 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
               aria-controls="gb-reader-settings"
               aria-expanded={readerPanelOpen}
               onClick={() => setReaderPanelOpen((open) => !open)}
-              className="inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center rounded-lg border p-2 transition-colors hover:opacity-90"
+              className="inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-lg border p-[8px] transition-colors hover:opacity-90"
               style={{
                 color: 'var(--gb-ink)',
                 borderColor: readerPanelOpen ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
                 backgroundColor: readerPanelOpen ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
               }}
             >
-              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+              <SlidersHorizontal className="h-[20px] w-[20px]" aria-hidden="true" />
             </button>
             {readerPanelOpen && (
               <div
@@ -466,7 +466,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             aria-haspopup="dialog"
             aria-expanded={mobilePillarsOpen}
             aria-controls="gb-mobile-pillars-dialog"
-            className="min-[1440px]:hidden inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border p-1.5"
+            className="min-[1440px]:hidden inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-lg border p-[8px]"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -474,7 +474,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             }}
             aria-label="Открыть скрижали имён Бога"
           >
-            <Compass className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
+            <Compass className="h-[20px] w-[20px]" style={{ color: 'var(--gb-gold)' }} />
           </button>
         </div>
       </div>

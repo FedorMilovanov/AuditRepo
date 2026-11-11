@@ -759,7 +759,29 @@ async function visit(browser,engine,app,width,base){
     const h=target?.getBoundingClientRect();
     const menu=document.querySelector(app==='atlas'?'[data-covenant-map-nav]':'#sozvezdie-mobile-index-trigger');
     const m=menu?.getBoundingClientRect();
+    // A page-width-only test missed real root-200% glyph collisions in the fixed header.
+    // Measure actual visible controls and check whether truncated brand text can paint
+    // outside its own DOM box. The full brand must remain available to assistive tech.
+    const header=document.querySelector(app==='atlas'?'nav[aria-label="Основная навигация сайта"]':'header');
+    const brand=header?.querySelector(app==='atlas'?'a[href="#top"]':'a[href="https://gospod-bog.ru"]');
+    const b=brand?.getBoundingClientRect();
+    const brandStyle=brand?getComputedStyle(brand):null;
+    const headerControls=[...(header?.querySelectorAll('a,button')||[])].filter(el=>{
+      if(el===brand) return false;
+      const r=el.getBoundingClientRect(),style=getComputedStyle(el);
+      return r.width>0&&r.height>0&&style.display!=='none'&&style.visibility!=='hidden';
+    }).map(el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};});
+    const headerBrandPaintOverflow=!!brand&&brand.scrollWidth>brand.clientWidth+2&&
+      !['hidden','clip'].includes(brandStyle?.overflowX);
+    const headerOverlap=!!b&&headerControls.some(r=>
+      Math.min(b.right,r.right)-Math.max(b.left,r.left)>2 &&
+      Math.min(b.bottom,r.bottom)-Math.max(b.top,r.top)>2);
+    const headerControlsOutOfBounds=headerControls.some(r=>r.left< -2||r.right>root.clientWidth+2);
     return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
+      headerBrandFound:!!b,headerBrandWidth:b?.width??null,
+      headerBrandAccessible:!!brand?.getAttribute('aria-label'),
+      headerBrandPaintOverflow,headerOverlap,headerControlsOutOfBounds,
+      headerControlsCount:headerControls.length,
       viewport:root.clientWidth,documentWidth:root.scrollWidth,
       headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
       headingClientWidth:target?.clientWidth??null,headingScrollWidth:target?.scrollWidth??null,
@@ -783,7 +805,9 @@ async function visit(browser,engine,app,width,base){
    if(d.rootFontPx<30||!d.headingFound||d.documentWidth>d.viewport+2||
       d.headingLeft< -2||d.headingRight>d.viewport+2||
       d.headingScrollWidth>d.headingClientWidth+2||
-      !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24)
+      !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24||
+      !d.headerBrandFound||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
+      d.headerOverlap||d.headerControlsOutOfBounds||d.headerControlsCount<1)
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));

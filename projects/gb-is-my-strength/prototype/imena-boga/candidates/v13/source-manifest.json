@@ -104,8 +104,8 @@
       "bytes_normalized": 14462
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "5acb8130582ed2d021a84c8780fac01df41e6010e9a789edc643370400251450",
-      "bytes_normalized": 21272
+      "sha256": "8f92155dabb3f1cf505d701d50f58ce427433a6c01162cb8680c44391e08e3cd",
+      "bytes_normalized": 21340
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -184,8 +184,8 @@
       "bytes_normalized": 38912
     },
     "checks/visual_review.cjs": {
-      "sha256": "52251680d1b5c0b64b4b49c3e2740146a86c06247fc425197808b4ba8775fef5",
-      "bytes_normalized": 50140
+      "sha256": "d48dcde310c710bdd32ac93943bf2743be88ed85d3e3ddd962fede2719ef56a5",
+      "bytes_normalized": 51961
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -236,8 +236,8 @@
       "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "8db3eae99bd8d6d59f922d1237be757b1c06151f14d2c458e4c25bdd2dc45694",
-      "bytes_normalized": 18003
+      "sha256": "2138bf0f36fd261c8ceece5aeb1698bddcfee5ed0106ef4389d8ba6ceaed88b5",
+      "bytes_normalized": 18120
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
