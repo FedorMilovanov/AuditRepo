@@ -504,6 +504,27 @@ if (gardenRecord) {
   grove.traverse((o) => { if (o.name === 'olive-branch' && o instanceof THREE.Mesh) branchMats.add(o.material as THREE.Material); });
   t('Gethsemane four trees have independent tapered structural branches',
     branches >= 24 && branchMats.size === 1);
+  // Every major branch must share the trunk's real fissured bark, not the
+  // flat light-grey wood used for the small twigs and buried roots. The
+  // matching vertex attributes are also a prerequisite for safe batching.
+  const trunk = grove.getObjectByName('olive-main-trunk');
+  const trunkBark = trunk instanceof THREE.Mesh ? trunk.material : null;
+  let barkedBranches = 0, minBark = Infinity, maxBark = -Infinity;
+  grove.traverse((o) => {
+    if (o.name !== 'olive-branch' || !(o instanceof THREE.Mesh)) return;
+    const colors = o.geometry.getAttribute('color');
+    const positions = o.geometry.getAttribute('position');
+    if (!colors || !positions || colors.count !== positions.count ||
+        o.material !== trunkBark) return;
+    barkedBranches++;
+    for (let i = 0; i < colors.count; i++) {
+      minBark = Math.min(minBark, colors.getX(i));
+      maxBark = Math.max(maxBark, colors.getX(i));
+    }
+  });
+  t('Gethsemane structural wood shares true bark material and varied colors',
+    trunkBark !== null && barkedBranches === branches &&
+    maxBark - minBark > 0.06 && branchMats.size === 1);
   // Structural forks must actually BEND, not merely use more cylinder faces.
   // Their first and last rings still touch the original connected branch
   // endpoints; the existing trunk colliders and walkable path are unchanged.
@@ -543,6 +564,13 @@ if (gardenRecord) {
   t('Gethsemane merged branch buffers are disposed once after batching',
     ownedBranches >= 28 && disposedOwnedBranches === ownedBranches &&
     !batchableGarden.children.some((object) => object.name === 'olive-branch'));
+  const barkBatches = batchableGarden.children.filter((object) =>
+    object instanceof THREE.Mesh && object.material === trunkBark);
+  t('Gethsemane bark and structural forks form one GPU material batch',
+    barkBatches.length === 1 &&
+    barkBatches[0] instanceof THREE.Mesh &&
+    barkBatches[0].geometry.getAttribute('color')?.count ===
+      barkBatches[0].geometry.getAttribute('position')?.count);
   let trunks = 0, roots = 0, flatLeaves = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-main-trunk') trunks++;
