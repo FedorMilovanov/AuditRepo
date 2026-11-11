@@ -46,23 +46,53 @@ const fs=require('node:fs');const path=require('node:path');const ts=require('ty
   assert.equal(metadataOnly.entries.length,1,
     'Valid metadata-only policy must remain a permitted enum value');
 
-  // Transpile the *real* scene data module, not a duplicated geometric
-  // fixture. The test supplies only the base URL needed for demo cover paths.
-  const dataSource=fs.readFileSync(path.join(__dirname,'../src/data.ts'),'utf8');
+  // Execute the REAL source-owned scene and geometry modules together.
+  // A data: URL cannot resolve relative TypeScript imports, so instead
+  // transpile both local modules to CommonJS and use an exact allowlisted
+  // local dependency. No geometry values are mirrored or stubbed in tests.
+  const sourceRoot=path.join(__dirname,'../src');
+  const realGeometry=fs.readFileSync(path.join(sourceRoot,'scene/readingGeometry.ts'),'utf8');
+  const geometryJS=ts.transpileModule(realGeometry,{compilerOptions:{
+    module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022
+  }}).outputText;
+  const geomModule={exports:{}};
+  new Function('module','exports',geometryJS)(geomModule,geomModule.exports);
+  const R=geomModule.exports.READING_GEOMETRY;
+  assert.ok(Object.isFrozen(R),'Real reading geometry not loaded');
+
+  const dataSource=fs.readFileSync(path.join(sourceRoot,'data.ts'),'utf8');
   const dataJS=ts.transpileModule(dataSource,{compilerOptions:{
-    module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022
+    module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022
   }}).outputText;
   const previousDocument=global.document;
   global.document={baseURI:'https://gb-library-test.invalid/'};
   let scene;
   try {
-    scene=await import('data:text/javascript;base64,'+Buffer.from(dataJS).toString('base64'));
+    const dataModule={exports:{}};
+    const localRequire=(specifier)=>{
+      assert.equal(specifier,'./scene/readingGeometry',
+        'Scene data imported unexpected dependency: '+specifier);
+      return geomModule.exports;
+    };
+    new Function('require','module','exports',dataJS)(
+      localRequire,dataModule,dataModule.exports);
+    scene=dataModule.exports;
   } finally {
     if(previousDocument===undefined)delete global.document;
     else global.document=previousDocument;
   }
   const sections=scene.ITEMS.filter(it=>it.kind==='section');
   assert.equal(sections.length,5);
+  const lectern=scene.ITEMS.find(it=>it.kind==='lectern');
+  assert.ok(lectern,'Physical reading station missing');
+  const arrival=scene.approachPose(lectern);
+  const [lx,lz]=scene.itemPos(lectern);
+  const arrivalDistance=Math.hypot(lx-arrival.x,lz-arrival.z);
+  assert.ok(Math.abs(arrivalDistance-R.lecternApproachDistance)<0.001,
+    'Reading station approach no longer uses canonical stand-off distance');
+  assert.ok(arrival.pitch < -0.15 && Math.abs(arrival.pitch -
+    Math.atan2(R.lecternPageCenterY-scene.EYE,arrivalDistance))<1e-6,
+    'Reading station camera no longer points at physical page centre');
   const [cx,cz,cr]=scene.OBSTACLES[0];
   assert.equal(cr,scene.CENTER_OBSTACLE_RADIUS);
   for(const it of sections) {
