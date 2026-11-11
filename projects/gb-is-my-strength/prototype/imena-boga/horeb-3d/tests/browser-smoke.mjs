@@ -148,6 +148,20 @@ try {
       .find((b) => b.textContent.includes('Проверить понимание'))?.click());
     await axReaderPage.waitForFunction(() =>
       JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}').understood?.includes('elohim'));
+    // A previously correct lesson must NOT show success and failure banners
+    // simultaneously when the visitor experiments with a wrong retry.
+    await lesson.$('input[value="a"]').then((el) => el.click());
+    await lesson.evaluate((node) => [...node.querySelectorAll('button')]
+      .find((button) => button.textContent?.includes('Проверить ещё раз'))?.click());
+    await axReaderPage.waitForFunction(() =>
+      !!document.querySelector('[data-learning-feedback="retry"]'));
+    check('wrong learning retry hides accepted feedback but keeps prior result', 
+      await lesson.evaluate((node) =>
+        !!node.querySelector('[data-learning-feedback="retry"]') &&
+        !node.querySelector('[data-learning-feedback="accepted"]')) &&
+      await axReaderPage.evaluate(() =>
+        JSON.parse(localStorage.getItem('imena-horeb.learning.v1') || '{}')
+          .understood?.includes('elohim')));
     await axReaderPage.reload({ waitUntil: 'domcontentloaded' });
     check('learned meaning persists but does not unlock or modify navigation',
       await axReaderPage.evaluate(() => {
@@ -203,6 +217,19 @@ try {
     await axReaderPage.waitForFunction(() =>
       JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes('nissi'));
     check('correct named altar recorded only after both contexts', await checkJournal('nissi'));
+    await nissi.$('input[value="city_name"]').then((e) => e.click());
+    await nissi.$('button[data-field-submit]').then((e) => e.click());
+    check('wrong field retry has one status and preserves correct journal entry',
+      await nissi.evaluate((node) =>
+        !!node.querySelector('[data-study-feedback="retry"]') &&
+        !node.querySelector('[data-study-feedback="accepted"]')) &&
+      await checkJournal('nissi'));
+    await nissi.$('input[value="altar_name"]').then((e) => e.click());
+    await nissi.$('button[data-field-submit]').then((e) => e.click());
+    check('correct field retry restores accepted feedback without stale error',
+      await nissi.evaluate((node) =>
+        !!node.querySelector('[data-study-feedback="accepted"]') &&
+        !node.querySelector('[data-study-feedback="retry"]')));
     const aramaic = await revealField('atiq-yomin');
     await aramaic.$('input[value="grc"]').then((e) => e.click());
     await aramaic.$('button[data-field-submit]').then((e) => e.click());
