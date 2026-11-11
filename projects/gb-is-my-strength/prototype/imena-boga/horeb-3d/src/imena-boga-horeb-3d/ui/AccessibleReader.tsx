@@ -1,6 +1,8 @@
 import { EXHIBITS, ZONES, CATEGORY_RU, EX_3_5_RU, EX_3_5_SOURCE, type Exhibit } from '../data/exhibits';
 import { narrationPlan, NARRATION_LANGUAGE_LABEL } from '../data/narrationPlan';
 import { SceneMoment } from './SceneMoment';
+import { FieldStudy } from './FieldStudy';
+import { FIELD_IDS, FIELD_STUDIES } from '../data/fieldStudies';
 import { PILOT_IDS, PILOT_LESSONS, type LearningChoice, type LearningJournal } from '../data/learningJourney';
 
 const LANG_RU = { he: 'древнееврейский', arc: 'арамейский', grc: 'греческий' } as const;
@@ -111,11 +113,13 @@ export function AboutExhibition() {
   );
 }
 
-export function AccessibleReader({ onClose, learning, onLearningObserve, onLearningCorrect }: {
+export function AccessibleReader({ onClose, learning, onLearningObserve, onLearningCorrect, fieldJournal, onFieldComplete }: {
   onClose?: () => void;
   learning: LearningJournal;
   onLearningObserve: (id: string) => void;
   onLearningCorrect: (id: string, choice: LearningChoice) => void;
+  fieldJournal: readonly string[];
+  onFieldComplete: (id: string, a: boolean, b: boolean, answer: string | null) => void;
 }) {
   return (
     <main id="reader" className="reader min-h-screen bg-ink text-parch">
@@ -126,7 +130,8 @@ export function AccessibleReader({ onClose, learning, onLearningObserve, onLearn
           <p className="mt-4 text-parch/80 leading-relaxed">Все тексты 3D-экспозиции в доступном виде. Каждая карточка содержит исходную форму, транслитерацию, стих, говорящего, референт, категорию и статус.</p>
           {onClose && <button className="btn mt-6" onClick={onClose}>← Вернуться</button>}
           <p className="mt-5 text-sm text-bronze" role="status">Путевой дневник: {learning.understood.length} из {PILOT_LESSONS.length} сюжетов осмыслено.</p>
-          <p className="text-sm text-parch/75">Восемь ключевых сюжетов можно проходить как вопросы по Писанию и без WebGL. Это обучающее чтение, не заменяющее личного исследования.</p>
+          <p className="text-sm text-parch/75">Восемь ключевых сюжетов и {FIELD_STUDIES.length} дополнительных исследований доступны без WebGL. Они не заменяют изучение Писания.</p>
+          <p className="text-sm text-parch/75 mt-1">Контекстных исследований записано: {fieldJournal.length} / {FIELD_STUDIES.length}.</p>
           <nav aria-label="Зоны" className="mt-6 flex flex-wrap gap-2 text-sm">
             {ZONES.filter((z) => EXHIBITS.some((e) => e.zone === z.id)).map((z) => (
               <a key={z.id} className="chip" href={`#zone-${z.id}`}>{z.id}. {z.title}</a>
@@ -154,6 +159,8 @@ export function AccessibleReader({ onClose, learning, onLearningObserve, onLearn
                   e={e} examined={learning.observed.includes(e.id)} understood={learning.understood.includes(e.id)}
                   canInspect textMode onInspect={() => onLearningObserve(e.id)}
                   onUnderstood={(choice) => onLearningCorrect(e.id, choice)} />}
+                {FIELD_IDS.includes(e.id) && <FieldStudy e={e}
+                  completed={fieldJournal.includes(e.id)} onComplete={onFieldComplete} />}
                 <ExhibitCard e={e} />
               </div>)}</div>
             </section>

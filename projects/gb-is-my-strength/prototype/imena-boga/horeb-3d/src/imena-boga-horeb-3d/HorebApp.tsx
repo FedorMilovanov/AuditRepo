@@ -5,6 +5,8 @@ import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
 import { SceneMoment } from './ui/SceneMoment';
+import { FieldStudy } from './ui/FieldStudy';
+import { FIELD_IDS, FIELD_STUDIES, FIELD_STORAGE_KEY, normalizeFieldJournal, markFieldStudy } from './data/fieldStudies';
 import { LEARNING_STORAGE_KEY, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from './data/learningJourney';
 import { SITE_CLUES, SITE_CLUE_IDS, SITE_CLUE_STORAGE_KEY, normalizeSiteClues, addSiteClue, type SiteClueId } from './data/siteClues';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
@@ -75,10 +77,11 @@ function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (i
   </div>;
 }
 
-function StudyJourneyPanel({ observed, understood, clues }: { observed: readonly string[]; understood: readonly string[]; clues: readonly SiteClueId[] }) {
+function StudyJourneyPanel({ observed, understood, clues, fields }: { observed: readonly string[]; understood: readonly string[]; clues: readonly SiteClueId[]; fields: readonly string[] }) {
   return <section aria-label="Путевой дневник смысла" className="space-y-4">
     <p className="text-parch/80 text-sm">Пройдите восемь ключевых исследований в любой последовательности. Все 42 досье можно читать свободно; знания не открывают запретные области.</p>
-    <p className="font-display text-xl text-bronze" role="status">Осмыслено: {understood.length} / {PILOT_LESSONS.length}</p>
+    <p className="font-display text-xl text-bronze" role="status">Основные истории: {understood.length} / {PILOT_LESSONS.length}</p>
+    <p className="text-sm text-parch/80">Контекстные исследования: {fields.length} / {FIELD_STUDIES.length}. Типы: говорящий и референт, именованный объект, два контекста, письменный язык.</p>
     <p className="text-sm text-parch/80">3D-наблюдения у реальных деталей сцены: {clues.length} / {SITE_CLUE_IDS.length}. Доступное чтение не требует их собирать.</p>
     <ul className="space-y-2 text-sm text-parch/80">
       {SITE_CLUE_IDS.map((id) => <li key={id} className="border-l-2 border-bronze/20 pl-3">
@@ -116,6 +119,7 @@ export default function HorebApp() {
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
   const [learning, setLearning] = useState(() => normalizeLearningJournal(readStored(LEARNING_STORAGE_KEY)));
   const [siteClues, setSiteClues] = useState<SiteClueId[]>(() => normalizeSiteClues(readStored(SITE_CLUE_STORAGE_KEY)));
+  const [fieldJournal, setFieldJournal] = useState<string[]>(() => normalizeFieldJournal(readStored(FIELD_STORAGE_KEY)));
   const [bookmarks, setBookmarks] = useState<string[]>(() => normalizeStudyBookmarks(readStored(STUDY_BOOKMARKS_KEY)));
   const [guideCaption, setGuideCaption] = useState<string | null>(null);
   const [webgl] = useState(hasWebGL);
@@ -134,6 +138,7 @@ export default function HorebApp() {
   useEffect(() => { try { localStorage.setItem(STUDY_BOOKMARKS_KEY, JSON.stringify(bookmarks)); } catch { /* private mode */ } }, [bookmarks]);
   useEffect(() => { try { localStorage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(learning)); } catch { /* private mode */ } }, [learning]);
   useEffect(() => { try { localStorage.setItem(SITE_CLUE_STORAGE_KEY, JSON.stringify(siteClues)); } catch { /* private mode */ } }, [siteClues]);
+  useEffect(() => { try { localStorage.setItem(FIELD_STORAGE_KEY, JSON.stringify(fieldJournal)); } catch { /* private mode */ } }, [fieldJournal]);
 
   const resolved = useMemo(() => {
     const low = settings.quality === 'low' || (settings.quality === 'auto' && (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || innerWidth < 700));
@@ -314,6 +319,8 @@ export default function HorebApp() {
     learning={learning}
     onLearningObserve={(id) => setLearning((prev) => observeLesson(prev, id))}
     onLearningCorrect={(id, choice) => setLearning((prev) => completeLesson(prev, id, choice))}
+    fieldJournal={fieldJournal}
+    onFieldComplete={(id, a, b, answer) => setFieldJournal((old) => markFieldStudy(old, id, a, b, answer))}
   />;
 
   if (screen === 'intro') return (
@@ -364,7 +371,7 @@ export default function HorebApp() {
           {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
       {introDialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setIntroDialog(null)}>
-        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} />
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} fields={fieldJournal} />
       </Modal>}
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
@@ -491,6 +498,9 @@ export default function HorebApp() {
           setDialog(null);
           setToast('Осмотрите освещённую надпись и предметы. Нажмите E снова, чтобы сопоставить с Писанием.');
         }} />
+        {FIELD_IDS.includes(exhibit.id) && <FieldStudy e={exhibit}
+          completed={fieldJournal.includes(exhibit.id)}
+          onComplete={(id, a, b, answer) => setFieldJournal((old) => markFieldStudy(old, id, a, b, answer))} />}
         <ExhibitCard e={exhibit} headingLevel={2} />
       </Modal>}
       {dialog?.kind === 'menu' && <Modal title="Управление экспозицией" onClose={() => setDialog(null)}>
@@ -505,7 +515,7 @@ export default function HorebApp() {
         </div>
       </Modal>}
       {dialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setDialog(null)}>
-        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} />
+        <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} fields={fieldJournal} />
       </Modal>}
       {dialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setDialog(null)}>
         <StudyBookmarkList ids={bookmarks} onOpen={(id) => setDialog({ kind: 'exhibit', id })} />

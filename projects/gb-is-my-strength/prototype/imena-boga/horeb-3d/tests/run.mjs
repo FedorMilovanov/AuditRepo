@@ -5,6 +5,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
+import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy, markFieldStudy } from '../.test-build/data/fieldStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
@@ -98,6 +99,40 @@ t('site observations record only known physical locations once',
 t('site observations never imply an automatic educational completion',
   normalizeLearningJournal({ observed: [], understood: [] }).understood.length === 0 &&
   SITE_CLUES['beersheba-tamarisk'].reference === 'Быт. 21:33');
+// Four different source-analysis interactions (16 authored investigations).
+const kindCounts = Object.fromEntries(['voices','named-object','parallel-witness','written-form']
+  .map((kind) => [kind, FIELD_STUDIES.filter((task) => task.kind === kind).length]));
+t('four distinct fieldwork methods have exactly four authored dossiers each',
+  FIELD_STUDIES.length === 16 && Object.values(kindCounts).every((n) => n === 4));
+t('all fieldwork IDs exist in canonical 42 and exclude the 8 hero quizzes',
+  new Set(FIELD_IDS).size === 16 && FIELD_IDS.every((id) =>
+    EXHIBITS.some((e) => e.id === id) && !PILOT_IDS.includes(id)));
+t('all authored evidence prompts and cautions have meaningful content',
+  FIELD_STUDIES.every((task) => task.prompt.length > 35 &&
+    task.lensA.length > 30 && task.lensB.length > 30 && task.takeaway.length > 35));
+t('object classification matches registry rather than a new inferred divine name',
+  FIELD_STUDIES.filter((task) => task.kind === 'named-object').every((task) =>
+    ['altar_name','place_name','city_name'].includes(EXHIBITS.find((e) => e.id === task.id).category)));
+t('written language tasks use canonical source language rather than speculative phonetics',
+  FIELD_STUDIES.filter((task) => task.kind === 'written-form').every((task) =>
+    ['arc','grc'].includes(EXHIBITS.find((e) => e.id === task.id).sourceLanguage)));
+t('fieldwork cannot complete before both evidence perspectives are inspected',
+  !canCompleteFieldStudy('nissi', true, false, 'altar_name') &&
+  !canCompleteFieldStudy('ego-eimi', false, true, null));
+t('a false named object or false language cannot be recorded',
+  !canCompleteFieldStudy('nissi', true, true, 'city_name') &&
+  !canCompleteFieldStudy('atiq-yomin', true, true, 'grc') &&
+  markFieldStudy([], 'nissi', true, true, 'city_name').length === 0);
+t('correct source-grounded category and language allow a local study record',
+  canCompleteFieldStudy('nissi', true, true, 'altar_name') &&
+  canCompleteFieldStudy('atiq-yomin', true, true, 'arc') &&
+  markFieldStudy([], 'nissi', true, true, 'altar_name').includes('nissi'));
+t('contrast and speaker mapping need both facets but no invented doctrinal choice',
+  canCompleteFieldStudy('tsidkenu', true, true, null) &&
+  canCompleteFieldStudy('ego-eimi', true, true, null));
+t('forged IDs duplicates and unknown journal keys remain excluded',
+  JSON.stringify(normalizeFieldJournal(['constructor','nissi','nissi','fake'])) === JSON.stringify(['nissi']) &&
+  !canCompleteFieldStudy('constructor', true, true, 'altar_name'));
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }

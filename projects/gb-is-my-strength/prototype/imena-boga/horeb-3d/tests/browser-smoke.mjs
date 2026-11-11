@@ -156,6 +156,65 @@ try {
         return data.observed?.includes('elohim') && data.understood?.includes('elohim') &&
           !p.last;
       }));
+    // A fresh URL reload intentionally returns to the intro: re-enter the
+    // accessible HTML reader before testing its optional context studies.
+    await axReaderPage.evaluate(() => [...document.querySelectorAll('button')]
+      .find((button) => (button.textContent || '').trim() === 'Режим чтения')?.click());
+    await axReaderPage.waitForSelector('main#reader h1', { timeout: 20000 });
+    const fieldSelector = 'section[data-field-study]';
+    check('sixteen curated studies appear in the 42-dossier accessible reader',
+      (await axReaderPage.$$(fieldSelector)).length === 16);
+    const checkJournal = (id) => axReaderPage.evaluate((value) => {
+      try { return JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes(value); }
+      catch { return false; }
+    }, id);
+    async function revealField(id) {
+      const node = await axReaderPage.$(fieldSelector + '[data-field-study="' + id + '"]');
+      if (!node) throw new Error('Missing curated field task ' + id);
+      const blockedBefore = await node.evaluate((section) =>
+        !!section.querySelector('button[data-field-submit]')?.disabled);
+      check('field study blocks completion before two evidence facets: ' + id, blockedBefore);
+      await node.evaluate((section) =>
+        [...section.querySelectorAll('button[data-field-lens]')].forEach((b) => b.click()));
+      await axReaderPage.waitForFunction((name) => {
+        const el = document.querySelector('[data-field-study="' + name + '"]');
+        return !!el && !el.querySelector('button[data-field-submit]')?.disabled;
+      }, {}, id);
+      return node;
+    }
+    const nissi = await revealField('nissi');
+    await nissi.$('input[value="city_name"]').then((e) => e.click());
+    await nissi.$('button[data-field-submit]').then((e) => e.click());
+    check('wrong named object never records the altar', !(await checkJournal('nissi')));
+    await nissi.$('input[value="altar_name"]').then((e) => e.click());
+    await nissi.$('button[data-field-submit]').then((e) => e.click());
+    await axReaderPage.waitForFunction(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes('nissi'));
+    check('correct named altar recorded only after both contexts', await checkJournal('nissi'));
+    const aramaic = await revealField('atiq-yomin');
+    await aramaic.$('input[value="grc"]').then((e) => e.click());
+    await aramaic.$('button[data-field-submit]').then((e) => e.click());
+    check('wrong original language never records Aramaic', !(await checkJournal('atiq-yomin')));
+    await aramaic.$('input[value="arc"]').then((e) => e.click());
+    await aramaic.$('button[data-field-submit]').then((e) => e.click());
+    await axReaderPage.waitForFunction(() =>
+      JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes('atiq-yomin'));
+    check('correct written-language investigation persists', await checkJournal('atiq-yomin'));
+    for (const id of ['ego-eimi', 'tsidkenu']) {
+      const node = await revealField(id);
+      await node.$('button[data-field-submit]').then((e) => e.click());
+      await axReaderPage.waitForFunction((name) =>
+        JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').includes(name), {}, id);
+      check('source-contrast study recorded after inspecting both perspectives: ' + id,
+        await checkJournal(id));
+    }
+    await axReaderPage.reload({ waitUntil: 'domcontentloaded' });
+    check('four differentiated source inquiries persist across reader reload',
+      await axReaderPage.evaluate(() =>
+        JSON.parse(localStorage.getItem('imena-horeb.field-studies.v1') || '[]').length === 4));
+    const finalUnnamed = await anonymousAccessibleActions(axReaderPage);
+    check('new four-mode study controls all have computed accessibility names',
+      finalUnnamed.length === 0, JSON.stringify(finalUnnamed));
   } finally { await axReaderPage.close(); }
 
   const start = await page.evaluate(() => [...document.querySelectorAll('button')]
