@@ -362,3 +362,42 @@ for(const [src,needle] of flagshipRequired)if(!src.includes(needle))
 for(const [src,needle] of flagshipForbidden)if(src.includes(needle))
   throw Error('Flagship Research guard found disproven formulation: '+needle);
 console.log('V13_FLAGSHIP_RESEARCH_RECHECK_20261111_PASS',flagshipRequired.length,flagshipForbidden.length);
+
+// Second flagship source precision sweep: the Tetragrammaton reading convention
+// and distinctions between proper names, divine epithets, poetry and typology.
+const secondReaderNov11=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const secondAtlasNov11=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const secondMust=[
+  [secondReaderNov11,'«Яхве» — распространённая научная реконструкция произношения'],
+  [secondReaderNov11,'масоретские огласовки тетраграмматона отражают традицию заместительного чтения'],
+  [secondReaderNov11,'Этот божественный титул звучит'],
+  [secondReaderNov11,'Этот титул говорит о Боге'],
+  [secondReaderNov11,'Этот божественный эпитет нельзя читать'],
+  [secondAtlasNov11,'В Быт. 15:2 Авраам обращается к Богу этим титулом'],
+  [secondAtlasNov11,'Эта поэтическая метафора выражает'],
+  [secondAtlasNov11,'Здесь слово Элоах относится'],
+  [secondAtlasNov11,'Это поэтическое исповедание соединяет'],
+  [secondAtlasNov11,'Титул Бога, Который стоит'],
+  [secondAtlasNov11,'В Иис. Нав. 3:10 сочетание'],
+  [secondAtlasNov11,'Это условное Божье самоописание, а не новый акт наречения собственного имени'],
+  [secondAtlasNov11,'В Исх. 31:13 Божье самоописание'],
+  [secondAtlasNov11,'Одно из наиболее личных поэтических исповеданий'],
+  [secondAtlasNov11,'Вывод о Его единственности и независимости от творения относится к богословию']
+];
+const secondMustNot=[
+  [secondReaderNov11,'Реконструкция огласовок «Яхве» общепринята'],
+  [secondReaderNov11,'иудеи читают тетраграмматон как Адона́й или Хаше́м'],
+  [secondAtlasNov11,'Впервые это имя произносит Авраам'],
+  [secondAtlasNov11,'Это имя выражает моральное и онтологическое постоянство'],
+  [secondAtlasNov11,'Здесь это имя подчёркивает исключительное право'],
+  [secondAtlasNov11,'Это имя соединяет величие Создателя галактик'],
+  [secondAtlasNov11,'Имя Бога, Который стоит над потоком времени'],
+  [secondAtlasNov11,'Впервые сочетание אֵל חַי'],
+  [secondAtlasNov11,'Здесь Бог впервые называет Себя יְהוָה רֹפְאֶךָ'],
+  [secondAtlasNov11,'Примечательно, что впервые это имя даётся'],
+  [secondAtlasNov11,'Самое нежное и интимное имя в Псалтири'],
+  [secondAtlasNov11,'в Библии оно очищено от всякой мифологии']
+];
+for(const [textValue,snippet] of secondMust)if(!textValue.includes(snippet))throw Error('Second source boundary absent: '+snippet);
+for(const [textValue,snippet] of secondMustNot)if(textValue.includes(snippet))throw Error('Second source boundary reverted: '+snippet);
+console.log('V13_FLAGSHIP_SECOND_PASS_QERE_NAMING_PASS', secondMust.length, secondMustNot.length);
