@@ -238,3 +238,36 @@ for(const [name,source,required] of [
  if(!source.includes(required))throw Error('Research content evidence guard missing '+name);
 }
 console.log('V13_RESEARCH_CONTENT_RECONCILIATION_PASS',JSON.stringify({negative:researchNegative.length,positive:9,source:'Research PR379 ledger ad62d11b; digital verse context; unapproved for Product'}));
+
+
+// Second research-pass controls: exact biblical chronology, semantic/lexical
+// separation and MT/LXX/Matthew edition scope. A site build is not a peer review.
+const readerSecondPass=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const atlasSecondPass=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+for(const [id,text,forbidden] of [
+ ['Hagar chronology',readerSecondPass,'Вернувшись, она говорит'],
+ ['El Gibbor and Sabaoth roots',readerSecondPass,'Это язык того же корня, что и «Господь воинств»'],
+ ['El Gibbor psalm lexical conflation',readerSecondPass,'«Господь сил» в молитвах псалмов — это обращение к Эль Гиббо́ру'],
+ ['El Gibbor identity without referent',readerSecondPass,'Исаия осмеливается приложить это слово к Самому Богу'],
+ ['Immanuel MT/LXX surface merged',readerSecondPass,'Пророк Исаия обещает дому Давидову знамение: «Се, Дева'],
+ ['Healer mistaken proper-name coinage',readerSecondPass,'Имя дано сразу после чуда'],
+ ['Leviticus 20 incorrect single-verse join',readerSecondPass,'(Лев 20:8; см. Исх 31:13)'],
+ ['Immanuel incarnation as lexical gloss',atlasSecondPass,'С нами Сильный Бог (Эль) в личном воплощении'],
+]){
+ if(text.includes(forbidden))throw Error('Second-pass Research factual regression: '+id);
+}
+for(const [id,text,required] of [
+ ['Hagar at the spring',readerSecondPass,'Именно там, прежде чем рассказ сообщает о рождении Измаила'],
+ ['Mighty God Isaiah 10 referent',readerSecondPass,'В Ис. 10:21 выражение относится к Богу'],
+ ['Gibbor and hosts different words',readerSecondPass,'«Гиббор» и «Саваоф» происходят от разных еврейских слов'],
+ ['Isaiah 9 Hebrew numbering',readerSecondPass,'Ис. 9:5 по еврейской нумерации'],
+ ['Isaiah 7 Hebrew form',readerSecondPass,'Еврейский текст употребляет הָעַלְמָה'],
+ ['Isaiah 7 Greek form',readerSecondPass,'ἡ παρθένος'],
+ ['Healing conditional predication',readerSecondPass,'условном обращении к Израилю'],
+ ['Leviticus 20 context range',readerSecondPass,'Лев. 20:7–8'],
+ ['Isaiah 1:4 prior biblical mention',readerSecondPass,'Эпитет встречается уже в Ис. 1:4'],
+ ['Immanuel literal meaning bounded',atlasSecondPass,'В Ис. 7:14 «Эммануил» — пророческое имя ребёнка'],
+]){
+ if(!text.includes(required))throw Error('Second-pass Research assertion missing: '+id);
+}
+console.log('V13_RESEARCH_SECOND_PASS_PASS',JSON.stringify({negative:8,positive:10,authority:'Research #379 draft, 11 Nov 2026, no independent approval'}));
