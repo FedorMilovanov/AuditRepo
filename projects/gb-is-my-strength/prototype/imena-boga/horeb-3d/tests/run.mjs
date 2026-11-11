@@ -113,24 +113,30 @@ t('two hero studies reuse canonical source choices and seven physical meshes',
     FIELD_STUDIES.some((t) => t.id === study.id && t.correctAnswer)));
 t('a hero study cannot pass without both sighted details',
   !heroStudyReady('abba', [groveWitness[0]]) &&
-  !canCompleteHeroStudy('abba', [groveWitness[0]], 'b') &&
+  !canCompleteHeroStudy('abba', [groveWitness[0]], true, true, 'b') &&
   !heroStudyReady('tsidkenu', [jeremiahWitness[0]]) &&
-  !canCompleteHeroStudy('tsidkenu', [jeremiahWitness[0]], 'c'));
+  !canCompleteHeroStudy('tsidkenu', [jeremiahWitness[0]], true, true, 'c'));
+t('hero source conclusions fail closed when either text side is unopened',
+  !canCompleteHeroStudy('abba', groveWitness, false, true, 'b') &&
+  !canCompleteHeroStudy('abba', groveWitness, true, false, 'b') &&
+  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, false, false, 'c') &&
+  markHeroStudy([], 'abba', groveWitness, true, false, 'b').length === 0 &&
+  markHeroStudy([], 'tsidkenu', jeremiahWitness, false, true, 'c').length === 0);
 t('Gethsemane and Jeremiah are two independently grounded interpretations',
   heroStudyReady('abba', groveWitness) && heroStudyReady('tsidkenu', jeremiahWitness) &&
-  canCompleteHeroStudy('abba', groveWitness, 'b') &&
-  !canCompleteHeroStudy('abba', groveWitness, 'c') &&
-  canCompleteHeroStudy('tsidkenu', jeremiahWitness, 'c') &&
-  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, 'a') &&
-  !canCompleteHeroStudy('abba', jeremiahWitness, 'b'));
+  canCompleteHeroStudy('abba', groveWitness, true, true, 'b') &&
+  !canCompleteHeroStudy('abba', groveWitness, true, true, 'c') &&
+  canCompleteHeroStudy('tsidkenu', jeremiahWitness, true, true, 'c') &&
+  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, true, true, 'a') &&
+  !canCompleteHeroStudy('abba', jeremiahWitness, true, true, 'b'));
 t('hero records require verified physical clues after reload and reject invented IDs',
-  JSON.stringify(markHeroStudy([], 'abba', groveWitness, 'b')) === '["abba"]' &&
-  JSON.stringify(markHeroStudy([], 'tsidkenu', jeremiahWitness, 'c')) === '["tsidkenu"]' &&
-  JSON.stringify(markHeroStudy([], 'fake', [...groveWitness, ...jeremiahWitness], 'b')) === '[]' &&
+  JSON.stringify(markHeroStudy([], 'abba', groveWitness, true, true, 'b')) === '["abba"]' &&
+  JSON.stringify(markHeroStudy([], 'tsidkenu', jeremiahWitness, true, true, 'c')) === '["tsidkenu"]' &&
+  JSON.stringify(markHeroStudy([], 'fake', [...groveWitness, ...jeremiahWitness], true, true, 'b')) === '[]' &&
   normalizeHeroStudyJournal(['abba', 'abba', 'fake'], groveWitness).join('|') === 'abba' &&
   normalizeHeroStudyJournal(['abba', 'tsidkenu'], groveWitness).join('|') === 'abba' &&
   normalizeHeroStudyJournal(['abba'], []).length === 0 &&
-  markHeroStudy(['abba'], 'tsidkenu', groveWitness, 'c').join('|') === 'abba');
+  markHeroStudy(['abba'], 'tsidkenu', groveWitness, true, true, 'c').join('|') === 'abba');
 // Four different source-analysis interactions (16 authored investigations).
 const kindCounts = Object.fromEntries(['voices','named-object','parallel-witness','written-form']
   .map((kind) => [kind, FIELD_STUDIES.filter((task) => task.kind === kind).length]));
