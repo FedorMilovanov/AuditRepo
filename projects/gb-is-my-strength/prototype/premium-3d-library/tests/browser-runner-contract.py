@@ -43,6 +43,16 @@ def cases_for(name: str) -> list[dict]:
          "result": "PASS", "errors": []}
         for i in range(expected[name])
     ]
+    if name == "architectural-art-browser.py":
+        for index, item in enumerate(records):
+            item["engine"] = ("chromium", "webkit")[index // 2]
+            item["viewport"] = ("1440x900", "390x844")[index % 2]
+            item["status"] = "PASS"
+            item["result"] = {"hasWebGL2": True, "pbr": [True, True, True],
+                              "referenceFurniture": [{"name": "ArmChair_01_512-fixture.glb",
+                                                      "bytes": 328452}]}
+        records.append({"fixture": "cc0-armchair-404", "result": "PASS",
+                        "blocked": 1, "pageErrors": []})
     if name == "reduced-motion-browser.py":
         for index, item in enumerate(records):
             pref = ("reduce", "no-preference")[index % 2]
@@ -112,7 +122,7 @@ for name, count in expected.items():
     module.verify_case_records(name, jsonlines(valid), count)
     broken = valid[:-1]
     # Drop one *case*, not the interaction summary.
-    if name == "interaction-regression-browser.py":
+    if name in ("interaction-regression-browser.py", "architectural-art-browser.py"):
         broken = valid[:-2] + valid[-1:]
     try:
         module.verify_case_records(name, jsonlines(broken), count)
@@ -122,7 +132,10 @@ for name, count in expected.items():
         raise AssertionError(f"{name}: accepted missing browser case")
 
     invalid = [dict(item) for item in valid]
-    invalid[0]["result"] = "SKIP"
+    if name == "architectural-art-browser.py":
+        invalid[0]["status"] = "SKIP"
+    else:
+        invalid[0]["result"] = "SKIP"
     try:
         module.verify_case_records(name, jsonlines(invalid), count)
     except AssertionError:
@@ -211,13 +224,7 @@ else:
 # Architectural art intentionally carries technical measurements in "result"
 # and the test verdict in "status"; a truthy result dict is not a PASS.
 architecture = cases_for("architectural-art-browser.py")
-architecture[0] = {
-    "engine": "chromium",
-    "viewport": "1440x900",
-    "status": "PASS",
-    "result": {"hasWebGL2": True, "pbr": [True, True, True]},
-    "errors": [],
-}
+architecture[0]["result"].update({"hasWebGL2": True, "pbr": [True, True, True]})
 module.verify_case_records("architectural-art-browser.py", jsonlines(architecture), 4)
 architecture[0]["status"] = "FAIL"
 try:
@@ -226,6 +233,37 @@ except AssertionError:
     pass
 else:
     raise AssertionError("Truthy architecture metrics were mistaken for a PASS")
+
+# A missing or unexercised optional-furniture failure must never be accepted
+# merely because four ordinary art screenshots passed.
+missing_optional = cases_for("architectural-art-browser.py")[:-1]
+try:
+    module.verify_case_records("architectural-art-browser.py",
+                               jsonlines(missing_optional), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Art accepted missing 404 fallback witness")
+
+unsafe_fallback = cases_for("architectural-art-browser.py")
+unsafe_fallback[-1]["pageErrors"] = ["unhandled loader failure"]
+try:
+    module.verify_case_records("architectural-art-browser.py",
+                               jsonlines(unsafe_fallback), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Art accepted a broken optional-GLB fallback")
+
+missing_furniture = cases_for("architectural-art-browser.py")
+missing_furniture[0]["result"]["referenceFurniture"] = []
+try:
+    module.verify_case_records("architectural-art-browser.py",
+                               jsonlines(missing_furniture), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Art accepted a model that was never fetched")
 
 # Quality must witness *both* directions per configuration.
 invalid = cases_for("quality-transition-browser.py")
