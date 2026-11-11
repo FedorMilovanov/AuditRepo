@@ -454,14 +454,14 @@ export default function HorebApp() {
 
       {/* Подсказка взаимодействия — кликабельна */}
       {ws?.prompt && !dialog && ws.shoes !== 'removing' && !(ws.prompt.kind === 'shoes' && gateOuter) && (
-        <button className="prompt absolute left-1/2 -translate-x-1/2 bottom-8 sm:bottom-10" onClick={interact}>
+        <button data-testid="interaction-prompt" className={`prompt absolute left-1/2 -translate-x-1/2 ${isTouch ? 'bottom-44' : 'bottom-8 sm:bottom-10'}`} onClick={interact}>
           <span className="kbd">E</span>
           {ws.prompt.kind === 'shoes' ? 'Снять обувь' : <>Контекст и источники: <b className="font-normal text-parch">{promptEx?.displayLabelRu}</b> · {promptEx?.verseReference}</>}
         </button>
       )}
 
       {ws?.focusClue && !dialog && ws.shoes !== 'removing' && (
-        <button className="absolute right-4 bottom-32 sm:right-8 sm:bottom-32 z-20 max-w-[min(70vw,19rem)] rounded-sm border border-bronze/55 bg-black/85 px-3 py-3 text-sm text-left text-parch shadow-lg"
+        <button data-testid="focus-story-clue" className={`absolute right-4 ${isTouch ? 'bottom-64' : 'bottom-32'} sm:right-8 z-20 max-w-[min(70vw,19rem)] rounded-sm border border-bronze/55 bg-black/85 px-3 py-3 text-sm text-left text-parch shadow-lg`}
           onClick={inspectSiteClue} aria-label={'Изучить в 3D: ' + SITE_CLUES[ws.focusClue].label}>
           <span className="kbd mr-2">F</span>
           {siteClues.includes(ws.focusClue) ? 'Осмотреть ещё: ' : 'Исследовать: '}
@@ -470,7 +470,7 @@ export default function HorebApp() {
       )}
       {isTouch && ws && !dialog && <>
         <Joystick onMove={(x, y) => worldRef.current?.setMoveInput(x, y)} />
-        <button className="fixed right-6 bottom-8 z-20 w-20 h-20 rounded-full bg-amber-900/50 border border-parch/40 text-sm" onClick={interact} disabled={!ws.prompt}>Действие</button>
+        <button data-testid="touch-action" className="fixed right-6 bottom-8 z-20 w-20 h-20 rounded-full bg-amber-900/50 border border-parch/40 text-sm" onClick={interact} disabled={!ws.prompt}>Действие</button>
       </>}
 
       {ws?.contextLost && (
