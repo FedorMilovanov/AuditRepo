@@ -957,10 +957,22 @@ try {
     .find((b) => (b.textContent || '').startsWith('Путевой дневник ('))?.click());
   await investigator.waitForSelector('[data-hero-studies]', { timeout: 12000 });
   await investigator.evaluate(() => { document.querySelector('[data-hero-studies]').open = true; });
-  check('both 3D-gated context studies unlock only with real observations',
+  check('both physically witnessed hero studies require opening the textual perspectives',
     await investigator.evaluate(() =>
       [...document.querySelectorAll('[data-hero-study] fieldset')].length === 2 &&
-      [...document.querySelectorAll('[data-hero-study] fieldset')].every((f) => !f.disabled)));
+      [...document.querySelectorAll('[data-hero-study] fieldset')].every((f) => f.disabled)));
+  for (const studyId of ['abba', 'tsidkenu']) {
+    await investigator.$('[data-hero-study="' + studyId + '"] [data-hero-lens="a"]').then((el) => el.click());
+    check('first textual witness alone cannot submit ' + studyId,
+      await investigator.evaluate((id) =>
+        document.querySelector('[data-hero-study="' + id + '"] fieldset')?.disabled &&
+        document.querySelector('[data-hero-submit="' + id + '"]')?.disabled, studyId));
+    await investigator.$('[data-hero-study="' + studyId + '"] [data-hero-lens="b"]').then((el) => el.click());
+    check('both textual witnesses unlock supported choice ' + studyId,
+      await investigator.evaluate((id) =>
+        !document.querySelector('[data-hero-study="' + id + '"] fieldset')?.disabled,
+        studyId));
+  }
   await investigator.$('[name="hero-choice-abba"][value="a"]').then((el) => el.click());
   await investigator.$('[data-hero-submit="abba"]').then((el) => el.click());
   check('false Gethsemane speaker claim never advances hero journal',
@@ -985,6 +997,7 @@ try {
   await investigator.waitForFunction(() =>
     JSON.parse(localStorage.getItem('imena-horeb.hero-context.v1') || '[]').length === 2,
     { timeout: 6500 });
+  await investigator.screenshot({ path: join(shots, 'smoke-hero-spatial-studies.png') });
   await investigator.reload({ waitUntil: 'domcontentloaded' });
   check('two physically witnessed context conclusions survive normal reload',
     await investigator.evaluate(() =>
