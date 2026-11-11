@@ -338,6 +338,20 @@ if (wellToAudit) {
 const gardenRecord = EXHIBITS.find((e) => e.environmentKey === 'gethsemane-garden');
 if (gardenRecord) {
   const garden = buildExhibitProps(gardenRecord, false, 0, 0);
+  const trunkHeights: number[] = [];
+  garden.traverse((obj) => {
+    if (obj.name === 'olive-main-trunk' && obj instanceof THREE.Mesh &&
+        obj.geometry instanceof THREE.CylinderGeometry)
+      trunkHeights.push(obj.geometry.parameters.height);
+  });
+  t('Gethsemane four trees have deliberately different age-scale silhouettes',
+    trunkHeights.length === 4 && new Set(trunkHeights.map((h) => h.toFixed(2))).size === 4 &&
+    Math.max(...trunkHeights) - Math.min(...trunkHeights) >= 0.25);
+  const prayerStone = garden.getObjectByName('gethsemane-prayer-stone');
+  t('Gethsemane prayer viewpoint is a natural low irregular stone, not an altar box',
+    prayerStone instanceof THREE.Mesh &&
+    prayerStone.geometry instanceof THREE.DodecahedronGeometry &&
+    prayerStone.scale.y < 0.35 && prayerStone.position.y < 0.2);
   let oliveLobes = 0;
   garden.traverse((o) => { if (o.name === 'olive-crown-lobe') oliveLobes++; });
   t('Gethsemane grove uses irregular multi-lobed olive crowns, not four spheres', oliveLobes >= 28);
