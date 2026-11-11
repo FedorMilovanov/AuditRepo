@@ -90,7 +90,12 @@ jobs:
         run: |
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie
-          # Chromium is already verified in the version-matched Playwright image.
+          # The standalone Constellation QA is deliberately pinned to
+          # playwright-core 1.49.1, while shared contracts use 1.62.1.
+          # Install ONLY that older Chromium binary; the Noble container
+          # already supplies all OS packages. Keep the original QA version.
+          node -p "require('playwright-core/package.json').version"
+          npx playwright-core install chromium
           test -x "$(node -p "require('playwright-core').chromium.executablePath()")"
           npm run qa
 
