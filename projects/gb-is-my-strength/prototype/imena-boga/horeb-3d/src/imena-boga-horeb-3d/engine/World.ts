@@ -680,7 +680,7 @@ export class World {
     }
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);
     this.bush.group.visible = this.pos.y < -286;
-    this.audio.update(this.t, zone, db, Math.hypot(this.pos.x - 9.5, this.pos.y + 104));
+    this.audio.update(this.t, zone, this.pos.y, db, Math.hypot(this.pos.x - 9.5, this.pos.y + 104));
 
     this.renderer.render(this.scene, this.camera);
 
