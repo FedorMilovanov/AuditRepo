@@ -23,7 +23,6 @@ function Card({ item, index }: { item: Item; index: number }) {
   }, [tex]);
   const frame = useRef<THREE.Group>(null!);
   const hit = useRef<THREE.Mesh>(null!);
-  const glow = useRef<THREE.MeshBasicMaterial>(null!);
   const aim = useRef(0);
 
   useEffect(() => {
@@ -39,7 +38,6 @@ function Card({ item, index }: { item: Item; index: number }) {
     aim.current += ((get().aimed === item.id ? 1 : 0) - aim.current) * (reduced ? 1 : Math.min(1, dt * 8));
     frame.current.position.y = 2.55 + (reduced ? 0 : Math.sin(t * 0.8 + index * 2) * 0.05);
     frame.current.scale.setScalar(1 + aim.current * 0.07);
-    glow.current.opacity = 0.18 + aim.current * 0.6 + (reduced ? 0 : Math.sin(t * 1.4 + index) * 0.04);
   });
 
   return (
@@ -77,11 +75,9 @@ function Card({ item, index }: { item: Item; index: number }) {
           <planeGeometry args={[W, H]} />
           <meshBasicMaterial map={tex} toneMapped={false} color="#d4d4d4" />
         </mesh>
-        {/* свечение рамки при наведении */}
-        <mesh position={[0, 0, -0.07]} renderOrder={9}>
-          <planeGeometry args={[W + 0.7, H + 0.7]} />
-          <meshBasicMaterial ref={glow} color={item.color} transparent opacity={0.2} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
-        </mesh>
+        {/* The real gilt frame and hover scale supply the interactive state.
+            No oversized additive transparent rectangle may wash over the
+            shelves/columns behind the framed art. */}
         <mesh
           ref={hit}
           position={[0, 0, 0.1]}
