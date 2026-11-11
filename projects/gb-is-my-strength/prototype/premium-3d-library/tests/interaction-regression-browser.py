@@ -203,13 +203,14 @@ async def run_case(browser,engine,w,h,touch):
               const visible=el=>!!el && getComputedStyle(el).display!=='none';
               return {
                 joystick:joystick && rect(joystick), visibleJoystick:visible(joystick),
-                minimapHidden:!visible(minimap), mapAccessible:visible(nav),
+                minimapHidden:!visible(minimap), minimapDetached:!minimap,
+                mapAccessible:visible(nav),
                 help:visible(help) ? rect(help) : null,
                 compact:visible(help) && visible(help.querySelector('[data-gb-help-compact]')),
                 fullHidden:!visible(help) || !visible(help.querySelector('[data-gb-help-full]')),
               };
             }""")
-            assert hud["visibleJoystick"] and hud["minimapHidden"] and hud["mapAccessible"], hud
+            assert hud["visibleJoystick"] and hud["minimapHidden"] and hud["minimapDetached"] and hud["mapAccessible"], hud
             if hud["help"]:
                 assert hud["compact"] and hud["fullHidden"], hud
                 assert hud["help"]["top"] > h * .75, hud
@@ -233,16 +234,26 @@ async def run_case(browser,engine,w,h,touch):
                 joystick:shown('[data-gb-joystick]'),
                 map:shown('[data-gb-toolbar] button[title="Карта сайта"]'),
                 minimap:shown('[data-gb-minimap]'),
+                minimapDetached:!document.querySelector('[data-gb-minimap]'),
                 overflow:document.documentElement.scrollWidth>innerWidth+2,
               };
             }""")
             assert not narrow["help"] and narrow["joystick"] and narrow["map"], narrow
-            assert not narrow["minimap"] and not narrow["overflow"], narrow
+            assert not narrow["minimap"] and narrow["minimapDetached"] and not narrow["overflow"], narrow
             await capture_evidence(page, OUT/f"{engine}-480x320-narrow-hall.png")
             await page.set_viewport_size({"width":w,"height":h})
             await page.wait_for_function(
                 "([width,height]) => innerWidth === width && innerHeight === height",
                 arg=[w,h])
+
+        if touch and size == "844x390":
+            # Responsive lifecycle: a large portrait tablet may show the map,
+            # but returning to short landscape MUST unmount its canvas and
+            # stop the requestAnimationFrame loop, not merely CSS-hide it.
+            await page.set_viewport_size({"width":768,"height":1024})
+            await page.locator('[data-gb-minimap]').wait_for(state="visible", timeout=12000)
+            await page.set_viewport_size({"width":w,"height":h})
+            await page.locator('[data-gb-minimap]').wait_for(state="detached", timeout=12000)
 
         # Reopen via the public game keyboard shortcut (desktop), or real
         # toolbar tap (mobile), then ensure modal isolation and restoration.

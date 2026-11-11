@@ -243,5 +243,17 @@ assert.ok(hudCss.includes('[data-gb-help] { left: 0; right: 0; margin-inline: au
   'Default help centering must use intrinsic margins');
 assert.ok(hudCss.includes('margin-inline: 0;'),
   'Portrait chip must reset margins to remain right of 128px joystick');
+const minimapSource=hudSource.slice(hudSource.indexOf('function Minimap()'),hudSource.indexOf('function Joystick()'));
+assert.ok(minimapSource.includes('&& screenAllowsMap;'),
+  'Minimap display condition must unmount hidden Canvas');
+for (const clause of [
+  'const [screenAllowsMap, setScreenAllowsMap] = useState(',
+  'window.matchMedia("(min-width: 640px)")',
+  'window.matchMedia("(pointer: coarse) and (orientation: landscape) and (max-height: 430px)")',
+  'wide.addEventListener("change", sync);',
+  'shortTouch.addEventListener("change", sync);',
+  'wide.removeEventListener("change", sync);',
+  'shortTouch.removeEventListener("change", sync);',
+]) assert.ok(minimapSource.includes(clause), 'Minimap responsive lifecycle missing '+clause);
 
 console.log(`PASS: ${count} TS/TSX source files parsed, local imports resolved, renderer/VR/3 covers verified.`);

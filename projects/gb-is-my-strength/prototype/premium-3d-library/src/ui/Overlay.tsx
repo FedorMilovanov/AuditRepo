@@ -261,12 +261,32 @@ function Minimap() {
   const sitemap = useApp((s) => s.sitemap);
   const opened = useApp((s) => s.opened);
   const cv = useRef<HTMLCanvasElement>(null);
-  // TourCard occupies the bottom-center reading zone, including the
-  // tablet's minimap position. Hide navigation chrome while the guided
-  // reading panel (or another modal) has user focus, without running
-  // an unobserved minimap rAF loop behind it.
+  // CSS-hidden canvases still execute requestAnimationFrame. Do not mount
+  // the 150px minimap (or its animation loop) when the screen cannot show it.
+  // The same media conditions govern the Tailwind sm: breakpoint and the
+  // low-height coarse-landscape HUD layout; live query listeners handle
+  // device rotation and viewport resizing without a page reload.
+  const [screenAllowsMap, setScreenAllowsMap] = useState(() =>
+    typeof window !== "undefined"
+      && window.matchMedia("(min-width: 640px)").matches
+      && !window.matchMedia("(pointer: coarse) and (orientation: landscape) and (max-height: 430px)").matches
+  );
+  useEffect(() => {
+    const wide = window.matchMedia("(min-width: 640px)");
+    const shortTouch = window.matchMedia("(pointer: coarse) and (orientation: landscape) and (max-height: 430px)");
+    const sync = () => setScreenAllowsMap(wide.matches && !shortTouch.matches);
+    wide.addEventListener("change", sync);
+    shortTouch.addEventListener("change", sync);
+    sync();
+    return () => {
+      wide.removeEventListener("change", sync);
+      shortTouch.removeEventListener("change", sync);
+    };
+  }, []);
+  // TourCard occupies the bottom-center reading zone; other reader panels
+  // must also unmount the minimap rather than running a hidden frame loop.
   const show = phase === "play" && !xr && mode === "desktop"
-    && tour === null && !sitemap && !opened;
+    && tour === null && !sitemap && !opened && screenAllowsMap;
   useEffect(() => {
     if (!show) return;
     const c = cv.current!;
@@ -515,7 +535,7 @@ function HelpHint() {
   const aimed = useApp((s) => s.aimed);
   if (phase !== "play" || xr || !on || tour !== null || aimed) return null;
   return (
-    <div data-gb-help data-gb-hint-mode={mode} className={`pointer-events-none fixed z-10 w-full max-w-md -translate-x-1/2 px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
+    <div data-gb-help data-gb-hint-mode={mode} className={`pointer-events-none fixed z-10 w-full max-w-md px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
       <div className="glass fade-up rounded-full px-5 py-2 text-xs text-[#e0dcd1]">
         <span data-gb-help-full>
           {mode === "cardboard"
