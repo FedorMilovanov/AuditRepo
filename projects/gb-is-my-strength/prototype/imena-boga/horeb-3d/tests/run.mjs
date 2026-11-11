@@ -165,13 +165,21 @@ t('linked expedition refuses wrong chronology and false context conflation',
   !canCompleteExpedition(SITE_CLUE_IDS, 'b', 'a') &&
   !canCompleteExpedition(SITE_CLUE_IDS, null, 'c') &&
   !completeExpedition(false, SITE_CLUE_IDS, 'b', 'a'));
-t('linked expedition persists only after all three clues and both answers',
+t('linked expedition persists only with all three canonical clues and both answers',
   expeditionReady(SITE_CLUE_IDS) &&
   canCompleteExpedition(SITE_CLUE_IDS, 'b', 'c') &&
   completeExpedition(false, SITE_CLUE_IDS, 'b', 'c') &&
-  completeExpedition(true, [], 'a', 'a') &&
-  normalizeExpeditionCompletion(true) && !normalizeExpeditionCompletion('true') &&
-  !normalizeExpeditionCompletion({ completed: true }));
+  completeExpedition(true, SITE_CLUE_IDS, 'a', 'a') &&
+  normalizeExpeditionCompletion(true, SITE_CLUE_IDS) &&
+  !normalizeExpeditionCompletion('true', SITE_CLUE_IDS) &&
+  !normalizeExpeditionCompletion({ completed: true }, SITE_CLUE_IDS));
+t('linked expedition rejects forged completion without supporting observations',
+  !normalizeExpeditionCompletion(true, []) &&
+  !normalizeExpeditionCompletion(true, ['hagar-spring']) &&
+  !normalizeExpeditionCompletion(true, ['hagar-spring', 'beersheba-well']) &&
+  !normalizeExpeditionCompletion(true, ['fake', 'hagar-spring', 'beersheba-well']) &&
+  !completeExpedition(true, [], 'a', 'a') &&
+  !completeExpedition(true, ['beersheba-well', 'hagar-spring'], 'a', 'a'));
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }
