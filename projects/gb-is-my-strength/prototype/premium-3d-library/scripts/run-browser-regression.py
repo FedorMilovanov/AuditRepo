@@ -77,6 +77,21 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
         assert actual == "PASS", f"{name}: non-PASS case {case}"
         assert not case.get("errors"), f"{name}: browser errors {case['errors']}"
 
+    if name == "architectural-art-browser.py":
+        # Real HTTP 404 for the optional GLB must be exercised in Chromium,
+        # with a working map/route and zero uncaught page errors.
+        negatives = [r for r in records if r.get("fixture") == "cc0-armchair-404"]
+        assert len(negatives) == 1 and negatives[0].get("result") == "PASS" and (
+            negatives[0].get("blocked") == 1
+        ) and negatives[0].get("pageErrors") == [], (
+            f"{name}: optional-furniture negative witness missing/failing: {negatives}"
+        )
+        for case in cases:
+            art = case.get("result")
+            furniture = art.get("referenceFurniture") if isinstance(art, dict) else None
+            assert isinstance(furniture, list) and len(furniture) == 1 and (
+                0 <= furniture[0].get("bytes", -1) < 400_000
+            ), f"{name}: missing source-owned furniture GLB in {case}"
     if name == "interaction-regression-browser.py":
         summaries = [r for r in records if r.get("passed") is not None]
         assert len(summaries) == 1 and summaries[0]["passed"] == expected, (

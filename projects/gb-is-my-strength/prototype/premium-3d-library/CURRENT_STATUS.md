@@ -1,5 +1,19 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.56 — one source-verified chair reference; LAB candidate, ART HOLD
+
+**Preceding exact-head functional gate is terminal green:** commit `39e1d5711667136f78defb806422a409f202bd50`: [Workflow Preflight SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793273), [Linux Validate SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793225), **13/13 real-browser suites and 65/65 cases PASS on Linux**, independently **65/65 PASS on Windows**. The corrected desktop-keyboard E / mobile-touch Open witness does not bypass input handlers. **Do not project these results to this V5.56 asset commit; exact-new-head CI must run again.**
+
+**One bounded art candidate:** a real textured vintage armchair near the Article station, replacing only one schematic bench, positioned farther from the approach camera and to the side after the first placement occluded the lower viewport. Screenshots from Chrome and Playwright WebKit 1440×900 plus Chrome touch-emulated 390×844 confirm no headline/button occlusion and no JS/HTTP errors. This is a local candidate, **not owner aesthetic approval, not physical-device proof**.
+
+**Asset and reproducibility:** [Poly Haven Arm Chair 01](https://polyhaven.com/a/ArmChair_01), by Kirill Sannikov, **CC0**. Official asset manifest: `https://api.polyhaven.com/files/ArmChair_01`; five source files and their MD5s independently verified against that API. Source glTF `ArmChair_01_1k.gltf` MD5 `39d1e4b0ffdde688c98335c9621e3aae`, binary buffer `fbd842795fdec75d94f1335c28acfc0e`, diffuse JPEG `9166f2c24f2114a5fa5513950ed9b9ae`, OpenGL normal JPEG `8541821edd6dcb319b7f9841d849fbbe`, ARM packed JPEG `2ea528244dd6fc0deb2af1a555c0a312`. `glTF-Transform v4.5.1 copy` assembled the 1K multi-file glTF, `resize --width 512 --height 512` created `src/assets/ArmChair_01_512.glb`: **328,452 bytes**, SHA-256 `3cf5a722a4fa50bcb1c278629030d99159920a38f82328c0c9daea7ff268cd5f`. Original 5,626 triangles / one mesh / one material; the three 512px texture maps still require real runtime VRAM validation. No source ZIP, duplicate meshes, or unlicensed assets committed.
+
+**Performance caveat:** old green Linux SwiftShader measured a first graphics quality transition up to 17.76s / 5.05s rAF gap. Windows Playwright WebKit at 1440×900 gave ~27–29 rAF/s versus actual RTX3060 Chromium ~60; temporary scene-hiding experiments showed ~276 draw calls and little FPS improvement when large groups were hidden. These are short software/browser benchmarks, **not GPU timings** or proof an individual texture/model is the bottleneck. Avoid subtracting architecture or procedural content without matched GPU and real-hardware A/B.
+
+**HARD OPEN:** exact-new-head Linux 65/65 and asset fallback/context-loss proofs; full reference-matched architecture and owner visual acceptance; physical Android/iOS Safari, XR, accessibility, long-session GPU frame-time/VRAM/thermal; Product-owned catalog/Reader/rights integration. Remain **DRAFT / LAB / ART HOLD**. No merge, deploy, Product writes, new branch or speculative content registry.
+
+---
+
 ## V5.36 — physical reading furniture (current LAB candidate)
 
 [**V536_READING_FURNITURE_ENGINEERING.md**](V536_READING_FURNITURE_ENGINEERING.md) records real same-camera before/after Chromium/WebKit evidence, a corrected visitor-facing lectern page, and numerical book/table/support clearances using actual Three.js transforms and negative fixtures. The 4 new browser cases passed locally; the mandatory test count is now **12 suites / 61 browser cases**. New exact-head GitHub Preflight + Validate must independently finish green. Old V5.35 **11/11 suites, 57/57 PASS** is validated but does not certify V5.36. Keep Draft / LAB / ART HOLD; no Product/main/merge/deploy.

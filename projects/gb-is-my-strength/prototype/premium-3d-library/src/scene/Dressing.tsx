@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { ITEMS, byId, itemPos } from "../data";
@@ -93,27 +94,58 @@ function Lectern() {
   );
 }
 
+/** Optional CC0 art loads without suspending or failing the visitor's hall. */
+function ReferenceArmchair() {
+  const [model, setModel] = useState<THREE.Group | null>(null);
+  useEffect(() => {
+    let active = true;
+    const url = new URL("../assets/ArmChair_01_512.glb", import.meta.url).href;
+    new GLTFLoader().load(url, ({ scene }) => {
+      if (!active) return;
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.castShadow = true;
+          object.receiveShadow = true;
+        }
+      });
+      setModel(scene);
+    }, undefined, () => {
+      // A decorative asset is optional. Keep the real original bench, and
+      // leave navigation/2D cabinet and the rest of the 3D scene functional.
+      console.warn("[Library 3D] Optional CC0 armchair unavailable; retaining bench.");
+    });
+    return () => { active = false; };
+  }, []);
+  return model ? <primitive object={model} /> : <BenchGeometry />;
+}
+
+function BenchGeometry() {
+  return <>
+    <mesh position={[0, 0.4, 0]} material={wood}>
+      <boxGeometry args={[1.35, 0.08, 0.42]} />
+    </mesh>
+    {[-0.52, 0.52].map((sx) => (
+      <mesh key={sx} position={[sx, 0.2, 0]} material={wood}>
+        <boxGeometry args={[0.08, 0.4, 0.34]} />
+      </mesh>
+    ))}
+  </>;
+}
+
 function Benches() {
-  return (
-    <group>
-      {ITEMS.filter((i) => i.kind === "section").map((it) => {
-        const a = (it.angle * Math.PI) / 180;
-        const r = 6.15;
-        return (
-          <group key={it.id} position={[Math.sin(a) * r, 0, Math.cos(a) * r]} rotation={[0, a, 0]}>
-            <mesh position={[0, 0.4, 0]} material={wood}>
-              <boxGeometry args={[1.35, 0.08, 0.42]} />
-            </mesh>
-            {[-0.52, 0.52].map((sx) => (
-              <mesh key={sx} position={[sx, 0.2, 0]} material={wood}>
-                <boxGeometry args={[0.08, 0.4, 0.34]} />
-              </mesh>
-            ))}
-          </group>
-        );
-      })}
-    </group>
-  );
+  return <group>
+    {ITEMS.filter((i) => i.kind === "section").map((it) => {
+      const a = (it.angle * Math.PI) / 180;
+      const r = it.id === "articles" ? 9.4 : 6.15;
+      return <group key={it.id} position={[Math.sin(a) * r, 0, Math.cos(a) * r]} rotation={[0, a, 0]}>
+        {it.id === "articles"
+          ? <group position={[2.2, 0, 0.7]} rotation-y={-0.4}>
+              <ReferenceArmchair />
+            </group>
+          : <BenchGeometry />}
+      </group>;
+    })}
+  </group>;
 }
 
 function DestMark() {

@@ -361,6 +361,20 @@ assert.ok(caseworkBytes>200000 && caseworkBytes<600000,
  'PBR oak budget exceeded '+caseworkBytes);
 console.log('PASS: CC0 oak PBR 6/6 SHA256, shared wood context, UV grain directions.');
 
+// The single authored CC0 furniture reference is byte-pinned: an optional art
+// asset must not silently become an unlicensed or oversized mesh.
+const chairBytes = fs.readFileSync(path.join(src, 'assets/ArmChair_01_512.glb'));
+assert.equal(chairBytes.subarray(0, 4).toString('ascii'), 'glTF', 'Furniture file is not GLB');
+assert.equal(chairBytes.readUInt32LE(4), 2, 'Furniture glTF version is not 2');
+assert.equal(chairBytes.length, 328452, 'Furniture size budget/identity changed');
+assert.equal(floorCrypto.createHash('sha256').update(chairBytes).digest('hex'),
+  '3cf5a722a4fa50bcb1c278629030d99159920a38f82328c0c9daea7ff268cd5f',
+  'CC0 armchair GLB sha256 mismatch');
+const furnitureSource = get('scene/Dressing.tsx');
+assert.ok(furnitureSource.includes('ArmChair_01_512.glb'), 'CC0 reference not connected to scene');
+assert.ok(furnitureSource.includes('it.id === "articles"'), 'Chair placement station changed');
+console.log('PASS: source-verified CC0 armchair GLB 328452 bytes, SHA256, single station.');
+
 // The short-landscape hint is optional. Never hide Cardboard's mandatory
 // headset instructions, and never leave a collapsed desktop hint in 480px.
 // On phone portrait it belongs to the right of the movement joystick.
