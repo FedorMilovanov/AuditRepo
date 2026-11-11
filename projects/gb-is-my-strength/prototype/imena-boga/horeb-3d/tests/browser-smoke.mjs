@@ -618,6 +618,50 @@ try {
         setup.obscured !== clueId, JSON.stringify(setup));
     check('camera can investigate actual prop ' + clueId,
       setup.focus === clueId, JSON.stringify(setup));
+    if (clueId === 'beersheba-well') {
+      const cacheProof = await investigator.evaluate(() => {
+        const w = window.__horeb.world;
+        const target = w.storyTargets.find((item) => item.id === 'beersheba-well');
+        w.teleportTo(target.x - 4.5, target.z);
+        const p = w.position;
+        w.yaw = Math.atan2(-(target.x - p.x), -(target.z - p.z));
+        w.pitch = 0;
+        w.emit(true);
+        const original = w.sightRaycaster.intersectObjects.bind(w.sightRaycaster);
+        let calls = 0;
+        w.sightRaycaster.intersectObjects = (...args) => { calls++; return original(...args); };
+        try {
+          for (let i = 0; i < 8; i++) w.emit(false);
+          const passiveCalls = calls;
+          const observed = w.observeFocusedStoryClue();
+          const exactActionRecast = calls > passiveCalls;
+          const beforeMove = calls;
+          w.yaw += 0.07;
+          w.emit(false);
+          const viewChangeRecast = calls > beforeMove;
+          const beforeForce = calls;
+          w.emit(true);
+          return { passiveCalls, observed, exactActionRecast,
+            viewChangeRecast, forceRecast: calls > beforeForce };
+        } finally { w.sightRaycaster.intersectObjects = original; }
+      });
+      check('stationary HUD reuses visibility without repeated raycasts',
+        cacheProof.passiveCalls === 0, JSON.stringify(cacheProof));
+      check('actual F/touch action always casts a new real mesh ray',
+        cacheProof.observed === clueId && cacheProof.exactActionRecast,
+        JSON.stringify(cacheProof));
+      check('significant camera turn and forced refresh invalidate gaze cache',
+        cacheProof.viewChangeRecast && cacheProof.forceRecast,
+        JSON.stringify(cacheProof));
+      // Restore exact camera before the regular ceiling-look and F checks.
+      await investigator.evaluate(() => {
+        const w = window.__horeb.world;
+        const target = w.storyTargets.find((item) => item.id === 'beersheba-well');
+        const p = w.position;
+        w.yaw = Math.atan2(-(target.x - p.x), -(target.z - p.z));
+        w.pitch = 0;
+      });
+    }
     const ceilingLookBlocked = await investigator.evaluate((id) => {
       const world = window.__horeb.world;
       world.pitch = 1.0;

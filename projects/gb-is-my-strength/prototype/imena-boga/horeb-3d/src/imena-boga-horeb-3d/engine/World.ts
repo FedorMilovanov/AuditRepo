@@ -59,6 +59,13 @@ export class World {
   private sightRaycaster = new THREE.Raycaster();
   private sightOrigin = new THREE.Vector3();
   private sightAim = new THREE.Vector3();
+  // Passive HUD snapshots share their last visibility result for short,
+  // nearly-static camera intervals. All actual F/touch observations still
+  // invoke focusStoryClue() directly, always with a fresh raycast.
+  private hudFocusCache: {
+    at: number; x: number; z: number; yaw: number; pitch: number;
+    shoes: Shoes; found: SiteClueId | null;
+  } | null = null;
   private nameBeacons: { id: string; x: number; z: number; update: (distance: number, inspected?: boolean, viewFactor?: number) => void }[] = [];
   // Scene objects remain in the 42-item registry/physics, but a visitor does
   // not need GPU draws for exhibits a hundred metres behind the fog.
@@ -500,8 +507,30 @@ export class World {
     return found;
   }
   observeFocusedStoryClue(): SiteClueId | null {
+    // Security / physics boundary: never use the cached HUD suggestion
+    // to approve a source observation.
     const id = this.focusStoryClue();
     return id && SITE_CLUES[id] ? id : null;
+  }
+
+  private focusForHud(force: boolean): SiteClueId | null {
+    if (this.disposed || this.contextLost || this.inputLocked || this.shoes === 'removing') {
+      this.hudFocusCache = null;
+      return null;
+    }
+    const cache = this.hudFocusCache;
+    const pitch = this.pitch + this.pitchOffset;
+    if (!force && cache && this.t >= cache.at && this.t - cache.at < 0.30 &&
+        cache.shoes === this.shoes &&
+        Math.hypot(this.pos.x - cache.x, this.pos.y - cache.z) < 0.14 &&
+        Math.abs(Math.sin((this.yaw - cache.yaw) / 2)) < 0.025 &&
+        Math.abs(pitch - cache.pitch) < 0.05) return cache.found;
+    const found = this.focusStoryClue();
+    this.hudFocusCache = {
+      at: this.t, x: this.pos.x, z: this.pos.y,
+      yaw: this.yaw, pitch, shoes: this.shoes, found,
+    };
+    return found;
   }
   canInspectExhibit(id: string): boolean {
     const item = this.exhibitPos.find((p) => p.e.id === id);
@@ -665,9 +694,8 @@ export class World {
       zone: zoneAt(this.pos.y), x: this.pos.x, z: this.pos.y, yaw: this.yaw, prompt, shoes: this.shoes, block: this.block,
       distBush: distToBush(this.pos.x, this.pos.y), fps: this.fps, calls: this.renderer.info.render.calls, tris: this.renderer.info.render.triangles,
       locked: document.pointerLockElement === this.canvas, contextLost: this.contextLost, pixelRatio: this.renderer.getPixelRatio(),
-      focusClue: this.focusStoryClue(),
+      focusClue: this.focusForHud(force),
     };
-    void force;
     this.onState(s);
   }
 
@@ -677,6 +705,7 @@ export class World {
     this.sightMeshes.length = 0;
     this.sightMeshesByClue.clear();
     this.storyTargets.length = 0;
+    this.hudFocusCache = null;
     this.renderer.setAnimationLoop(null);
     for (const [t, ty, fn, o] of this.listeners) t.removeEventListener(ty, fn, o);
     this.listeners.length = 0;
