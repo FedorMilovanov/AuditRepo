@@ -19,11 +19,14 @@ concurrency:
 jobs:
   candidate-browser:
     name: Vite builds, browser contracts and CLS witness
-    # Pin the same supported image as AuditRepo Validate/Preflight. ubuntu-latest
-    # moved to resolute in the failed 2026-11-11 witness; apt dependency
-    # downloads stalled on Ubuntu archive DNS until the 30m job deadline.
-    # Keep the real Playwright browsers, apt dependencies and strict QA.
+    # Official version-matched Playwright image has Chromium, WebKit and their
+    # Ubuntu 24.04 browser libraries preinstalled. Avoid repeated apt downloads:
+    # Ubuntu archive DNS failed in run 43033851836 and exhausted its job timeout.
+    # Source/delivery/CLS/browser/visual tests and the 30m deadline stay strict.
     runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --ipc=host
     timeout-minutes: 30
     env:
       PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -60,7 +63,9 @@ jobs:
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
           npm ci --no-audit --no-fund
-          npx playwright-core install --with-deps chromium webkit
+          # The pinned image must include BOTH browser executables: fail closed
+          # instead of installing packages from Ubuntu mirrors at CI runtime.
+          node -e 'const fs=require("node:fs"); const p=require("playwright-core"); for(const name of ["chromium","webkit"]){ const exe=p[name].executablePath(); if(!fs.existsSync(exe)) throw Error("Missing pinned "+name+" browser: "+exe); console.log("BROWSER_IMAGE_VERIFIED",name,exe); }'
           export CHROMIUM_PATH
           CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
           npm run qa:source
@@ -85,7 +90,8 @@ jobs:
         run: |
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie
-          npx playwright-core install chromium
+          # Chromium is already verified in the version-matched Playwright image.
+          test -x "$(node -p "require('playwright-core').chromium.executablePath()")"
           npm run qa
 
       - name: Capture visual audit screenshots and interaction evidence
