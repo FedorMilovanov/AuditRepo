@@ -296,7 +296,6 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     for (let i = 0; i < zs.length; i++) {
       const z = zs[i], hw = halfWidth(z) + 1.2, cf = chasmF(z);
       const xr = hw + (LEDGE_X + 0.75 - hw) * cf;
-      const [tr, tg, tb] = tint(z);
       for (let j = 0; j <= M; j++) {
         let x = -hw + (xr + hw) * (j / M);
         // The chasm lip is a single eroded floor boundary, with its nearest
