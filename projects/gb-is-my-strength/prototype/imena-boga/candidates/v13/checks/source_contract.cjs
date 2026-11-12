@@ -106,6 +106,7 @@ const brandReaderMap=fs.readFileSync(path.join(root,'sozvezdie','src','component
 const brandReaderSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const brandAtlasArticle=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
 const brandAtlasIndex=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
+const brandAtlasModal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
 if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библейское исследование') ||
     !brandAtlasHtml.includes('"headline": "Атлас имён Бога — библейское исследование"') ||
     !brandReaderHtml.includes('<title>Панорама имён Бога — чтение') ||
@@ -118,8 +119,14 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     !brandReaderSection.includes('Атлас имён Бога · открыть разбор') ||
     !brandReaderSection.includes('в Атласе имён Бога') ||
     brandAtlasArticle.includes('даёт нам целое созвездие имён') ||
+    brandAtlasArticle.includes('«созвездие» имён') ||
+    !brandAtlasModal.includes('в Панораме имён Бога') ||
+    !brandAtlasModal.includes('min-w-0 break-words text-center">Панорама имён Бога</span>') ||
+    !brandAtlasModal.includes('order-4 col-span-2 inline-flex min-h-11') ||
+    !brandAtlasModal.includes('order-3 col-span-2 inline-flex') ||
+    brandAtlasModal.includes('в Созвездии') ||
     [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
-     brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex].some(
+     brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex,brandAtlasModal].some(
       s=>/Астролябия имён|астролябию|астролябия и атлас|Созвездие имён|Созвездие складывается|Фокус созвездия|Другой флагман|Второй флагман/.test(s)))
   throw Error('W70 editorial naming and cross-format links mismatch');
 console.log('W70_EDITORIAL_NAMING_PASS');

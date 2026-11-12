@@ -750,7 +750,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     }
     // A link copied from the divine-name dossier must reopen that dossier
     // in a clean browser session (not merely scroll behind a closed overlay).
-    if(width===390){
+    if(width===390||width===320){
       const direct=await ctx.newPage();
       await direct.goto(base+'/atlas/#name-elohim',{waitUntil:'domcontentloaded'});
       const dossier=direct.getByRole('dialog');
@@ -763,6 +763,44 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       );
       if(new URL(direct.url()).hash!=='#name-elohim')
         throw Error('Atlas direct dossier link hash changed unexpectedly');
+      // W71: verify the longer Panorama label in narrow modal at 200% root.
+      // Document width alone misses text painted outside the button.
+      const counterpartLayout=await direct.evaluate(async()=>{
+        const root=document.documentElement, previous=root.style.getPropertyValue('font-size');
+        const priority=root.style.getPropertyPriority('font-size');
+        root.style.setProperty('font-size','32px');
+        await document.fonts.ready;
+        await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+        const link=document.querySelector('[role="dialog"] a[href^="/imena-boga/#"]');
+        const rect=link?.getBoundingClientRect(),range=document.createRange();
+        if(link)range.selectNodeContents(link);
+        const fragments=link?[...range.getClientRects()]:[];
+        const data={
+          found:!!link,text:link?.textContent?.trim(),
+          aria:link?.getAttribute('aria-label'),href:link?.getAttribute('href'),
+          left:rect?.left,right:rect?.right,
+          clientWidth:link?.clientWidth,scrollWidth:link?.scrollWidth,
+          fragmentsOutside:!!link&&fragments.some(r=>
+            r.left<rect.left-2||r.right>rect.right+2),
+          viewport:root.clientWidth,documentWidth:root.scrollWidth,
+          rootFont:parseFloat(getComputedStyle(root).fontSize)
+        };
+        if(previous)root.style.setProperty('font-size',previous,priority);
+        else root.style.removeProperty('font-size');
+        return data;
+      });
+      if(!counterpartLayout.found||
+         counterpartLayout.text!=='Панорама имён Бога'||
+         !counterpartLayout.aria?.includes('в Панораме имён Бога')||
+         counterpartLayout.href!=='/imena-boga/#elohim'||
+         counterpartLayout.rootFont<31||
+         counterpartLayout.left < -2 ||
+         counterpartLayout.right>counterpartLayout.viewport+2||
+         counterpartLayout.scrollWidth>counterpartLayout.clientWidth+2||
+         counterpartLayout.fragmentsOutside||
+         counterpartLayout.documentWidth>counterpartLayout.viewport+2)
+        throw Error('Atlas-to-Panorama 200% dossier link clipped '+
+          JSON.stringify({engine,width,counterpartLayout}));
       await dossier.getByRole('button',{name:'Закрыть окно'}).click();
       await dossier.waitFor({state:'detached'});
       if(new URL(direct.url()).hash)

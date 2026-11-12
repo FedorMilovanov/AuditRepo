@@ -663,13 +663,13 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           {counterpartId && (
             <a
               href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}
-              aria-label={`Продолжить чтение о «${entry.transliteration}» в Созвездии`}
-              className="font-ui order-4 inline-flex min-h-10 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:order-none sm:w-auto sm:px-3"
+              aria-label={`Продолжить чтение о «${entry.transliteration}» в Панораме имён Бога`}
+              className="font-ui order-4 col-span-2 inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:order-none sm:col-auto sm:w-auto sm:px-3"
               style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
             >
-              <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-              Созвездие
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              <BookOpen className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              <span className="min-w-0 break-words text-center">Панорама имён Бога</span>
+              <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </a>
           )}
 
@@ -680,8 +680,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               onClose();
               onJumpToArticle(entry);
             }}
-            className={'font-ui order-3 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:order-none sm:w-auto sm:px-4 ' +
-              (counterpartId ? '' : 'col-span-2')}
+            className="font-ui order-3 col-span-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:order-none sm:col-auto sm:w-auto sm:px-4"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <Navigation className="h-3.5 w-3.5" />
