@@ -123,8 +123,13 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     !brandAtlasModal.includes('в Панораме имён Бога') ||
     !brandAtlasModal.includes('min-w-0 break-normal text-center">Панорама имён Бога</span>') ||
     !brandAtlasModal.includes('hidden h-3.5 w-3.5 shrink-0 sm:block') ||
-    !brandAtlasModal.includes('order-4 col-span-2 inline-flex min-h-11') ||
-    !brandAtlasModal.includes('order-3 col-span-2 inline-flex') ||
+    !brandAtlasModal.includes('data-modal-footer') ||
+    brandAtlasModal.includes('font-ui order-4') ||
+    brandAtlasModal.includes('font-ui order-3') ||
+    brandAtlasModal.includes('font-ui order-2') ||
+    brandAtlasModal.includes('font-ui order-1') ||
+    !brandAtlasModal.includes('col-span-2 inline-flex min-h-11') ||
+    !brandAtlasModal.includes('col-span-2 inline-flex min-h-10') ||
     brandAtlasModal.includes('в Созвездии') ||
     [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
      brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex,brandAtlasModal].some(

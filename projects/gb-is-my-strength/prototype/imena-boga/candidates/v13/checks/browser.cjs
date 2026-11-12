@@ -812,6 +812,43 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
          counterpartLayout.documentWidth>counterpartLayout.viewport+2)
         throw Error('Atlas-to-Panorama 200% dossier link clipped '+
           JSON.stringify({engine,width,counterpartLayout}));
+      // W72: CSS visual order must agree with actual keyboard focus order.
+      // Prove the painted sequence and exercise real Tab navigation.
+      const footerReadingOrder=await direct.evaluate(()=>{
+        const footer=document.querySelector('[role="dialog"] [data-modal-footer]');
+        if(!footer)return null;
+        const items=[...footer.children].filter(n=>n.matches('button,a'));
+        const positions=items.map((n,i)=>{const r=n.getBoundingClientRect();return {
+          index:i,left:r.left,top:r.top,disabled:n.matches(':disabled'),
+          label:n.getAttribute('aria-label')||n.textContent?.trim()||''
+        }});
+        // Allow subpixel baseline shifts for controls in the same row.
+        const spatial=[...positions].sort((a,b)=>
+          Math.abs(a.top-b.top)>4?a.top-b.top:a.left-b.left).map(x=>x.index);
+        return {count:positions.length,spatial,labels:positions.map(x=>x.label),
+          enabled:positions.filter(x=>!x.disabled).map(x=>x.index)};
+      });
+      if(!footerReadingOrder||footerReadingOrder.count!==4||
+         footerReadingOrder.spatial.join(',')!=='0,1,2,3'||
+         footerReadingOrder.enabled.join(',')!=='1,2,3'||
+         !footerReadingOrder.labels[3].includes('Панораме имён Бога'))
+        throw Error('Atlas dossier keyboard/visual order mismatch '+
+          JSON.stringify({engine,width,footerReadingOrder}));
+      const footer=direct.locator('[role="dialog"] [data-modal-footer]');
+      await footer.locator('button').nth(1).focus();
+      await direct.keyboard.press('Tab');
+      const tabOnArticle=await direct.evaluate(()=>{
+        const footer=document.querySelector('[role="dialog"] [data-modal-footer]');
+        return document.activeElement===footer?.querySelectorAll('button')[2];
+      });
+      if(!tabOnArticle)throw Error('Atlas dossier Tab skipped article action '+
+        JSON.stringify({engine,width}));
+      await direct.keyboard.press('Tab');
+      const tabOnPanorama=await direct.evaluate(()=>
+        document.activeElement===document.querySelector(
+          '[role="dialog"] [data-modal-footer] a[href^="/imena-boga/#"]'));
+      if(!tabOnPanorama)throw Error('Atlas dossier Tab skipped Panorama action '+
+        JSON.stringify({engine,width}));
       await dossier.getByRole('button',{name:'Закрыть окно'}).click();
       await dossier.waitFor({state:'detached'});
       if(new URL(direct.url()).hash)

@@ -639,6 +639,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
 
         {/* Bottom Navigation Bar */}
         <div
+          data-modal-footer
           className="grid grid-cols-2 gap-2 border-t px-3 py-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:px-8 sm:py-3.5"
           style={{
             backgroundColor: 'var(--gb-bg)',
@@ -649,7 +650,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             type="button"
             disabled={!prevEntry}
             onClick={() => prevEntry && onSelectEntry(prevEntry)}
-            className="font-ui order-1 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:order-none sm:w-auto sm:px-3.5"
+            className="font-ui inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -660,39 +661,11 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <span className="max-w-[120px] truncate">{prevEntry ? prevEntry.transliteration : 'Начало'}</span>
           </button>
 
-          {counterpartId && (
-            <a
-              href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}
-              aria-label={`Продолжить чтение о «${entry.transliteration}» в Панораме имён Бога`}
-              className="font-ui order-4 col-span-2 inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:order-none sm:col-auto sm:w-auto sm:px-3"
-              style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
-            >
-              <BookOpen className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
-              <span className="min-w-0 break-normal text-center">Панорама имён Бога</span>
-              <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            </a>
-          )}
-
-          <button
-            type="button"
-            onClick={() => {
-              shouldRestoreFocusRef.current = false;
-              onClose();
-              onJumpToArticle(entry);
-            }}
-            className="font-ui order-3 col-span-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:order-none sm:col-auto sm:w-auto sm:px-4"
-            style={{ backgroundColor: 'var(--gb-accent)' }}
-          >
-            <Navigation className="h-3.5 w-3.5" />
-            <span className="sm:hidden">К статье</span>
-            <span className="hidden sm:inline">Перейти в статье</span>
-          </button>
-
           <button
             type="button"
             disabled={!nextEntry}
             onClick={() => nextEntry && onSelectEntry(nextEntry)}
-            className="font-ui order-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:order-none sm:w-auto sm:px-3.5"
+            className="font-ui inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -701,7 +674,35 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           >
             <span className="max-w-[120px] truncate">{nextEntry ? nextEntry.transliteration : 'Конец'}</span>
             <ChevronRight className="h-4 w-4" />
+          </button>          <button
+            type="button"
+            onClick={() => {
+              shouldRestoreFocusRef.current = false;
+              onClose();
+              onJumpToArticle(entry);
+            }}
+            className="font-ui col-span-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:col-auto sm:w-auto sm:px-4"
+            style={{ backgroundColor: 'var(--gb-accent)' }}
+          >
+            <Navigation className="h-3.5 w-3.5" />
+            <span className="sm:hidden">К статье</span>
+            <span className="hidden sm:inline">Перейти в статье</span>
           </button>
+
+          {counterpartId && (
+            <a
+              href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}
+              aria-label={`Продолжить чтение о «${entry.transliteration}» в Панораме имён Бога`}
+              className="font-ui col-span-2 inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:col-auto sm:w-auto sm:px-3"
+              style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
+            >
+              <BookOpen className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
+              <span className="min-w-0 break-normal text-center">Панорама имён Бога</span>
+              <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            </a>
+          )}
+
+
         </div>
       </div>
     </div>
