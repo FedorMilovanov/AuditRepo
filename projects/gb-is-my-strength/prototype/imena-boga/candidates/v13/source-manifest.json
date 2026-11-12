@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "1599ba9a75a2aeeb1a3e429cdcbab122b6a3e322cc05350eaaea7c8f4737db8d",
-      "bytes_normalized": 67358
+      "sha256": "d9c767080007be7f62ed45d7ea7f0b2ec7c29b51db89a914499b081e03966835",
+      "bytes_normalized": 67373
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "aadf84915157324787fb8b464f937a25777ba0118344dec0037e81762bdde07b",
@@ -184,8 +184,8 @@
       "bytes_normalized": 38912
     },
     "checks/visual_review.cjs": {
-      "sha256": "d48dcde310c710bdd32ac93943bf2743be88ed85d3e3ddd962fede2719ef56a5",
-      "bytes_normalized": 51961
+      "sha256": "70d11683a3d3a515c9504685cc2a79628cb39b1d09c5a695635afe4f0705e691",
+      "bytes_normalized": 52904
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -236,8 +236,8 @@
       "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "2138bf0f36fd261c8ceece5aeb1698bddcfee5ed0106ef4389d8ba6ceaed88b5",
-      "bytes_normalized": 18120
+      "sha256": "f20fff05c1f3ea818582d97abe4495cc3ca14b5ffd1578cbbfcac5fbf616103d",
+      "bytes_normalized": 18142
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
@@ -256,8 +256,8 @@
       "bytes_normalized": 7639
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
-      "sha256": "c3793c1970f0bb2739ab4fb7e77c952199a24911f5da69b6853e18ef2d7050b5",
-      "bytes_normalized": 9941
+      "sha256": "d45dfe4adf37ad9204a8a2e6b094a574423c36e61e161596c3ae86b0adfa6a64",
+      "bytes_normalized": 9959
     },
     "sozvezdie/src/components/NameGrid.tsx": {
       "sha256": "2588b395c901b99b855646a575de0bd9630320c3bdf5b9f1cbfb6a358c879ee0",
@@ -280,8 +280,8 @@
       "bytes_normalized": 6899
     },
     "sozvezdie/src/components/ReaderDock.tsx": {
-      "sha256": "78102d71991408506a8701b9508f1de7f51535169572e788f940a4b4678d347c",
-      "bytes_normalized": 13199
+      "sha256": "37e4ab16137f46faba54488a3899d023cdb347f68d9ca69ffff989ed37cd7ed0",
+      "bytes_normalized": 13298
     },
     "sozvezdie/src/components/Reveal.tsx": {
       "sha256": "a472c1df117a111b2dead67b1e782480b5cb189b1062c1df02375b2c36793240",

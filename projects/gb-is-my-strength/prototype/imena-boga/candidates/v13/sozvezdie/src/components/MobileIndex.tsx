@@ -101,9 +101,9 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
           aria-controls="sozvezdie-mobile-index-dialog"
           aria-label="Открыть список имён"
           title="Указатель имён"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold-500/20 text-gold-300 transition-colors hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+          className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-gold-500/20 text-gold-300 transition-colors hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
         >
-          <List className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+          <List className="h-[20px] w-[20px]" strokeWidth={1.5} aria-hidden="true" />
         </button>,
         headerSlot
       )}

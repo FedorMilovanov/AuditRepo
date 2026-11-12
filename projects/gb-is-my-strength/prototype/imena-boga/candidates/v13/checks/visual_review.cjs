@@ -777,10 +777,11 @@ async function visit(browser,engine,app,width,base){
       Math.min(b.right,r.right)-Math.max(b.left,r.left)>2 &&
       Math.min(b.bottom,r.bottom)-Math.max(b.top,r.top)>2);
     const headerControlsOutOfBounds=headerControls.some(r=>r.left< -2||r.right>root.clientWidth+2);
+    const headerUndersizedControls=headerControls.filter(r=>r.right-r.left<43||r.bottom-r.top<43).length;
     return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
       headerBrandFound:!!b,headerBrandWidth:b?.width??null,
       headerBrandAccessible:!!brand?.getAttribute('aria-label'),
-      headerBrandPaintOverflow,headerOverlap,headerControlsOutOfBounds,
+      headerBrandPaintOverflow,headerOverlap,headerControlsOutOfBounds,headerUndersizedControls,
       headerControlsCount:headerControls.length,
       viewport:root.clientWidth,documentWidth:root.scrollWidth,
       headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
@@ -806,8 +807,8 @@ async function visit(browser,engine,app,width,base){
       d.headingLeft< -2||d.headingRight>d.viewport+2||
       d.headingScrollWidth>d.headingClientWidth+2||
       !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24||
-      !d.headerBrandFound||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
-      d.headerOverlap||d.headerControlsOutOfBounds||d.headerControlsCount<1)
+      !d.headerBrandFound||d.headerBrandWidth<48||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
+      d.headerOverlap||d.headerControlsOutOfBounds||d.headerUndersizedControls>0||d.headerControlsCount<1)
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
@@ -835,11 +836,22 @@ async function visit(browser,engine,app,width,base){
      const button=[...document.querySelectorAll('button')].find(el=>el.textContent?.includes('Развернуть все 36 разборов'));
      const rect=button?.getBoundingClientRect();
      const parent=button?.parentElement?.getBoundingClientRect();
+     const title=document.querySelector('#article-introduction h2');
      return {viewport:doc.clientWidth,documentWidth:doc.scrollWidth,
-      buttonFound:!!button,buttonRight:rect?.right??null,parentRight:parent?.right??null};
+      buttonFound:!!button,buttonRight:rect?.right??null,parentRight:parent?.right??null,
+      titleFound:!!title,titleWidth:title?.getBoundingClientRect().width??null,
+      titleScrollWidth:title?.scrollWidth??null,titleClientWidth:title?.clientWidth??null,
+      titleWrap:title?getComputedStyle(title).overflowWrap:null,
+      overflowCandidates:[...document.body.querySelectorAll('*')].map(el=>{
+       const r=el.getBoundingClientRect();
+       return {tag:el.tagName,id:el.id||null,cls:String(el.className).slice(0,100),
+        right:Math.round(r.right),width:Math.round(r.width),scrollWidth:el.scrollWidth};
+      }).filter(el=>el.width>0&&el.right>doc.clientWidth+2).slice(0,15)};
     });
     record('atlas-text-resize-200',{engine,width,count,...result});
-    if(!result.buttonFound || result.documentWidth>result.viewport+2 ||
+    if(!result.buttonFound || !result.titleFound ||
+       result.titleScrollWidth>result.titleClientWidth+2 ||
+       result.documentWidth>result.viewport+2 ||
        (result.buttonRight!==null && result.parentRight!==null &&
         result.buttonRight>result.parentRight+2))
      problem('BLOCKER','atlas-text-resize-200-overflow',{engine,width,...result});

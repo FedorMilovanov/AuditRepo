@@ -57,7 +57,7 @@ function ProgressRing({
 }) {
   return (
     <>
-      <svg viewBox="0 0 36 36" className="h-8 w-8 -rotate-90 sm:h-9 sm:w-9" aria-hidden="true">
+      <svg viewBox="0 0 36 36" className="h-[32px] w-[32px] -rotate-90 sm:h-[36px] sm:w-[36px] xl:h-9 xl:w-9" aria-hidden="true">
         <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(74,66,50,0.5)" strokeWidth="2" />
         <motion.circle
           cx="18" cy="18" r="15" fill="none" stroke="#d4af37"
@@ -202,6 +202,7 @@ export default function ReaderDock({
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         data-reader-dock
         className={`${compact ? "relative z-10 flex-row" : "fixed bottom-5 right-2 z-40 w-14 flex-col gap-1 py-2"} flex items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)]`}
+        style={compact ? { padding: "4px" } : undefined}
         role="toolbar"
         aria-label="Настройки чтения"
       >
@@ -214,7 +215,7 @@ export default function ReaderDock({
           aria-expanded={expanded}
           aria-label={`Прочитано ${pct}%. ${expanded ? "Свернуть" : "Развернуть"} панель чтения`}
           title={`Прочитано ${pct}% · изучено ${completedCount} из ${totalCount}`}
-          className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full xl:hidden"
+          className="relative flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full xl:hidden"
         >
           <ProgressRing progress={progress} pct={pct} completedCount={completedCount} expanded={expanded} />
         </button>

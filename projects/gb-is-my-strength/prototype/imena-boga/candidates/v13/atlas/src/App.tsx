@@ -970,7 +970,7 @@ export function App() {
             className="font-serif-display min-w-0 break-words text-2xl font-bold leading-snug [overflow-wrap:anywhere] sm:text-3xl"
             style={{ color: 'var(--gb-ink)' }}
           >
-            Почему Бог открывает Свои имена: не закли&shy;нание, а заветное само&shy;откровение
+            Почему Бог открывает Свои имена: не закли&shy;нание, а заветное само&shy;от&shy;кро&shy;ве&shy;ние
           </h2>
 
           <div

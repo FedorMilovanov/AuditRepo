@@ -313,7 +313,7 @@ export default function App() {
           <a
             href="https://gospod-bog.ru"
             aria-label="Господь Бог — Сила Моя"
-            className="flex min-h-11 min-w-0 shrink items-center overflow-hidden whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
+            className="flex min-h-[44px] min-w-0 shrink items-center overflow-hidden whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
             <span className="min-w-0 truncate sm:hidden">Господь Бог</span>
             <span className="hidden min-w-0 truncate sm:inline">Господь Бог — Сила Моя</span>
@@ -351,9 +351,9 @@ export default function App() {
             <a
             href="https://gospod-bog.ru/articles/"
             aria-label="Библиотека статей"
-            className="group flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
+            className="group flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
           >
-            <BookOpen className="h-4 w-4 text-gold-400 min-[400px]:hidden" strokeWidth={1.5} aria-hidden="true" />
+            <BookOpen className="h-[18px] w-[18px] text-gold-400 min-[400px]:hidden" strokeWidth={1.5} aria-hidden="true" />
             <span className="hidden min-[400px]:inline">Библиотека</span>
             <span aria-hidden="true" className="hidden h-1 w-1 rotate-45 bg-gold-500 transition-transform duration-300 group-hover:rotate-[135deg] min-[400px]:inline-block" />
           </a>
