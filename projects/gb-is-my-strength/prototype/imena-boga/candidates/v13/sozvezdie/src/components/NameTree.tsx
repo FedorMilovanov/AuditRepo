@@ -323,7 +323,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           <span aria-hidden="true" className="pointer-events-none absolute -left-16 -top-24 h-48 w-48 rounded-full bg-gold-400/10 blur-[58px]" />
           <div className="relative flex items-center gap-5">
             <div className="min-w-0 flex-1">
-              <p className="font-ui text-xs uppercase tracking-[0.25em] text-gold-500">Фокус созвездия · Tab / ← → / Enter</p>
+              <p className="font-ui text-xs uppercase tracking-[0.25em] text-gold-500">Навигация по схеме · Tab / ← → / Enter</p>
               <p className="mt-1 font-display text-[27px] italic leading-tight text-cream-50" aria-live="polite">{selected.translit}</p>
               <p className="mt-1 font-body text-base leading-snug text-cream-300">{selected.russian} <span className="text-cream-700">·</span> {selected.verse.ref}</p>
             </div>

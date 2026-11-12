@@ -152,15 +152,15 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
       <div className="mb-8 flex flex-col items-center text-center">
         <p className="flex max-w-full flex-wrap items-center justify-center gap-2 font-ui text-xs font-medium uppercase tracking-[0.2em] text-gold-400">
           <span className="hairline w-10" />
-          Созвездие имён
+          Панорама имён
           <span className="hairline w-10" />
         </p>
         <h2 className="mt-4 font-display text-3xl font-medium text-cream-100 md:text-4xl">
           29 именований и выражений — <span className="gold-static italic">одним взглядом</span>
         </h2>
         <p className="mt-3 max-w-lg font-body text-base italic leading-relaxed text-cream-500">
-          Нажмите на любое имя, чтобы открыть его раздел. Созвездие складывается из {NAMES.length}{" "}
-          огней — и все они указывают на Одного.
+          Выберите именование, чтобы перейти к его разбору. На общей схеме представлены {NAMES.length}{" "}
+          именований и выражений Писания.
         </p>
       </div>
 

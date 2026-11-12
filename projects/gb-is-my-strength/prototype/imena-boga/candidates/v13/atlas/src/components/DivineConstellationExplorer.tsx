@@ -90,7 +90,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           }}
         >
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Интерактивный справочник-созвездие</span>
+          <span>Атлас имён Бога · интерактивный указатель</span>
         </div>
 
         <h2

@@ -95,6 +95,29 @@ if (!atlasUiHero.includes('Сводная схема · 36 позиций') ||
     atlasUiHero.includes('36 именований и формул (еврейский'))
  throw Error('Atlas hero mislabeled its internal 36-position overview as canonical names');
 console.log('V13_ATLAS_HERO_SCOPE_PASS');
+// W70 reader-facing names: sober and accurate; legacy identifiers remain stable.
+// No URL/storage-key, research, immutable source or Product migration in this PR.
+const brandAtlasHtml=fs.readFileSync(path.join(root,'atlas','index.html'),'utf8');
+const brandReaderHtml=fs.readFileSync(path.join(root,'sozvezdie','index.html'),'utf8');
+const brandAtlasHero=fs.readFileSync(path.join(root,'atlas','src','components','SacredAstrolabeHero.tsx'),'utf8');
+const brandReaderHero=fs.readFileSync(path.join(root,'sozvezdie','src','components','Hero.tsx'),'utf8');
+const brandReaderIndex=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameGrid.tsx'),'utf8');
+const brandReaderMap=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameTree.tsx'),'utf8');
+const brandAtlasIndex=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
+if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библейское исследование') ||
+    !brandAtlasHtml.includes('"headline": "Атлас имён Бога — библейское исследование"') ||
+    !brandReaderHtml.includes('<title>Панорама имён Бога — чтение') ||
+    !brandReaderHtml.includes('"headline": "Панорама имён Бога — исследование Писания"') ||
+    !brandAtlasHero.includes('Панорама имён Бога · 29 разделов') ||
+    !brandReaderHero.includes('Атлас имён Бога · 36 исследуемых выражений') ||
+    !brandAtlasIndex.includes('Атлас имён Бога · интерактивный указатель') ||
+    !brandReaderIndex.includes('Панорама имён') ||
+    !brandReaderMap.includes('Навигация по схеме') ||
+    [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
+     brandReaderIndex,brandReaderMap,brandAtlasIndex].some(
+      s=>/Астролябия имён|астролябию|астролябия и атлас|Созвездие имён|Созвездие складывается|Фокус созвездия|Другой флагман|Второй флагман/.test(s)))
+  throw Error('W70 editorial naming and cross-format links mismatch');
+console.log('W70_EDITORIAL_NAMING_PASS');
 
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');

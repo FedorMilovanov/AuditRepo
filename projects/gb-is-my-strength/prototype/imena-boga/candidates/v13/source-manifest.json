@@ -12,8 +12,8 @@
       "bytes_normalized": 47
     },
     "atlas/index.html": {
-      "sha256": "0ed460ece4bb2e6477f09600ee67ef8651a638e0b4441d3e7c1e3820e5a6fd84",
-      "bytes_normalized": 4108
+      "sha256": "6cf5028bd0ab468617dc68e284747071ee79c30d265b2a9c5b2906ab415a12c6",
+      "bytes_normalized": 4129
     },
     "atlas/package-lock.json": {
       "sha256": "a2f06d26bd86252da64375094265b925cec25a744b224edfdc72b460c5059f1b",
@@ -60,8 +60,8 @@
       "bytes_normalized": 19064
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "bb946c13c6c2d81190481531ae17436c0907bc351f8145a5fa3b0f7bd0f2844f",
-      "bytes_normalized": 18388
+      "sha256": "06579350f7324f50dfe19b3747ef24631a2f281060a12c278585fdc5adf0cdaa",
+      "bytes_normalized": 18399
     },
     "atlas/src/components/DivineNameModal.tsx": {
       "sha256": "ad68d8f9abc8b210ee067dedd8299aace31703c0e0e16d092f498902673aacd3",
@@ -92,8 +92,8 @@
       "bytes_normalized": 1283
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "3071f6a2d9d9c9066125ecab46cd2c9a0f90a667eb240cb0f316a0cf3441f54c",
-      "bytes_normalized": 28702
+      "sha256": "e728691b5fe5470e7307d3c2490f2f3d67357094d8ab0adfe881807449f1c8b7",
+      "bytes_normalized": 28637
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",
@@ -180,20 +180,20 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "59ccc1e8c287ae79167a38e97bdb393c54e9d6f1c83258d758697d5837f4baf9",
-      "bytes_normalized": 38927
+      "sha256": "647aebf3a214795a1dc989666d47a08269711620c52ec0ff7830848181c3a133",
+      "bytes_normalized": 41257
     },
     "checks/visual_review.cjs": {
       "sha256": "b40ff2d1f867434804700731715b0649e6cf2345c6974a794a35442145483e1b",
       "bytes_normalized": 58505
     },
     "README.md": {
-      "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
-      "bytes_normalized": 4590
+      "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
+      "bytes_normalized": 4712
     },
     "sozvezdie/index.html": {
-      "sha256": "45f404c040d2232ff00e3387070b201e7b1966eb4c5cf3996b981c4c0f939a56",
-      "bytes_normalized": 2492
+      "sha256": "71208783dd675e624971a8243279a81e699d6a0af8f5574e7b68cb0139a0391f",
+      "bytes_normalized": 2595
     },
     "sozvezdie/package-lock.json": {
       "sha256": "a5c4aea42b14c5a3a1528fb91d159e8dc612695e3c8cf3ccb3b1f6c3b042604c",
@@ -248,8 +248,8 @@
       "bytes_normalized": 9502
     },
     "sozvezdie/src/components/Hero.tsx": {
-      "sha256": "54437cbfff11e46a67fe53511dd715ae8ab790b110b6f43ba15a1eaea465d223",
-      "bytes_normalized": 9646
+      "sha256": "ef5a8948690413f55687ec8de8d13fd1f6228a29cebd21a5ab5a765cff3537bc",
+      "bytes_normalized": 9639
     },
     "sozvezdie/src/components/Intro.tsx": {
       "sha256": "7d1bf9cc32db87f64b08d32c1eb03da6e7482862883506b42a1ae6350e8a19e5",
@@ -260,16 +260,16 @@
       "bytes_normalized": 9959
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "2588b395c901b99b855646a575de0bd9630320c3bdf5b9f1cbfb6a358c879ee0",
-      "bytes_normalized": 20968
+      "sha256": "1ef9d5e2dc666fe2abc1c5037a822486d9f650b37446f044e117b68a8a03227b",
+      "bytes_normalized": 20963
     },
     "sozvezdie/src/components/NameSection.tsx": {
       "sha256": "e009d9c788a3902534ec787fd22348f73ff827d49cf44fcb02d14afb12b86236",
       "bytes_normalized": 18657
     },
     "sozvezdie/src/components/NameTree.tsx": {
-      "sha256": "305e1c9939c96958010f50f842fd0fc933926d4504a159bfe1ef82c2fdcb8b80",
-      "bytes_normalized": 25509
+      "sha256": "89ba44ff43ca049e1d3cc7c913b2ffc51fafc7df3e08b0a1899f8cf6dae187c8",
+      "bytes_normalized": 25514
     },
     "sozvezdie/src/components/PartDivider.tsx": {
       "sha256": "9870afaffbefa69f540a6636ded7d382e9ed9b891d5e16901e4885fd4ed8b86e",

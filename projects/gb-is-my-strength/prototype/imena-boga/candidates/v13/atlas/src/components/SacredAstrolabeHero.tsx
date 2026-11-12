@@ -614,7 +614,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
         <nav aria-label="Два формата исследования имён Бога" className="mt-6 flex items-center justify-center">
           <a href="/imena-boga/" className="font-ui inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-colors hover:opacity-80" style={{borderColor:'var(--gb-border-strong)',color:'var(--gb-accent)',backgroundColor:'var(--gb-surface)'}}>
             <BookOpen className="h-4 w-4" aria-hidden="true" />
-            Другой флагман: созвездие и последовательное чтение (29 именований) →
+            Панорама имён Бога · 29 разделов →
           </a>
         </nav>
 

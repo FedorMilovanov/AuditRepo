@@ -179,9 +179,9 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         <a
           href="/imena-boga/atlas/"
           className="relative z-20 mt-7 inline-flex max-w-[90vw] items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-ink-900/85 px-4 py-2 text-center font-ui text-xs uppercase tracking-[0.14em] text-gold-300 shadow-lg backdrop-blur-md transition-colors hover:border-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300 sm:text-xs"
-          aria-label="Открыть второй флагман — интерактивную астролябию с 36 исследуемыми позициями"
+          aria-label="Открыть атлас имён Бога — интерактивное исследование 36 библейских выражений"
         >
-          <span aria-hidden="true">✦</span> Второй флагман: астролябия и атлас 36 позиций →
+          <span aria-hidden="true">✦</span> Атлас имён Бога · 36 исследуемых выражений →
         </a>
       </motion.div>
 

@@ -2,8 +2,8 @@
 
 Two independent visual prototypes intended as selective references for the Astro Product, not deployable canonical Product routes:
 
-- atlas/: bright Astrolabe, 36 unverified research records.
-- sozvezdie/: dark cinematic Constellation, 29 unverified research records, WebP Sinai image with original JPEG fallback.
+- atlas/: «Атлас имён Бога», light interactive biblical study of 36 provisional entries; technical route name retained.
+- sozvezdie/: «Панорама имён Бога», dark interactive overview plus 29 reading sections; technical route name retained, Sinai media rights remain HOLD.
 
 ## Precisely bounded changes from v1.2
 
