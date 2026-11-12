@@ -650,7 +650,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             type="button"
             disabled={!prevEntry}
             onClick={() => prevEntry && onSelectEntry(prevEntry)}
-            className="font-ui inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
+            className="font-ui inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -665,7 +665,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             type="button"
             disabled={!nextEntry}
             onClick={() => nextEntry && onSelectEntry(nextEntry)}
-            className="font-ui inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
+            className="font-ui inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
@@ -674,14 +674,16 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           >
             <span className="max-w-[120px] truncate">{nextEntry ? nextEntry.transliteration : 'Конец'}</span>
             <ChevronRight className="h-4 w-4" />
-          </button>          <button
+          </button>
+
+          <button
             type="button"
             onClick={() => {
               shouldRestoreFocusRef.current = false;
               onClose();
               onJumpToArticle(entry);
             }}
-            className="font-ui col-span-2 inline-flex min-h-10 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:col-auto sm:w-auto sm:px-4"
+            className="font-ui col-span-2 inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:col-auto sm:w-auto sm:px-4"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <Navigation className="h-3.5 w-3.5" />
@@ -701,8 +703,6 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </a>
           )}
-
-
         </div>
       </div>
     </div>

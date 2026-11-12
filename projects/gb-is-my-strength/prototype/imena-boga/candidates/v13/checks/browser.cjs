@@ -849,6 +849,60 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           '[role="dialog"] [data-modal-footer] a[href^="/imena-boga/#"]'));
       if(!tabOnPanorama)throw Error('Atlas dossier Tab skipped Panorama action '+
         JSON.stringify({engine,width}));
+      // W74: ensure the first, middle and last dossier all have a matching
+      // spatial/DOM/Tab order at normal and 200%-root text sizes.
+      for(const entryCase of [
+        {id:'elohim',count:4,enabled:[1,2,3]},
+        {id:'yhwh',count:4,enabled:[0,1,2,3]},
+        {id:'alpha-omega-pantokrator',count:3,enabled:[0,2]},
+      ]){
+        if(entryCase.id!=='elohim'){
+          await direct.goto(base+'/atlas/#name-'+entryCase.id,{waitUntil:'domcontentloaded'});
+          await direct.reload({waitUntil:'domcontentloaded'});
+          await dossier.waitFor({state:'visible',timeout:20000});
+        }
+        for(const rootPx of [16,32]){
+          await direct.evaluate(px=>document.documentElement.style.setProperty('font-size',px+'px'),rootPx);
+          await direct.evaluate(async()=>{
+            await document.fonts.ready;
+            await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+          });
+          const layout=await direct.evaluate(()=>{
+            const root=document.documentElement,container=
+              document.querySelector('[role="dialog"] [data-modal-footer]');
+            const nodes=[...(container?.children||[])].filter(n=>n.matches('button,a'));
+            const rects=nodes.map((n,i)=>{const r=n.getBoundingClientRect();
+              return {i,top:r.top,left:r.left,right:r.right,height:r.height,disabled:n.matches(':disabled')};
+            });
+            const visual=[...rects].sort((a,b)=>
+              Math.abs(a.top-b.top)>4?a.top-b.top:a.left-b.left).map(r=>r.i);
+            return {count:nodes.length,visual,enabled:rects.filter(r=>!r.disabled).map(r=>r.i),
+              rootPx:parseFloat(getComputedStyle(root).fontSize),viewport:root.clientWidth,
+              documentWidth:root.scrollWidth,
+              tooSmall:rects.filter(r=>r.height<43),
+              outside:rects.filter(r=>r.left< -2||r.right>root.clientWidth+2)};
+          });
+          if(layout.count!==entryCase.count||
+             layout.visual.join(',')!==Array.from({length:entryCase.count},(_,i)=>i).join(',')||
+             layout.enabled.join(',')!==entryCase.enabled.join(',')||
+             Math.abs(layout.rootPx-rootPx)>1||layout.tooSmall.length||
+             layout.outside.length||layout.documentWidth>layout.viewport+2)
+            throw Error('Atlas W74 footer geometry failed '+
+              JSON.stringify({engine,width,entryCase,rootPx,layout}));
+          for(let i=0;i<entryCase.enabled.length-1;i++){
+            const from=entryCase.enabled[i],to=entryCase.enabled[i+1];
+            await footer.locator('button,a').nth(from).focus();
+            await direct.keyboard.press('Tab');
+            const active=await direct.evaluate(()=>{
+              const f=document.querySelector('[role="dialog"] [data-modal-footer]');
+              return [...(f?.children||[])].indexOf(document.activeElement);
+            });
+            if(active!==to)
+              throw Error('Atlas W74 Tab focus failed '+
+                JSON.stringify({engine,width,id:entryCase.id,rootPx,from,to,active}));
+          }
+        }
+      }
       await dossier.getByRole('button',{name:'Закрыть окно'}).click();
       await dossier.waitFor({state:'detached'});
       if(new URL(direct.url()).hash)

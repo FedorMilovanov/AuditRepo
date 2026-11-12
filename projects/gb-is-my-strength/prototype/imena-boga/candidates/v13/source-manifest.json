@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "3efaec9482e34a022f57c7582dd02c98d74d79710cc3e69ca8d12007f48cc376",
-      "bytes_normalized": 67405
+      "sha256": "65432f603070508d7a667f2af51f55a660cd87030d6b07a7a96f9c6a8873e0c2",
+      "bytes_normalized": 67472
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "aadf84915157324787fb8b464f937a25777ba0118344dec0037e81762bdde07b",
@@ -64,7 +64,7 @@
       "bytes_normalized": 18399
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "d0f98f7db2bff1025c63f2cd4e6f33b8feece730d4726bae5e425b7a77391ee8",
+      "sha256": "3a3d76517307c4a45aeae8787fb388f66c83b76b31d1e3077083d9ae50f7e80c",
       "bytes_normalized": 30436
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "dcf0736cc41b093192259da8ec770da15d2507e0b83c09d94146317199af55e5",
-      "bytes_normalized": 65554
+      "sha256": "20d6381204e265a1bdad4a1dfa0f77ec9c2091680fef5c4bf3cf8c0135057f86",
+      "bytes_normalized": 68655
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "fd054b56123c919b6d9606ad1a85b2883e45e141eeb86096860c41b861168d97",
-      "bytes_normalized": 45347
+      "sha256": "e7d8b68b75fe88a7c805ff4e4e24c629e4393c0f0dcec50665525768cfee8cdf",
+      "bytes_normalized": 45970
     },
     "checks/visual_review.cjs": {
       "sha256": "b40ff2d1f867434804700731715b0649e6cf2345c6974a794a35442145483e1b",

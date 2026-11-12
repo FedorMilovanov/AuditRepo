@@ -129,13 +129,23 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     brandAtlasModal.includes('font-ui order-2') ||
     brandAtlasModal.includes('font-ui order-1') ||
     !brandAtlasModal.includes('col-span-2 inline-flex min-h-11') ||
-    !brandAtlasModal.includes('col-span-2 inline-flex min-h-10') ||
+    !brandAtlasModal.includes('col-span-2 inline-flex min-h-11') ||
     brandAtlasModal.includes('в Созвездии') ||
     [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
      brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex,brandAtlasModal].some(
       s=>/Астролябия имён|астролябию|астролябия и атлас|Созвездие имён|Созвездие складывается|Фокус созвездия|Другой флагман|Второй флагман/.test(s)))
   throw Error('W70 editorial naming and cross-format links mismatch');
 console.log('W70_EDITORIAL_NAMING_PASS');
+
+// W74: authored Russian breaks must survive 200%-root font reflow.
+// 44px minimum modal footer control height must not silently regress.
+if(!brandAtlasArticle.includes('data-atlas-intro-title')||
+   !brandAtlasArticle.includes('Почему Бог откры&shy;вает')||
+   !brandAtlasArticle.includes("overflowWrap: 'normal'")||
+   !brandAtlasArticle.includes("hyphens: 'manual'")||
+   brandAtlasModal.slice(brandAtlasModal.indexOf('data-modal-footer')).includes('min-h-10'))
+ throw Error('W74 Russian intro hyphenation or dossier control height drift');
+console.log('V13_W74_RUSSIAN_REFLOW_FOOTER_TARGETS_PASS');
 
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');

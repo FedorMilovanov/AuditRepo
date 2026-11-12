@@ -967,10 +967,11 @@ export function App() {
         {/* Introduction Essay */}
         <section id="article-introduction" className="scroll-mt-24 space-y-5">
           <h2
-            className="font-serif-display min-w-0 break-words text-2xl font-bold leading-snug [overflow-wrap:anywhere] sm:text-3xl"
-            style={{ color: 'var(--gb-ink)' }}
+            data-atlas-intro-title
+            className="font-serif-display min-w-0 text-2xl font-bold leading-snug sm:text-3xl"
+            style={{ color: 'var(--gb-ink)', overflowWrap: 'normal', wordBreak: 'normal', hyphens: 'manual' }}
           >
-            Почему Бог открывает Свои имена: не закли&shy;нание, а заветное само&shy;от&shy;кро&shy;ве&shy;ние
+            Почему Бог откры&shy;вает Свои имена: не закли&shy;нание, а заветное само&shy;от&shy;кро&shy;ве&shy;ние
           </h2>
 
           <div
