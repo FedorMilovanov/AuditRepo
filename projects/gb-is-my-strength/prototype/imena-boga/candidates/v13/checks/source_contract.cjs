@@ -564,3 +564,40 @@ for(const term of [
 ])if(!w61Script.includes(term))
  throw Error('W61 root-font witness missing: '+term);
 console.log('V13_W61_BOTH_CANDIDATES_ROOT_FONT_200_PASS');
+
+// W73: all reciprocal deep links must remain structurally valid. A mapping
+// identifies a corresponding study topic, NOT necessarily identical lexemes.
+// Standalone Atlas/Panorama copies are immutable in identity until Product
+// establishes one canonical shared data owner; fail on any drift.
+const atlasCrosswalk=fs.readFileSync(path.join(root,'atlas','src','data','topicCrosswalk.ts'),'utf8');
+const readerCrosswalk=fs.readFileSync(path.join(root,'sozvezdie','src','data','topicCrosswalk.ts'),'utf8');
+if(atlasCrosswalk!==readerCrosswalk)
+  throw Error('Atlas/Panorama topic crosswalk copies drifted');
+const pairs=[...atlasCrosswalk.matchAll(/^\s*\["([^"]+)", "([^"]+)"\],?$/gm)]
+  .map(([,atlas,reader])=>({atlas,reader}));
+if(pairs.length!==24||new Set(pairs.map(x=>x.atlas)).size!==24||
+   new Set(pairs.map(x=>x.reader)).size!==24)
+  throw Error('Crosswalk is not a 24-pair bijection');
+const atlasNamesSource=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const readerNamesSource=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const atlasEntries=atlasNamesSource.split('export const DIVINE_NAMES: DivineNameEntry[] = [')[1];
+const readerEntries=readerNamesSource.split('export const NAMES: NameEntry[] = [')[1];
+if(!atlasEntries||!readerEntries)throw Error('Missing authoritative study entry arrays');
+const atlasIds=[...atlasEntries.matchAll(/^\s{4}id: '([^']+)'/gm)].map(m=>m[1]);
+const readerIds=[...readerEntries.matchAll(/^\s{4}id: "([^"]+)"/gm)].map(m=>m[1]);
+if(atlasIds.length!==36||new Set(atlasIds).size!==36||
+   readerIds.length!==29||new Set(readerIds).size!==29)
+  throw Error('Study entry count or identity drifted (36 Atlas, 29 Panorama)');
+const atlasSet=new Set(atlasIds),readerSet=new Set(readerIds);
+for(const {atlas,reader} of pairs){
+  if(!atlasSet.has(atlas)||!readerSet.has(reader))
+    throw Error('Crosswalk points to missing entry: '+atlas+' / '+reader);
+}
+const atlasDossier=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+const w73ReaderSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
+if(!atlasDossier.includes('atlasToReader.get(entry.id)')||
+   !atlasDossier.includes('href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}')||
+   !w73ReaderSection.includes('readerToAtlas.get(name.id)')||
+   !w73ReaderSection.includes('href={`/imena-boga/atlas/#name-${encodeURIComponent(counterpartId)}`}'))
+  throw Error('Crosswalk no longer drives the reciprocal user links');
+console.log('W73_TOPIC_CROSSWALK_24_PASS',JSON.stringify({pairs:pairs.length,atlas:atlasIds.length,panorama:readerIds.length}));
