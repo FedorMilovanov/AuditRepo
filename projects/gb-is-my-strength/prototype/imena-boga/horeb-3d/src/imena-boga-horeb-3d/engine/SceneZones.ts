@@ -174,11 +174,37 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
   const particles: THREE.Points[] = [];
   const tmp: [number, number, number] = [0, 0, 0];
 
+  // One physically shared floor field governs the cave's final ring AND
+  // the first metres of exterior earth. The older separate height/color/UV
+  // formulae left a dark strip even though their world-space Z bounds were
+  // approximately adjacent. Never conceal that seam with an extra plane.
+  const floorHeight = (x: number, z: number, isChasmLip = false): number => {
+    const hw = halfWidth(z) + 1.2, cf = chasmF(z);
+    const n = fbm(x * 0.4, 3, z * 0.4, 3);
+    return 0.06 * n +
+      Math.max(0, Math.abs(x) - (hw - 2.2)) * 0.18 -
+      (cf > 0 && isChasmLip ? cf * (0.2 + 0.07 * n) : 0);
+  };
+  const floorColor = (x: number, z: number): [number, number, number] => {
+    const [tr, tg, tb] = tint(z);
+    bake(x, 0, z, tmp);
+    const n = fbm(x * 0.4, 3, z * 0.4, 3);
+    const wear = 1 + 0.12 * Math.exp(-(x * x) / 4);
+    const v = (0.45 + 0.5 * n) * wear * 0.85 * caveSurfaceVariation(x, 0, z);
+    return [tr * v * tmp[0], tg * v * tmp[1], tb * v * tmp[2]];
+  };
+  const floorUv = (x: number, z: number): [number, number] => {
+    const warp = fbm(x * 0.12, 0.5, z * 0.12, 2) - 0.5;
+    return [x * 0.3 + warp * 0.4, z * 0.3 + warp * 0.5];
+  };
+  let lastCaveFloorZ = TUNNEL_END - 4;
+
   // ── Тоннель / галереи: единая процедурная оболочка
   {
     const step = low ? 0.9 : 0.5, N = low ? 36 : 60;
     const zs: number[] = [];
     for (let z = 4; z >= TUNNEL_END - 4; z -= step) zs.push(z);
+    lastCaveFloorZ = zs[zs.length - 1];
     const pos: number[] = [], col: number[] = [], uv: number[] = [], idx: number[] = [];
     let weatheredCliffVertices = 0, weatheredCliffMin = Infinity, weatheredCliffMax = -Infinity;
     for (let i = 0; i < zs.length; i++) {
@@ -278,17 +304,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         if (j === M && cf > 0) x += cf * (
           0.075 * Math.sin(z * 0.79) + 0.065 *
           (fbm(x * 0.4, 0.7, z * 0.32, 3) - 0.5));
-        const n = fbm(x * 0.4, 3, z * 0.4, 3);
-        const edge = Math.max(0, Math.abs(x) - (hw - 2.2));
-        const y = 0.06 * n + edge * 0.18 -
-          (cf > 0 && j === M ? cf * (0.2 + 0.07 * n) : 0);
-        fp.push(x, y, z);
-        bake(x, 0, z, tmp);
-        const wear = 1 + 0.12 * Math.exp(-(x * x) / 4);
-        const v = (0.45 + 0.5 * n) * wear * 0.85 * caveSurfaceVariation(x, 0, z);
-        fc.push(tr * v * tmp[0], tg * v * tmp[1], tb * v * tmp[2]);
-        const warp = fbm(x * 0.12, 0.5, z * 0.12, 2) - 0.5;
-        fu.push(x * 0.3 + warp * 0.4, z * 0.3 + warp * 0.5);
+        fp.push(x, floorHeight(x, z, cf > 0 && j === M), z);
+        fc.push(...floorColor(x, z));
+        fu.push(...floorUv(x, z));
       }
     }
     for (let i = 0; i < zs.length - 1; i++) for (let j = 0; j < M; j++) {
@@ -537,35 +555,43 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
     tg.rotateX(-Math.PI / 2);
-    // Abut the existing cave floor without overlapping it by ~3 metres.
-    // Its near edge is z=-322, while low/high cave strips end at -321.8/-322.
-    tg.translate(0, 0, TUNNEL_END - 4 - 500);
+    // The first exterior row MUST be at the actual last existing shell ring
+    // in both LODs (LOW ends near -321.8, HIGH at -322). Merely aiming both
+    // at -322 leaves a real slit in LOW mode.
+    tg.translate(0, 0, lastCaveFloorZ - 500);
     const p = tg.attributes.position;
+    const terrainUv = tg.getAttribute('uv') as THREE.BufferAttribute;
     const tc: number[] = [];
+    const halfSpan = 600;
     for (let i = 0; i < p.count; i++) {
-      const x = p.getX(i), z = p.getZ(i);
-      const y = terrainHeight(x, z);
+      const originalX = p.getX(i);
+      // Graded world-space tessellation: same vertex count and draw calls,
+      // but sub-metre samples around the cave aperture instead of the former
+      // 6–11m spacing that bridged over the entire 7.6m-wide exit.
+      const x = Math.sign(originalX) * halfSpan *
+        Math.pow(Math.abs(originalX) / halfSpan, 1.45);
+      const z = p.getZ(i);
+      p.setX(i, x);
+      const mouth = ss(-340, lastCaveFloorZ, z) *
+        (1 - ss(5, 9, Math.abs(x)));
+      const outdoorY = terrainHeight(x, z);
+      const y = outdoorY * (1 - mouth) + floorHeight(x, z) * mouth;
       p.setY(i, y);
       const v = 0.5 + 0.5 * fbm(x * 0.05, 5, z * 0.05, 3);
       const hcol = Math.min(1, y / 200);
       const outdoor = [(0.26 + hcol * 0.08) * v,
         (0.2 + hcol * 0.05) * v, (0.17 + hcol * 0.06) * v];
-      // A physically adjacent ground plane should not switch from near-black
-      // cave floor to orange sand at the seam. Match the real cave vertex
-      // field at the lip, then fade into natural exterior earth by z=-340.
-      const mouth = ss(-340, TUNNEL_END - 4, z);
       if (mouth > 0) {
-        const [tr, tg, tb] = tint(z);
-        bake(x, 0, z, tmp);
-        const floorN = fbm(x * 0.4, 3, z * 0.4, 3);
-        const floorWear = 1 + 0.12 * Math.exp(-(x * x) / 4);
-        const rockValue = (0.45 + 0.5 * floorN) * floorWear * 0.85 *
-          caveSurfaceVariation(x, 0, z);
+        const inside = floorColor(x, z);
         tc.push(
-          outdoor[0] * (1 - mouth) + tr * rockValue * tmp[0] * mouth,
-          outdoor[1] * (1 - mouth) + tg * rockValue * tmp[1] * mouth,
-          outdoor[2] * (1 - mouth) + tb * rockValue * tmp[2] * mouth,
+          outdoor[0] * (1 - mouth) + inside[0] * mouth,
+          outdoor[1] * (1 - mouth) + inside[1] * mouth,
+          outdoor[2] * (1 - mouth) + inside[2] * mouth,
         );
+        const [u, vv] = floorUv(x, z);
+        terrainUv.setXY(i,
+          terrainUv.getX(i) * (1 - mouth) + u * mouth,
+          terrainUv.getY(i) * (1 - mouth) + vv * mouth);
       } else tc.push(...outdoor);
     }
     tg.setAttribute('color', new THREE.Float32BufferAttribute(tc, 3));
