@@ -1,5 +1,19 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.61 — physical Article folio and Pointer Lock photo regression (Draft LAB candidate)
+
+**Source-owned geometry, not a staged screenshot:** The Article exhibit previously suspended a giant rigid V-shaped book about 0.8m over its stone plinth, independently orbiting six paper rectangles and rotating three sheets up to ~180 degrees. The local replacement in `Stations.tsx` and `openBookGeometry.ts` removes detached and orbiting leaves. Both sides have bound physical paper volume and individual 171-vertex subtly crowned pages. A slightly inclined real hardwood reading board and two diagonal wooden braces anchor the display to the same pedestal used by the public museum station.
+
+**Numerical contact:** `ARTICLE_OPEN_BOOK_CONTACT_PASS` validates the true Station art origin (y=1.95), the plinth top (y=1.09), board front at y=1.09, support feet at y≈1.089, support heads at y≈1.891 and paper surface 10mm above its block, with direct source-JSX wiring and guards against reintroducing rotating/flying leaves. All 20 public approaches remain reachable with zero collision topology regression, and the independent CC0 chair contract continues to pass. The visual replacement is deliberately restrained, not a claim of photorealism.
+
+**Real visual review:** 4/4 actual public-map Article approach captures: Chromium and Windows Playwright WebKit × 1440×900 and 390×844. On the matching source screenshots the old suspended V is gone; the new folio is visibly held on its inclined stand with a legible two-page spread. JavaScript errors and document overflow: zero. The existing `central-book-browser.py` now also captures the separate Article display, in addition to the central reading table. These browser captures are **not** a physical Safari/Android or owner artistic sign-off.
+
+**Independent Linux CI issue from the preceding V5.60 SHA `a176e4f`:** [Validate 43320876956](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43320876956) finished **FAILURE** inside `photo-transition-browser.py`; a Linux Pointer Lock canvas intercepts Playwright desktop mouse-clicking the visible photo exit control. The documented real desktop exit is **H**, while touch still uses the actual button. The test now exercises those distinct user inputs, verifies the exit controls unmount, keeps the canvas and fade unchanged and was independently checked Windows Chromium/WebKit desktop/mobile **4/4 PASS**. Do not confuse that previous failed CI with the next source HEAD result.
+
+**Still held:** this is Draft / LAB / ART HOLD. All-new-head CI, owner approval of the premium two-level vaulted stone design, actual iOS/Android and XR routes, long-session GPU/VRAM/thermal proof, Product catalogue and rights are NOT complete. No main merge or website deployment.
+
+---
+
 ## V5.58 — complete walkable hall topology and sustained render characterization (local candidate)
 
 The preceding published LAB HEAD was `66b1953f066302b6730ca99b18bbb1450006875c` in the same Draft PR #545. **Exact-head GitHub Preflight [43118344367](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344367) SUCCESS and Linux Validate [43118344563](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344563) terminal SUCCESS**, with `browser_suites: 13, browser_cases: 65` verified in its log. Its independent Windows full browser suite is also **13/13 suites, 65/65 cases PASS**, runtime 415.94 s. **This is V5.57 acceptance, not acceptance of the following V5.58 topology test until that new HEAD independently completes CI.**

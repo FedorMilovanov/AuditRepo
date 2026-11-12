@@ -7,8 +7,8 @@ import { useApp, registry, openItem, get, set } from "../store";
 import { useReducedMotion } from "../motion";
 import { plaqueTexture, paperTexture, glowTexture } from "../textures";
 import { ConfessionArchive } from "./ConfessionArchive";
-import { Beam } from "./Center";
-import { darkStone, goldMat, marble, statue } from "./Platform";
+import { ARTICLE_BOOK, articleBookCenterY, makeArticlePageGeometry } from "./openBookGeometry";
+import { darkStone, goldMat, marble, statue, wood } from "./Platform";
 
 const shadowTex = glowTexture();
 
@@ -119,69 +119,76 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
 
 /* ───────────── 01 Статьи: раскрытая книга с листающимися страницами ───────────── */
 function BookArt({ color }: { color: string }) {
-  const reduced = useReducedMotion();
-  const paper = useMemo(() => new THREE.MeshStandardMaterial({ map: paperTexture(), roughness: 0.9, side: THREE.DoubleSide }), []);
-  const cover = useMemo(() => new THREE.MeshStandardMaterial({ color: "#6b1f2c", roughness: 0.5, metalness: 0.25 }), []);
+  const p = ARTICLE_BOOK;
+  const left = useMemo(() => makeArticlePageGeometry(-1), []);
+  const right = useMemo(() => makeArticlePageGeometry(1), []);
+  const leather = useMemo(
+    () => new THREE.MeshStandardMaterial({
+      color, roughness: 0.87, metalness: 0,
+    }), [color],
+  );
+  const edges = useMemo(
+    () => new THREE.MeshStandardMaterial({
+      color: "#e9d9b4", roughness: 0.94, metalness: 0,
+    }), [],
+  );
+  const paper = useMemo(
+    () => new THREE.MeshStandardMaterial({
+      map: paperTexture(), roughness: 0.96,
+      metalness: 0, side: THREE.DoubleSide,
+    }), [],
+  );
   useEffect(() => {
     if (paper.map) paper.map.needsUpdate = true;
-    return () => paper.map?.dispose();
-  }, [paper]);
-  const flips = useRef<THREE.Group[]>([]);
-  const sheets = useRef<THREE.Group>(null!);
-  useFrame(({ clock }) => {
-    const t = reduced ? 0 : clock.elapsedTime;
-    flips.current.forEach((g, i) => {
-      if (!g) return;
-      const k = (t / 3.4 + i / 3) % 1;
-      const e = k * k * (3 - 2 * k);
-      g.rotation.z = 0.12 + e * (Math.PI - 0.24);
-      g.position.y = 0.07 + Math.sin(e * Math.PI) * 0.0 + i * 0.002;
-    });
-    sheets.current.children.forEach((m, i) => {
-      const a = t * 0.35 + i * 1.0472;
-      m.position.set(Math.cos(a) * 1.45, 0.35 + Math.sin(t * 0.8 + i * 2) * 0.3, Math.sin(a) * 1.45);
-      m.rotation.set(t * 0.5 + i, a, t * 0.3 + i);
-    });
-  });
+    return () => {
+      left.dispose();
+      right.dispose();
+      paper.map?.dispose();
+      paper.dispose();
+      leather.dispose();
+      edges.dispose();
+    };
+  }, [left, right, paper, leather, edges]);
   return (
     <group>
-      <group scale={1.55} rotation={[0.38, 0, 0]}>
-        {[1, -1].map((s) => (
-          <group key={s} rotation-z={0.12 * s}>
-            <mesh position={[0.43 * s, -0.04, 0]} material={cover}>
-              <boxGeometry args={[0.88, 0.04, 1.12]} />
-            </mesh>
-            <mesh position={[0.41 * s, 0.025, 0]} material={paper}>
-              <boxGeometry args={[0.8, 0.08, 1.04]} />
-            </mesh>
-          </group>
-        ))}
-        <mesh position={[0, -0.05, 0]} material={cover}>
-          <boxGeometry args={[0.1, 0.05, 1.12]} />
+      {/* Grounded structural braces reach the raised back of the actual board. */}
+      {([-1, 1] as const).map((side) => (
+        <mesh key={side} position={[
+            side * p.braceX, p.braceCenterWorldY - p.stationArtOriginY,
+            p.braceCenterZ,
+          ]} rotation-x={p.braceTiltX} material={wood} castShadow receiveShadow>
+          <boxGeometry args={[0.115, p.braceLength, 0.14]} />
         </mesh>
-        {[0, 1, 2].map((i) => (
-          <group key={i} ref={(g) => { if (g) flips.current[i] = g; }} position={[0, 0.07, 0]}>
-            <mesh position={[0.39, 0, 0]} material={paper}>
-              <boxGeometry args={[0.78, 0.006, 1.02]} />
-            </mesh>
-          </group>
-        ))}
-      </group>
-      <group ref={sheets}>
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <mesh key={i} material={paper}>
-            <planeGeometry args={[0.3, 0.4]} />
+      ))}
+      <group position={[0, articleBookCenterY(), 0]}
+        rotation-x={p.displayTiltX} scale={p.displayScale}>
+        <mesh position={[0, p.panelCenterY, 0]} material={wood} castShadow receiveShadow>
+          <boxGeometry args={[p.panelWidth, p.panelThickness, p.panelDepth]} />
+        </mesh>
+      {([-1, 1] as const).map((side) => (
+        <group key={side}>
+          {/* Both leather boards contact the tilted wooden reading board. */}
+          <mesh position={[side * p.leafCenterX, 0, 0]}
+            material={leather} castShadow receiveShadow>
+            <boxGeometry args={[p.coverLeafWidth, p.coverThickness, p.coverDepth]} />
           </mesh>
-        ))}
-      </group>
-      <pointLight position={[0, 0.9, 0.4]} color="#ffe0b0" intensity={2.2} distance={6} decay={1.8} />
-      <group position={[0, 0.1, 0]}>
-        <Beam height={2.1} r0={0.7} r1={0.12} color={color} opacity={0.3} />
+          {/* A bound folio has paper volume and trimmed edges under its leaves. */}
+          <mesh position={[side * p.leafCenterX, p.pageBlockCenterY, 0]}
+            material={edges} castShadow receiveShadow>
+            <boxGeometry args={[p.pageBlockWidth, p.pageBlockThickness, p.pageBlockDepth]} />
+          </mesh>
+          <mesh geometry={side < 0 ? left : right} material={paper}
+            castShadow receiveShadow dispose={null} />
+        </group>
+      ))}
+      {/* Continuous, stitched spine: no detached upright sheets or orbits. */}
+      <mesh position={[0, 0.062, 0]} material={leather} castShadow>
+        <boxGeometry args={[0.075, 0.16, p.coverDepth]} />
+      </mesh>
       </group>
     </group>
   );
 }
-
 /* ───────────── 02 Серии: спираль книг ───────────── */
 const PALETTE = ["#7a1f2b", "#1f3a6b", "#c99a3a", "#2d6a5b", "#5a2d7a", "#a0482a", "#2a4d8f"];
 function SeriesArt({ color }: { color: string }) {

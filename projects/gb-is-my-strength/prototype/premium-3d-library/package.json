@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lab:check": "node scripts/verify-architecture.cjs && node tests/visited.cjs && node tests/reading-furniture-geometry.mjs && node tests/entrance-geometry.mjs",
+    "lab:check": "node scripts/verify-architecture.cjs && node tests/visited.cjs && node tests/reading-furniture-geometry.mjs && node tests/article-book-geometry.mjs && node tests/entrance-geometry.mjs",
     "lab:progression:test": "node tests/progression.cjs",
     "lab:cabinet:test": "node tests/cabinet.cjs",
     "lab:catalog:test": "node tests/catalog.cjs",

@@ -85,7 +85,17 @@ async def run(browser,engine,w,h,touch):
           return !!c && !!b && getComputedStyle(c).opacity === '1'
             && getComputedStyle(b).pointerEvents === 'auto';
         }""",timeout=3000,polling=100)
-        await exit_btn.click(timeout=10000)
+        # Under desktop Pointer Lock Chromium sends physical pointer clicks
+        # to the WebGL canvas, even when the HTML exit chip is visibly focused.
+        # The real documented desktop exit control is H. A touch visitor
+        # instead uses the actual public on-screen button.
+        if touch:
+            await exit_btn.click(timeout=10000)
+            exit_input="touch-button"
+        else:
+            await page.keyboard.press("h")
+            exit_input="desktop-key-H"
+        await controls.wait_for(state="detached",timeout=10000)
         await page.wait_for_timeout(110)
         after=await veil.evaluate("(e)=>getComputedStyle(e).opacity")
         assert float(after)==0,("photo exit blanked view",after)

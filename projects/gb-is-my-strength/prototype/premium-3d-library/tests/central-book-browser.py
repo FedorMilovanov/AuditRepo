@@ -7,6 +7,7 @@ physical accuracy or a substitute for expert art acceptance.
 import asyncio
 import json
 import os
+import re
 import tempfile
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -45,9 +46,33 @@ async def inspect(browser, engine, width, height, mobile):
         EVIDENCE.mkdir(parents=True, exist_ok=True)
         path = EVIDENCE / f"{engine}-{width}x{height}-central-book.png"
         await capture_evidence(page, path)
+
+        # A central table snapshot does not prove the separate Article book.
+        # Navigate with the real visitor-facing map and capture that book at
+        # exactly the same canonical approach in both desktop/mobile engines.
+        nav = page.locator('[data-gb-toolbar] button[title^="Карта сайта"]:visible').first
+        await nav.evaluate("(el) => el.click()")
+        map_dialog = page.get_by_role("dialog", name="Карта сайта")
+        await map_dialog.wait_for(state="visible", timeout=12000)
+        await map_dialog.get_by_role("searchbox", name="Поиск по карте сайта").fill("Статьи")
+        await map_dialog.get_by_role(
+            "button", name=re.compile("Статьи")
+        ).first.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="detached", timeout=12000)
+        await page.wait_for_timeout(3450)
+        aim = page.locator("[data-gb-aim]")
+        await aim.wait_for(state="visible", timeout=12000)
+        assert "Статьи" in await aim.inner_text(), (
+            engine, width, "Article approach did not aim at physical book"
+        )
+        article = EVIDENCE / f"{engine}-{width}x{height}-article-book.png"
+        await capture_evidence(page, article)
+        assert not errors, f"Article book rendering errors: {errors}"
         print(json.dumps({"engine": engine, "viewport": f"{width}x{height}",
                           "result": "PASS", "report": report,
-                          "screenshot": str(path), "errors": errors},
+                          "screenshot": str(path),
+                          "articleScreenshot": str(article),
+                          "errors": errors},
                          ensure_ascii=False), flush=True)
     finally:
         await context.close()
