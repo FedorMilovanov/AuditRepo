@@ -27,7 +27,7 @@ const witness = {
   timestamp: new Date().toISOString(),
   browser: chromePath,
   renderingMode: process.env.HOREB_SWIFTSHADER === '1' ? 'software-SwiftShader' : 'browser-default-not-verified-GPU',
-  desktop: [], mobile: [], details: [], closeBush: null, innerBush: null, errors: [],
+  desktop: [], mobile: [], details: [], exitSeam: [], closeBush: null, innerBush: null, errors: [],
 };
 const browser = await puppeteer.launch({
   executablePath: chromePath, headless: true, args, protocolTimeout: 90000,
@@ -119,6 +119,64 @@ try {
   witness.details.push({ id: 'zone6-continuous-roof', zone: 6, screenshot: exitClose,
     narrative: 'Camera at z=-309.5 looking toward exit; no nav certification' });
   console.log('PASS close-up zone-6 continuous roof screenshot ' + exitClose);
+
+  // The earlier roof frame looks toward the mouth from too far away to
+  // adjudicate the cave/terrain floor seam. Photograph the same physical
+  // boundary from BOTH sides at human eye height. Camera-only witness:
+  // actual keyboard movement is certified by the independent journey jobs.
+  // The exact seam-vertex agreement is asserted separately in construct.ts.
+  for (const pose of [
+    { slug: 'zone6-threshold-inside', z: -315.5, yaw: 0, pitch: -0.27, zone: 6 },
+    { slug: 'zone6-threshold-outside', z: -326, yaw: Math.PI, pitch: -0.37, zone: 7 },
+  ]) {
+    const previousFrame = await desktop.evaluate(({ z, yaw, pitch }) => {
+      const w = window.__horeb.world;
+      const before = w.renderer.info.render.frame;
+      w.teleportTo(0, z);
+      w.yaw = yaw;
+      w.pitch = pitch;
+      return before;
+    }, pose);
+    await waitForRenderedFrame(desktop, previousFrame, pose.zone);
+    const boundary = await desktop.evaluate(async () => {
+      const THREE = await import('/node_modules/.vite/deps/three.js');
+      const w = window.__horeb.world;
+      const cave = w.scene.getObjectByName('cave-floor-continuous');
+      const terrain = w.scene.getObjectByName('horeb-exterior-terrain');
+      if (!cave?.isMesh || !terrain?.isMesh)
+        throw new Error('Threshold visual witness missing either actual floor mesh');
+      const pos = cave.geometry.getAttribute('position');
+      let z = Infinity, y = NaN;
+      for (let i = 0; i < pos.count; i++) {
+        if (Math.abs(pos.getX(i)) < 0.005 && pos.getZ(i) < -310 &&
+            pos.getZ(i) < z) { z = pos.getZ(i); y = pos.getY(i); }
+      }
+      if (!Number.isFinite(z) || !Number.isFinite(y))
+        throw new Error('Cannot locate cave-mouth centre boundary station');
+      w.camera.updateMatrixWorld(true);
+      const projected = new THREE.Vector3(0, y, z).project(w.camera);
+      return { seamZ: z, seamY: y, ndcX: projected.x, ndcY: projected.y,
+        cameraZ: w.camera.position.z,
+        zone: window.__horeb.state().zone, caveMesh: cave.name,
+        exteriorMesh: terrain.name };
+    });
+    if (boundary.zone !== pose.zone ||
+        Math.abs(boundary.cameraZ - pose.z) > 0.05 ||
+        ![boundary.seamZ, boundary.seamY, boundary.ndcX, boundary.ndcY]
+          .every(Number.isFinite) ||
+        Math.abs(boundary.ndcX) > 0.85 ||
+        Math.abs(boundary.ndcY) > 0.85)
+      throw new Error('Threshold seam not actually framed: ' +
+        pose.slug + ' ' + JSON.stringify(boundary));
+    await new Promise((resolve) => setTimeout(resolve, 350));
+    const screenshot = 'visual-detail-' + pose.slug + '.png';
+    await desktop.screenshot({ path: join(shots, screenshot) });
+    witness.exitSeam.push({ ...pose, screenshot, ...boundary,
+      artGate: 'HOLD_HUMAN_ART_REVIEW',
+      narrative: 'Physical cave/terrain boundary framed from eye-height; camera-only, not nav or art approval' });
+    console.log('PASS threshold-framed zone-6 art witness ' + pose.slug + ' ' +
+      JSON.stringify(boundary));
+  }
 
   // Zone 4 is a ravine, not a flat wall. Both screenshots must show
   // physically DEEP opposite rock from positions reachable on the safe ledge.
@@ -456,6 +514,8 @@ const detailComplete = witness.details.length === 6 &&
   actualDetailShots.length === new Set(actualDetailShots).size &&
   expectedDetailShots.every((name) => actualDetailShots.includes(name));
 const ok = witness.desktop.length === 8 && witness.mobile.length === 3 &&
+  witness.exitSeam.length === 2 && witness.exitSeam.every((item) =>
+    existsSync(join(shots, item.screenshot))) &&
   detailComplete && witness.chasmGeometryGate === 'PASS_UNOBSTRUCTED_RAVINE' &&
   witness.closeBush?.shoes === 'shod' && witness.innerBush?.shoes === 'unshod' &&
   witness.innerBush?.distance >= 6.5 && witness.errors.length === 0;
