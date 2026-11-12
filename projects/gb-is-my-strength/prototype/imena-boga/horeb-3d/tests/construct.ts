@@ -802,48 +802,52 @@ for (const lowMode of [true, false]) {
       if (Math.abs(gPos.getZ(i) - seamZ) < 0.00005) front.push(i);
     front.sort((a, b) => gPos.getX(a) - gPos.getX(b));
     const portalSamples = front.filter(i => Math.abs(gPos.getX(i)) < 4.5);
-    t('Horeb terrain has real mouth-resolution vertex samples ' +
+    t('Horeb exterior terrain reuses every cave mouth X station ' +
         (lowMode ? 'LOW' : 'HIGH'),
-      portalSamples.length >= (lowMode ? 3 : 7));
-    let sampled = 0, maxHeightDifference = 0;
-    let maxColorDifference = 0, maxUvDifference = 0;
+      portalSamples.length >= (lowMode ? 17 : 29));
+    // A graph with two merely close spline contours still has raster slits.
+    // Prove every cave boundary station has a matching exterior vertex
+    // with the EXACT same position, vertex tint and UV, not a nearby
+    // interpolated edge. This prohibits T-junctions at either LOD.
+    let caveStations = 0, matchedStations = 0;
+    let maxPositionError = 0, maxColorError = 0, maxUvError = 0;
     for (let i = 0; i < cPos.count; i++) {
-      if (Math.abs(cPos.getZ(i) - seamZ) > 0.00005 ||
-          Math.abs(cPos.getX(i)) > 3.75) continue;
+      if (Math.abs(cPos.getZ(i) - seamZ) > 0.00005) continue;
+      caveStations++;
       const x = cPos.getX(i);
-      let right = front.findIndex(id => gPos.getX(id) >= x);
-      if (right < 1) continue;
-      const leftId = front[right - 1], rightId = front[right];
-      const x0 = gPos.getX(leftId), x1 = gPos.getX(rightId);
-      if (x1 <= x0) continue;
-      const t = (x - x0) / (x1 - x0);
-      const interp = (attribute: THREE.BufferAttribute, channel: 'X' | 'Y' | 'Z') => {
-        const get = channel === 'X' ? attribute.getX.bind(attribute) :
-          channel === 'Y' ? attribute.getY.bind(attribute) : attribute.getZ.bind(attribute);
-        return get(leftId) * (1 - t) + get(rightId) * t;
-      };
-      maxHeightDifference = Math.max(maxHeightDifference,
-        Math.abs(cPos.getY(i) - interp(gPos, 'Y')));
+      let nearest = -1, distance = Infinity;
+      for (const id of front) {
+        const d = Math.abs(gPos.getX(id) - x);
+        if (d < distance) { distance = d; nearest = id; }
+      }
+      if (nearest < 0 || distance > 0.00005) continue;
+      matchedStations++;
+      maxPositionError = Math.max(maxPositionError, distance,
+        Math.abs(cPos.getY(i) - gPos.getY(nearest)),
+        Math.abs(cPos.getZ(i) - gPos.getZ(nearest)));
       if (cCol && gCol) for (const channel of ['X', 'Y', 'Z'] as const) {
-        const get = channel === 'X' ? cCol.getX.bind(cCol) :
-          channel === 'Y' ? cCol.getY.bind(cCol) : cCol.getZ.bind(cCol);
-        maxColorDifference = Math.max(maxColorDifference,
-          Math.abs(get(i) - interp(gCol, channel)));
+        const read = channel === 'X' ? 'getX' :
+          channel === 'Y' ? 'getY' : 'getZ';
+        maxColorError = Math.max(maxColorError,
+          Math.abs(cCol[read](i) - gCol[read](nearest)));
       }
       if (cUv && gUv) for (const channel of ['X', 'Y'] as const) {
-        const get = channel === 'X' ? cUv.getX.bind(cUv) : cUv.getY.bind(cUv);
-        maxUvDifference = Math.max(maxUvDifference,
-          Math.abs(get(i) - interp(gUv, channel)));
+        const read = channel === 'X' ? 'getX' : 'getY';
+        maxUvError = Math.max(maxUvError,
+          Math.abs(cUv[read](i) - gUv[read](nearest)));
       }
-      sampled++;
     }
-    t('Horeb cave/exterior mouth shares ground height and colour ' +
+    console.log('HOREB mouth seam ' + (lowMode ? 'LOW' : 'HIGH') +
+      ' ' + JSON.stringify({ caveStations, matchedStations,
+        maxPositionError, maxColorError, maxUvError }));
+    t('Horeb cave and exterior share every boundary vertex without T-junctions ' +
         (lowMode ? 'LOW' : 'HIGH'),
-      sampled >= (lowMode ? 10 : 18) &&
-      maxHeightDifference < 0.09 && maxColorDifference < 0.11);
-    t('Horeb cave/exterior mouth shares stone UV alignment ' +
+      caveStations === (lowMode ? 17 : 29) &&
+      matchedStations === caveStations && maxPositionError < 0.00005);
+    t('Horeb cave/exterior mouth shares exact stone colour and UV per station ' +
         (lowMode ? 'LOW' : 'HIGH'),
-      sampled >= (lowMode ? 10 : 18) && maxUvDifference < 0.12);
+      matchedStations === caveStations &&
+      maxColorError < 0.00005 && maxUvError < 0.00005);
   }
   let apertureSafe = false;
   if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {
