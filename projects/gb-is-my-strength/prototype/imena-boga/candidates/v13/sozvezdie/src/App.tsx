@@ -89,7 +89,7 @@ export default function App() {
 
   // One viewport marker drives header state, active section AND rail visibility.
   // Rails are bound to the <main> article region so they can never overlap the
-  // wide "Созвездие имён" grid or the intro above it.
+  // wide "Панорама имён" grid or the intro above it.
   useEffect(() => {
     const sections = NAMES.map((n) => document.getElementById(n.id)).filter(
       (el): el is HTMLElement => !!el,

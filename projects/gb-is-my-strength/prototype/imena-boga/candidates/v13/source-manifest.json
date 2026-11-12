@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "d9c767080007be7f62ed45d7ea7f0b2ec7c29b51db89a914499b081e03966835",
-      "bytes_normalized": 67373
+      "sha256": "cfe9c5f8d31d8b893b2fb5b0e2ed4180dc4e43b13899d53ee51a524421b1ffd6",
+      "bytes_normalized": 67384
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "aadf84915157324787fb8b464f937a25777ba0118344dec0037e81762bdde07b",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "647aebf3a214795a1dc989666d47a08269711620c52ec0ff7830848181c3a133",
-      "bytes_normalized": 41257
+      "sha256": "2b6c5bf5141a8396590c8657a396586d99c210a07b21b318ebb84c3f6e69ab1b",
+      "bytes_normalized": 41744
     },
     "checks/visual_review.cjs": {
       "sha256": "b40ff2d1f867434804700731715b0649e6cf2345c6974a794a35442145483e1b",
@@ -236,8 +236,8 @@
       "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "f20fff05c1f3ea818582d97abe4495cc3ca14b5ffd1578cbbfcac5fbf616103d",
-      "bytes_normalized": 18142
+      "sha256": "7573063747e36b5788aed4e15c83e59446257bb9b5d8de8c8d2a07501cb86d65",
+      "bytes_normalized": 18140
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
@@ -264,8 +264,8 @@
       "bytes_normalized": 20963
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "e009d9c788a3902534ec787fd22348f73ff827d49cf44fcb02d14afb12b86236",
-      "bytes_normalized": 18657
+      "sha256": "c82d273c4c724bff0758ec26ad4c2c4dde669a1c28762b550df374dd4f275e8b",
+      "bytes_normalized": 18673
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "89ba44ff43ca049e1d3cc7c913b2ffc51fafc7df3e08b0a1899f8cf6dae187c8",

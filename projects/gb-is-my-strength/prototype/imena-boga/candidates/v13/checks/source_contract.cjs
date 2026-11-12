@@ -103,6 +103,8 @@ const brandAtlasHero=fs.readFileSync(path.join(root,'atlas','src','components','
 const brandReaderHero=fs.readFileSync(path.join(root,'sozvezdie','src','components','Hero.tsx'),'utf8');
 const brandReaderIndex=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameGrid.tsx'),'utf8');
 const brandReaderMap=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameTree.tsx'),'utf8');
+const brandReaderSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
+const brandAtlasArticle=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
 const brandAtlasIndex=fs.readFileSync(path.join(root,'atlas','src','components','DivineConstellationExplorer.tsx'),'utf8');
 if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библейское исследование') ||
     !brandAtlasHtml.includes('"headline": "Атлас имён Бога — библейское исследование"') ||
@@ -113,8 +115,11 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     !brandAtlasIndex.includes('Атлас имён Бога · интерактивный указатель') ||
     !brandReaderIndex.includes('Панорама имён') ||
     !brandReaderMap.includes('Навигация по схеме') ||
+    !brandReaderSection.includes('Атлас имён Бога · открыть разбор') ||
+    !brandReaderSection.includes('в Атласе имён Бога') ||
+    brandAtlasArticle.includes('даёт нам целое созвездие имён') ||
     [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
-     brandReaderIndex,brandReaderMap,brandAtlasIndex].some(
+     brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex].some(
       s=>/Астролябия имён|астролябию|астролябия и атлас|Созвездие имён|Созвездие складывается|Фокус созвездия|Другой флагман|Второй флагман/.test(s)))
   throw Error('W70 editorial naming and cross-format links mismatch');
 console.log('W70_EDITORIAL_NAMING_PASS');

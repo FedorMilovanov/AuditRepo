@@ -182,10 +182,10 @@ function NameSection({
                 <a
                   href={`/imena-boga/atlas/#name-${encodeURIComponent(counterpartId)}`}
                   className="mt-5 inline-flex min-h-11 max-w-full min-w-0 flex-wrap items-center justify-center gap-2 rounded-full border border-gold-500/35 bg-gold-500/[0.07] px-4 py-2 font-ui text-xs uppercase tracking-[0.16em] text-gold-200 transition-colors hover:border-gold-400/70 hover:bg-gold-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400"
-                  aria-label={`Перейти к соответствующему разделу «${name.translit}» в Астролябии`}
+                  aria-label={`Перейти к соответствующему разделу «${name.translit}» в Атласе имён Бога`}
                 >
                   <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-                  Астролябия · исследовать имя
+                  Атлас имён Бога · открыть разбор
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
               )}
