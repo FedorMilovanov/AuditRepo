@@ -30,7 +30,7 @@ export const PLACEMENTS: Record<string, [number, number]> = {
   // Зона 5 — Позднейшие свидетельства (12)
   'atiq-yomin': [-5, -234], 'elah-shmaya': [5, -237], 'abba': [-5, -244.2], 'pantokrator': [5, -246.8],
   'alpha-omega': [-5, -254.4], 'ego-eimi': [5, -256.6], 'immanuel': [-5, -264.6], 'kyrios-ho-theos': [5, -266.4],
-  'poimen-ho-kalos': [-5, -274.8], 'anastasis-zoe': [5, -276.2], 'ho-on-erchomenos': [-5, -285], 'arche-telos': [5, -286],
+  'poimen-ho-kalos': [-5, -274.8], 'anastasis-zoe': [5, -276.2], 'ho-on-erchomenos': [-5, -285], 'arche-telos': [4.8, -286],
   // Зона 7 — Хорив (2)
   'ehyeh': [-10.0, -347], 'yhwh': [10.0, -347],
 };
