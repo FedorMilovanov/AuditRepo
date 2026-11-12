@@ -784,27 +784,50 @@ async function visit(browser,engine,app,width,base){
     const headerUndersizedControls=headerControls.filter(r=>r.right-r.left<43||r.bottom-r.top<43).length;
     // The section kicker formerly clipped “Часть” inside overflow-clip while
     // the document width stayed correct. Check both semantic labels' actual boxes.
-    const kicker=app==='sozvezdie'?document.querySelector('#yhwh [data-name-section-kicker]'):null;
-    const countLabel=kicker?.querySelector('[data-name-section-count]'),
-      partLabel=kicker?.querySelector('[data-name-section-part]');
-    const countBox=countLabel?.getBoundingClientRect(),
-      partBox=partLabel?.getBoundingClientRect();
-    const kickerLabelsFound=!!(countBox&&partBox);
-    const kickerOverflow=!!kickerLabelsFound&&(
-      [countBox,partBox].some(r=>r.left< -2||r.right>root.clientWidth+2||r.width<1)||
-      countLabel.scrollWidth>countLabel.clientWidth+2||
-      partLabel.scrollWidth>partLabel.clientWidth+2);
-    const kickerOverlap=!!kickerLabelsFound&&
-      Math.min(countBox.right,partBox.right)-Math.max(countBox.left,partBox.left)>2&&
-      Math.min(countBox.bottom,partBox.bottom)-Math.max(countBox.top,partBox.top)>2;
+    // Shared NameSection uses the same component 29 times. A first-section-only
+    // contract misses longer two-digit labels and a later Part IV marker.
+    // Inspect every actual label; a parent overflow-clip hides the text without
+    // making document.scrollWidth larger, so page-width alone is insufficient.
+    const kickers=app==='sozvezdie'?
+      [...document.querySelectorAll('[data-name-section-kicker]')]:[];
+    const kickerAudit=kickers.map(kicker=>{
+      const countLabel=kicker.querySelector('[data-name-section-count]'),
+        partLabel=kicker.querySelector('[data-name-section-part]');
+      const countBox=countLabel?.getBoundingClientRect(),
+        partBox=partLabel?.getBoundingClientRect();
+      const labelsFound=!!(countBox&&partBox);
+      const overflow=!labelsFound||[countBox,partBox].some(r=>
+        r.left< -2||r.right>root.clientWidth+2||r.width<1)||
+        countLabel.scrollWidth>countLabel.clientWidth+2||
+        partLabel.scrollWidth>partLabel.clientWidth+2;
+      const overlap=!!labelsFound&&
+        Math.min(countBox.right,partBox.right)-Math.max(countBox.left,partBox.left)>2&&
+        Math.min(countBox.bottom,partBox.bottom)-Math.max(countBox.top,partBox.top)>2;
+      const box=r=>r?{left:r.left,right:r.right,top:r.top,bottom:r.bottom}:null;
+      return {sectionId:kicker.closest('section')?.id||null,
+        countText:countLabel?.textContent?.trim()||null,
+        partText:partLabel?.textContent?.trim()||null,
+        labelsFound,overflow,overlap,
+        countBox:box(countBox),partBox:box(partBox)};
+    });
+    const kickerFailures=kickerAudit.filter(item=>
+      !item.labelsFound||item.overflow||item.overlap);
+    const firstKicker=kickerAudit.find(item=>item.sectionId==='yhwh');
+    const kickerLabelsFound=!!firstKicker?.labelsFound;
+    const kickerOverflow=!!firstKicker?.overflow;
+    const kickerOverlap=!!firstKicker?.overlap;
+    const countBox=firstKicker?.countBox;
+    const partBox=firstKicker?.partBox;
     return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
       headerBrandFound:!!b,headerBrandWidth:b?.width??null,
       headerBrandAccessible:!!brand?.getAttribute('aria-label'),
       headerBrandPaintOverflow,headerOverlap,headerControlsOutOfBounds,headerUndersizedControls,
       headerControlsCount:headerControls.length,
       kickerLabelsFound,kickerOverflow,kickerOverlap,
-      kickerCountBox:countBox?{left:countBox.left,right:countBox.right,top:countBox.top,bottom:countBox.bottom}:null,
-      kickerPartBox:partBox?{left:partBox.left,right:partBox.right,top:partBox.top,bottom:partBox.bottom}:null,
+      kickerCount:kickerAudit.length,kickerFailures,
+      kickerLast:kickerAudit.length?kickerAudit[kickerAudit.length-1]:null,
+      kickerCountBox:countBox||null,
+      kickerPartBox:partBox||null,
       viewport:root.clientWidth,documentWidth:root.scrollWidth,
       headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
       headingClientWidth:target?.clientWidth??null,headingScrollWidth:target?.scrollWidth??null,
@@ -831,7 +854,8 @@ async function visit(browser,engine,app,width,base){
       !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24||
       !d.headerBrandFound||d.headerBrandWidth<48||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
       d.headerOverlap||d.headerControlsOutOfBounds||d.headerUndersizedControls>0||d.headerControlsCount<1||
-      (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap)))
+      (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap||
+        d.kickerCount!==29||d.kickerFailures.length>0)))
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
