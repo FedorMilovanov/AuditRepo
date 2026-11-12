@@ -606,11 +606,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
           outdoor[1] * (1 - mouth) + inside[1] * mouth,
           outdoor[2] * (1 - mouth) + inside[2] * mouth,
         );
-        const [u, vv] = floorUv(x, z);
-        terrainUv.setXY(i,
-          terrainUv.getX(i) * (1 - mouth) + u * mouth,
-          terrainUv.getY(i) * (1 - mouth) + vv * mouth);
       } else tc.push(...outdoor);
+      // The original PlaneGeometry UVs cover 1200 by 1000 metres with
+      // a single texture repeat. Interpolating them with cave metric UVs
+      // stretched the rock surface into a featureless, artificial sheet
+      // just outside the mouth even though position/tint/normals matched.
+      // Use the same world-space stone UV field across BOTH meshes, not a
+      // transitional UV scale (which would itself produce a visible band).
+      // MirroredRepeatWrapping on the shared rock texture handles tiling.
+      terrainUv.setXY(i, ...floorUv(x, z));
     }
     tg.setAttribute('color', new THREE.Float32BufferAttribute(tc, 3));
     tg.computeVertexNormals();

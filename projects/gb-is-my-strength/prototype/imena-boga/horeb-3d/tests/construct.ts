@@ -864,6 +864,26 @@ for (const lowMode of [true, false]) {
         (lowMode ? 'LOW' : 'HIGH'),
       matchedStations === caveStations && !!cNormal && !!gNormal &&
       maxNormalError < 0.00005 && minMouthNormalY > 0.6);
+
+    // Terrain UV density must be measured in world metres, not inherited
+    // from a 1200x1000 plane. Repeating a texture once across kilometres
+    // looks like an untextured slab even when the seam's first row matches.
+    const centreUvStations: { z: number; v: number }[] = [];
+    for (let i = 0; i < gPos.count; i++) {
+      const x = gPos.getX(i), z = gPos.getZ(i);
+      if (Math.abs(x) < 0.00005 && z < -345 && z > -395)
+        centreUvStations.push({ z, v: gUv.getY(i) });
+    }
+    centreUvStations.sort((a, b) => a.z - b.z);
+    const centreUvRates = centreUvStations.slice(1).map((item, index) => {
+      const prev = centreUvStations[index];
+      return Math.abs(item.v - prev.v) / Math.abs(item.z - prev.z);
+    });
+    t('Horeb exterior stone texture retains world-metric UV density ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      centreUvRates.length >= (lowMode ? 3 : 6) &&
+      centreUvRates.every(rate => rate > 0.18 && rate < 0.42));
+
   }
   let apertureSafe = false;
   if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {
