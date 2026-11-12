@@ -621,7 +621,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // No added surfaces, materials, lighting, or physics interventions.
     const mouthFloor = caveMouthFloor;
     if (!mouthFloor) throw new Error('Missing cave floor before exterior normal join');
-    const cp = mouthFloor.getAttribute('position');
+    const caveBoundaryPositions = mouthFloor.getAttribute('position');
     const cn = mouthFloor.getAttribute('normal');
     const en = tg.getAttribute('normal');
     const terrainStations: number[] = [];
@@ -629,15 +629,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       if (Math.abs(p.getZ(j) - lastCaveFloorZ) < 0.00005)
         terrainStations.push(j);
     let matchedNormals = 0;
-    for (let i = 0; i < cp.count; i++) {
-      if (Math.abs(cp.getZ(i) - lastCaveFloorZ) > 0.00005) continue;
+    for (let i = 0; i < caveBoundaryPositions.count; i++) {
+      if (Math.abs(caveBoundaryPositions.getZ(i) - lastCaveFloorZ) > 0.00005) continue;
       let best = -1, distance = Infinity;
       for (const j of terrainStations) {
-        const d = Math.abs(cp.getX(i) - p.getX(j));
+        const d = Math.abs(caveBoundaryPositions.getX(i) - p.getX(j));
         if (d < distance) { best = j; distance = d; }
       }
       if (best < 0 || distance > 0.00005 ||
-          Math.abs(cp.getY(i) - p.getY(best)) > 0.00005)
+          Math.abs(caveBoundaryPositions.getY(i) - p.getY(best)) > 0.00005)
         throw new Error('Disconnected floor at cave mouth normal join');
       const nx = cn.getX(i) + en.getX(best);
       const ny = cn.getY(i) + en.getY(best);
