@@ -174,24 +174,29 @@ const closestCell = (x, z) => {
   return -1;
 };
 assert(walkableAt(D.SPAWN.x, D.SPAWN.z), "Real initial spawn is blocked");
-const queue = new Int32Array(side * side), visited = new Uint8Array(side * side);
-let readIndex = 0, writeIndex = 0;
 const start = closestCell(D.SPAWN.x, D.SPAWN.z);
-assert(start >= 0, "Spawn has no walkable grid cell");
-queue[writeIndex++] = start; visited[start] = 1;
+assert(start >= 0 && walkable[start], "Spawn has no walkable grid cell");
 const moves = [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
-while (readIndex < writeIndex) {
-  const index = queue[readIndex++], x = index % side, z = (index - x) / side;
-  for (const [dx,dz] of moves) {
-    const nx = x + dx, nz = z + dz;
-    if (nx < 0 || nz < 0 || nx >= side || nz >= side) continue;
-    const next = nz * side + nx;
-    if (!walkable[next] || visited[next]) continue;
-    if (dx !== 0 && dz !== 0 &&
-      (!walkable[z * side + nx] || !walkable[nz * side + x])) continue;
-    visited[next] = 1; queue[writeIndex++] = next;
+const reachableFromSpawn = (available) => {
+  const queue = new Int32Array(side * side), visited = new Uint8Array(side * side);
+  let readIndex = 0, writeIndex = 0;
+  assert(available[start], "Probe blocked the real spawn");
+  queue[writeIndex++] = start; visited[start] = 1;
+  while (readIndex < writeIndex) {
+    const index = queue[readIndex++], x = index % side, z = (index - x) / side;
+    for (const [dx, dz] of moves) {
+      const nx = x + dx, nz = z + dz;
+      if (nx < 0 || nz < 0 || nx >= side || nz >= side) continue;
+      const next = nz * side + nx;
+      if (!available[next] || visited[next]) continue;
+      if (dx !== 0 && dz !== 0 &&
+        (!available[z * side + nx] || !available[nz * side + x])) continue;
+      visited[next] = 1; queue[writeIndex++] = next;
+    }
   }
-}
+  return { visited, reachableCells: writeIndex };
+};
+const { visited, reachableCells } = reachableFromSpawn(walkable);
 for (const exhibit of D.ITEMS) {
   const approach = D.approachPose(exhibit);
   assert(walkableAt(approach.x, approach.z),
@@ -204,8 +209,27 @@ for (const exhibit of D.ITEMS) {
     step * Math.SQRT2 / 2 + 0.02,
     `Arrival to ${exhibit.id} snaps too far from the actual approach pose`);
 }
+// Negative fixture: surround one still-walkable approach with an artificial
+// closed barrier. The same BFS must detect isolation, even though the target
+// itself is not colliding with any obstacle. Never apply this to scene data.
+const target = D.approachPose(D.byId("articles"));
+const targetCell = closestCell(target.x, target.z);
+assert(targetCell >= 0 && walkable[targetCell], "Route negative fixture target not walkable");
+const enclosed = walkable.slice();
+for (let z = 0; z < side; z++) for (let x = 0; x < side; x++) {
+  const distance = Math.hypot(xy(x) - target.x, xy(z) - target.z);
+  if (distance >= 0.75 && distance <= 1.25) enclosed[z * side + x] = 0;
+}
+assert(enclosed[targetCell], "Negative fixture must preserve the destination cell");
+const blocked = reachableFromSpawn(enclosed);
+assert(!blocked.visited[targetCell],
+  "BFS incorrectly accepts an intact destination cut off by a closed barrier");
+console.log("HALL_ROUTE_NEGATIVE_PASS " + JSON.stringify({
+  fixture: "closed-barrier-around-articles", targetStillWalkable: true,
+  disconnectedTargetDetected: true,
+}));
 console.log("HALL_ROUTE_TOPOLOGY_PASS " + JSON.stringify({
-  reachableExhibits: D.ITEMS.length, reachableCells: writeIndex,
+  reachableExhibits: D.ITEMS.length, reachableCells,
   gridStepMetres: step, diagonalCornerCutting: false,
 }));
 console.log("FURNITURE_COLLISION_PASS " + JSON.stringify(furnitureProof));
