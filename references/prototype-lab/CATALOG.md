@@ -6,6 +6,7 @@
 
 | Эксперимент | Где искать рабочий образец | Что уже существует | Статус / следующий шаг |
 |---|---|---|---|
+| Reader «На полях» — исследовательская панель | [полный исходник и контрольные суммы](../../projects/gb-is-my-strength/prototype/study-panel-lab/AUDITREPO_HANDOFF.md) | 65 оригинальных файлов (JS/CSS/HTML, тесты, документация, 43 PNG), manifest SHA-256; исходный Product e4eb066 | **IMPORTED / source exact-match 2026-11-13**; архив лаборатории, прежние 125 PASS относятся только к исходной версии, чистая сборка в AuditRepo пока NOT RUN; дальше owner UX review и right-panel-only пилот, не Product live |
 | Grok Desktop Reader | [папка в main](../../projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) | HTML reference V22–V26, QA, передачи агентам и Product-заметки | Реальные reference-файлы в main; актуальные визуальные решения проверить в project README; **не** считать live Product |
 | Book Engine v7 | [папка в main](../../projects/gb-is-my-strength/prototype/book-engine/v7/README.md) | HTML-прототип и исторические аудит/QA | Исторический образец; перед продолжением выяснить, актуален ли этот design owner |
 | Имена Бога — Atlas / Sozvezdie | [AuditRepo draft PR #538](https://github.com/FedorMilovanov/AuditRepo/pull/538) | Два независимых React-прототипа и проверенные кандидаты; код **пока в ветке PR**, не в main | `lab-active` на ветке PR; Research [#379](https://github.com/FedorMilovanov/Research/pull/379) не разрешает публикацию; проверять head, webkit/права/owner review |
