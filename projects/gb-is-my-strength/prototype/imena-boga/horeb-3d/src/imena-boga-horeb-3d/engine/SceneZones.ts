@@ -562,14 +562,30 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const terrainUv = tg.getAttribute('uv') as THREE.BufferAttribute;
     const tc: number[] = [];
     const halfSpan = 600;
+    const ringSegments = low ? 16 : 28;
+    const halfRings = ringSegments / 2;
+    const halfGrid = seg / 2;
+    const lipHalfWidth = halfWidth(lastCaveFloorZ) + 1.2;
     for (let i = 0; i < p.count; i++) {
       const originalX = p.getX(i);
-      // Graded world-space tessellation: same vertex count and draw calls,
-      // but sub-metre samples around the cave aperture instead of the former
-      // 6–11m spacing that bridged over the entire 7.6m-wide exit.
-      const x = Math.sign(originalX) * halfSpan *
-        Math.pow(Math.abs(originalX) / halfSpan, 1.45);
       const z = p.getZ(i);
+      // A visual seam cannot be welded by merely using the same height
+      // FUNCTION: when two meshes sample that function at different X
+      // locations, their rasterized linear edges form thin slits.
+      // Give the first terrain row EXACTLY the same 17/29 X stations as
+      // the existing cave floor ring, not a different approximate spline.
+      // Transition into the prior graded sampling farther outside. This
+      // keeps the original terrain vertex/index count and physics unchanged.
+      const gridSteps = Math.abs(originalX) * seg / (halfSpan * 2);
+      const portalX = gridSteps <= halfRings
+        ? lipHalfWidth * gridSteps / halfRings
+        : lipHalfWidth + (halfSpan - lipHalfWidth) *
+          Math.pow((gridSteps - halfRings) / (halfGrid - halfRings), 1.30);
+      const alignedX = Math.sign(originalX) * portalX;
+      const gradedX = Math.sign(originalX) * halfSpan *
+        Math.pow(Math.abs(originalX) / halfSpan, 1.45);
+      const stationBlend = ss(-348, lastCaveFloorZ, z);
+      const x = alignedX * stationBlend + gradedX * (1 - stationBlend);
       p.setX(i, x);
       const mouth = ss(-340, lastCaveFloorZ, z) *
         (1 - ss(5, 9, Math.abs(x)));
