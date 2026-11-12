@@ -170,7 +170,7 @@ if (!qAtlasNavbar.includes('id="gb-mobile-atlas-nav-trigger"') ||
     qAtlasPillars.includes('data-atlas-launcher-shell') ||
     !qAtlasNavbar.includes('min-[1440px]:hidden inline-flex') ||
     !atlasReaderText.includes('закли&shy;нание') ||
-    !atlasReaderText.includes('само&shy;откровение') ||
+    !atlasReaderText.includes('само&shy;от&shy;кро&shy;ве&shy;ние') ||
     !atlasReaderCss.includes('hyphens: auto;') ||
     qAtlasPillars.includes('text-[10px]') ||
     qAtlasPillars.includes('text-[11px]')) {
