@@ -21,16 +21,16 @@ export const PLACEMENTS: Record<string, [number, number]> = {
   'el-shaddai': [-8.0, -72], 'el-olam': [8.0, -84], 'el-roi': [-8.0, -96], 'el-bethel': [8.0, -108],
   // Зона 3 — Память о действии (7)
   'yireh': [-3.5, -122], 'nissi': [3.5, -130], 'shalom': [-3.5, -138], 'rapha': [3.5, -146],
-  'mekoddishkem': [-3.5, -154], 'yah': [3.5, -161], 'ro-i': [-3.5, -167],
+  'mekoddishkem': [-3.5, -154], 'yah': [3.5, -161], 'ro-i': [-3.5, -168],
   // Зона 4 — Святость и Воинства (11). Справа провал (часм): правые стелы на уступе x≈3.8 (не x=3.2 — props
   // не должны закрывать центр прохода), левые на широком полу x≈-8.5.
-  'sabaoth': [-8.5, -176], 'el-gibbor': [3.8, -181], 'tsidkenu': [-8.5, -186], 'shammah': [3.8, -191],
-  'el-qanna': [-8.5, -196], 'adonai': [3.8, -201], 'qedosh-yisrael': [-8.5, -206], 'el-hay': [3.8, -211],
-  'avinu': [-8.5, -216], 'yhwh-ori': [3.8, -221], 'el-rahum-hannun': [-8.5, -225],
+  'sabaoth': [-8.5, -177], 'el-gibbor': [3.8, -181], 'tsidkenu': [-8.5, -186.6], 'shammah': [3.8, -191],
+  'el-qanna': [-8.5, -196.2], 'adonai': [3.8, -201], 'qedosh-yisrael': [-8.5, -205.8], 'el-hay': [3.8, -211],
+  'avinu': [-8.5, -215.4], 'yhwh-ori': [3.8, -221], 'el-rahum-hannun': [-8.5, -225],
   // Зона 5 — Позднейшие свидетельства (12)
-  'atiq-yomin': [-4.6, -234], 'elah-shmaya': [4.6, -238], 'abba': [-4.6, -243], 'pantokrator': [4.6, -248],
-  'alpha-omega': [-4.6, -253], 'ego-eimi': [4.6, -258], 'immanuel': [-4.6, -263], 'kyrios-ho-theos': [4.6, -268],
-  'poimen-ho-kalos': [-4.6, -273], 'anastasis-zoe': [4.6, -278], 'ho-on-erchomenos': [-4.6, -282], 'arche-telos': [4.6, -286],
+  'atiq-yomin': [-5, -234], 'elah-shmaya': [5, -237], 'abba': [-5, -244.2], 'pantokrator': [5, -246.8],
+  'alpha-omega': [-5, -254.4], 'ego-eimi': [5, -256.6], 'immanuel': [-5, -264.6], 'kyrios-ho-theos': [5, -266.4],
+  'poimen-ho-kalos': [-5, -274.8], 'anastasis-zoe': [5, -276.2], 'ho-on-erchomenos': [-5, -285], 'arche-telos': [5, -286],
   // Зона 7 — Хорив (2)
   'ehyeh': [-10.0, -347], 'yhwh': [10.0, -347],
 };

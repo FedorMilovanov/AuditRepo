@@ -14,6 +14,7 @@ import { SITE_CLUES, SITE_CLUE_IDS, SITE_CLUE_STORAGE_KEY, normalizeSiteClues, a
 import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpedition } from './data/expedition';
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
+import { JOURNEY_BEATS } from './data/journeyBeats';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
@@ -344,6 +345,8 @@ export default function HorebApp() {
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
   const zoneInfo = ZONES[zone];
+  const walkingBeat = ws?.journeyBeat
+    ? JOURNEY_BEATS.find(beat => beat.id === ws.journeyBeat) : null;
   const nextLesson = nextLearningLesson(learning);
   // User-approved subdued HUD: let the bush take visual focus at close range.
   // Critical prompts and the sandal gate live outside .hud and remain opaque.
@@ -460,6 +463,16 @@ export default function HorebApp() {
         </nav>
         {settings.showStats && ws && <p className="absolute top-20 right-4 text-[11px] font-mono text-muted text-right">{ws.fps} fps · {ws.calls} calls · {(ws.tris / 1000).toFixed(0)}k tris · dpr {ws.pixelRatio}<br />x {ws.x.toFixed(1)} z {ws.z.toFixed(1)} · куст {ws.distBush.toFixed(1)} м · {ws.shoes}</p>}
       </div>
+
+      {walkingBeat && !dialog && !ws?.prompt && !ws?.block && ws?.shoes !== 'removing' && (
+        <aside data-testid="journey-walking-moment" aria-label="Путевая заметка"
+          className="pointer-events-none absolute left-3 sm:left-6 top-32 sm:top-36 max-w-[min(80vw,23rem)] rounded-sm border border-parch/20 bg-black/80 p-3 shadow-lg">
+          <p className="text-xs text-bronze">Путевая пауза · художественная экспозиция</p>
+          <p className="font-display text-lg text-parch mt-1">{walkingBeat.title}</p>
+          <p className="text-sm text-parch/85 mt-1 leading-relaxed">{walkingBeat.text}</p>
+          <p className="text-xs text-parch/55 mt-1">{walkingBeat.source}</p>
+        </aside>
+      )}
 
       {ws && !ws.locked && !isTouch && !dialog && !ws.block && ws.zone < 6 && (
         <p data-testid="world-keyboard-help" className="absolute bottom-24 inset-x-0 px-3 text-center pointer-events-none">

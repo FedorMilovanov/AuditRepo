@@ -3,6 +3,7 @@ import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-bui
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
+import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
@@ -11,6 +12,19 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+t('eight original museum walking moments in ascending depth',
+  JOURNEY_BEATS.length === 8 &&
+  new Set(JOURNEY_BEATS.map(b => b.id)).size === 8 &&
+  JOURNEY_BEATS.every((b, i) => b.text.length > 32 && b.source &&
+    (i === 0 || JOURNEY_BEATS[i - 1].atZ > b.atZ)));
+t('a real 0.2m walking step announces a section at most once',
+  journeyBeatCrossing(-7.92, -8.12, new Set())?.id === 'threshold' &&
+  journeyBeatCrossing(-7.92, -8.12, new Set(['threshold'])) === null);
+t('teleports, reverse walking, stationary and invalid input never fire narration',
+  journeyBeatCrossing(0, -100, new Set()) === null &&
+  journeyBeatCrossing(-8.3, -8, new Set()) === null &&
+  journeyBeatCrossing(-8, -8, new Set()) === null &&
+  journeyBeatCrossing(NaN, -8.12, new Set()) === null);
 const errs = validateExhibits(EXHIBITS);
 if (errs.length) console.log(errs.join('\n'));
 t('registry passes editorial invariants', errs.length === 0);

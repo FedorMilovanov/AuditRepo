@@ -96,5 +96,22 @@ for (const [id, [x, z]] of Object.entries(PLACEMENTS)) {
 }
 if (!collBad) t(`all 42 prop-collision circles leave centre path (≥${CENTRE_MIN}m)`, true);
 
+// Cross-gallery minimum must be measured in 2D walking metres rather
+// than the 5-metre axial staggering. All 42 steles stay in canonical zones.
+const pairs = Object.entries(PLACEMENTS);
+let minSeparation = Infinity;
+for (let i = 0; i < pairs.length; i++) for (let j = i + 1; j < pairs.length; j++) {
+  const [, [ax, az]] = pairs[i], [, [bx, bz]] = pairs[j];
+  minSeparation = Math.min(minSeparation, Math.hypot(ax - bx, az - bz));
+}
+t('all 42 exhibit stations separated by >=9.5 real metres',
+  Number.isFinite(minSeparation) && minSeparation >= 9.5,
+  'nearest centres=' + minSeparation.toFixed(2) + ' m');
+t('zone 4/5 witnesses remain in canonical chapters',
+  EXHIBITS.filter(e => e.zone === 4 || e.zone === 5).every(e => {
+    const z = PLACEMENTS[e.id]?.[1];
+    return e.zone === 4 ? z <= -171 && z > -229 : z <= -229 && z > -288;
+  }));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

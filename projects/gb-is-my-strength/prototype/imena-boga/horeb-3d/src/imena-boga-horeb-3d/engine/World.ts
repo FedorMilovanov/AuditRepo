@@ -6,6 +6,7 @@ import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_TAMARISK_OFFSET, BEERSHEBA_WELL_COLLIDER_RADIUS, GETHSEMANE_PRAYER_OFFSET, JEREMIAH_CITY_WALL_OFFSET } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
+import { journeyBeatCrossing } from '../data/journeyBeats';
 import { BEACON_IDS, createNameBeacon, beaconViewFactor } from './NameBeacon';
 import { choosePixelRatio, resetsAutoLowered } from './quality';
 import { validateExhibits } from '../data/validate';
@@ -18,6 +19,7 @@ export interface WorldState {
   distBush: number; fps: number; calls: number; tris: number; locked: boolean; contextLost: boolean; pixelRatio: number;
   // Optional true spatial observations; unrelated to sacred access or quiz scores.
   focusClue: SiteClueId | null;
+  journeyBeat: string | null;
 }
 export interface WorldSettings { quality: 'low' | 'high'; reducedMotion: boolean; particles: boolean; sound: boolean; exposure: number; autoQuality: boolean }
 
@@ -84,6 +86,8 @@ export class World {
   private autoLoweredResolution = false;
   private emitT = 0;
   private stepAcc = 0;
+  private seenJourneyBeats = new Set<string>();
+  private activeJourneyBeat: { id: string; until: number } | null = null;
   private dragging: { id: number; x: number; y: number } | null = null;
   private contextLost = false;
   private disposed = false;
@@ -632,6 +636,12 @@ export class World {
     if (c.block === 'outer' || c.block === 'inner' || nearOuter) { if (nearOuter && !c.block) c.block = 'outer'; this.block = c.block; if (moving) this.vel.multiplyScalar(0.3); }
     else if (this.block && distToBush(c.x, c.z) > (this.block === 'outer' ? R_OUTER + 2.5 : 9)) this.block = null;
     const stepD = Math.hypot(c.x - this.pos.x, c.z - this.pos.y);
+    const beat = moving && !this.inputLocked
+      ? journeyBeatCrossing(this.pos.y, c.z, this.seenJourneyBeats) : null;
+    if (beat) {
+      this.seenJourneyBeats.add(beat.id);
+      this.activeJourneyBeat = { id: beat.id, until: this.t + 7.5 };
+    }
     this.pos.set(c.x, c.z);
     this.stepAcc += stepD;
     if (this.stepAcc > 0.72) { this.stepAcc = 0; this.audio.step(!shod); }
@@ -710,6 +720,8 @@ export class World {
       distBush: distToBush(this.pos.x, this.pos.y), fps: this.fps, calls: this.renderer.info.render.calls, tris: this.renderer.info.render.triangles,
       locked: document.pointerLockElement === this.canvas, contextLost: this.contextLost, pixelRatio: this.renderer.getPixelRatio(),
       focusClue: this.focusForHud(force),
+      journeyBeat: this.activeJourneyBeat && this.t < this.activeJourneyBeat.until
+        ? this.activeJourneyBeat.id : null,
     };
     this.onState(s);
   }
