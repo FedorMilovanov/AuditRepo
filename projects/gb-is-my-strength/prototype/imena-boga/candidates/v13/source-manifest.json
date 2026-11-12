@@ -184,8 +184,8 @@
       "bytes_normalized": 38927
     },
     "checks/visual_review.cjs": {
-      "sha256": "c566dff8fd6a81da99668343395fa400657ecc2f32b46b2b7795b845d654700d",
-      "bytes_normalized": 54704
+      "sha256": "6c0910b6dd93ffc3489f9740eb44f9021951085f2cc6f7a39c461b467ae790f3",
+      "bytes_normalized": 56104
     },
     "README.md": {
       "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
@@ -264,8 +264,8 @@
       "bytes_normalized": 20968
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "fec08d70e5d9e03dbc98285e8a006793833b57892bfd07a500f35b706c13e7d8",
-      "bytes_normalized": 18381
+      "sha256": "e009d9c788a3902534ec787fd22348f73ff827d49cf44fcb02d14afb12b86236",
+      "bytes_normalized": 18657
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "305e1c9939c96958010f50f842fd0fc933926d4504a159bfe1ef82c2fdcb8b80",

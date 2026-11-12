@@ -128,11 +128,12 @@ function NameSection({
         {/* header */}
         <Reveal>
           <div
-            className={`flex items-center gap-4 font-ui text-xs font-medium uppercase tracking-[0.4em] text-gold-400/90`}
+            data-name-section-kicker
+            className="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-2 font-ui text-xs font-medium uppercase tracking-[0.18em] text-gold-400/90 sm:tracking-[0.4em]"
           >
-            <span>Раздел {num} / {NAMES.length}</span>
-            <span className="hairline flex-1" />
-            <span className="text-right text-cream-500">
+            <span data-name-section-count className="min-w-0 [overflow-wrap:anywhere]">Раздел {num} / {NAMES.length}</span>
+            <span aria-hidden="true" className="hairline hidden min-w-4 flex-1 sm:block" />
+            <span data-name-section-part className="ml-auto min-w-0 text-right text-cream-500 [overflow-wrap:anywhere]">
               Часть {part.numeral}
               <span className="hidden lg:inline"> · {part.title} · {scriptLabel(name)}</span>
             </span>
