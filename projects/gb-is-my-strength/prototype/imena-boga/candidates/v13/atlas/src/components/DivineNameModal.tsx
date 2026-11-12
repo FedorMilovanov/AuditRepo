@@ -667,8 +667,8 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               className="font-ui order-4 col-span-2 inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:order-none sm:col-auto sm:w-auto sm:px-3"
               style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
             >
-              <BookOpen className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              <span className="min-w-0 break-words text-center">Панорама имён Бога</span>
+              <BookOpen className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
+              <span className="min-w-0 break-normal text-center">Панорама имён Бога</span>
               <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </a>
           )}

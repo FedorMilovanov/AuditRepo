@@ -775,11 +775,20 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         const rect=link?.getBoundingClientRect(),range=document.createRange();
         if(link)range.selectNodeContents(link);
         const fragments=link?[...range.getClientRects()]:[];
+        const title=link?.querySelector('span');
+        const wordNode=title?.firstChild;
+        const firstWord=wordNode?.textContent?.trim().split(/\s+/)[0]||'';
+        const wordRange=document.createRange();
+        if(wordNode?.nodeType===Node.TEXT_NODE&&firstWord)
+          wordRange.setStart(wordNode,0),wordRange.setEnd(wordNode,firstWord.length);
+        const wordRects=firstWord?[...wordRange.getClientRects()]:[];
+        const firstWordSplit=wordRects.length!==1;
         const data={
           found:!!link,text:link?.textContent?.trim(),
           aria:link?.getAttribute('aria-label'),href:link?.getAttribute('href'),
           left:rect?.left,right:rect?.right,
           clientWidth:link?.clientWidth,scrollWidth:link?.scrollWidth,
+          firstWord,firstWordSplit,
           fragmentsOutside:!!link&&fragments.some(r=>
             r.left<rect.left-2||r.right>rect.right+2),
           viewport:root.clientWidth,documentWidth:root.scrollWidth,
@@ -797,6 +806,8 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
          counterpartLayout.left < -2 ||
          counterpartLayout.right>counterpartLayout.viewport+2||
          counterpartLayout.scrollWidth>counterpartLayout.clientWidth+2||
+         counterpartLayout.firstWord!=='Панорама'||
+         counterpartLayout.firstWordSplit||
          counterpartLayout.fragmentsOutside||
          counterpartLayout.documentWidth>counterpartLayout.viewport+2)
         throw Error('Atlas-to-Panorama 200% dossier link clipped '+

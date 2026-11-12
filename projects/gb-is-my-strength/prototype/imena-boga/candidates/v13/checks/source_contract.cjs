@@ -121,7 +121,8 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     brandAtlasArticle.includes('даёт нам целое созвездие имён') ||
     brandAtlasArticle.includes('«созвездие» имён') ||
     !brandAtlasModal.includes('в Панораме имён Бога') ||
-    !brandAtlasModal.includes('min-w-0 break-words text-center">Панорама имён Бога</span>') ||
+    !brandAtlasModal.includes('min-w-0 break-normal text-center">Панорама имён Бога</span>') ||
+    !brandAtlasModal.includes('hidden h-3.5 w-3.5 shrink-0 sm:block') ||
     !brandAtlasModal.includes('order-4 col-span-2 inline-flex min-h-11') ||
     !brandAtlasModal.includes('order-3 col-span-2 inline-flex') ||
     brandAtlasModal.includes('в Созвездии') ||
