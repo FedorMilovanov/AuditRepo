@@ -61,6 +61,10 @@ async function anchorShot(page,label,selector,top=112){
  record('screenshot-anchor',{label,selector,...pos});
  if(Math.abs(pos.top-top)>3||pos.width<1||pos.scrollWidth>pos.clientWidth+2){
   problem('BLOCKER','screenshot-anchor-invalid',{label,selector,...pos});
+  // Capture painted pixels before failing, without waiving the geometry requirement.
+  try { await shot(page,label+'-INVALID'); } catch(e) {
+   record('screenshot-anchor-invalid-capture-failed',{label,error:String(e).slice(0,300)});
+  }
   throw Error('Bad screenshot anchor: '+label);
  }
  await shot(page,label);
@@ -842,6 +846,10 @@ async function visit(browser,engine,app,width,base){
       titleFound:!!title,titleWidth:title?.getBoundingClientRect().width??null,
       titleScrollWidth:title?.scrollWidth??null,titleClientWidth:title?.clientWidth??null,
       titleWrap:title?getComputedStyle(title).overflowWrap:null,
+      titleWordBreak:title?getComputedStyle(title).wordBreak:null,
+      titleWhiteSpace:title?getComputedStyle(title).whiteSpace:null,
+      titleFontPx:title?parseFloat(getComputedStyle(title).fontSize):null,
+      titleHyphens:title?getComputedStyle(title).hyphens:null,
       overflowCandidates:[...document.body.querySelectorAll('*')].map(el=>{
        const r=el.getBoundingClientRect();
        return {tag:el.tagName,id:el.id||null,cls:String(el.className).slice(0,100),
