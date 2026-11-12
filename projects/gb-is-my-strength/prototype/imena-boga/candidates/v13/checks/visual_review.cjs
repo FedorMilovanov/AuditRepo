@@ -847,6 +847,10 @@ async function visit(browser,engine,app,width,base){
    // cannot accidentally compound two independent 200% stress scenarios.
    await page.reload({waitUntil:'domcontentloaded',timeout:30000});
    await waitVisual(page);
+   // WebKit can defer mobile text autosizing until an offscreen heading is laid out.
+   // Focus the actual target before taking the clean baseline and applying 200%.
+   await page.locator('#article-introduction h2').scrollIntoViewIfNeeded();
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
    const textBaseline=await page.evaluate(()=>{
     const title=document.querySelector('#article-introduction h2');
     const root=document.documentElement;
@@ -869,7 +873,25 @@ async function visit(browser,engine,app,width,base){
      nodes.forEach((el,i)=>el.style.setProperty('font-size',fontSizes[i]*2+'px','important'));
      return nodes.length;
     });
-    await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(resolve))});
+    // A single frame occasionally saw WebKit's pre-resize 24px value while
+    // the subsequent screenshot already painted at 48px. Require two consecutive
+    // settled frames at the exact intended 200%; never accept 100% as success.
+    const fontSettle=await page.evaluate(async expected=>{
+     const title=document.querySelector('#article-introduction h2');
+     const samples=[];let stable=0;
+     for(let attempt=0;attempt<24;attempt++){
+      await document.fonts.ready;
+      await new Promise(resolve=>requestAnimationFrame(resolve));
+      const px=title?parseFloat(getComputedStyle(title).fontSize):null;
+      samples.push({attempt:attempt+1,px,inline:title?.style.getPropertyValue('font-size')||''});
+      stable=px!==null&&Math.abs(px-expected)<0.5?stable+1:0;
+      if(stable>=2)break;
+     }
+     return {stable:stable>=2,expected,samples};
+    },textBaseline.titleFontPx*2);
+    record('atlas-text-resize-200-font-settle',{engine,width,...fontSettle});
+    if(!fontSettle.stable)
+     problem('BLOCKER','atlas-text-resize-200-unstable-font',{engine,width,...fontSettle});
     const result=await page.evaluate(()=>{
      const doc=document.documentElement;
      const button=[...document.querySelectorAll('button')].find(el=>el.textContent?.includes('Развернуть все 36 разборов'));
@@ -885,7 +907,6 @@ async function visit(browser,engine,app,width,base){
       titleWrap:title?getComputedStyle(title).overflowWrap:null,
       titleWordBreak:title?getComputedStyle(title).wordBreak:null,
       titleWhiteSpace:title?getComputedStyle(title).whiteSpace:null,
-      titleFontPx:title?parseFloat(getComputedStyle(title).fontSize):null,
       titleHyphens:title?getComputedStyle(title).hyphens:null,
       overflowCandidates:[...document.body.querySelectorAll('*')].map(el=>{
        const r=el.getBoundingClientRect();
