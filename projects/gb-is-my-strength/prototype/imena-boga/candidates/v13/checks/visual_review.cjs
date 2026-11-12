@@ -761,6 +761,25 @@ async function visit(browser,engine,app,width,base){
    const d=await page.evaluate(({app,selector})=>{
     const root=document.documentElement,target=document.querySelector(selector);
     const h=target?.getBoundingClientRect();
+    // W75: prove a Russian word never leaves a single-letter orphan at 200%.
+    const introWord=app==='atlas'?(()=>{
+      const word='откры\u00adвает';
+      const node=[...(target?.childNodes||[])].find(n=>
+        n.nodeType===Node.TEXT_NODE&&n.textContent?.includes(word));
+      const at=node?.textContent?.indexOf(word)??-1,rows=[];
+      if(at>=0)for(let k=0;k<word.length;k++){
+        if(word[k]==='\u00ad')continue;
+        const rg=document.createRange();
+        rg.setStart(node,at+k);rg.setEnd(node,at+k+1);
+        const b=rg.getBoundingClientRect();
+        let row=rows.find(r=>Math.abs(r.top-b.top)<3);
+        if(!row){row={top:b.top,count:0};rows.push(row)}
+        row.count++;
+      }
+      const st=target?getComputedStyle(target):null;
+      return {found:at>=0,overflowWrap:st?.overflowWrap,hyphens:st?.hyphens,
+        lines:rows.map(r=>r.count)};
+    })():null;
     const menu=document.querySelector(app==='atlas'?'[data-covenant-map-nav]':'#sozvezdie-mobile-index-trigger');
     const m=menu?.getBoundingClientRect();
     // A page-width-only test missed real root-200% glyph collisions in the fixed header.
@@ -831,6 +850,7 @@ async function visit(browser,engine,app,width,base){
       viewport:root.clientWidth,documentWidth:root.scrollWidth,
       headingFound:!!h,headingLeft:h?.left??null,headingRight:h?.right??null,
       headingClientWidth:target?.clientWidth??null,headingScrollWidth:target?.scrollWidth??null,
+      introWord,
       controlFound:!!m,controlLeft:m?.left??null,controlRight:m?.right??null,
       controlWidth:m?.width??null,
       // Strict evidence: record the actual DOM boxes that force document width.
@@ -857,6 +877,10 @@ async function visit(browser,engine,app,width,base){
       (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap||
         d.kickerCount!==29||d.kickerFailures.length>0)))
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
+   if(app==='atlas'&&(!d.introWord?.found||
+      d.introWord.overflowWrap!=='normal'||d.introWord.hyphens!=='manual'||
+      !d.introWord.lines.length||d.introWord.lines.some(n=>n<2)))
+    problem('BLOCKER','atlas-intro-word-orphan-root200',{engine,width,introWord:d.introWord});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
    await page.evaluate(async()=>{
@@ -866,6 +890,37 @@ async function visit(browser,engine,app,width,base){
   });
 
   if(app==='atlas' && [320,390].includes(width)){
+   // W75: last-card images contain no Panorama control; capture a middle
+   // dossier with all four footer actions in Chromium/WebKit at 200%.
+   await safeAction(page,engine+'-atlas-'+width+'-middle-modal-footer-root200',async()=>{
+     await page.goto(base+'/atlas/#name-yhwh',{waitUntil:'domcontentloaded',timeout:30000});
+     await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+     const modal=page.getByRole('dialog');
+     await modal.waitFor({state:'visible',timeout:20000});
+     await page.evaluate(async()=>{
+       document.documentElement.style.setProperty('font-size','200%','important');
+       await document.fonts.ready;
+       await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+     });
+     const footer=modal.locator('[data-modal-footer]');
+     await footer.scrollIntoViewIfNeeded();
+     const bounds=await footer.evaluate(el=>{
+       const nodes=[...el.children].filter(n=>n.matches('button,a'));
+       const viewport=document.documentElement.clientWidth;
+       return {count:nodes.length,viewport,documentWidth:document.documentElement.scrollWidth,
+         heights:nodes.map(n=>n.getBoundingClientRect().height),
+         outOfBounds:nodes.filter(n=>{
+           const r=n.getBoundingClientRect();return r.left< -2||r.right>viewport+2;
+         }).length};
+     });
+     record('atlas-middle-modal-footer-root200',{engine,width,...bounds});
+     if(bounds.count!==4||bounds.heights.some(h=>h<43)||
+        bounds.outOfBounds||bounds.documentWidth>bounds.viewport+2)
+       problem('BLOCKER','atlas-middle-modal-footer-root200-invalid',{engine,width,...bounds});
+     await shot(page,engine+'-atlas-'+width+'-middle-modal-footer-root200');
+     await page.goto(base+'/atlas/',{waitUntil:'domcontentloaded',timeout:30000});
+     await waitVisual(page);
+   });
    // A root-font 200% probe runs earlier on this page. Reload before text-only
    // enlargement so WebKit mobile text inflation / asynchronous style recalculation
    // cannot accidentally compound two independent 200% stress scenarios.
