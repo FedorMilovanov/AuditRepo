@@ -823,6 +823,22 @@ async function visit(browser,engine,app,width,base){
   });
 
   if(app==='atlas' && [320,390].includes(width)){
+   // A root-font 200% probe runs earlier on this page. Reload before text-only
+   // enlargement so WebKit mobile text inflation / asynchronous style recalculation
+   // cannot accidentally compound two independent 200% stress scenarios.
+   await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+   await waitVisual(page);
+   const textBaseline=await page.evaluate(()=>{
+    const title=document.querySelector('#article-introduction h2');
+    const root=document.documentElement;
+    return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
+      titleFontPx:title?parseFloat(getComputedStyle(title).fontSize):null,
+      viewport:root.clientWidth,documentWidth:root.scrollWidth};
+   });
+   record('atlas-text-resize-200-fresh-baseline',{engine,width,...textBaseline});
+   if(Math.abs(textBaseline.rootFontPx-16)>0.5||!textBaseline.titleFontPx||
+      textBaseline.documentWidth>textBaseline.viewport+2)
+    problem('BLOCKER','atlas-text-resize-200-invalid-baseline',{engine,width,...textBaseline});
    // WCAG text-only resize stress. Unlike browser page zoom, this keeps
    // responsive breakpoints unchanged while enlarging text to 200%.
    // Never hide horizontal scrolling as a substitute for reflow.
@@ -842,6 +858,8 @@ async function visit(browser,engine,app,width,base){
      const parent=button?.parentElement?.getBoundingClientRect();
      const title=document.querySelector('#article-introduction h2');
      return {viewport:doc.clientWidth,documentWidth:doc.scrollWidth,
+      rootFontPx:parseFloat(getComputedStyle(doc).fontSize),
+      titleFontPx:title?parseFloat(getComputedStyle(title).fontSize):null,
       buttonFound:!!button,buttonRight:rect?.right??null,parentRight:parent?.right??null,
       titleFound:!!title,titleWidth:title?.getBoundingClientRect().width??null,
       titleScrollWidth:title?.scrollWidth??null,titleClientWidth:title?.clientWidth??null,
@@ -858,6 +876,8 @@ async function visit(browser,engine,app,width,base){
     });
     record('atlas-text-resize-200',{engine,width,count,...result});
     if(!result.buttonFound || !result.titleFound ||
+       Math.abs(result.rootFontPx-textBaseline.rootFontPx)>0.5||
+       Math.abs(result.titleFontPx-2*textBaseline.titleFontPx)>0.5||
        result.titleScrollWidth>result.titleClientWidth+2 ||
        result.documentWidth>result.viewport+2 ||
        (result.buttonRight!==null && result.parentRight!==null &&
