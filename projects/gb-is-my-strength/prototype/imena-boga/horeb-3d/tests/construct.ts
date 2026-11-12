@@ -780,11 +780,71 @@ for (const lowMode of [true, false]) {
     for (let i = 0; i < points.count; i++) max = Math.max(max, points.getZ(i));
     return max;
   };
-  t('Horeb floor and exterior earth have no overlapping surface ' +
+  // The old test tolerated a 0.9m geometric gap at the cave mouth.
+  // The ground and cave now share the precise final ring even on LOW,
+  // whose angular/axial step lands at -321.8 rather than -322.
+  const seamZ = floor ? minZ(floor) : NaN;
+  t('Horeb floor and exterior earth physically meet without gap or overlap ' +
       (lowMode ? 'LOW' : 'HIGH'),
     !!floor && !!terrain &&
-    Math.abs(minZ(floor) - maxZ(terrain)) < 0.9 &&
-    maxZ(terrain) <= TUNNEL_END - 3.99);
+    Number.isFinite(seamZ) &&
+    Math.abs(seamZ - maxZ(terrain)) < 0.00005 &&
+    maxZ(terrain) <= TUNNEL_END - 3.7);
+  if (floor instanceof THREE.Mesh && terrain instanceof THREE.Mesh) {
+    const cPos = floor.geometry.getAttribute('position');
+    const cCol = floor.geometry.getAttribute('color');
+    const cUv = floor.geometry.getAttribute('uv');
+    const gPos = terrain.geometry.getAttribute('position');
+    const gCol = terrain.geometry.getAttribute('color');
+    const gUv = terrain.geometry.getAttribute('uv');
+    const front: number[] = [];
+    for (let i = 0; i < gPos.count; i++)
+      if (Math.abs(gPos.getZ(i) - seamZ) < 0.00005) front.push(i);
+    front.sort((a, b) => gPos.getX(a) - gPos.getX(b));
+    const portalSamples = front.filter(i => Math.abs(gPos.getX(i)) < 4.5);
+    t('Horeb terrain has real mouth-resolution vertex samples ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      portalSamples.length >= (lowMode ? 3 : 7));
+    let sampled = 0, maxHeightDifference = 0;
+    let maxColorDifference = 0, maxUvDifference = 0;
+    for (let i = 0; i < cPos.count; i++) {
+      if (Math.abs(cPos.getZ(i) - seamZ) > 0.00005 ||
+          Math.abs(cPos.getX(i)) > 3.75) continue;
+      const x = cPos.getX(i);
+      let right = front.findIndex(id => gPos.getX(id) >= x);
+      if (right < 1) continue;
+      const leftId = front[right - 1], rightId = front[right];
+      const x0 = gPos.getX(leftId), x1 = gPos.getX(rightId);
+      if (x1 <= x0) continue;
+      const t = (x - x0) / (x1 - x0);
+      const interp = (attribute: THREE.BufferAttribute, channel: 'X' | 'Y' | 'Z') => {
+        const get = channel === 'X' ? attribute.getX.bind(attribute) :
+          channel === 'Y' ? attribute.getY.bind(attribute) : attribute.getZ.bind(attribute);
+        return get(leftId) * (1 - t) + get(rightId) * t;
+      };
+      maxHeightDifference = Math.max(maxHeightDifference,
+        Math.abs(cPos.getY(i) - interp(gPos, 'Y')));
+      if (cCol && gCol) for (const channel of ['X', 'Y', 'Z'] as const) {
+        const get = channel === 'X' ? cCol.getX.bind(cCol) :
+          channel === 'Y' ? cCol.getY.bind(cCol) : cCol.getZ.bind(cCol);
+        maxColorDifference = Math.max(maxColorDifference,
+          Math.abs(get(i) - interp(gCol, channel)));
+      }
+      if (cUv && gUv) for (const channel of ['X', 'Y'] as const) {
+        const get = channel === 'X' ? cUv.getX.bind(cUv) : cUv.getY.bind(cUv);
+        maxUvDifference = Math.max(maxUvDifference,
+          Math.abs(get(i) - interp(gUv, channel)));
+      }
+      sampled++;
+    }
+    t('Horeb cave/exterior mouth shares ground height and colour ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      sampled >= (lowMode ? 10 : 18) &&
+      maxHeightDifference < 0.09 && maxColorDifference < 0.11);
+    t('Horeb cave/exterior mouth shares stone UV alignment ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      sampled >= (lowMode ? 10 : 18) && maxUvDifference < 0.12);
+  }
   let apertureSafe = false;
   if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {
     const shapes = face.geometry.parameters.shapes;
