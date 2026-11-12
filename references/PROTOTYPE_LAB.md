@@ -1,8 +1,10 @@
-# Prototype Lab — лаборатория интерфейсов и исследовательских прототипов
+# Отдел разработок — Prototype Lab: рабочие образцы и продолжаемые проекты
 
 **Статус:** навигационный вход в уже существующие `projects/<project>/prototype/` — не новый репозиторий, не Product-ветка и не вторая матрица ошибок.
 
-Здесь сохраняются исходные макеты и альтернативные реализации, сравниваются сильные стороны агентов, проверяются гипотезы и готовятся **выборочные переносы** в Product. Самостоятельный макет допустим как лабораторный результат; он не становится действующим кодом сайта и не создаёт право редактировать Product.
+Здесь находятся **сами создаваемые проекты**: исходные HTML/React/Canvas/Three.js/WebGL-приложения, версии, тесты, скриншоты и инструкция продолжения для следующего агента. Это **не** раздел словесных предложений об улучшениях (им занимается `WORK_QUEUE.md`) и не поисковая матрица багов. Здесь также сохраняются исходные макеты и альтернативные реализации, сравниваются сильные стороны агентов и готовятся **выборочные переносы** в Product. Самостоятельный макет допустим как лабораторный результат; он не становится действующим кодом сайта и не создаёт право редактировать Product.
+
+**Начать работу:** [каталог реальных образцов](prototype-lab/CATALOG.md) → [правила Отдела разработок](prototype-lab/DEVELOPMENT_DEPARTMENT.md) → конкретный проектный README и текущий PR/branch → [шаблон продолжения для агента](prototype-lab/templates/AGENT_CONTINUATION.md). Общий [workflow](prototype-lab/WORKFLOW.md) продолжает действовать. При отсутствии исходников в PR агент не должен рисовать «новый такой же сайт» вместо продолжения кода.
 
 ## Существующие лаборатории
 
@@ -11,6 +13,7 @@
 | `gb-is-my-strength` | [Grok desktop reader](../projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) — отбор UX из версий V16–V26 | Reference; пример [PR #537](https://github.com/FedorMilovanov/AuditRepo/pull/537) |
 | `gb-is-my-strength` | [Book engine v7](../projects/gb-is-my-strength/prototype/book-engine/v7/README.md) — книжный движок | Исторический prototype/evidence; проверить актуальность перед использованием |
 | `gb-is-my-strength` | [Имена Бога — Atlas / Созвездие](https://github.com/FedorMilovanov/AuditRepo/pull/538) — два Arena React-флагмана и четыре версии исходников | Draft PR #538, не Product и не live |
+| `gb-is-my-strength` | [HOREB 3D](https://github.com/FedorMilovanov/AuditRepo/pull/543) — отдельный Arena Three.js прототип пещеры | Draft PR #543; **IMPORTED** — код, тесты, immutable ZIP и hash manifest подтверждены; clean build/browser/публикация не заявлены |
 
 Остальные прежние каталоги `prototype/` не нужно массово перемещать или переименовывать ради новой схемы. Новая лаборатория — **общий метод и индекс, а не новая копия всех файлов**.
 
@@ -28,7 +31,7 @@ projects/<product>/prototype/<experiment>/
   HANDOFF.md                   # появляется только при переносе
 ```
 
-Каталоги опциональны; **не создавайте пустые папки ради шаблона**. Используйте [шаблон карточки](prototype-lab/templates/PROTOTYPE.md) и [методику](prototype-lab/WORKFLOW.md).
+Каталоги опциональны; **не создавайте пустые папки ради шаблона**. Для нового исполняемого проекта обязательны проектный README, актуальный checkpoint (`AGENT_HANDOFF.md` либо существующий `NEXT-AGENT.md`), оригинал/provenance и доказательство фактического запуска. Точный список и границы описаны в [Отделе разработок](prototype-lab/DEVELOPMENT_DEPARTMENT.md). Используйте [шаблон карточки](prototype-lab/templates/PROTOTYPE.md) и [методику](prototype-lab/WORKFLOW.md).
 
 ## Операционная модель
 

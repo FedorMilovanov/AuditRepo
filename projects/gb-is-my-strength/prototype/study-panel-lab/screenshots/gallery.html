@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>«На полях» — галерея состояний</title>
+<style>
+  :root { color-scheme:light; --paper:#fbf7f0; --ink:#241c15; --muted:#766857; --accent:#7a2e2e; --rule:#e4d9c8; --ui:'Source Sans 3',system-ui,sans-serif; --serif:Lora,Georgia,serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:400 15px/1.55 var(--serif); }
+  header { padding:34px clamp(20px,5vw,64px) 26px; border-bottom:1px solid var(--rule); }
+  .eyebrow { display:block; font:800 10px/1 var(--ui); letter-spacing:.28em; text-transform:uppercase; color:var(--accent); }
+  h1 { margin:10px 0 8px; font:600 clamp(30px,4vw,46px)/1.1 var(--serif); }
+  p { margin:0; max-width:70ch; color:var(--muted); }
+  a.live { display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding:10px 18px; border:1px solid var(--accent); color:var(--accent); text-decoration:none; font:700 12px/1 var(--ui); letter-spacing:.04em; }
+  a.live:hover { background:var(--accent); color:#fff; }
+  main { padding:clamp(20px,4vw,52px); display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:28px; }
+  figure { margin:0; border-top:1px solid var(--rule); padding-top:12px; }
+  figure img { display:block; width:100%; height:auto; border:1px solid var(--rule); box-shadow:0 18px 44px -34px rgba(60,32,18,.7); background:#fff; }
+  figcaption { margin-top:10px; font:600 12px/1.4 var(--ui); color:var(--ink); }
+  figcaption small { display:block; font-weight:400; color:var(--muted); margin-top:2px; }
+  footer { padding:22px clamp(20px,5vw,64px) 40px; border-top:1px solid var(--rule); font:400 12px/1.5 var(--ui); color:var(--muted); }
+  @media (prefers-reduced-motion:reduce) { * { transition:none!important; animation:none!important; } }
+</style>
+</head>
+<body>
+<header>
+  <span class="eyebrow">Изолированный прототип · Герменевтика</span>
+  <h1>«На полях»</h1>
+  <p>Правая исследовательская область для реальной статьи «Оценка христоцентричной герменевтики». Автоследование, ручной разбор и закреплённая память разделены; центр остаётся текстом.</p>
+  <a class="live" href="../">Открыть живой интерактивный прототип →</a>
+</header>
+<main>
+  <figure><a href="01-desktop-1920-light.png"><img src="01-desktop-1920-light.png" alt="Широкий desktop 1920, светлая тема, три зоны"></a><figcaption>01 · 1920 px, день<small>Полная трёхзонная система, пять тезисов автора и нить разделов сразу видны.</small></figcaption></figure>
+  <figure><a href="02-hover-verse-tooltip.png"><img src="02-hover-verse-tooltip.png" alt="Предпросмотр стиха при наведении"></a><figcaption>02 · Hover-предпросмотр<small>Реальный текст из аппарата статьи у самой ссылки, без ухода со страницы.</small></figcaption></figure>
+  <figure><a href="03-verse-open.png"><img src="03-verse-open.png" alt="Открытое место Писания на полях"></a><figcaption>03 · Клик по ссылке<small>«Разбор»: дословный стих, источник, контекст, обратные цитаты, закрепление.</small></figcaption></figure>
+  <figure><a href="04-verse-context-expanded.png"><img src="04-verse-context-expanded.png" alt="Раскрытый контекст стиха"></a><figcaption>04 · Контекст стиха<small>Реальные соседние стихи из локального корпуса data/bible.</small></figcaption></figure>
+  <figure><a href="05-term-and-pinned.png"><img src="05-term-and-pinned.png" alt="Определение понятия и закреплённые материалы"></a><figcaption>05 · Понятие + память<small>Определение из data/glossary.json; полка «Закреплено» всегда на виду.</small></figcaption></figure>
+  <figure><a href="06-compare.png"><img src="06-compare.png" alt="Сравнение двух закреплённых материалов"></a><figcaption>06 · Сравнение<small>Два дословных материала рядом, без выдуманного вывода.</small></figcaption></figure>
+  <figure><a href="07-concept-graph.png"><img src="07-concept-graph.png" alt="Сеть понятий"></a><figcaption>07 · Сеть понятий<small>Ребра = совместная встречаемость терминов в абзацах статьи; лимит 26 связей.</small></figcaption></figure>
+  <figure><a href="08-index-search.png"><img src="08-index-search.png" alt="Указатель статьи с поиском"></a><figcaption>08 · Указатель<small>Поиск по 181 ссылке, 14 понятиям, разделам и словам из стихов.</small></figcaption></figure>
+  <figure><a href="09-desktop-1920-dark.png"><img src="09-desktop-1920-dark.png" alt="Широкий desktop, тёмная тема"></a><figcaption>09 · 1920 px, ночь<small>Те же пропорции, тёплый тёмный фон, контраст 15.22:1.</small></figcaption></figure>
+  <figure><a href="10-right-collapsed.png"><img src="10-right-collapsed.png" alt="Правая панель свёрнута"></a><figcaption>10 · Правая панель закрыта<small>Центр расширяется; появляется тонкая кнопка возврата.</small></figcaption></figure>
+  <figure><a href="11-left-collapsed.png"><img src="11-left-collapsed.png" alt="Левая панель свёрнута"></a><figcaption>11 · Левая панель закрыта<small>Панели сворачиваются независимо друг от друга.</small></figcaption></figure>
+  <figure><a href="12-laptop-1440-light.png"><img src="12-laptop-1440-light.png" alt="Ноутбук 1440 px"></a><figcaption>12 · 1440 px, ноутбук<small>Умеренно суженные поля без потери трёх зон.</small></figcaption></figure>
+  <figure><a href="13-laptop-scrolled-autofollow.png"><img src="13-laptop-scrolled-autofollow.png" alt="Автоследование после прокрутки"></a><figcaption>13 · Автоследование<small>Лента сменилась вместе с разделом; «Разбор» и память не тронуты.</small></figcaption></figure>
+  <figure><a href="14-1280.png"><img src="14-1280.png" alt="1280 px"></a><figcaption>14 · 1280 px<small>Последняя ширина с полной трёхзонной системой.</small></figcaption></figure>
+  <figure><a href="15-1024.png"><img src="15-1024.png" alt="1024 px, статья на всю ширину"></a><figcaption>15 · 1024 px, гибрид<small>Обе панели уходят в drawer; статья занимает всю ширину.</small></figcaption></figure>
+  <figure><a href="16-tablet-768-drawer.png"><img src="16-tablet-768-drawer.png" alt="Планшет 768, правая панель как drawer"></a><figcaption>16 · 768 px, drawer<small>Правое поле открывается поверх статьи по явному действию.</small></figcaption></figure>
+  <figure><a href="17-mobile-390-article.png"><img src="17-mobile-390-article.png" alt="Мобильная статья 390 px"></a><figcaption>17 · 390 px, чтение<small>Только текст и нижняя хром-панель; ничего не перекрывает абзацы.</small></figcaption></figure>
+  <figure><a href="18-mobile-390-sheet.png"><img src="18-mobile-390-sheet.png" alt="Мобильный bottom-sheet с Писанием"></a><figcaption>18 · 390 px, bottom-sheet<small>Те же три ленты, но в нижней шторке; ручка видна только когда шторка открыта.</small></figcaption></figure>
+  <figure><a href="19-mobile-390-sheet-sepia.png"><img src="19-mobile-390-sheet-sepia.png" alt="Мобильная шторка, сепия"></a><figcaption>19 · 390 px, сепия<small>Тёплая бумага серии на мобильном.</small></figcaption></figure>
+  <figure><a href="20-mobile-390-sheet-dark.png"><img src="20-mobile-390-sheet-dark.png" alt="Мобильная шторка, ночь"></a><figcaption>20 · 390 px, ночь<small>Тёмная тема без чистого чёрного.</small></figcaption></figure>
+  <figure><a href="22-desktop-speed-pill.png"><img src="22-desktop-speed-pill.png" alt="Оригинальный горизонтальный пилл скоростей"></a><figcaption>22 · Пилл скоростей<small>Оригинальный <code>.gb-ember-expand</code> с сайта: [1, 1.25, 1.5, 1.75, 2], выдвигается из кнопки озвучки.</small></figcaption></figure>
+  <figure><a href="23-desktop-notes-desk.png"><img src="23-desktop-notes-desk.png" alt="Сноски статьи на полях с поиском"></a><figcaption>23 · Сноски и источники<small>116 реальных сносок из аппарата статьи, поиск по автору, книге и слову.</small></figcaption></figure>
+  <figure><a href="24-desktop-note-verbatim.png"><img src="24-desktop-note-verbatim.png" alt="Открытая сноска дословно"></a><figcaption>24 · Сноска дословно<small>Полный текст примечания, раздел статьи, переход к маркеру, закрепление.</small></figcaption></figure>
+  <figure><a href="25-desktop-section-overview.png"><img src="25-desktop-section-overview.png" alt="Обзор раздела с реальными счётчиками"></a><figcaption>25 · Обзор раздела<small>Счётчики охватывают вложенные подразделы: 102 места Писания, 6 понятий, 29 сносок.</small></figcaption></figure>
+  <figure><a href="26-desktop-help.png"><img src="26-desktop-help.png" alt="Справка по клавиатуре и трём зонам"></a><figcaption>26 · Справка<small>Клавиши, три разные области и честный список того, чего в прототипе нет.</small></figcaption></figure>
+  <figure><a href="27-edition-article.png"><img src="27-edition-article.png" alt="Инструмент «Издание»: три формы издания"></a><figcaption>27 · Издание<small>Статья, серия и книга рядом: что меняется и что обязано остаться общим.</small></figcaption></figure>
+  <figure><a href="28-edition-book-switcher.png"><img src="28-edition-book-switcher.png" alt="Книжная форма и переключатель в рельсе"></a><figcaption>28 · Книга<small>Две ступени: глава → статья; подпись показывает главу и номер статьи.</small></figcaption></figure>
+  <figure><a href="29-edition-samizdat-margins.png"><img src="29-edition-samizdat-margins.png" alt="Тема серии самиздат на полях"></a><figcaption>29 · Тема серии<small>Настоящий `series-samizdat.css`: чернила и газетная бумага, геометрия та же.</small></figcaption></figure>
+  <figure><a href="30-bands-folded.png"><img src="30-bands-folded.png" alt="Ленты, свёрнутые до строк"></a><figcaption>30 · Ленты до строк<small>Значок, название и один честный счётчик в 41 px: ни одного наложения, ничего не прыгает.</small></figcaption></figure>
+  <figure><a href="31-band-desk-open.png"><img src="31-band-desk-open.png" alt="Одна раскрытая лента, остальные свёрнуты"></a><figcaption>31 · Один аккордеон<small>Раскрытая лента складывает остальные; семь инструментов — один ряд значков.</small></figcaption></figure>
+  <figure><a href="32-first-visit-coach.png"><img src="32-first-visit-coach.png" alt="Подсказка при первом открытии полей"></a><figcaption>32 · Первый визит<small>Три жеста, которые объясняют поля, — один раз и без модального окна.</small></figcaption></figure>
+  <figure><a href="33-help-legend.png"><img src="33-help-legend.png" alt="Легенда всех семи инструментов"></a><figcaption>33 · Легенда значков<small>У каждого глифа — название, объяснение и место в справке. Ничего не нужно угадывать.</small></figcaption></figure>
+  <figure><a href="34-toc-sections-as-rows.png"><img src="34-toc-sections-as-rows.png" alt="Оглавление: разделы строками"></a><figcaption>34 · Оглавление строками<small>5 разделов вместо плоского списка из 15 пунктов: 190 px вместо 533, подпункты внутри раздела.</small></figcaption></figure>
+  <figure><a href="35-toc-follows-reading.png"><img src="35-toc-follows-reading.png" alt="Оглавление следует за чтением"></a><figcaption>35 · Рельс следует за чтением<small>Текущий раздел раскрыт и подсвечен, пройденные отмечены, счётчик «3 / 5».</small></figcaption></figure>
+  <figure><a href="36-toc-quiet-rail.png"><img src="36-toc-quiet-rail.png" alt="Тихий рельс"></a><figcaption>36 · Тихий рельс<small>Один переключатель убирает поиск, мета и прогресс — остаётся спокойный список разделов.</small></figcaption></figure>
+  <figure><a href="37-pins-survive-reload.png"><img src="37-pins-survive-reload.png" alt="Закрепления после перезагрузки"></a><figcaption>37 · Память полки<small>Восемь закреплённых мест Писания переживают перезагрузку; у каждой формы издания своя полка.</small></figcaption></figure>
+  <figure><a href="38-compare-whole-shelf.png"><img src="38-compare-whole-shelf.png" alt="Сопоставление всей полки"></a><figcaption>38 · Вся полка на одном экране<small>Вместо двух колонок — сводка всех восьми материалов по разделам статьи и одна честная фраза о том, где они сходятся.</small></figcaption></figure>
+  <figure><a href="39-compare-manual-pair.png"><img src="39-compare-manual-pair.png" alt="Ручное сопоставление двух материалов"></a><figcaption>39 · Пара вручную<small>Любые два материала из восьми, дословный текст рядом, разделы каждого и общий раздел.</small></figcaption></figure>
+  <figure><a href="40-book-form-headline.png"><img src="40-book-form-headline.png" alt="Книжная форма: глава и статья в шапке полей"></a><figcaption>40 · Позиция в книге<small>Глава, номер статьи и «1 / 22» отдельной строкой; заголовок остаётся одной читаемой фразой.</small></figcaption></figure>
+  <figure><a href="41-book-parts-picker.png"><img src="41-book-parts-picker.png" alt="Список статей книги, сгруппированный по главам"></a><figcaption>41 · Статьи по главам<small>Четыре группы глав, сквозная нумерация 1–22 и время чтения каждой статьи.</small></figcaption></figure>
+  <figure><a href="42-book-part-chosen.png"><img src="42-book-part-chosen.png" alt="Выбранная статья книги"></a><figcaption>42 · Выбор статьи — настоящий шаг<small>Клик по статье меняет шапку полей и подпись издания, а не только подсветку.</small></figcaption></figure>
+  <figure><a href="43-mobile-edition-card.png"><img src="43-mobile-edition-card.png" alt="Мобильная карточка текущего издания над компактной пустой полкой"></a><figcaption>43 · Издание на телефоне<small>Карточка книги целиком видна над пустой полкой; место в книге и краткая подсказка остаются читабельными.</small></figcaption></figure>
+  <figure><a href="21-desktop-sepia.png"><img src="21-desktop-sepia.png" alt="Desktop, сепия"></a><figcaption>21 · Desktop, сепия<small>Третья тема и compatibility с бумажной эстетикой.</small></figcaption></figure>
+</main>
+<footer>
+  43 состояния · 6 контрольных ширин · 0 JS-ошибок · 0 внешних запросов · 0 FAIL в автоматическом аудите.
+  Подробности: <a href="../research-catalog.md">research-catalog.md</a>, <a href="../design-comparison.md">design-comparison.md</a>, <a href="../STATUS.md">STATUS.md</a>, <a href="../edition-model.md">edition-model.md</a>.
+</footer>
+</body>
+</html>
