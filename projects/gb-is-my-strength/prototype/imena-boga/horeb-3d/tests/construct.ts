@@ -794,9 +794,11 @@ for (const lowMode of [true, false]) {
     const cPos = floor.geometry.getAttribute('position');
     const cCol = floor.geometry.getAttribute('color');
     const cUv = floor.geometry.getAttribute('uv');
+    const cNormal = floor.geometry.getAttribute('normal');
     const gPos = terrain.geometry.getAttribute('position');
     const gCol = terrain.geometry.getAttribute('color');
     const gUv = terrain.geometry.getAttribute('uv');
+    const gNormal = terrain.geometry.getAttribute('normal');
     const front: number[] = [];
     for (let i = 0; i < gPos.count; i++)
       if (Math.abs(gPos.getZ(i) - seamZ) < 0.00005) front.push(i);
@@ -811,6 +813,7 @@ for (const lowMode of [true, false]) {
     // interpolated edge. This prohibits T-junctions at either LOD.
     let caveStations = 0, matchedStations = 0;
     let maxPositionError = 0, maxColorError = 0, maxUvError = 0;
+    let maxNormalError = 0, minMouthNormalY = Infinity;
     for (let i = 0; i < cPos.count; i++) {
       if (Math.abs(cPos.getZ(i) - seamZ) > 0.00005) continue;
       caveStations++;
@@ -822,6 +825,15 @@ for (const lowMode of [true, false]) {
       }
       if (nearest < 0 || distance > 0.00005) continue;
       matchedStations++;
+      if (cNormal && gNormal) {
+        for (const channel of ['X', 'Y', 'Z'] as const) {
+          const read = channel === 'X' ? 'getX' : channel === 'Y' ? 'getY' : 'getZ';
+          maxNormalError = Math.max(maxNormalError,
+            Math.abs(cNormal[read](i) - gNormal[read](nearest)));
+        }
+        minMouthNormalY = Math.min(minMouthNormalY,
+          cNormal.getY(i), gNormal.getY(nearest));
+      }
       maxPositionError = Math.max(maxPositionError, distance,
         Math.abs(cPos.getY(i) - gPos.getY(nearest)),
         Math.abs(cPos.getZ(i) - gPos.getZ(nearest)));
@@ -839,7 +851,7 @@ for (const lowMode of [true, false]) {
     }
     console.log('HOREB mouth seam ' + (lowMode ? 'LOW' : 'HIGH') +
       ' ' + JSON.stringify({ caveStations, matchedStations,
-        maxPositionError, maxColorError, maxUvError }));
+        maxPositionError, maxColorError, maxUvError, maxNormalError, minMouthNormalY }));
     t('Horeb cave and exterior share every boundary vertex without T-junctions ' +
         (lowMode ? 'LOW' : 'HIGH'),
       caveStations === (lowMode ? 17 : 29) &&
@@ -848,6 +860,10 @@ for (const lowMode of [true, false]) {
         (lowMode ? 'LOW' : 'HIGH'),
       matchedStations === caveStations &&
       maxColorError < 0.00005 && maxUvError < 0.00005);
+    t('Horeb cave/exterior share lighting normals at every mouth station ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      matchedStations === caveStations && !!cNormal && !!gNormal &&
+      maxNormalError < 0.00005 && minMouthNormalY > 0.6);
   }
   let apertureSafe = false;
   if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {

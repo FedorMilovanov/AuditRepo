@@ -143,10 +143,11 @@ jobs:
           const root = '.test-build';
           const w = JSON.parse(fs.readFileSync(path.join(root, 'visual-witness.json'), 'utf8'));
           if (w.desktop?.length !== 8 || w.mobile?.length !== 3 ||
-              w.details?.length !== 6 || w.errors?.length !== 0 ||
+              w.details?.length !== 6 || w.exitSeam?.length !== 2 ||
+              w.errors?.length !== 0 ||
               w.chasmGeometryGate !== 'PASS_UNOBSTRUCTED_RAVINE')
             throw new Error('Missing or failed visual evidence manifest');
-          const required = [...w.desktop, ...w.mobile, ...w.details];
+          const required = [...w.desktop, ...w.mobile, ...w.details, ...w.exitSeam];
           const files = new Set();
           for (const entry of required) {
             const name = entry.screenshot;

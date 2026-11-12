@@ -198,6 +198,8 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     return [x * 0.3 + warp * 0.4, z * 0.3 + warp * 0.5];
   };
   let lastCaveFloorZ = TUNNEL_END - 4;
+  // Both independently indexed meshes must share their mouth lighting normal.
+  let caveMouthFloor: THREE.BufferGeometry | null = null;
 
   // ── Тоннель / галереи: единая процедурная оболочка
   {
@@ -383,6 +385,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     fg.setAttribute('uv', new THREE.Float32BufferAttribute(fu, 2));
     fg.setIndex(fi);
     fg.computeVertexNormals();
+    caveMouthFloor = fg;
     const caveFloor = new THREE.Mesh(fg, rockMat);
     caveFloor.name = 'cave-floor-continuous';
     caveFloor.userData.chasmStrata = {
@@ -611,6 +614,43 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     }
     tg.setAttribute('color', new THREE.Float32BufferAttribute(tc, 3));
     tg.computeVertexNormals();
+
+    // Shared positions, UVs and tints do not by themselves prevent lighting
+    // discontinuities: independent computeVertexNormals gives each side its
+    // own edge normal. Weld lighting normals at identical mouth stations.
+    // No added surfaces, materials, lighting, or physics interventions.
+    const mouthFloor = caveMouthFloor;
+    if (!mouthFloor) throw new Error('Missing cave floor before exterior normal join');
+    const cp = mouthFloor.getAttribute('position');
+    const cn = mouthFloor.getAttribute('normal');
+    const en = tg.getAttribute('normal');
+    const terrainStations: number[] = [];
+    for (let j = 0; j < p.count; j++)
+      if (Math.abs(p.getZ(j) - lastCaveFloorZ) < 0.00005)
+        terrainStations.push(j);
+    let matchedNormals = 0;
+    for (let i = 0; i < cp.count; i++) {
+      if (Math.abs(cp.getZ(i) - lastCaveFloorZ) > 0.00005) continue;
+      let best = -1, distance = Infinity;
+      for (const j of terrainStations) {
+        const d = Math.abs(cp.getX(i) - p.getX(j));
+        if (d < distance) { best = j; distance = d; }
+      }
+      if (best < 0 || distance > 0.00005 ||
+          Math.abs(cp.getY(i) - p.getY(best)) > 0.00005)
+        throw new Error('Disconnected floor at cave mouth normal join');
+      const nx = cn.getX(i) + en.getX(best);
+      const ny = cn.getY(i) + en.getY(best);
+      const nz = cn.getZ(i) + en.getZ(best);
+      const magnitude = Math.hypot(nx, ny, nz);
+      if (magnitude < 1 || ny <= 0)
+        throw new Error('Invalid cave mouth normal orientation');
+      cn.setXYZ(i, nx / magnitude, ny / magnitude, nz / magnitude);
+      en.setXYZ(best, nx / magnitude, ny / magnitude, nz / magnitude);
+      matchedNormals++;
+    }
+    if (matchedNormals !== (low ? 17 : 29))
+      throw new Error('Incomplete cave mouth lighting normal join');
     const terrainMat = rockMat.clone();
     terrainMat.side = THREE.FrontSide;
     const exteriorTerrain = new THREE.Mesh(tg, terrainMat);
