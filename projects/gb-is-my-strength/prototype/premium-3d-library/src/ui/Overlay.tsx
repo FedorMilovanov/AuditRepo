@@ -236,9 +236,9 @@ function AimTooltip() {
   const it = byId(aimed);
   return (
     <div data-gb-aim className={`pointer-events-none fixed inset-x-0 z-10 flex justify-center px-4 ${coarse ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-24 sm:bottom-10"}`}>
-      <div key={aimed} className="glass fade-up pointer-events-auto flex max-w-lg items-center gap-4 rounded-3xl p-4 pr-5" style={{ animationDuration: "0.35s", borderColor: it.color + "99" }}>
+      <div key={aimed} className="glass fade-up pointer-events-auto flex w-full min-w-0 max-w-lg items-center gap-3 rounded-3xl p-3 pr-4 sm:w-auto sm:gap-4 sm:p-4 sm:pr-5" style={{ animationDuration: "0.35s", borderColor: it.color + "99" }}>
         <div className="h-12 w-1 shrink-0 rounded-full" style={{ background: it.color, boxShadow: `0 0 16px ${it.color}` }} />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="text-[10px] uppercase tracking-[0.25em]" style={{ color: it.color }}>{it.label}</div>
           <div className="truncate font-display text-xl font-semibold leading-tight sm:text-2xl">{it.title}</div>
           <div className="mt-0.5 line-clamp-1 text-xs text-[#c3c0b8]">{it.desc}</div>

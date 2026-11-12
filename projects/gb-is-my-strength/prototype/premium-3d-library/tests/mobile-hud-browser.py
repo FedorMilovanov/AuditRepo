@@ -90,6 +90,58 @@ async def inspect(browser, engine, width, height):
         await menu.wait_for(state="detached")
         assert await more.get_attribute("aria-expanded") == "false"
 
+        # The long-titled Project lectern exposed an actual fixed HUD clipping
+        # defect on 320/390px: the page's scrollWidth remained in-bounds,
+        # while the flex child grew to 506px and the Open button escaped right.
+        # Navigate through the real public map and assert each actionable
+        # physical bounding box, not only document horizontal overflow.
+        map_button = page.locator(
+            '[data-gb-toolbar] button[title^="Карта сайта"]:visible'
+        ).first
+        await map_button.evaluate("(el) => el.click()")
+        map_dialog = page.get_by_role("dialog", name="Карта сайта")
+        await map_dialog.wait_for(state="visible")
+        await map_dialog.get_by_role(
+            "searchbox", name="Поиск по карте сайта"
+        ).fill("Библиотека, где содержание важнее шума")
+        await map_dialog.get_by_role(
+            "button", name="Библиотека, где содержание важнее шума"
+        ).first.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="detached", timeout=12000)
+        aim = page.locator("[data-gb-aim]")
+        await aim.wait_for(state="visible", timeout=16000)
+        open_button = aim.get_by_role("button", name="Открыть")
+        await open_button.wait_for(state="visible")
+        aim_box = await aim.locator(":scope > div").bounding_box()
+        button_box = await open_button.bounding_box()
+        assert aim_box and button_box
+        assert aim_box["x"] >= 11 and (
+            aim_box["x"] + aim_box["width"] <= width - 11
+        ), f"{engine}/{width}: lectern HUD content clips viewport: {aim_box}"
+        assert button_box["x"] >= 11 and (
+            button_box["x"] + button_box["width"] <= width - 11
+        ), f"{engine}/{width}: lectern Open button clips viewport: {button_box}"
+        assert button_box["width"] >= 75, (
+            f"{engine}/{width}: Open button was squeezed until unreadable"
+        )
+        assert not overlap(aim_box, j), (
+            f"{engine}/{width}: lectern HUD overlaps touch joystick"
+        )
+        EVIDENCE.mkdir(parents=True, exist_ok=True)
+        await capture_evidence(page, EVIDENCE /
+            f"gb-library-touch-{engine}-{width}x{height}-aim.png")
+        # The CTA must still work via real touch after adaptive reflow.
+        await open_button.click(timeout=12000)
+        detail = page.get_by_role("dialog")
+        await detail.wait_for(state="visible", timeout=15000)
+        assert "Библиотека, где содержание важнее шума" in (
+            await detail.inner_text()
+        ), f"{engine}/{width}: Project detail failed to open"
+        await detail.get_by_role(
+            "button", name="Вернуться в зал"
+        ).click(timeout=12000)
+        await detail.wait_for(state="detached", timeout=10000)
+
         # On tour start, touch movement control must disappear rather than
         # conflict with the bottom-aligned multi-step tour card.
         await more.click()
