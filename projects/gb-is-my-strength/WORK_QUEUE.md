@@ -4,6 +4,14 @@ This file is for **optional improvements, measurement-first work and reverify-be
 
 Before starting any lane, inspect current Product `main`, open PRs/branches and the selected owner. Historical wording or a reserved branch name alone never authorizes Product mutation.
 
+## Reader: one core, three existing references — owner decision 2026-11-13
+
+**Status: informational owner decision / optional acceptance criteria, NOT a new bug, implementation lane or fourth design.** Owner explicitly rejected continuing or importing the separate local experimental worktree of another agent: do not transfer its code, screenshot bundles, uncommitted patches or numerous versions into AuditRepo/Product; do not open another Reader branch/PR for it. Do not delete another agent's uncommitted local files under this note; cleanup requires a separate verified disposition.
+
+For future comparison retain exactly the established reference directions: **Grok Desktop Reader** (existing AuditRepo reference), **original Argon** (owner will supply the latest canonical source), and **«На полях»** (the imported right-panel laboratory in AuditRepo PR #544). This is a design/reference inventory, **not three independent Reader implementations**. Actual article content, TTS/audio, Scripture, notes, bookmarks and preferences have one Product-owned Reader Core.
+
+Retain only these **cross-design quality criteria**, if relevant when the owner chooses a final UI: correct active multi-level H2/H3 outline without breaking reader progress; legible collapse/expand without clipped text; stable and responsive saved-items/notes panel; pointer/keyboard/touch-safe popovers with Escape and reduced-motion support; Scripture references validated against the permitted real verse corpus; actual Chromium/Firefox/WebKit desktop/mobile checks plus side-by-side visual fidelity to the owner's chosen original. **These are not claims of missing features or current defects.** Some mechanisms already exist in Product draft PR #2292, so inspect its exact HEAD, existing contracts and the owner's latest Argon before implementing anything. No cloned engine, automatic cherry-pick, new mockup, independent task per bullet or MASTER promotion without a fresh reproducible defect.
+
 ## Selected evidence-backed candidates
 
 ## 2026-09-30 series/editorial presentation candidates (not current defects)
