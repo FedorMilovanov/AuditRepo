@@ -365,6 +365,19 @@ if (gardenRecord) {
     leafSprigs(low) === 4 * 7 * 5 * 6 * 2);
   t('Gethsemane high detail increases sprig density without extra trees',
     leafSprigs(garden) === 4 * 7 * 7 * 7 * 2);
+  // Four mature trees must have breathing space: avoid lining up four
+  // overlapping silhouettes less than 1.7m apart. The same canonical
+  // positions still drive visible trunks, real collisions and field clues.
+  const roots = OLIVE_GROVE_OFFSETS;
+  let nearestTrunks = Infinity;
+  for (let i = 0; i < roots.length; i++) for (let j = i + 1; j < roots.length; j++) {
+    nearestTrunks = Math.min(nearestTrunks,
+      Math.hypot(roots[i][0] - roots[j][0], roots[i][1] - roots[j][1]));
+  }
+  t('Gethsemane four mature olives have natural staggered trunk separation',
+    roots.length === 4 && nearestTrunks >= 2.40 &&
+    new Set(roots.map((o) => o[1].toFixed(2))).size === 4);
+
 
 } else {
   t('Gethsemane visual scene exists', false);
@@ -685,9 +698,19 @@ if (gardenRecord) {
   });
   t('Gethsemane bark has continuous vertex-colour fissures, not a flat trunk material',
     barkVertices >= 4 * 180 && shadeRange > 0.045);
+  t('Gethsemane small branch cores cannot reappear as opaque green fruit-balls',
+    biggestCore > 0 && biggestCore <= 0.055);
   t('Gethsemane foliage is paired along joined twig sprays, with no giant opaque balls',
-    foliageTwigs === 4 * 7 * 5 && biggestCore <= 0.14 &&
+    foliageTwigs === 4 * 7 * 5 && biggestCore <= 0.055 &&
     flatLeaves === 4 * 7 * 5 * 6 * 2);
+  let hangingTwigs = 0;
+  grove.traverse((o) => {
+    if (o.name !== 'olive-foliage-twig' || !(o instanceof THREE.Mesh)) return;
+    const direction = new THREE.Vector3(0, 1, 0).applyQuaternion(o.quaternion);
+    if (direction.y < -0.08) hangingTwigs++;
+  });
+  t('Gethsemane leaf-bearing lateral shoots droop naturally instead of forming starbursts',
+    hangingTwigs >= foliageTwigs * 0.92);
   let tooLongLeaves = 0, verticalLeaves = 0, paleTrunks = 0;
   grove.traverse((o) => {
     if (o.name === 'olive-leaf-sprig' && o instanceof THREE.Mesh) {

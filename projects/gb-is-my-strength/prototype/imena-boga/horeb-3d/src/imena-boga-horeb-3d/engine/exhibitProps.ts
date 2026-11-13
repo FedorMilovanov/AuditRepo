@@ -12,7 +12,9 @@ interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMa
 
 /** One authored grove layout is shared by meshes and physical trunk colliders. */
 export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
-  [-2.15, -1.25], [-0.72, -2.02], [0.98, -1.13], [2.25, -1.79],
+  // Staggered in both axes: 2.5m+ between adjacent mature trunks instead
+  // of four saplings compressed into a single symmetrical garden row.
+  [-2.30, -1.15], [-1.00, -3.35], [0.82, -1.40], [2.35, -3.55],
 ];
 /** The well's tree is rooted away from both the stone rim and front inscription. */
 export const BEERSHEBA_TAMARISK_OFFSET = { x: 2.15, z: -0.75 } as const;
@@ -371,8 +373,8 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
   const random = rng(seed);
   const up = new THREE.Vector3(0, 1, 0);
-  const leanX = (random() - 0.5) * 0.20;
-  const leanZ = (random() - 0.5) * 0.18;
+  const leanX = (random() - 0.5) * 0.22;
+  const leanZ = (random() - 0.5) * 0.20;
   const barkPhase = random() * Math.PI * 2;
   // One material and the SAME deterministic bark field for trunk and all
   // major forks. Previously the fork material was a uniform light cylinder,
@@ -413,7 +415,7 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
     const angle = Math.atan2(pz, px);
     const furrow = Math.sin(angle * 6 + t * 9 + barkPhase);
     const finer = Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
-    const grooves = 1 + 0.085 * furrow + 0.04 * finer;
+    const grooves = 1 + 0.105 * furrow + 0.048 * finer;
     const center = spine(t);
     vertices.setXYZ(i, (center.x - x) + px * grooves, py,
       (center.z - z) + pz * grooves);
@@ -504,10 +506,11 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
   for (let i = 0; i < 7; i++) {
     // Avoid seven near-identical spokes/flat Y-forks: natural olives have
     // asymmetric crowns with branches emerging at staggered heights.
-    const angle = i * Math.PI * 2 / 7 + (random() - 0.5) * 0.76;
-    const reach = (0.49 + random() * 0.67) * form.spread;
+    const angle = i * Math.PI * 2 / 7 +
+      (random() - 0.5) * 1.18 + (silhouette - 1.5) * 0.10;
+    const reach = (0.52 + random() * 0.75) * form.spread;
     const tip = crownBase.clone().add(new THREE.Vector3(
-      Math.cos(angle) * reach, 0.16 + random() * 0.52 + form.crownLift,
+      Math.cos(angle) * reach, 0.11 + random() * 0.43 + form.crownLift,
       Math.sin(angle) * reach));
     const stem = spine(0.57 + random() * 0.35);
     const elbow = stem.clone().lerp(tip, 0.43 + random() * 0.17).add(new THREE.Vector3(
@@ -530,8 +533,11 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
       (random() - 0.5) * 0.35);
     // A small interior shade is acceptable; visible green disks are not.
     // Open crown mass comes from real two-sided leaf sprays below.
-    core.scale.set(0.100 + random() * 0.035, 0.067 + random() * 0.025,
-      0.100 + random() * 0.035);
+    // Previous opaque 10-14cm balls survived between the sparse sprays
+    // as green dots at EVERY branch tip. Keep only an inconspicuous dark
+    // internal node and let actual olive leaves form the silhouette.
+    core.scale.set(0.037 + random() * 0.014, 0.032 + random() * 0.014,
+      0.037 + random() * 0.014);
     g.add(core);
     // Every leaf pair is anchored along a twig instead of floating around
     // a random spherical volume. A few downward arcs evoke olive sprays.
@@ -543,11 +549,17 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
       // and distributes foliage into the open, asymmetric crown volume.
       const attachment = 0.55 + 0.43 * ((k + 0.5) / twigs);
       const twigOrigin = branchPaths[i].getPointAt(attachment);
-      const theta = k * Math.PI * 2 / twigs +
-        i * 0.44 + (random() - 0.5) * 0.61;
-      const reach = 0.29 + random() * 0.29;
+      // A real live lateral shoot follows its parent branch and then
+      // droops in gravity; the old evenly spaced circular azimuths
+      // made seven miniature starburst crowns on every olive.
+      const tangent = branchPaths[i].getTangentAt(attachment);
+      const heading = Math.atan2(tangent.z, tangent.x);
+      const fan = (k - (twigs - 1) / 2) / Math.max(1, twigs - 1);
+      const theta = heading + fan * (1.35 + random() * 0.35) +
+        (random() - 0.5) * 0.18;
+      const reach = 0.38 + random() * 0.30;
       const delta = new THREE.Vector3(Math.cos(theta) * reach,
-        -0.23 + random() * 0.38, Math.sin(theta) * reach);
+        -0.10 - random() * 0.25, Math.sin(theta) * reach);
       const end = twigOrigin.clone().add(delta);
       segment(twigOrigin, end, 0.016, 0.0035, 'olive-foliage-twig');
       const lateral = new THREE.Vector3(-Math.sin(theta), 0, Math.cos(theta));
@@ -567,8 +579,8 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: bool
           leaf.rotation.set((random() - 0.5) * 1.05,
             theta + side * 0.45 + Math.PI * 0.5,
             side * (0.82 + random() * 0.38));
-          leaf.scale.set(0.070 + random() * 0.024,
-            0.084 + random() * 0.031, 1);
+          leaf.scale.set(0.083 + random() * 0.025,
+            0.096 + random() * 0.017, 1);
           g.add(leaf);
         }
       }
