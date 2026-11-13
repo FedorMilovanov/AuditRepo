@@ -884,6 +884,30 @@ for (const lowMode of [true, false]) {
       centreUvRates.length >= (lowMode ? 3 : 6) &&
       centreUvRates.every(rate => rate > 0.18 && rate < 0.42));
 
+    // The original 1200x1000 plane had 5m HIGH / 9.1m LOW spacing
+    // immediately outside the lip: the ground looked like a polygonal
+    // empty sheet despite being textured. Reuse the SAME grid indices but
+    // redistribute axial rings into the first 30m of real walking space.
+    const axialAtCentre: number[] = [];
+    for (let i = 0; i < gPos.count; i++)
+      if (Math.abs(gPos.getX(i)) < 0.00005) axialAtCentre.push(gPos.getZ(i));
+    axialAtCentre.sort((a, b) => b - a);
+    const firstAxialStep = axialAtCentre[0] - axialAtCentre[1];
+    const resolvedApronRings = axialAtCentre.filter(z =>
+      z <= seamZ + 0.00005 && z >= seamZ - 32).length;
+    t('Horeb exterior apron has real near-field axial terrain sampling ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      axialAtCentre.length === (lowMode ? 111 : 201) &&
+      Math.abs(axialAtCentre[0] - seamZ) < 0.00005 &&
+      firstAxialStep > 0.8 && firstAxialStep < 2.8 &&
+      resolvedApronRings >= (lowMode ? 9 : 16));
+    const apronStones = geoScene.group.getObjectByName('horeb-outdoor-pebbles');
+    t('Horeb near-mouth scree uses existing instancing not extra draw calls ' +
+        (lowMode ? 'LOW' : 'HIGH'),
+      apronStones instanceof THREE.InstancedMesh &&
+      apronStones.count === (lowMode ? 80 : 200));
+
+
   }
   let apertureSafe = false;
   if (face instanceof THREE.Mesh && face.geometry instanceof THREE.ShapeGeometry) {

@@ -552,7 +552,15 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const ridge = Math.pow(fbm(x * 0.006, 1, z * 0.006, 5), 2.2) * 260;
       const near = fbm(x * 0.12, 2, z * 0.12, 3) * 0.22;
       const backWall = ss(-345, -322, z) * 60 * ss(14, 60, Math.abs(x));
-      return near + mask * (ridge + horeb * 0.9) + backWall;
+      // An eroded alluvial fan begins OUTSIDE the cave, away from the
+      // 2.2-m central walking track. The field is continuous, never
+      // touches the shared cave ring, and has no hidden collision slope.
+      const apron = ss(-360, -345, z) * (1 - ss(-325, lastCaveFloorZ, z));
+      const flank = ss(2.2, 5.0, Math.abs(x)) * (1 - ss(10, 16, Math.abs(x)));
+      const gravel = fbm(x * 0.29 + 11, 2.4, z * 0.21 - 7, 3) - 0.5;
+      const rill = -0.12 * Math.exp(-((x - 7) ** 2) / 12);
+      return near + mask * (ridge + horeb * 0.9) + backWall +
+        apron * flank * (0.22 * gravel + rill);
     };
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
@@ -571,7 +579,17 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const lipHalfWidth = halfWidth(lastCaveFloorZ) + 1.2;
     for (let i = 0; i < p.count; i++) {
       const originalX = p.getX(i);
-      const z = p.getZ(i);
+      const originalZ = p.getZ(i);
+      // Concentrate the SAME axial topology into the first ~40m of
+      // exterior wadi, where footsteps and erosion must actually resolve.
+      // Far terrain retains its original 1000m extent and vertex budget.
+      // Because distance=0 remains exactly zero, the cave floor's last
+      // z-ring remains identical in both quality modes.
+      const distanceFromMouth = Math.max(0, lastCaveFloorZ - originalZ);
+      const radialSample = Math.min(1, distanceFromMouth / 1000);
+      const z = lastCaveFloorZ - distanceFromMouth *
+        (0.18 + 0.82 * Math.sqrt(radialSample));
+      p.setZ(i, z);
       // A visual seam cannot be welded by merely using the same height
       // FUNCTION: when two meshes sample that function at different X
       // locations, their rasterized linear edges form thin slits.
@@ -747,11 +765,25 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     group.add(boulders);
     // маленькие камни в зоне прогулки
     const pebbles = new THREE.InstancedMesh(stoneGeo, stoneMat, low ? 80 : 200);
+    pebbles.name = 'horeb-outdoor-pebbles';
     for (let i = 0; i < pebbles.count; i++) {
       let x = 0, z = 0;
-      do { x = (r() - 0.5) * 50; z = TUNNEL_END - 4 - r() * 76; } while (Math.hypot(x - BUSH.x, z - BUSH.z) < R_INNER + 1.5);
-      const s = 0.05 + r() * 0.12;
-      m.compose(new THREE.Vector3(x, s * 0.2, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(r(), r() * 6, r())), new THREE.Vector3(s * 1.4, s * 0.7, s));
+      if (i < Math.floor(pebbles.count * 0.58)) {
+        // Existing small stones, reallocated to the natural scree apron.
+        // Leave the central approach unblocked; no new collider/draw call.
+        x = (i % 2 ? -1 : 1) * (2.8 + r() * 5.8);
+        z = lastCaveFloorZ - 2.4 - r() * 29;
+      } else {
+        x = (r() - 0.5) * 50;
+        z = TUNNEL_END - 4 - r() * 76;
+      }
+      if (Math.hypot(x - BUSH.x, z - BUSH.z) < R_INNER + 1.5) {
+        x = 11 + r() * 6; z = -327 - r() * 9;
+      }
+      const s = 0.07 + r() * 0.15;
+      m.compose(new THREE.Vector3(x, terrainHeight(x, z) + s * 0.2, z),
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(r(), r() * 6, r())),
+        new THREE.Vector3(s * 1.4, s * 0.7, s));
       pebbles.setMatrixAt(i, m);
     }
     group.add(pebbles);
