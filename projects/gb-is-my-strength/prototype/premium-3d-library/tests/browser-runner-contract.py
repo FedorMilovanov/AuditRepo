@@ -58,6 +58,9 @@ def cases_for(name: str) -> list[dict]:
             pref = ("reduce", "no-preference")[index % 2]
             item["engine"] = ("chromium", "webkit")[index // 2]
             item["preference"] = pref
+            item["station"] = "bio"
+            item["seriesUnchanged"] = True
+            item["seriesSha256"] = ["series-still", "series-still"]
             item["sceneUnchanged"] = pref == "reduce"
             item["sha256"] = ["a", "a"] if pref == "reduce" else ["a", "b"]
     if name == "photo-transition-browser.py":
@@ -348,6 +351,30 @@ except AssertionError:
 else:
     raise AssertionError("Reading furniture accepted unfocusable detail modal")
 
+# A deliberately animated Series fixture must be rejected even if the
+# unrelated Biography witness is valid and all 4 case records are present.
+series_orbit = cases_for("reduced-motion-browser.py")
+series_orbit[1]["seriesSha256"] = ["old-neon-orbit-0", "old-neon-orbit-1"]
+try:
+    module.verify_case_records("reduced-motion-browser.py", jsonlines(series_orbit), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Animated Series passed the new stationary-art contract")
+
+# Supplying plausible hashes without the actual public Series evidence must
+# never be accepted: a screenshot equality alone is not enough.
+missing_series = cases_for("reduced-motion-browser.py")
+missing_series[2].pop("seriesUnchanged")
+try:
+    module.verify_case_records("reduced-motion-browser.py", jsonlines(missing_series), 4)
+except AssertionError:
+    pass
+else:
+    raise AssertionError("Missing Series evidence flag passed reduced-motion gate")
+
+# A two-frame static Biography scene at normal motion still fails. Preserve
+# the original negative control after extending the fixture with Series data.
 # A falsely-green static scene must not satisfy the normal-motion control.
 broken_motion = cases_for("reduced-motion-browser.py")
 broken_motion[1]["sha256"] = ["a", "a"]
