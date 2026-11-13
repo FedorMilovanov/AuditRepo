@@ -156,6 +156,14 @@ if(!brandAtlasModal.includes('data-modal-header')||
  throw Error('W76 dossier header reflow contract failure');
 console.log('V13_W76_DOSSIER_HEADER_REFLOW_PASS');
 
+// W78: icon-only buttons retain a 44px target at 200%-root text while
+// the real textual badge and study label still enlarge and reflow naturally.
+if(!brandAtlasModal.includes('data-modal-header-tools className="flex w-full min-w-0 max-w-full flex-wrap items-center justify-end gap-[6px]')||
+   !brandAtlasModal.includes('h-[44px] w-[44px] shrink-0 cursor-pointer')||
+   !brandAtlasModal.includes('sm:h-11 sm:w-11'))
+ throw Error('W78 zoomed icon controls no longer fit a single accessible row');
+console.log('V13_W78_ZOOMED_ICON_CONTROLS_PASS');
+
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');
@@ -194,8 +202,9 @@ if (!qAtlasModal.includes('inline-block max-w-full whitespace-normal [overflow-w
 if (!qAtlasModal.includes('sm:flex-row sm:flex-wrap sm:items-center sm:justify-between') ||
     !qAtlasModal.includes('data-modal-header-tools') ||
     !qAtlasModal.includes('max-w-full flex-wrap items-center justify-end') ||
-    !qAtlasModal.includes('min-h-11 min-w-11'))
-  throw Error('Visual regression: narrow dossier header must wrap accessible controls');
+    !qAtlasModal.includes('h-[44px] w-[44px] shrink-0') ||
+    !qAtlasModal.includes('sm:min-h-11 sm:min-w-11'))
+  throw Error('Visual regression: narrow dossier header must keep 44px icon controls');
 if (!qAtlasPillars.includes('sm:flex-row sm:items-center sm:justify-between') ||
     !qAtlasPillars.includes('onMobileDrawerOpenChange') ||
     qAtlasPillars.includes('data-atlas-mobile-ribbon') ||

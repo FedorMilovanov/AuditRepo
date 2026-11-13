@@ -298,12 +298,12 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             </button>
           </div>
 
-          <div data-modal-header-tools className="flex w-full min-w-0 max-w-full flex-wrap items-center justify-end gap-2 sm:ml-auto sm:w-auto">
+          <div data-modal-header-tools className="flex w-full min-w-0 max-w-full flex-wrap items-center justify-end gap-[6px] sm:ml-auto sm:w-auto sm:gap-2">
             {hasSpeechSupport && (
               <button
                 type="button"
                 onClick={handleToggleSpeech}
-                className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+                className="font-ui inline-flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-[6px] py-[6px] text-xs font-medium transition-colors hover:opacity-85 sm:h-auto sm:w-auto sm:min-h-11 sm:min-w-11 sm:px-2.5 sm:py-1.5"
                 style={{
                   borderColor: speaking ? 'var(--gb-accent)' : 'var(--gb-border-strong)',
                   backgroundColor: speaking ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
@@ -319,7 +319,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <button
               type="button"
               onClick={handleCopy}
-              className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-[6px] py-[6px] text-xs font-medium transition-colors hover:opacity-85 sm:h-auto sm:w-auto sm:min-h-11 sm:min-w-11 sm:px-2.5 sm:py-1.5"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
@@ -334,7 +334,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="font-ui inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:opacity-85"
+              className="font-ui inline-flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-[6px] py-[6px] text-xs font-medium transition-colors hover:opacity-85 sm:h-auto sm:w-auto sm:min-h-11 sm:min-w-11 sm:px-2.5 sm:py-1.5"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',
@@ -351,7 +351,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
-              className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors hover:opacity-80"
+              className="inline-flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors hover:opacity-80 sm:h-11 sm:w-11"
               style={{
                 borderColor: 'var(--gb-border-strong)',
                 backgroundColor: 'var(--gb-surface)',

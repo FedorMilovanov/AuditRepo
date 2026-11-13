@@ -895,7 +895,12 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
               return [...range.getClientRects()];
             }):[];
             const tr=tools?.getBoundingClientRect();
+            const toolTops=[...(tools?.querySelectorAll('button')||[])]
+              .map(node=>node.getBoundingClientRect().top);
+            const toolRows=toolTops.length?
+              1+toolTops.slice(1).filter(top=>Math.abs(top-toolTops[0])>4).length:0;
             const headerEvidence={found:!!(dialog&&header&&badge&&tools),
+              toolRows,
               targets:headerRects.length,clippedHeaderTargets,overlappingHeaderTargets,
               label:badge?.textContent?.trim(),
               badgeClipped:!bb||!db||bb.left<db.left-2||bb.right>db.right+2||
@@ -923,6 +928,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
              layout.headerEvidence.clippedHeaderTargets.length||
              layout.headerEvidence.overlappingHeaderTargets.length||
              layout.headerEvidence.badgeClipped||layout.headerEvidence.toolsClipped||
+             layout.headerEvidence.toolRows!==1||
              !layout.headerEvidence.label?.includes('/36'))
             throw Error('Atlas W76 modal header/footer geometry failed '+
               JSON.stringify({engine,width,entryCase,rootPx,layout}));

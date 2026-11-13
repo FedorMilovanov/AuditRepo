@@ -913,6 +913,10 @@ async function visit(browser,engine,app,width,base){
        const fragments=[...(badge?.querySelectorAll('span')||[])].flatMap(n=>{
          const r=document.createRange();r.selectNodeContents(n);return [...r.getClientRects()];
        });
+       const iconTools=[...(tools?.querySelectorAll('button')||[])];
+       const toolTops=iconTools.map(n=>n.getBoundingClientRect().top);
+       const toolRows=toolTops.length?
+         1+toolTops.slice(1).filter(top=>Math.abs(top-toolTops[0])>4).length:0;
        const buttons=[...el.querySelectorAll('button')].map(n=>{
          const r=n.getBoundingClientRect();
          return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,
@@ -926,7 +930,7 @@ async function visit(browser,engine,app,width,base){
               Math.max(buttons[i].left,buttons[j].left)>2&&
             Math.min(buttons[i].bottom,buttons[j].bottom)-
               Math.max(buttons[i].top,buttons[j].top)>2)overlaps.push([i,j]);
-       return {buttons:buttons.length,out,overlaps,label:badge?.textContent?.trim(),
+       return {buttons:buttons.length,out,overlaps,toolRows,label:badge?.textContent?.trim(),
          badgeClipped:!pane||!bb||bb.left<pane.left-2||bb.right>pane.right+2||
            fragments.some(r=>r.left<bb.left-2||r.right>bb.right+2),
          toolsClipped:!pane||!tr||tr.left<pane.left-2||tr.right>pane.right+2,
@@ -934,7 +938,7 @@ async function visit(browser,engine,app,width,base){
      });
      record('atlas-middle-modal-header-root200',{engine,width,...headerAudit});
      if(headerAudit.buttons<3||headerAudit.out.length||headerAudit.overlaps.length||
-        !headerAudit.label?.includes('/36')||
+        headerAudit.toolRows!==1||!headerAudit.label?.includes('/36')||
         headerAudit.badgeClipped||headerAudit.toolsClipped||headerAudit.bodyHeight<24)
        problem('BLOCKER','atlas-middle-modal-header-root200-invalid',{engine,width,...headerAudit});
      await shot(page,engine+'-atlas-'+width+'-middle-modal-header-root200');
