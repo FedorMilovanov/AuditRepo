@@ -104,6 +104,15 @@ def verify_case_records(name: str, stdout: str, expected: int) -> None:
             ("webkit", "reduce"), ("webkit", "no-preference"),
         }, f"Motion regression missing an engine/preference: {cases}"
         for case in cases:
+            # The premium Series display is now deliberately stationary in both
+            # preferences; the still-animated Biography confirms reduced motion.
+            assert case.get("station") == "bio" and (
+                case.get("seriesUnchanged") is True
+            ), f"Missing public Series stillness and Biography motion witness: {case}"
+            series_hashes = case.get("seriesSha256")
+            assert isinstance(series_hashes, list) and len(series_hashes) == 2 and (
+                series_hashes[0] == series_hashes[1]
+            ), f"Series has reintroduced decorative orbiting motion: {case}"
             assert case.get("sceneUnchanged") is (case["preference"] == "reduce"), (
                 f"Unproven reduced-motion screenshot comparison: {case}"
             )
