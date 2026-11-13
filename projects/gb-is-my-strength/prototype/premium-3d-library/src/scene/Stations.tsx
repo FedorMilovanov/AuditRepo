@@ -10,8 +10,13 @@ import { ConfessionArchive } from "./ConfessionArchive";
 import { SeriesCase } from "./SeriesCase";
 import { ARTICLE_BOOK, articleBookCenterY, makeArticlePageGeometry } from "./openBookGeometry";
 import { darkStone, goldMat, marble, statue, wood } from "./Platform";
+import { STATION_COLLAR } from "./stationPedestalGeometry";
 
 const shadowTex = glowTexture();
+// Physical brass patina; hover aims brighten the existing inlaid band,
+// never reintroduce additive particles or an ungrounded floor halo.
+const STATION_BRASS_PATINA = new THREE.Color("#806a4e");
+const STATION_BRASS_FOCUSED = new THREE.Color("#c2a779");
 
 /** Универсальный постамент: табличка, свет, зона клика, подсветка при наведении */
 function Station({ item, children }: { item: Item; children: ReactNode }) {
@@ -34,7 +39,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
   const hit = useRef<THREE.Mesh>(null!);
   const plaque = useRef<THREE.Group>(null!);
   const art = useRef<THREE.Group>(null!);
-  const pad = useRef<THREE.MeshBasicMaterial>(null!);
+  const trim = useRef<THREE.MeshStandardMaterial>(null!);
   const light = useRef<THREE.PointLight>(null!);
   const aim = useRef(0);
   const tex = useMemo(() => plaqueTexture(item), [item]);
@@ -56,7 +61,7 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
     aim.current += (a - aim.current) * (reduced ? 1 : Math.min(1, dt * 8));
     plaque.current.scale.setScalar(1 + aim.current * 0.12);
     art.current.position.y = 1.95;
-    pad.current.opacity = 0.045 + aim.current * 0.15;
+    trim.current.color.lerpColors(STATION_BRASS_PATINA, STATION_BRASS_FOCUSED, aim.current);
     if (light.current) light.current.intensity = 0.3 + aim.current * 0.8;
   });
 
@@ -70,19 +75,17 @@ function Station({ item, children }: { item: Item; children: ReactNode }) {
       <mesh position={[0, 0.06, 0]} material={darkStone}>
         <cylinderGeometry args={[0.95, 1.05, 0.12, 40]} />
       </mesh>
-      <mesh position={[0, 0.55, 0]} material={marble}>
-        <cylinderGeometry args={[0.55, 0.68, 0.95, 40]} />
+      <mesh position={[0, STATION_COLLAR.shaftCenterY, 0]} material={marble}>
+        <cylinderGeometry args={[STATION_COLLAR.shaftTopRadius, STATION_COLLAR.shaftBottomRadius, STATION_COLLAR.shaftHeight, 40]} />
       </mesh>
       <mesh position={[0, 1.04, 0]} material={goldMat}>
         <cylinderGeometry args={[0.78, 0.62, 0.1, 40]} />
       </mesh>
-      <mesh position={[0, 0.55, 0]} rotation-x={Math.PI / 2}>
-        <torusGeometry args={[0.62, 0.014, 6, 64]} />
-        <meshBasicMaterial color={item.color} toneMapped={false} />
-      </mesh>
-      <mesh rotation-x={-Math.PI / 2} position={[0, 0.11, 0]} renderOrder={3}>
-        <ringGeometry args={[1.28, 1.5, 64]} />
-        <meshBasicMaterial ref={pad} color={item.color} transparent opacity={0.4} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
+      {/* Cast physical brass at the actual marble shaft's midline. The
+          nonemissive finish still brightens when visitors aim at the stand. */}
+      <mesh position={[0, STATION_COLLAR.bandCenterY, 0]} rotation-x={Math.PI / 2} castShadow receiveShadow>
+        <torusGeometry args={[STATION_COLLAR.bandMajorRadius, STATION_COLLAR.bandTubeRadius, 10, 64]} />
+        <meshStandardMaterial ref={trim} color="#806a4e" metalness={0.58} roughness={0.52} />
       </mesh>
 
       <group ref={art} position={[0, 1.95, 0]}>{children}</group>
