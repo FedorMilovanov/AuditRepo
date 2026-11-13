@@ -243,7 +243,7 @@ function NameSection({
             {/* verse card */}
             <Reveal delay={0.15}>
               <Tilt className="mt-9" max={7} enabled={motionOn}>
-                <div className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-8 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.85)] md:p-9">
+                <div data-verse-card className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-8 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.85)] md:p-9">
                   <span className="absolute -right-6 -top-6 select-none font-hebrew text-8xl text-gold-500/10">
                     ”
                   </span>
@@ -258,11 +258,12 @@ function NameSection({
                     <button
                       type="button"
                       onClick={copyVerse}
-                      className="relative z-10 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gold-500/25 px-3 py-1.5 font-ui text-xs uppercase tracking-[0.2em] text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+                      data-verse-copy-action
+                      className="relative z-10 inline-flex min-h-11 min-w-0 max-w-full flex-wrap items-center justify-center gap-x-1.5 gap-y-1 rounded-full border border-gold-500/25 px-3 py-1.5 text-center font-ui text-xs uppercase tracking-[0.2em] text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
                       aria-label={`Скопировать стих ${name.verse.ref}`}
                     >
-                      <Copy className="h-3 w-3" strokeWidth={1.5} />
-                      Копировать стих
+                      <Copy className="h-3 w-3 shrink-0" strokeWidth={1.5} />
+                      <span data-verse-copy-label className="min-w-0 break-words [overflow-wrap:anywhere]">Копировать стих</span>
                     </button>
                   </div>
                 </div>

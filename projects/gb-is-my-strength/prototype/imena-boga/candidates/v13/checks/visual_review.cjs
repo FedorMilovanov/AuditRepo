@@ -807,6 +807,27 @@ async function visit(browser,engine,app,width,base){
     // contract misses longer two-digit labels and a later Part IV marker.
     // Inspect every actual label; a parent overflow-clip hides the text without
     // making document.scrollWidth larger, so page-width alone is insufficient.
+    // W80: hidden local overflow can clip a verse button while the document
+    // width remains exactly equal to the viewport. Audit all 29 instances.
+    const verseActions=app==='sozvezdie'?
+      [...document.querySelectorAll('[data-verse-copy-action]')]:[];
+    const verseFailures=verseActions.map(button=>{
+      const card=button.closest('[data-verse-card]');
+      const label=button.querySelector('[data-verse-copy-label]');
+      const b=button.getBoundingClientRect(),c=card?.getBoundingClientRect();
+      const rg=document.createRange();
+      if(label)rg.selectNodeContents(label);
+      const glyphRects=label?[...rg.getClientRects()]:[];
+      return {section:button.closest('section')?.id||null,
+        width:b.width,height:b.height,scrollWidth:button.scrollWidth,
+        clientWidth:button.clientWidth,
+        clipped:!card||!label||!c||b.width<43||b.height<43||
+          b.left<c.left-2||b.right>c.right+2||
+          button.scrollWidth>button.clientWidth+2||
+          !glyphRects.length||glyphRects.some(r=>
+            r.left<b.left-2||r.right>b.right+2||
+            r.left<c.left-2||r.right>c.right+2)};
+    }).filter(item=>item.clipped);
     const kickers=app==='sozvezdie'?
       [...document.querySelectorAll('[data-name-section-kicker]')]:[];
     const kickerAudit=kickers.map(kicker=>{
@@ -844,6 +865,7 @@ async function visit(browser,engine,app,width,base){
       headerControlsCount:headerControls.length,
       kickerLabelsFound,kickerOverflow,kickerOverlap,
       kickerCount:kickerAudit.length,kickerFailures,
+      verseActionsCount:verseActions.length,verseFailures,
       kickerLast:kickerAudit.length?kickerAudit[kickerAudit.length-1]:null,
       kickerCountBox:countBox||null,
       kickerPartBox:partBox||null,
@@ -875,13 +897,23 @@ async function visit(browser,engine,app,width,base){
       !d.headerBrandFound||d.headerBrandWidth<48||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
       d.headerOverlap||d.headerControlsOutOfBounds||d.headerUndersizedControls>0||d.headerControlsCount<1||
       (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap||
-        d.kickerCount!==29||d.kickerFailures.length>0)))
+        d.kickerCount!==29||d.kickerFailures.length>0||
+        d.verseActionsCount!==29||d.verseFailures.length>0)))
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    if(app==='atlas'&&(!d.introWord?.found||
       d.introWord.overflowWrap!=='normal'||d.introWord.hyphens!=='manual'||
       !d.introWord.lines.length||d.introWord.lines.some(n=>n<2)))
     problem('BLOCKER','atlas-intro-word-orphan-root200',{engine,width,introWord:d.introWord});
    await shot(page,engine+'-'+app+'-'+width+'-15-root-font-200');
+   if(app==='sozvezdie'&&[320,390].includes(width)){
+     // Show the real button in context, not just an offscreen DOM rectangle.
+     await page.locator('[data-verse-copy-action]').first().scrollIntoViewIfNeeded();
+     await page.evaluate(async()=>{
+       await document.fonts.ready;
+       await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+     });
+     await shot(page,engine+'-'+app+'-'+width+'-root200-verse-copy-action');
+   }
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
    await page.evaluate(async()=>{
      await document.fonts.ready;
@@ -913,6 +945,21 @@ async function visit(browser,engine,app,width,base){
        const fragments=[...(badge?.querySelectorAll('span')||[])].flatMap(n=>{
          const r=document.createRange();r.selectNodeContents(n);return [...r.getClientRects()];
        });
+       // W80: the banner clips painted title glyphs unless the title itself reflows.
+       const title=el.parentElement?.querySelector('#modal-divine-name-title');
+       const banner=title?.closest('[data-modal-name-banner]');
+       const br=banner?.getBoundingClientRect();
+       const tn=title?.firstChild,txt=tn?.nodeType===Node.TEXT_NODE?tn.textContent:'';
+       const glyphs=[];
+       if(tn?.nodeType===Node.TEXT_NODE)for(let i=0;i<txt.length;i++){
+         if(/[\s\u00ad]/u.test(txt[i]))continue;
+         const rg=document.createRange();rg.setStart(tn,i);rg.setEnd(tn,i+1);
+         const r=rg.getBoundingClientRect();
+         if(r.width>0&&r.height>0)glyphs.push({left:r.left,right:r.right});
+       }
+       const titleClipped=!br||!title||!glyphs.length||
+         title.scrollWidth>title.clientWidth+2||
+         glyphs.some(r=>r.left<br.left-2||r.right>br.right+2);
        const iconTools=[...(tools?.querySelectorAll('button')||[])];
        const toolTops=iconTools.map(n=>n.getBoundingClientRect().top);
        const toolRows=toolTops.length?
@@ -930,7 +977,8 @@ async function visit(browser,engine,app,width,base){
               Math.max(buttons[i].left,buttons[j].left)>2&&
             Math.min(buttons[i].bottom,buttons[j].bottom)-
               Math.max(buttons[i].top,buttons[j].top)>2)overlaps.push([i,j]);
-       return {buttons:buttons.length,out,overlaps,toolRows,label:badge?.textContent?.trim(),
+       return {buttons:buttons.length,out,overlaps,toolRows,
+         titleClipped,titleGlyphCount:glyphs.length,label:badge?.textContent?.trim(),
          badgeClipped:!pane||!bb||bb.left<pane.left-2||bb.right>pane.right+2||
            fragments.some(r=>r.left<bb.left-2||r.right>bb.right+2),
          toolsClipped:!pane||!tr||tr.left<pane.left-2||tr.right>pane.right+2,
@@ -942,7 +990,8 @@ async function visit(browser,engine,app,width,base){
      });
      record('atlas-middle-modal-header-root200',{engine,width,...headerAudit});
      if(headerAudit.buttons<3||headerAudit.out.length||headerAudit.overlaps.length||
-        headerAudit.toolRows!==1||!headerAudit.label?.includes('/36')||
+        headerAudit.toolRows!==1||headerAudit.titleClipped||
+        !headerAudit.label?.includes('/36')||
         headerAudit.badgeClipped||headerAudit.toolsClipped||
         !headerAudit.bodyScrollable||
         headerAudit.bodyHeight<Math.min(240,headerAudit.viewportHeight*0.28))

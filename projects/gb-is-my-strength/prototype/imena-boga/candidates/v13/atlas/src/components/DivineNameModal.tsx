@@ -372,6 +372,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           {/* Illuminated 3D Tilting Original Banner */}
           <div style={{ perspective: '1000px' }}>
             <div
+              data-modal-name-banner
               onMouseMove={handleBannerMove}
               onMouseLeave={handleBannerLeave}
               className="relative overflow-hidden rounded-2xl border p-4 text-center sm:p-7"
@@ -418,12 +419,13 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
 
               <h2
                 id="modal-divine-name-title"
-                className="font-serif-display relative z-10 mt-2 text-[clamp(1.125rem,5.6vw,1.5rem)] font-bold leading-snug sm:mt-3 sm:text-3xl"
-                style={{ color: 'var(--gb-ink)' }}
+                lang="ru"
+                className="font-serif-display relative z-10 mt-2 min-w-0 break-words [overflow-wrap:anywhere] text-[clamp(1.125rem,5.6vw,1.5rem)] font-bold leading-snug sm:mt-3 sm:text-3xl"
+                style={{ color: 'var(--gb-ink)', hyphens: 'manual' }}
               >
                 {entry.language === 'greek'
                   ? entry.transliteration.replace(/(то|То)\s+/gu, '$1\u00A0')
-                  : entry.transliteration}
+                  : entry.transliteration.replace(/Тетраграмматон/gu, 'Тетра\u00adграмматон')}
               </h2>
               <p
                 className="font-serif-display relative z-10 mt-1 text-base font-semibold italic leading-snug sm:text-xl"

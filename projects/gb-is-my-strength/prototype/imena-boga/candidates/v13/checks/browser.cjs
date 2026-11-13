@@ -900,6 +900,22 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             const toolRows=toolTops.length?
               1+toolTops.slice(1).filter(top=>Math.abs(top-toolTops[0])>4).length:0;
             const body=dialog?.children[1],bodyRect=body?.getBoundingClientRect();
+            const title=dialog?.querySelector('#modal-divine-name-title');
+            const banner=title?.closest('[data-modal-name-banner]');
+            const bannerRect=banner?.getBoundingClientRect();
+            const titleNode=title?.firstChild;
+            const titleText=titleNode?.nodeType===Node.TEXT_NODE?titleNode.textContent:'';
+            const titleGlyphs=[];
+            if(titleNode?.nodeType===Node.TEXT_NODE)
+              for(let i=0;i<titleText.length;i++){
+                if(/[\s\u00ad]/u.test(titleText[i]))continue;
+                const rg=document.createRange();rg.setStart(titleNode,i);rg.setEnd(titleNode,i+1);
+                const r=rg.getBoundingClientRect();
+                if(r.width>0&&r.height>0)titleGlyphs.push({left:r.left,right:r.right});
+              }
+            const titleClipped=!bannerRect||!title||!titleGlyphs.length||
+              title.scrollWidth>title.clientWidth+2||
+              titleGlyphs.some(r=>r.left<bannerRect.left-2||r.right>bannerRect.right+2);
             const headerEvidence={found:!!(dialog&&header&&badge&&tools),
               toolRows,
               targets:headerRects.length,clippedHeaderTargets,overlappingHeaderTargets,
@@ -914,7 +930,8 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             const visual=[...rects].sort((a,b)=>
               Math.abs(a.top-b.top)>4?a.top-b.top:a.left-b.left).map(r=>r.i);
             return {count:nodes.length,visual,enabled:rects.filter(r=>!r.disabled).map(r=>r.i),
-              headerEvidence,
+              headerEvidence,titleClipped,titleGlyphCount:titleGlyphs.length,
+              titleName:titleText,
               bodyHeight:bodyRect?.height??0,viewportHeight:innerHeight,
               bodyScrollable:!!body&&body.scrollHeight>body.clientHeight+8,
               rootPx:parseFloat(getComputedStyle(root).fontSize),viewport:root.clientWidth,
@@ -931,7 +948,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
              layout.headerEvidence.clippedHeaderTargets.length||
              layout.headerEvidence.overlappingHeaderTargets.length||
              layout.headerEvidence.badgeClipped||layout.headerEvidence.toolsClipped||
-             layout.headerEvidence.toolRows!==1||
+             layout.headerEvidence.toolRows!==1||layout.titleClipped||
              !layout.headerEvidence.label?.includes('/36')||
              (rootPx===32&&(!layout.bodyScrollable||
                layout.bodyHeight<Math.min(240,layout.viewportHeight*0.28))))

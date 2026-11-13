@@ -178,6 +178,22 @@ if(!brandAtlasModal.includes('data-modal-studied')||
  throw Error('W79 compact dossier controls/a11y/reading layout regressed');
 console.log('V13_W79_DOSSIER_READING_ROOM_PASS');
 
+// W80: text must reflow inside clipped cards, not merely inside page width.
+if(!brandAtlasModal.includes('data-modal-name-banner')||
+   !brandAtlasModal.includes('id="modal-divine-name-title"')||
+   !brandAtlasModal.includes('min-w-0 break-words [overflow-wrap:anywhere]')||
+   !brandAtlasModal.includes("hyphens: 'manual'")||
+   !brandAtlasModal.includes(String.raw\`'Тетра\\u00adграмматон'\`.replace('\\\\','\\')))
+ throw Error('W80 Atlas long title inside clipping banner has no verified break');
+const w80Verse=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
+if(!w80Verse.includes('data-verse-card')||
+   !w80Verse.includes('data-verse-copy-action')||
+   !w80Verse.includes('data-verse-copy-label')||
+   !w80Verse.includes('min-w-0 max-w-full flex-wrap items-center justify-center')||
+   w80Verse.includes('inline-flex shrink-0 items-center gap-1.5 rounded-full'))
+ throw Error('W80 Reader verse action is clipped or lacks regression landmarks');
+console.log('V13_W80_LOCAL_CLIP_GLYPH_CONTRACT_PASS');
+
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');

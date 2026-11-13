@@ -64,8 +64,8 @@
       "bytes_normalized": 18399
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "5ed7148270df39b1e277492f0f05d3af406b50af9b9e65ef4143811c61db6310",
-      "bytes_normalized": 32061
+      "sha256": "40691c762e57238eff878aa07355c84e1852e411fe65436f460d822d8e93226a",
+      "bytes_normalized": 32268
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "390a7dc86f95d332640da5ca12be90ea13579a1d7a7c85c35fffd1840718ebbc",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "8bab5c56562f1d843e91b52d1756091fce84c04a806909e9dbadc28ad15b1c07",
-      "bytes_normalized": 71713
+      "sha256": "46d0b35257b55d62b88a312913a73ba52075aaa221b5a83cb66a2494a8f762c6",
+      "bytes_normalized": 72833
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "82579c475de9fc49c0099ac14efa51bd897383b5d024c0e744372feb58599857",
-      "bytes_normalized": 48122
+      "sha256": "5307ad227746a2fb136215888af3330b10146836b2f6f9637f05045f2b214279",
+      "bytes_normalized": 49186
     },
     "checks/visual_review.cjs": {
-      "sha256": "ab0d7901eade6aacb42fb402f22198fcbe0571c958062c75947221d146751f67",
-      "bytes_normalized": 64434
+      "sha256": "ae7281f8aea06822aeb30002760f2682c06e2eb9b80ea31bb0eaab355a88ea45",
+      "bytes_normalized": 67164
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
@@ -264,8 +264,8 @@
       "bytes_normalized": 20963
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "c82d273c4c724bff0758ec26ad4c2c4dde669a1c28762b550df374dd4f275e8b",
-      "bytes_normalized": 18673
+      "sha256": "073dc617828f449232c216712582ece358722be2a0f3804c58a9ea5921fb94da",
+      "bytes_normalized": 18901
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "89ba44ff43ca049e1d3cc7c913b2ffc51fafc7df3e08b0a1899f8cf6dae187c8",
