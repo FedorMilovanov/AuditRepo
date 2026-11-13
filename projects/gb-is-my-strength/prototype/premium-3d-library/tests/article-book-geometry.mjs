@@ -91,7 +91,13 @@ for (const side of [-1, 1]) {
   }
 }
 const scene = fs.readFileSync(path.join(root, "src/scene/Stations.tsx"), "utf8");
-const art = scene.slice(scene.indexOf("function BookArt("), scene.indexOf("function SeriesArt("));
+// SeriesCase is now in its own component: end the Article test at the
+// next actual section renderer, never at a function that has been removed.
+const artStart = scene.indexOf("function BookArt(");
+const artEnd = scene.indexOf("function BustArt(", artStart);
+assert(artStart >= 0 && artEnd > artStart,
+  "Article / next renderer boundary missing after series refactor");
+const art = scene.slice(artStart, artEnd);
 assert(scene.includes("art.current.position.y = 1.95;") &&
   scene.includes('<group ref={art} position={[0, 1.95, 0]}>') &&
   scene.includes('<mesh position={[0, 1.04, 0]} material={goldMat}>') &&
