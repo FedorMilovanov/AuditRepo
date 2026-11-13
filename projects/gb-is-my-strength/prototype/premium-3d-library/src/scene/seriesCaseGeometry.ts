@@ -11,12 +11,12 @@ export const SERIES_CASE = Object.freeze({
   bottomShelfThickness: 0.08,
   upperShelfCenterY: 0.30,
   upperShelfThickness: 0.07,
-  crownCenterY: 1.31,
+  crownCenterY: 1.15,
   crownThickness: 0.10,
   sideRailX: 0.79,
   sideRailWidth: 0.075,
-  sideRailHeight: 2.20,
-  sideRailCenterY: 0.24,
+  sideRailHeight: 2.06,
+  sideRailCenterY: 0.17,
   bookDepth: 0.54,
   spineFaceZ: 0.277,
 });
@@ -39,9 +39,9 @@ export const SERIES_VOLUMES: readonly SeriesVolume[] = Object.freeze([
   { id: "ii",  roman: "II",  row: 0, x: -0.18, width: 0.31, height: 1.01, leather: "#354e57" },
   { id: "iii", roman: "III", row: 0, x:  0.17, width: 0.30, height: 0.98, leather: "#57472e" },
   { id: "iv",  roman: "IV",  row: 0, x:  0.51, width: 0.29, height: 0.96, leather: "#354a3b" },
-  { id: "v",   roman: "V",   row: 1, x: -0.44, width: 0.38, height: 0.85, leather: "#5c414a" },
-  { id: "vi",  roman: "VI",  row: 1, x:  0.00, width: 0.37, height: 0.89, leather: "#694a34" },
-  { id: "vii", roman: "VII", row: 1, x:  0.44, width: 0.38, height: 0.83, leather: "#34485e" },
+  { id: "v",   roman: "V",   row: 1, x: -0.44, width: 0.38, height: 0.70, leather: "#5c414a" },
+  { id: "vi",  roman: "VI",  row: 1, x:  0.00, width: 0.37, height: 0.73, leather: "#694a34" },
+  { id: "vii", roman: "VII", row: 1, x:  0.44, width: 0.38, height: 0.68, leather: "#34485e" },
 ].map(volume => Object.freeze(volume)));
 
 export const seriesShelfTop = (row: 0 | 1): number => {

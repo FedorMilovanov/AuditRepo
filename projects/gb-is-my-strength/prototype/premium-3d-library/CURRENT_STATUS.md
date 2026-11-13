@@ -6,6 +6,8 @@ The prior "Серии" exhibit visibly orbited seven detached coloured rectangul
 
 Numerical source contract `SERIES_CASE_GEOMETRY_PASS` enforces the physical stone-plinth contact at y=1.09m, seven distinct immutable bound volumes, nonintersecting book edges, clearance below both overhead shelves, a restrained 0.20m corner overhang limit and actual JSX wiring. `lab:check` invokes the contract. The existing 4-case `central-book-browser.py` now also visits Series via the real public map and captures four genuine 1440×900/390×844 Chromium/WebKit screenshots; it does not inject camera or bypass content routes.
 
+The new immutable contract also checks the true 3.95m public heading's lower edge against the top oak cornice: the upper tier contains intentionally shorter folios, with **at least 6cm clear space** before the existing title panel, not an overlapping hidden board.
+
 **Admission status:** this is source work in Draft/LAB; after this commit GitHub Preflight/Validate and new screenshot review must pass before accepting the change as even a LAB witness. No local GPU/physical Safari/Android/XR proof, and no premium architecture sign-off. *ART HOLD and no main/Product deployment remain unchanged.*
 
 ---

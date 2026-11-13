@@ -37,11 +37,19 @@ assert(Math.hypot(c.shelfWidth/2, c.shelfDepth/2) - 0.78 < 0.20,
   "Shelf overhang far beyond the real pedestal rim");
 assert(c.shelfWidth > 2*(c.sideRailX+c.sideRailWidth/2),
   "The sides protrude outside the structural shelf");
+// The physical case must not be visually cut by the existing giant heading.
+// Compare true world Y bounds, not a cropped camera screenshot.
+const plaqueBottom = 3.95 - (3.5 * 420/1024)/2;
+const caseCrownTop = c.stationArtOriginY +
+  c.crownCenterY + c.crownThickness/2;
+assert(plaqueBottom - caseCrownTop >= 0.06,
+  "The oak cornice intersects the fixed public section heading");
+
 const innerLimit = c.sideRailX - c.sideRailWidth/2;
 const contacts = [];
 for (const v of vols) {
   assert(v.row===0 || v.row===1);
-  assert(v.width>0.22 && v.width<0.55 && v.height>0.7 && v.height<1.2);
+  assert(v.width>0.22 && v.width<0.55 && v.height>0.62 && v.height<1.2);
   assert(Math.abs(v.x)+v.width/2 < innerLimit-0.02,
     "A volume intersects its physical side frame: "+v.id);
   const foot = seriesShelfTop(v.row);
@@ -79,12 +87,15 @@ assert(!cabinet.includes("useFrame(") && !cabinet.includes("torusGeometry") &&
 assert(station.includes('series: SeriesCase,') &&
   station.includes('import { SeriesCase } from "./SeriesCase";') &&
   station.includes('<group ref={art} position={[0, 1.95, 0]}>') &&
+  station.includes('<Billboard position={[0, 3.95, 0]}') &&
+  station.includes('<planeGeometry args={[3.5, 3.5 * (420 / 1024)]} />') &&
   station.includes('<cylinderGeometry args={[0.78, 0.62, 0.1, 40]} />'),
   "Actual public section station is detached from the real case contract");
 console.log("SERIES_CASE_GEOMETRY_PASS "+JSON.stringify({
   pedestalTop:c.stonePedestalTopY,
   shelfBottomWorld:supportBottomWorld,
   railBottomWorld,
+  plaqueClearance:+(plaqueBottom-caseCrownTop).toFixed(3),
   sevenIndexedVolumes:true,
   independentOrbitMeshes:0,
   contacts
