@@ -328,7 +328,7 @@ const readerEpilogueContacts=fs.readFileSync(path.join(root,'sozvezdie','src','c
 const readerIntroduction=fs.readFileSync(path.join(root,'sozvezdie','src','components','Intro.tsx'),'utf8');
 // W82: contacts keep explicit 44px mobile hit targets; desktop returns to
 // min-h-11. Do not demand the obsolete pre-reflow class string.
-if((readerEpilogueContacts.match(/inline-flex min-h-\\[44px\\] min-w-0 max-w-full flex-wrap items-center justify-center gap-\\[6px\\]/g)||[]).length!==2||
+if((readerEpilogueContacts.match(/inline-flex min-h-\[44px\] min-w-0 max-w-full flex-wrap items-center justify-center gap-\[6px\]/g)||[]).length!==2||
    (readerEpilogueContacts.match(/sm:min-h-11 sm:gap-2 sm:px-2/g)||[]).length!==2||
    !readerIntroduction.includes('inline-flex min-h-11 items-center text-gold-400'))
   throw Error('Reader footer/contact touch targets must remain 44px accessible');
