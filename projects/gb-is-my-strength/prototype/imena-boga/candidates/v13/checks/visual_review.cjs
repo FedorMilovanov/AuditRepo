@@ -818,12 +818,45 @@ async function visit(browser,engine,app,width,base){
       const rg=document.createRange();
       if(label)rg.selectNodeContents(label);
       const glyphRects=label?[...rg.getClientRects()]:[];
+      // W81: a button can be entirely in bounds while the label wraps every
+      // *letter* into a tall vertical stack. Measure per-character paint rows
+      // for every word, not just the bounding rectangle of the entire label.
+      const node=label?.firstChild;
+      const words=node?.nodeType===Node.TEXT_NODE?
+        [...(node.textContent||'').matchAll(/\S+/gu)]:[];
+      const uniqueTops=values=>values.reduce((acc,top)=>{
+        if(!acc.some(v=>Math.abs(v-top)<3))acc.push(top);
+        return acc;
+      },[]);
+      const wordLines=words.map(m=>{
+        const rectTops=[];
+        for(let i=0;i<m[0].length;i++){
+          const range=document.createRange();
+          range.setStart(node,m.index+i);range.setEnd(node,m.index+i+1);
+          const rect=range.getBoundingClientRect();
+          if(rect.height>0&&rect.width>0)rectTops.push(rect.top);
+        }
+        return {word:m[0],rows:uniqueTops(rectTops).length};
+      });
+      const allLines=node?.nodeType===Node.TEXT_NODE?(()=>{
+        const tops=[];
+        for(let i=0;i<(node.textContent||'').length;i++){
+          if(/\s/u.test(node.textContent[i]))continue;
+          const range=document.createRange();range.setStart(node,i);range.setEnd(node,i+1);
+          const rect=range.getBoundingClientRect();
+          if(rect.height>0&&rect.width>0)tops.push(rect.top);
+        }
+        return uniqueTops(tops).length;
+      })():0;
       return {section:button.closest('section')?.id||null,
         width:b.width,height:b.height,scrollWidth:button.scrollWidth,
+        labelLines:allLines,wordLines,
         clientWidth:button.clientWidth,
         clipped:!card||!label||!c||b.width<43||b.height<43||
           b.left<c.left-2||b.right>c.right+2||
           button.scrollWidth>button.clientWidth+2||
+          b.height>160||allLines<1||allLines>2||
+          wordLines.length!==2||wordLines.some(w=>w.rows!==1)||
           !glyphRects.length||glyphRects.some(r=>
             r.left<b.left-2||r.right>b.right+2||
             r.left<c.left-2||r.right>c.right+2)};

@@ -243,7 +243,7 @@ function NameSection({
             {/* verse card */}
             <Reveal delay={0.15}>
               <Tilt className="mt-9" max={7} enabled={motionOn}>
-                <div data-verse-card className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-8 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.85)] md:p-9">
+                <div data-verse-card className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-[16px] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.85)] sm:p-8 md:p-9">
                   <span className="absolute -right-6 -top-6 select-none font-hebrew text-8xl text-gold-500/10">
                     ”
                   </span>
@@ -252,18 +252,18 @@ function NameSection({
                     «{name.verse.text}»
                   </p>
                   <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                    <p className="font-ui text-xs font-medium uppercase tracking-[0.35em] text-gold-400">
+                    <p className="min-w-0 break-words font-ui text-xs font-medium uppercase tracking-normal text-gold-400 sm:tracking-[0.35em]">
                       — {name.verse.ref}
                     </p>
                     <button
                       type="button"
                       onClick={copyVerse}
                       data-verse-copy-action
-                      className="relative z-10 inline-flex min-h-11 min-w-0 max-w-full flex-wrap items-center justify-center gap-x-1.5 gap-y-1 rounded-full border border-gold-500/25 px-3 py-1.5 text-center font-ui text-xs uppercase tracking-[0.2em] text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+                      className="relative z-10 inline-flex min-h-[44px] min-w-0 max-w-full flex-col items-center justify-center gap-[6px] rounded-full border border-gold-500/25 px-[12px] py-[10px] text-center font-ui text-xs uppercase tracking-normal text-cream-400 transition-all hover:border-gold-400/60 hover:bg-gold-500/10 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 sm:min-h-11 sm:flex-row sm:gap-1.5 sm:px-3 sm:py-1.5 sm:tracking-[0.2em]"
                       aria-label={`Скопировать стих ${name.verse.ref}`}
                     >
                       <Copy className="h-3 w-3 shrink-0" strokeWidth={1.5} />
-                      <span data-verse-copy-label className="min-w-0 break-words [overflow-wrap:anywhere]">Копировать стих</span>
+                      <span data-verse-copy-label className="min-w-0 whitespace-normal break-normal [overflow-wrap:normal]">Копировать стих</span>
                     </button>
                   </div>
                 </div>

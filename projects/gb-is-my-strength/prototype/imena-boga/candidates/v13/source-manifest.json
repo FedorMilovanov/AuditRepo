@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "faaa115fd12f5f7246d6590fe8e09d3113ba6bfd14754df41e40b17ab6b30c56",
-      "bytes_normalized": 49243
+      "sha256": "d50101d3e8c2bae76aa709d58911bdd6370242d8e5dc7dce76d63566a66ae3f5",
+      "bytes_normalized": 50061
     },
     "checks/visual_review.cjs": {
-      "sha256": "ae7281f8aea06822aeb30002760f2682c06e2eb9b80ea31bb0eaab355a88ea45",
-      "bytes_normalized": 67164
+      "sha256": "5e67d2851a467a45f9f9ddfdf09121543da069544096acd4ad8f64e276bd3e35",
+      "bytes_normalized": 68732
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
@@ -264,8 +264,8 @@
       "bytes_normalized": 20963
     },
     "sozvezdie/src/components/NameSection.tsx": {
-      "sha256": "073dc617828f449232c216712582ece358722be2a0f3804c58a9ea5921fb94da",
-      "bytes_normalized": 18901
+      "sha256": "f80a1f1d7c03e4e7d4e02fb213d541770a3a6c12a660248b5788f5bfa4015be0",
+      "bytes_normalized": 19044
     },
     "sozvezdie/src/components/NameTree.tsx": {
       "sha256": "89ba44ff43ca049e1d3cc7c913b2ffc51fafc7df3e08b0a1899f8cf6dae187c8",

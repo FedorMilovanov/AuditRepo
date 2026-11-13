@@ -189,10 +189,22 @@ const w80Verse=fs.readFileSync(path.join(root,'sozvezdie','src','components','Na
 if(!w80Verse.includes('data-verse-card')||
    !w80Verse.includes('data-verse-copy-action')||
    !w80Verse.includes('data-verse-copy-label')||
-   !w80Verse.includes('min-w-0 max-w-full flex-wrap items-center justify-center')||
+   !w80Verse.includes('min-w-0 max-w-full flex-col items-center justify-center')||
    w80Verse.includes('inline-flex shrink-0 items-center gap-1.5 rounded-full'))
  throw Error('W80 Reader verse action is clipped or lacks regression landmarks');
 console.log('V13_W80_LOCAL_CLIP_GLYPH_CONTRACT_PASS');
+
+// W81: full 200%-root zoom must retain intact Cyrillic words, not
+// paint the copy-verse action as an accessible-but-unreadable letter column.
+if(!w80Verse.includes('data-verse-card className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-[16px]')||
+   !w80Verse.includes('min-h-[44px] min-w-0 max-w-full flex-col')||
+   !w80Verse.includes('tracking-normal text-cream-400')||
+   !w80Verse.includes('sm:flex-row')||
+   !w80Verse.includes('min-w-0 whitespace-normal break-normal [overflow-wrap:normal]')||
+   !w80Verse.includes('sm:tracking-[0.35em]')||
+   w80Verse.includes('data-verse-copy-label className="min-w-0 break-words [overflow-wrap:anywhere]'))
+ throw Error('W81 copy-verse typography or card spacing regression');
+console.log('V13_W81_READABLE_VERSE_ACTION_PASS');
 
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
