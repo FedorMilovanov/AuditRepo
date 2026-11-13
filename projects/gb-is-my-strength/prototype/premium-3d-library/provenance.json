@@ -1,0 +1,17 @@
+{
+  "audit_date": "2026-11-08",
+  "delivery": "V5 experimental lab candidate; separate draft PR intended, no Product mutation",
+  "base_zip": "interactive-3d-card-cover(1).zip",
+  "input_sha256": {
+    "interactive-3d-card-cover(1).zip": "cbe9fb6309a0f37ac43393e0ed511a609e2a814f0c1e3886bab23349a764a0f2",
+    "interactive-3d-card-cover.zip": "4a9980b89ad280fd09bc936466e26f377696dc45455aa8a5196b4296b4e22828",
+    "interactive-3d-website-cover(1).zip": "a077d31c0f106a41381cc0f7d97867a63cc6e6b2f9d8b55667fa7962b397b696",
+    "interactive-3d-website-cover.zip": "683f63207815a2a7f44414b62b503cc42760538140b1ac48c1da9621621f0263"
+  },
+  "dependency_build": "not run: npm registry unreachable in offline container",
+  "static_validation": "PASS: 28 TS/TSX files parse; cabinet/progression/catalog + scoped TypeScript check",
+  "originals": [
+    "originals/interactive-3d-card-cover(1).zip",
+    "originals/interactive-3d-card-cover.zip"
+  ]
+}

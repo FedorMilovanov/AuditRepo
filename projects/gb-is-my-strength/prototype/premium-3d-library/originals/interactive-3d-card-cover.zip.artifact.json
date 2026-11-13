@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "path": "projects/gb-is-my-strength/prototype/premium-3d-library/originals/interactive-3d-card-cover.zip",
+  "sha256": "4a9980b89ad280fd09bc936466e26f377696dc45455aa8a5196b4296b4e22828",
+  "sizeBytes": 345214,
+  "purpose": "Immutable Arena Battle user-provided source prototype for 3D library audit and lab comparison",
+  "provenance": "Original user-supplied Arena Battle card-cover archive preserved byte-for-byte in Prototype Lab; recorded in provenance.json",
+  "retention": "Retain in AuditRepo Prototype Lab for auditable source comparison; retirement requires explicit owner-reviewed archival decision and SHA/provenance reconciliation"
+}

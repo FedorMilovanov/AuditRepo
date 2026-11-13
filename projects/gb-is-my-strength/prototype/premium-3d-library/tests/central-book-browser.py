@@ -1,0 +1,111 @@
+"""Browser witness of the central book's physical page presentation (V5.12).
+
+Uses normal intro CTA and actual Canvas; never injects a camera pose or
+modifies app state. Screenshots are review evidence, NOT automatic proof of
+physical accuracy or a substitute for expert art acceptance.
+"""
+import asyncio
+import json
+import os
+import re
+import tempfile
+from pathlib import Path
+from playwright.async_api import async_playwright
+from browser_runtime import launch_kwargs, test_context, capture_evidence
+
+URL = os.environ.get("GB_LIBRARY_TEST_URL", "http://127.0.0.1:8771/")
+EVIDENCE = Path(os.environ.get("GB_LIBRARY_BOOK_EVIDENCE_DIR",
+                               str(Path(tempfile.gettempdir()) / "gb-library-central-book")))
+
+async def inspect(browser, engine, width, height, mobile):
+    context = await test_context(browser,
+        viewport={"width": width, "height": height},
+        device_scale_factor=1, is_mobile=mobile, has_touch=mobile,
+        reduced_motion="reduce")
+    page = await context.new_page()
+    errors = []
+    page.on("pageerror", lambda error: errors.append("JS " + str(error)))
+    page.on("response", lambda r: errors.append(f"HTTP {r.status}: {r.url}")
+            if r.status >= 400 else None)
+    try:
+        response = await page.goto(URL, wait_until="domcontentloaded", timeout=45000)
+        assert response and response.status == 200
+        await page.get_by_role("button", name="Войти в библиотеку").click(timeout=45000)
+        await page.locator("div.fixed.inset-0.z-50").wait_for(
+            state="detached", timeout=45000)
+        await page.wait_for_timeout(1250)
+        report = await page.evaluate("""() => ({
+            webgl2: [...document.querySelectorAll('canvas')].some(
+                canvas => !!canvas.getContext('webgl2')),
+            overflow: document.documentElement.scrollWidth > innerWidth + 2,
+            viewport: [innerWidth, innerHeight]
+        })""")
+        assert report["webgl2"] and not report["overflow"], report
+        assert report["viewport"] == [width, height], report
+        assert not errors, errors
+        EVIDENCE.mkdir(parents=True, exist_ok=True)
+        path = EVIDENCE / f"{engine}-{width}x{height}-central-book.png"
+        await capture_evidence(page, path)
+
+        # A central table snapshot does not prove the separate Article book.
+        # Navigate with the real visitor-facing map and capture that book at
+        # exactly the same canonical approach in both desktop/mobile engines.
+        nav = page.locator('[data-gb-toolbar] button[title^="Карта сайта"]:visible').first
+        await nav.evaluate("(el) => el.click()")
+        map_dialog = page.get_by_role("dialog", name="Карта сайта")
+        await map_dialog.wait_for(state="visible", timeout=12000)
+        await map_dialog.get_by_role("searchbox", name="Поиск по карте сайта").fill("Статьи")
+        await map_dialog.get_by_role(
+            "button", name=re.compile("Статьи")
+        ).first.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="detached", timeout=12000)
+        await page.wait_for_timeout(3450)
+        aim = page.locator("[data-gb-aim]")
+        await aim.wait_for(state="visible", timeout=12000)
+        assert "Статьи" in await aim.inner_text(), (
+            engine, width, "Article approach did not aim at physical book"
+        )
+        article = EVIDENCE / f"{engine}-{width}x{height}-article-book.png"
+        await capture_evidence(page, article)
+        assert not errors, f"Article book rendering errors: {errors}"
+        # The Series case must also exist in the built scene, reached through
+        # the actual public map rather than injection of camera/store state.
+        await nav.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="visible", timeout=12000)
+        await map_dialog.get_by_role(
+            "searchbox", name="Поиск по карте сайта"
+        ).fill("Серии")
+        await map_dialog.get_by_role(
+            "button", name=re.compile("Серии")
+        ).first.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="detached", timeout=12000)
+        await page.wait_for_timeout(3450)
+        await aim.wait_for(state="visible", timeout=12000)
+        assert "Серии" in await aim.inner_text(), (
+            engine, width, "Series approach did not aim at the grounded case"
+        )
+        series_shot = EVIDENCE / f"{engine}-{width}x{height}-series-case.png"
+        await capture_evidence(page, series_shot)
+        assert not errors, f"Series case rendering errors: {errors}"
+        print(json.dumps({"engine": engine, "viewport": f"{width}x{height}",
+                          "result": "PASS", "report": report,
+                          "screenshot": str(path),
+                          "articleScreenshot": str(article),
+                          "seriesScreenshot": str(series_shot),
+                          "errors": errors},
+                         ensure_ascii=False), flush=True)
+    finally:
+        await context.close()
+
+async def main():
+    async with async_playwright() as playwright:
+        for engine in ("chromium", "webkit"):
+            browser = await getattr(playwright, engine).launch(**launch_kwargs(engine))
+            try:
+                for width, height, mobile in ((1440, 900, False), (390, 844, True)):
+                    await inspect(browser, engine, width, height, mobile)
+            finally:
+                await browser.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -1,0 +1,220 @@
+# Premium 3D Library — current engineering truth and admission gates
+
+## V5.62 — Series: physical oak case replacing orbiting neon books (Draft LAB candidate)
+
+The prior "Серии" exhibit visibly orbited seven detached coloured rectangular books around a central rod, with neon rings above and below. The new source-owned `SeriesCase.tsx` and `seriesCaseGeometry.ts` render seven individually bound and indexed volumes (I–VII) on two real oak shelves, between continuous wooden sides and a cornice. These display indices do not invent titles or assert catalogue contents. No orbit, particle beam or emissive ring is used; the existing public Station plaque and interactive click volume remain unchanged.
+
+Numerical source contract `SERIES_CASE_GEOMETRY_PASS` enforces the physical stone-plinth contact at y=1.09m, seven distinct immutable bound volumes, nonintersecting book edges, clearance below both overhead shelves, a restrained 0.20m corner overhang limit and actual JSX wiring. `lab:check` invokes the contract. The existing 4-case `central-book-browser.py` now also visits Series via the real public map and captures four genuine 1440×900/390×844 Chromium/WebKit screenshots; it does not inject camera or bypass content routes.
+
+The new immutable contract also checks the true 3.95m public heading's lower edge against the top oak cornice: the upper tier contains intentionally shorter folios, with **at least 6cm clear space** before the existing title panel, not an overlapping hidden board.
+
+**Admission status:** this is source work in Draft/LAB; after this commit GitHub Preflight/Validate and new screenshot review must pass before accepting the change as even a LAB witness. No local GPU/physical Safari/Android/XR proof, and no premium architecture sign-off. *ART HOLD and no main/Product deployment remain unchanged.*
+
+---
+
+
+## V5.61 — physical Article folio and Pointer Lock photo regression (Draft LAB candidate)
+
+**Source-owned geometry, not a staged screenshot:** The Article exhibit previously suspended a giant rigid V-shaped book about 0.8m over its stone plinth, independently orbiting six paper rectangles and rotating three sheets up to ~180 degrees. The local replacement in `Stations.tsx` and `openBookGeometry.ts` removes detached and orbiting leaves. Both sides have bound physical paper volume and individual 171-vertex subtly crowned pages. A slightly inclined real hardwood reading board and two diagonal wooden braces anchor the display to the same pedestal used by the public museum station.
+
+**Numerical contact:** `ARTICLE_OPEN_BOOK_CONTACT_PASS` validates the true Station art origin (y=1.95), the plinth top (y=1.09), board front at y=1.09, support feet at y≈1.089, support heads at y≈1.891 and paper surface 10mm above its block, with direct source-JSX wiring and guards against reintroducing rotating/flying leaves. All 20 public approaches remain reachable with zero collision topology regression, and the independent CC0 chair contract continues to pass. The visual replacement is deliberately restrained, not a claim of photorealism.
+
+**Real visual review:** 4/4 actual public-map Article approach captures: Chromium and Windows Playwright WebKit × 1440×900 and 390×844. On the matching source screenshots the old suspended V is gone; the new folio is visibly held on its inclined stand with a legible two-page spread. JavaScript errors and document overflow: zero. The existing `central-book-browser.py` now also captures the separate Article display, in addition to the central reading table. These browser captures are **not** a physical Safari/Android or owner artistic sign-off.
+
+**Independent Linux CI issue from the preceding V5.60 SHA `a176e4f`:** [Validate 43320876956](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43320876956) finished **FAILURE** inside `photo-transition-browser.py`; a Linux Pointer Lock canvas intercepts Playwright desktop mouse-clicking the visible photo exit control. The documented real desktop exit is **H**, while touch still uses the actual button. The test now exercises those distinct user inputs, verifies the exit controls unmount, keeps the canvas and fade unchanged and was independently checked Windows Chromium/WebKit desktop/mobile **4/4 PASS**. Do not confuse that previous failed CI with the next source HEAD result.
+
+**Still held:** this is Draft / LAB / ART HOLD. All-new-head CI, owner approval of the premium two-level vaulted stone design, actual iOS/Android and XR routes, long-session GPU/VRAM/thermal proof, Product catalogue and rights are NOT complete. No main merge or website deployment.
+
+---
+
+## V5.58 — complete walkable hall topology and sustained render characterization (local candidate)
+
+The preceding published LAB HEAD was `66b1953f066302b6730ca99b18bbb1450006875c` in the same Draft PR #545. **Exact-head GitHub Preflight [43118344367](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344367) SUCCESS and Linux Validate [43118344563](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43118344563) terminal SUCCESS**, with `browser_suites: 13, browser_cases: 65` verified in its log. Its independent Windows full browser suite is also **13/13 suites, 65/65 cases PASS**, runtime 415.94 s. **This is V5.57 acceptance, not acceptance of the following V5.58 topology test until that new HEAD independently completes CI.**
+
+**Route continuity, not just one piece of furniture:** a new extension of the existing `tests/reading-furniture-geometry.mjs` loads the **real** `data.ts` collision disks, player radius, canonical spawn and every `approachPose`. Flood-fill/BFS uses a 0.22 m occupancy grid, prevents diagonal corner-cutting, tests target clearance against the exact analytic collision circles, and limits grid-to-pose snapping. **All 20/20 interactive station approaches are reachable** from spawn, with 9,225 connected grid cells. `HALL_ROUTE_TOPOLOGY_PASS` and `lab:check` passed locally. This is a source-level LAB candidate, not a substitute for a real mobile/XR pedestrian route or exact-new-HEAD GitHub CI.
+
+**Measured 60-second steady-frame characterization (read-only Windows Playwright, 1440×900, DPR=1, same built source):** real **RTX 3060 / Chrome / D3D11** stayed at **59.9–60.0 rAF/s** across five ten-second bins, p95 16.8ms, zero `>100 ms` stalls; quality remained `Ультра`. **Windows Playwright WebKit** yielded 25.5 and 24.2 rAF/s in the first two ten-second bins, downgraded via legitimate AutoQuality to `Лёгкая`, then maintained 28.9–29.3 rAF/s, p95 41–42ms. Two >100ms stalls occurred during the downgrade bin; no JavaScript page errors. These are browser animation-frame interval measurements, **not GPU timings**, a physical Mac/iPhone test, or 15-minute thermal/VRAM evidence. The WebKit `Apple GPU` renderer string does not establish physical Apple hardware.
+
+**Shader investigation:** `KHR_parallel_shader_compile` is available in both tested browser contexts. Official [Three.js WebGLRenderer.compileAsync docs](https://threejs.org/docs/pages/WebGLRenderer) describe asynchronous shader preparation, but it should be studied only as a measured option for compilation stalls, **not assumed to fix the persistent slow WebKit frame rate**. No speculative renderer changes have been applied.
+
+**Admission unchanged:** DRAFT / LAB / ART HOLD. Do not merge/deploy/change Product or main. Verify exact-new-head CI after this candidate is committed, physical Android/iOS/XR, owner reference-art acceptance, production catalogue/rights, and sustained GPU frame-time/VRAM/thermals.
+
+---
+
+## V5.57 — source-owned 3D chair collision synchronization (local candidate)
+
+The first real CC0 armchair exposed a distinct pedestrian bug: the old procedural Article bench collision at radius 6.15m had survived after that bench's renderer was removed, while the new GLB had no collision. The visitor could have been stopped by invisible furniture and could walk through the visible chair. The actual player collision path uses `OBSTACLES` and a 0.35m player radius; a rendering-only fix would not resolve either defect.
+
+**Scoped correction:** `src/data.ts` now defines one immutable `ARTICLE_CHAIR_PLACEMENT` (9.4m ring, 2.5m lateral, 0.7m longitudinal offset, -0.4rad turn, 0.62m collision radius) and `SECTION_BENCH_RING_RADIUS` (6.15m). `Dressing.tsx` consumes exactly these coordinates, while `OBSTACLES` replaces the deleted Article bench's collision with the transformed real chair footprint. Other section benches remain in their original positions, with their collisions unchanged.
+
+**Independent geometry witness:** `tests/reading-furniture-geometry.mjs` executes the real TypeScript data module, checks that its placement feeds the actual JSX and player collision loop, matches the original GLB 0.85×0.77m bounds, verifies exactly one chair collider and zero ghost bench collider, then proves 2.175m radial free passage to the wall and 0.448m spare width between the two player-expanded obstacles at the Article station. `FURNITURE_COLLISION_PASS`, `lab:check`, TypeScript and production build passed locally. Visual navigation screenshots and the current candidate's exact-head CI remain independent admission gates.
+
+**Status:** this V5.57 step is a LAB candidate only until committed and its own CI is terminal-green. Never transfer the previous-head CI status to this change. Draft / ART HOLD remains; no Product/main changes or deployment.
+
+---
+
+## V5.56 — one source-verified chair reference; LAB candidate, ART HOLD
+
+**Preceding exact-head functional gate is terminal green:** commit `39e1d5711667136f78defb806422a409f202bd50`: [Workflow Preflight SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793273), [Linux Validate SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43101793225), **13/13 real-browser suites and 65/65 cases PASS on Linux**, independently **65/65 PASS on Windows**. The corrected desktop-keyboard E / mobile-touch Open witness does not bypass input handlers. **Do not project these results to this V5.56 asset commit; exact-new-head CI must run again.**
+
+**One bounded art candidate:** a real textured vintage armchair near the Article station, replacing only one schematic bench, positioned farther from the approach camera and to the side after the first placement occluded the lower viewport. Screenshots from Chrome and Playwright WebKit 1440×900 plus Chrome touch-emulated 390×844 confirm no headline/button occlusion and no JS/HTTP errors. This is a local candidate, **not owner aesthetic approval, not physical-device proof**.
+
+**Asset and reproducibility:** [Poly Haven Arm Chair 01](https://polyhaven.com/a/ArmChair_01), by Kirill Sannikov, **CC0**. Official asset manifest: `https://api.polyhaven.com/files/ArmChair_01`; five source files and their MD5s independently verified against that API. Source glTF `ArmChair_01_1k.gltf` MD5 `39d1e4b0ffdde688c98335c9621e3aae`, binary buffer `fbd842795fdec75d94f1335c28acfc0e`, diffuse JPEG `9166f2c24f2114a5fa5513950ed9b9ae`, OpenGL normal JPEG `8541821edd6dcb319b7f9841d849fbbe`, ARM packed JPEG `2ea528244dd6fc0deb2af1a555c0a312`. `glTF-Transform v4.5.1 copy` assembled the 1K multi-file glTF, `resize --width 512 --height 512` created `src/assets/ArmChair_01_512.glb`: **328,452 bytes**, SHA-256 `3cf5a722a4fa50bcb1c278629030d99159920a38f82328c0c9daea7ff268cd5f`. Original 5,626 triangles / one mesh / one material; the three 512px texture maps still require real runtime VRAM validation. No source ZIP, duplicate meshes, or unlicensed assets committed.
+
+**Performance caveat:** old green Linux SwiftShader measured a first graphics quality transition up to 17.76s / 5.05s rAF gap. Windows Playwright WebKit at 1440×900 gave ~27–29 rAF/s versus actual RTX3060 Chromium ~60; temporary scene-hiding experiments showed ~276 draw calls and little FPS improvement when large groups were hidden. These are short software/browser benchmarks, **not GPU timings** or proof an individual texture/model is the bottleneck. Avoid subtracting architecture or procedural content without matched GPU and real-hardware A/B.
+
+**HARD OPEN:** exact-new-head Linux 65/65 and asset fallback/context-loss proofs; full reference-matched architecture and owner visual acceptance; physical Android/iOS Safari, XR, accessibility, long-session GPU frame-time/VRAM/thermal; Product-owned catalog/Reader/rights integration. Remain **DRAFT / LAB / ART HOLD**. No merge, deploy, Product writes, new branch or speculative content registry.
+
+---
+
+## V5.36 — physical reading furniture (current LAB candidate)
+
+[**V536_READING_FURNITURE_ENGINEERING.md**](V536_READING_FURNITURE_ENGINEERING.md) records real same-camera before/after Chromium/WebKit evidence, a corrected visitor-facing lectern page, and numerical book/table/support clearances using actual Three.js transforms and negative fixtures. The 4 new browser cases passed locally; the mandatory test count is now **12 suites / 61 browser cases**. New exact-head GitHub Preflight + Validate must independently finish green. Old V5.35 **11/11 suites, 57/57 PASS** is validated but does not certify V5.36. Keep Draft / LAB / ART HOLD; no Product/main/merge/deploy.
+
+---
+
+## V5.35 — reduced motion and no-WebGL 2D entry (NEW candidate)
+
+[**V535_MOTION_2D_BOOTSTRAP.md**](V535_MOTION_2D_BOOTSTRAP.md) documents real screenshot-motion evidence, capability-first bootstrap, original WebGL recovery and explicit limitations. The existing lab Draft PR now requires **11 suites / 57 cases** on the exact **new** SHA; 6/6 WebGL/recovery and 4/4 motion cases were passed on Windows browsers in the local candidate. The new Linux GitHub CI cannot be presumed green until its final terminal status and run logs are inspected. **Keep Draft / LAB / ART HOLD; no Product/main/deploy/merge.**
+
+---
+
+## V5.34 — crash-safe history and fail-closed Product policy candidate
+
+Current [V534_DATA_INTEGRITY_RECOVERY.md](V534_DATA_INTEGRITY_RECOVERY.md) documents two reproduced P1 failures and independently tested source fixes. Malformed visited localStorage values no longer crash the sitemap; their raw bytes are preserved instead of erased. Unknown/missing Pagefind policies can no longer admit a route. **New exact-head CI must pass 10 suites / 53 browser cases**; historical [V5.33 Validate 47/47](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42886253395) is not current acceptance. No change to private cabinet IndexedDB or Product. Art, mobile/XR/GPU and Product remain HARD OPEN. Keep one Draft PR, no merge/deployment.
+
+---
+
+## V5.33 — central lectern design, new exact-head gate required
+
+Latest [LECTERN_CRAFT_V533.md](LECTERN_CRAFT_V533.md) records replacement of the accidental standing 4.2m gold torus by a correct horizontal 9mm tabletop inlay, one genuine carved/fluted lathed oak pedestal and one beveled solid tabletop. No station/book/content/navigation/Reader moves and no extra textures. Real same-RTX3060 A/B, Chromium 1440×900 and 390×844, bidirectional quality, WebGL recovery and 2D fallback PASS locally. A new fail-closed geometry guard rejects the old vertical hoop (negative fixture PASS). **Prior V5.32 47/47 does NOT certify this new source SHA**; wait for exact-head Preflight and Chromium/WebKit 47/47 Validate. Artistic, physical-device, XR, rights and Product gates remain HARD OPEN. Keep Draft / ART HOLD.
+
+---
+
+## V5.32 current candidate — wood grain architecture, exact-head checks required
+
+One existing Draft PR #545 contains the V5.32 authored direction-aware carpentry candidate: [CASEWORK_GRAIN_PROVENANCE_V532.md](CASEWORK_GRAIN_PROVENANCE_V532.md). Original lectern/furniture materials are kept separate. Real R3F 1024/512 color/normal/roughness wood maps are source-verified (CC0, six SHA-256; 490,652 bytes); horizontal and upright elements use distinct UV geometry while retaining GPU instancing. RTX3060 Chrome browser and bidirectional quality transitions passed locally. **Never project the previous V5.31 47/47 onto the new candidate**; new exact-head CI and screenshot inspection are mandatory. The artistic, physical-device, Product/rights and XR gates remain HARD OPEN; no merge/deployment.
+
+---
+
+## V5.31 floor-material candidate — current source
+
+The active Draft PR #545 now contains a source-verified ambientCG CC0 **honed stone PBR floor** (color/normal/roughness in 1024/512px presets). Provenance, roughness remapping, SHA-256, colour spaces and target-size budget: [PBR_FLOOR_PROVENANCE_V531.md](PBR_FLOOR_PROVENANCE_V531.md). Local NVIDIA RTX 3060 Chrome (1440×900 and touch-emulated 390×844) checked WebGL2, actual CDN-free material loads, viewport images and both directions of graphics quality without errors. **Do not infer the latest SHA's 47/47 from the former exact-head V5.30 green run; check current GitHub Actions.** The artistic quality gate and real mobile/XR performance remain HARD OPEN. No Product/main writes or deployment.
+
+---
+
+## Current verified checkpoint — 2026-11-10, V5.30
+
+**Active engineering candidate:** sole existing [AuditRepo Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`; source of truth is the latest **exact PR HEAD** from GitHub. The historical 2026-11-09 and V5.23–V5.26 sections below are **superseded** and must not be read as current unclosed defects.
+
+**Latest verified exact-head CI:**
+- SHA `0754519ab904d934c00b5801dd0522e12155dfd9`: [AuditRepo Workflow Preflight #42829675469](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675469) **SUCCESS**; [AuditRepo Validate #42829675732](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732) **SUCCESS**; its log explicitly reports **9/9 suites, 47/47 browser cases PASS** on one SHA. Evidence: [59 genuine PNGs](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42829675732/artifacts/13773466543), Chromium and Playwright WebKit at desktop/portrait/landscape resolutions, including six WebGL recovery tests and genuine two-tab cabinet persistence.
+- Prior [#42824278435](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42824278435) at `e0f5b7c` was likewise **47/47 PASS** after the sitemap scrollport fix: heading remains stationary after search and independently scrollable results. Do not aggregate cases across SHAs.
+- The latest artistic-scale source introduces immutable `src/scene/caseworkScale.ts`, shared by `Architecture.tsx` and `ArchitecturalPolish.tsx`. Outer bay geometry and circulation remain unchanged. Thirteen shelved bays × twelve shelves × 38 slim books = **5,928** GPU-instanced decorative folios, rather than 1,716 oversized volumes; book heights 0.31–0.48 world metres, shelf pitch 0.59m. `scripts/verify-architecture.cjs` validates the real shared geometry: book-width/height clearance, upper cornice clearance, expected bay and instance count. **A procedural folio is decorative geometry, not a claimed source-verified title.**
+- Screenshot witness review: the increased shelf density improves scale and reduces empty gaps; portrait plaque title remains readable on both engines; site-map title remains visible in WebKit after search, and the tour/minimap no longer overlap. **These are tested code and image observations, not an approval of photorealistic design.**
+- The isolated Windows NVIDIA RTX 3060 Direct3D11 and Windows SwiftShader real-browser tests confirmed genuine WebGL loss→restoration and 2D fallback on same prior SHA. Short 180-frame rAF sampling was approximately 60Hz, but is **not GPU frame-time or sustained performance certification**.
+
+**Still HARD OPEN, without waivers:**
+1. **Art direction:** real high-fidelity licensed/owned glTF/UV/PBR reference prop(s), correct lighting/material identity, lifelike joinery and furniture, source provenance, actual side-by-side screenshots and owner's visual approval. Procedural book count is not itself a premium-art acceptance gate.
+2. **Physical-device performance:** actual iPhone Safari, Android, XR headset, assisted tech and 15+ minute cold/warm GPU frame-time, VRAM/thermal/long-session sampling on target devices. Linux CI SwiftShader and Windows RTX/Chrome are not substitutes.
+3. **Product/readers/rights:** Product-owned content route/catalog/Reader/data rights approval and migration policy remain separate; no transfer of lab-local IndexedDB profiles to real user accounts by assumption.
+4. **No live deployment, merge, main changes or additional branches**. Keep PR Draft / LAB / ART HOLD.
+
+---
+**Historical evidence below — retained for traceability, superseded as live status by V5.30 above.**
+
+
+## Current live checkpoint — 2026-11-10, V5.23–V5.26
+
+**Single candidate:** existing [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. The active SHA is whatever GitHub reports for that PR, **not the V5.14 historical baseline below**. No Product/main writes, new branch, deployment, merge or approved premium art release.
+
+### Verified browser evidence, not projections
+
+- [Validate #42802193147](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42802193147) on `200ece88`: **FAILURE**, but the first eight suites completed **41/41 PASS** (12 interaction, 4 architecture, 4 central book, 6 touch HUD, 5 reference bay, 4 photo, 4 true bidirectional quality transitions, 2 real-origin IndexedDB cabinet tests). 52 real screenshot artifacts. **WebGL recovery suite failed at first Chromium 1440×900 software renderer case** after a context restore attempt.
+- [Validate #42805542724](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42805542724) on `0a6d960`: **FAILURE** at the first WebGL loss overlay witness; all previous 41 browser cases were PASS again, including explicit manually-owned texture lifetime changes. This is a *different failure stage*, not a validated recovery. Browser snapshot and runtime fault-event evidence is needed to determine whether the renderer throws, the lost event is missing, or an alternate UI replaces the overlay.
+- Current later PR commits add **fail-closed lost-event diagnostics with screenshot** and a true separately loaded 2D cabinet bootstrap. Require fresh **exact-head** CI to accept those changes; do **not** combine older PASS results across SHAs or claim 47/47.
+- [Actual old-run visual audit](https://github.com/FedorMilovanov/AuditRepo/pull/545#issuecomment-6764874310) and [implementation report](https://github.com/FedorMilovanov/AuditRepo/pull/545#issuecomment-6765457215): the fixed overlay-card double lettering, portrait plaque fitting (both engines), readable opaque sitemap and tablet tour/minimap separation have source changes and 41-case browser evidence. Initial map vs search-scrolled map are now distinct screenshots. These do not imply owner-approved premium architectural art.
+- Software-GPU quality-switch latency and screenshot readback remain costly on Chromium SwiftShader; no real-device GPU frame-time, mobile thermal or VRAM certification. The production renderer uses the tested R3F/WebGL stack, not an unreviewed WebGPU swap.
+
+### Current hard-open admission gates
+
+1. **WebGL loss + restore**: retain strict evidence of actual `webglcontextlost` cancellation and `webglcontextrestored` from the same context. 2D cabinet and original-site fallback must remain functional when restoration is impossible. Six recovery cases and exact-head **47/47** remain unaccepted until a full terminal-green Validate run.
+2. **Visual premium art**: current screenshots are real but still too schematic (repetitive books, sparse authored furniture, uniform flooring, stylized displays). Build and approve a genuine glTF/UV/PBR architectural reference bay with original/CC0-licensed provenance and performance budgets, then expand it; never treat concept art as real screenshot evidence.
+3. **Physical devices/performance**: actual desktop GPU, physical iOS Safari/Android, XR, assistive technologies, thermal/VRAM, cold/warm shader compilation and sustained use remain not tested.
+4. **Product/readers/rights**: only verified Product-owned route/catalog/Reader state and publication rights may cross the lab boundary by separately approved PR; independent local IndexedDB lab demo never automatically migrates.
+
+The **V5.14 matrix that follows is historical**, and its 31-case Windows/lab measurements have been superseded by later 47-case exact-head checks.
+
+**Updated:** 2026-11-09. **One candidate:** AuditRepo [Draft PR #545](https://github.com/FedorMilovanov/AuditRepo/pull/545), branch `lane/gb-premium-3d-library-lab-20261108`. **Last independently confirmed pre-CI baseline:** `63db5d5347c5662ed7cb01bdfebde2267ca52158` (V5.14). For the current PR head, always query GitHub; do not infer it from a versioned report. The branch must stay Draft / LAB / ART HOLD until each release gate below passes.
+
+**Product:** [FedorMilovanov/gb-is-my-strength](https://github.com/FedorMilovanov/gb-is-my-strength). This AuditRepo lab is **not** Product, and no content, saved bookmarks, Reader or main branch has been updated by its V5.0–V5.14 lab waves. No production URL or deployment is asserted. A Windows localhost `dist/` preview is not an externally reachable deployment.
+
+## Source-of-truth ordering
+
+1. **Current code and tests** under `src/`, `tests/` and `scripts/`.
+2. **GitHub exact-head job logs**, including the new conditional library check inside the existing required `AuditRepo Validate` workflow; distinguish repo-level preflight from actual 3D build and browser journeys.
+3. **Evidence and immutable manifests** for specific V5.7–V5.14 commits in `evidence/` and `V5*_MANIFEST.json`.
+4. **Historic V5 docs** (`QA_V5_REAL_BROWSER.md`, `QA_V57_CONTROL_VISUAL_AUDIT.md`, `ART_DIRECTION.md` and early sections of `README-LAB.md`): observations when written, not live admission statuses.
+5. AI-generated `reference/library-design-target.png` is a **mood target only**, never a captured browser frame or ground truth for achieved artistic fidelity.
+
+Do not count a historical PASS for a later SHA. A clean `AuditRepo Validate` without the library branch trigger is only a repo-rules PASS; to certify the 3D candidate, inspect the exact-head job and the individual lab steps. The new conditional workflow requires a real run before its Linux browser behavior can be marked accepted.
+
+## Current system matrix (V5.14 engineering state)
+
+| Area | Implemented and locally witnessed | Not certified / remaining gate |
+| --- | --- | --- |
+| WebGL2 Hall | Real React/Three.js scene; normal entry, walk/tour, station cards, deterministic instanced bookshelf books | Artistic realism and physical hardware stability |
+| Geometry and scene | Daylight architecture, limestone/dark timber, windows, domed roof, PBR details in four contiguous shelf bays; 20 vaulted ribs share one instance geometry; inclined central open book | Professionally authored, complete coherent GLB/UV/PBR furniture and architecture; owner reference-matched approval |
+| UX and accessibility | P0 small-landscape entry and P1 sitemap modal/focus repaired V5.8; photo veil repaired V5.9; quality transition coverage V5.10; portrait camera V5.11; browser screenshot witnesses | Real assistive technology, physical touch/VR; focus and WebGL context recovery across devices |
+| Static cab/progression | Demo IndexedDB vault, local import guard, rank/XP simulator and optional cosmetic unlocks; bounded pure-engine tests | Product GBReaderLibrary V3 data, cross-tab/origin and real-user data lifecycle, cloud sync and exact quote provenance |
+| Public catalog | Fail-closed, read-only adapter accepts supplied route policy and metadata | Live Product content/route/rights/noindex projection not implemented |
+| Performance | Chrome desktop measured around 60 rAF/s in short tests; instanced art lowered submitted draw calls; WebKit emulation observed around 25–30 rAF/s on desktop | Repeatable controlled GPU frame timings, VRAM/thermals, actual iOS Safari, Android, VR; unresolved first graphics-quality switch stall |
+| Quality gates | On the V5.14 candidate, five lab checks, TS, production build, 31/31 public browser cases, geometry equivalence and GitHub AuditRepo structural/preflight checks passed | Mandatory automatic **exact-head library** CI newly authored here; require actual GitHub success on its first run and future changes |
+| Publication | One Draft PR with checked provenance and screenshot evidence | Owner signoff, Product promotion PR, genuine publicly accessible preview and deployment |
+
+### Precision on performance
+
+Browser `requestAnimationFrame` cadence is not measured GPU frame time. The Windows Playwright WebKit backend is not actual iPhone Safari, and mobile viewports are emulated on the Windows machine. The V5.14 roof optimization reduced observed draw calls per frame by **7–13**, not a proof of guaranteed real-world frame-rate gains. Initial quality changes can still delay the renderer ~0.8–2 seconds. Unproven tweaks (permanent shadow quality or frozen floor texture resolution) were tested in V5.11 and **rejected**, not silently shipped.
+
+### Previously observed P0/P1 closure details
+
+- V5.7 A-01 inaccessible landscape CTA: fixed with scrollable responsive cover in V5.8, tested in 12 browser scenarios including 844×390.
+- V5.7 A-02 inaccessible sitemap dialog: real dialog with focus trap/restore, named search and close action, inert app background in V5.8.
+- V5.7 A-03 incomplete art fidelity: **OPEN**. Additional joinery in V5.13 is not proof of whole-hall premium architecture.
+- V5.7 A-04 slow desktop WebKit: **OPEN**, hardware and GPU timing not proven.
+- V5.7 A-05 Product catalog/cabinet mismatch: **OPEN**.
+- V5.7 A-06 portrait framing: improved V5.11 on 320/390 touch emulation; physical-device signoff OPEN.
+- V5.7 A-07 photo veil: fixed V5.9 with a dedicated browser witness. First-quality-switch **runtime stall** is still open.
+- V5.7 A-08 QA automation: source-owned regressions exist; new conditional GitHub CI must pass and remain enforced.
+- V5.7 A-09 heavy initial JS: ~1.46 MB minified main JS (~414 KB gzip), while large XR chunks are already lazy. Coverage/long-task profiling required, not blind file splitting.
+
+## Permanent check commands (from lab root)
+
+```sh
+npm ci --no-audit --no-fund
+npm run lab:check
+npm run lab:catalog:test
+npm run lab:cabinet:test
+npm run lab:progression:test
+npm run lab:cabinet:types
+node tests/vault-rib-equivalence.mjs
+npx tsc --noEmit
+npm run build
+python tests/browser-runner-contract.py
+# Python Playwright 1.62.0 and browser binaries must be installed.
+python scripts/run-browser-regression.py
+```
+
+The final runner serves `dist/` on ephemeral loopback and demands nine non-skipped suites: **12 interaction + 4 architecture + 4 central book + 6 mobile HUD + 5 reference bay + 4 photo + 4 quality + 2 cabinet IndexedDB + 6 WebGL recovery/fallback = 47 cases** (quality also checks both switch directions). Screenshot witnesses go into an external temporary directory, not tracked `evidence/`. No runtime patch or debug camera teleport is allowed.
+
+## Wave sequence and safe ownership
+
+- **Wave 0: baseline audit and ownership** — maintain one branch and one Draft PR, immutable original ZIPs, no interference with other AuditRepo agents/PRs, no Product writes. **Complete.**
+- **Wave 1: required library-specific CI** — existing repo Validate must run Node lab/typecheck/build, exact 3D scene browser journeys, fail-closed witness and geometry checks when this lab changes. **Implementation in progress; gate closes only after exact-head GitHub success.**
+- **Wave 2: truthful current documentation** — this status is canonical; update README/HANDOFF/blueprint front matter, retain historical audit evidence and stop calling old FAIL current. **In progress.**
+- **Wave 3: art asset standard** — build one human-approved convincing architecture/reading bay with UV/PBR and authentic furniture, with licensed authored glTF/GLB provenance and fixed-camera before/after. Expand only after owner approval, without scattering independent decorative primitives. **OPEN.**
+- **Wave 4: renderer stability and mobile hardware** — instrument main thread/GL compile/long tasks/context loss with reproducible runs; physical Safari/Android/VR and thermal/VRAM testing. No GPU hacks or unsupported FPS claims. **OPEN.**
+- **Wave 5: source-owned Product bridge** — implement read-only catalog projection, verified rights/noindex and reader/cabinet contracts on an approved Product head; migrate no demo XP or personal data implicitly. **OPEN.**
+- **Wave 6: staging/live promotion** — accessible 2D fallback + security/rights/privacy checks + owner's artistic signoff; only then exact-head separate Product PR, staging and release. **OPEN.**
+
+**Stop condition:** No merge, publication, Product copy, cloud sync or claim of "full zero" while any Wave 3–6 acceptance is still open. Passing a CI gate is necessary but insufficient for premium artistic acceptance.
