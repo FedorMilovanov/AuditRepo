@@ -718,6 +718,13 @@ const mouthLeft = exitVaultRelief(-2.1, 3.4, -320, 0.2, -1);
 const mouthRight = exitVaultRelief(2.1, 3.4, -320, 0.2, 1);
 t('zone-6 cave mouth remains eroded and visibly asymmetric through last shell rings',
   mouthRelief.roofDrop > 0.08 && mouthLeft.sideOut > mouthRight.sideOut * 1.25);
+const erodedLeftShoulder = exitVaultRelief(1.4, 4, -320, 0.85, -0.47);
+const erodedRightShoulder = exitVaultRelief(1.4, 4, -320, 0.85, 0.47);
+t('zone-6 mouth includes real asymmetric upper shoulder bedding, not a round portal',
+  erodedLeftShoulder.roofDrop > erodedRightShoulder.roofDrop + 0.14 &&
+  erodedLeftShoulder.roofDrop < 1.25 &&
+  exitVaultRelief(1.4, 4, -330, 0.85, -0.47).roofDrop === 0);
+
 
 t('zone-6 erosion modifies the original vault without out-of-zone artefacts',
   exitCeiling.roofDrop > 0.4 && exitCeiling.roofDrop < 1.22 &&
@@ -914,10 +921,14 @@ for (const lowMode of [true, false]) {
     const shapes = face.geometry.parameters.shapes;
     const holes = (Array.isArray(shapes) ? shapes[0] : shapes).holes;
     const points = holes?.[0]?.getPoints(24) ?? [];
-    apertureSafe = points.length >= 6 &&
-      Math.min(...points.map((p: THREE.Vector2) => p.x)) <= -3.55 &&
-      Math.max(...points.map((p: THREE.Vector2) => p.x)) >= 3.55 &&
-      Math.max(...points.map((p: THREE.Vector2) => p.y)) > 5.9;
+    const highRidge = points.reduce((best: THREE.Vector2, current: THREE.Vector2) =>
+      current.y > best.y ? current : best, points[0]);
+    apertureSafe = points.length >= 100 &&
+      Math.min(...points.map((p: THREE.Vector2) => p.x)) <= -3.75 &&
+      Math.max(...points.map((p: THREE.Vector2) => p.x)) >= 3.75 &&
+      highRidge.y > 6.15 && highRidge.x < -0.15 &&
+      Math.max(...points.filter((p: THREE.Vector2) =>
+        Math.abs(p.x) < 0.3).map((p: THREE.Vector2) => p.y)) > 5.85;
   }
   t('Horeb rock face aperture clears real wider cave shell ' +
       (lowMode ? 'LOW' : 'HIGH'),

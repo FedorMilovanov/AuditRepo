@@ -64,8 +64,17 @@ export function exitVaultRelief(x: number, y: number, z: number,
   const ceiling = Math.pow(Math.max(0, archSin), 2.3);
   const flank = Math.pow(Math.max(0, Math.abs(archCos)), 2.2);
   const asymmetricBedding = fbm(x * 0.28 + 7.1, y * 0.20 - 8.2, z * 0.23, 3);
+  // Real erosion leaves different ledges on the left and right shoulder,
+  // rather than one mathematically round arch. Widen the two NOTCHES in
+  // the existing roof triangles; both stay above the walking centreline.
+  // Shape depends on the original arc, never a hanging billboard/overlay.
+  const leftBedding = Math.exp(-Math.pow((archCos + 0.47) / 0.19, 2));
+  const rightBedding = Math.exp(-Math.pow((archCos - 0.62) / 0.20, 2));
+  const fracturedShoulder = envelope *
+    Math.pow(Math.max(0, archSin), 1.8) *
+    (0.31 * leftBedding + 0.11 * rightBedding);
   const roofDrop = envelope * ceiling * (0.27 + 0.94 * fold) *
-    (0.88 + 0.26 * asymmetricBedding);
+    (0.88 + 0.26 * asymmetricBedding) + fracturedShoulder;
   // Move shoulders OUTWARDS, not into the navigable passage. Nonidentical
   // cliff flanks break the textbook semicircular silhouette at the mouth.
   const sideOut = envelope * flank * (0.16 + 0.54 * fold) *
@@ -708,12 +717,21 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // A wider, gently eroded irregular aperture surrounds the cave's real
     // 3D end profile instead of cutting across it.
     const hole = new THREE.Path();
-    hole.moveTo(-3.6, -1.5);
-    hole.lineTo(3.6, -1.5);
-    hole.lineTo(3.6, 1.4);
-    hole.bezierCurveTo(3.7, 3.8, 2.7, 5.6, 0.9, 6.0);
-    hole.bezierCurveTo(-1.1, 6.3, -3.1, 5.4, -3.6, 2.4);
-    hole.lineTo(-3.6, -1.5);
+    // A generous EXTERIOR clearance contour, offset beyond the actual
+    // eroded cave shell. Unequal upper ledges and asymmetrical shoulders
+    // break the old textbook semicircle. Neither flank encroaches on the
+    // real 3D portal or its physical 2m-wide centre walkway.
+    hole.moveTo(-3.82, -1.5);
+    hole.lineTo(3.82, -1.5);
+    hole.lineTo(3.78, 0.85);
+    hole.bezierCurveTo(3.72, 1.80, 3.66, 2.74, 3.42, 3.31);
+    hole.bezierCurveTo(3.19, 4.06, 2.79, 5.15, 2.10, 5.43);
+    hole.bezierCurveTo(1.72, 5.55, 1.43, 6.16, 0.76, 6.16);
+    hole.bezierCurveTo(0.17, 6.03, -0.27, 6.40, -0.91, 6.24);
+    hole.bezierCurveTo(-1.41, 6.11, -1.72, 5.74, -2.19, 5.72);
+    hole.bezierCurveTo(-2.86, 5.40, -3.31, 4.41, -3.70, 2.73);
+    hole.bezierCurveTo(-3.78, 2.23, -3.61, 1.34, -3.82, 0.72);
+    hole.lineTo(-3.82, -1.5);
     shape.holes.push(hole);
     const cg = new THREE.ShapeGeometry(shape, 24);
     const cp = cg.attributes.position;
