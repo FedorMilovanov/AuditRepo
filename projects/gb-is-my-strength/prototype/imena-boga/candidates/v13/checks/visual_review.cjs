@@ -95,6 +95,74 @@ async function waitVisual(page){
  await page.locator('h1').first().waitFor({state:'visible',timeout:20000});
  await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(resolve))});
 }
+// W83: screenshots of the Panorama must not outrun the app lifecycle.
+// A green layout check with unrendered rails or an undecoded image is invalid.
+async function waitPanoramaHeroImage(page,engine,width){
+ const image=page.locator('[data-sinai-backdrop]').first();
+ await image.waitFor({state:'attached',timeout:12000});
+ const evidence=await image.evaluate(async el=>{
+  if(!(el instanceof HTMLImageElement))return {isImage:false};
+  let decodeError=null;
+  try{await el.decode()}catch(e){decodeError=String(e)};
+  await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+  const b=el.getBoundingClientRect(),s=getComputedStyle(el);
+  return {isImage:true,complete:el.complete,naturalWidth:el.naturalWidth,
+   naturalHeight:el.naturalHeight,currentSrc:el.currentSrc.split('/').pop(),
+   decodeError,width:b.width,height:b.height,visibility:s.visibility,
+   display:s.display,opacity:s.opacity};
+ });
+ record('panorama-sinai-image-ready',{engine,width,...evidence});
+ if(!evidence.isImage||!evidence.complete||evidence.naturalWidth<700||
+    evidence.naturalHeight<400||evidence.decodeError||
+    evidence.width<width-2||evidence.height<400||
+    evidence.visibility==='hidden'||evidence.display==='none'||
+    Number(evidence.opacity)<.95){
+  problem('BLOCKER','panorama-sinai-image-not-ready',{engine,width,...evidence});
+  throw Error('Panorama Sinai image did not decode/paint before hero capture');
+ }
+}
+async function expectPanoramaReaderRails(page,engine,width,label){
+ if(width!==1440)return;
+ // React sets inArticle on scroll via requestAnimationFrame. Wait for the
+ // actual visible, populated DOM rather than sleeping an arbitrary 130ms.
+ try{
+  await page.waitForFunction(()=>{
+   const main=document.querySelector('main'),m=main?.getBoundingClientRect();
+   const rails=[...document.querySelectorAll('[data-rails]')];
+   return !!m&&m.top<innerHeight*.5&&m.bottom>innerHeight*.5&&
+    rails.length===2&&rails.every(rail=>{
+     const rect=rail.getBoundingClientRect(),style=getComputedStyle(rail);
+     return style.display!=='none'&&style.visibility!=='hidden'&&
+      Number(style.opacity)>.95&&rect.width>150&&rect.height>80&&
+      rect.left>=-2&&rect.right<=innerWidth+2&&
+      rail.querySelectorAll('button').length>=14;
+    });
+  },null,{timeout:8000});
+ }catch(e){
+  problem('BLOCKER','panorama-reader-rails-not-ready',{engine,width,label,
+   error:String(e).slice(0,250)});
+  throw e;
+ }
+ await page.evaluate(()=>new Promise(done=>
+  requestAnimationFrame(()=>requestAnimationFrame(done))));
+ const evidence=await page.evaluate(()=>{
+  const main=document.querySelector('main'),m=main?.getBoundingClientRect();
+  const rails=[...document.querySelectorAll('[data-rails]')];
+  return {mainTop:m?.top??null,mainBottom:m?.bottom??null,
+   rails:rails.map(rail=>{const r=rail.getBoundingClientRect(),s=getComputedStyle(rail);
+    return {label:rail.getAttribute('aria-label'),left:r.left,right:r.right,
+     width:r.width,height:r.height,display:s.display,opacity:s.opacity,
+     buttons:rail.querySelectorAll('button').length};})};
+ });
+ record('panorama-reader-rails-visible',{engine,width,label,...evidence});
+ if(evidence.rails.length!==2||
+    evidence.rails.map(x=>x.buttons).sort((a,b)=>a-b).join(',')!=='14,15'||
+    evidence.rails.some(x=>x.display==='none'||x.width<150||
+      x.left< -2||x.right>width+2)){
+  problem('BLOCKER','panorama-reader-rails-invalid',{engine,width,label,...evidence});
+  throw Error('Panorama reader rails disappeared after settling');
+ }
+}
 async function diag(page,app,engine,width,stage){
  const d=await page.evaluate(()=>{
   const ww=document.documentElement.clientWidth;
@@ -269,6 +337,7 @@ async function visit(browser,engine,app,width,base){
  try{
   await page.goto(base+'/'+app+'/',{waitUntil:'domcontentloaded',timeout:30000});
   await waitVisual(page);
+  if(app==='sozvezdie')await waitPanoramaHeroImage(page,engine,width);
   await wcagAudit(page,app,engine,width);
   await layoutContract(page,app,engine,width);
   await diag(page,app,engine,width,'hero');
@@ -287,10 +356,13 @@ async function visit(browser,engine,app,width,base){
    if(await section.count()){
     await section.first().scrollIntoViewIfNeeded();
     await page.waitForTimeout(130);
+    if(app==='sozvezdie')
+      await expectPanoramaReaderRails(page,engine,width,'03-reader');
     await shot(page,engine+'-'+app+'-'+width+'-03-reader');
    }
    if(app==='sozvezdie'&&await page.locator('#tetragrammaton').count()){
     await page.locator('#tetragrammaton').scrollIntoViewIfNeeded();
+    await expectPanoramaReaderRails(page,engine,width,'04-hebrew');
     await shot(page,engine+'-'+app+'-'+width+'-04-hebrew');
    }
    if(app==='sozvezdie'){
@@ -347,6 +419,8 @@ async function visit(browser,engine,app,width,base){
     });
     record('reader-progress-exact',{engine,width,...witness});
    }
+   if(app==='sozvezdie')
+    await expectPanoramaReaderRails(page,engine,width,'05-deep');
    await shot(page,engine+'-'+app+'-'+width+'-05-deep');
   }
   if(width===320&&app==='atlas'){
@@ -424,6 +498,7 @@ async function visit(browser,engine,app,width,base){
        return tab?.textContent?.includes('Вав') && panel?.textContent?.includes('Вав')
          && !panel?.textContent?.includes('Йод');
      },null,{timeout:5000});
+     await expectPanoramaReaderRails(page,engine,width,'07-letter-detail');
      await shot(page,engine+'-sozvezdie-'+width+'-07-letter-detail');
     });
     if(width===390||width===320)await safeAction(page,engine+'-sozvezdie-'+width+'-mobile-index',async()=>{

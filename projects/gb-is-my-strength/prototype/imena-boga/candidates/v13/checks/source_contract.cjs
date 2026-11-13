@@ -222,6 +222,22 @@ if(!readerEpilogue.includes('data-library-return-link')||
    readerEpilogue.includes('inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/70 px-8'))
  throw Error('W82 zoomed footer links/return CTA would clip');
 console.log('V13_W82_FOOTER_REFLOW_PASS');
+
+// W83: the visual-harness must prove image decode and actual in-article
+// 1440px rails before capture; arbitrary sleeps are not acceptance evidence.
+const w83Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+if(!w83Visual.includes('async function waitPanoramaHeroImage(')||
+   !w83Visual.includes('await el.decode()')||
+   !w83Visual.includes('panorama-sinai-image-ready')||
+   !w83Visual.includes('async function expectPanoramaReaderRails(')||
+   !w83Visual.includes('panorama-reader-rails-visible')||
+   !w83Visual.includes('panorama-reader-rails-not-ready')||
+   !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'03-reader')")||
+   !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'04-hebrew')")||
+   !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'05-deep')")||
+   !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'07-letter-detail')"))
+ throw Error('W83 screenshot witness must wait for loaded Sinai and visible reader rails');
+console.log('V13_W83_SCREENSHOT_LIFECYCLE_WITNESSES_PASS');
 if(readerSection.includes('«Я есмь» и составные имена') ||
    !readerSection.includes('«Я есмь» и связанные выражения') ||
    !readerEpilogue.includes('но не {NAMES.length}') ||
