@@ -191,9 +191,11 @@ if (!qAtlasModal.includes('inline-block max-w-full whitespace-normal [overflow-w
     !qAtlasModal.includes('data-greek-original-token') ||
     !qAtlasModal.includes("entry.original.replace(/(τὸ|"))
   throw Error('Visual regression: Greek articles can become orphan glyphs');
-if (!qAtlasModal.includes('sm:flex-row sm:items-center sm:justify-between') ||
+if (!qAtlasModal.includes('sm:flex-row sm:flex-wrap sm:items-center sm:justify-between') ||
+    !qAtlasModal.includes('data-modal-header-tools') ||
+    !qAtlasModal.includes('max-w-full flex-wrap items-center justify-end') ||
     !qAtlasModal.includes('min-h-11 min-w-11'))
-  throw Error('Visual regression: narrow dossier header has inaccessible controls');
+  throw Error('Visual regression: narrow dossier header must wrap accessible controls');
 if (!qAtlasPillars.includes('sm:flex-row sm:items-center sm:justify-between') ||
     !qAtlasPillars.includes('onMobileDrawerOpenChange') ||
     qAtlasPillars.includes('data-atlas-mobile-ribbon') ||
