@@ -285,7 +285,10 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <button
               type="button"
               onClick={() => onToggleStudied(entry.id)}
-              className="font-ui inline-flex min-h-11 max-w-full min-w-0 cursor-pointer flex-wrap items-center justify-center gap-1 rounded-lg border px-3 py-1 text-xs font-medium transition-colors"
+              data-modal-studied
+              aria-pressed={isStudied}
+              aria-label={isStudied ? 'Снять отметку изучения этой позиции' : 'Отметить изучение этой позиции'}
+              className="font-ui inline-flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center gap-1 rounded-lg border px-[6px] py-[6px] text-xs font-medium transition-colors sm:h-auto sm:w-auto sm:min-h-11 sm:px-3 sm:py-1"
               style={{
                 backgroundColor: isStudied ? 'rgba(42, 107, 74, 0.12)' : 'var(--gb-surface)',
                 borderColor: isStudied ? '#2a6b4a' : 'var(--gb-border-strong)',
@@ -293,8 +296,8 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               }}
               title="Отметить изучение этой позиции"
             >
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>{isStudied ? 'Изучено' : 'Отметить'}</span>
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+              <span className="hidden sm:inline">{isStudied ? 'Изучено' : 'Отметить'}</span>
             </button>
           </div>
 
@@ -643,7 +646,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
         {/* Bottom Navigation Bar */}
         <div
           data-modal-footer
-          className="grid grid-cols-2 gap-2 border-t px-3 py-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:px-8 sm:py-3.5"
+          className="grid grid-cols-2 gap-[6px] border-t px-3 py-[8px] sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:gap-2 sm:px-8 sm:py-3.5"
           style={{
             backgroundColor: 'var(--gb-bg)',
             borderColor: 'var(--gb-border)',
@@ -653,30 +656,34 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             type="button"
             disabled={!prevEntry}
             onClick={() => prevEntry && onSelectEntry(prevEntry)}
-            className="font-ui inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
+            aria-label={prevEntry ? `Предыдущая позиция: ${prevEntry.transliteration}` : 'Начало списка'}
+            className="font-ui inline-flex min-h-[44px] w-full min-w-0 cursor-pointer items-center justify-center gap-[4px] rounded-xl border px-[6px] py-[6px] text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:min-h-11 sm:w-auto sm:gap-1.5 sm:px-3.5 sm:py-2"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
               color: 'var(--gb-ink)',
             }}
           >
-            <ChevronLeft className="h-4 w-4" />
-            <span className="max-w-[120px] truncate">{prevEntry ? prevEntry.transliteration : 'Начало'}</span>
+            <ChevronLeft className="h-[16px] w-[16px] shrink-0 sm:h-4 sm:w-4" />
+            <span className="sm:hidden">Назад</span>
+            <span className="hidden max-w-[120px] truncate sm:inline">{prevEntry ? prevEntry.transliteration : 'Начало'}</span>
           </button>
 
           <button
             type="button"
             disabled={!nextEntry}
             onClick={() => nextEntry && onSelectEntry(nextEntry)}
-            className="font-ui inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-3.5"
+            aria-label={nextEntry ? `Следующая позиция: ${nextEntry.transliteration}` : 'Конец списка'}
+            className="font-ui inline-flex min-h-[44px] w-full min-w-0 cursor-pointer items-center justify-center gap-[4px] rounded-xl border px-[6px] py-[6px] text-xs font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-35 sm:min-h-11 sm:w-auto sm:gap-1.5 sm:px-3.5 sm:py-2"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
               color: 'var(--gb-ink)',
             }}
           >
-            <span className="max-w-[120px] truncate">{nextEntry ? nextEntry.transliteration : 'Конец'}</span>
-            <ChevronRight className="h-4 w-4" />
+            <span className="sm:hidden">Далее</span>
+            <span className="hidden max-w-[120px] truncate sm:inline">{nextEntry ? nextEntry.transliteration : 'Конец'}</span>
+            <ChevronRight className="h-[16px] w-[16px] shrink-0 sm:h-4 sm:w-4" />
           </button>
 
           <button
@@ -686,10 +693,10 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               onClose();
               onJumpToArticle(entry);
             }}
-            className="font-ui col-span-2 inline-flex min-h-11 w-full min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:col-auto sm:w-auto sm:px-4"
+            className="font-ui col-span-2 inline-flex min-h-[44px] w-full min-w-0 cursor-pointer items-center justify-center gap-[6px] rounded-xl px-[8px] py-[6px] text-xs font-semibold gb-on-accent transition-opacity hover:opacity-90 sm:col-auto sm:min-h-11 sm:w-auto sm:gap-1.5 sm:px-4 sm:py-2"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
-            <Navigation className="h-3.5 w-3.5" />
+            <Navigation className="h-[16px] w-[16px] shrink-0 sm:h-3.5 sm:w-3.5" />
             <span className="sm:hidden">К статье</span>
             <span className="hidden sm:inline">Перейти в статье</span>
           </button>
@@ -698,12 +705,12 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             <a
               href={`/imena-boga/#${encodeURIComponent(counterpartId)}`}
               aria-label={`Продолжить чтение о «${entry.transliteration}» в Панораме имён Бога`}
-              className="font-ui col-span-2 inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:col-auto sm:w-auto sm:px-3"
+              className="font-ui col-span-2 inline-flex min-h-[44px] w-full min-w-0 items-center justify-center gap-[6px] rounded-xl border px-[8px] py-[6px] text-xs font-semibold transition-colors hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:col-auto sm:min-h-11 sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2"
               style={{ borderColor: 'var(--gb-gold)', color: 'var(--gb-accent)' }}
             >
               <BookOpen className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
               <span className="min-w-0 break-normal text-center">Панорама имён Бога</span>
-              <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              <ArrowUpRight className="h-[16px] w-[16px] shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
             </a>
           )}
         </div>

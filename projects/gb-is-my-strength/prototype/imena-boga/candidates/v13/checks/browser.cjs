@@ -899,6 +899,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
               .map(node=>node.getBoundingClientRect().top);
             const toolRows=toolTops.length?
               1+toolTops.slice(1).filter(top=>Math.abs(top-toolTops[0])>4).length:0;
+            const body=dialog?.children[1],bodyRect=body?.getBoundingClientRect();
             const headerEvidence={found:!!(dialog&&header&&badge&&tools),
               toolRows,
               targets:headerRects.length,clippedHeaderTargets,overlappingHeaderTargets,
@@ -914,6 +915,8 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
               Math.abs(a.top-b.top)>4?a.top-b.top:a.left-b.left).map(r=>r.i);
             return {count:nodes.length,visual,enabled:rects.filter(r=>!r.disabled).map(r=>r.i),
               headerEvidence,
+              bodyHeight:bodyRect?.height??0,viewportHeight:innerHeight,
+              bodyScrollable:!!body&&body.scrollHeight>body.clientHeight+8,
               rootPx:parseFloat(getComputedStyle(root).fontSize),viewport:root.clientWidth,
               documentWidth:root.scrollWidth,
               tooSmall:rects.filter(r=>r.height<43),
@@ -929,7 +932,9 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
              layout.headerEvidence.overlappingHeaderTargets.length||
              layout.headerEvidence.badgeClipped||layout.headerEvidence.toolsClipped||
              layout.headerEvidence.toolRows!==1||
-             !layout.headerEvidence.label?.includes('/36'))
+             !layout.headerEvidence.label?.includes('/36')||
+             (rootPx===32&&(!layout.bodyScrollable||
+               layout.bodyHeight<Math.min(240,layout.viewportHeight*0.28))))
             throw Error('Atlas W76 modal header/footer geometry failed '+
               JSON.stringify({engine,width,entryCase,rootPx,layout}));
           for(let i=0;i<entryCase.enabled.length-1;i++){

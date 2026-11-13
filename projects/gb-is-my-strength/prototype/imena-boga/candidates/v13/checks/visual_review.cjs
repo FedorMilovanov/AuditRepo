@@ -934,12 +934,18 @@ async function visit(browser,engine,app,width,base){
          badgeClipped:!pane||!bb||bb.left<pane.left-2||bb.right>pane.right+2||
            fragments.some(r=>r.left<bb.left-2||r.right>bb.right+2),
          toolsClipped:!pane||!tr||tr.left<pane.left-2||tr.right>pane.right+2,
-         bodyHeight:el.parentElement?.children[1]?.getBoundingClientRect().height||0};
+         bodyHeight:el.parentElement?.children[1]?.getBoundingClientRect().height||0,
+         viewportHeight:innerHeight,
+         bodyScrollable:!!el.parentElement?.children[1]&&
+           el.parentElement.children[1].scrollHeight>
+             el.parentElement.children[1].clientHeight+8};
      });
      record('atlas-middle-modal-header-root200',{engine,width,...headerAudit});
      if(headerAudit.buttons<3||headerAudit.out.length||headerAudit.overlaps.length||
         headerAudit.toolRows!==1||!headerAudit.label?.includes('/36')||
-        headerAudit.badgeClipped||headerAudit.toolsClipped||headerAudit.bodyHeight<24)
+        headerAudit.badgeClipped||headerAudit.toolsClipped||
+        !headerAudit.bodyScrollable||
+        headerAudit.bodyHeight<Math.min(240,headerAudit.viewportHeight*0.28))
        problem('BLOCKER','atlas-middle-modal-header-root200-invalid',{engine,width,...headerAudit});
      await shot(page,engine+'-atlas-'+width+'-middle-modal-header-root200');
      const footer=modal.locator('[data-modal-footer]');

@@ -128,8 +128,8 @@ if (!brandAtlasHtml.includes('<title>Атлас имён Бога — библе
     brandAtlasModal.includes('font-ui order-3') ||
     brandAtlasModal.includes('font-ui order-2') ||
     brandAtlasModal.includes('font-ui order-1') ||
-    !brandAtlasModal.includes('col-span-2 inline-flex min-h-11') ||
-    !brandAtlasModal.includes('col-span-2 inline-flex min-h-11') ||
+    !brandAtlasModal.includes('col-span-2 inline-flex min-h-[44px]') ||
+    !brandAtlasModal.includes('sm:col-auto sm:min-h-11') ||
     brandAtlasModal.includes('в Созвездии') ||
     [brandAtlasHtml,brandReaderHtml,brandAtlasHero,brandReaderHero,
      brandReaderIndex,brandReaderMap,brandReaderSection,brandAtlasIndex,brandAtlasModal].some(
@@ -163,6 +163,20 @@ if(!brandAtlasModal.includes('data-modal-header-tools className="flex w-full min
    !brandAtlasModal.includes('sm:h-11 sm:w-11'))
  throw Error('W78 zoomed icon controls no longer fit a single accessible row');
 console.log('V13_W78_ZOOMED_ICON_CONTROLS_PASS');
+
+// W79: preserve 44px targets and full a11y names while letting 200%-zoom
+// mobile visitors actually read the dossier rather than only its toolbars.
+if(!brandAtlasModal.includes('data-modal-studied')||
+   !brandAtlasModal.includes('aria-pressed={isStudied}')||
+   !brandAtlasModal.includes('aria-label={prevEntry ?')||
+   !brandAtlasModal.includes('aria-label={nextEntry ?')||
+   !brandAtlasModal.includes('<span className="sm:hidden">Назад</span>')||
+   !brandAtlasModal.includes('<span className="sm:hidden">Далее</span>')||
+   !brandAtlasModal.includes('grid grid-cols-2 gap-[6px] border-t')||
+   !brandAtlasModal.includes('min-h-[44px] w-full min-w-0 cursor-pointer')||
+   !brandAtlasModal.includes('sm:col-auto sm:min-h-11'))
+ throw Error('W79 compact dossier controls/a11y/reading layout regressed');
+console.log('V13_W79_DOSSIER_READING_ROOM_PASS');
 
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
