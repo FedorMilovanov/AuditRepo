@@ -209,6 +209,19 @@ console.log('V13_W81_READABLE_VERSE_ACTION_PASS');
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');
+
+// W82: footer interaction must fit the viewport at 200% root text.
+// Cropping under overflow-hidden is not an acceptable responsive strategy.
+if(!readerEpilogue.includes('data-library-return-link')||
+   !readerEpilogue.includes('data-library-return-text')||
+   !readerEpilogue.includes('data-library-further-link')||
+   !readerEpilogue.includes('max-w-3xl px-[16px]')||
+   !readerEpilogue.includes('min-h-[44px] min-w-0 max-w-full flex-wrap')||
+   !readerEpilogue.includes('tracking-normal text-cream-500')||
+   !readerEpilogue.includes('min-w-0 break-all [overflow-wrap:anywhere]')||
+   readerEpilogue.includes('inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/70 px-8'))
+ throw Error('W82 zoomed footer links/return CTA would clip');
+console.log('V13_W82_FOOTER_REFLOW_PASS');
 if(readerSection.includes('«Я есмь» и составные имена') ||
    !readerSection.includes('«Я есмь» и связанные выражения') ||
    !readerEpilogue.includes('но не {NAMES.length}') ||

@@ -861,6 +861,33 @@ async function visit(browser,engine,app,width,base){
             r.left<b.left-2||r.right>b.right+2||
             r.left<c.left-2||r.right>c.right+2)};
     }).filter(item=>item.clipped);
+    // W82: overflow-hidden footer can clip real links while the document
+    // itself reports no horizontal overflow. Check every visible actionable
+    // link/button, including painted text fragments and the full hit box.
+    const footer=app==='sozvezdie'?document.querySelector('footer'):null;
+    const footerActions=footer?
+      [...footer.querySelectorAll('a,button')].filter(node=>{
+        const s=getComputedStyle(node),r=node.getBoundingClientRect();
+        return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0;
+      }):[];
+    const footerFailures=footerActions.map((node,index)=>{
+      const r=node.getBoundingClientRect();
+      const walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+      const ranges=[];
+      let textNode;
+      while((textNode=walker.nextNode())){
+        if(!textNode.textContent?.trim())continue;
+        const rg=document.createRange();rg.selectNodeContents(textNode);
+        ranges.push(...rg.getClientRects());
+      }
+      const clipped=r.left< -2||r.right>root.clientWidth+2||
+        r.width<43||r.height<43||
+        ranges.some(x=>x.left<r.left-2||x.right>r.right+2||
+          x.left< -2||x.right>root.clientWidth+2);
+      return {index,label:node.textContent?.trim().slice(0,90),
+        left:r.left,right:r.right,width:r.width,height:r.height,
+        fragmentCount:ranges.length,clipped};
+    }).filter(x=>x.clipped);
     const kickers=app==='sozvezdie'?
       [...document.querySelectorAll('[data-name-section-kicker]')]:[];
     const kickerAudit=kickers.map(kicker=>{
@@ -899,6 +926,7 @@ async function visit(browser,engine,app,width,base){
       kickerLabelsFound,kickerOverflow,kickerOverlap,
       kickerCount:kickerAudit.length,kickerFailures,
       verseActionsCount:verseActions.length,verseFailures,
+      footerActionsCount:footerActions.length,footerFailures,
       kickerLast:kickerAudit.length?kickerAudit[kickerAudit.length-1]:null,
       kickerCountBox:countBox||null,
       kickerPartBox:partBox||null,
@@ -931,7 +959,8 @@ async function visit(browser,engine,app,width,base){
       d.headerOverlap||d.headerControlsOutOfBounds||d.headerUndersizedControls>0||d.headerControlsCount<1||
       (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap||
         d.kickerCount!==29||d.kickerFailures.length>0||
-        d.verseActionsCount!==29||d.verseFailures.length>0)))
+        d.verseActionsCount!==29||d.verseFailures.length>0||
+        d.footerActionsCount<5||d.footerFailures.length>0)))
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
    if(app==='atlas'&&(!d.introWord?.found||
       d.introWord.overflowWrap!=='normal'||d.introWord.hyphens!=='manual'||
@@ -946,6 +975,12 @@ async function visit(browser,engine,app,width,base){
        await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
      });
      await shot(page,engine+'-'+app+'-'+width+'-root200-verse-copy-action');
+     await page.locator('[data-library-return-link]').scrollIntoViewIfNeeded();
+     await page.evaluate(async()=>{
+       await document.fonts.ready;
+       await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+     });
+     await shot(page,engine+'-'+app+'-'+width+'-root200-footer-actions');
    }
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
    await page.evaluate(async()=>{

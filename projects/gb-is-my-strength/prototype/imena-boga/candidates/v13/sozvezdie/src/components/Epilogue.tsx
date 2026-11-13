@@ -35,7 +35,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
       <Starfield density={0.6} paused={!motionOn} />
       <div className="absolute bottom-0 left-1/2 h-[380px] w-[680px] -translate-x-1/2 translate-y-1/3 rounded-full bg-gold-500/[0.08] blur-[110px]" />
 
-      <div className="relative mx-auto max-w-3xl px-6 pb-16 text-center">
+      <div className="relative mx-auto max-w-3xl px-[16px] pb-16 text-center sm:px-6">
         <Reveal>
           <span
             className="glow-gold block select-none font-hebrew text-6xl font-medium text-gold-300 md:text-7xl"
@@ -70,7 +70,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
 
         {/* reader's journey summary */}
         <Reveal delay={0.3}>
-          <div className="mx-auto mt-12 flex max-w-md flex-col items-center gap-4 rounded-3xl border border-gold-500/20 bg-ink-900/55 px-6 py-6 backdrop-blur-sm">
+          <div className="mx-auto mt-12 flex max-w-md flex-col items-center gap-4 rounded-3xl border border-gold-500/20 bg-ink-900/55 px-[16px] py-6 backdrop-blur-sm sm:px-6">
             <div className="relative h-20 w-20">
               <svg viewBox="0 0 36 36" className="h-20 w-20 -rotate-90" aria-hidden>
                 <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(74,66,50,0.55)" strokeWidth="1.5" />
@@ -98,7 +98,7 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
               <button
                 type="button"
                 onClick={() => onSelect(nextUnread.id)}
-                className="group inline-flex items-center gap-2 rounded-full border border-gold-500/35 px-5 py-2.5 font-ui text-xs uppercase tracking-[0.22em] text-gold-300 transition-all hover:border-gold-400/70 hover:bg-gold-500/10"
+                className="group inline-flex min-h-[44px] min-w-0 max-w-full flex-wrap items-center justify-center gap-[8px] rounded-full border border-gold-500/35 px-[12px] py-[10px] text-center font-ui text-xs uppercase tracking-normal text-gold-300 transition-all hover:border-gold-400/70 hover:bg-gold-500/10 sm:px-5 sm:py-2.5 sm:tracking-[0.22em]"
               >
                 {completedCount === 0 ? "Начать с" : "Следующее неизученное"} · {nextUnread.translit}
                 <span className="transition-transform group-hover:translate-x-0.5">→</span>
@@ -122,10 +122,11 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
                 <a
                   key={item.href}
                   href={item.href}
-                  className="group flex flex-col justify-between rounded-2xl border border-cream-800/50 bg-ink-900/60 p-6 transition-all duration-300 hover:border-gold-500/40 hover:bg-ink-850"
+                  data-library-further-link
+                  className="group flex min-w-0 max-w-full flex-col justify-between rounded-2xl border border-cream-800/50 bg-ink-900/60 p-[16px] transition-all duration-300 hover:border-gold-500/40 hover:bg-ink-850 sm:p-6"
                 >
                   <span>
-                    <span className="font-display text-xl font-semibold leading-snug text-cream-100 transition-colors group-hover:text-gold-200">
+                    <span className="min-w-0 break-words [overflow-wrap:anywhere] font-display text-xl font-semibold leading-snug text-cream-100 transition-colors group-hover:text-gold-200">
                       {item.title}
                     </span>
                     <span className="mt-2 block font-body text-sm italic leading-relaxed text-cream-500">
@@ -145,31 +146,32 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
         <Reveal delay={0.45}>
           <a
             href="https://gospod-bog.ru"
-            className="group mt-12 inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/70 px-8 py-4 font-ui text-xs font-medium uppercase tracking-[0.3em] text-gold-300 transition-all duration-300 hover:border-gold-400/60 hover:bg-ink-800 hover:shadow-[0_0_40px_rgba(212,175,55,0.18)]"
+            data-library-return-link
+            className="group mt-12 inline-flex min-h-[44px] min-w-0 max-w-full flex-wrap items-center justify-center gap-[8px] rounded-full border border-gold-500/30 bg-ink-900/70 px-[12px] py-[12px] text-center font-ui text-xs font-medium uppercase tracking-normal text-gold-300 transition-all duration-300 hover:border-gold-400/60 hover:bg-ink-800 hover:shadow-[0_0_40px_rgba(212,175,55,0.18)] sm:gap-3 sm:px-8 sm:py-4 sm:tracking-[0.3em]"
           >
-            <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={1.5} />
-            Вернуться в библиотеку
+            <ArrowLeft className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={1.5} />
+            <span data-library-return-text className="min-w-0 whitespace-normal break-normal [overflow-wrap:normal]">Вернуться в библиотеку</span>
           </a>
         </Reveal>
 
         <Reveal delay={0.5}>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 font-ui text-xs tracking-[0.15em] text-cream-500 sm:flex-row">
+          <div className="mt-12 flex min-w-0 flex-col items-center justify-center gap-4 font-ui text-xs tracking-normal text-cream-500 sm:flex-row sm:tracking-[0.15em]">
             <a
               href="mailto:viktorcoy2012@gmail.com"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="inline-flex min-h-[44px] min-w-0 max-w-full flex-wrap items-center justify-center gap-[6px] rounded-lg px-[8px] text-center transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 sm:min-h-11 sm:gap-2 sm:px-2"
             >
-              <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
-              viktorcoy2012@gmail.com
+              <Mail className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
+              <span className="min-w-0 break-all [overflow-wrap:anywhere]">viktorcoy2012@gmail.com</span>
             </a>
             <span className="hidden h-1 w-1 rotate-45 bg-cream-700 sm:block" />
             <a
               href="https://t.me/fedormilovanov"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="inline-flex min-h-[44px] min-w-0 max-w-full flex-wrap items-center justify-center gap-[6px] rounded-lg px-[8px] text-center transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 sm:min-h-11 sm:gap-2 sm:px-2"
             >
-              <Send className="h-3.5 w-3.5" strokeWidth={1.5} />
-              t.me/fedormilovanov
+              <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
+              <span className="min-w-0 break-all [overflow-wrap:anywhere]">t.me/fedormilovanov</span>
             </a>
           </div>
         </Reveal>
