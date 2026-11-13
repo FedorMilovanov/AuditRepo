@@ -261,28 +261,31 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
       >
         {/* Top Modal Header */}
         <div
-          className="flex flex-col gap-2 border-b px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-4"
+          data-modal-header
+          className="flex min-w-0 flex-col gap-2 border-b px-3 py-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-8 sm:py-4"
           style={{
             backgroundColor: 'var(--gb-bg)',
             borderColor: 'var(--gb-border)',
           }}
         >
-          <div className="flex min-w-0 flex-wrap items-center gap-2">
+          <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">
             <span
-              className="font-ui inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-bold tracking-wide uppercase"
+              data-modal-position
+              className="font-ui inline-flex min-h-10 max-w-full min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 rounded-lg px-2.5 py-1 text-xs font-bold tracking-wide uppercase"
               style={{
                 backgroundColor: 'var(--gb-accent-soft)',
                 color: 'var(--gb-accent)',
               }}
             >
-              <Sparkles className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-              Позиция {entry.number}/{allNames.length}
+              <Sparkles className="h-3.5 w-3.5 shrink-0" style={{ color: 'var(--gb-gold)' }} />
+              <span>Позиция</span>{' '}
+              <span className="whitespace-nowrap">{entry.number}/{allNames.length}</span>
             </span>
 
             <button
               type="button"
               onClick={() => onToggleStudied(entry.id)}
-              className="font-ui inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1 text-xs font-medium transition-colors"
+              className="font-ui inline-flex min-h-11 max-w-full min-w-0 cursor-pointer flex-wrap items-center justify-center gap-1 rounded-lg border px-3 py-1 text-xs font-medium transition-colors"
               style={{
                 backgroundColor: isStudied ? 'rgba(42, 107, 74, 0.12)' : 'var(--gb-surface)',
                 borderColor: isStudied ? '#2a6b4a' : 'var(--gb-border-strong)',
@@ -295,7 +298,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
             </button>
           </div>
 
-          <div className="flex w-full items-center justify-end gap-2 sm:w-auto">
+          <div data-modal-header-tools className="flex w-full min-w-0 max-w-full flex-wrap items-center justify-end gap-2 sm:ml-auto sm:w-auto">
             {hasSpeechSupport && (
               <button
                 type="button"

@@ -902,6 +902,42 @@ async function visit(browser,engine,app,width,base){
        await document.fonts.ready;
        await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
      });
+     // W76: at 200% the header clipped its status and leftmost toolbar.
+     // Check the actual painted rectangles and preserve a separate screenshot.
+     const header=modal.locator('[data-modal-header]');
+     const headerAudit=await header.evaluate(el=>{
+       const pane=el.parentElement?.getBoundingClientRect();
+       const badge=el.querySelector('[data-modal-position]');
+       const tools=el.querySelector('[data-modal-header-tools]');
+       const bb=badge?.getBoundingClientRect(),tr=tools?.getBoundingClientRect();
+       const fragments=[...(badge?.querySelectorAll('span')||[])].flatMap(n=>{
+         const r=document.createRange();r.selectNodeContents(n);return [...r.getClientRects()];
+       });
+       const buttons=[...el.querySelectorAll('button')].map(n=>{
+         const r=n.getBoundingClientRect();
+         return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,
+           width:r.width,height:r.height};
+       });
+       const out=buttons.filter(b=>!pane||b.left<pane.left-2||
+         b.right>pane.right+2||b.width<43||b.height<43);
+       const overlaps=[];
+       for(let i=0;i<buttons.length;i++)for(let j=i+1;j<buttons.length;j++)
+         if(Math.min(buttons[i].right,buttons[j].right)-
+              Math.max(buttons[i].left,buttons[j].left)>2&&
+            Math.min(buttons[i].bottom,buttons[j].bottom)-
+              Math.max(buttons[i].top,buttons[j].top)>2)overlaps.push([i,j]);
+       return {buttons:buttons.length,out,overlaps,label:badge?.textContent?.trim(),
+         badgeClipped:!pane||!bb||bb.left<pane.left-2||bb.right>pane.right+2||
+           fragments.some(r=>r.left<bb.left-2||r.right>bb.right+2),
+         toolsClipped:!pane||!tr||tr.left<pane.left-2||tr.right>pane.right+2,
+         bodyHeight:el.parentElement?.children[1]?.getBoundingClientRect().height||0};
+     });
+     record('atlas-middle-modal-header-root200',{engine,width,...headerAudit});
+     if(headerAudit.buttons<3||headerAudit.out.length||headerAudit.overlaps.length||
+        !headerAudit.label?.includes('/36')||
+        headerAudit.badgeClipped||headerAudit.toolsClipped||headerAudit.bodyHeight<24)
+       problem('BLOCKER','atlas-middle-modal-header-root200-invalid',{engine,width,...headerAudit});
+     await shot(page,engine+'-atlas-'+width+'-middle-modal-header-root200');
      const footer=modal.locator('[data-modal-footer]');
      await footer.scrollIntoViewIfNeeded();
      const bounds=await footer.evaluate(el=>{

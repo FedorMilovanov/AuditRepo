@@ -147,6 +147,15 @@ if(!brandAtlasArticle.includes('data-atlas-intro-title')||
  throw Error('W74 Russian intro hyphenation or dossier control height drift');
 console.log('V13_W74_RUSSIAN_REFLOW_FOOTER_TARGETS_PASS');
 
+// W76: keep the zoomed Atlas dossier header navigable and entirely visible.
+if(!brandAtlasModal.includes('data-modal-header')||
+   !brandAtlasModal.includes('data-modal-position')||
+   !brandAtlasModal.includes('data-modal-header-tools')||
+   !brandAtlasModal.includes('max-w-full flex-wrap items-center justify-end')||
+   brandAtlasModal.includes('min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap'))
+ throw Error('W76 dossier header reflow contract failure');
+console.log('V13_W76_DOSSIER_HEADER_REFLOW_PASS');
+
 
 const readerSection=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 const readerEpilogue=fs.readFileSync(path.join(root,'sozvezdie','src','components','Epilogue.tsx'),'utf8');

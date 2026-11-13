@@ -870,6 +870,37 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           const layout=await direct.evaluate(()=>{
             const root=document.documentElement,container=
               document.querySelector('[role="dialog"] [data-modal-footer]');
+            const dialog=document.querySelector('[role="dialog"] > div');
+            const header=dialog?.querySelector('[data-modal-header]');
+            const badge=header?.querySelector('[data-modal-position]');
+            const tools=header?.querySelector('[data-modal-header-tools]');
+            const db=dialog?.getBoundingClientRect();
+            const headerRects=[...(header?.querySelectorAll('button')||[])].map((node,i)=>{
+              const r=node.getBoundingClientRect();
+              return {i,left:r.left,right:r.right,top:r.top,bottom:r.bottom,
+                height:r.height,width:r.width};
+            });
+            const clippedHeaderTargets=headerRects.filter(r=>
+              !db||r.left<db.left-2||r.right>db.right+2||r.width<43||r.height<43);
+            const overlappingHeaderTargets=[];
+            for(let i=0;i<headerRects.length;i++)for(let j=i+1;j<headerRects.length;j++){
+              const a=headerRects[i],b=headerRects[j];
+              if(Math.min(a.right,b.right)-Math.max(a.left,b.left)>2&&
+                 Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>2)
+                overlappingHeaderTargets.push([i,j]);
+            }
+            const bb=badge?.getBoundingClientRect();
+            const fragments=badge?[...badge.querySelectorAll('span')].flatMap(node=>{
+              const range=document.createRange();range.selectNodeContents(node);
+              return [...range.getClientRects()];
+            }):[];
+            const tr=tools?.getBoundingClientRect();
+            const headerEvidence={found:!!(dialog&&header&&badge&&tools),
+              targets:headerRects.length,clippedHeaderTargets,overlappingHeaderTargets,
+              label:badge?.textContent?.trim(),
+              badgeClipped:!bb||!db||bb.left<db.left-2||bb.right>db.right+2||
+                fragments.some(r=>r.left<bb.left-2||r.right>bb.right+2),
+              toolsClipped:!tr||!db||tr.left<db.left-2||tr.right>db.right+2};
             const nodes=[...(container?.children||[])].filter(n=>n.matches('button,a'));
             const rects=nodes.map((n,i)=>{const r=n.getBoundingClientRect();
               return {i,top:r.top,left:r.left,right:r.right,height:r.height,disabled:n.matches(':disabled')};
@@ -877,6 +908,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             const visual=[...rects].sort((a,b)=>
               Math.abs(a.top-b.top)>4?a.top-b.top:a.left-b.left).map(r=>r.i);
             return {count:nodes.length,visual,enabled:rects.filter(r=>!r.disabled).map(r=>r.i),
+              headerEvidence,
               rootPx:parseFloat(getComputedStyle(root).fontSize),viewport:root.clientWidth,
               documentWidth:root.scrollWidth,
               tooSmall:rects.filter(r=>r.height<43),
@@ -886,8 +918,13 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
              layout.visual.join(',')!==Array.from({length:entryCase.count},(_,i)=>i).join(',')||
              layout.enabled.join(',')!==entryCase.enabled.join(',')||
              Math.abs(layout.rootPx-rootPx)>1||layout.tooSmall.length||
-             layout.outside.length||layout.documentWidth>layout.viewport+2)
-            throw Error('Atlas W74 footer geometry failed '+
+             layout.outside.length||layout.documentWidth>layout.viewport+2||
+             !layout.headerEvidence.found||layout.headerEvidence.targets<3||
+             layout.headerEvidence.clippedHeaderTargets.length||
+             layout.headerEvidence.overlappingHeaderTargets.length||
+             layout.headerEvidence.badgeClipped||layout.headerEvidence.toolsClipped||
+             !layout.headerEvidence.label?.includes('/36'))
+            throw Error('Atlas W76 modal header/footer geometry failed '+
               JSON.stringify({engine,width,entryCase,rootPx,layout}));
           for(let i=0;i<entryCase.enabled.length-1;i++){
             const from=entryCase.enabled[i],to=entryCase.enabled[i+1];
