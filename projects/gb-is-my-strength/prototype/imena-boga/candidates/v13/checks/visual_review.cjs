@@ -135,7 +135,12 @@ async function expectPanoramaReaderRails(page,engine,width,label){
      return style.display!=='none'&&style.visibility!=='hidden'&&
       Number(style.opacity)>.95&&rect.width>150&&rect.height>80&&
       rect.left>=-2&&rect.right<=innerWidth+2&&
-      rail.querySelectorAll('button').length>=14;
+      [...rail.querySelectorAll('button')].length>=14&&
+      [...rail.querySelectorAll('button')].every(button=>{
+       const b=button.getBoundingClientRect(),s=getComputedStyle(button);
+       return Number(s.opacity)>.98&&s.visibility!=='hidden'&&
+        b.width>50&&b.height>18&&!!button.textContent?.trim();
+      });
     });
   },null,{timeout:8000});
  }catch(e){
@@ -150,15 +155,19 @@ async function expectPanoramaReaderRails(page,engine,width,label){
   const rails=[...document.querySelectorAll('[data-rails]')];
   return {mainTop:m?.top??null,mainBottom:m?.bottom??null,
    rails:rails.map(rail=>{const r=rail.getBoundingClientRect(),s=getComputedStyle(rail);
+    const buttons=[...rail.querySelectorAll('button')];
     return {label:rail.getAttribute('aria-label'),left:r.left,right:r.right,
      width:r.width,height:r.height,display:s.display,opacity:s.opacity,
-     buttons:rail.querySelectorAll('button').length};})};
+     buttons:buttons.length,minButtonOpacity:Math.min(...buttons.map(b=>
+      Number(getComputedStyle(b).opacity))),
+     nonemptyLabels:buttons.filter(b=>!!b.textContent?.trim()).length};})};
  });
  record('panorama-reader-rails-visible',{engine,width,label,...evidence});
  if(evidence.rails.length!==2||
     evidence.rails.map(x=>x.buttons).sort((a,b)=>a-b).join(',')!=='14,15'||
     evidence.rails.some(x=>x.display==='none'||x.width<150||
-      x.left< -2||x.right>width+2)){
+      x.left< -2||x.right>width+2||x.minButtonOpacity<.98||
+      x.nonemptyLabels!==x.buttons)){
   problem('BLOCKER','panorama-reader-rails-invalid',{engine,width,label,...evidence});
   throw Error('Panorama reader rails disappeared after settling');
  }

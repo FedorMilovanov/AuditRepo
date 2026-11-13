@@ -232,6 +232,8 @@ if(!w83Visual.includes('async function waitPanoramaHeroImage(')||
    !w83Visual.includes('async function expectPanoramaReaderRails(')||
    !w83Visual.includes('panorama-reader-rails-visible')||
    !w83Visual.includes('panorama-reader-rails-not-ready')||
+   !w83Visual.includes('minButtonOpacity')||
+   !w83Visual.includes('Number(s.opacity)>.98')||
    !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'03-reader')")||
    !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'04-hebrew')")||
    !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'05-deep')")||
