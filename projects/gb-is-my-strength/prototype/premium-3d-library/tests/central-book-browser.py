@@ -68,10 +68,30 @@ async def inspect(browser, engine, width, height, mobile):
         article = EVIDENCE / f"{engine}-{width}x{height}-article-book.png"
         await capture_evidence(page, article)
         assert not errors, f"Article book rendering errors: {errors}"
+        # The Series case must also exist in the built scene, reached through
+        # the actual public map rather than injection of camera/store state.
+        await nav.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="visible", timeout=12000)
+        await map_dialog.get_by_role(
+            "searchbox", name="Поиск по карте сайта"
+        ).fill("Серии")
+        await map_dialog.get_by_role(
+            "button", name=re.compile("Серии")
+        ).first.evaluate("(el) => el.click()")
+        await map_dialog.wait_for(state="detached", timeout=12000)
+        await page.wait_for_timeout(3450)
+        await aim.wait_for(state="visible", timeout=12000)
+        assert "Серии" in await aim.inner_text(), (
+            engine, width, "Series approach did not aim at the grounded case"
+        )
+        series_shot = EVIDENCE / f"{engine}-{width}x{height}-series-case.png"
+        await capture_evidence(page, series_shot)
+        assert not errors, f"Series case rendering errors: {errors}"
         print(json.dumps({"engine": engine, "viewport": f"{width}x{height}",
                           "result": "PASS", "report": report,
                           "screenshot": str(path),
                           "articleScreenshot": str(article),
+                          "seriesScreenshot": str(series_shot),
                           "errors": errors},
                          ensure_ascii=False), flush=True)
     finally:

@@ -1,5 +1,16 @@
 # Premium 3D Library — current engineering truth and admission gates
 
+## V5.62 — Series: physical oak case replacing orbiting neon books (Draft LAB candidate)
+
+The prior "Серии" exhibit visibly orbited seven detached coloured rectangular books around a central rod, with neon rings above and below. The new source-owned `SeriesCase.tsx` and `seriesCaseGeometry.ts` render seven individually bound and indexed volumes (I–VII) on two real oak shelves, between continuous wooden sides and a cornice. These display indices do not invent titles or assert catalogue contents. No orbit, particle beam or emissive ring is used; the existing public Station plaque and interactive click volume remain unchanged.
+
+Numerical source contract `SERIES_CASE_GEOMETRY_PASS` enforces the physical stone-plinth contact at y=1.09m, seven distinct immutable bound volumes, nonintersecting book edges, clearance below both overhead shelves, a restrained 0.20m corner overhang limit and actual JSX wiring. `lab:check` invokes the contract. The existing 4-case `central-book-browser.py` now also visits Series via the real public map and captures four genuine 1440×900/390×844 Chromium/WebKit screenshots; it does not inject camera or bypass content routes.
+
+**Admission status:** this is source work in Draft/LAB; after this commit GitHub Preflight/Validate and new screenshot review must pass before accepting the change as even a LAB witness. No local GPU/physical Safari/Android/XR proof, and no premium architecture sign-off. *ART HOLD and no main/Product deployment remain unchanged.*
+
+---
+
+
 ## V5.61 — physical Article folio and Pointer Lock photo regression (Draft LAB candidate)
 
 **Source-owned geometry, not a staged screenshot:** The Article exhibit previously suspended a giant rigid V-shaped book about 0.8m over its stone plinth, independently orbiting six paper rectangles and rotating three sheets up to ~180 degrees. The local replacement in `Stations.tsx` and `openBookGeometry.ts` removes detached and orbiting leaves. Both sides have bound physical paper volume and individual 171-vertex subtly crowned pages. A slightly inclined real hardwood reading board and two diagonal wooden braces anchor the display to the same pedestal used by the public museum station.

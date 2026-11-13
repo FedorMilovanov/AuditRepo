@@ -7,6 +7,7 @@ import { useApp, registry, openItem, get, set } from "../store";
 import { useReducedMotion } from "../motion";
 import { plaqueTexture, paperTexture, glowTexture } from "../textures";
 import { ConfessionArchive } from "./ConfessionArchive";
+import { SeriesCase } from "./SeriesCase";
 import { ARTICLE_BOOK, articleBookCenterY, makeArticlePageGeometry } from "./openBookGeometry";
 import { darkStone, goldMat, marble, statue, wood } from "./Platform";
 
@@ -189,53 +190,6 @@ function BookArt({ color }: { color: string }) {
     </group>
   );
 }
-/* ───────────── 02 Серии: спираль книг ───────────── */
-const PALETTE = ["#7a1f2b", "#1f3a6b", "#c99a3a", "#2d6a5b", "#5a2d7a", "#a0482a", "#2a4d8f"];
-function SeriesArt({ color }: { color: string }) {
-  const reduced = useReducedMotion();
-  const g = useRef<THREE.Group>(null!);
-  useFrame((_, dt) => {
-    if (!reduced) g.current.rotation.y += dt * 0.55;
-  });
-  const pages = useMemo(() => new THREE.MeshStandardMaterial({ color: "#efe5cc", roughness: 0.9 }), []);
-  return (
-    <group>
-      <group ref={g}>
-        {PALETTE.map((c, i) => {
-          const a = (i / PALETTE.length) * Math.PI * 2;
-          return (
-            <group key={i} position={[Math.cos(a) * 0.9, (i - 3) * 0.22, Math.sin(a) * 0.9]} rotation={[0, -a - Math.PI / 2, 0]}>
-              <group rotation={[0.22, 0, 0.05 * (i % 3)]}>
-                <mesh>
-                  <boxGeometry args={[0.8, 0.17, 0.58]} />
-                  <meshStandardMaterial color={c} roughness={0.5} metalness={0.25} />
-                </mesh>
-                <mesh position={[0.02, 0, 0.015]} material={pages}>
-                  <boxGeometry args={[0.76, 0.12, 0.58]} />
-                </mesh>
-                <mesh position={[0, 0.0, -0.295]} material={goldMat}>
-                  <boxGeometry args={[0.6, 0.03, 0.01]} />
-                </mesh>
-              </group>
-            </group>
-          );
-        })}
-      </group>
-      <mesh material={goldMat}>
-        <cylinderGeometry args={[0.014, 0.014, 2.0, 8]} />
-      </mesh>
-      <mesh position={[0, -0.9, 0]} rotation-x={Math.PI / 2}>
-        <torusGeometry args={[1.0, 0.012, 6, 64]} />
-        <meshBasicMaterial color={color} toneMapped={false} />
-      </mesh>
-      <mesh position={[0, 0.9, 0]} rotation-x={Math.PI / 2}>
-        <torusGeometry args={[1.0, 0.012, 6, 64]} />
-        <meshBasicMaterial color={color} toneMapped={false} />
-      </mesh>
-    </group>
-  );
-}
-
 /* ───────────── 03 Биографии: бюст + кольцо эпох ───────────── */
 function BustArt({ color }: { color: string }) {
   const reduced = useReducedMotion();
@@ -437,7 +391,7 @@ function GlobeArt({ color }: { color: string }) {
 // tablets I–X and orbiting sacred-glow geometry were semantically incorrect.
 const ART: Record<string, (p: { color: string }) => ReactNode> = {
   articles: BookArt,
-  series: SeriesArt,
+  series: SeriesCase,
   bio: BustArt,
   maps: GlobeArt,
   creeds: ConfessionArchive,
