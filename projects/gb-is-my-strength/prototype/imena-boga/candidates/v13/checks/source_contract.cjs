@@ -183,7 +183,7 @@ if(!brandAtlasModal.includes('data-modal-name-banner')||
    !brandAtlasModal.includes('id="modal-divine-name-title"')||
    !brandAtlasModal.includes('min-w-0 break-words [overflow-wrap:anywhere]')||
    !brandAtlasModal.includes("hyphens: 'manual'")||
-   !brandAtlasModal.includes(String.raw\`'Тетра\\u00adграмматон'\`.replace('\\\\','\\')))
+   !brandAtlasModal.includes("entry.transliteration.replace(/Тетраграмматон/gu, 'Тетра"+String.fromCharCode(92)+"u00adграмматон')"))
  throw Error('W80 Atlas long title inside clipping banner has no verified break');
 const w80Verse=fs.readFileSync(path.join(root,'sozvezdie','src','components','NameSection.tsx'),'utf8');
 if(!w80Verse.includes('data-verse-card')||
