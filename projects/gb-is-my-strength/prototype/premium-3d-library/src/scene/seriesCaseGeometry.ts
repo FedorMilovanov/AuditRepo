@@ -35,13 +35,13 @@ type SeriesVolume = Readonly<{
  * Roman numerals are display indices; they do not claim a real catalogue.
  */
 export const SERIES_VOLUMES: readonly SeriesVolume[] = Object.freeze([
-  { id: "i",   roman: "I",   row: 0, x: -0.53, width: 0.30, height: 0.95, leather: "#633d39" },
-  { id: "ii",  roman: "II",  row: 0, x: -0.18, width: 0.31, height: 1.01, leather: "#354e57" },
-  { id: "iii", roman: "III", row: 0, x:  0.17, width: 0.30, height: 0.98, leather: "#57472e" },
-  { id: "iv",  roman: "IV",  row: 0, x:  0.51, width: 0.29, height: 0.96, leather: "#354a3b" },
-  { id: "v",   roman: "V",   row: 1, x: -0.44, width: 0.38, height: 0.70, leather: "#5c414a" },
-  { id: "vi",  roman: "VI",  row: 1, x:  0.00, width: 0.37, height: 0.73, leather: "#694a34" },
-  { id: "vii", roman: "VII", row: 1, x:  0.44, width: 0.38, height: 0.68, leather: "#34485e" },
+  { id: "i",   roman: "I",   row: 0 as const, x: -0.53, width: 0.30, height: 0.95, leather: "#633d39" },
+  { id: "ii",  roman: "II",  row: 0 as const, x: -0.18, width: 0.31, height: 1.01, leather: "#354e57" },
+  { id: "iii", roman: "III", row: 0 as const, x:  0.17, width: 0.30, height: 0.98, leather: "#57472e" },
+  { id: "iv",  roman: "IV",  row: 0 as const, x:  0.51, width: 0.29, height: 0.96, leather: "#354a3b" },
+  { id: "v",   roman: "V",   row: 1 as const, x: -0.44, width: 0.38, height: 0.70, leather: "#5c414a" },
+  { id: "vi",  roman: "VI",  row: 1 as const, x:  0.00, width: 0.37, height: 0.73, leather: "#694a34" },
+  { id: "vii", roman: "VII", row: 1 as const, x:  0.44, width: 0.38, height: 0.68, leather: "#34485e" },
 ].map(volume => Object.freeze(volume)));
 
 export const seriesShelfTop = (row: 0 | 1): number => {
