@@ -129,6 +129,23 @@ export function opposingRavineRelief(x: number, y: number, z: number, chasm: num
   const signed = (broad - 0.5) * 3.25 + (fracture - 0.5) * 1.4;
   return gate * Math.max(-1.15, Math.min(1.15, signed));
 }
+/** True staggered terraces in the existing far ravine wall triangles.
+ * This changes x positions deep below the far rock face, never the ledge.
+ * Smooth ramping and a z-dependent geological fold prevent mechanical
+ * straight bands, while bounding the offset and preserving all colliders. */
+export function ravineTerraceOffset(x: number, y: number, z: number, chasm: number): number {
+  if (![x, y, z, chasm].every(Number.isFinite) ||
+      chasm <= 0 || x <= 12 || y >= -8) return 0;
+  const gate = Math.min(1, chasm) * ss(12, 19, x);
+  const depth = -y;
+  const warpedDepth = depth + 2.1 *
+    (fbm(z * 0.083 + 4.7, 0.2, x * 0.021, 3) - 0.5);
+  const upperLedge = 1.15 * ss(11, 17, warpedDepth) *
+    (1 - ss(22, 29, warpedDepth));
+  const lowerLedge = 3.65 * ss(26, 34, warpedDepth) *
+    (1 - ss(44, 53, warpedDepth));
+  return gate * ss(8, 11, depth) * (upperLedge + lowerLedge);
+}
 export function ravineMetricUvWeight(x: number, y: number, chasm: number): number {
   if (chasm <= 0 || x <= 12 || y >= -4) return 0;
   return Math.min(1, chasm) * ss(12, 18, x) * ss(4, 14, -y);
@@ -218,6 +235,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     lastCaveFloorZ = zs[zs.length - 1];
     const pos: number[] = [], col: number[] = [], uv: number[] = [], idx: number[] = [];
     let weatheredCliffVertices = 0, weatheredCliffMin = Infinity, weatheredCliffMax = -Infinity;
+    let terracedRockVertices = 0, maxTerraceOffset = 0;
     for (let i = 0; i < zs.length; i++) {
       const z = zs[i], hw = halfWidth(z), H = vaultHeight(z), cf = chasmF(z);
       const amp = 0.6 + Math.min(2.6, (hw - 4) * 0.22) + (H > 20 ? 1.4 : 0);
@@ -249,7 +267,14 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
           weatheredCliffMin = Math.min(weatheredCliffMin, cliffRelief);
           weatheredCliffMax = Math.max(weatheredCliffMax, cliffRelief);
         }
-        x += cliffRelief;
+        // Geological ledges are part of the existing far-wall triangles,
+        // not separate decorative platforms or invisible collision walls.
+        const terrace = ravineTerraceOffset(x, y, z, cf);
+        if (terrace > 0.20) {
+          terracedRockVertices++;
+          maxTerraceOffset = Math.max(maxTerraceOffset, terrace);
+        }
+        x += cliffRelief + terrace;
         // Carve zone-6 fractures INTO the continuous cave shell. The previous
         // separate triangles looked like paper stalactites when lit. No new
         // mesh, material, collision shape or draw call is needed.
@@ -299,6 +324,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       min: weatheredCliffMin,
       max: weatheredCliffMax,
     };
+    mesh.userData.ravineTerraces = {
+      affectedVertices: terracedRockVertices,
+      maxOffset: maxTerraceOffset,
+      sculptedInOriginalShell: true,
+    };
     group.add(mesh);
 
     // Пол
@@ -334,9 +364,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // no extra draw calls, physical rail, platform or floating billboard.
     const strata = [
       { depth: 0.85, outward: 0.11 },
-      { depth: 5.8, outward: 0.73 },
-      { depth: 18.5, outward: 2.30 },
-      { depth: 43.0, outward: 4.80 },
+      { depth: 5.8, outward: 1.15 },
+      { depth: 18.5, outward: 4.30 },
+      { depth: 43.0, outward: 7.60 },
     ] as const;
     const wallRows = new Map<number, number[]>();
     const floorVertexCount = fp.length / 3;

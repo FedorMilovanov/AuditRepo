@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop, ravineTerraceOffset } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -1020,6 +1020,26 @@ t('zone-4 relief changes smoothly across adjacent 3D samples',
     Math.abs(opposingRavineRelief(23, -24, z + 0.04, 1) -
       opposingRavineRelief(23, -24, z - 0.04, 1)) < 0.25) &&
   Math.abs(opposingRavineRelief(23, -23, -200, 0.02)) < 0.024);
+// The previous deep 55m wall was nearly planar in screenshots despite
+// real ray hits. Its new two stepped faces must have measurable recession.
+const upperTerrace = ravineTerraceOffset(23, -18, -200, 1);
+const lowerTerrace = ravineTerraceOffset(23, -35, -200, 1);
+const fadeTerrace = ravineTerraceOffset(23, -54, -200, 1);
+t('deep opposing wall has two physical, non-horizontal eroded shelves',
+  upperTerrace > 0.75 && upperTerrace < 1.18 &&
+  lowerTerrace > 2.3 && lowerTerrace < 3.7 &&
+  fadeTerrace >= 0 && fadeTerrace < 0.2);
+t('ravine ledges never alter walkable lip, cave ceiling or other zones',
+  ravineTerraceOffset(3.6, -30, -200, 1) === 0 &&
+  ravineTerraceOffset(23, 5, -200, 1) === 0 &&
+  ravineTerraceOffset(23, -6, -200, 1) === 0 &&
+  ravineTerraceOffset(23, -30, -200, 0) === 0 &&
+  ravineTerraceOffset(NaN, -30, -200, 1) === 0);
+t('ravine physical bedding varies continuously along the actual cliff',
+  [-216, -207, -198, -189, -181].every(z =>
+    Math.abs(ravineTerraceOffset(23, -34, z - 0.06, 1) -
+      ravineTerraceOffset(23, -34, z + 0.06, 1)) < 0.10) &&
+  ravineTerraceOffset(23, -30, -200, 0.03) < 0.12);
 // A visible ravine must descend from the exact right-hand floor vertices,
 // not be simulated by a disconnected dark plane fifty metres underneath.
 for (const lowMode of [true, false]) {
@@ -1059,6 +1079,15 @@ for (const lowMode of [true, false]) {
   t('zone-4 opposing cliff opens real 20m+ ravine without extra geometry ' +
     (lowMode ? 'LOW' : 'HIGH'),
     intersectedRockEdges >= 2 && farRockX > 20 && farRockX < 28);
+  const terraces = opposingVault instanceof THREE.Mesh
+    ? opposingVault.userData.ravineTerraces as {
+      affectedVertices: number; maxOffset: number; sculptedInOriginalShell: boolean
+    } : null;
+  t('far chasm terraces alter actual LOW/HIGH shell vertices ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+    !!terraces && terraces.sculptedInOriginalShell === true &&
+    terraces.affectedVertices > (lowMode ? 50 : 90) &&
+    terraces.maxOffset > 2.3 && terraces.maxOffset <= 3.7);
   // Physically measured cliff length, not arbitrary j/N surface indices:
   // enforce texture frequency remains comparable on LOW and HIGH.
   if (opposingVault instanceof THREE.Mesh) {
@@ -1128,7 +1157,8 @@ for (const lowMode of [true, false]) {
     const maxMidspanRecession = Math.max(0, ...[...crossSections.values()]
       .map((section) => section.deep - section.rim)
       .filter(Number.isFinite));
-    const terracedAtMidspan = maxMidspanRecession > 3.3;
+    const terracedAtMidspan = maxMidspanRecession > 6.0 &&
+      maxMidspanRecession < 10.0;
     let joinedFaces = 0, safeBoundary = true;
     if (faces) {
       for (let i = 0; i < faces.count; i += 3) {
