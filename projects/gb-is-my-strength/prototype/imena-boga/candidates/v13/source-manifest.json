@@ -104,7 +104,7 @@
       "bytes_normalized": 14462
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "7db7e10442d0dff60fd42e0d5c5d493e701c7251e162d20f76bcf42133cfabe8",
+      "sha256": "bc94f2a4b213a17fcd07930b375fe5d480474cdbae90faee1ba6a961234c5728",
       "bytes_normalized": 21401
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "b5fce22f3072db8207ba69867813f1c66f722cdd74ba5e3032c3cecbe410c4c0",
-      "bytes_normalized": 55350
+      "sha256": "004860b28c40c7ea64a989a80a42ea6e43a0bceebc4abf5cd0eae99b41aa64ba",
+      "bytes_normalized": 56117
     },
     "checks/visual_review.cjs": {
-      "sha256": "63675e69b9c7048b56aedc2925708389cdbda041b595315598ceeb9a3de23127",
-      "bytes_normalized": 84426
+      "sha256": "e66ca6dd134f72da5027e9996769a107c37818b3b02b84687da266d599f154a5",
+      "bytes_normalized": 85800
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",

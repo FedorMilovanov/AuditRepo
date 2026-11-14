@@ -110,11 +110,11 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           >
             Господь Бог
           </span>
-          <span className="font-serif-display hidden min-[440px]:inline text-base" style={{ color: 'var(--gb-muted)' }}>
+          <span className="font-serif-display hidden min-[640px]:inline text-base" style={{ color: 'var(--gb-muted)' }}>
             —
           </span>
           <span
-            className="font-serif-display hidden min-[440px]:inline text-base sm:text-[17px] font-bold italic"
+            className="font-serif-display hidden min-[640px]:inline text-base sm:text-[17px] font-bold italic"
             style={{ color: 'var(--gb-accent)' }}
           >
             Сила Моя

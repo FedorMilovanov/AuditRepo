@@ -403,11 +403,28 @@ async function visitShortLandscape(browser,engine,width,height,base){
    return {innerWidth,innerHeight,viewport:document.documentElement.clientWidth,
     documentWidth:document.documentElement.scrollWidth,
     top:r.top,bottom:r.bottom,left:r.left,right:r.right,
-    width:r.width,height:r.height,maxHeight:s.maxHeight,
+    panelWidth:r.width,panelHeight:r.height,maxHeight:s.maxHeight,
     overflowY:s.overflowY,clientHeight:el.clientHeight,
     scrollHeight:el.scrollHeight,scrollTop:el.scrollTop,
     lastLabel:last?.textContent?.trim()??null};
   });
+  const brand=await page.evaluate(()=>{
+   const nav=document.querySelector('nav[aria-label="Основная навигация сайта"]');
+   const link=nav?.querySelector('a[aria-label="Господь Бог — Сила Моя — в начало статьи"]');
+   const parts=link?.querySelectorAll(':scope > span')||[];
+   const first=parts[0],extended=parts[2];
+   const f=first?.getBoundingClientRect(),l=link?.getBoundingClientRect();
+   return {present:!!link,firstText:first?.textContent?.trim()??null,
+    firstClipped:!first||first.scrollWidth>first.clientWidth+2,
+    extendedVisible:!!extended&&getComputedStyle(extended).display!=='none',
+    linkRight:l?.right??null,firstRight:f?.right??null};
+  });
+  record('atlas-short-landscape-header-brand',{engine,width,height,...brand});
+  if(!brand.present||brand.firstText!=='Господь Бог'||
+     brand.firstClipped||brand.linkRight>initial.viewport+2||
+     (width===568&&brand.extendedVisible)||
+     (width===844&&!brand.extendedVisible))
+   problem('BLOCKER','atlas-short-landscape-brand-clipped',{engine,width,height,...brand});
   record('atlas-short-landscape-settings-open',{engine,width,height,...initial});
   if(initial.top< -2||initial.bottom>height-4||initial.left< -2||
      initial.right>initial.viewport+2||
@@ -437,7 +454,12 @@ async function visitShortLandscape(browser,engine,width,height,base){
    problem('BLOCKER','atlas-short-landscape-last-action-inaccessible',{engine,width,height,...after});
   await shot(page,engine+'-atlas-'+width+'x'+height+'-root200-landscape-settings-bottom');
   await page.keyboard.press('Escape');
-  const closed=(await trigger.get_attribute('aria-expanded'))==='false'&&
+  await page.waitForFunction(()=>{
+   const toggle=document.querySelector('[aria-controls="gb-reader-settings"]');
+   return toggle?.getAttribute('aria-expanded')==='false'&&
+     !document.querySelector('#gb-reader-settings');
+  },null,{timeout:3000});
+  const closed=(await trigger.getAttribute('aria-expanded'))==='false'&&
     await panel.count()===0;
   record('atlas-short-landscape-escape',{engine,width,height,closed});
   if(!closed)problem('BLOCKER','atlas-short-landscape-escape-failed',{engine,width,height});

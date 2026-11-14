@@ -252,6 +252,19 @@ if(!w87Navbar.includes('max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-con
  throw Error('W87 landscape reader settings boundary witness missing');
 console.log('V13_W87_LANDSCAPE_READER_SETTINGS_PASS');
 
+// W87b: compact brand is deliberate at 568px with 200% text, rather
+// than a clipped first name plus a two-line extension. Browser acceptance
+// must also prove Escape completion, not call a Python-only Playwright API.
+if(w87Navbar.includes('min-[440px]:inline')||
+   (w87Navbar.match(/min-\[640px\]:inline/g)||[]).length!==2||
+   !w87Visual.includes('atlas-short-landscape-header-brand')||
+   !w87Visual.includes('atlas-short-landscape-brand-clipped')||
+   !w87Visual.includes("await trigger.getAttribute('aria-expanded')")||
+   w87Visual.includes("trigger.get_attribute(")||
+   !w87Visual.includes('panelWidth:r.width,panelHeight:r.height'))
+ throw Error('W87b short-landscape header brand or test API regression');
+console.log('V13_W87B_LANDSCAPE_BRAND_PASS');
+
 // W83: the visual-harness must prove image decode and actual in-article
 // 1440px rails before capture; arbitrary sleeps are not acceptance evidence.
 const w83Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
