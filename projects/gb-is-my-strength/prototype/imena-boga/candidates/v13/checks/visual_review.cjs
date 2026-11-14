@@ -156,8 +156,27 @@ async function expectPanoramaReaderRails(page,engine,width,label){
     });
   },null,{timeout:8000});
  }catch(e){
+  const diagnostics=await page.evaluate(()=>{
+   const main=document.querySelector('main')?.getBoundingClientRect();
+   const measure=document.querySelector('main .reader-measure')?.getBoundingClientRect();
+   return {innerWidth,contentWidth:document.documentElement.clientWidth,
+    mq1400:matchMedia('(min-width: 1400px)').matches,
+    mq1440:matchMedia('(min-width: 1440px)').matches,
+    mainTop:main?.top??null,mainBottom:main?.bottom??null,
+    measure:measure?{left:measure.left,right:measure.right}:null,
+    railCount:document.querySelectorAll('[data-rails]').length,
+    rails:[...document.querySelectorAll('[data-rails]')].map(el=>({
+     display:getComputedStyle(el).display,
+     left:el.getBoundingClientRect().left,
+     right:el.getBoundingClientRect().right,
+     opacity:getComputedStyle(el).opacity,
+     paintedItems:[...el.querySelectorAll('button')].filter(b=>
+      Number(getComputedStyle(b).opacity)>.98).length
+    }))};
+  });
+  record('panorama-rail-timeout-diagnostics',{engine,width,label,...diagnostics});
   problem('BLOCKER','panorama-reader-rails-not-ready',{engine,width,label,
-   error:String(e).slice(0,250)});
+   error:String(e).slice(0,250),diagnostics});
   throw e;
  }
  await page.evaluate(()=>new Promise(done=>
@@ -165,7 +184,12 @@ async function expectPanoramaReaderRails(page,engine,width,label){
  const evidence=await page.evaluate(()=>{
   const main=document.querySelector('main'),m=main?.getBoundingClientRect();
   const rails=[...document.querySelectorAll('[data-rails]')];
+  const measure=document.querySelector('main .reader-measure')?.getBoundingClientRect();
   return {mainTop:m?.top??null,mainBottom:m?.bottom??null,
+   viewport:document.documentElement.clientWidth,
+   mq1400:matchMedia('(min-width: 1400px)').matches,
+   mq1440:matchMedia('(min-width: 1440px)').matches,
+   measure:measure?{left:measure.left,right:measure.right}:null,
    rails:rails.map(rail=>{const r=rail.getBoundingClientRect(),s=getComputedStyle(rail);
     const buttons=[...rail.querySelectorAll('button')];
     return {label:rail.getAttribute('aria-label'),left:r.left,right:r.right,
@@ -175,11 +199,13 @@ async function expectPanoramaReaderRails(page,engine,width,label){
      nonemptyLabels:buttons.filter(b=>!!b.textContent?.trim()).length};})};
  });
  record('panorama-reader-rails-visible',{engine,width,label,...evidence});
- if(evidence.rails.length!==2||
+ if(evidence.rails.length!==2||!evidence.mq1400||!evidence.measure||
     evidence.rails.map(x=>x.buttons).sort((a,b)=>a-b).join(',')!=='14,15'||
     evidence.rails.some(x=>x.display==='none'||x.width<150||
-      x.left< -2||x.right>width+2||x.minButtonOpacity<.98||
-      x.nonemptyLabels!==x.buttons)){
+      x.left< -2||x.right>evidence.viewport+2||x.minButtonOpacity<.98||
+      x.nonemptyLabels!==x.buttons)||
+    evidence.rails[0].right>evidence.measure.left-8||
+    evidence.rails[1].left<evidence.measure.right+8){
   problem('BLOCKER','panorama-reader-rails-invalid',{engine,width,label,...evidence});
   throw Error('Panorama reader rails disappeared after settling');
  }

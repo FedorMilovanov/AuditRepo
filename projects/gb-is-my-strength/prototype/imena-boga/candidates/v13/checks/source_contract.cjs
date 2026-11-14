@@ -244,6 +244,19 @@ if(!w83Visual.includes('async function waitPanoramaHeroImage(')||
    !w83Visual.includes("expectPanoramaReaderRails(page,engine,width,'07-letter-detail')"))
  throw Error('W83 screenshot witness must wait for loaded Sinai and visible reader rails');
 console.log('V13_W83_SCREENSHOT_LIFECYCLE_WITNESSES_PASS');
+
+// W85: responsive rails must be visible in WebKit's 1430px *content*
+// viewport when the outer configured window is 1440px. Use deliberate
+// layout thresholds, not a WebKit UA special case or hidden screenshots.
+const w85Rails=fs.readFileSync(path.join(root,'sozvezdie','src','components','Rails.tsx'),'utf8');
+if(!w85Rails.includes('wide ? "2xl:block" : "min-[1400px]:block"')||
+   w85Rails.includes('min-[1440px]:block')||
+   !w83Visual.includes('panorama-rail-timeout-diagnostics')||
+   !w83Visual.includes("mq1400:matchMedia('(min-width: 1400px)').matches")||
+   !w83Visual.includes('evidence.rails[0].right>evidence.measure.left-8')||
+   !w83Visual.includes('evidence.rails[1].left<evidence.measure.right+8'))
+ throw Error('W85 responsive rails or overlap witness regressed');
+console.log('V13_W85_WEBKIT_RAIL_BREAKPOINT_PASS');
 if(readerSection.includes('«Я есмь» и составные имена') ||
    !readerSection.includes('«Я есмь» и связанные выражения') ||
    !readerEpilogue.includes('но не {NAMES.length}') ||

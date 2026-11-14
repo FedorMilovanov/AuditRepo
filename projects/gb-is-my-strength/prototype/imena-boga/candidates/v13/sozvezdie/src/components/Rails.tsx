@@ -130,7 +130,7 @@ export default function Rails({ active, completedIds, wide, onSelect }: RailsPro
       <aside
         data-rails
         className={`fixed top-1/2 z-40 hidden w-44 -translate-y-1/2 ${
-          wide ? "min-[1560px]:block" : "min-[1440px]:block"
+          wide ? "2xl:block" : "min-[1400px]:block"
         } ${side === "left" ? "left-4 2xl:left-8" : "right-24 2xl:right-28"}`}
         aria-label={`Указатель имён: ${title}`}
       >

@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "efa1e2bbbfe8a35304ad955d7f7d59685abf03b299933cda9282eda4ae3bf81b",
-      "bytes_normalized": 52560
+      "sha256": "3dd7800642e3c73944d5d5a7692b11470065b8bc9b727277970ce8729e7bbc49",
+      "bytes_normalized": 53398
     },
     "checks/visual_review.cjs": {
-      "sha256": "f9962042c4ebcb407e5edc9935c6772b1c39eb98c97598e51e7240958a72aaf2",
-      "bytes_normalized": 75597
+      "sha256": "8b120fd6d806eec7a163f0605993809ef1bf209b5fc2cebda84779f3472828c9",
+      "bytes_normalized": 77112
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
@@ -276,8 +276,8 @@
       "bytes_normalized": 2960
     },
     "sozvezdie/src/components/Rails.tsx": {
-      "sha256": "393dcecb28a293ecde6e11e240e53acdb654a8b177cbec5488568b2c98dd6e95",
-      "bytes_normalized": 6899
+      "sha256": "3c77314ba96b89863a32bc38dd18c81d6229211b1cf74d5007879384a4b0075e",
+      "bytes_normalized": 6890
     },
     "sozvezdie/src/components/ReaderDock.tsx": {
       "sha256": "37e4ab16137f46faba54488a3899d023cdb347f68d9ca69ffff989ed37cd7ed0",
