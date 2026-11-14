@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "22037e563319e97b8b2e60930efac064b42befee986943391763f68b0f40ffae",
-      "bytes_normalized": 52323
+      "sha256": "efa1e2bbbfe8a35304ad955d7f7d59685abf03b299933cda9282eda4ae3bf81b",
+      "bytes_normalized": 52560
     },
     "checks/visual_review.cjs": {
-      "sha256": "f8b11fcf14d0d9a8ef77145cef829cfb3b00343227e862cc82313949e67dd12e",
-      "bytes_normalized": 75041
+      "sha256": "f9962042c4ebcb407e5edc9935c6772b1c39eb98c97598e51e7240958a72aaf2",
+      "bytes_normalized": 75597
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",

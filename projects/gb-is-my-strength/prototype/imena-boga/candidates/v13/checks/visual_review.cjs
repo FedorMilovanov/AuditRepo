@@ -106,15 +106,27 @@ async function waitPanoramaHeroImage(page,engine,width){
   try{await el.decode()}catch(e){decodeError=String(e)};
   await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
   const b=el.getBoundingClientRect(),s=getComputedStyle(el);
+  const container=el.parentElement?.getBoundingClientRect();
+  const viewport=document.documentElement.clientWidth;
   return {isImage:true,complete:el.complete,naturalWidth:el.naturalWidth,
    naturalHeight:el.naturalHeight,currentSrc:el.currentSrc.split('/').pop(),
-   decodeError,width:b.width,height:b.height,visibility:s.visibility,
-   display:s.display,opacity:s.opacity};
+   decodeError,width:b.width,height:b.height,
+   imageLeft:b.left,imageRight:b.right,
+   containerWidth:container?.width??null,
+   containerLeft:container?.left??null,
+   containerRight:container?.right??null,
+   contentViewportWidth:viewport,
+   visibility:s.visibility,display:s.display,opacity:s.opacity};
  });
  record('panorama-sinai-image-ready',{engine,width,...evidence});
  if(!evidence.isImage||!evidence.complete||evidence.naturalWidth<700||
     evidence.naturalHeight<400||evidence.decodeError||
-    evidence.width<width-2||evidence.height<400||
+    !Number.isFinite(evidence.containerWidth)||evidence.containerWidth<200||
+    evidence.contentViewportWidth<200||
+    evidence.width<evidence.containerWidth-2||
+    evidence.imageLeft>evidence.containerLeft+2||
+    evidence.imageRight<evidence.containerRight-2||
+    evidence.height<400||
     evidence.visibility==='hidden'||evidence.display==='none'||
     Number(evidence.opacity)<.95){
   problem('BLOCKER','panorama-sinai-image-not-ready',{engine,width,...evidence});

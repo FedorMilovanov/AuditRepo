@@ -229,6 +229,10 @@ const w83Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'ut
 if(!w83Visual.includes('async function waitPanoramaHeroImage(')||
    !w83Visual.includes('await el.decode()')||
    !w83Visual.includes('panorama-sinai-image-ready')||
+   !w83Visual.includes('contentViewportWidth:viewport')||
+   !w83Visual.includes('containerWidth:container?.width')||
+   !w83Visual.includes('evidence.width<evidence.containerWidth-2')||
+   w83Visual.includes('evidence.width<width-2')||
    !w83Visual.includes('async function expectPanoramaReaderRails(')||
    !w83Visual.includes('panorama-reader-rails-visible')||
    !w83Visual.includes('panorama-reader-rails-not-ready')||
