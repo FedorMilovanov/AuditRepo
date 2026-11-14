@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop, ravineTerraceOffset } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop, ravineTerraceOffset, ravineFacetLight } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -1040,6 +1040,22 @@ t('ravine physical bedding varies continuously along the actual cliff',
     Math.abs(ravineTerraceOffset(23, -34, z - 0.06, 1) -
       ravineTerraceOffset(23, -34, z + 0.06, 1)) < 0.10) &&
   ravineTerraceOffset(23, -30, -200, 0.03) < 0.12);
+// A deep cliff may exist in geometry while every pixel reads as a
+// featureless flat wall. Derive local face exposure from REAL displaced
+// terrace slopes and test both lit and occluded geological facets.
+const sunlitShelf = ravineFacetLight(23, -14, -200, 1);
+const shadedRecess = ravineFacetLight(23, -25, -200, 1);
+t('zone-4 real outward and recessed cliff facets have visible baked tonal contrast',
+  sunlitShelf > 1.08 && sunlitShelf <= 1.39 &&
+  shadedRecess < 0.97 && shadedRecess >= 0.61 &&
+  sunlitShelf - shadedRecess > 0.20);
+t('zone-4 facet reflectance is bounded and cannot affect safe route or other galleries',
+  ravineFacetLight(3.6, -25, -200, 1) === 1 &&
+  ravineFacetLight(23, 5, -200, 1) === 1 &&
+  ravineFacetLight(23, -6, -200, 1) === 1 &&
+  ravineFacetLight(23, -25, -88, 0) === 1 &&
+  ravineFacetLight(23, -25, -200, 0) === 1 &&
+  ravineFacetLight(NaN, -25, -200, 1) === 1);
 // A visible ravine must descend from the exact right-hand floor vertices,
 // not be simulated by a disconnected dark plane fifty metres underneath.
 for (const lowMode of [true, false]) {
@@ -1088,6 +1104,15 @@ for (const lowMode of [true, false]) {
     !!terraces && terraces.sculptedInOriginalShell === true &&
     terraces.affectedVertices > (lowMode ? 50 : 90) &&
     terraces.maxOffset > 2.3 && terraces.maxOffset <= 3.7);
+  const facetMeta = opposingVault instanceof THREE.Mesh
+    ? opposingVault.userData.ravineFacetLighting as {
+      exposedVertices: number; recessedVertices: number; existingShellOnly: boolean
+    } : null;
+  t('zone-4 both highlighted shelves and shaded recesses are real mesh vertices ' +
+      (lowMode ? 'LOW' : 'HIGH'),
+    !!facetMeta && facetMeta.existingShellOnly &&
+    facetMeta.exposedVertices > (lowMode ? 4 : 8) &&
+    facetMeta.recessedVertices > (lowMode ? 20 : 40));
   // Physically measured cliff length, not arbitrary j/N surface indices:
   // enforce texture frequency remains comparable on LOW and HIGH.
   if (opposingVault instanceof THREE.Mesh) {

@@ -239,6 +239,7 @@ try {
       raycaster.far = 90;
       let nearFloor = 0, connectedNearFace = 0, opposingRock = 0;
       let deepOppositeRock = 0, misses = 0, lowestVisibleY = Infinity;
+      const deepRockXYZ = [];
       for (let iy = 0; iy < 7; iy++) for (let ix = 0; ix < 9; ix++) {
         raycaster.setFromCamera(new THREE.Vector2(-0.84 + ix * 0.21, -0.84 + iy * 0.28), w.camera);
         const hit = raycaster.intersectObjects([floor, vault], false)[0];
@@ -252,8 +253,10 @@ try {
         } else {
           opposingRock++;
           if (hit.point.y < -10 && hit.point.x > 10 &&
-              hit.point.z > -225 && hit.point.z < -176)
+              hit.point.z > -225 && hit.point.z < -176) {
             deepOppositeRock++;
+            deepRockXYZ.push({ x: hit.point.x, y: hit.point.y, z: hit.point.z });
+          }
         }
       }
       // Reuse exactly the World registry of opaque triangles used by F
@@ -279,8 +282,18 @@ try {
           foregroundNames[name] = (foregroundNames[name] || 0) + 1;
         }
       }
+      // Observe real ray-hit parallax spread across the visible wall,
+      // rather than calling any dark region "depth" from pixel color.
+      // Diagnostic only; screenshots still require human art review.
+      const rockHorizontalSpan = deepRockXYZ.length
+        ? Math.max(...deepRockXYZ.map(p => p.x)) -
+          Math.min(...deepRockXYZ.map(p => p.x)) : 0;
+      const rockVerticalSpan = deepRockXYZ.length
+        ? Math.max(...deepRockXYZ.map(p => p.y)) -
+          Math.min(...deepRockXYZ.map(p => p.y)) : 0;
       return { samples: 63, nearFloor, connectedNearFace, opposingRock,
-        deepOppositeRock, misses, lowestVisibleY,
+        deepOppositeRock, rockHorizontalSpan, rockVerticalSpan,
+        misses, lowestVisibleY,
         foregroundOpaqueProps, foregroundNames, checkedOpaqueMeshes: opaqueProps.length,
         actualCameraZ: w.camera.position.z, expectedCameraZ: w.position.z };
     });

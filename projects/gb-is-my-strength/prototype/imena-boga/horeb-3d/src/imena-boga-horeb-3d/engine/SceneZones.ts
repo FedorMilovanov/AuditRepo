@@ -146,6 +146,23 @@ export function ravineTerraceOffset(x: number, y: number, z: number, chasm: numb
     (1 - ss(44, 53, warpedDepth));
   return gate * ss(8, 11, depth) * (upperLedge + lowerLedge);
 }
+/** Facet-responsive light, baked directly into the physical wall's existing
+ * vertex colors. The signed derivative of the actual terraced profile
+ * distinguishes outward-facing ledges from their recessed back faces.
+ * No secondary lamp, glowing strip, decal, extra mesh or material.
+ * Exposure decays with real depth; canyon geometry determines the highlights.
+ * This is an ART candidate, not automatic proof of aesthetic success. */
+export function ravineFacetLight(x: number, y: number, z: number, chasm: number): number {
+  if (![x, y, z, chasm].every(Number.isFinite) ||
+      chasm <= 0 || x <= 12 || y >= -8) return 1;
+  const delta = 0.65;
+  const outwardSlope = (ravineTerraceOffset(x, y - delta, z, chasm) -
+    ravineTerraceOffset(x, y + delta, z, chasm)) / (2 * delta);
+  const face = THREE.MathUtils.clamp(1 + outwardSlope * 0.90, 0.67, 1.38);
+  const deepAir = 1 - 0.19 * ss(15, 52, -y);
+  return THREE.MathUtils.clamp(1 + Math.min(1, chasm) *
+    (face * deepAir - 1) * ss(12, 19, x), 0.61, 1.39);
+}
 export function ravineMetricUvWeight(x: number, y: number, chasm: number): number {
   if (chasm <= 0 || x <= 12 || y >= -4) return 0;
   return Math.min(1, chasm) * ss(12, 18, x) * ss(4, 14, -y);
@@ -236,6 +253,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const pos: number[] = [], col: number[] = [], uv: number[] = [], idx: number[] = [];
     let weatheredCliffVertices = 0, weatheredCliffMin = Infinity, weatheredCliffMax = -Infinity;
     let terracedRockVertices = 0, maxTerraceOffset = 0;
+    let exposedFacetVertices = 0, recessedFacetVertices = 0;
     for (let i = 0; i < zs.length; i++) {
       const z = zs[i], hw = halfWidth(z), H = vaultHeight(z), cf = chasmF(z);
       const amp = 0.6 + Math.min(2.6, (hw - 4) * 0.22) + (H > 20 ? 1.4 : 0);
@@ -289,9 +307,12 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         pos.push(x, y, z);
         bake(x * 0.8, Math.max(0, y), z, tmp);
         const v = (0.55 + 0.6 * n) * caveSurfaceVariation(x, y, z) * exit.shade;
+        const facet = ravineFacetLight(x, y, z, cf);
+        if (facet > 1.075) exposedFacetVertices++;
+        if (facet < 0.915) recessedFacetVertices++;
         const ao = (0.55 + 0.45 * Math.min(1, Math.max(0, y) / 3) *
           (1 - 0.35 * Math.max(0, y / H - 0.7))) *
-          ravineStrataReflectance(x, y, z, cf);
+          ravineStrataReflectance(x, y, z, cf) * facet;
         let vein = 1;
         if (z < -62 && z > -118) vein = 1 + 0.35 * Math.max(0, Math.sin(y * 1.7 + n * 9) - 0.85) * 6;
         col.push(tr * v * ao * tmp[0] * vein, tg * v * ao * tmp[1] * vein, tb * v * ao * tmp[2] * (vein > 1 ? 1.05 : 1));
@@ -328,6 +349,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       affectedVertices: terracedRockVertices,
       maxOffset: maxTerraceOffset,
       sculptedInOriginalShell: true,
+    };
+    mesh.userData.ravineFacetLighting = {
+      exposedVertices: exposedFacetVertices,
+      recessedVertices: recessedFacetVertices,
+      existingShellOnly: true,
     };
     group.add(mesh);
 
