@@ -1,0 +1,233 @@
+{
+  "archive_entries": 54,
+  "excluded_generated_prefixes": [
+    ".test-build/"
+  ],
+  "files": [
+    {
+      "bytes": 12,
+      "git_blob_sha1": "70120861d673213ada67b41464cc8ff55b9c6a10",
+      "path": ".gitignore",
+      "sha256": "1048054de50f5236c525f70aad93f020d96ff799cf6b07b7de3caf0d311714e5"
+    },
+    {
+      "bytes": 2997,
+      "git_blob_sha1": "59dccb71ed35dda0b0b4d3fe8e0569ade0997704",
+      "path": "ARENA_ORIGINAL_README.md",
+      "sha256": "a2d971270c9e3e87636b1f829894a1ed2f84ea6e8254ff0468bdc5d0c92ac165"
+    },
+    {
+      "bytes": 2842,
+      "git_blob_sha1": "1ff06f82865926acf0b020908a8e2cf62553c0cf",
+      "path": "audit/acceptance-matrix.md",
+      "sha256": "65f7b72042a68aa39cc188601a68ad46a7bd81474934328562f517181b512157"
+    },
+    {
+      "bytes": 5213,
+      "git_blob_sha1": "9627024edd863db3d86912134851715d0c9d4b98",
+      "path": "audit/iteration-log.md",
+      "sha256": "c949ac0e75001913767e25f9e70c0f9c147df161bc68c509d48cba697dc6db39"
+    },
+    {
+      "bytes": 129,
+      "git_blob_sha1": "3e0eae60247bdc771b99867d60b82fcbff51677a",
+      "path": "data/exhibits.ts",
+      "sha256": "82aad795bbd39faf214de36ecac83d759b40465541d3865bb74e50f7c5b92dba"
+    },
+    {
+      "bytes": 855,
+      "git_blob_sha1": "1ccd8598f1bba991faa31645b5f5a81fad3bcb24",
+      "path": "docs/ASSET_LICENSES.md",
+      "sha256": "af7947ad77b074207bff51f58e01050a911eb82e096242cc51e4872d855f7a93"
+    },
+    {
+      "bytes": 938,
+      "git_blob_sha1": "9f53ac21a03cec7a50b7add08cd5ca51f65b2021",
+      "path": "docs/ASTRO_PRODUCT_HANDOFF.md",
+      "sha256": "242c4328fc081fd7fb8a3f4cf13495debf40889ff6ce599660677629af39fca8"
+    },
+    {
+      "bytes": 2778,
+      "git_blob_sha1": "0b2c5fd2b0951946d754869f86190f17a5c707a8",
+      "path": "docs/SCENE_MAP.md",
+      "sha256": "5af74f2163f32194e8b61f3dd902b8fa7613496322cc443b2ab4d018357a3b25"
+    },
+    {
+      "bytes": 1639,
+      "git_blob_sha1": "73be91665b4cd3e4ed490641ff660838d017a3cc",
+      "path": "docs/SOURCE_AUDIT.md",
+      "sha256": "db0ca4bff8ab91581f1141681fd5310ba6f7e2fb178f91236e718e3c36ae0dae"
+    },
+    {
+      "bytes": 1229,
+      "git_blob_sha1": "b770275d62af3296a85ed63337233aac8e0fe0e9",
+      "path": "index.html",
+      "sha256": "e0bf8a3fd3b127f08e685a9b98b0b29b8f3ed60519c64c7ab5f4f1b8f48f8998"
+    },
+    {
+      "bytes": 89674,
+      "git_blob_sha1": "8624b0ab7eebc351079ed43c770de205b433d71e",
+      "path": "package-lock.json",
+      "sha256": "5b6c2af19e4f356aa255cbcd7aa54aaea1317cd793f93bee1a0f349d27536055"
+    },
+    {
+      "bytes": 821,
+      "git_blob_sha1": "11d9083be844d857833bc52e3cdcebef1b011c23",
+      "path": "package.json",
+      "sha256": "56976c287e9d9da0b1de114f3b5db3f906f0adf908ce5c9312dc003e86190217"
+    },
+    {
+      "bytes": 48918,
+      "git_blob_sha1": "82289bcd86610dc0172de4c341413ec8702f8452",
+      "path": "public/reader.html",
+      "sha256": "832dd87b70bffcf016278ea02ca28d7cc456f96dc8822d1f6e1c808085d0234f"
+    },
+    {
+      "bytes": 113,
+      "git_blob_sha1": "b739ee0ac6af567771d892fa9b14470e5987f878",
+      "path": "src/App.tsx",
+      "sha256": "f5482b8c8c3d76ce70d3e86c004e19318a03ffdfd984c0a1afc5092dc0e78868"
+    },
+    {
+      "bytes": 23062,
+      "git_blob_sha1": "cd534d6f4d9427c10d3107c03d3a2b1aec958451",
+      "path": "src/imena-boga-horeb-3d/HorebApp.tsx",
+      "sha256": "5bf0a4d0343746aed4181a94125827092e0d8459c0fb20fb7f78cece9ceabb1b"
+    },
+    {
+      "bytes": 30242,
+      "git_blob_sha1": "8a79358683d587b1d0a3dbc742bec2e3ad763718",
+      "path": "src/imena-boga-horeb-3d/data/exhibits.ts",
+      "sha256": "96faa6a28ccb79c3aa42b4bfdef2668d6dc287e10ddc70bbec061003c3dc5306"
+    },
+    {
+      "bytes": 3428,
+      "git_blob_sha1": "bc10d9edcaf9eb4482b50daae59b67b95f7e565a",
+      "path": "src/imena-boga-horeb-3d/data/validate.ts",
+      "sha256": "b91de0abca8cd5cca730bbbc4a288934a9465ceb1abc3a10ef35a7c84a57f74d"
+    },
+    {
+      "bytes": 6343,
+      "git_blob_sha1": "7f2cb9486aea4c70ad5dbab1b5960644fec85b30",
+      "path": "src/imena-boga-horeb-3d/engine/BurningBush.ts",
+      "sha256": "2b13563a8178866a2fda36ff8484480ab9b92f774b9a42285112f75d2a7f2909"
+    },
+    {
+      "bytes": 22986,
+      "git_blob_sha1": "3586eca2888c8cf5fd753c0d77cedb83b3863f5f",
+      "path": "src/imena-boga-horeb-3d/engine/SceneZones.ts",
+      "sha256": "655582d014276d2b2b2c0d5d843b112f28edc247fe897fa2f1612ca202f757b9"
+    },
+    {
+      "bytes": 19618,
+      "git_blob_sha1": "424bd051e07daf7db08e3917fede9b689658d3e0",
+      "path": "src/imena-boga-horeb-3d/engine/World.ts",
+      "sha256": "72cfd2aabf4eda63c63f69bf044835de3cea46eb23ca2adac83c73f5c375368e"
+    },
+    {
+      "bytes": 3878,
+      "git_blob_sha1": "83341a74423f5f4b7491b1e1f1867bf0f7a3b8dc",
+      "path": "src/imena-boga-horeb-3d/engine/audio.ts",
+      "sha256": "5af671bb5de9cd6692dfbe0f6a2cc9d1d60a3f203a399d771ba1e3ee0c210b98"
+    },
+    {
+      "bytes": 4531,
+      "git_blob_sha1": "d85a6ee959cee3832a6f7ceee9426744d0412d46",
+      "path": "src/imena-boga-horeb-3d/engine/nav.ts",
+      "sha256": "e101413ec2ff8085cf81fcc476993b17cb069723e870154b079781a002597214"
+    },
+    {
+      "bytes": 6614,
+      "git_blob_sha1": "f7824a077907cd1ade25fb28d68f800ca77ed80c",
+      "path": "src/imena-boga-horeb-3d/engine/procedural.ts",
+      "sha256": "a5982108e6385fe8483de82197d999b789d3f52305418d3603a6c4792d752529"
+    },
+    {
+      "bytes": 9475,
+      "git_blob_sha1": "11a5ee457c8155586af5fe23546143da7a4968e9",
+      "path": "src/imena-boga-horeb-3d/ui/AccessibleReader.tsx",
+      "sha256": "ab7761768ad1de3ea713d095bb4dcb75515e469db5c6f46e3e634d681371d877"
+    },
+    {
+      "bytes": 7282,
+      "git_blob_sha1": "4e984e409a5f88427ba8c39f4d30beef0875f695",
+      "path": "src/imena-boga-horeb-3d/ui/Controls.tsx",
+      "sha256": "5bb0010b0474b9f41834c38135f5ec28166c06fce57294dc0c47adca092457ca"
+    },
+    {
+      "bytes": 2180,
+      "git_blob_sha1": "1de680c0310262dffbbe78b4826d91d2614edf2d",
+      "path": "src/imena-boga-horeb-3d/ui/ResearchDrawer.tsx",
+      "sha256": "11587af223e4fdb519a2ab311339b7f57ae927f95a137d4e4ecd94a944c6a266"
+    },
+    {
+      "bytes": 4375,
+      "git_blob_sha1": "4edfbc917e694f42caa4055e1520375c76f7cb4b",
+      "path": "src/index.css",
+      "sha256": "db8319e52350caa6e71a5c1dad17487db639e0c3a17c5130b1805bc305c78311"
+    },
+    {
+      "bytes": 230,
+      "git_blob_sha1": "12fa35b9813dddf7047f8fb1059b9cac5f601bd2",
+      "path": "src/main.tsx",
+      "sha256": "f268dc44f71240012de0cfb1569d8ac906265cccd45eb3a99059c1a663d2f830"
+    },
+    {
+      "bytes": 169,
+      "git_blob_sha1": "a5ef193506d07d0459fec4f187af08283094d7c8",
+      "path": "src/utils/cn.ts",
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+    },
+    {
+      "bytes": 12155,
+      "git_blob_sha1": "6afac294e54ad256ebe3f62415c5be8aa8ea1242",
+      "path": "tests/e2e.mjs",
+      "sha256": "77f387349c197851d708ef28b8b193812e648d765ccd998bddaa5a2fee928ad4"
+    },
+    {
+      "bytes": 7294,
+      "git_blob_sha1": "de9817af9e04ea578bf4ad39f0a06417c19b8e8e",
+      "path": "tests/generate-reader.mjs",
+      "sha256": "3fbca9ec176758428af239ff9cf9ecb8925249c8f21a9a2d8257131bbd9419a1"
+    },
+    {
+      "bytes": 5133,
+      "git_blob_sha1": "827016283909c15488583bdd09e0251ff99b5e66",
+      "path": "tests/regression.mjs",
+      "sha256": "b5d212b077753f85c65b9cb22849eae5b26ceb1efe9c697bb6ae67955ec02858"
+    },
+    {
+      "bytes": 5192,
+      "git_blob_sha1": "4a01e32ebf760c2c972084b2084367d4dd861776",
+      "path": "tests/run.mjs",
+      "sha256": "24c192f27bcd67a6bea2f3d6b0f51f1cbb6b85abb7bb9fce3ac142fced211c25"
+    },
+    {
+      "bytes": 339,
+      "git_blob_sha1": "730f13b0233f3690c7d6c78122441f7fed6b82ca",
+      "path": "tests/test.sh",
+      "sha256": "f5f922133b7acd67a053269d8a7d4b6dc5d0f9c402cfa1fc9e54b5cf8dc00edf"
+    },
+    {
+      "bytes": 681,
+      "git_blob_sha1": "d06d38f6f7df2f4bc4a1a3343376f8d01f25707f",
+      "path": "tsconfig.json",
+      "sha256": "2a760f56fa49b96935783a2c3b4ce63d67e4547fdace88c4f4361a0c4fc10848"
+    },
+    {
+      "bytes": 538,
+      "git_blob_sha1": "1f06afd4b79b46f28b416d4e339b51ef76d68bb3",
+      "path": "vite.config.ts",
+      "sha256": "18dd184b9091357fe23797ee047138e6af7663b59697ac45d6c3c219522db9fa"
+    }
+  ],
+  "imported_source_file_count": 36,
+  "original_file_count": 40,
+  "original_size_bytes": 378979,
+  "original_zip_sha256": "c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9",
+  "project": "horeb-3d",
+  "renamed_original_file": {
+    "README.md": "ARENA_ORIGINAL_README.md"
+  },
+  "source_zip": "---.zip"
+}

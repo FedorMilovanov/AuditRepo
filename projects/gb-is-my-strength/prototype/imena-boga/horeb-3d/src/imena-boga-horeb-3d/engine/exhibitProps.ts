@@ -1,0 +1,1048 @@
+import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { rng, fbm, glowTexture } from './procedural';
+import type { Exhibit } from '../data/exhibits';
+
+// ── Props для 42 уникальных библейских экспозиций.
+// Воспользуемся одним engine: props — это узнаваемые предметы/среды вокруг
+// стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
+// но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
+
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; oliveWood: THREE.MeshStandardMaterial; oliveBark: THREE.MeshStandardMaterial; wellStoneBase: THREE.MeshStandardMaterial; wellStoneWarm: THREE.MeshStandardMaterial; wellStoneCool: THREE.MeshStandardMaterial; wellMortar: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; shallowWater: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; oliveLeaf: THREE.MeshStandardMaterial; oliveLeafSilver: THREE.MeshStandardMaterial; }
+
+/** One authored grove layout is shared by meshes and physical trunk colliders. */
+export const OLIVE_GROVE_OFFSETS: ReadonlyArray<readonly [number, number]> = [
+  // Staggered in both axes: 2.5m+ between adjacent mature trunks instead
+  // of four saplings compressed into a single symmetrical garden row.
+  [-2.30, -1.15], [-1.00, -3.35], [0.82, -1.40], [2.35, -3.55],
+];
+/** The well's tree is rooted away from both the stone rim and front inscription. */
+export const BEERSHEBA_TAMARISK_OFFSET = { x: 2.15, z: -0.75 } as const;
+// Physical story viewpoints reuse the authored prop offsets, never guess
+// invisible target coordinates unrelated to the actual mesh.
+export const GETHSEMANE_PRAYER_OFFSET = { x: 0, z: -0.8 } as const;
+export const JEREMIAH_CITY_WALL_OFFSET = { x: 1.0, z: -2.55 } as const;
+/** The visible well masonry must stay inside this shared physical footprint. */
+export const BEERSHEBA_WELL_COLLIDER_RADIUS = 1.45;
+
+let CACHE: { low: boolean; s: Shared } | null = null;
+export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
+function shared(low: boolean, surface?: StoneSurface): Shared {
+  // Reuse the tunnel's procedural texture instead of drawing a separate stone atlas.
+  // Node construction tests may omit a texture: geometry remains fully testable.
+  if (CACHE && CACHE.low === low) {
+    if (surface && (CACHE.s.stone.map !== surface.map || CACHE.s.stone.bumpMap !== surface.bump)) {
+      for (const material of [CACHE.s.stone, CACHE.s.wellStoneBase, CACHE.s.wellStoneWarm, CACHE.s.wellStoneCool]) {
+        material.map = surface.map;
+        material.bumpMap = surface.bump;
+        material.needsUpdate = true;
+      }
+    }
+    return CACHE.s;
+  }
+  const stone = new THREE.MeshStandardMaterial({
+    color: 0xa18b74, roughness: 0.95, metalness: 0,
+    map: surface?.map ?? null, bumpMap: surface?.bump ?? null,
+    bumpScale: 0.75,
+  });
+  // Earth-tone alternation is material-level, not a bright painted grout
+  // texture. All stones inherit the same procedural rock maps.
+  // The earlier base stone used the brighter generic cave material and made
+  // the well look like a uniform cream-coloured cast-concrete cylinder.
+  // Keep a dedicated triad of limestone tones without changing cave texture.
+  const wellStoneBase = stone.clone(); wellStoneBase.color.setHex(0x857968);
+  const wellStoneWarm = stone.clone(); wellStoneWarm.color.setHex(0x766654);
+  const wellStoneCool = stone.clone(); wellStoneCool.color.setHex(0x928c80);
+  const wellMortar = new THREE.MeshStandardMaterial({
+    color: 0x4b4037, roughness: 1, metalness: 0, side: THREE.DoubleSide,
+  });
+  const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
+  const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
+  // Roots and tiny twigs share this lower-cost wood material. The original
+  // light grey tone made roots resemble detached bright support struts.
+  const oliveWood = new THREE.MeshStandardMaterial({ color: 0x39372f, roughness: 1 });
+  // Vertex-coloured bark needs no additional texture atlas or GPU upload.
+  // The same material is shared by all four grooved boles for safe batching.
+  const oliveBark = new THREE.MeshStandardMaterial({
+    color: 0x777168, roughness: 1, metalness: 0, vertexColors: true,
+  });
+  const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
+  // A shallow seep is translucent water over sediment, not an opaque colored
+  // painted polygon. No expensive transmission pass or metal-like reflections.
+  // The underlying bank, rock fragments and physically lit specular response
+  // give the surface visual depth without an unlit "water glow" billboard.
+  const shallowWater = new THREE.MeshStandardMaterial({
+    color: 0x788b82, roughness: 0.20, metalness: 0,
+    transparent: true, opacity: 0.66, depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
+  const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
+  const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
+  // Two-sided matte leaves: long narrow blades, not inflated oval pebbles.
+  const oliveLeaf = new THREE.MeshStandardMaterial({ color: 0x52604c, roughness: 0.95, side: THREE.DoubleSide });
+  const oliveLeafSilver = new THREE.MeshStandardMaterial({ color: 0x737f6c, roughness: 0.95, side: THREE.DoubleSide });
+  const s: Shared = { stone, dark, wood, oliveWood, oliveBark, wellStoneBase, wellStoneWarm, wellStoneCool, wellMortar, water, shallowWater, metal, leaf, leafSilver, oliveLeaf, oliveLeafSilver };
+  CACHE = { low, s };
+  return s;
+}
+
+// Низкий полигон: простые примитивы,shared geometry.
+// Geometry cache: identical parameters return the same BufferGeometry,
+// reducing GPU memory. Profiling: 71% of prop meshes share identical params.
+const _geoCache = new Map<string, THREE.BufferGeometry>();
+function geoCached(type: string, params: any): THREE.BufferGeometry {
+  const key = type + ':' + JSON.stringify(params);
+  let g = _geoCache.get(key);
+  if (!g) {
+    switch (type) {
+      case 'BoxGeometry': g = new THREE.BoxGeometry(params.w, params.h, params.d); break;
+      case 'CylinderGeometry': g = new THREE.CylinderGeometry(params.rt, params.rb, params.h,
+        params.s, 1, params.openEnded === true); break;
+      case 'SphereGeometry': g = new THREE.SphereGeometry(params.r, params.w, params.h); break;
+      case 'ConeGeometry': g = new THREE.ConeGeometry(params.r, params.h, params.s); break;
+      case 'TorusGeometry': g = new THREE.TorusGeometry(params.r, params.t, params.rs, params.ts, params.arc); break;
+      case 'PlaneGeometry': g = new THREE.PlaneGeometry(params.w, params.h); break;
+      case 'DodecahedronGeometry': g = new THREE.DodecahedronGeometry(params.r, params.d); break;
+      case 'OliveLeafGeometry': {
+        const leaf = new THREE.Shape();
+        leaf.moveTo(0, -0.62);
+        leaf.bezierCurveTo(-0.18, -0.38, -0.22, 0.05, -0.13, 0.26);
+        leaf.quadraticCurveTo(-0.07, 0.49, 0, 0.63);
+        leaf.quadraticCurveTo(0.12, 0.45, 0.18, 0.05);
+        leaf.quadraticCurveTo(0.16, -0.35, 0, -0.62);
+        g = new THREE.ShapeGeometry(leaf, 3);
+        break;
+      }
+      default: throw new Error('Unknown geometry type: ' + type);
+    }
+    _geoCache.set(key, g);
+  }
+  return g;
+}
+const G = {
+  box: (w: number, h: number, d: number) => geoCached('BoxGeometry', { w, h, d }),
+  cyl: (rt: number, rb: number, h: number, s = 7, openEnded = false) =>
+    geoCached('CylinderGeometry', { rt, rb, h, s, openEnded }),
+  sph: (r: number, w = 8, h = 6) => geoCached('SphereGeometry', { r, w, h }),
+  cone: (r: number, h: number, s = 7) => geoCached('ConeGeometry', { r, h, s }),
+  tor: (r: number, t: number, rs = 6, ts = 10, arc = Math.PI * 2) => geoCached('TorusGeometry', { r, t, rs, ts, arc }),
+  plane: (w: number, h: number) => geoCached('PlaneGeometry', { w, h }),
+  dodec: (r: number, d = 0) => geoCached('DodecahedronGeometry', { r, d }),
+  oliveLeaf: () => geoCached('OliveLeafGeometry', {}),
+};
+
+// Annular-sector stone units, not rotated cuboids glued to a round barrel.
+// Each stone has an actual recessed radial joint, staggered bond and bevel.
+// Coordinates are in the XZ plane; extrusion is rotated into +Y.
+function wellRingUnit(innerR: number, outerR: number, from: number, to: number,
+  height: number): THREE.ExtrudeGeometry {
+  const shape = new THREE.Shape();
+  const edge = (r: number, theta: number) =>
+    new THREE.Vector2(Math.cos(theta) * r, -Math.sin(theta) * r);
+  // Deterministic, centimetre-scale erosion in each cut stone. Keep the
+  // wedge's recessed joints and shared collision footprint; do not create
+  // a perfect circular band or add decorative loose cover slabs.
+  const outerSteps = 5;
+  for (let n = 0; n <= outerSteps; n++) {
+    const angle = from + (to - from) * n / outerSteps;
+    const worn = (n === 0 || n === outerSteps) ? 0 :
+      0.013 * Math.sin(angle * 23.3 + from * 7.7) +
+      0.006 * Math.sin(angle * 42.7 + to * 12.3);
+    const point = edge(outerR + worn, angle);
+    if (n === 0) shape.moveTo(point.x, point.y);
+    else shape.lineTo(point.x, point.y);
+  }
+  for (let n = outerSteps; n >= 0; n--) {
+    const point = edge(innerR, from + (to - from) * n / outerSteps);
+    shape.lineTo(point.x, point.y);
+  }
+  shape.closePath();
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: height, steps: 1, bevelEnabled: true,
+    bevelSegments: 1, bevelThickness: 0.009, bevelSize: 0.009,
+    curveSegments: 1,
+  });
+  geometry.rotateX(-Math.PI / 2);
+  return geometry;
+}
+
+function addWell(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
+  // The rim's exact radius is fixed in both visual LODs and fits the 1.45m
+  // collider shared with World. No artificial "safety cylinder" is added.
+  const r = 1.10, count = 14, step = Math.PI * 2 / count;
+  const random = rng((Math.round(x * 131 + z * 173) ^ 0x57211) >>> 0);
+  const interiorMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2d241d, roughness: 1, side: THREE.DoubleSide,
+  });
+  const liner = new THREE.Mesh(G.cyl(r - 0.18, r - 0.18, 0.96,
+    low ? 24 : 36, true), interiorMaterial);
+  liner.name = 'well-open-shaft';
+  liner.position.set(x, 0.48, z);
+  g.add(liner);
+  // Mortar rests 4–6cm behind the visible outer stone faces, not buried
+  // BEHIND the inner wall where its joints disappear into the dark shaft.
+  // This real recessed backing shows between fitted radial wedges and
+  // horizontal courses while remaining occluded by their exposed faces.
+  const mortarRadius = r + 0.115;
+  const joints = new THREE.Mesh(G.cyl(mortarRadius, mortarRadius, 0.98,
+    low ? 42 : 56, true), s.wellMortar);
+  joints.name = 'well-recessed-mortar';
+  joints.position.set(x, 0.49, z);
+  g.add(joints);
+  const water = new THREE.Mesh(G.cyl(r - 0.20, r - 0.20, 0.025,
+    low ? 24 : 36), s.water);
+  water.name = 'well-water-below-rim';
+  water.position.set(x, 0.20, z);
+  g.add(water);
+
+  for (let layer = 0; layer < 3; layer++) {
+    const halfBond = layer % 2 === 1 ? step * 0.5 : 0;
+    const courseBase = 0.08 + layer * 0.275;
+    for (let i = 0; i < count; i++) {
+      // Tiny angular differences create a handmade edge, while a guaranteed
+      // minimum 0.025 rad gap keeps every radial joint visible.
+      const center = (i + 0.5) * step + halfBond;
+      const gap = 0.028 + random() * 0.012;
+      const start = center - step / 2 + gap / 2 + random() * 0.002;
+      const end = center + step / 2 - gap / 2 - random() * 0.002;
+      const inner = r - 0.028;
+      const outer = r + 0.155 + random() * 0.016;
+      const bottom = courseBase + (random() - 0.5) * 0.010;
+      const height = 0.215 + random() * 0.016;
+      const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
+        (i + layer * 2) % 7 === 0 ? s.wellStoneCool :
+          (i * 3 + layer) % 6 === 0 ? s.wellStoneWarm : s.wellStoneBase);
+      stone.name = 'well-course-stone';
+      stone.position.set(x, bottom, z);
+      stone.userData.wellBond = {
+        layer, index: i, start, end, inner, outer, bottom, top: bottom + height,
+      };
+      g.add(stone);
+    }
+  }
+  // A smaller staggered coping course, also an annular arc instead of
+  // overlapping rectangular plates or a perfect torus. The well stays open.
+  for (let i = 0; i < count; i++) {
+    const center = (i + 0.5) * step + step * 0.25;
+    const gap = 0.024 + random() * 0.010;
+    const start = center - step / 2 + gap / 2;
+    const end = center + step / 2 - gap / 2;
+    const inner = r - 0.035;
+    const outer = r + 0.17 + random() * 0.018;
+    // Weathered coping has slight height differences, not a machine-flat
+    // torus. Individual stones remain physically fitted with open shaft.
+    const bottom = 0.89 + (random() - 0.5) * 0.018;
+    const height = 0.125 + random() * 0.021;
+    const stone = new THREE.Mesh(wellRingUnit(inner, outer, start, end, height),
+      i % 7 === 0 ? s.wellStoneWarm : i % 8 === 0 ? s.wellStoneCool : s.wellStoneBase);
+    stone.name = 'well-rim-stone';
+    stone.position.set(x, bottom, z);
+    stone.userData.wellBond = {
+      layer: 3, index: i, start, end, inner, outer, bottom, top: bottom + height,
+    };
+    g.add(stone);
+  }
+  // The small ground stones sit below ankle level; they are not invisible walls.
+  for (let i = 0; i < 18; i++) {
+    const a = random() * Math.PI * 2, rr = r + 0.34 + random() * 0.54;
+    const stone = new THREE.Mesh(G.dodec(0.065 + random() * 0.068),
+      i % 3 === 0 ? s.wellStoneWarm : s.wellStoneBase);
+    stone.name = 'well-ground-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.08, z + Math.sin(a) * rr);
+    stone.rotation.set(random() * 0.3, random() * Math.PI, random() * 0.3);
+    stone.scale.set(1.25 + random() * 0.45, 0.30 + random() * 0.24, 1.0 + random() * 0.40);
+    g.add(stone);
+  }
+}
+function addTamarisk(g: THREE.Group, x: number, z: number, s: Shared) {
+  // The former giant green ellipsoid hid the name and looked like a plastic
+  // topiary. A living tamarisk has an airy crown of drooping fine sprays.
+  const random = rng((Math.round(x * 113 + z * 157) ^ 0x4165) >>> 0);
+  const up = new THREE.Vector3(0, 1, 0);
+  const bottom = new THREE.Vector3(x, 0.04, z);
+  const stem = new THREE.Vector3(x + 0.10, 1.35, z - 0.05);
+  const trunk = new THREE.Mesh(G.cyl(0.065, 0.15, 1.36, 7), s.wood);
+  trunk.name = 'tamarisk-trunk';
+  trunk.position.copy(bottom).lerp(stem, 0.5);
+  trunk.quaternion.setFromUnitVectors(up, stem.clone().sub(bottom).normalize());
+  g.add(trunk);
+  for (let i = 0; i < 10; i++) {
+    const a = i * Math.PI * 2 / 10 + random() * 0.28;
+    const root = new THREE.Vector3(x + 0.07, 1.06 + random() * 0.3, z - 0.04);
+    const reach = 0.45 + random() * 0.42;
+    const tip = new THREE.Vector3(root.x + Math.cos(a) * reach,
+      1.32 + random() * 0.42, root.z + Math.sin(a) * reach);
+    const delta = tip.clone().sub(root);
+    const spray = new THREE.Mesh(G.cyl(0.008, 0.027, delta.length(), 5), s.wood);
+    spray.name = 'tamarisk-spray';
+    spray.position.copy(root).addScaledVector(delta, 0.5);
+    spray.quaternion.setFromUnitVectors(up, delta.normalize());
+    g.add(spray);
+    for (let j = 0; j < 7; j++) {
+      const fol = new THREE.Mesh(G.oliveLeaf(), (i + j) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+      fol.name = 'tamarisk-needle';
+      const t = 0.42 + (j / 7) * 0.58;
+      fol.position.copy(root).lerp(tip, t);
+      fol.position.y -= (j % 2) * 0.07;
+      fol.rotation.set((random() - 0.5) * 1.6, random() * Math.PI * 2,
+        (random() - 0.5) * 1.7);
+      fol.scale.set(0.11 + random() * 0.07, 0.11 + random() * 0.06, 1);
+      g.add(fol);
+    }
+  }
+}
+function addTent(g: THREE.Group, x: number, z: number, s: Shared, w = 2.2, h = 1.8) {
+  const body = new THREE.Mesh(G.box(w, h, w * 0.8), s.wood);
+  body.position.set(x, h / 2, z); body.rotation.y = Math.PI / 4; g.add(body);
+  const top = new THREE.Mesh(G.cone(w * 0.62, h * 0.7, 4), s.dark);
+  top.position.set(x, h + h * 0.35, z); top.rotation.y = Math.PI / 4; g.add(top);
+}
+function addAltar(g: THREE.Group, x: number, z: number, s: Shared) {
+  const base = new THREE.Mesh(G.box(1.1, 0.5, 0.9), s.stone);
+  base.position.set(x, 0.25, z); g.add(base);
+  const top = new THREE.Mesh(G.box(0.85, 0.3, 0.7), s.dark);
+  top.position.set(x, 0.65, z); g.add(top);
+  for (let i = 0; i < 4; i++) {
+    const a = (i / 4) * Math.PI * 2 + 0.4;
+    const stone = new THREE.Mesh(G.dodec(0.16), s.stone);
+    stone.position.set(x + Math.cos(a) * 0.6, 0.08, z + Math.sin(a) * 0.5);
+    stone.rotation.set(a, a, a); g.add(stone);
+  }
+}
+function addRam(g: THREE.Group, x: number, z: number, s: Shared) {
+  const body = new THREE.Mesh(G.box(0.5, 0.5, 0.7), s.dark);
+  body.position.set(x, 0.6, z); g.add(body);
+  const head = new THREE.Mesh(G.box(0.22, 0.28, 0.3), s.wood);
+  head.position.set(x, 0.75, z + 0.4); g.add(head);
+  for (const sgn of [-1, 1]) {
+    const horn = new THREE.Mesh(G.cyl(0.04, 0.06, 0.35, 6), s.wood);
+    horn.position.set(x + sgn * 0.1, 0.95, z + 0.42); horn.rotation.z = sgn * 0.7; g.add(horn);
+  }
+  const legs = [-0.2, 0.2];
+  for (const lx of legs) for (const lz of [-0.2, 0.2]) {
+    const leg = new THREE.Mesh(G.cyl(0.05, 0.05, 0.5, 5), s.dark);
+    leg.position.set(x + lx, 0.25, z + lz); g.add(leg);
+  }
+}
+function addSheep(g: THREE.Group, x: number, z: number, s: Shared) {
+  const body = new THREE.Mesh(G.sph(0.28, 8, 6), s.dark);
+  body.position.set(x, 0.5, z); g.add(body);
+  const head = new THREE.Mesh(G.box(0.14, 0.18, 0.2), s.wood);
+  head.position.set(x, 0.55, z + 0.28); g.add(head);
+  for (const lx of [-0.12, 0.12]) for (const lz of [-0.12, 0.12]) {
+    const leg = new THREE.Mesh(G.cyl(0.04, 0.04, 0.4, 5), s.dark);
+    leg.position.set(x + lx, 0.2, z + lz); g.add(leg);
+  }
+}
+function addSea(g: THREE.Group, x: number, z: number, s: Shared) {
+  const sea = new THREE.Mesh(G.plane(8, 6), s.water);
+  sea.rotation.x = -Math.PI / 2; sea.position.set(x, 0.1, z - 1.5); g.add(sea);
+  const rim = new THREE.Mesh(G.box(8, 0.2, 0.4), s.stone);
+  rim.position.set(x, 0.15, z + 1.5); g.add(rim);
+}
+function addScroll(g: THREE.Group, x: number, z: number, s: Shared, h = 0.8) {
+  const body = new THREE.Mesh(G.cyl(0.12, 0.12, h, 8), s.wood);
+  body.position.set(x, h / 2 + 0.4, z); body.rotation.z = Math.PI / 2; g.add(body);
+  for (const ex of [-h / 2, h / 2]) {
+    const cap = new THREE.Mesh(G.cyl(0.16, 0.16, 0.06, 8), s.dark);
+    cap.position.set(x + ex, 0.4, z); cap.rotation.z = Math.PI / 2; g.add(cap);
+  }
+}
+function addWall(g: THREE.Group, x: number, z: number, s: Shared, w: number, h: number, dx = 0) {
+  const wall = new THREE.Mesh(G.box(w, h, 0.3), s.stone);
+  wall.position.set(x + dx, h / 2, z); g.add(wall);
+}
+function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
+  const base = new THREE.Mesh(G.box(2.2, 0.2, 2.2), s.dark);
+  base.position.set(x, 0.1, z); g.add(base);
+  const r = rng(91);
+  for (let i = 0; i < 14; i++) {
+    const b = new THREE.Mesh(G.box(0.18 + r() * 0.12, 0.2 + r() * 0.5, 0.18), s.stone);
+    b.position.set(x - 0.9 + r() * 1.8, 0.2 + r() * 0.25, z - 0.9 + r() * 1.8); g.add(b);
+  }
+  for (const sgn of [-1, 1]) {
+    const gate = new THREE.Mesh(G.box(0.4, 0.6, 0.1), s.metal);
+    gate.position.set(x + sgn * 1.1, 0.4, z); g.add(gate);
+  }
+}
+function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, silhouette = 0) {
+  // Mature Mediterranean olive: a squat, irregular, torsioned bole, spreading
+  // structural forks and an open silver-green canopy, not cone-trunk topiary.
+  // Physical trunk radius stays within the separately tested 0.29m collider.
+  const seed = (Math.round(x * 1619 + z * 4093) ^ 0x2f4a17) >>> 0;
+  const random = rng(seed);
+  const up = new THREE.Vector3(0, 1, 0);
+  const leanX = (random() - 0.5) * 0.22;
+  const leanZ = (random() - 0.5) * 0.20;
+  const barkPhase = random() * Math.PI * 2;
+  // One material and the SAME deterministic bark field for trunk and all
+  // major forks. Previously the fork material was a uniform light cylinder,
+  // visibly disconnected from the darker grooved bole in actual screenshots.
+  const barkTone = (angle: number, t: number) => {
+    const furrow = Math.sin(angle * 6 + t * 9 + barkPhase);
+    const finer = Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const fissure = Math.pow(0.5 + 0.5 * Math.sin(angle * 9 + t * 3.8 + barkPhase), 4);
+    return THREE.MathUtils.clamp(
+      0.52 + 0.22 * furrow + 0.09 * finer - 0.24 * fissure, 0.12, 0.82);
+  };
+  // Four intentionally distinct mature silhouettes: uneven height and
+  // lateral reach, not four copies with merely different random noise.
+  // Trunk colliders/positions remain the single canonical layout.
+  const forms = [
+    { height: 1.78, spread: 1.05, crownLift: 0.02 },
+    { height: 1.60, spread: 0.90, crownLift: -0.04 },
+    { height: 1.90, spread: 1.12, crownLift: 0.08 },
+    { height: 1.73, spread: 0.83, crownLift: -0.06 },
+  ] as const;
+  const form = forms[((silhouette % forms.length) + forms.length) % forms.length];
+  const trunkHeight = form.height;
+  const spine = (t: number) => new THREE.Vector3(
+    x + leanX * t * t + 0.022 * Math.sin(t * 6.5 + barkPhase) * t,
+    0.02 + t * trunkHeight,
+    z + leanZ * t * t + 0.022 * Math.cos(t * 5.1 + barkPhase) * t,
+  );
+  const bole = new THREE.CylinderGeometry(0.105, 0.235, trunkHeight,
+    low ? 12 : 18, low ? 14 : 20);
+  const vertices = bole.getAttribute('position') as THREE.BufferAttribute;
+  const barkColors = new Float32Array(vertices.count * 3);
+  const shadeDark = new THREE.Color(0x47463f);
+  const shadeLight = new THREE.Color(0xa29e8d);
+  const localColor = new THREE.Color();
+  for (let i = 0; i < vertices.count; i++) {
+    const px = vertices.getX(i), py = vertices.getY(i), pz = vertices.getZ(i);
+    const t = Math.max(0, Math.min(1, (py + trunkHeight / 2) / trunkHeight));
+    const angle = Math.atan2(pz, px);
+    const furrow = Math.sin(angle * 6 + t * 9 + barkPhase);
+    const finer = Math.sin(angle * 11 - t * 15 + barkPhase * 0.37);
+    const grooves = 1 + 0.105 * furrow + 0.048 * finer;
+    const center = spine(t);
+    vertices.setXYZ(i, (center.x - x) + px * grooves, py,
+      (center.z - z) + pz * grooves);
+    // Vertical fissures follow the same procedural coordinates as the mesh
+    // folds. Soft brown-grey tones, not alternating flat stripes or a texture
+    // whose seams will tear where the trunk twists.
+    localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
+    barkColors[i * 3] = localColor.r;
+    barkColors[i * 3 + 1] = localColor.g;
+    barkColors[i * 3 + 2] = localColor.b;
+  }
+  bole.setAttribute('color', new THREE.BufferAttribute(barkColors, 3));
+  bole.computeVertexNormals();
+  const boleMesh = new THREE.Mesh(bole, s.oliveBark);
+  boleMesh.name = 'olive-main-trunk';
+  boleMesh.position.set(x, 0.02 + trunkHeight / 2, z);
+  g.add(boleMesh);
+  const base = spine(0);
+  // Small roots and foliage twigs reuse shared cylinders. Only structural
+  // forks need an individually constructed continuous curved surface.
+  const segment = (from: THREE.Vector3, to: THREE.Vector3,
+    bottom: number, top: number, name: string) => {
+    const vector = to.clone().sub(from), length = vector.length();
+    const piece = new THREE.Mesh(
+      G.cyl(top, bottom, length, low ? 7 : 10), s.oliveWood);
+    piece.name = name;
+    piece.position.copy(from).addScaledVector(vector, 0.5);
+    piece.quaternion.setFromUnitVectors(up, vector.normalize());
+    g.add(piece);
+  };
+  const structuralFork = (stem: THREE.Vector3, elbow: THREE.Vector3,
+    tip: THREE.Vector3) => {
+    // A single C1-continuous pipe replaces TWO separately capped cylinders
+    // with a hard visible V junction. Centripetal interpolation suppresses
+    // overshoot while a gradually decreasing radius follows the full curve.
+    // Start center is embedded inside the existing trunk; end is anchored in
+    // the existing foliage pocket. No offsets/colliders or new materials.
+    const path = new THREE.CatmullRomCurve3(
+      [stem.clone(), elbow.clone(), tip.clone()], false, 'centripetal');
+    const tubular = low ? 12 : 18;
+    const radial = low ? 9 : 12;
+    const geometry = new THREE.TubeGeometry(path, tubular, 1, radial, false);
+    const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+    const colors = new Float32Array(positions.count * 3);
+    for (let ring = 0; ring <= tubular; ring++) {
+      const t = ring / tubular;
+      const center = path.getPointAt(t);
+      const taper = THREE.MathUtils.lerp(0.092, 0.014, t);
+      for (let side = 0; side <= radial; side++) {
+        const i = ring * (radial + 1) + side;
+        const dx = positions.getX(i) - center.x;
+        const dy = positions.getY(i) - center.y;
+        const dz = positions.getZ(i) - center.z;
+        // Narrow organic bark furrows, never large detached branch bumps.
+        const angle = Math.atan2(dz, dx);
+        const grooved = taper * (1 + 0.045 *
+          Math.sin(angle * 7 + t * 12 + barkPhase));
+        positions.setXYZ(i, center.x + dx * grooved,
+          center.y + dy * grooved, center.z + dz * grooved);
+        localColor.copy(shadeDark).lerp(shadeLight, barkTone(angle, t));
+        colors[i * 3] = localColor.r;
+        colors[i * 3 + 1] = localColor.g;
+        colors[i * 3 + 2] = localColor.b;
+      }
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.computeVertexNormals();
+    // One owned buffer per completed branch. It is disposed ONLY after the
+    // normal safe material-group merge, never while referenced elsewhere.
+    geometry.userData.horebOwnedBeforeMerge = true;
+    const mesh = new THREE.Mesh(geometry, s.oliveBark);
+    mesh.name = 'olive-branch';
+    g.add(mesh);
+    return path;
+  };
+  // Buttress roots are shallow ground details; they do not widen the colliding
+  // trunk or add invisible collision walls.
+  for (let i = 0; i < 3; i++) {
+    const angle = i * Math.PI * 2 / 3 + random() * 0.34;
+    const root = base.clone().add(new THREE.Vector3(
+      Math.cos(angle) * 0.30, 0.014, Math.sin(angle) * 0.30));
+    segment(root, spine(0.22), 0.075, 0.035, 'olive-root');
+  }
+  const crownBase = spine(1);
+  const branchTips: THREE.Vector3[] = [];
+  const branchPaths: THREE.CatmullRomCurve3[] = [];
+  // Each fork is joined to the sculpted trunk and to its foliage pocket.
+  for (let i = 0; i < 7; i++) {
+    // Avoid seven near-identical spokes/flat Y-forks: natural olives have
+    // asymmetric crowns with branches emerging at staggered heights.
+    const angle = i * Math.PI * 2 / 7 +
+      (random() - 0.5) * 1.18 + (silhouette - 1.5) * 0.10;
+    const reach = (0.52 + random() * 0.75) * form.spread;
+    const tip = crownBase.clone().add(new THREE.Vector3(
+      Math.cos(angle) * reach, 0.11 + random() * 0.43 + form.crownLift,
+      Math.sin(angle) * reach));
+    const stem = spine(0.57 + random() * 0.35);
+    const elbow = stem.clone().lerp(tip, 0.43 + random() * 0.17).add(new THREE.Vector3(
+      -Math.sin(angle) * (0.07 + random() * 0.11),
+      0.035 + random() * 0.16,
+      Math.cos(angle) * (0.07 + random() * 0.11)));
+    branchPaths.push(structuralFork(stem, elbow, tip));
+    branchTips.push(tip);
+  }
+  // Compact interior cores supply shadow, not visible green balloons.
+  // Most of the canopy is constructed from paired lanceolate leaves on
+  // fine, physically joined twigs. Keep both materials reusable for merging.
+  for (let i = 0; i < branchTips.length; i++) {
+    const origin = branchTips[i];
+    const core = new THREE.Mesh(G.sph(0.5, 9, 6),
+      i % 3 === 0 ? s.leafSilver : s.leaf);
+    core.name = 'olive-crown-lobe';
+    core.position.copy(origin);
+    core.rotation.set((random() - 0.5) * 0.35, random() * Math.PI * 2,
+      (random() - 0.5) * 0.35);
+    // A small interior shade is acceptable; visible green disks are not.
+    // Open crown mass comes from real two-sided leaf sprays below.
+    // Previous opaque 10-14cm balls survived between the sparse sprays
+    // as green dots at EVERY branch tip. Keep only an inconspicuous dark
+    // internal node and let actual olive leaves form the silhouette.
+    core.scale.set(0.037 + random() * 0.014, 0.032 + random() * 0.014,
+      0.037 + random() * 0.014);
+    g.add(core);
+    // Every leaf pair is anchored along a twig instead of floating around
+    // a random spherical volume. A few downward arcs evoke olive sprays.
+    const twigs = low ? 5 : 7;
+    const pairs = low ? 6 : 7;
+    for (let k = 0; k < twigs; k++) {
+      // Start leaf-bearing twigs on several points along the existing live
+      // branch, not all at its very end. This eliminates starburst rosettes
+      // and distributes foliage into the open, asymmetric crown volume.
+      const attachment = 0.55 + 0.43 * ((k + 0.5) / twigs);
+      const twigOrigin = branchPaths[i].getPointAt(attachment);
+      // A real live lateral shoot follows its parent branch and then
+      // droops in gravity; the old evenly spaced circular azimuths
+      // made seven miniature starburst crowns on every olive.
+      const tangent = branchPaths[i].getTangentAt(attachment);
+      const heading = Math.atan2(tangent.z, tangent.x);
+      const fan = (k - (twigs - 1) / 2) / Math.max(1, twigs - 1);
+      const theta = heading + fan * (1.35 + random() * 0.35) +
+        (random() - 0.5) * 0.18;
+      const reach = 0.38 + random() * 0.30;
+      const delta = new THREE.Vector3(Math.cos(theta) * reach,
+        -0.10 - random() * 0.25, Math.sin(theta) * reach);
+      const end = twigOrigin.clone().add(delta);
+      segment(twigOrigin, end, 0.016, 0.0035, 'olive-foliage-twig');
+      const lateral = new THREE.Vector3(-Math.sin(theta), 0, Math.cos(theta));
+      for (let j = 0; j < pairs; j++) {
+        const along = 0.18 + 0.73 * (j + 1) / pairs;
+        const node = twigOrigin.clone().addScaledVector(delta, along);
+        for (const side of [-1, 1]) {
+          const leaf = new THREE.Mesh(G.oliveLeaf(),
+            (j + k + (side > 0 ? 1 : 0)) % 3 === 0 ? s.oliveLeafSilver : s.oliveLeaf);
+          leaf.name = 'olive-leaf-sprig';
+          // The old 7–12 cm offsets detached tiny leaves from their twigs,
+          // producing a floating spiky fringe instead of a living spray.
+          const spread = 0.024 + random() * 0.023;
+          leaf.position.copy(node).addScaledVector(lateral, side * spread);
+          // Tilt the narrow lamina away from vertical; the previous 0.2 m
+          // upright shapes resembled grass spikes rather than olive foliage.
+          leaf.rotation.set((random() - 0.5) * 1.05,
+            theta + side * 0.45 + Math.PI * 0.5,
+            side * (0.82 + random() * 0.38));
+          leaf.scale.set(0.083 + random() * 0.025,
+            0.096 + random() * 0.017, 1);
+          g.add(leaf);
+        }
+      }
+    }
+  }
+}
+function addTomb(g: THREE.Group, x: number, z: number, s: Shared) {
+  const back = new THREE.Mesh(G.box(1.6, 1.4, 0.3), s.stone);
+  back.position.set(x, 0.7, z + 0.8); g.add(back);
+  const arch = new THREE.Mesh(G.tor(0.8, 0.12, 6, 12, Math.PI), s.stone);
+  arch.position.set(x, 0.7, z + 0.65); g.add(arch);
+  const stone = new THREE.Mesh(G.cyl(0.55, 0.55, 0.3, 12), s.dark);
+  stone.rotation.x = Math.PI / 2; stone.position.set(x, 0.7, z + 0.2); g.add(stone);
+}
+function addRock(g: THREE.Group, x: number, z: number, s: Shared, scale = 1) {
+  const m = new THREE.Mesh(G.dodec(0.6 * scale), s.stone);
+  m.position.set(x, 0.3 * scale, z); m.scale.set(scale, scale * 0.7, scale);
+  m.rotation.set(fbm(x, z, 3, 2), fbm(x + 2, z, 3, 2), fbm(x, z + 2, 3, 2)); g.add(m);
+}
+function addStandard(g: THREE.Group, x: number, z: number, s: Shared) {
+  const pole = new THREE.Mesh(G.cyl(0.04, 0.05, 2.2, 6), s.wood);
+  pole.position.set(x, 1.1, z); g.add(pole);
+  const flag = new THREE.Mesh(G.plane(0.8, 0.5), s.metal);
+  flag.position.set(x + 0.4, 1.7, z); g.add(flag);
+}
+function addTablets(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (const dx of [-0.25, 0.25]) {
+    const t = new THREE.Mesh(G.box(0.5, 0.7, 0.1), s.stone);
+    t.position.set(x + dx, 0.6, z); t.rotation.y = dx * 0.2; g.add(t);
+  }
+  const stand = new THREE.Mesh(G.box(0.7, 0.2, 0.4), s.dark);
+  stand.position.set(x, 0.1, z); g.add(stand);
+}
+function addLightShaft(g: THREE.Group, x: number, z: number) {
+  const m = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+    uniforms: { uT: { value: 0 } },
+    vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+    fragmentShader: `varying vec2 vUv; void main(){ float e=smoothstep(0.0,0.5,vUv.x)*smoothstep(1.0,0.5,vUv.x); float l=smoothstep(0.0,0.3,vUv.y)*smoothstep(1.0,0.6,vUv.y); gl_FragColor=vec4(vec3(0.9,0.85,0.7)*e*e*l*0.22,1.0);} ` });
+  for (let k = 0; k < 2; k++) {
+    const p = new THREE.Mesh(G.plane(1.6, 6), m);
+    p.position.set(x, 3, z); p.rotation.set(0, k * Math.PI / 2, 0); g.add(p);
+  }
+  (g.userData as { shafts?: THREE.ShaderMaterial[] }).shafts ??= [];
+  (g.userData as { shafts?: THREE.ShaderMaterial[] }).shafts!.push(m);
+}
+function addEditorialScroll(g: THREE.Group, x: number, z: number, s: Shared) {
+  const board = new THREE.Mesh(G.box(1.2, 0.9, 0.1), s.wood);
+  board.position.set(x, 0.9, z); board.rotation.y = -0.3; g.add(board);
+  const top = new THREE.Mesh(G.plane(1.0, 0.7), new THREE.MeshBasicMaterial({ color: 0xe8dcc0 }));
+  top.position.set(x, 0.92, z + 0.06); top.rotation.y = -0.3; g.add(top);
+}
+function addScribeTable(g: THREE.Group, x: number, z: number, s: Shared) {
+  const top = new THREE.Mesh(G.box(1.1, 0.1, 0.7), s.wood);
+  top.position.set(x, 0.7, z); g.add(top);
+  for (const lx of [-0.45, 0.45]) for (const lz of [-0.25, 0.25]) {
+    const leg = new THREE.Mesh(G.cyl(0.05, 0.05, 0.7, 6), s.dark);
+    leg.position.set(x + lx, 0.35, z + lz); g.add(leg);
+  }
+  const paper = new THREE.Mesh(G.plane(0.9, 0.5), new THREE.MeshBasicMaterial({ color: 0xd8c9a0 }));
+  paper.rotation.x = -Math.PI / 2; paper.position.set(x, 0.76, z); g.add(paper);
+}
+function addRidge(g: THREE.Group, x: number, z: number, s: Shared, w = 4, h = 0.6) {
+  const m = new THREE.Mesh(G.box(w, h, 1.2), s.stone);
+  m.position.set(x, h / 2, z + 1.5); m.rotation.x = -0.2; g.add(m);
+}
+function addPath(g: THREE.Group, x: number, z: number, s: Shared, len = 3, along = 'z') {
+  const p = new THREE.Mesh(G.box(0.8, 0.04, len), s.dark);
+  p.position.set(x, 0.02, z); if (along === 'x') p.rotation.y = Math.PI / 2; g.add(p);
+}
+function addVessel(g: THREE.Group, x: number, z: number, s: Shared) {
+  const jar = new THREE.Mesh(G.cyl(0.22, 0.16, 0.5, 10), s.wood);
+  jar.position.set(x, 0.35, z); g.add(jar);
+  const water = new THREE.Mesh(G.cyl(0.2, 0.2, 0.04, 10), s.water);
+  water.position.set(x, 0.55, z); g.add(water);
+}
+function addCampTable(g: THREE.Group, x: number, z: number, s: Shared) {
+  const top = new THREE.Mesh(G.box(1.2, 0.1, 0.6), s.wood);
+  top.position.set(x, 0.6, z); g.add(top);
+  for (const lx of [-0.5, 0.5]) { const leg = new THREE.Mesh(G.cyl(0.04, 0.04, 0.6, 6), s.dark); leg.position.set(x + lx, 0.3, z); g.add(leg); }
+  const jar = new THREE.Mesh(G.cyl(0.12, 0.1, 0.25, 8), s.wood); jar.position.set(x + 0.3, 0.75, z); g.add(jar);
+  const bread = new THREE.Mesh(G.cyl(0.14, 0.14, 0.08, 8), new THREE.MeshStandardMaterial({ color: 0xc9a06a, roughness: 0.9 })); bread.rotation.x = Math.PI / 2; bread.position.set(x - 0.3, 0.68, z); g.add(bread);
+}
+function addDeer(g: THREE.Group, x: number, z: number, s: Shared) {
+  const body = new THREE.Mesh(G.box(0.3, 0.5, 0.6), s.leaf);
+  body.position.set(x, 0.6, z); g.add(body);
+  const head = new THREE.Mesh(G.box(0.12, 0.2, 0.18), s.wood);
+  head.position.set(x, 0.8, z + 0.35); g.add(head);
+  for (const lx of [-0.1, 0.1]) for (const lz of [-0.2, 0.2]) {
+    const leg = new THREE.Mesh(G.cyl(0.03, 0.03, 0.5, 5), s.wood); leg.position.set(x + lx, 0.25, z + lz); g.add(leg);
+  }
+}
+function addGate(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (const sgn of [-1, 1]) {
+    const post = new THREE.Mesh(G.box(0.1, 1.2, 0.1), s.wood); post.position.set(x + sgn * 0.6, 0.6, z); g.add(post);
+  }
+  const door = new THREE.Mesh(G.box(1.1, 1.0, 0.08), s.wood); door.position.set(x, 0.5, z); g.add(door);
+}
+function addSheepfold(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const post = new THREE.Mesh(G.cyl(0.05, 0.05, 1.0, 6), s.wood);
+    post.position.set(x + Math.cos(a) * 1.4, 0.5, z + Math.sin(a) * 1.4); g.add(post);
+  }
+}
+function addPrayerSpot(g: THREE.Group, x: number, z: number, s: Shared, natural = false) {
+  // The Gethsemane viewpoint is an intentionally modest, irregular stone,
+  // NOT a square platform, altar or identified archaeological relic.
+  const stone = new THREE.Mesh(
+    natural ? G.dodec(0.51) : G.box(0.8, 0.2, 0.6), s.stone);
+  stone.name = natural ? 'gethsemane-prayer-stone' : 'prayer-rest-stone';
+  stone.position.set(x, natural ? 0.10 : 0.1, z);
+  stone.rotation.set(natural ? 0.08 : 0, 0.3, natural ? -0.11 : 0);
+  if (natural) stone.scale.set(1.02, 0.28, 0.76);
+  g.add(stone);
+}
+function addRoyalSign(g: THREE.Group, x: number, z: number, s: Shared) {
+  const stand = new THREE.Mesh(G.box(0.3, 1.2, 0.3), s.dark); stand.position.set(x, 0.6, z); g.add(stand);
+  const orb = new THREE.Mesh(G.sph(0.22, 10, 8), s.metal); orb.position.set(x, 1.3, z); g.add(orb);
+}
+function addCityView(g: THREE.Group, x: number, z: number, s: Shared) {
+  const r = rng(13);
+  for (let i = 0; i < 12; i++) {
+    const b = new THREE.Mesh(G.box(0.2 + r() * 0.2, 0.4 + r() * 1.2, 0.2), s.stone);
+    b.position.set(x - 2 + r() * 4, 0.2 + r() * 0.6, z - 2.5); g.add(b);
+  }
+  const wall = new THREE.Mesh(G.box(5, 1.4, 0.2), s.stone); wall.position.set(x, 0.7, z - 2.6); g.add(wall);
+}
+function addEmptyHall(g: THREE.Group, x: number, z: number, s: Shared) {
+  const arch = new THREE.Mesh(G.tor(1.2, 0.15, 6, 16, Math.PI), s.stone);
+  arch.position.set(x, 1.4, z + 1.2); g.add(arch);
+  const sides = new THREE.Mesh(G.box(0.3, 2.8, 0.3), s.stone); sides.position.set(x - 1.2, 1.4, z + 1.2); g.add(sides);
+  const sides2 = sides.clone(); sides2.position.x = x + 1.2; g.add(sides2);
+}
+function addBrokenPedestal(g: THREE.Group, x: number, z: number, s: Shared) {
+  const col = new THREE.Mesh(G.cyl(0.3, 0.35, 1.2, 8), s.stone); col.position.set(x, 0.6, z); col.rotation.z = 0.3; g.add(col);
+  const top = new THREE.Mesh(G.box(0.8, 0.3, 0.8), s.dark); top.position.set(x + 0.2, 1.1, z); top.rotation.y = 0.4; g.add(top);
+}
+function addArch(g: THREE.Group, x: number, z: number, s: Shared, h = 2.2) {
+  const arch = new THREE.Mesh(G.tor(h / 2, 0.14, 6, 14, Math.PI), s.stone);
+  arch.position.set(x, h / 2, z); g.add(arch);
+  const l = new THREE.Mesh(G.box(0.25, h, 0.25), s.stone); l.position.set(x - h / 2, h / 2, z); g.add(l);
+  const l2 = l.clone(); l2.position.x = x + h / 2; g.add(l2);
+}
+function addCrackedRoad(g: THREE.Group, x: number, z: number, s: Shared) {
+  const road = new THREE.Mesh(G.box(2.4, 0.05, 3), s.dark); road.position.set(x, 0.02, z); g.add(road);
+  for (let i = 0; i < 6; i++) {
+    const crack = new THREE.Mesh(G.box(0.05, 0.06, 0.3 + rng(i)() * 0.3), s.stone);
+    crack.position.set(x - 0.9 + rng(i + 9)() * 1.8, 0.05, z - 1 + rng(i + 3)() * 2); crack.rotation.y = rng(i + 5)() * Math.PI; g.add(crack);
+  }
+}
+function addDryStream(g: THREE.Group, x: number, z: number, s: Shared) {
+  const ch = new THREE.Mesh(G.box(1.2, 0.05, 4), new THREE.MeshStandardMaterial({ color: 0x3a2e22, roughness: 1 }));
+  ch.position.set(x, 0.02, z - 0.5); g.add(ch);
+  for (let i = 0; i < 8; i++) { const r = new THREE.Mesh(G.dodec(0.08 + rng(i + 1)() * 0.06), s.stone); r.position.set(x - 0.4 + rng(i + 2)() * 0.8, 0.06, z - 1.5 + rng(i + 3)() * 3); g.add(r); }
+}
+function addThinSpring(g: THREE.Group, x: number, z: number, s: Shared) {
+  // A small irregular seep in the rock, NOT a circular artificial drain.
+  // Water and wet bank use the same deterministic outline, but different sizes.
+  const random = rng((Math.round(x * 307 + z * 109) ^ 0x5133) >>> 0);
+  const shape = new THREE.Shape();
+  // Use exactly one point per perimeter angle; the old duplicate at 2π
+  // chose a *different* random radius and introduced a visible seam wedge.
+  for (let i = 0; i < 20; i++) {
+    const angle = i * Math.PI * 2 / 20;
+    const radius = 0.47 + random() * 0.13 + 0.08 * Math.sin(angle * 3 + 0.6);
+    const px = Math.cos(angle) * radius, pz = Math.sin(angle) * radius * 0.75;
+    if (i === 0) shape.moveTo(px, pz); else shape.lineTo(px, pz);
+  }
+  shape.closePath();
+  const basin = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.dark);
+  basin.name = 'spring-irregular-bank';
+  basin.rotation.x = -Math.PI / 2;
+  basin.scale.set(1.29, 1.23, 1);
+  basin.position.set(x, 0.018, z); g.add(basin);
+  // One low irregular sediment bed and actual submerged fragments.
+  // The transparent dielectric surface is drawn afterwards, so fragments are
+  // visible through water rather than painted on top of the pool.
+  const bed = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.stone);
+  bed.name = 'spring-sediment-bed';
+  bed.rotation.x = -Math.PI / 2;
+  bed.position.set(x, 0.023, z); g.add(bed);
+  for (let i = 0; i < 11; i++) {
+    const a = random() * Math.PI * 2;
+    const rr = 0.04 + Math.sqrt(random()) * 0.29;
+    const stone = new THREE.Mesh(G.dodec(0.035 + random() * 0.028), i % 3 ? s.dark : s.stone);
+    stone.name = 'spring-submerged-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.032, z + Math.sin(a) * rr * 0.75);
+    stone.scale.set(1.12 + random() * 0.35, 0.18 + random() * 0.12, 0.7 + random() * 0.45);
+    stone.rotation.y = random() * Math.PI * 2;
+    g.add(stone);
+  }
+  const pool = new THREE.Mesh(new THREE.ShapeGeometry(shape), s.shallowWater);
+  pool.name = 'spring-irregular-water';
+  pool.rotation.x = -Math.PI / 2;
+  pool.position.set(x, 0.046, z); g.add(pool);
+  for (let i = 0; i < 13; i++) {
+    const a = random() * Math.PI * 2;
+    const rr = 0.49 + random() * 0.27;
+    const stone = new THREE.Mesh(G.dodec(0.07 + random() * 0.09), s.stone);
+    stone.name = 'spring-natural-edge-stone';
+    stone.position.set(x + Math.cos(a) * rr, 0.075,
+      z + Math.sin(a) * rr * 0.77);
+    stone.scale.set(1.1 + random() * 0.45, 0.33 + random() * 0.25,
+      1 + random() * 0.32);
+    g.add(stone);
+  }
+  // Do not add a floating painted glint; highlights must follow scene light.
+}
+function addDistantGlow(g: THREE.Group, x: number, z: number) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(180,200,255,0.6)', 'rgba(80,100,180,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  sp.position.set(x, 2.5, z - 3); sp.scale.set(3, 3, 1); g.add(sp);
+}
+function addStarWindow(g: THREE.Group, x: number, z: number, s: Shared) {
+  const frame = new THREE.Mesh(G.box(1.4, 1.8, 0.2), s.stone); frame.position.set(x, 1.6, z + 1.2); g.add(frame);
+  const hole = new THREE.Mesh(G.plane(1.0, 1.4), new THREE.MeshBasicMaterial({ color: 0x0a1030 })); hole.position.set(x, 1.6, z + 1.32); g.add(hole);
+}
+function addLightStoneSpace(g: THREE.Group, x: number, z: number, s: Shared) {
+  const floor = new THREE.Mesh(G.plane(6, 6), new THREE.MeshStandardMaterial({ color: 0x6a6055, roughness: 0.6 }));
+  floor.rotation.x = -Math.PI / 2; floor.position.set(x, 0.02, z); g.add(floor);
+  const pillar = new THREE.Mesh(G.box(0.4, 3, 0.4), s.stone); pillar.position.set(x + 2, 1.5, z - 2); g.add(pillar);
+}
+function addPublicPlace(g: THREE.Group, x: number, z: number, s: Shared) {
+  const paved = new THREE.Mesh(G.box(3, 0.05, 2.4), s.dark); paved.position.set(x, 0.02, z); g.add(paved);
+  for (let i = 0; i < 6; i++) { const tile = new THREE.Mesh(G.box(0.5, 0.02, 0.5), s.stone); tile.position.set(x - 1 + (i % 3) * 1, 0.04, z - 0.6 + Math.floor(i / 3) * 1.2); g.add(tile); }
+}
+function addNightDoorway(g: THREE.Group, x: number, z: number, s: Shared) {
+  addArch(g, x, z + 1, s, 1.8);
+  const light = new THREE.Mesh(G.plane(0.6, 0.8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 })); light.position.set(x, 1.1, z + 1.3); g.add(light);
+}
+function addStoneThreshold(g: THREE.Group, x: number, z: number, s: Shared) {
+  const step = new THREE.Mesh(G.box(1.4, 0.25, 0.7), s.stone); step.position.set(x, 0.12, z); g.add(step);
+  const step2 = new THREE.Mesh(G.box(1.2, 0.15, 0.6), s.dark); step2.position.set(x, 0.32, z); g.add(step2);
+}
+function addMessageScroll(g: THREE.Group, x: number, z: number, s: Shared) {
+  addScroll(g, x, z, s, 0.6);
+  const seal = new THREE.Mesh(G.sph(0.1, 8, 6), s.metal); seal.position.set(x, 0.4, z + 0.3); g.add(seal);
+}
+function addTimeLayers(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 4; i++) {
+    const ring = new THREE.Mesh(G.tor(0.5 + i * 0.4, 0.05, 6, 18), s.stone);
+    ring.rotation.x = Math.PI / 2; ring.position.set(x, 0.1 + i * 0.1, z); ring.scale.setScalar(1 - i * 0.15); g.add(ring);
+  }
+}
+function addHorizonLine(g: THREE.Group, x: number, z: number, s: Shared) {
+  const ridge = new THREE.Mesh(G.box(8, 0.4, 1), s.stone); ridge.position.set(x, 0.2, z + 2); ridge.rotation.x = -0.1; g.add(ridge);
+}
+function addFalseGuide(g: THREE.Group, x: number, z: number, s: Shared) {
+  const pillar = new THREE.Mesh(G.cyl(0.12, 0.15, 1.4, 8), s.stone); pillar.position.set(x, 0.7, z); g.add(pillar);
+  const top = new THREE.Mesh(G.box(0.4, 0.2, 0.4), s.dark); top.position.set(x, 1.45, z); g.add(top);
+}
+function addStrataWall(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 5; i++) {
+    const layer = new THREE.Mesh(G.box(2.4, 0.25, 0.3), new THREE.MeshStandardMaterial({ color: s.stone.color.clone().offsetHSL(0, 0, i * 0.02), roughness: 0.95 }));
+    layer.position.set(x, 0.25 + i * 0.3, z + 1.4); g.add(layer);
+  }
+}
+function addMassiveRock(g: THREE.Group, x: number, z: number, s: Shared, lowProfile = false) {
+  const r = new THREE.Mesh(G.dodec(1.4, 1), s.stone);
+  r.name = 'scenic-boulder';
+  // The creation marker is a witness to the written text, not a theatre
+  // prop perched beside it. Keep its rocky shelf low, fully behind the sign.
+  r.position.set(x, lowProfile ? 0.62 : 0.7, z + 1.2);
+  r.scale.set(lowProfile ? 1.1 : 1.2, lowProfile ? 0.55 : 1.6, lowProfile ? 0.88 : 1.2);
+  r.rotation.set(0.2, 0.4, 0.1);
+  g.add(r);
+}
+function addCrumblingSlope(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 8; i++) {
+    const stone = new THREE.Mesh(G.dodec(0.2 + rng(i + 2)() * 0.2), s.stone);
+    stone.position.set(x - 0.6 + rng(i + 4)() * 1.2, 0.1 + rng(i + 1)() * 0.3, z + 1 + rng(i + 3)() * 0.8);
+    stone.rotation.set(rng(i)() * 3, rng(i + 2)() * 3, rng(i + 1)() * 3); g.add(stone);
+  }
+}
+function addTurnedPath(g: THREE.Group, x: number, z: number, s: Shared) {
+  addPath(g, x, z, s, 2.5, 'z');
+  const turn = new THREE.Mesh(G.box(2.5, 0.04, 0.8), s.dark); turn.position.set(x + 1.2, 0.02, z + 1); turn.rotation.y = -Math.PI / 2; g.add(turn);
+}
+function addEmptyTents(g: THREE.Group, x: number, z: number, s: Shared) {
+  addTent(g, x - 1.2, z, s, 1.6, 1.4);
+  addTent(g, x + 1.2, z + 0.8, s, 1.6, 1.4);
+}
+function addWorkTools(g: THREE.Group, x: number, z: number, s: Shared) {
+  const anvil = new THREE.Mesh(G.box(0.5, 0.5, 0.4), s.dark); anvil.position.set(x, 0.25, z); g.add(anvil);
+  const hammer = new THREE.Mesh(G.box(0.1, 0.4, 0.1), s.wood); hammer.position.set(x + 0.3, 0.4, z); g.add(hammer);
+}
+function addPeopleSilhouette(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 4; i++) {
+    const fig = new THREE.Mesh(G.box(0.3, 1.0, 0.2), s.dark);
+    fig.position.set(x - 1.5 + i * 0.9, 0.5, z - 2.5); g.add(fig);
+  }
+}
+function addShepherdPath(g: THREE.Group, x: number, z: number, s: Shared) {
+  addPath(g, x, z, s, 4, 'z');
+}
+function addWaterHole(g: THREE.Group, x: number, z: number, s: Shared) {
+  const pool = new THREE.Mesh(G.cyl(0.5, 0.5, 0.1, 12), s.water); pool.position.set(x, 0.05, z); g.add(pool);
+  const rim = new THREE.Mesh(G.tor(0.55, 0.06, 6, 12), s.stone); rim.rotation.x = Math.PI / 2; rim.position.set(x, 0.06, z); g.add(rim);
+}
+function addValley(g: THREE.Group, x: number, z: number, s: Shared) {
+  const v = new THREE.Mesh(G.box(6, 0.3, 3), s.stone); v.position.set(x, 0.15, z + 1.5); v.rotation.x = -0.15; g.add(v);
+}
+function addPropheticLandscape(g: THREE.Group, x: number, z: number, s: Shared) {
+  addRidge(g, x, z, s, 5, 1.0);
+  addRidge(g, x + 1.5, z - 1, s, 4, 0.7);
+}
+function addWallRemnants(g: THREE.Group, x: number, z: number, s: Shared) {
+  const wall = new THREE.Mesh(G.box(2.5, 1.6, 0.3), s.stone); wall.position.set(x, 0.8, z + 1.2); wall.rotation.y = 0.2; g.add(wall);
+  for (let i = 0; i < 5; i++) { const r = new THREE.Mesh(G.dodec(0.15 + rng(i + 7)() * 0.1), s.stone); r.position.set(x - 1 + rng(i + 8)() * 2, 0.2 + rng(i + 6)() * 0.4, z + 1.5); g.add(r); }
+}
+function addSafePath(g: THREE.Group, x: number, z: number, s: Shared) {
+  addPath(g, x, z, s, 3, 'z');
+  const glow = new THREE.Mesh(G.plane(1.2, 0.1), new THREE.MeshBasicMaterial({ color: 0x4a5a7a, transparent: true, opacity: 0.4 }));
+  glow.rotation.x = -Math.PI / 2; glow.position.set(x, 0.06, z); g.add(glow);
+}
+function addQuietStone(g: THREE.Group, x: number, z: number, s: Shared) {
+  const stone = new THREE.Mesh(G.box(0.9, 0.4, 0.6), s.stone); stone.position.set(x, 0.2, z); stone.rotation.y = 0.3; g.add(stone);
+}
+function addUnfoldingBorders(g: THREE.Group, x: number, z: number, s: Shared) {
+  for (let i = 0; i < 4; i++) {
+    const ring = new THREE.Mesh(G.tor(0.8 + i * 0.4, 0.04, 6, 20), s.stone);
+    ring.rotation.x = Math.PI / 2; ring.position.set(x, 0.5 + i * 0.2, z + 1.5); ring.scale.setScalar(1 + i * 0.1); g.add(ring);
+  }
+}
+function addScrolls(g: THREE.Group, x: number, z: number, s: Shared) {
+  addScroll(g, x - 0.4, z, s, 0.7);
+  addScroll(g, x + 0.4, z + 0.3, s, 0.6);
+}
+function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, n = 3) {
+  // Asymmetric planted grove: vary depth and spacing rather than four
+  // interpenetrating identical treetops on a straight evenly spaced line.
+  for (let i = 0; i < n; i++) {
+    const [dx, dz] = OLIVE_GROVE_OFFSETS[i] ?? [(i - n / 2) * 1.55, i % 2 ? -0.5 : 0.5];
+    addOliveTree(g, x + dx, z + dz, s, low, i);
+  }
+}
+
+// ── Диспетчер: environmentKey → конкретные props.
+// (px, pz) — положение props-якоря (позади стелы, к стене прохода).
+export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: number, surface?: StoneSurface): THREE.Group {
+  const g = new THREE.Group();
+  const s = shared(low, surface);
+  const key = e.environmentKey;
+  switch (key) {
+    case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 1.4, pz - 4.2, s, true); break;
+    case 'stone-corridor': addStrataWall(g, px, pz, s); addFalseGuide(g, px - 1.2, pz, s); break;
+    case 'high-ledge-camp': addCampTable(g, px, pz, s); addVessel(g, px + 0.8, pz, s); break;
+    case 'great-rock': addMassiveRock(g, px, pz, s); addCrumblingSlope(g, px - 1, pz, s); break;
+    case 'dual-path': addPath(g, px - 0.6, pz, s, 3, 'z'); addPath(g, px + 0.6, pz, s, 2.5, 'z'); break;
+    case 'fertile-camp': addTurnedPath(g, px, pz, s); addCampTable(g, px - 1, pz, s); break;
+    case 'patriarch-tent': addTent(g, px, pz, s); addVessel(g, px + 1, pz, s); break;
+    case 'beersheba-well': addWell(g, px, pz, s, low);
+      addTamarisk(g, px + BEERSHEBA_TAMARISK_OFFSET.x, pz + BEERSHEBA_TAMARISK_OFFSET.z, s); break;
+    case 'wilderness-spring': addThinSpring(g, px, pz, s); addVessel(g, px - 0.8, pz, s); break;
+    case 'bethel-altar': addAltar(g, px, pz, s); addWall(g, px, pz + 1, s, 2, 1.2); break;
+    case 'mountain-slope': addRidge(g, px, pz, s, 5, 1.2); addRam(g, px + 0.8, pz - 0.5, s); break;
+    case 'battle-overlook': addAltar(g, px, pz, s); addStandard(g, px - 1, pz, s); break;
+    case 'oak-gideon': addTamarisk(g, px, pz, s); addAltar(g, px - 1, pz, s); addAltar(g, px + 1.2, pz + 0.5, s); break;
+    case 'marrah-waters': addDryStream(g, px, pz, s); addThinSpring(g, px - 1, pz + 1, s); break;
+    case 'camp-sabbath': addEmptyTents(g, px, pz, s); addWorkTools(g, px + 1.2, pz, s); break;
+    case 'sea-shore': addSea(g, px, pz, s); addPeopleSilhouette(g, px, pz, s); break;
+    case 'shepherd-valley': addSheep(g, px, pz, s); addShepherdPath(g, px, pz, s); addWaterHole(g, px - 1, pz - 0.5, s); break;
+    case 'valley-battle': addValley(g, px, pz, s); addLightShaft(g, px - 1, pz); break;
+    case 'prophetic-hall': addEmptyHall(g, px, pz, s); addPath(g, px - 1, pz, s, 2, 'x'); break;
+    case 'jerusalem-view': addRoyalSign(g, px, pz, s); addCityView(g, px, pz, s); break;
+    case 'city-model': addCityModel(g, px, pz, s); break;
+    case 'covenant-corridor': addPath(g, px - 0.7, pz, s, 3, 'z'); addPath(g, px + 0.7, pz, s, 3, 'z'); addBrokenPedestal(g, px + 1.5, pz, s); break;
+    case 'prayer-rest': addPrayerSpot(g, px, pz, s); addArch(g, px - 1.5, pz, s, 2); break;
+    case 'city-road-crack': addCrackedRoad(g, px, pz, s); addRidge(g, px, pz + 1.5, s, 3, 0.5); break;
+    case 'dry-stream': addDryStream(g, px, pz, s); addThinSpring(g, px - 1.2, pz, s); addDeer(g, px + 1, pz - 1, s); break;
+    case 'return-path': addPath(g, px, pz, s, 4, 'z'); addWallRemnants(g, px, pz, s); break;
+    case 'dawn-light-gap': addLightShaft(g, px, pz); addSafePath(g, px, pz, s); break;
+    case 'tablets-scene': addTablets(g, px, pz, s); addQuietStone(g, px, pz - 1, s); break;
+    case 'vision-abstract': addDistantGlow(g, px, pz); addUnfoldingBorders(g, px, pz, s); break;
+    case 'night-shelter': addScrolls(g, px, pz, s); addStarWindow(g, px, pz, s); break;
+    case 'gethsemane-garden': addOliveTrees(g, px, pz, s, low, 4);
+      addPrayerSpot(g, px + GETHSEMANE_PRAYER_OFFSET.x, pz + GETHSEMANE_PRAYER_OFFSET.z, s, true); break;
+    case 'apocalyptic-architecture': addLightStoneSpace(g, px, pz, s); break;
+    case 'scroll-alpha-omega': addEditorialScroll(g, px, pz, s); break;
+    case 'two-windows': addPublicPlace(g, px, pz, s); addArch(g, px + 1.5, pz, s, 1.8); break;
+    case 'two-era-frames': addPropheticLandscape(g, px, pz, s); addNightDoorway(g, px + 1.5, pz, s); break;
+    case 'stone-threshold': addStoneThreshold(g, px, pz, s); addMessageScroll(g, px - 0.8, pz, s); break;
+    case 'sheepfold': addSheepfold(g, px, pz, s); addGate(g, px, pz - 1.2, s); addSheep(g, px - 0.4, pz, s); break;
+    case 'tomb-stone': addTomb(g, px, pz, s); break;
+    case 'scribe-table': addScribeTable(g, px, pz, s); addTimeLayers(g, px + 1.5, pz, s); break;
+    case 'ridge-horizon': addHorizonLine(g, px, pz, s); addRidge(g, px, pz + 1, s, 4, 0.8); break;
+    case 'bush-scene': addRock(g, px, pz, s, 1.2); break;
+    default: addRock(g, px, pz, s);
+  }
+  // Зонная подсветка: не 42 точечных света (это перегрузит лигитовый бюджет),
+  // а лёгкий аддитивный огонёк zone-tint цвета. Sprite автоматически смотрит в камеру.
+  const tint = e.zone === 5 ? 0x6677aa : e.zone === 4 ? 0x8899bb : e.zone === 1 ? 0xffcc88 : 0xffe0b0;
+  const glowMat = new THREE.SpriteMaterial({
+    // Shared radial alpha prevents square translucent panels beside exhibits.
+    map: surface?.glow ?? null,
+    color: tint, transparent: true, opacity: e.qualityProfile === 'hero' ? 0.22 : 0.12,
+    blending: THREE.AdditiveBlending, depthWrite: false,
+  });
+  const glow = new THREE.Sprite(glowMat);
+  glow.scale.set(2.2, 2.2, 1);
+  glow.position.set(px, 1.4, pz);
+  g.add(glow);
+  return g;
+}
+
+// Merge all meshes in a group by material: applies each mesh's local matrix
+// to its geometry, then merges into one BufferGeometry per material.
+// Reduces draw calls from N (meshes) to M (unique materials, typically 2-4).
+// Non-mesh children (sprites, lights) are preserved. Falls back gracefully
+// if geometries have incompatible attributes.
+export function mergePropsGroup(group: THREE.Group): void {
+  // Three.js only updates matrix after an explicit update or a render traversal.
+  // All scene props are newly constructed here; merging before updating loses their offsets.
+  group.updateMatrixWorld(true);
+  const children = [...group.children];
+  const meshes = children.filter((o): o is THREE.Mesh =>
+    o instanceof THREE.Mesh && o.geometry instanceof THREE.BufferGeometry);
+  if (meshes.length < 2) return;
+  // Refuse unsafe merges (nested transforms or multiple materials) without modifying source objects.
+  if (children.some((o) => o.children.length > 0) ||
+      children.filter((o) => o instanceof THREE.Mesh).length !== meshes.length ||
+      meshes.some((m) => Array.isArray(m.material))) return;
+  const inverseRoot = group.matrixWorld.clone().invert();
+  const groups = new Map<THREE.Material, { geometries: THREE.BufferGeometry[]; originals: THREE.Mesh[] }>();
+  const temporary: THREE.BufferGeometry[] = [];
+  for (const mesh of meshes) {
+    let geo = mesh.geometry.clone();
+    if (geo.index) {
+      const flat = geo.toNonIndexed();
+      geo.dispose();
+      geo = flat;
+    }
+    geo.applyMatrix4(inverseRoot.clone().multiply(mesh.matrixWorld));
+    temporary.push(geo);
+    const material = mesh.material as THREE.Material;
+    if (!groups.has(material)) groups.set(material, { geometries: [], originals: [] });
+    groups.get(material)!.geometries.push(geo);
+    groups.get(material)!.originals.push(mesh);
+  }
+  const mergedMeshes: THREE.Mesh[] = [];
+  for (const [material, data] of groups) {
+    const merged = mergeGeometries(data.geometries, false);
+    if (!merged) {
+      for (const m of mergedMeshes) m.geometry.dispose();
+      for (const g of temporary) g.dispose();
+      return; // preserve every original object and geometry if merging cannot be proved safe
+    }
+    const mesh = new THREE.Mesh(merged, material);
+    mesh.castShadow = data.originals.some((original) => original.castShadow);
+    mesh.receiveShadow = data.originals.some((original) => original.receiveShadow);
+    mergedMeshes.push(mesh);
+  }
+  for (const mesh of meshes) group.remove(mesh);
+  for (const mesh of mergedMeshes) group.add(mesh);
+  // The temporary clones are disposable. Source geometry may be shared by
+  // dozens of props, so release ONLY explicitly owned, detached sources
+  // after a complete successful merge (never on the failure path).
+  for (const g of temporary) g.dispose();
+  const released = new Set<THREE.BufferGeometry>();
+  for (const mesh of meshes) {
+    if (mesh.geometry.userData.horebOwnedBeforeMerge && !released.has(mesh.geometry)) {
+      mesh.geometry.dispose();
+      released.add(mesh.geometry);
+    }
+  }
+}

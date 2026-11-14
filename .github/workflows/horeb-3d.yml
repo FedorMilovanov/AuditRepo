@@ -1,0 +1,299 @@
+name: HOREB 3D Lab QA
+
+on:
+  # The one canonical HOREB Draft PR is the sole write lane; a second push run
+  # would redundantly recheck the exact same SHA.
+  pull_request:
+    paths:
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/**'
+      - '.github/workflows/horeb-3d.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: horeb-3d-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: projects/gb-is-my-strength/prototype/imena-boga/horeb-3d
+
+jobs:
+  source-and-geometry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/package-lock.json'
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build app and accessible 42-entry reader
+        run: npm run build
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Verify 42 records and actual geometry
+        run: sh tests/test.sh
+      - name: Ensure HTML reader is reproducible and committed
+        run: |
+          set -euo pipefail
+          count="$(grep -o '<article id=' public/reader.html | wc -l | tr -d ' ')"
+          test "$count" = "42"
+          git diff --exit-code -- public/reader.html
+      - name: Preserve self-contained local preview (offline files)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-local-preview-${{ github.run_id }}
+          path: projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/dist/
+          retention-days: 14
+          if-no-files-found: error
+
+  actual-chromium:
+    needs: source-and-geometry
+    runs-on: ubuntu-24.04
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/package-lock.json'
+      - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Start only the isolated HOREB preview
+        run: |
+          set -euo pipefail
+          npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > "$RUNNER_TEMP/horeb-vite.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/horeb-vite.pid"
+          for i in $(seq 1 40); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent --show-error http://127.0.0.1:5173/ > /dev/null
+      - name: Chrome desktop, mobile and 42 dossier baseline
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:smoke
+      - name: Open every one of the 42 dossiers with E
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:exhibits
+      - name: Recreate WebGL when changing to the real low-power quality
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:quality
+      - name: Walk the whole route and back by actual keyboard input (no teleport)
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:journey
+      - name: Build and test the direct local file preview
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+        run: |
+          npm run build
+          node tests/browser-portable.mjs
+      - name: Capture rendered screenshots for eight zones and mobile emulation
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:visual
+      # PNG files are already compressed. One ~25 MiB artifact previously
+      # stalled/failed after ALL browser/visual checks had passed. Publish
+      # three independent, mandatory evidence packages: each is small enough
+      # to diagnose independently, none is best-effort or allowed to be absent.
+      - name: Validate complete on-disk visual evidence inventory
+        if: success()
+        run: |
+          set -euo pipefail
+          node --input-type=commonjs <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const root = '.test-build';
+          const w = JSON.parse(fs.readFileSync(path.join(root, 'visual-witness.json'), 'utf8'));
+          if (w.desktop?.length !== 8 || w.mobile?.length !== 3 ||
+              w.details?.length !== 6 || w.exitSeam?.length !== 2 ||
+              w.errors?.length !== 0 ||
+              w.chasmGeometryGate !== 'PASS_UNOBSTRUCTED_RAVINE')
+            throw new Error('Missing or failed visual evidence manifest');
+          const required = [...w.desktop, ...w.mobile, ...w.details, ...w.exitSeam];
+          const files = new Set();
+          for (const entry of required) {
+            const name = entry.screenshot;
+            if (typeof name !== 'string' || !name.startsWith('visual-') ||
+                files.has(name)) throw new Error('Duplicate or invalid visual: ' + name);
+            files.add(name);
+            const file = path.join(root, 'screenshots', name);
+            if (!fs.existsSync(file) || fs.statSync(file).size < 12000)
+              throw new Error('Missing/empty image: ' + name);
+            const signature = fs.readFileSync(file).subarray(0, 8).toString('hex');
+            if (signature !== '89504e470d0a1a0a')
+              throw new Error('Invalid PNG header: ' + name);
+          }
+          const group = fs.readdirSync(path.join(root, 'screenshots'));
+          if (!group.some(s => s.startsWith('smoke-') && s.endsWith('.png')) ||
+              !group.some(s => s.startsWith('journey-') && s.endsWith('.png')) ||
+              !fs.existsSync(path.join(root, 'journey-witness.json')))
+            throw new Error('Missing mandatory smoke or pedestrian witnesses');
+          console.log('Verified', files.size, 'independent PNG visual witnesses, plus smoke and journey evidence');
+          NODE
+      - name: Preserve gallery and mobile evidence
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-gallery-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-desktop-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-mobile-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve all six exhibit and geology detail screenshots
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-details-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-detail-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve browser smoke and real pedestrian evidence
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-chromium-witness-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/journey-witness.json
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve browser evidence if any test fails
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-chromium-debug-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+            ${{ runner.temp }}/horeb-vite.log
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop isolated preview
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/horeb-vite.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/horeb-vite.pid")" 2>/dev/null || true
+          fi
+
+
+  # All 42 exhibits are divided into four disjoint real-input zone shards.
+  # Each runner walks from the genuine entrance and returns to the centre after
+  # every E dossier. Never teleport, skip collisions or accelerate simulation.
+  # The original independent axial 0→7→0 witness remains mandatory.
+  side-chromium:
+    needs: source-and-geometry
+    runs-on: ubuntu-24.04
+    timeout-minutes: 32
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ['1-2', '3-4', '5', '7']
+    name: Side pedestrian zones ${{ matrix.shard }} (real input)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/package-lock.json'
+      - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Start isolated preview for side exhibit witness
+        run: |
+          set -euo pipefail
+          npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > "$RUNNER_TEMP/horeb-side-vite.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/horeb-side-vite.pid"
+          for i in $(seq 1 40); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent --show-error http://127.0.0.1:5173/ > /dev/null
+      - name: Walk every side exhibit in shard ${{ matrix.shard }} (no teleport)
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+          HOREB_SIDE_SHARD: ${{ matrix.shard }}
+        run: npm run test:browser:side
+      - name: Preserve successful real side-journey evidence
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-side-journey-${{ matrix.shard }}-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/side-journey-witness-${{ matrix.shard }}.json
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-side-${{ matrix.shard }}-*.png
+          retention-days: 7
+          if-no-files-found: error
+      - name: Preserve debug evidence for failed side-journey
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-side-debug-${{ matrix.shard }}-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/side-journey-witness-${{ matrix.shard }}.json
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-side-${{ matrix.shard }}-*.png
+            ${{ runner.temp }}/horeb-side-vite.log
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop isolated side preview
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/horeb-side-vite.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/horeb-side-vite.pid")" 2>/dev/null || true
+          fi
