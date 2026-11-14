@@ -8,15 +8,15 @@
 
 | State | Value |
 |---|---|
-| Active work units | **45** |
-| Direct current defects | **12** |
+| Active work units | **44** |
+| Direct current defects | **11** |
 | Verified necessary improvements | **8** |
 | Narrowed residuals | **1** |
 | System verification lanes | **24** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Current arithmetic after verified closure wave 59 (2026-11-04): **12** + **8** + **1** + **24** + 0 = **45 active work units**. See [append-only closure ledger](CLOSURE_LEDGER.md).
+> Current arithmetic after verified closure wave 60 (2026-11-14): **11** + **8** + **1** + **24** + 0 = **44 active work units**. See [append-only closure ledger](CLOSURE_LEDGER.md).
 
 > **PDF PR final merge-candidate verification — 2026-11-03 (broad wave 54).** Full AuditRepo history resolves merge-base `94e9bf8a…`; current base `5b203c2d…` changes six portfolio/security/validator paths with zero intersection against the nine-file PDF audit package. A clean base merge has 0 conflicts and does not touch concurrent AuditRepo PR #514. Product current main remains `4577af55…`. The bounded package is four Russian reports, four compact JSONL streams and this MASTER update—no PDF/PNG, binaries, dependencies, build output or scratch tooling. All 97 JSONL records round-trip under the 700-character limit; evidence references resolve and matrix coverage confirms 63 active ids with unchanged arithmetic. No new finding is manufactured after behavioral closure. Evidence: `../reverify/2026-11-03-pdf-pr-merge-candidate-wave54.md`.
 
@@ -146,7 +146,7 @@
 >
 > **Resulting-main owner state (refreshed 2026-10-29, broad wave 41).** Product owner merged PR #2217 as `f63aac01…`; PR head `ff860d39…` is its ancestor and both commits have identical tree `8a121d90…`. Exact PR-head admission finished at 39 success / 4 intentional skipped / 0 failure / 0 pending. Fresh resulting-main index and glossary contracts pass; the final main check suite is 32 success / 13 skipped / 1 failure, with `interactive-audit` the only red check. Exact deployment `7420006801` succeeded. Artifact/stage reconciliation cannot name the internal runtime assertion, so no new root is invented and resulting-main CI remains explicitly not fully green. The publication lane is no longer an open-PR collision, but any Product repair still requires a fresh owner/open-PR check and a separate declared lane.
 
-## CURRENT DEFECTS — 12
+## CURRENT DEFECTS — 11
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -159,7 +159,6 @@
 
 
 
-| `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` | Literal ASCII question-mark replacements remain in headings, labels, explanatory text and alt/source strings in **nine** published Baptist article body components (not the series hub or `SovetskayaNoch`) on Product main `d586aa63...`. Counts are **identical** on main and on the live release `d0e04a9c`: Spravochnik 481, Podpolnaya 431, Iniciativnaya 289, Peterburgskaya 216, Goneniya 177, Yuzhnaya 129, Noch 118, Vsehib 97, DvaSezda 88. **Root cause (git-verified):** the props entered already corrupted in `059b3024` (PR #2028 «authentic historical media and composition guards», 2026-09-13), preserving ASCII tokens (`Public Domain, CC0`, `SHA-256`, `provenance`) — a lossy non-ASCII→`?` transformation, not a terminal artifact. **Live-visible:** `https://gospod-bog.ru/baptisty-rossii/spravochnik/` renders the damaged cards verbatim (live HTTP retrieval, not a rendering browser). No approved original for these strings was found in the repository (`data/baptisty-rossii-visual-atlas.json` holds only a related caption; dossiers and media-ledger do not carry the card texts). **2026-09-30 third pass (artifact + fresh live witness):** production-like builds of Product main `d586aa63` **and** of the live release SHA `d0e04a9c` carry **identical** built-page counts per route (Spravochnik 506, Podpolnaya 471, Iniciativnaya 314, Peterburgskaya 239, Goneniya 183, Yuzhnaya 135, Noch 124, Vsehib 105, DvaSezda 91; series hub and `sovetskaya-noch` 0), so the loss is neither fixed nor build-dependent; live `/baptisty-rossii/spravochnik/` was re-retrieved today and still renders the damaged cards verbatim, including inside link text (`03 ????? **????????? ???????? ? SHA-256**`), with ASCII tokens (`Public Domain, CC0`, `SHA-256`, `provenance`) intact. Receipts: `../reverify/evidence/2026-09-30-baptist-dates-main-vs-live-sha.txt`, `../reverify/evidence/2026-09-30-live-fetch-time-element-boundary.txt`. | **Current-anchor refresh 2026-10-26 (`80440f9c`):** production-like final HTML still has 1,385 `???` runs / 10,507 `?` across the same nine routes; source has 1,308 runs / 9,948 `?`. Evidence: `../reverify/2026-10-26-reader-material-glossary-tooltip-audit.md` §3. Recover owner-approved original Russian strings (including image alt, citation captions and broken source URLs) — **never machine-guessed text**; verify all nine production routes with built HTML/browser text and link/alt checks after a release ships, and add a narrow guard against non-ASCII→`?` loss in published component props. Merged #2146 addressed distinct quotation/byline work, not this copy loss. Evidence, counts and recovery-source search: `../reverify/2026-09-30-release-block-and-baptist-provenance.md` §5; earlier census: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_GARBLED_VISIBLE_COPY_AND_DATES.md`. **Exact `1a67c65c…` refresh:** source remains 1,308 runs/9,948 marks; raw final is 1,387 runs/10,507 marks on nine routes, with 1,199 parsed DOM runs, 141 painted nodes and 15 corrupt ALT values per tested width. `../reverify/2026-10-28-editorial-copy-glossary-resulting-main.md`. |
 
 
 | `GBS-CHROME-LABEL-IN-NAME-MISMATCH` | **ACTIVE-NARROWED on Product `d056a19c…` (2026-10-28).** Fresh settled + native full-focus Chromium leaves four owner families: wide Home ambient marginalia/sacred-name controls (33 focus-reachable mismatch events at 1600px), Russian Baptism app home (visible «Русский баптизм / Карта истории» vs name «Перейти на главную»), Nagornaya TTS speed (`1×` vs «Скорость»), and mobile Highlights FAB (`0` vs «Мои цитаты»). Historical route-specific chrome owners repaired by the shared guard are no longer in scope. | Make each accessible name contain its own stable visible label without losing purpose/state. Closure must use settled Axe plus native full-Tab traversal at wide Home, desktop/mobile app surfaces and both schemes; static baseline alone is insufficient because Home findings appear on focus. Evidence: `../reverify/2026-10-28-interactive-semantic-output-cluster-resulting-main.md` §5. |
