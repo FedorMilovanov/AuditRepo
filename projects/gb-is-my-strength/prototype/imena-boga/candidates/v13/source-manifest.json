@@ -104,8 +104,8 @@
       "bytes_normalized": 14462
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "8f92155dabb3f1cf505d701d50f58ce427433a6c01162cb8680c44391e08e3cd",
-      "bytes_normalized": 21340
+      "sha256": "7db7e10442d0dff60fd42e0d5c5d493e701c7251e162d20f76bcf42133cfabe8",
+      "bytes_normalized": 21401
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "c5b64f639fe2601739456e7caca235fc0a26b5d81279cc032dfa3eedddca77b3",
-      "bytes_normalized": 54486
+      "sha256": "b5fce22f3072db8207ba69867813f1c66f722cdd74ba5e3032c3cecbe410c4c0",
+      "bytes_normalized": 55350
     },
     "checks/visual_review.cjs": {
-      "sha256": "168e515f0e033faea7186507eb8ba65c24dfd65b63565756fa61371b01b7db73",
-      "bytes_normalized": 79760
+      "sha256": "63675e69b9c7048b56aedc2925708389cdbda041b595315598ceeb9a3de23127",
+      "bytes_normalized": 84426
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",

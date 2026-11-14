@@ -375,6 +375,81 @@ async function wcagAudit(page,app,engine,width){
  }
 }
 
+// W87 independent low-height/landscape acceptance. Main 844px-high
+// screenshots do not prove reader preferences stay reachable after zoom on
+// landscape mobile/tablet screens. This test records painted controls.
+async function visitShortLandscape(browser,engine,width,height,base){
+ const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1,
+   isMobile:width<768,hasTouch:width<768,locale:'ru-RU',reducedMotion:'reduce'});
+ const page=await ctx.newPage(),errors=[],failed=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)
+  failed.push(r.status()+' '+r.url())});
+ try{
+  await page.goto(base+'/atlas/',{waitUntil:'domcontentloaded',timeout:30000});
+  await waitVisual(page);
+  await page.evaluate(async()=>{
+   document.documentElement.style.setProperty('font-size','200%','important');
+   await document.fonts.ready;
+   await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+  });
+  const trigger=page.getByRole('button',{name:'Настройки чтения и шрифта'});
+  await trigger.click();
+  const panel=page.getByRole('region',{name:'Настройки чтения'});
+  await panel.waitFor({state:'visible',timeout:8000});
+  const initial=await panel.evaluate(el=>{
+   const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+   const last=[...el.querySelectorAll('button')].at(-1);
+   return {innerWidth,innerHeight,viewport:document.documentElement.clientWidth,
+    documentWidth:document.documentElement.scrollWidth,
+    top:r.top,bottom:r.bottom,left:r.left,right:r.right,
+    width:r.width,height:r.height,maxHeight:s.maxHeight,
+    overflowY:s.overflowY,clientHeight:el.clientHeight,
+    scrollHeight:el.scrollHeight,scrollTop:el.scrollTop,
+    lastLabel:last?.textContent?.trim()??null};
+  });
+  record('atlas-short-landscape-settings-open',{engine,width,height,...initial});
+  if(initial.top< -2||initial.bottom>height-4||initial.left< -2||
+     initial.right>initial.viewport+2||
+     initial.width<100||initial.height<80||
+     initial.maxHeight==='none'||initial.overflowY!=='auto'||
+     initial.documentWidth>initial.viewport+2||
+     !initial.lastLabel?.includes('Печать'))
+   problem('BLOCKER','atlas-short-landscape-panel-outside-viewport',{engine,width,height,...initial});
+  await shot(page,engine+'-atlas-'+width+'x'+height+'-root200-landscape-settings-open');
+  await panel.evaluate(el=>{el.scrollTop=el.scrollHeight});
+  await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
+  const after=await panel.evaluate(el=>{
+   const panel=el.getBoundingClientRect();
+   const last=[...el.querySelectorAll('button')].at(-1);
+   const b=last?.getBoundingClientRect();
+   return {clientHeight:el.clientHeight,scrollHeight:el.scrollHeight,
+    scrollTop:el.scrollTop,panelTop:panel.top,panelBottom:panel.bottom,
+    lastText:last?.textContent?.trim()??null,
+    lastTop:b?.top??null,lastBottom:b?.bottom??null,
+    lastLeft:b?.left??null,lastRight:b?.right??null,
+    lastHeight:b?.height??null};
+  });
+  record('atlas-short-landscape-settings-last-action',{engine,width,height,...after});
+  if(!after.lastText.includes('Печать')||after.lastTop<after.panelTop-2||
+     after.lastBottom>after.panelBottom+2||after.lastHeight<35||
+     (after.scrollHeight>after.clientHeight+2&&after.scrollTop<1))
+   problem('BLOCKER','atlas-short-landscape-last-action-inaccessible',{engine,width,height,...after});
+  await shot(page,engine+'-atlas-'+width+'x'+height+'-root200-landscape-settings-bottom');
+  await page.keyboard.press('Escape');
+  const closed=(await trigger.get_attribute('aria-expanded'))==='false'&&
+    await panel.count()===0;
+  record('atlas-short-landscape-escape',{engine,width,height,closed});
+  if(!closed)problem('BLOCKER','atlas-short-landscape-escape-failed',{engine,width,height});
+  if(errors.length)problem('HIGH','atlas-short-landscape-runtime-errors',{engine,width,height,errors});
+  if(failed.length)problem('HIGH','atlas-short-landscape-resource-errors',{engine,width,height,failed});
+  record('short-landscape-session',{app:'atlas',engine,width,height,status:'complete'});
+ }catch(e){
+  problem('HIGH','short-landscape-session-failed',{app:'atlas',engine,width,height,
+    error:String(e).slice(0,700)});
+  try{await shot(page,engine+'-atlas-'+width+'x'+height+'-root200-landscape-ERROR')}catch{}
+ }finally{await ctx.close()}
+}
 async function visit(browser,engine,app,width,base){
  const ctx=await browser.newContext({viewport:{width,height:844},deviceScaleFactor:1,
   isMobile:width<768,hasTouch:width<768,locale:'ru-RU',reducedMotion:'reduce'});
@@ -1360,8 +1435,12 @@ async function visit(browser,engine,app,width,base){
    const spec={chromium,webkit}[engine],options={headless:true};
    if(engine==='chromium'&&process.env.CHROMIUM_PATH)options.executablePath=process.env.CHROMIUM_PATH;
    const browser=await spec.launch(options);
-   try{for(const app of ['atlas','sozvezdie'])for(const width of widths)
-    await visit(browser,engine,app,width,base);
+   try{
+    for(const app of ['atlas','sozvezdie'])for(const width of widths)
+     await visit(browser,engine,app,width,base);
+    // Separate low-height acceptance; does not bloat 48 standard sessions.
+    for(const [width,height] of [[568,320],[844,390]])
+     await visitShortLandscape(browser,engine,width,height,base);
    }finally{await browser.close()}
   }
  }finally{

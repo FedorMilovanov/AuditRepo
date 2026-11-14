@@ -239,6 +239,19 @@ if(!w86Visual.includes('panorama-footer-email-word-integrity-root200')||
  throw Error('W86 screenshot and per-glyph address witness missing');
 console.log('V13_W86_EMAIL_SEMANTIC_REFLOW_PASS');
 
+// W87: reader settings must fit a short landscape viewport with 200% text,
+// retaining keyboard Escape and a scrollable, reachable last action.
+const w87Navbar=fs.readFileSync(path.join(root,'atlas','src','components','SiteNavbar.tsx'),'utf8');
+const w87Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+if(!w87Navbar.includes('max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain')||
+   !w87Visual.includes('async function visitShortLandscape(')||
+   !w87Visual.includes('atlas-short-landscape-settings-last-action')||
+   !w87Visual.includes('atlas-short-landscape-panel-outside-viewport')||
+   !w87Visual.includes('atlas-short-landscape-escape')||
+   !w87Visual.includes('[[568,320],[844,390]]'))
+ throw Error('W87 landscape reader settings boundary witness missing');
+console.log('V13_W87_LANDSCAPE_READER_SETTINGS_PASS');
+
 // W83: the visual-harness must prove image decode and actual in-article
 // 1440px rails before capture; arbitrary sleeps are not acceptance evidence.
 const w83Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
