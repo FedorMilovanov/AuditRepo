@@ -1010,6 +1010,38 @@ async function visit(browser,engine,app,width,base){
         left:r.left,right:r.right,width:r.width,height:r.height,
         fragmentCount:ranges.length,clipped};
     }).filter(x=>x.clipped);
+    // W86: email is a single unaltered address, but its domain must never
+    // fracture into tiny orphan fragments at 200% root text.
+    const footerEmail=app==='sozvezdie'?(()=>{
+      const link=footer?.querySelector('[data-footer-email-link]');
+      const address=link?.querySelector('[data-footer-email-address]');
+      const nodes=address?[...address.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE):[];
+      const measuredRows=node=>{
+        if(!node)return 0;
+        const rows=[];
+        for(let offset=0;offset<(node.textContent||'').length;offset++){
+          const range=document.createRange();
+          range.setStart(node,offset);range.setEnd(node,offset+1);
+          const box=range.getBoundingClientRect();
+          if(box.width>0&&box.height>0&&!rows.some(top=>Math.abs(top-box.top)<3))
+            rows.push(box.top);
+        }
+        return rows.length;
+      };
+      const rect=link?.getBoundingClientRect();
+      const style=address?getComputedStyle(address):null;
+      return {found:!!link,addressFound:!!address,
+        href:link?.getAttribute('href')??null,
+        addressText:address?.textContent??null,
+        wbrCount:address?.querySelectorAll('wbr').length??0,
+        segments:nodes.map(n=>n.textContent),
+        localRows:measuredRows(nodes[0]),
+        domainRows:measuredRows(nodes[1]),
+        wordBreak:style?.wordBreak??null,
+        overflowWrap:style?.overflowWrap??null,
+        linkLeft:rect?.left??null,linkRight:rect?.right??null,
+        linkWidth:rect?.width??null,linkHeight:rect?.height??null};
+    })():null;
     const kickers=app==='sozvezdie'?
       [...document.querySelectorAll('[data-name-section-kicker]')]:[];
     const kickerAudit=kickers.map(kicker=>{
@@ -1049,6 +1081,7 @@ async function visit(browser,engine,app,width,base){
       kickerCount:kickerAudit.length,kickerFailures,
       verseActionsCount:verseActions.length,verseFailures,
       footerActionsCount:footerActions.length,footerFailures,
+      footerEmail,
       kickerLast:kickerAudit.length?kickerAudit[kickerAudit.length-1]:null,
       kickerCountBox:countBox||null,
       kickerPartBox:partBox||null,
@@ -1084,6 +1117,19 @@ async function visit(browser,engine,app,width,base){
         d.verseActionsCount!==29||d.verseFailures.length>0||
         d.footerActionsCount<5||d.footerFailures.length>0)))
     problem('BLOCKER','root-font-resize-200-reflow-failed',{app,engine,width,...d});
+   if(app==='sozvezdie'&&(!d.footerEmail?.found||!d.footerEmail.addressFound||
+      d.footerEmail.href!=='mailto:viktorcoy2012@gmail.com'||
+      d.footerEmail.addressText!=='viktorcoy2012@gmail.com'||
+      d.footerEmail.wbrCount!==1||
+      d.footerEmail.segments?.join('|')!=='viktorcoy2012@|gmail.com'||
+      d.footerEmail.localRows!==1||d.footerEmail.domainRows!==1||
+      d.footerEmail.wordBreak!=='normal'||
+      d.footerEmail.linkLeft< -2||d.footerEmail.linkRight>d.viewport+2||
+      d.footerEmail.linkHeight<43))
+    problem('BLOCKER','panorama-footer-email-word-integrity-root200',
+      {engine,width,...d.footerEmail});
+   record('panorama-footer-email-word-integrity-root200',
+    {engine,width,...d.footerEmail});
    if(app==='atlas'&&(!d.introWord?.found||
       d.introWord.overflowWrap!=='normal'||d.introWord.hyphens!=='manual'||
       !d.introWord.lines.length||d.introWord.lines.some(n=>n<2)))
@@ -1103,6 +1149,12 @@ async function visit(browser,engine,app,width,base){
        await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
      });
      await shot(page,engine+'-'+app+'-'+width+'-root200-footer-actions');
+     await page.locator('[data-footer-email-link]').scrollIntoViewIfNeeded();
+     await page.evaluate(async()=>{
+       await document.fonts.ready;
+       await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+     });
+     await shot(page,engine+'-'+app+'-'+width+'-root200-footer-email');
    }
    await page.evaluate(()=>document.documentElement.style.removeProperty('font-size'));
    await page.evaluate(async()=>{

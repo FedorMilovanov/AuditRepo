@@ -223,6 +223,22 @@ if(!readerEpilogue.includes('data-library-return-link')||
  throw Error('W82 zoomed footer links/return CTA would clip');
 console.log('V13_W82_FOOTER_REFLOW_PASS');
 
+// W86: the email is one exact mailto target; a semantic wrapping opportunity
+// after @ replaces the indiscriminate break-all orphan at 200% root text.
+if(!readerEpilogue.includes('href="mailto:viktorcoy2012@gmail.com"')||
+   !readerEpilogue.includes('data-footer-email-link')||
+   !readerEpilogue.includes('data-footer-email-address className="min-w-0 [overflow-wrap:anywhere] [word-break:normal]"')||
+   !readerEpilogue.includes('viktorcoy2012@<wbr />gmail.com')||
+   readerEpilogue.includes('className="min-w-0 break-all [overflow-wrap:anywhere]">viktorcoy2012@gmail.com'))
+ throw Error('W86 email wrapping or mailto content regression');
+const w86Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+if(!w86Visual.includes('panorama-footer-email-word-integrity-root200')||
+   !w86Visual.includes('d.footerEmail.domainRows!==1')||
+   !w86Visual.includes('d.footerEmail.localRows!==1')||
+   !w86Visual.includes("'-root200-footer-email'"))
+ throw Error('W86 screenshot and per-glyph address witness missing');
+console.log('V13_W86_EMAIL_SEMANTIC_REFLOW_PASS');
+
 // W83: the visual-harness must prove image decode and actual in-article
 // 1440px rails before capture; arbitrary sleeps are not acceptance evidence.
 const w83Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');

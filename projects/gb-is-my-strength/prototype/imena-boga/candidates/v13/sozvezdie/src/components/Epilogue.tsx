@@ -158,10 +158,11 @@ export default function Epilogue({ motionOn, completedIds, onSelect }: EpilogueP
           <div className="mt-12 flex min-w-0 flex-col items-center justify-center gap-4 font-ui text-xs tracking-normal text-cream-500 sm:flex-row sm:tracking-[0.15em]">
             <a
               href="mailto:viktorcoy2012@gmail.com"
+              data-footer-email-link
               className="inline-flex min-h-[44px] min-w-0 max-w-full flex-wrap items-center justify-center gap-[6px] rounded-lg px-[8px] text-center transition-colors hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 sm:min-h-11 sm:gap-2 sm:px-2"
             >
               <Mail className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
-              <span className="min-w-0 break-all [overflow-wrap:anywhere]">viktorcoy2012@gmail.com</span>
+              <span data-footer-email-address className="min-w-0 [overflow-wrap:anywhere] [word-break:normal]">viktorcoy2012@<wbr />gmail.com</span>
             </a>
             <span className="hidden h-1 w-1 rotate-45 bg-cream-700 sm:block" />
             <a
