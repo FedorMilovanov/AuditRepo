@@ -1,0 +1,77 @@
+{
+  "schema": "imena-cover-assets/v1",
+  "status": "DESIGN_TRIAL_ONLY_RESEARCH_HOLD",
+  "source": "2026-11-08 user-selected ChatGPT-generated artwork; source originals available in handoff package, not committed to this repository",
+  "license": "UNREVIEWED_FOR_PUBLICATION",
+  "publisherRoute": "NOT_ASSIGNED",
+  "variants": {
+    "fire-white": {
+      "originalFile": "8435ede0-f55f-4836-a92e-f3c090188cba.png",
+      "originalDimensions": [
+        1672,
+        941
+      ],
+      "originalSha256": "3c080432ab6a896224a182cd5c4c35ef3dc53395ae4c944493cf3da3cf1c6f51",
+      "derived": {
+        "480x270": {
+          "file": "fire-white-480x270.webp",
+          "sha256": "8ae9de0b27cfc8ec74d1b3ec590d65701056c72abeb36031f2c2d7dfc825e0b4"
+        },
+        "800x450": {
+          "file": "fire-white-800x450.webp",
+          "sha256": "9f91debdff146b7b3097a4aeeeec061212b3ffdef630cc707004a9020dd9aa93"
+        },
+        "1200x675": {
+          "file": "fire-white-1200x675.webp",
+          "sha256": "ac18484a8b001fa3c43b898bfa1b138ff1995971770ead6d2dbe5b4e0af2fa1d"
+        },
+        "1600x900": {
+          "file": "fire-white-1600x900.webp",
+          "sha256": "2e48682128f87c59c39b29e9bd091d3045c61415d3d0bc7637289915b3aae1e7"
+        },
+        "catalog-640x432": {
+          "file": "fire-white-catalog-640x432.webp",
+          "sha256": "5728eea337fb03e7bad6c27e8d84a4585e3075769f4e75f18db9bdf8253c65da"
+        },
+        "social-og-1200x630": {
+          "file": "fire-white-social-og-1200x630.webp",
+          "sha256": "3ff777569fdc1cb4d6695b88df75722985de53b62b9765af373be9ac3500de0d"
+        }
+      }
+    },
+    "ink-white": {
+      "originalFile": "Imena_Boga_Sozvezdie_Selected_Black_Calligraphy.png",
+      "originalDimensions": [
+        1672,
+        941
+      ],
+      "originalSha256": "7a2971ddbcfd62e82e53755cb689ef98554dc16b79579e57d316350039daa2a5",
+      "derived": {
+        "480x270": {
+          "file": "ink-white-480x270.webp",
+          "sha256": "2609228ee61c20524b14ccc269c2909bc4629d3706d2b32a4005735ea834846c"
+        },
+        "800x450": {
+          "file": "ink-white-800x450.webp",
+          "sha256": "19b1cf68934023ccff9bc7bf17fc73b7108f3ce3b6d08bbf51f35896f48b7cfb"
+        },
+        "1200x675": {
+          "file": "ink-white-1200x675.webp",
+          "sha256": "67bd8bebb0c54e8c88c8ed99384d8b9f5da76394b292bbbb10b405efeceaa300"
+        },
+        "1600x900": {
+          "file": "ink-white-1600x900.webp",
+          "sha256": "52f64c7b6e08daf847aa25e24ddb115ac17f77f7abe0cd45fb50c3700f262bb9"
+        },
+        "catalog-640x432": {
+          "file": "ink-white-catalog-640x432.webp",
+          "sha256": "c5d433c7d1082395549efefc8aef64c82509f2ee08513ccd8b814f3286ad2a9e"
+        },
+        "social-og-1200x630": {
+          "file": "ink-white-social-og-1200x630.webp",
+          "sha256": "e4397344c0dbaad03bdb8a5a5401a9cbc119fbb9e453ffed6a634b4422a089b5"
+        }
+      }
+    }
+  }
+}

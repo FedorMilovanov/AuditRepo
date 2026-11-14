@@ -1,0 +1,9 @@
+# Documented false-positive disposition: PREFS_KEY is an inert browser localStorage preference ID, not a credential.
+# Only seven exact historical commit:path:rule:line fingerprints; all other GitLeaks scanning remains enabled.
+08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242:projects/gb-is-my-strength/prototype/imena-boga/candidates/v12/sozvezdie/src/App.tsx:generic-api-key:20
+9beb3ae189c9f5c8ff28766d8fe4ce478826b754:projects/gb-is-my-strength/prototype/imena-boga/candidates/v11/sozvezdie/src/App.tsx:generic-api-key:23
+228314558252a1ee488094bc65c86cd4e2f96841:projects/gb-is-my-strength/prototype/imena-boga/candidates/v10/sozvezdie/src/App.tsx:generic-api-key:20
+5362734e63dace0942bd35a52704dfaee8d6b361:projects/gb-is-my-strength/prototype/imena-boga/candidates/v09/sozvezdie/src/App.tsx:generic-api-key:20
+f1ab285612740530f24f7e73ab427043a4f4bf5a:projects/gb-is-my-strength/prototype/imena-boga/candidates/v08/sozvezdie/src/App.tsx:generic-api-key:20
+2889d15b131634e1cf304e623c7ff8ed1d2476c4:projects/gb-is-my-strength/prototype/imena-boga/candidates/v07/sozvezdie/src/App.tsx:generic-api-key:20
+56a467a21235393fb6959a916f4e5f31a92f49ad:projects/gb-is-my-strength/prototype/imena-boga/reference/sozvezdie/src/App.tsx:generic-api-key:20

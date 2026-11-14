@@ -1,0 +1,295 @@
+name: Names of God prototype browser QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/**"
+      - ".github/workflows/imena-boga-prototype-browser.yml"
+
+permissions:
+  contents: read
+
+# The browser witness is expensive. Only the latest SHA of the SAME PR needs
+# to run; do not cancel unrelated PRs or other project workflows.
+concurrency:
+  group: imena-boga-prototype-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  candidate-browser:
+    name: Vite builds, browser contracts and CLS witness
+    # Official version-matched Playwright image has Chromium, WebKit and their
+    # Ubuntu 24.04 browser libraries preinstalled. Avoid repeated apt downloads:
+    # Ubuntu archive DNS failed in run 43033851836 and exhausted its job timeout.
+    # Source/delivery/CLS/browser/visual tests and the 30m deadline stay strict.
+    runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --ipc=host
+    timeout-minutes: 30
+    env:
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Checkout bounded prototype and immutable Sinai reference
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            projects/gb-is-my-strength/prototype/imena-boga/candidates/v13
+            projects/gb-is-my-strength/prototype/imena-boga/reference/sozvezdie
+
+      - name: Confirm runtime and build the two independent prototypes
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          ROOT="projects/gb-is-my-strength/prototype/imena-boga/candidates/v13"
+          for app in atlas sozvezdie; do
+            (
+              cd "$ROOT/$app"
+              npm ci --no-audit --no-fund
+              npm run build
+              npx tsc --noEmit
+              if [ "$app" = "sozvezdie" ]; then
+                node scripts/qa-colors.mjs
+              fi
+            )
+          done
+
+      - name: Install isolated browsers and run source/delivery contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          npm ci --no-audit --no-fund
+          # The pinned image must include BOTH browser executables: fail closed
+          # instead of installing packages from Ubuntu mirrors at CI runtime.
+          node -e 'const fs=require("node:fs"); const p=require("playwright-core"); for(const name of ["chromium","webkit"]){ const exe=p[name].executablePath(); if(!fs.existsSync(exe)) throw Error("Missing pinned "+name+" browser: "+exe); console.log("BROWSER_IMAGE_VERIFIED",name,exe); }'
+          export CHROMIUM_PATH
+          CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+          test -x "$CHROMIUM_PATH"
+          # Later visual_review.cjs runs in another Actions step; a shell export
+          # alone disappears at the step boundary, leaving chromium.launch()
+          # targeting the absent headless-shell binary of the container image.
+          # Persist the already-verified full Chromium binary path across steps.
+          printf 'CHROMIUM_PATH=%s\n' "$CHROMIUM_PATH" >> "$GITHUB_ENV"
+          npm run qa:source
+          npm run qa:delivery
+          npm run qa:failure
+          npm run qa:image
+          npm run qa:fonts
+          ENGINE=chromium npm test
+          ENGINE=webkit npm test
+
+      - name: Certify production font preloads and CLS across breakpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          node preload_contract.cjs
+          CLS_APPS=atlas VIEWPORTS=320,390,768,1440 CLS_RUNS=3 CLS_VARIANTS=baseline MAX_CLS=0.1 node cls_witness.cjs
+          CLS_APPS=sozvezdie VIEWPORTS=320,359,360,375,390,768,1440 CLS_RUNS=3 CLS_VARIANTS=baseline MAX_CLS=0.1 node cls_witness.cjs
+
+      - name: Reproduce Constellation's full browser QA with its pinned Playwright
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie
+          # Shared checks use Playwright 1.62.1's container browsers in
+          # /ms-playwright. The independent Sozvezdie QA is pinned to 1.49.1.
+          # Playwright's installer garbage-collects browser builds it thinks
+          # are unused: installing 1.49 into /ms-playwright deleted 1.62.
+          # Isolate the old browser cache for this step, including its full
+          # executable override, and leave the $GITHUB_ENV 1.62 path intact
+          # for subsequent Chromium/WebKit visual evidence capture.
+          export PLAYWRIGHT_BROWSERS_PATH="${RUNNER_TEMP:?}/imena-sozvezdie-pw149"
+          mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
+          test "$(node -p "require('playwright-core/package.json').version")" = "1.49.1"
+          npx playwright-core install chromium
+          export CHROMIUM_PATH
+          CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+          test -x "$CHROMIUM_PATH"
+          npm run qa
+
+      - name: Capture visual audit screenshots and interaction evidence
+        if: success()
+        shell: bash
+        env:
+          VISUAL_OUT: ${{ runner.temp }}/imena-visual-audit
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          node visual_review.cjs
+
+      - name: Upload private visual audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: imena-v13-visual-audit
+          path: ${{ runner.temp }}/imena-visual-audit/
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Create Windows local preview packages from the tested dist outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="projects/gb-is-my-strength/prototype/imena-boga/candidates/v13"
+          OUTPUT="$RUNNER_TEMP/imena-v13-local-previews"
+          mkdir -p "$OUTPUT"
+          for app in atlas sozvezdie; do
+            mkdir -p "$OUTPUT/$app"
+            cp -a "$ROOT/$app/dist/." "$OUTPUT/$app/"
+            test -s "$OUTPUT/$app/index.html"
+            test -d "$OUTPUT/$app/assets"
+            cat > "$OUTPUT/$app/preview-server.mjs" <<'LOCAL_PREVIEW_SERVER'
+          import { createServer } from 'node:http';
+          import { readFile } from 'node:fs/promises';
+          import { dirname, resolve, sep, extname } from 'node:path';
+          import { fileURLToPath } from 'node:url';
+          import { spawn } from 'node:child_process';
+          
+          const root = dirname(fileURLToPath(import.meta.url));
+          const port = Number(process.env.PREVIEW_PORT || 4173);
+          if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Invalid PREVIEW_PORT');
+          // Canonical cross-candidate links belong to Product. Paired local
+          // previews can optionally redirect them to a separately running peer,
+          // without compiling machine-specific ports into either application.
+          const peerPath = process.env.PREVIEW_PEER_PATH || '';
+          let peerHref = null;
+          if (peerPath || process.env.PREVIEW_PEER_URL) {
+            if (!new Set(['/imena-boga/', '/imena-boga/atlas/']).has(peerPath)) {
+              throw new Error('Invalid PREVIEW_PEER_PATH');
+            }
+            const peer = new URL(process.env.PREVIEW_PEER_URL || '');
+            if (peer.protocol !== 'http:' || peer.hostname !== '127.0.0.1' ||
+                !peer.port || peer.pathname !== '/' || peer.search || peer.hash ||
+                peer.username || peer.password || Number(peer.port) === port) {
+              throw new Error('Invalid PREVIEW_PEER_URL: expected another loopback preview');
+            }
+            peerHref = peer.href;
+          }
+          const mime = {
+            '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
+            '.css': 'text/css; charset=utf-8', '.json': 'application/json',
+            '.svg': 'image/svg+xml', '.woff2': 'font/woff2',
+            '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+            '.webp': 'image/webp', '.ico': 'image/x-icon', '.txt': 'text/plain; charset=utf-8',
+          };
+          const server = createServer(async (req, res) => {
+            let pathname;
+            try {
+              pathname = decodeURIComponent(new URL(req.url || '/', 'http://127.0.0.1').pathname);
+            } catch {
+              res.writeHead(400).end('Bad URL');
+              return;
+            }
+            if (peerHref && (pathname === peerPath || pathname === peerPath.slice(0, -1))) {
+              // Browser preserves the original #name-id fragment across a
+              // redirect with no Location fragment, keeping deep links intact.
+              res.writeHead(302, { location: peerHref, 'cache-control': 'no-store' }).end();
+              return;
+            }
+            const filename = resolve(root, '.' + (pathname.endsWith('/') ? pathname + 'index.html' : pathname));
+            if (!filename.startsWith(root + sep)) {
+              res.writeHead(403).end('Forbidden');
+              return;
+            }
+            try {
+              const data = await readFile(filename);
+              res.writeHead(200, { 'content-type': mime[extname(filename).toLowerCase()] || 'application/octet-stream',
+                'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
+              res.end(data);
+            } catch {
+              res.writeHead(404).end('Not found');
+            }
+          });
+          server.listen(port, '127.0.0.1', () => {
+            const url = 'http://127.0.0.1:' + port + '/';
+            process.stdout.write('Локальный предпросмотр: ' + url + '\nОстановить: Ctrl+C\n');
+            if (process.platform === 'win32') {
+              const child = spawn('cmd.exe', ['/d', '/s', '/c', 'start "" "' + url + '"'],
+                { windowsHide: true, detached: true, stdio: 'ignore' });
+              child.unref();
+            }
+          });
+          
+          LOCAL_PREVIEW_SERVER
+            cat > "$OUTPUT/$app/Start-Preview.cmd" <<'WINDOWS_START'
+          @echo off
+          cd /d "%~dp0"
+          where node >nul 2>&1
+          if errorlevel 1 (
+            echo Node.js 20+ is required for this local preview.
+            pause
+            exit /b 1
+          )
+          node preview-server.mjs
+          if errorlevel 1 pause
+          WINDOWS_START
+            cat > "$OUTPUT/$app/README-RU.txt" <<'LOCAL_PREVIEW_README'
+          ИМЕНА БОГА — ЛОКАЛЬНЫЙ ПРОСМОТР
+          ==================================
+          Проверенный коммит: SHA_PLACEHOLDER
+          Сборка: APP_PLACEHOLDER, AuditRepo PR #538 (DRAFT).
+          Это прототип, не опубликованный сайт.
+          
+          Откройте файл Start-Preview.cmd двойным кликом.
+          Требуется установленный Node.js (достаточно версии 20 или новее).
+          Откроется локальная страница http://127.0.0.1:4173/
+          Командное окно оставьте открытым во время просмотра.
+          Для остановки нажмите Ctrl+C или закройте окно.
+          
+          Если порт 4173 занят: откройте PowerShell в этой папке и выполните
+          $env:PREVIEW_PORT=4174; node .\preview-server.mjs
+          после чего откройте http://127.0.0.1:4174/
+          
+          Для работающих ссылок между двумя предпросмотрами можно установить
+          переменные PREVIEW_PEER_PATH и PREVIEW_PEER_URL перед запуском:
+          - из Астролябии: PREVIEW_PEER_PATH=/imena-boga/
+          - из Созвездия: PREVIEW_PEER_PATH=/imena-boga/atlas/
+          - PREVIEW_PEER_URL — полный адрес другой локальной сборки
+            вида http://127.0.0.1:PORT/ (порт выбирается при запуске).
+          Без обеих переменных публикационные ссылки остаются неактивными.
+          
+          Содержимое работает только на 127.0.0.1; в интернет не публикуется.
+          Исследовательские названия/цитаты требуют редакционной проверки.
+          Изображение Синая нельзя использовать для публичной публикации без проверки прав.
+          Локальный пакет содержит готовую production-сборку, а не исходный код.
+          
+          LOCAL_PREVIEW_README
+            sed -i "s/SHA_PLACEHOLDER/$PR_HEAD_SHA/g; s/APP_PLACEHOLDER/$app/g" "$OUTPUT/$app/README-RU.txt"
+            node --check "$OUTPUT/$app/preview-server.mjs"
+            test -s "$OUTPUT/$app/Start-Preview.cmd"
+            # Smoke-test the actual packaged local server. A configured peer
+            # route must redirect to a loopback origin, not return 404.
+            if [ "$app" = "atlas" ]; then peer_route="/imena-boga/"; else peer_route="/imena-boga/atlas/"; fi
+            PREVIEW_PORT=4191 PREVIEW_PEER_PATH="$peer_route" PREVIEW_PEER_URL="http://127.0.0.1:4183/" node "$OUTPUT/$app/preview-server.mjs" > "$RUNNER_TEMP/preview-$app.log" 2>&1 &
+            preview_pid=$!
+            for attempt in $(seq 1 25); do
+              if curl --silent --fail "http://127.0.0.1:4191/" --output /dev/null; then break; fi
+              sleep 0.2
+            done
+            status=$(curl --silent --output /dev/null --dump-header "$RUNNER_TEMP/peer-$app.headers" --write-out "%{http_code}" "http://127.0.0.1:4191$peer_route")
+            kill "$preview_pid" 2>/dev/null || true
+            wait "$preview_pid" 2>/dev/null || true
+            test "$status" = "302"
+            grep -qi '^location: http://127\.0\.0\.1:4183/' "$RUNNER_TEMP/peer-$app.headers"
+          done
+
+      - name: Upload verified Atlas Windows local preview
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: imena-atlas-local-preview
+          path: ${{ runner.temp }}/imena-v13-local-previews/atlas/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload verified Constellation Windows local preview
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: imena-sozvezdie-local-preview
+          path: ${{ runner.temp }}/imena-v13-local-previews/sozvezdie/
+          if-no-files-found: error
+          retention-days: 7

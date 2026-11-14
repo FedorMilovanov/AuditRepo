@@ -1,0 +1,349 @@
+{
+  "version": "1.3",
+  "repo": "AuditRepo PR #538",
+  "scope": "two standalone unverified visual prototypes, no Product/Research changes",
+  "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
+  "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
+  "sha256_policy": "text CRLF->LF, binaries raw",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING; Atlas desktop navigation brand no truncation after wider header: exact-head browser CI pending; 2026-11-08 precise live DOM circle-edge strands+thread, spring-linked center, geometry during/after drag: exact-head CI PENDING; central sphere immediate drag follow and explicit pointer capture QA exact-head pending; no CSS position transition on dynamic center; exact-head CI pending; 2026-11-08 reading rail: floating diamond removed from all 29 sections, one understated active hairline only; exact-head CI pending; 2026-11-08 active fixed-rail scrolling kept inside rail; MobileIndex traps Tab and restores focus on Escape or sends focus to selected heading; browser QA on exact head PENDING; 2026-11-08 Atlas mobile/tablet drawers keyboard-modal, focus return to persistent ribbon and resize release, browser CI exact-head PENDING; 2026-11-08 corrected QA scenario isolation: assert article anchor before testing fixed-rail scroll on last name (no skip or weaker threshold); 2026-11-08 Atlas introductory Коротко compact by default, CSS grid intrinsic-height disclosure, aria-expanded/inert and keyboard toggling verified through Chromium/WebKit browser QA PENDING; 2026-11-08 ReaderDock progress indicator: desktop read-only with no dead focusable button, mobile button proper disclosure, keyboard-help region semantics; new browser assertions exact-head PENDING; 2026-11-08 Atlas deep-link #name-id now opens actual dossier instead of only scrolling, clean-browser 390px QA verifies focus/name and clears hash on close; exact-head CI PENDING; 2026-11-08 Constellation global slash/Ctrl+K search shortcuts no longer use a guessed 420ms timer, never steal input or modal focus, instant focus + reduced-motion aware scroll; exact-head browser QA PENDING; 2026-11-08 Atlas navbar search: focus immediately (no 450ms delayed timer) and do not recapture focus after an unrelated control receives it; Chromium+WebKit exact-head PENDING; 2026-11-08 mobile Atlas tablet 36 entries always fully readable (opacity 1), progress expressed with labels/borders; Chromium/WebKit 320/390/768 inline-style browser QA pending on exact head; 2026-11-08 Atlas print/PDF now synchronous direct user-action window.print(), no delayed timer; browser activation microtask witness added at 320/390/768/1440 Chromium/WebKit; exact-head CI pending; 2026-11-08 Atlas saved studied IDs sanitized against live 36-name registry (invalid type/stale IDs/duplicates ignored); clean fresh-context Chromium/WebKit regression at 320px; exact-head CI pending; 2026-11-08 print activation regression: observe click synchrony from document bubble after React event delegation, not capture-phase premature microtask; CI exact-head pending; 2026-11-08 Atlas deliberate navigation uses one system reduced-motion aware ScrollBehavior helper (hero both destinations, resume, study jumps/search), cross-browser 390px reduced-motion witness verifies instant and no animation; exact-head CI pending; 2026-11-08 visual: narrow Constellation mobile index clips long Russian labels inside cards despite document scrollWidth=viewport; grid/flex-wrap semantics fix, browser QA checks actual Range fragment bounds all 29 entries at 320/390; exact-head CI pending; 2026-11-08 Atlas mobile all 36 names full-width wrap, no ellipsis on title/russianDescription; Chromium and WebKit 320/390/768 Range fragment bounds; exact-head CI PENDING; 2026-11-08 Constellation modal focus immediately in useLayoutEffect; remove timer 60ms, same-event document bubble focus proof at 320/390 in pinned QA; exact-head browser CI PENDING; 2026-11-08 full-length Pantokrator Greek original clipped despite zero document overflow; min-w-0 reading grid item and fluid Greek script typography with word wrap; all 29 original+transliterated headings geometry at 320/390/768/1440 in Chromium QA; exact-head CI PENDING; 2026-11-08 Atlas drawer initial keyboard focus synchronously in layout effect instead of requestAnimationFrame; direct trigger restoration on modal close; document bubble same-event witness at 320/390/768; exact-head CI PENDING; 2026-11-08 requested cosmic circle caption simplification: center orb label only ЯХВЕ (remove · центр), explicit Chromium functional assertion; exact head CI pending; 2026-11-08 independent dossier focus: capture opener and focus new modal synchronously via ordered layout effects; no 40ms timer; immediate Playwright focus witness at 320/390/768; local preview peer redirects configurable and CI packaged server smoke; exact-head CI PENDING; 2026-11-08 actual 320/390/768 Atlas dossier related names truncated with CSS ellipsis (Greek/Hebrew peer labels and Russian descriptive titles); real word wrapping, full glyph Range bounds and no ellipsis regression witness; exact-head CI PENDING; 2026-11-08 Atlas mobile/touch responsive glyph reflow: container-query medallion, 5 glyphs at 200/240/280/320/430 CSS px Chromium+WebKit, no clipped original text/caption/CTA, 44px arrows and motion-safe feedback; exact-head CI pending; 2026-11-08 WebKit browser QA repair: isolate five-glyph responsive geometry from reader-preferences page context, preserve strict 25 glyph assertions and separate print-activation witness; exact-head CI pending; 2026-11-08 targeted WebKit reopening-debug witness with event-phase and active-element evidence for reader settings after Escape (retain strict print interaction assertion); exact-head CI pending; 2026-11-08 WebKit input-path isolation: initial settings pointer click + Escape focus return + Enter keyboard reopening, followed by synchronous print-click witness; retain strict modal and 25 glyph geometry checks; exact-head CI pending; 2026-11-08 Constellation mobile index polish: min-44px floating trigger and shrink-proof 44x44 close, safe-area-aware edges, 11px heading, more readable full 29-name labels, reduced-motion no-fade and motion-safe press state, current entry accessibility; measured Chromium prototype at 280/320/390; exact-head CI PENDING",
+  "files": {
+    ".gitignore": {
+      "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
+      "bytes_normalized": 47
+    },
+    "atlas/index.html": {
+      "sha256": "6cf5028bd0ab468617dc68e284747071ee79c30d265b2a9c5b2906ab415a12c6",
+      "bytes_normalized": 4129
+    },
+    "atlas/package-lock.json": {
+      "sha256": "a2f06d26bd86252da64375094265b925cec25a744b224edfdc72b460c5059f1b",
+      "bytes_normalized": 85726
+    },
+    "atlas/package.json": {
+      "sha256": "e0eae2cec1d0ac33e64160bb67d735e3e0b75e6e32531e150b0f5c6557f09594",
+      "bytes_normalized": 874
+    },
+    "atlas/public/font-licenses/fontsource--cormorant-garamond-OFL.txt": {
+      "sha256": "732f37009943e7f4378cf37113c9bcc4716af002a8583511aa91ed5d37683e73",
+      "bytes_normalized": 4504
+    },
+    "atlas/public/font-licenses/fontsource--inter-OFL.txt": {
+      "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
+      "bytes_normalized": 4477
+    },
+    "atlas/public/font-licenses/fontsource--noto-serif-hebrew-OFL.txt": {
+      "sha256": "38d5fbc95848cf88131f2611c9f3f3a44f0262141601abf3aee6df2f8c4c71f5",
+      "bytes_normalized": 4380
+    },
+    "atlas/public/font-licenses/fontsource--noto-serif-OFL.txt": {
+      "sha256": "45d545469122348b916bfa4d362f691c3f7f3af7169fd46f920845cae97923df",
+      "bytes_normalized": 4519
+    },
+    "atlas/public/font-licenses/fontsource--playfair-display-OFL.txt": {
+      "sha256": "c052aafd2a71e90bcee6e69f475029d430a10d548c08ffcae350171f0e9668b1",
+      "bytes_normalized": 4630
+    },
+    "atlas/public/font-licenses/fontsource-variable--lora-OFL.txt": {
+      "sha256": "948aed765160f7b974105606c21994715a171f89fca48e57bf1e0a23aca0bef1",
+      "bytes_normalized": 4563
+    },
+    "atlas/public/font-licenses/README.md": {
+      "sha256": "51fae96ac2160d257f2fa61b7d92b28e4411b1628ad8cf9fb180d8da7ac00080",
+      "bytes_normalized": 1399
+    },
+    "atlas/src/App.tsx": {
+      "sha256": "65432f603070508d7a667f2af51f55a660cd87030d6b07a7a96f9c6a8873e0c2",
+      "bytes_normalized": 67472
+    },
+    "atlas/src/components/CovenantAltarsAtlas.tsx": {
+      "sha256": "aadf84915157324787fb8b464f937a25777ba0118344dec0037e81762bdde07b",
+      "bytes_normalized": 19064
+    },
+    "atlas/src/components/DivineConstellationExplorer.tsx": {
+      "sha256": "06579350f7324f50dfe19b3747ef24631a2f281060a12c278585fdc5adf0cdaa",
+      "bytes_normalized": 18399
+    },
+    "atlas/src/components/DivineNameModal.tsx": {
+      "sha256": "40691c762e57238eff878aa07355c84e1852e411fe65436f460d822d8e93226a",
+      "bytes_normalized": 32268
+    },
+    "atlas/src/components/DivineNameTiltCard.tsx": {
+      "sha256": "390a7dc86f95d332640da5ca12be90ea13579a1d7a7c85c35fffd1840718ebbc",
+      "bytes_normalized": 16576
+    },
+    "atlas/src/components/FeatureLoadBoundary.tsx": {
+      "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
+      "bytes_normalized": 1410
+    },
+    "atlas/src/components/HebrewGreekLexiconMatrix.tsx": {
+      "sha256": "3c99e208447b51e15261b54d797e094d7987d67a7e673bdfe0a7aff17d959dfb",
+      "bytes_normalized": 12075
+    },
+    "atlas/src/components/LateralNamePillars.tsx": {
+      "sha256": "5880a01fd6fd9ed00778c783fa1f57fb7c270e607e1bdd98c3faade549a51b6e",
+      "bytes_normalized": 27122
+    },
+    "atlas/src/components/NamesIndexTable.tsx": {
+      "sha256": "fe0e2d679e738e434e3b0901d15cb8e6ac0bca4715f01940339383b69f323381",
+      "bytes_normalized": 8975
+    },
+    "atlas/src/components/NearViewport.tsx": {
+      "sha256": "f8102fd1196cb21d23a34eed7889c7f93c221bc96a9202498b80f44c44cb0b4d",
+      "bytes_normalized": 1283
+    },
+    "atlas/src/components/SacredAstrolabeHero.tsx": {
+      "sha256": "e728691b5fe5470e7307d3c2490f2f3d67357094d8ab0adfe881807449f1c8b7",
+      "bytes_normalized": 28637
+    },
+    "atlas/src/components/ScriptureRefPill.tsx": {
+      "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",
+      "bytes_normalized": 5542
+    },
+    "atlas/src/components/SevenIAmStatements.tsx": {
+      "sha256": "7654aef2ad3e818beaedf65537cc302514ac810856a294e742acfc1b7e97da6d",
+      "bytes_normalized": 14462
+    },
+    "atlas/src/components/SiteNavbar.tsx": {
+      "sha256": "8f92155dabb3f1cf505d701d50f58ce427433a6c01162cb8680c44391e08e3cd",
+      "bytes_normalized": 21340
+    },
+    "atlas/src/components/TetragrammatonAnatomy.tsx": {
+      "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
+      "bytes_normalized": 9972
+    },
+    "atlas/src/components/TheologicalQuiz.tsx": {
+      "sha256": "0b164466c03d789f463cae5656e403c74d006d286c32eba1c31973d60ab2d47e",
+      "bytes_normalized": 17460
+    },
+    "atlas/src/data/divineNames.ts": {
+      "sha256": "4774ca2094db8f4c555b71156298f4036f7284a39d58045a88f66465733d9c44",
+      "bytes_normalized": 150379
+    },
+    "atlas/src/data/topicCrosswalk.ts": {
+      "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
+      "bytes_normalized": 1238
+    },
+    "atlas/src/index.css": {
+      "sha256": "dab734602d944bf9fdb6c02da3ecfa1d4bb9d88a34aad5ecb34ec3cb2464bde4",
+      "bytes_normalized": 10524
+    },
+    "atlas/src/main.tsx": {
+      "sha256": "b958f86783daa9a48342c318140ed95b9cf718ae9a3c58d2ce7b7e6194385d3b",
+      "bytes_normalized": 1646
+    },
+    "atlas/src/utils/cn.ts": {
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+      "bytes_normalized": 169
+    },
+    "atlas/tsconfig.json": {
+      "sha256": "2a760f56fa49b96935783a2c3b4ce63d67e4547fdace88c4f4361a0c4fc10848",
+      "bytes_normalized": 681
+    },
+    "atlas/vite.config.ts": {
+      "sha256": "55878f9c301019fab5bb908df0ea7d580f7a304b623585655582af1fdd7e4ddf",
+      "bytes_normalized": 1637
+    },
+    "checks/browser.cjs": {
+      "sha256": "46d0b35257b55d62b88a312913a73ba52075aaa221b5a83cb66a2494a8f762c6",
+      "bytes_normalized": 72833
+    },
+    "checks/cls_witness.cjs": {
+      "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
+      "bytes_normalized": 12061
+    },
+    "checks/delivery_contracts.cjs": {
+      "sha256": "66efa87d67797cb4a6726bb9728baac3b4735ba7cd2ef8d3eefbab618a46fdd8",
+      "bytes_normalized": 5266
+    },
+    "checks/font_contract.cjs": {
+      "sha256": "1ae4648a52bcf613320a4d4eba7b887094288050ad8f31fb78095d3773185ef9",
+      "bytes_normalized": 3620
+    },
+    "checks/image_delivery.cjs": {
+      "sha256": "e1d051ab787ffb2c1b31b18d7a746d5a0237a955ea418a46c4a1a498e06c6a58",
+      "bytes_normalized": 2717
+    },
+    "checks/package-lock.json": {
+      "sha256": "385daa36b6b844fd34ed87c5b3bdbfc36af0a4ac5ef8563ad2ce6dfd2b74f2a2",
+      "bytes_normalized": 1130
+    },
+    "checks/package.json": {
+      "sha256": "dfaa81f395596a1fe7198dfe84d6bbc06e1b8cfc84d5cdae3b1f6be321655b04",
+      "bytes_normalized": 450
+    },
+    "checks/preload_contract.cjs": {
+      "sha256": "9c361cd6690f8c3fa7a3ccb7a12569cbcbcb8ea1fb29eaaa7399e75346623c36",
+      "bytes_normalized": 1788
+    },
+    "checks/quiz_failure.cjs": {
+      "sha256": "98e9eb019847b74875e3e80dbe46c9f4da61a18e4488a5d2c2eaa5c8cb7b185b",
+      "bytes_normalized": 2463
+    },
+    "checks/source_contract.cjs": {
+      "sha256": "c5b64f639fe2601739456e7caca235fc0a26b5d81279cc032dfa3eedddca77b3",
+      "bytes_normalized": 54486
+    },
+    "checks/visual_review.cjs": {
+      "sha256": "168e515f0e033faea7186507eb8ba65c24dfd65b63565756fa61371b01b7db73",
+      "bytes_normalized": 79760
+    },
+    "README.md": {
+      "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
+      "bytes_normalized": 4712
+    },
+    "sozvezdie/index.html": {
+      "sha256": "71208783dd675e624971a8243279a81e699d6a0af8f5574e7b68cb0139a0391f",
+      "bytes_normalized": 2595
+    },
+    "sozvezdie/package-lock.json": {
+      "sha256": "a5c4aea42b14c5a3a1528fb91d159e8dc612695e3c8cf3ccb3b1f6c3b042604c",
+      "bytes_normalized": 87523
+    },
+    "sozvezdie/package.json": {
+      "sha256": "b2d20c453df34192d7d2032efe550d19e4faba19e8ddd3c2a7738c4867b5b127",
+      "bytes_normalized": 933
+    },
+    "sozvezdie/public/font-licenses/fontsource--cormorant-garamond-OFL.txt": {
+      "sha256": "732f37009943e7f4378cf37113c9bcc4716af002a8583511aa91ed5d37683e73",
+      "bytes_normalized": 4504
+    },
+    "sozvezdie/public/font-licenses/fontsource--eb-garamond-OFL.txt": {
+      "sha256": "f03c8eda63076cd52317dcd40aa04db8472d4cb592dfaafa385129dfdafc7f9c",
+      "bytes_normalized": 4519
+    },
+    "sozvezdie/public/font-licenses/fontsource--frank-ruhl-libre-OFL.txt": {
+      "sha256": "7eb9208b0f057da5220ebe784da4683f950a73be271f074d8bdfb6eac0ef4463",
+      "bytes_normalized": 4397
+    },
+    "sozvezdie/public/font-licenses/fontsource--inter-OFL.txt": {
+      "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
+      "bytes_normalized": 4477
+    },
+    "sozvezdie/public/font-licenses/fontsource--noto-serif-hebrew-OFL.txt": {
+      "sha256": "38d5fbc95848cf88131f2611c9f3f3a44f0262141601abf3aee6df2f8c4c71f5",
+      "bytes_normalized": 4380
+    },
+    "sozvezdie/public/font-licenses/README.md": {
+      "sha256": "7a86688fbe0b831536a2fb13015c1ec8546bd94b88c7f3c00456a44c4ecdf47c",
+      "bytes_normalized": 1260
+    },
+    "sozvezdie/scripts/qa-colors.mjs": {
+      "sha256": "0ab191ef461ff3e718230e6853e055c6745ed2e965d5c1d3d205e73a7ac2fc28",
+      "bytes_normalized": 1371
+    },
+    "sozvezdie/scripts/qa.mjs": {
+      "sha256": "8d401d29722e6ae7bcf8051593d7764d30ba64ab27191bb71f62aece1c9be155",
+      "bytes_normalized": 52156
+    },
+    "sozvezdie/src/App.tsx": {
+      "sha256": "7573063747e36b5788aed4e15c83e59446257bb9b5d8de8c8d2a07501cb86d65",
+      "bytes_normalized": 18140
+    },
+    "sozvezdie/src/assets/sinai-dawn.webp": {
+      "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
+      "bytes_normalized": 140842
+    },
+    "sozvezdie/src/components/Epilogue.tsx": {
+      "sha256": "c42bc67361f71445801691238f3bde600c0c37104306dd3ac3e80fa45bf9fe97",
+      "bytes_normalized": 10506
+    },
+    "sozvezdie/src/components/Hero.tsx": {
+      "sha256": "ef5a8948690413f55687ec8de8d13fd1f6228a29cebd21a5ab5a765cff3537bc",
+      "bytes_normalized": 9639
+    },
+    "sozvezdie/src/components/Intro.tsx": {
+      "sha256": "7d1bf9cc32db87f64b08d32c1eb03da6e7482862883506b42a1ae6350e8a19e5",
+      "bytes_normalized": 7639
+    },
+    "sozvezdie/src/components/MobileIndex.tsx": {
+      "sha256": "d45dfe4adf37ad9204a8a2e6b094a574423c36e61e161596c3ae86b0adfa6a64",
+      "bytes_normalized": 9959
+    },
+    "sozvezdie/src/components/NameGrid.tsx": {
+      "sha256": "1ef9d5e2dc666fe2abc1c5037a822486d9f650b37446f044e117b68a8a03227b",
+      "bytes_normalized": 20963
+    },
+    "sozvezdie/src/components/NameSection.tsx": {
+      "sha256": "f80a1f1d7c03e4e7d4e02fb213d541770a3a6c12a660248b5788f5bfa4015be0",
+      "bytes_normalized": 19044
+    },
+    "sozvezdie/src/components/NameTree.tsx": {
+      "sha256": "89ba44ff43ca049e1d3cc7c913b2ffc51fafc7df3e08b0a1899f8cf6dae187c8",
+      "bytes_normalized": 25514
+    },
+    "sozvezdie/src/components/PartDivider.tsx": {
+      "sha256": "9870afaffbefa69f540a6636ded7d382e9ed9b891d5e16901e4885fd4ed8b86e",
+      "bytes_normalized": 2960
+    },
+    "sozvezdie/src/components/Rails.tsx": {
+      "sha256": "3c77314ba96b89863a32bc38dd18c81d6229211b1cf74d5007879384a4b0075e",
+      "bytes_normalized": 6890
+    },
+    "sozvezdie/src/components/ReaderDock.tsx": {
+      "sha256": "37e4ab16137f46faba54488a3899d023cdb347f68d9ca69ffff989ed37cd7ed0",
+      "bytes_normalized": 13298
+    },
+    "sozvezdie/src/components/Reveal.tsx": {
+      "sha256": "a472c1df117a111b2dead67b1e782480b5cb189b1062c1df02375b2c36793240",
+      "bytes_normalized": 918
+    },
+    "sozvezdie/src/components/Starfield.tsx": {
+      "sha256": "e068cae7ac78101f7483b7631d3d17fb1705bbc907a59ef4c6fb35ea35eec70d",
+      "bytes_normalized": 6781
+    },
+    "sozvezdie/src/components/Tetragrammaton.tsx": {
+      "sha256": "7c985fbe1cd56daf596f0e3a3e5b09e96efe83d6f839a535fb8b72ef70e12302",
+      "bytes_normalized": 10728
+    },
+    "sozvezdie/src/components/Tilt.tsx": {
+      "sha256": "e16c69b80d670c38e31f1a7391a6ade828306c14d3d03cd7e9199efaa3e6ed4b",
+      "bytes_normalized": 1809
+    },
+    "sozvezdie/src/components/Toast.tsx": {
+      "sha256": "d6d55bcf5f105542ddae4454d3fd79218339fe0946f638e3df5da6efc7db6395",
+      "bytes_normalized": 3626
+    },
+    "sozvezdie/src/components/useElasticConstellation.ts": {
+      "sha256": "27cd660b50a469ca14c77121fe7e002cfc1fc224daa4e5366a9b7cb4815f9bf5",
+      "bytes_normalized": 13928
+    },
+    "sozvezdie/src/data/names.ts": {
+      "sha256": "141b8d46ee77be49c6aa2f1e923e3f1303d22c0154e38ab9313ebb6a6c3b3872",
+      "bytes_normalized": 73144
+    },
+    "sozvezdie/src/data/topicCrosswalk.ts": {
+      "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
+      "bytes_normalized": 1238
+    },
+    "sozvezdie/src/index.css": {
+      "sha256": "7cda8a348e895811c10f897683d7b1e6efd8ccdf95a711bb2b6f25723d7ae9f5",
+      "bytes_normalized": 8533
+    },
+    "sozvezdie/src/main.tsx": {
+      "sha256": "76f104d10a14363fbeed89b8c2768741ded2849154df9c6de3dda1dca835aba8",
+      "bytes_normalized": 1354
+    },
+    "sozvezdie/src/utils/cn.ts": {
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+      "bytes_normalized": 169
+    },
+    "sozvezdie/src/utils/script.ts": {
+      "sha256": "4e77458f35fbbd55c6f8de7dd0b5413936dde5cb1919045e1ca97b798792c0a5",
+      "bytes_normalized": 1141
+    },
+    "sozvezdie/src/vite-env.d.ts": {
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "bytes_normalized": 38
+    },
+    "sozvezdie/tsconfig.json": {
+      "sha256": "2a760f56fa49b96935783a2c3b4ce63d67e4547fdace88c4f4361a0c4fc10848",
+      "bytes_normalized": 681
+    },
+    "sozvezdie/vite.config.ts": {
+      "sha256": "f27755576cdcb85c5b3143d1a05bd4c5c609104c9bce5eed17f2063cb168ee9e",
+      "bytes_normalized": 1784
+    }
+  },
+  "canonical_jpeg": "reference/sozvezdie/public/images/sinai-dawn.jpg (single immutable source imported by Vite)",
+  "admission": "All original ZIPs have path/hash/size sidecars; duplicated JPEG/WebP artifacts removed."
+}
