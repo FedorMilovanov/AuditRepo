@@ -865,3 +865,80 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Section chip browser witness: Chromium touch 20/20 tests (all ten essays × portrait/landscape × both motion modes, 40 engagements) plus iPhone Safari/WebKit 2/2 real-tap cases, verifying `inert=false`, visible named control, native popover, Escape and chapter hash.
 - Disposition: **CLOSED BY ALREADY-MERGED PRODUCT FIX**; these two P2 rows leave the active matrix, from 1 P1 + 9 P2 + 1 P3 = 11 after the companion landmark retirement to **1 P1 + 7 P2 + 1 P3 = 9**. Fragment navigation and portrait pointer ownership are not absorbed; incomplete normal-motion figure hit-testing was independently observed and must remain open.
 - Evidence: `../reverify/REVERIFY_ab57d75_2026-11-03_command-chip-owners.md`. This is current-main source and production-like browser evidence, not an independently asserted new custom-domain production release.
+
+
+## 2026-11-04 — TLP label-in-name root closed after Product #549
+
+- Finding: `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, prior P2 WCAG 2.5.3 owner gap in six Home portrait links and four music volume controls.
+- Product fix: #549 reviewed exact head `8fcbfc709d1714d4827f02f817c30f470abaadc8`; squash merge `c1beee3b7bcaa3a0d47fbc8e5bbf79f4da6efed4`.
+- Fresh local exact-main validation: production Vite build PASS; Chromium visible-label suite 2/2 and Android/iPhone Safari portrait-name suite 2/2 PASS.
+- Result-main evidence: current Product `main@4ad5cf4bd6cff3f4679dbf0beb21bbd2234b6848`; full Manual Browser QA [41728806631](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806631), CI [41728806405](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806405) and Pages deployment [41728806845](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806845) all SUCCESS. Permanent per-owner accessible-name behavioral guards remain.
+- Scope: one root only, no new Product code or provider change; no claims of closure for other P2/P3 or human Turnstile P1.
+- Disposition: retire this one fixed row. Active matrix 1 P1 + 7 P2 + 1 P3 = 9 becomes **1 P1 + 6 P2 + 1 P3 = 8**.
+- Detailed current-source review and release evidence: `../reverify/REVERIFY_4ad5cf4_2026-11-04_label-in-name-closure.md`.
+
+## 2026-11-04 — TLP floated portrait hit-test P2 retired after Product #548
+
+- Original October owner finding: `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`, 12/17 floated image buttons plus 11 adjacent source links intercepted at the old Product anchor.
+- Existing Product repair: #548, merged as `010d23f28eb2aaf3695a5b73b2f59882538077d9`, made shared left/right floated image wrappers `relative z-10` rather than disabling document prose pointers.
+- Current-main verification: untouched Product `main@4ad5cf4bd6cff3f4679dbf0beb21bbd2234b6848`; production build PASS; all 10 canonical essays inventoried (17 floated image buttons). Chromium desktop normal and reduced motion **34/34** real pointer clicks opened/closed lightboxes and **34/34** source-link trials were actionable. One off-viewport pre-action coordinate was not a blocked click; Playwright native pointer action succeeded. Result-main CI, Browser QA and Pages deploy completed successfully.
+- Disposition: **CLOSE only this already-repaired P2**. Active matrix narrows from 1 P1 + 6 P2 + 1 P3 = 8 to **1 P1 + 5 P2 + 1 P3 = 7**. No Product mutation, no reclassification of the remaining owners.
+- Detailed reverify: `../reverify/REVERIFY_4ad5cf4_2026-11-04_floated-portrait-hittest-closure.md`.
+
+## 2026-11-04 — TLP outline P3 proposed retirement after Product #554
+
+- Root: `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`; previously verified heading-order violations. Product #554 fixed catalog heading levels, KindredSpirits and mobile rankings H2 semantics, with actual DOM-based tests (33/33 desktop, 33/33 iPhone Safari).
+- Product PR exact head `a926ac3` squash merged to resulting `main@01d40f7e0ac238956ff6cc998be9c6792035a79c`, source-tree identical. PR 14/14 including full browser QA passed; main CI and Pages passed.
+- **Resulting-main release proof: SUCCESS:** Product main Manual Browser QA [41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) completed SUCCESS across all five jobs (Chromium/Android, iPhone Safari, premium Home, WebKit reveal, analytics routes). CI and Pages deploy also succeeded at exact `main@01d40f7`.
+- Verified scoped matrix retirement: 1 P1 + 5 P2 + 1 P3 = 7 to **1 P1 + 5 P2 + 0 P3 = 6**; no other statuses altered.
+- Source-led details: `../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md`.
+
+## 2026-11-04 — TLP modal exit P2 retirement prepared, release-gated
+
+- Root: `SYS-TLP-MODAL-EXIT-LIFECYCLE`. Prior bug restored focus and released scroll/inert stack while ImmersivePlayer and essay lightbox remained painted during exit.
+- Product #551 exact-head `484d8491cf9c8c8de6d48278a2b75789adb2948f` merged into `main@b850ef6795b8c5079c2cf9c740179abf0ff7b3a4`, with identical Git tree `e4938515411a47a50d8a101b7d5bf79024c18f3f`. Shared exit-lifetime ownership preserves modal isolation and body/focus lock through actual animation completion; no arbitrary delay or forced opacity.
+- All **13 required PR checks** successful, including exact-head full Browser QA and merge certification; independent local 12/12 Chromium/Android/iPhone modal exit regressions PASS. Resulting main CI already successful.
+- **Resulting-main release proof: SUCCESS:** Product `main@b850ef6` [Browser QA 41759439065](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439065) completed successfully with all five browser/analytics jobs SUCCESS; [Pages 41759439111](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439111) completed SUCCESS (build/deploy SUCCESS, optional report skipped). Deployment 7536105424 reports success on the same SHA. AuditRepo exact-head CI must pass after this documentation amendment.
+- Verified matrix delta **6 -> 5** (1 P1, 5 P2, 0 P3 -> 1 P1, 4 P2, 0 P3). Detailed source/release note: `../reverify/REVERIFY_b850ef6_2026-11-04_modal-exit-lifecycle-closure.md`.
+
+## 2026-11-04 — TLP sticky viewport P2 release-certified and retired
+
+- Root: `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`: desktop sticky TOC/poet sidebars and Ratings header blocked some real pointer targets when content exceeded the viewport.
+- Product [PR #552](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/552) head `228db3daa53fbc4ee53e65244419286971602d7a` squash-merged to `main@63492c2d0baefe6a952a93cdf0045ee182463540`, identical source trees. All 14/14 exact PR-head checks, including Browser QA and merge certification, passed.
+- Independent local integration with #555 rebased on #552 main: **56/56** Chrome desktop and Android tests PASS for sticky, pointer actionability, nested scroll, mobile/keyboard and fragment interactions. Product main CI and Pages SUCCESS.
+- **Resulting-main proof now SUCCESS:** Product [Manual Browser QA 41768798264](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41768798264) exact main@63492c2 **attempt 2** completed SUCCESS: all five browser and analytics jobs SUCCESS. The first attempt exposed an unrelated iPhone Safari modal-exit timing flake at qa/reader-journeys.spec.mjs:549 and correctly failed; neither product source nor test thresholds were changed for the job rerun. Product CI [41768798242](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41768798242) and Pages [41768798239](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41768798239) also SUCCESS on the exact same SHA. AuditRepo preflight/validate required on amended PR.
+- Verified scoped delta **5 -> 4** (1 P1 + 4 P2 + 0 P3 to 1 P1 + 3 P2 + 0 P3); leave independent fragment, contrast, text spacing and human Turnstile roots active.
+- Detailed proof: `../reverify/REVERIFY_63492c2_2026-11-04_sticky-viewport-closure.md`.
+
+## 2026-11-04 — TLP fragment navigation P2 retired after Product #555 and resulting-main release
+
+- Root: `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME` (idempotent repeated citation-source reveal, native section/citation hash identity, post-image-layout settled anchor geometry). Historical PoemQuickNav identity issues were already repaired by #548 and are not patched again.
+- Product [#555](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/555) exact source head `be198d6f6dd7c5d903a66fe3b92ce343a6b1549c` squash-merged to `main@185c900686bacf95ef3d73dbdb373d077a9a205f`; identical source Git tree `58951b24740ae52f877c9f33644d6cfcf15c88ca`. The owner-level repair removes false offscreen figure height, preserves stable section positions and reveals repeatedly cited filtered sources without synthetic history manipulation.
+- PR-head 17 applicable checks SUCCESS (three conditional SKIPPED), including full browser QA; local native TOC census 126/126 and permanent fragment suite 9/9 Chromium/Android/iPhone. Resulting-main CI [41859279351](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279351), Pages [41859279533](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279533), and full Manual Browser QA [41859279503](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279503) all SUCCESS on the same exact source, five browser/analytics jobs SUCCESS.
+- Scoped retirement **4 → 3** active engineering roots: 1 P1 + 3 P2 → **1 P1 + 2 P2**. Contrast, text spacing and human Turnstile remain open; no false technical zero. AuditRepo PR exact-head validation/preflight and subsequent merge required.
+- Evidence: `../reverify/REVERIFY_185c900_2026-11-04_fragment-navigation-closure.md`.
+
+## 2026-11-05 — TLP text-spacing WCAG 1.4.12 P2 release-certified and retired
+
+- Root: `SYS-TLP-TEXT-SPACING-ROBUSTNESS`, original October 34-route/68-load witness of 15 newly clipped texts under WCAG 1.4.12 overrides.
+- Product #556 exact PR HEAD `50aabc1` merged into `b862ec3` with identical Git tree `36877da8`. Permanent owner-and-route text-spacing suite **2/2** passed; PR exact-head Manual Browser QA 41906646752 and all five browser jobs SUCCESS.
+- Initial resulting-main CI 41914395233 and Pages 41914395216 succeeded; the contemporaneous Browser QA 41914395236 was **cancelled** and is not claimed as a success. Subsequent editor-only Product #564 main `d090892f62949d2fa7cfb9db4fa7984c60bd2745` retained the fixed owners and passed exact-main CI 41915846698, Pages 41915846745, and five-job Browser QA 41915846749, **all SUCCESS**, including the permanent spacing suite and isolated Safari contours.
+- Scoped retirement only: **1 P1 + 2 P2 → 1 P1 + 1 P2**. Semantic contrast P2 and two-human-session Turnstile P1 remain open. No Product mutation or fake approval.
+- Detailed proof: `../reverify/REVERIFY_d090892_2026-11-05_text-spacing-closure.md`. AuditRepo exact-head validation/preflight and merge are required.
+
+## 2026-11-05 — TLP semantic-theme contrast P2 certified and retired
+
+- Root: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, established in the October 2026 34-route desktop/light + mobile/dark audit (746 axe contrast nodes). This closure does **not** misclassify incomplete image-background checks as evaluated contrast passes.
+- [Product PR #557](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/557) exact head `d6a37c3` passed full five-job Manual Browser QA, Brand Deep Audit, release checks and merge certification; merged to `main@32d7114db5166ad27f5e3ea1be86fef3939b4ecf`. Production publication [Pages 41934467432](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467432) build/deploy SUCCESS.
+- **Exact resulting-main** [Browser QA 41934467489](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467489) finished **5/5 SUCCESS**; [Brand Deep Audit 41934467389](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467389) SUCCESS. Later three Product commits through `2d77001` modify only `qa/mobile-platforms.spec.mjs`, not shipped contrast owners; release QA is claimed only for `32d7114`.
+- Scoped matrix retirement **1 P1 + 1 P2 → 1 P1 + 0 P2**. The sole remaining `TLP-COMM-ABUSE-001` requires two legitimate human Turnstile sessions and the production certifier; no fake all-zero.
+- Full release witness: `../reverify/REVERIFY_32d7114_2026-11-05_semantic-contrast-closure.md`. AuditRepo exact-head validation/preflight and merge required.
+
+
+## 2026-11-05 — TLP community P1 closed by genuine production two-session adversarial proof
+
+- Root: `TLP-COMM-ABUSE-001`, the final active P1. Product [#497](https://github.com/FedorMilovanov/TheLegendaryPoet/issues/497); AuditRepo [#437](https://github.com/FedorMilovanov/AuditRepo/issues/437). Previously merged Product [#505](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/505) supplied the fail-closed human Turnstile operator certifier. Source-only testing did **not** count as a production human proof.
+- A legitimate human operator completed the final live verification using **two separate normal browser profiles**, temporary ratings for canonical `poet:alexander-pushkin`, hidden local TTY actor tokens and the unmodified production Worker/D1. The owner provided the complete **sanitized terminal PASS**: `testedAt=2026-11-05T03:42:13.189Z`, `schemaVersion=1`. No token bytes or user-identifying actor UUIDs are recorded in this receipt.
+- PASS: production Worker health and canonical target manifest ready; both distinct human sessions independently authenticated by Worker via **2 × HTTP 404 `unknown_target`**; concurrent identical comment calls **2 × HTTP 200**, exactly one public row; replay **200 `idempotent=true`**; changed payload and different actor both **409 `comment_id_conflict`**; remote D1 exact certification rows deleted, comment absent after cleanup, rate buckets preserved.
+- Windows-safe operator wrapper and *pre-write* authenticated remote D1 cleanup probe were repaired on Product [PR #569](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/569) (live local-tested head `39227d273dc0e7f6a13833ddf56e1bd586954620`). The repair did **not** bypass Turnstile, downgrade the Worker, add token logging, or weaken D1 cleanup authority. The signed-session result is from a **real, user-supplied production terminal receipt**, not an invented browser run.
+- Scoped matrix retirement: **1 P1 + 0 P2 + 0 P3 = 1 → 0 P1 + 0 P2 + 0 P3 = 0**. Permanent details: `../reverify/REVERIFY_39227d2_2026-11-05_community-live-human-proof-closure.md`. Zero here means **no currently open verified engineering bug roots in the TLP MASTER matrix**, not a claim that the entire project has no roadmap tasks or cannot have future security bugs.

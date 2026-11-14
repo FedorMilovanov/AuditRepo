@@ -1,0 +1,52 @@
+{
+  "version": "V25",
+  "date": "2026-11-06",
+  "standalone_chromium_checked": 57,
+  "passed": 57,
+  "js_errors": 0,
+  "viewports": [
+    [
+      320,
+      740
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      781,
+      300
+    ],
+    [
+      900,
+      300
+    ],
+    [
+      900,
+      480
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      1280,
+      720
+    ],
+    [
+      1480,
+      900
+    ],
+    [
+      1920,
+      1080
+    ]
+  ],
+  "sha256_html": "2f353a74fce2c48616ce97b634c749fecc27920d338a9500677815ce0f97d6c3",
+  "limitations": [
+    "No genuine browser reload; navigation blocked by administrator",
+    "Firefox and WebKit not available",
+    "Real Product/Astro/GBReaderLibrary/GBSearch/TTS/live deploy not verified"
+  ],
+  "script_note": "standalone-v25-qa.py is a shorter reproducible smoke than the 57-assertion authoring harness"
+}
