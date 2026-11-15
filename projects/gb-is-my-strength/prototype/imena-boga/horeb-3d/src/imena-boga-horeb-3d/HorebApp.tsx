@@ -64,6 +64,19 @@ const coarse = () => typeof matchMedia !== 'undefined' && (
 );
 const prefersReduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+function EgyptReadingSequence() {
+  return <>
+    <p className="font-display text-lg text-parch">Порядок чтения · четыре эпизода</p>
+    <ol data-testid="egypt-reading-sequence" className="space-y-3">
+      {EGYPT_EPISODES.map((episode, i) => <li key={episode.id} className="border-l-2 border-bronze/30 pl-3">
+        <p className="font-display text-lg text-parch">{i + 1}. {episode.title}</p>
+        <p className="text-sm text-bronze">{episode.reference}</p>
+        <p className="text-sm text-parch/80 mt-1">{episode.summary}</p>
+      </li>)}
+    </ol>
+  </>;
+}
+
 function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (id: string) => void }) {
   const selected = new Set(ids);
   const entries = EXHIBITS.filter((e) => selected.has(e.id));
@@ -427,9 +440,10 @@ export default function HorebApp() {
           <p className="text-xs text-muted mt-2">Без баллов, штрафов и блокировки чтения. Путевой дневник хранится только в браузере.</p>
         </section>
         {err && <p role="alert" className="mt-6 text-amber-300">{err} <button className="link" onClick={() => setScreen('reader')}>Открыть режим чтения</button></p>}
-        <div className="mt-8 flex gap-5 justify-center text-sm reveal d3">
+        <div className="mt-8 flex flex-wrap gap-5 justify-center text-sm reveal d3">
           <button className="link" onClick={() => setIntroDialog({ kind: 'about' })}>Об экспозиции</button>
           <button className="link" onClick={() => setIntroDialog({ kind: 'sources' })}>Источники и ограничения исследования</button>
+          <button data-testid="egypt-reading-intro" className="link" onClick={() => setIntroDialog({ kind: 'departure' })}>Египет · план чтения Исх. 4–12</button>
         </div>
         {progress.last && <p className="mt-3 text-sm text-parch/75 reveal d3">
           Последняя точка сохранена. При продолжении границы у куста остаются обязательными.
@@ -447,6 +461,13 @@ export default function HorebApp() {
       </Modal>}
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={applyUiSettings} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
+      {introDialog?.kind === 'departure' && <Modal wide title="Египет · план будущей главы" onClose={() => setIntroDialog(null)}>
+        <div data-testid="egypt-intro-reading" className="space-y-3 text-parch/85 leading-relaxed">
+          <p>Это доступный без 3D порядок чтения Исх. 4:18–12:51. Отдельная египетская экспедиция ещё не построена.</p>
+          <EgyptReadingSequence />
+          <p className="text-sm text-muted">План не является исторической картой или реконструкцией Египта и не добавляет новых имён Бога к научному реестру.</p>
+        </div>
+      </Modal>}
       {introDialog?.kind === 'about' && <Modal wide title="Об экспозиции" onClose={() => setIntroDialog(null)}><AboutExhibition /></Modal>}
       {introDialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setIntroDialog(null)}>
         <StudyBookmarkList ids={bookmarks} onOpen={(id) => setIntroDialog({ kind: 'exhibit', id })} />
@@ -613,14 +634,7 @@ export default function HorebApp() {
           <p>Это конец построенной прогулки по Хориву, а не дорога до Египта. Реальная география пути не восстановлена.</p>
           <p>В Исх. 3:12 Бог обещает Моисею, что народ будет служить Ему на этой горе. В Исх. 4:18–20 Моисей возвращается к Иофору, затем отправляется в Египет с семьёй.</p>
           <p className="text-sm text-muted">{EGYPT_RETURN_STOP.place} · {EGYPT_RETURN_STOP.biblicalRange}.</p>
-          <p className="font-display text-lg text-parch">Порядок чтения · четыре эпизода</p>
-          <ol data-testid="egypt-reading-sequence" className="space-y-3">
-            {EGYPT_EPISODES.map((episode, i) => <li key={episode.id} className="border-l-2 border-bronze/30 pl-3">
-              <p className="font-display text-lg text-parch">{i + 1}. {episode.title}</p>
-              <p className="text-sm text-bronze">{episode.reference}</p>
-              <p className="text-sm text-parch/80 mt-1">{episode.summary}</p>
-            </li>)}
-          </ol>
+          <EgyptReadingSequence />
           <p className="text-sm text-bronze">Следующая историческая глава пока не построена. Здесь нет телепорта в Египет, неподтверждённых музейных объектов или притворной реконструкции расстояний.</p>
           <div className="flex flex-wrap gap-3 pt-2">
             <button className="btn btn-primary" onClick={() => setDialog(null)}>Вернуться на тропу</button>

@@ -32,6 +32,14 @@ try {
   await page.waitForSelector('h1', { timeout: 45000 });
   const title = await page.$eval('h1', (h) => h.textContent);
   if (!title?.includes('ИМЕНА БОГА')) throw new Error('Offline intro title missing');
+  // The planned Egypt reading sequence is available before any WebGL world,
+  // including from a portable file:// copy.
+  await page.click('[data-testid="egypt-reading-intro"]');
+  await page.waitForSelector('[data-testid="egypt-intro-reading"]');
+  const stages = await page.$$eval('[data-testid="egypt-reading-sequence"] > li', nodes => nodes.length);
+  if (stages !== 4) throw new Error('Offline Egypt reading sequence missing: ' + stages);
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 10000 });
   const start = await page.evaluate(() => {
     const btn = [...document.querySelectorAll('button')]
       .find((b) => b.textContent?.includes('Начать путешествие'));

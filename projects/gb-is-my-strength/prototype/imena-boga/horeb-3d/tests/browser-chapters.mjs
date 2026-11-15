@@ -25,6 +25,22 @@ try{
  page.on('pageerror',e=>errors.push(e.message));
  const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded',timeout:45000});
  if(response?.status()!==200)throw new Error('Intro HTTP '+response?.status());
+ // Egypt reading must be directly accessible from the intro and never
+ // require a successful WebGL scene or traversal to the southern lookout.
+ await page.waitForSelector('[data-testid="egypt-reading-intro"]');
+ await page.click('[data-testid="egypt-reading-intro"]');
+ await page.waitForSelector('[data-testid="egypt-intro-reading"]');
+ const introSource=await page.evaluate(()=>({
+   four:document.querySelectorAll('[data-testid="egypt-reading-sequence"] > li').length,
+   noWebGL:window.__horeb===undefined,
+   note:document.querySelector('[data-testid="egypt-intro-reading"]')?.textContent||'',
+ }));
+ if(introSource.four!==4||!introSource.noWebGL||
+    !introSource.note.includes('ещё не построена')||
+    !introSource.note.includes('не добавляет новых имён Бога'))
+   throw new Error('EGYPT READING INTRO MUST NOT REQUIRE 3D '+JSON.stringify(introSource));
+ await page.keyboard.press('Escape');
+ await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'),{timeout:15000});
  await page.waitForSelector('[data-testid="horeb-chapter-start"]');
  await page.click('[data-testid="horeb-chapter-start"]');
  await page.waitForFunction(()=>!!window.__horeb?.world?.renderer?.info?.render?.frame,{timeout:90000});
