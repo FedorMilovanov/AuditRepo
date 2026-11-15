@@ -324,6 +324,34 @@ let wallOk = true;
 for (let z = 2; z > -318; z -= 0.37) for (const x of [-40, 40]) { const r = N.constrain(x, z, true); if (Math.abs(r.x) > N.halfWidth(r.z)) wallOk = false; }
 t('walls clamp at all z (angled entries)', wallOk);
 t('chasm ledge enforced', N.constrain(10, -200, true).x <= N.LEDGE_X);
+// W2: actual route around (not through) the burning bush.
+const wadiSamples = Array.from({ length: 461 }, (_, i) => {
+  const z=-344-i*0.2, x=N.exodusTrailCentreX(z);
+  return { x,z,d:N.distToBush(x,z),actual:N.constrain(x,z,true) };
+});
+t('W2 92m trail stays at least 2.5m beyond 14m outer holy radius',
+  Math.min(...wadiSamples.map(p=>p.d))>N.R_OUTER+2.5 &&
+  wadiSamples.every(p=>Number.isFinite(p.x)&&Math.abs(p.x)<=26));
+t('W2 all centreline waypoints physically traversable without correction',
+  wadiSamples.every(p=>Math.abs(p.actual.x-p.x)<1e-5 &&
+    Math.abs(p.actual.z-p.z)<1e-5 && p.actual.block===null));
+const endWadi=N.exodusTrailWalkBounds(-430);
+t('W2 narrow final wadi and defensible end boundary',
+  Math.abs(endWadi.right-endWadi.left-5)<1e-6 &&
+  Math.abs(N.constrain(24,-430,true).x-endWadi.right)<1e-6 &&
+  Math.abs(N.constrain(-25,-430,true).x-endWadi.left)<1e-6 &&
+  N.constrain(0,-500,true).z===N.EXODUS_TRAIL_LIMIT_Z);
+t('W2 preserves existing cave and 14m/6.5m bush barriers',
+  N.constrain(0,-330,true).x===0 &&
+  N.constrain(0,-353,true).block==='outer' &&
+  N.constrain(0,-365,false).block==='inner' &&
+  N.constrain(NaN,-420,true).z===N.START.z);
+t('W2 route continuous at walking-sized samples',
+  wadiSamples.every((p,i)=>i===0||Math.hypot(
+    p.actual.x-wadiSamples[i-1].actual.x,
+    p.actual.z-wadiSamples[i-1].actual.z)<0.65) &&
+  N.EXODUS_TRAIL_LOOKOUT_Z>N.EXODUS_TRAIL_LIMIT_Z);
+
 // The old step-function ledge snapped x by several metres at z=-176.
 let previous = N.constrain(10, -175.9, true), largestJump = 0;
 for (let z = -175.91; z > -182; z -= 0.01) {

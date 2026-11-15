@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { fbm, rng, glowTexture, shaftMaterial, caveSurfaceVariation } from './procedural';
-import { halfWidth, vaultHeight, LEDGE_X, TUNNEL_END, BUSH, R_OUTER, R_INNER, chasmFactor } from './nav';
+import { halfWidth, vaultHeight, LEDGE_X, TUNNEL_END, BUSH, R_OUTER, R_INNER, chasmFactor, exodusTrailCentreX } from './nav';
 
 export interface Obstacle { x: number; z: number; r: number }
 export interface Built {
@@ -624,8 +624,20 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const flank = ss(2.2, 5.0, Math.abs(x)) * (1 - ss(10, 16, Math.abs(x)));
       const gravel = fbm(x * 0.29 + 11, 2.4, z * 0.21 - 7, 3) - 0.5;
       const rill = -0.12 * Math.exp(-((x - 7) ** 2) / 12);
-      return near + mask * (ridge + horeb * 0.9) + backWall +
+      const naturalRock = near + mask * (ridge + horeb * 0.9) + backWall +
         apron * flank * (0.22 * gravel + rill);
+      // A carved natural alluvial valley in the SAME actual exterior
+      // triangles: no ribbon/second plane or extra collider/draw calls.
+      // Fade near the existing cave and sacred outer bush perimeter.
+      const longitudinal = ss(-344, -360, z) * (1-ss(-450, -466, z));
+      const sacredClearance = ss(R_OUTER+0.6, R_OUTER+4.1,
+        Math.hypot(x-BUSH.x, z-BUSH.z));
+      const distance = Math.abs(x-exodusTrailCentreX(z));
+      const valley = 1-ss(10,23,distance);
+      const footbed = 1-ss(1.7,4.8,distance);
+      const alluvial = 0.05+near*0.11-0.13*footbed;
+      const w = longitudinal*sacredClearance*valley;
+      return naturalRock*(1-w)+alluvial*w;
     };
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
@@ -682,6 +694,11 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const hcol = Math.min(1, y / 200);
       const outdoor = [(0.26 + hcol * 0.08) * v,
         (0.2 + hcol * 0.05) * v, (0.17 + hcol * 0.06) * v];
+      // Local natural gravel sorting, not bright markers.
+      const trailTint = ss(-344,-360,z)*(1-ss(-450,-466,z)) *
+        (1-ss(2,4.6,Math.abs(x-exodusTrailCentreX(z)))) *
+        ss(R_OUTER+0.6,R_OUTER+4.1,Math.hypot(x-BUSH.x,z-BUSH.z));
+      for (let k=0;k<3;k++) outdoor[k] *= 1+trailTint*(k===0?0.12:0.08);
       if (mouth > 0) {
         const inside = floorColor(x, z);
         tc.push(

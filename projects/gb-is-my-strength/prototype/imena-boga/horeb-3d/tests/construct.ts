@@ -5,7 +5,7 @@ import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
-import { steleVariation, TUNNEL_END, LEDGE_X } from '../src/imena-boga-horeb-3d/engine/nav';
+import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, exodusTrailCentreX } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffsets, isApprovedAudioTrack, matchesAudioSha256 } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
@@ -956,6 +956,24 @@ for (const lowMode of [true, false]) {
   t('Horeb rock face aperture clears real wider cave shell ' +
       (lowMode ? 'LOW' : 'HIGH'),
     apertureSafe);
+  // These are actual vertices of the only terrain mesh, NOT a ghost trail.
+  if (terrain instanceof THREE.Mesh) {
+    const pos=terrain.geometry.getAttribute('position');
+    for (const sampleZ of [-411,-430]) {
+      const sampleX=exodusTrailCentreX(sampleZ);
+      let nearest={d:Infinity,y:NaN,x:NaN,z:NaN};
+      for (let i=0;i<pos.count;i++) {
+        const x=pos.getX(i), z=pos.getZ(i);
+        const d=Math.hypot(x-sampleX,z-sampleZ);
+        if (d<nearest.d) nearest={d,y:pos.getY(i),x,z};
+      }
+      console.log('W2 ACTUAL TERRAIN '+(lowMode?'LOW':'HIGH')+' '+JSON.stringify({sampleZ,sampleX,nearest}));
+      t('W2 physically carved alluvial route at '+sampleZ+' '+(lowMode?'LOW':'HIGH'),
+        nearest.d<7.5 && nearest.y> -0.75 && nearest.y<1.0);
+    }
+    t('W2 original exterior mesh extends beyond new walking lookout '+(lowMode?'LOW':'HIGH'),
+      minZ(terrain)<EXODUS_TRAIL_LIMIT_Z-50);
+  }
 }
 
 // Local mineral shading is attached to the ORIGINAL shell, not a giant

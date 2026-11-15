@@ -268,6 +268,45 @@ try {
       throw new Error('SIDE could not return to central passage ' +
         JSON.stringify(centre));
   }
+  if (SIDE_SHARD === '7') {
+    // W2: existing actual-player test extends beyond the prior z=-396
+    // boundary. No teleport or state mutation in either direction.
+    const wadi = [{x:-6,z:-350},{x:-15,z:-356},{x:-18,z:-365},
+      {x:-18,z:-383},{x:-16,z:-396},{x:-12,z:-410},
+      {x:-8,z:-425},{x:-8,z:-433}];
+    record.trail={outward:[],back:[],screenshots:[],mode:'real keyboard + live WebGL'};
+    for (const [i,p] of wadi.entries()) {
+      await face(0,'W2 outward facing '+i);
+      await axis('x',p.x,'W2 outward x '+i,0.55);
+      await axis('z',p.z,'W2 outward z '+i,0.55);
+      const at=await read(); safe(at,'W2 outward '+i);
+      if(Math.abs(at.x-p.x)>0.85||Math.abs(at.z-p.z)>0.85)
+        throw new Error('W2 actual outward missed '+JSON.stringify({p,at}));
+      record.trail.outward.push({p,at});
+    }
+    const shot='journey-side-7-wadi-lookout.png';
+    await page.screenshot({path:join(shots,shot)});record.trail.screenshots.push(shot);
+    for(let i=wadi.length-2;i>=0;i--){
+      const p=wadi[i];
+      await face(0,'W2 return facing '+i);
+      await axis('z',p.z,'W2 return z '+i,0.55);
+      await axis('x',p.x,'W2 return x '+i,0.55);
+      const at=await read();safe(at,'W2 return '+i);
+      if(Math.abs(at.x-p.x)>0.85||Math.abs(at.z-p.z)>0.85)
+        throw new Error('W2 actual return missed '+JSON.stringify({p,at}));
+      record.trail.back.push({p,at});
+    }
+    await face(0,'W2 home facing');
+    await axis('z',-346.7,'W2 return home z',0.75);
+    await axis('x',0,'W2 return home x',0.65);
+    const home=await read();safe(home,'W2 home');
+    if(Math.abs(home.x)>0.8||Math.abs(home.z+346.7)>1)
+      throw new Error('W2 home unreachable '+JSON.stringify(home));
+    const homeShot='journey-side-7-wadi-return.png';
+    await page.screenshot({path:join(shots,homeShot)});
+    record.trail.screenshots.push(homeShot);
+    console.log('PASS W2 real wadi path 8 outward / 7 backward waypoints and back to main path');
+  }
   const teleportViolations = await page.evaluate(() => window.__horebSideTeleportViolations);
   record.teleportCalls = teleportViolations;
   if (teleportViolations !== 0)

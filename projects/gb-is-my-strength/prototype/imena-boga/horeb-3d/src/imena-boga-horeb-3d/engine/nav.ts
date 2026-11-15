@@ -4,6 +4,22 @@ export const BUSH = { x: 0, z: -366 };
 export const R_OUTER = 14; // внешний порог: в обуви ближе нельзя
 export const R_INNER = 6.5; // внутренний рубеж: нельзя никогда
 export const TUNNEL_END = -318;
+/** Physically walkable departure to the left of Horeb's protected bush.
+ * These are world coordinates, NOT a teleport into historical Egypt. */
+export const EXODUS_TRAIL_LOOKOUT_Z = -434;
+export const EXODUS_TRAIL_LIMIT_Z = -438;
+const trailEase = (a: number, b: number, z: number): number => {
+  const t = Math.min(1, Math.max(0, (z-a)/(b-a)));
+  return t*t*(3-2*t);
+};
+export function exodusTrailCentreX(z: number): number {
+  if (!Number.isFinite(z)) return NaN;
+  return -18*trailEase(-344,-360,z) + 10*trailEase(-385,-425,z);
+}
+export function exodusTrailWalkBounds(z: number): { left: number; right: number } {
+  const t = trailEase(-396,-414,z), x = exodusTrailCentreX(z);
+  return { left: -26*(1-t)+(x-2.5)*t, right: 26*(1-t)+(x+2.5)*t };
+}
 export const START = { x: 0, z: -2 };
 
 // Контрольные точки: [z, визуальная полуширина, высота свода]
@@ -98,7 +114,14 @@ export function constrain(x: number, z: number, shod: boolean): { x: number; z: 
     // Открытый ландшафт у Хорива
     if (x > 26) { x = 26; block = 'wall'; }
     if (x < -26) { x = -26; block = 'wall'; }
-    if (z < -396) { z = -396; block = 'wall'; }
+    if (z < EXODUS_TRAIL_LIMIT_Z) { z = EXODUS_TRAIL_LIMIT_Z; block = 'wall'; }
+    // A real wadi on the existing terrain; progressively narrow from
+    // the old plateau. Same centreline as the eroded geometry.
+    if (z < -396) {
+      const wadi = exodusTrailWalkBounds(z);
+      if (x < wadi.left) { x = wadi.left; block = 'wall'; }
+      if (x > wadi.right) { x = wadi.right; block = 'wall'; }
+    }
     // Выход из тоннеля: у скалы допустим только проём
     if (z > TUNNEL_END - 3 && Math.abs(x) > 2) { z = TUNNEL_END - 3; }
   }
