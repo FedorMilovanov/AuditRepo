@@ -247,6 +247,14 @@ try {
     if (ready.prompt?.id !== item.id ||
         !await page.evaluate((id) => window.__horeb.world.canInspectExhibit(id), item.id))
       throw new Error('SIDE prompt/inspection wrong ' + JSON.stringify(ready));
+    // A modal screenshot proves E opens the dossier, but obscures the
+    // physical chapter art. Capture the real visitor's unobstructed view
+    // before E for independent visual review of the two Exodus 3 markers.
+    if (SIDE_SHARD === '7') {
+      const artFile = 'journey-side-7-' + item.id + '-physical-view.png';
+      await page.screenshot({ path: join(shots, artFile) });
+      record.segments.push({ label: item.id + '-physical-art-view', screenshot: artFile, ...ready });
+    }
     await page.keyboard.press('KeyE');
     await page.waitForSelector('[role="dialog"]', { timeout: 12000 });
     const actual = await page.$eval('[role="dialog"]', (node) => node.textContent || '');
@@ -296,6 +304,10 @@ try {
       await face(0,'W2 return facing '+i);
       await axis('z',p.z,'W2 return z '+i,0.55);
       await axis('x',p.x,'W2 return x '+i,0.55);
+      // Real A/D strafing with yaw close to (but not exactly) zero
+      // changes z slightly. Correct that cross-axis drift with physical
+      // W/S input before the strict waypoint assertion; do not relax it.
+      await axis('z',p.z,'W2 return re-center '+i,0.45);
       const at=await read();safe(at,'W2 return '+i);
       if(Math.abs(at.x-p.x)>0.85||Math.abs(at.z-p.z)>0.85)
         throw new Error('W2 actual return missed '+JSON.stringify({p,at}));
