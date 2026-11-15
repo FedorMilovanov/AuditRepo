@@ -12,7 +12,7 @@ import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffs
 import { narrationPlan, APPROVED_BILINGUAL_CUES, NARRATION_LANGUAGE_LABEL } from '../src/imena-boga-horeb-3d/data/narrationPlan';
 import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 import { caveSurfaceVariation } from '../src/imena-boga-horeb-3d/engine/procedural';
-import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop, ravineTerraceOffset, ravineFacetLight } from '../src/imena-boga-horeb-3d/engine/SceneZones';
+import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravineMetricUvWeight, opposingRavineRelief, opposingRavineDrop, ravineTerraceOffset, ravineFacetLight, opposingRavineSetback } from '../src/imena-boga-horeb-3d/engine/SceneZones';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -1079,6 +1079,23 @@ t('zone-4 relief changes smoothly across adjacent 3D samples',
     Math.abs(opposingRavineRelief(23, -24, z + 0.04, 1) -
       opposingRavineRelief(23, -24, z - 0.04, 1)) < 0.25) &&
   Math.abs(opposingRavineRelief(23, -23, -200, 0.02)) < 0.024);
+// The W4 openness contract must keep roof and pedestrian ground in place,
+// while shifting only actual far-face cliff vertices away from the ledge.
+const setbackLow=opposingRavineSetback(22,-2,-200,1,1);
+const setbackMid=opposingRavineSetback(22,16,-200,1,1);
+t('zone-4 opposing wall really recedes in depth, without modifying upper roof',
+  setbackLow>10 && setbackLow<12 &&
+  setbackMid>0 && setbackMid<setbackLow &&
+  opposingRavineSetback(22,28,-200,1,1)===0 &&
+  opposingRavineSetback(3.2,-12,-200,1,-1)===0 &&
+  opposingRavineSetback(-8,-12,-200,1,1)===0 &&
+  opposingRavineSetback(22,-12,-200,0,1)===0);
+t('zone-4 setback tapers in chasm factor rather than leaving wall seams',
+  opposingRavineSetback(22,0,-200,0.1,1)>0 &&
+  Math.abs(opposingRavineSetback(22,0,-200,0.1,1) -
+    0.1*opposingRavineSetback(22,0,-200,1,1))<0.00001 &&
+  Math.abs(opposingRavineSetback(22,0,-200,0.51,1) -
+    opposingRavineSetback(22,0,-200,0.50,1))<0.13);
 // The previous deep 55m wall was nearly planar in screenshots despite
 // real ray hits. Its new two stepped faces must have measurable recession.
 const upperTerrace = ravineTerraceOffset(23, -18, -200, 1);
@@ -1151,9 +1168,9 @@ for (const lowMode of [true, false]) {
       }
     }
   }
-  t('zone-4 opposing cliff opens real 20m+ ravine without extra geometry ' +
+  t('zone-4 opposing cliff opens genuinely recessed 30m+ ravine ' +
     (lowMode ? 'LOW' : 'HIGH'),
-    intersectedRockEdges >= 2 && farRockX > 20 && farRockX < 28);
+    intersectedRockEdges >= 2 && farRockX > 30 && farRockX < 43);
   const terraces = opposingVault instanceof THREE.Mesh
     ? opposingVault.userData.ravineTerraces as {
       affectedVertices: number; maxOffset: number; sculptedInOriginalShell: boolean

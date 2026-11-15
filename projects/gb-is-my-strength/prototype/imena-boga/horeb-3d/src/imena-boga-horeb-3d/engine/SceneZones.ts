@@ -99,6 +99,24 @@ const TINTS: [number, [number, number, number]][] = [
  * ~50m down the ravine across just a handful of contour samples. Blending
  * by actual world coordinates preserves the existing floor, visitor ledge
  * and all seven other zones without second textures or a special material. */
+/** W4: move the OPPOSING ravine face away from the visitor at its lower
+ * elevations. Old far-wall mesh genuinely contained a 55m descent but
+ * its front surface occupied most of the camera view, reading as a
+ * featureless tall wall instead of an open chasm. Keep the high roof and
+ * walkable floor fully unchanged: setback exists only on facing far-rock
+ * triangles, tapers to zero at upper shell and both ends of zone 4.
+ * No detached mesh, occlusion card, added light or collider.
+ */
+export function opposingRavineSetback(
+  x: number, y: number, z: number, chasm: number, facing: number,
+): number {
+  if (![x,y,z,chasm,facing].every(Number.isFinite) ||
+      chasm<=0 || x<=0 || facing<=0 || y>=27) return 0;
+  const upperTaper=1-ss(10,27,y);
+  const grain=fbm(z*0.095+6, y*0.025-2, x*0.012, 3);
+  return 12*Math.min(1,chasm)*Math.pow(Math.min(1,facing),1.35) *
+    upperTaper*(0.87+0.13*grain);
+}
 /** Actual continuous, bounded geology on the opposing *deep* ravine wall.
  * The existing rock used largely planar triangles and relied on a stretched
  * texture to imply fractures. Displace its real vertices, not billboard
@@ -277,6 +295,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
         if (cf > 0 && ca > 0) {
           const irregular = fbm(x * 0.11 + 2, y * 0.08, z * 0.10, low ? 2 : 3);
           x += cf * Math.pow(ca, 1.35) * (8.5 + 2.1 * irregular);
+          // Physical opposing-face setback creates genuine open air above
+          // the plunging strata, unlike painted darkness or fake depth.
+          x += opposingRavineSetback(x, y, z, cf, ca);
         }
         if (cf > 0 && ca > 0) y -= opposingRavineDrop(y, H, cf);
         const cliffRelief = opposingRavineRelief(x, y, z, cf);
