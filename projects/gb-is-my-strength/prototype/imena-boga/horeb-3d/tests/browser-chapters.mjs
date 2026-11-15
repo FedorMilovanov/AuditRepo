@@ -173,6 +173,7 @@ try{
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
+ await page.close(); // release the desktop WebGL context before phone QA
  // Recheck the NEW chapter on a phone-sized touch viewport. The existing
  // general smoke's prompt witness is in the 42-object archive, so it alone
  // cannot prove both chapter stones retain readable touch interactions.
@@ -226,7 +227,49 @@ try{
        throw new Error('MOBILE HOREB DOSSIER '+id);
    }finally{await phone.close();}
  }
- console.log('PASS W5E chapter: 2 Exodus-3 natural stones with mobile tap, 42 legacy, and sacred guards; errors=0');
+ // Phone-landscape guard: the verse and sandal action must never cover the
+ // bottom-left touch joystick. One REAL shod walk, then responsive viewport
+ // changes on the SAME live world (not teleport or fabricated World state).
+ const landscape=await browser.newPage();
+ try {
+   await landscape.setViewport({width:844,height:390,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+   await landscape.goto(base+'/?e2e',{waitUntil:'domcontentloaded',timeout:45000});
+   await landscape.click('[data-testid="horeb-chapter-start"]');
+   await landscape.waitForFunction(()=>window.__horeb?.world?.renderer?.info?.render?.frame,
+     {timeout:90000});
+   await landscape.keyboard.down('w');
+   await landscape.waitForFunction(()=>window.__horeb?.world?.position?.z<-351.2,{timeout:90000});
+   await landscape.keyboard.up('w');
+   await landscape.waitForSelector('[data-testid="sandal-action"]',{timeout:12000});
+   for(const [width,height] of [[844,390],[667,375],[568,320]]){
+     await landscape.setViewport({width,height,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+     const layout=await landscape.evaluate(()=>{
+       const rect=s=>document.querySelector(s)?.getBoundingClientRect()||null;
+       const g=rect('[role="alert"]'),j=rect('[data-testid="movement-joystick"]'),
+         a=rect('[data-testid="touch-action"]'),b=rect('[data-testid="sandal-action"]');
+       const overlap=(x,y)=>!!x&&!!y&&x.left<y.right+8&&x.right+8>y.left&&
+         x.top<y.bottom+8&&x.bottom+8>y.top;
+       const panel=document.querySelector('[role="alert"]');
+       return {ready:!!g&&!!j&&!!a&&!!b,
+         complete:panel?.textContent?.includes('Не подходи')&&
+           panel?.textContent?.includes('Исх. 3:5'),
+         buttonVisible:!!b&&!!g&&b.top>=0&&b.bottom<=innerHeight&&
+           b.left>=g.left&&b.right<=g.right,
+         fits:!!g&&g.top>=0&&g.bottom<=innerHeight&&
+           g.left>=0&&g.right<=innerWidth&&panel.scrollHeight<=panel.clientHeight+1,
+         avoidsControls:!overlap(g,j)&&!overlap(g,a),
+         viewport:[innerWidth,innerHeight]};
+     });
+     if(!layout.ready||!layout.complete||!layout.buttonVisible||
+        !layout.fits||!layout.avoidsControls)
+       throw new Error('HOREB LANDSCAPE GATE '+JSON.stringify(layout));
+     await landscape.screenshot({path:join(out,`smoke-chapter-landscape-${width}x${height}.png`)});
+   }
+   await landscape.tap('[data-testid="sandal-action"]');
+   await landscape.waitForFunction(()=>window.__horeb?.world?.shoes==='unshod',
+     {timeout:90000});
+ }finally{await landscape.close();}
+ console.log('PASS W5E chapter: 2 natural Exodus witnesses, mobile taps, 3 landscape gates, 42 legacy and sacred guards; errors=0');
  writeFileSync(join(process.cwd(),'.test-build','chapters-witness.json'),
    JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,outer,outerDistance,inner,innerDistance,north},errors,
      source:'actual Chromium/WebGL keyboard + scene mesh inspection'},null,2));

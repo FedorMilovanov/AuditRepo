@@ -519,7 +519,7 @@ export default function HorebApp() {
 
       {/* Святой порог */}
       {gateOuter && !dialog && (
-        <section role="alert" className={`gate absolute left-1/2 -translate-x-1/2 ${isTouch ? 'top-24' : 'bottom-4 sm:bottom-6'} w-[min(94vw,36rem)] text-center p-4`}>
+        <section role="alert" className={`gate ${isTouch ? 'gate-touch' : ''} absolute left-1/2 -translate-x-1/2 ${isTouch ? 'top-24' : 'bottom-4 sm:bottom-6'} w-[min(94vw,36rem)] text-center p-4`}>
           <p className="font-display text-lg sm:text-xl italic leading-snug">«{EX_3_5_RU}»</p>
           <p className="text-xs text-muted mt-2">{EX_3_5_SOURCE}</p>
           <button data-testid="sandal-action" className="btn btn-primary mt-4" onClick={() => worldRef.current?.removeShoes()}>Снять обувь {!isTouch && <span className="opacity-60 text-xs ml-1">E</span>}</button>
