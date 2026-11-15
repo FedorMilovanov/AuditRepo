@@ -307,12 +307,12 @@ export default function HorebApp() {
       const free = tag === 'BODY' || tag === 'CANVAS' || !tag;
       if (e.code === 'KeyE' || (e.key === 'Enter' && free)) { e.preventDefault(); interact(); }
       else if (e.code === 'KeyF' && free) { e.preventDefault(); inspectSiteClue(); }
-      else if (e.code === 'KeyM') setDialog({ kind: 'map' });
+      else if (e.code === 'KeyM' && routeMode === 'legacy') setDialog({ kind: 'map' });
       else if (e.code === 'KeyR') worldRef.current?.resetCamera();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [screen, dialog, interact, inspectSiteClue]);
+  }, [screen, dialog, interact, inspectSiteClue, routeMode]);
 
   const start = (mode: ExpeditionMode) => {
     setErr(null); setFinale('none'); setRouteMode(mode);
@@ -464,7 +464,7 @@ export default function HorebApp() {
           {routeMode === 'horeb' ? <>
             <p className="eyebrow">Исход 3–4 · самостоятельная глава</p>
             <p className="font-display text-xl sm:text-2xl leading-tight">Призвание Моисея</p>
-            <p className="text-xs text-bronze/90 mt-1">Купина · ${HOREB_CALL_STOP.exhibitIds.length} свидетельства · открытая долина</p>
+            <p className="text-xs text-bronze/90 mt-1">Купина · {HOREB_CALL_STOP.exhibitIds.length} свидетельства · открытая долина</p>
           </> : <>
             <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
             <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>

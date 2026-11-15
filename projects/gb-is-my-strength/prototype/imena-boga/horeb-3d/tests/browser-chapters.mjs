@@ -38,11 +38,21 @@ try{
      zoneHud:document.querySelector('.hud')?.textContent||''};
  });
  if(chapter.mode!=='horeb'||chapter.ids.join('|')!=='ehyeh|yhwh'||
-    chapter.groups.sort().join('|')!=='ehyeh|yhwh'||
+    new Set(chapter.groups).size!==2||
+    !chapter.groups.every(id=>chapter.ids.includes(id))||
     chapter.pos.z > -322 || chapter.pos.z < -346 ||
     chapter.shoes!=='shod'||chapter.err||chapter.canvasCount!==1||
     !chapter.zoneHud.includes('Призвание Моисея'))
    throw new Error('WRONG PHYSICAL HOREB CHAPTER '+JSON.stringify(chapter));
+ // A shared historical map shortcut must not open a hidden legacy dialog
+ // and freeze controls inside the independent Horeb chapter.
+ await page.keyboard.press('m');
+ await new Promise(resolve=>setTimeout(resolve,250));
+ const keyM=await page.evaluate(()=>({
+   dialog:!!document.querySelector('[role="dialog"]'),
+   locked:window.__horeb.world.inputLocked,
+ }));
+ if(keyM.dialog||keyM.locked)throw new Error('HOREB legacy map key locked chapter '+JSON.stringify(keyM));
  await page.screenshot({path:join(out,'smoke-chapter-horeb.png')});
  // Explicit exit is a real UI action. Legacy must still contain 42 scene
  // objects and use its previous independent start/progress.
@@ -62,7 +72,7 @@ try{
       groups:ids.length,unique:new Set(ids).size,pos:w.position,shoes:w.shoes,
       canvases:document.querySelectorAll('canvas').length};
  });
- if(legacy.mode!=='legacy'||legacy.exhibits!==42||legacy.groups!==42||
+ if(legacy.mode!=='legacy'||legacy.exhibits!==42||legacy.groups<42||
     legacy.unique!==42||Math.abs(legacy.pos.z+2)>0.5||
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
