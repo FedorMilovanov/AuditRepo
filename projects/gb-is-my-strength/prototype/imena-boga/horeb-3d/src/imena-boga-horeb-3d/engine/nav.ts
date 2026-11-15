@@ -10,6 +10,15 @@ export const HOREB_NORTH_EDGE_Z = -332.5;
  * These are world coordinates, NOT a teleport into historical Egypt. */
 export const EXODUS_TRAIL_LOOKOUT_Z = -434;
 export const EXODUS_TRAIL_LIMIT_Z = -438;
+/** A chapter-end reading viewpoint, not a real-world map to Egypt.
+ * Only reached from the actual southern valley inside standalone Horeb. */
+export function isHorebDepartureLookout(
+  x: number, z: number, mode: 'legacy' | 'horeb',
+): boolean {
+  return mode === 'horeb' && Number.isFinite(x) && Number.isFinite(z) &&
+    z <= EXODUS_TRAIL_LOOKOUT_Z + 3 && z >= EXODUS_TRAIL_LIMIT_Z - 0.01 &&
+    Math.abs(x - exodusTrailCentreX(z)) <= 7.8;
+}
 const trailEase = (a: number, b: number, z: number): number => {
   const t = Math.min(1, Math.max(0, (z-a)/(b-a)));
   return t*t*(3-2*t);

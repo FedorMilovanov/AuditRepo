@@ -173,6 +173,8 @@ try{
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
+ if(await page.$('[data-testid="horeb-departure-preview"]'))
+   throw new Error('LEGACY MUST NOT SHOW FUTURE EGYPT CHAPTER');
  await page.close(); // release the desktop WebGL context before phone QA
  // Recheck the NEW chapter on a phone-sized touch viewport. The existing
  // general smoke's prompt witness is in the 42-object archive, so it alone
@@ -269,7 +271,45 @@ try{
    await landscape.waitForFunction(()=>window.__horeb?.world?.shoes==='unshod',
      {timeout:90000});
  }finally{await landscape.close();}
- console.log('PASS W5E chapter: 2 natural Exodus witnesses, mobile taps, 3 landscape gates, 42 legacy and sacred guards; errors=0');
+ // Only the trigger/UI is posed here: the existing side-journey shader QA
+ // separately proves the eight real walking waypoints to the same outlook.
+ // This programmatic safe-position fixture MUST NOT be counted as a walk.
+ const next=await browser.newPage();
+ try{
+   await next.setViewport({width:1024,height:768,deviceScaleFactor:1});
+   await next.goto(base+'/?e2e',{waitUntil:'domcontentloaded',timeout:45000});
+   await next.click('[data-testid="horeb-chapter-start"]');
+   await next.waitForFunction(()=>window.__horeb?.world?.renderer?.info?.render?.frame,
+     {timeout:90000});
+   if(await next.$('[data-testid="horeb-departure-preview"]'))
+     throw new Error('DEPARTURE CARD VISIBLE AT HOREB ENTRANCE');
+   await next.evaluate(()=>{
+     const w=window.__horeb.world;
+     w.teleportTo(-8,-433); // safe test-only UI pose; NOT proof of travel
+     w.emit(true);
+   });
+   await next.waitForSelector('[data-testid="horeb-departure-preview"]',{timeout:12000});
+   await next.screenshot({path:join(out,'smoke-chapter-departure-outlook.png')});
+   await next.click('[data-testid="horeb-departure-preview"]');
+   await next.waitForSelector('[data-testid="horeb-departure-context"]',{timeout:12000});
+   const claim=await next.$eval('[data-testid="horeb-departure-context"]',
+     el=>el.textContent||'');
+   if(!claim.includes('Исх. 3:12')||!claim.includes('Исх. 4:18–20')||
+       !claim.includes('не построена')||!claim.includes('нет телепорта'))
+     throw new Error('DEPARTURE MUST MARK NEXT CHAPTER UNBUILT AND NON-GEOGRAPHICAL');
+   await next.screenshot({path:join(out,'smoke-chapter-departure-reader.png')});
+   await next.keyboard.press('Escape');
+   await next.waitForFunction(()=>!document.querySelector('[role="dialog"]'),
+     {timeout:12000});
+   await next.evaluate(()=>{
+     const w=window.__horeb.world;
+     w.teleportTo(-8,-425); // exit the UI-only viewpoint, safe by production nav
+     w.emit(true);
+   });
+   await next.waitForFunction(()=>!document.querySelector('[data-testid="horeb-departure-preview"]'),
+     {timeout:12000});
+ }finally{await next.close();}
+ console.log('PASS W5F chapter: 2 Exodus witnesses, 3 landscape gates, 42 archive, bounded departure text; errors=0');
  writeFileSync(join(process.cwd(),'.test-build','chapters-witness.json'),
    JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,outer,outerDistance,inner,innerDistance,north},errors,
      source:'actual Chromium/WebGL keyboard + scene mesh inspection'},null,2));

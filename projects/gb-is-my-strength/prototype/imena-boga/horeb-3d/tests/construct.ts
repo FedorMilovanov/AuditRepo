@@ -5,7 +5,7 @@ import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
-import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, exodusTrailCentreX } from '../src/imena-boga-horeb-3d/engine/nav';
+import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, EXODUS_TRAIL_LOOKOUT_Z, exodusTrailCentreX, isHorebDepartureLookout } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS, narrationOffsets, isApprovedAudioTrack, matchesAudioSha256 } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
@@ -16,6 +16,15 @@ import { buildZones, PLACEMENTS, exitVaultRelief, ravineStrataReflectance, ravin
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+
+t('Horeb departure viewpoint is only visible near actual south trail terminus',
+  isHorebDepartureLookout(exodusTrailCentreX(EXODUS_TRAIL_LOOKOUT_Z), EXODUS_TRAIL_LOOKOUT_Z, 'horeb') &&
+  isHorebDepartureLookout(-8, -433, 'horeb') &&
+  !isHorebDepartureLookout(0, -338, 'horeb') &&
+  !isHorebDepartureLookout(-8, -433, 'legacy') &&
+  !isHorebDepartureLookout(22, -433, 'horeb') &&
+  !isHorebDepartureLookout(NaN, -433, 'horeb') &&
+  !isHorebDepartureLookout(-8, -451, 'horeb'));
 
 let totalHigh = 0, totalLow = 0;
 const errors: string[] = [];

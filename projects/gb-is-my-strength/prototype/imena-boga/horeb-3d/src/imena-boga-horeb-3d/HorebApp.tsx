@@ -15,13 +15,13 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
-import { R_INNER } from './engine/nav';
+import { R_INNER, isHorebDepartureLookout } from './engine/nav';
 
 type Screen = 'intro' | 'world' | 'reader';
-type Dialog = null | { kind: 'learning' } | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
+type Dialog = null | { kind: 'departure' } | { kind: 'learning' } | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
 const LS_SETTINGS = 'imena-horeb.settings.v1';
 const LS_PROGRESS = 'imena-horeb.progress.v1';
 
@@ -374,6 +374,7 @@ export default function HorebApp() {
   // User-approved subdued HUD: let the bush take visual focus at close range.
   // Critical prompts and the sandal gate live outside .hud and remain opaque.
   const hudOpacity = ws && ws.zone === 7 ? Math.max(0.4, Math.min(1, (ws.distBush - 8) / 28)) : 1;
+  const atHorebLookout = !!ws && isHorebDepartureLookout(ws.x, ws.z, routeMode);
 
   if (screen === 'reader') return <AccessibleReader
     onClose={() => { history.replaceState(null, '', location.pathname); setScreen('intro'); }}
@@ -540,6 +541,15 @@ export default function HorebApp() {
         </button>
       )}
 
+      {atHorebLookout && !dialog && ws?.shoes !== 'removing' && (
+        <button data-testid="horeb-departure-preview"
+          className="departure-preview absolute z-20 left-1/2 -translate-x-1/2 bottom-44 sm:bottom-12 w-[min(86vw,25rem)] min-h-11 rounded-sm border border-bronze/55 bg-black/90 px-3 py-2 text-center text-parch shadow-lg"
+          onClick={() => setDialog({ kind: 'departure' })}>
+          <span className="block text-xs text-bronze">Конец прогулки · продолжение в Писании</span>
+          <span className="block font-display text-lg leading-snug">Возвращение в Египет · Исх. 4:18–20</span>
+        </button>
+      )}
+
       {ws?.focusClue && !dialog && ws.shoes !== 'removing' && (
         <button data-testid="focus-story-clue" className={`absolute right-4 ${isTouch ? 'bottom-64' : 'bottom-32'} sm:right-8 z-20 max-w-[min(70vw,19rem)] rounded-sm border border-bronze/55 bg-black/85 px-3 py-3 text-sm text-left text-parch shadow-lg`}
           onClick={inspectSiteClue} aria-label={'Изучить в 3D: ' + SITE_CLUES[ws.focusClue].label}>
@@ -566,7 +576,7 @@ export default function HorebApp() {
         <p className="mt-2 font-display text-lg sm:text-xl leading-snug text-parch/90">{guideCaption}</p>
       </section>}
 
-      {finale === 'show' && !dialog && (
+      {finale === 'show' && !dialog && (routeMode === 'legacy' || (!!ws && ws.distBush < R_INNER + 4)) && (
         <section className="absolute right-4 bottom-28 sm:right-8 sm:bottom-10 w-[min(90vw,24rem)] gate p-5" aria-label="Место наблюдения">
           <p className="font-display text-lg italic">Здесь можно остановиться и молчать.</p>
           <p className="text-sm text-parch/75 mt-2">Рядом — Исх. 3:12–15: обещание «Я буду с тобою», самоназвание <Original e={EXHIBITS.find((e) => e.id === 'ehyeh')!} /> и имя <Original e={EXHIBITS.find((e) => e.id === 'yhwh')!} /> — разные формы в разных стихах.</p>
@@ -597,6 +607,18 @@ export default function HorebApp() {
           completed={fieldJournal.includes(exhibit.id)}
           onComplete={(id, a, b, answer) => setFieldJournal((old) => markFieldStudy(old, id, a, b, answer))} />}
         <ExhibitCard e={exhibit} headingLevel={2} />
+      </Modal>}
+      {dialog?.kind === 'departure' && routeMode === 'horeb' && <Modal wide title="Продолжение Исхода · другая локация" onClose={() => setDialog(null)}>
+        <div data-testid="horeb-departure-context" className="space-y-3 text-parch/85 leading-relaxed">
+          <p>Это конец построенной прогулки по Хориву, а не дорога до Египта. Реальная география пути не восстановлена.</p>
+          <p>В Исх. 3:12 Бог обещает Моисею, что народ будет служить Ему на этой горе. В Исх. 4:18–20 Моисей возвращается к Иофору, затем отправляется в Египет с семьёй.</p>
+          <p className="text-sm text-muted">{EGYPT_RETURN_STOP.place} · {EGYPT_RETURN_STOP.biblicalRange}.</p>
+          <p className="text-sm text-bronze">Следующая историческая глава пока не построена. Здесь нет телепорта в Египет, нового Research ID или притворной реконструкции расстояний.</p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button className="btn btn-primary" onClick={() => setDialog(null)}>Вернуться на тропу</button>
+            <button className="btn" onClick={() => leaveWorld('reader')}>Читать 42 досье</button>
+          </div>
+        </div>
       </Modal>}
       {dialog?.kind === 'menu' && <Modal title="Управление экспозицией" onClose={() => setDialog(null)}>
         <div className="grid gap-3">
