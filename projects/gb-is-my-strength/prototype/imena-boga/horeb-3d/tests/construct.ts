@@ -971,6 +971,23 @@ for (const lowMode of [true, false]) {
       t('W2 physically carved alluvial route at '+sampleZ+' '+(lowMode?'LOW':'HIGH'),
         nearest.d<7.5 && nearest.y> -0.75 && nearest.y<1.0);
     }
+    // The navigation boundary is at 8 m from the walking centre.
+    // Its visible rock berm should rise above the actual carved footbed.
+    const nearVertex = (x0: number, z0: number) => {
+      let answer={d:Infinity,y:NaN};
+      for (let i=0;i<pos.count;i++) {
+        const d=Math.hypot(pos.getX(i)-x0,pos.getZ(i)-z0);
+        if (d<answer.d) answer={d,y:pos.getY(i)};
+      }
+      return answer;
+    };
+    const centre=nearVertex(exodusTrailCentreX(-430),-430);
+    const shoulder=nearVertex(exodusTrailCentreX(-430)+8,-430);
+    console.log('W2 VISIBLE WADI BANK '+(lowMode?'LOW':'HIGH')+
+      ' '+JSON.stringify({centre,shoulder}));
+    t('W2 no invisible wall: physical bank rises near navigation edge '+(lowMode?'LOW':'HIGH'),
+      centre.d<7.5 && shoulder.d<7.5 &&
+      Number.isFinite(shoulder.y) && shoulder.y>centre.y+0.3);
     t('W2 original exterior mesh extends beyond new walking lookout '+(lowMode?'LOW':'HIGH'),
       minZ(terrain)<EXODUS_TRAIL_LIMIT_Z-50);
   }

@@ -336,8 +336,8 @@ t('W2 all centreline waypoints physically traversable without correction',
   wadiSamples.every(p=>Math.abs(p.actual.x-p.x)<1e-5 &&
     Math.abs(p.actual.z-p.z)<1e-5 && p.actual.block===null));
 const endWadi=N.exodusTrailWalkBounds(-430);
-t('W2 narrow final wadi and defensible end boundary',
-  Math.abs(endWadi.right-endWadi.left-5)<1e-6 &&
+t('W2 natural 16m wadi matches the visible flanking rock banks',
+  Math.abs(endWadi.right-endWadi.left-16)<1e-6 &&
   Math.abs(N.constrain(24,-430,true).x-endWadi.right)<1e-6 &&
   Math.abs(N.constrain(-25,-430,true).x-endWadi.left)<1e-6 &&
   N.constrain(0,-500,true).z===N.EXODUS_TRAIL_LIMIT_Z);

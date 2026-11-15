@@ -637,7 +637,13 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const footbed = 1-ss(1.7,4.8,distance);
       const alluvial = 0.05+near*0.11-0.13*footbed;
       const w = longitudinal*sacredClearance*valley;
-      return naturalRock*(1-w)+alluvial*w;
+      // The nav boundary must coincide with a perceivable landform.
+      // A shallow, weathered bank starts before ±8 m, and the existing
+      // mountain relief rises behind it. Without this bank the original
+      // ±2.5m collision limit was invisible on a 20m flat valley.
+      const bank = longitudinal*sacredClearance *
+        ss(6,10,distance)*1.15*(1-ss(26,34,distance));
+      return naturalRock*(1-w)+alluvial*w+bank;
     };
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);

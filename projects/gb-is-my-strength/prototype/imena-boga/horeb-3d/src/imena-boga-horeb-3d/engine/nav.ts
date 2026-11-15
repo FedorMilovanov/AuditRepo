@@ -18,7 +18,7 @@ export function exodusTrailCentreX(z: number): number {
 }
 export function exodusTrailWalkBounds(z: number): { left: number; right: number } {
   const t = trailEase(-396,-414,z), x = exodusTrailCentreX(z);
-  return { left: -26*(1-t)+(x-2.5)*t, right: 26*(1-t)+(x+2.5)*t };
+  return { left: -26*(1-t)+(x-8)*t, right: 26*(1-t)+(x+8)*t };
 }
 export const START = { x: 0, z: -2 };
 
