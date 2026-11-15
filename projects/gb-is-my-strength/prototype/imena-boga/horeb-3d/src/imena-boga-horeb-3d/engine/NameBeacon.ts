@@ -38,7 +38,7 @@ export function beaconViewFactor(distance: number, bearing: number, horizontalHa
   return Math.max(0, Math.min(1, (safeHalfAngle - Math.abs(bearing)) / margin));
 }
 
-export function createNameBeacon(e: Exhibit, low: boolean) {
+export function createNameBeacon(e: Exhibit, low: boolean, chapterRock = false) {
   const canvas = document.createElement('canvas');
   const W = low ? 640 : 1024, H = low ? 256 : 410;
   canvas.width = W; canvas.height = H;
@@ -95,8 +95,10 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(3.65, 1.46), material);
   mesh.name = 'original-script-beacon';
   mesh.userData.exhibitId = e.id;
-  // Affixed just above the stone witness; no floating divine script in the sky.
-  mesh.position.set(0, 2.76, 0.255);
+  // Archive beacons remain affixed to steles. In standalone Horeb,
+  // a compact editorial cue sits above a natural stone viewpoint; it is
+  // not an invented ancient inscription or a supernatural apparition.
+  mesh.position.set(0, chapterRock ? 1.05 : 2.76, chapterRock ? 0.12 : 0.255);
   mesh.visible = false;
   return {
     mesh,
@@ -106,7 +108,7 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
       material.opacity = opacity;
       // A deliberate inspection brings the lettering forward without new GPU
       // lights or turning Horeb into a bright fantasy stage.
-      const scale = beaconVisualScale(distance) * (inspected ? 1.08 : 1);
+      const scale = beaconVisualScale(distance) * (inspected ? 1.08 : 1) * (chapterRock ? 0.56 : 1);
       mesh.scale.set(scale, scale, 1);
     },
   };

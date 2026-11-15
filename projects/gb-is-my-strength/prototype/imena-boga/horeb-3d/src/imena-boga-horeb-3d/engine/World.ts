@@ -149,16 +149,25 @@ export class World {
     this.bush = buildBurningBush(low);
     this.scene.add(this.bush.group);
 
-    // Стелы экспонатов
-    const steleGeo = new THREE.BoxGeometry(1.5, 2.6, 0.42, 6, 10, 2);
-    const p = steleGeo.attributes.position;
-    for (let i = 0; i < p.count; i++) {
-      const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-      const n = fbm(x * 2 + 5, y * 2, z * 2, 3);
-      const edge = Math.abs(x) > 0.7 || Math.abs(y) > 1.25 ? 1 : 0.25;
-      p.setXYZ(i, x + (n - 0.5) * 0.12 * edge, y + 1.3 + (y > 1.2 ? (n - 0.5) * 0.25 : 0), z + (z < 0 ? (n - 0.5) * 0.1 : 0));
+    // Archive keeps its original plaques. Exodus 3 uses low natural
+    // stones as interpretive viewpoints, not invented ancient inscriptions.
+    const steleGeo = this.expeditionMode === 'legacy'
+      ? new THREE.BoxGeometry(1.5, 2.6, 0.42, 6, 10, 2) : null;
+    if (steleGeo) {
+      const p = steleGeo.attributes.position;
+      for (let i = 0; i < p.count; i++) {
+        const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+        const n = fbm(x * 2 + 5, y * 2, z * 2, 3);
+        const edge = Math.abs(x) > 0.7 || Math.abs(y) > 1.25 ? 1 : 0.25;
+        p.setXYZ(i, x + (n - 0.5) * 0.12 * edge, y + 1.3 + (y > 1.2 ? (n - 0.5) * 0.25 : 0), z + (z < 0 ? (n - 0.5) * 0.1 : 0));
+      }
+      steleGeo.computeVertexNormals();
     }
-    steleGeo.computeVertexNormals();
+    const chapterRockGeo = this.expeditionMode === 'horeb'
+      ? new THREE.DodecahedronGeometry(0.8, 1) : null;
+    const chapterRockMat = this.expeditionMode === 'horeb'
+      ? new THREE.MeshStandardMaterial({color: 0x766451, map: tex, bumpMap: bump, bumpScale: 1.1, roughness: 0.97})
+      : null;
     // Zone-tinted materials: 8 clones (not 42) — ранние зоны теплые, поздние холодные.
     // Плюс per-exhibit scale/tilt/labelScale через steleVariation — 42 стелы не идентичны.
     const steleMats = new Map<number, THREE.MeshStandardMaterial>();
@@ -169,10 +178,11 @@ export class World {
       }
       return steleMats.get(zone)!;
     };
-    const plane = new THREE.PlaneGeometry(1.16, 1.63);
-    // One radial alpha mask per World, reused by all 42 scenic glows.
-    // A SpriteMaterial without a map renders a visible square billboard.
-    const propGlow = glowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
+    const plane = this.expeditionMode === 'legacy' ? new THREE.PlaneGeometry(1.16, 1.63) : null;
+    // Only the gallery has decorative prop glows; chapter stones should
+    // not spawn second fake burning-bush/rock props or invisible colliders.
+    const propGlow = this.expeditionMode === 'legacy'
+      ? glowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)') : null;
     const editorialOk = validateExhibits(EXHIBITS).length === 0; // fail-closed
     // Only physically install the chapter's own 3D exhibits and colliders.
     // The legacy laboratory still installs all 42 for unchanged QA.
@@ -183,17 +193,30 @@ export class World {
       const [x, z] = pl;
       const g = new THREE.Group();
       const v = steleVariation(e.id, e.zone);
-      const steleMesh = new THREE.Mesh(steleGeo, steleMatFor(e.zone));
-      steleMesh.scale.setScalar(v.scale);
-      steleMesh.rotation.z = v.tilt;
-      g.add(steleMesh);
-      const tx = labelTexture(e, e.zone === 5, low);
-      const lab = new THREE.Mesh(plane, new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: 0.42, roughness: 0.85 }));
-      lab.position.set(0, 1.42, 0.225);
-      lab.scale.setScalar(v.labelScale);
-      g.add(lab);
+      const chapterWitness = this.expeditionMode === 'horeb';
+      const witnessMesh = new THREE.Mesh(
+        chapterWitness ? chapterRockGeo! : steleGeo!,
+        chapterWitness ? chapterRockMat! : steleMatFor(e.zone),
+      );
+      witnessMesh.name = chapterWitness ? 'horeb-natural-witness-rock' : 'legacy-exhibit-stele';
+      if (chapterWitness) {
+        witnessMesh.scale.set(1.05, 0.58, 0.82);
+        witnessMesh.position.y = 0.38;
+        witnessMesh.rotation.y = e.id === 'ehyeh' ? 0.24 : -0.3;
+      } else {
+        witnessMesh.scale.setScalar(v.scale);
+        witnessMesh.rotation.z = v.tilt;
+      }
+      g.add(witnessMesh);
+      if (!chapterWitness) {
+        const tx = labelTexture(e, e.zone === 5, low);
+        const lab = new THREE.Mesh(plane!, new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: 0.42, roughness: 0.85 }));
+        lab.position.set(0, 1.42, 0.225);
+        lab.scale.setScalar(v.labelScale);
+        g.add(lab);
+      }
       if ((BEACON_IDS as readonly string[]).includes(e.id)) {
-        const beacon = createNameBeacon(e, low);
+        const beacon = createNameBeacon(e, low, chapterWitness);
         g.add(beacon.mesh);
         this.nameBeacons.push({ id: e.id, x, z, update: beacon.update });
       }
@@ -204,63 +227,65 @@ export class World {
       g.userData.exhibitId = e.id;
       this.scene.add(g);
       this.scenicGroups.push({ object: g, z });
-      // Уникальные props сцены: перед стелом (к центру прохода), видны при подходе;
-      // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
-      const d = Math.hypot(nx, nz) || 1;
-      const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
-      const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump, glow: propGlow });
-      mergePropsGroup(props); // merge meshes by material — reduce draw calls
-      this.scene.add(props);
-      this.scenicGroups.push({ object: props, z });
-      this.obstacles.push({ x, z, r: 0.85 }); // стелы
-      // The creation rock was moved behind its stele to clear Hebrew script.
-      // Keep its physical collider aligned with actual geometry, not the old
-      // abstract props anchor (the light shaft itself needs no collider).
-      if (e.id === 'elohim') this.obstacles.push({ x: bx - 1.4, z: bz - 3.0, r: 1.75 });
-      else if (e.environmentKey === 'gethsemane-garden') {
-        // Match physical tree trunks to the one authored grove layout.
-        // Preserve the clear x=0 visitor route; leaves are not solid obstacles.
-        for (const [dx, dz] of OLIVE_GROVE_OFFSETS)
-          this.obstacles.push({ x: bx + dx, z: bz + dz, r: 0.29 });
-      } else if (e.environmentKey === 'beersheba-well') {
-        this.obstacles.push({ x: bx, z: bz, r: BEERSHEBA_WELL_COLLIDER_RADIUS }); // same radius as the masonry contract
-        this.obstacles.push({
-          x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
-          z: bz + BEERSHEBA_TAMARISK_OFFSET.z, r: 0.18,
-        });
-      } else this.obstacles.push({ x: bx, z: bz, r: 0.6 });
-      // Register real prop centres, not invented markers or rendered HUD
-      // guesses. The two Beersheba targets use the SAME offsets as the
-      // well/tree meshes and colliders above.
-      if (e.id === 'el-olam') {
-        this.storyTargets.push({ id: 'beersheba-well', x: bx, z: bz });
-        this.storyTargets.push({
-          id: 'beersheba-tamarisk',
-          x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
-          z: bz + BEERSHEBA_TAMARISK_OFFSET.z,
-        });
-      } else if (e.id === 'el-roi') {
-        this.storyTargets.push({ id: 'hagar-spring', x: bx, z: bz });
-      } else if (e.id === 'abba') {
-        // Distinct visible olive and empty prayer-stone; neither is a
-        // claim of archaeological exactness or an embodied biblical figure.
-        const [oliveX, oliveZ] = OLIVE_GROVE_OFFSETS[2];
-        this.storyTargets.push({ id: 'gethsemane-olive', x: bx + oliveX, z: bz + oliveZ });
-        this.storyTargets.push({
-          id: 'gethsemane-prayer-stone',
-          x: bx + GETHSEMANE_PRAYER_OFFSET.x,
-          z: bz + GETHSEMANE_PRAYER_OFFSET.z,
-        });
-      } else if (e.id === 'tsidkenu') {
-        // The actual kingly emblem and the right-hand stretch of the
-        // constructed city wall represent DIFFERENT referents in Jeremiah.
-        this.storyTargets.push({ id: 'jeremiah-royal-sign', x: bx, z: bz });
-        this.storyTargets.push({
-          id: 'jeremiah-city-view',
-          x: bx + JEREMIAH_CITY_WALL_OFFSET.x,
-          z: bz + JEREMIAH_CITY_WALL_OFFSET.z,
-        });
-      }
+      this.obstacles.push({ x, z, r: 0.85 }); // matches the gallery plaque or chapter rock
+      if (!chapterWitness) {
+        // Archive-only props face the aisle; standalone Horeb has no
+        // duplicate decorative stone, glow or unmodelled prop collider.
+        const d = Math.hypot(nx, nz) || 1;
+        const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
+        const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump, glow: propGlow! });
+        mergePropsGroup(props); // merge meshes by material — reduce draw calls
+        this.scene.add(props);
+        this.scenicGroups.push({ object: props, z });
+        // The creation rock was moved behind its stele to clear Hebrew script.
+        // Keep its physical collider aligned with actual geometry, not the old
+        // abstract props anchor (the light shaft itself needs no collider).
+        if (e.id === 'elohim') this.obstacles.push({ x: bx - 1.4, z: bz - 3.0, r: 1.75 });
+        else if (e.environmentKey === 'gethsemane-garden') {
+          // Match physical tree trunks to the one authored grove layout.
+          // Preserve the clear x=0 visitor route; leaves are not solid obstacles.
+          for (const [dx, dz] of OLIVE_GROVE_OFFSETS)
+            this.obstacles.push({ x: bx + dx, z: bz + dz, r: 0.29 });
+        } else if (e.environmentKey === 'beersheba-well') {
+          this.obstacles.push({ x: bx, z: bz, r: BEERSHEBA_WELL_COLLIDER_RADIUS }); // same radius as the masonry contract
+          this.obstacles.push({
+            x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
+            z: bz + BEERSHEBA_TAMARISK_OFFSET.z, r: 0.18,
+          });
+        } else this.obstacles.push({ x: bx, z: bz, r: 0.6 });
+        // Register real prop centres, not invented markers or rendered HUD
+        // guesses. The two Beersheba targets use the SAME offsets as the
+        // well/tree meshes and colliders above.
+        if (e.id === 'el-olam') {
+          this.storyTargets.push({ id: 'beersheba-well', x: bx, z: bz });
+          this.storyTargets.push({
+            id: 'beersheba-tamarisk',
+            x: bx + BEERSHEBA_TAMARISK_OFFSET.x,
+            z: bz + BEERSHEBA_TAMARISK_OFFSET.z,
+          });
+        } else if (e.id === 'el-roi') {
+          this.storyTargets.push({ id: 'hagar-spring', x: bx, z: bz });
+        } else if (e.id === 'abba') {
+          // Distinct visible olive and empty prayer-stone; neither is a
+          // claim of archaeological exactness or an embodied biblical figure.
+          const [oliveX, oliveZ] = OLIVE_GROVE_OFFSETS[2];
+          this.storyTargets.push({ id: 'gethsemane-olive', x: bx + oliveX, z: bz + oliveZ });
+          this.storyTargets.push({
+            id: 'gethsemane-prayer-stone',
+            x: bx + GETHSEMANE_PRAYER_OFFSET.x,
+            z: bz + GETHSEMANE_PRAYER_OFFSET.z,
+          });
+        } else if (e.id === 'tsidkenu') {
+          // The actual kingly emblem and the right-hand stretch of the
+          // constructed city wall represent DIFFERENT referents in Jeremiah.
+          this.storyTargets.push({ id: 'jeremiah-royal-sign', x: bx, z: bz });
+          this.storyTargets.push({
+            id: 'jeremiah-city-view',
+            x: bx + JEREMIAH_CITY_WALL_OFFSET.x,
+            z: bz + JEREMIAH_CITY_WALL_OFFSET.z,
+          });
+        }
+      } // no secondary gallery props in the standalone Exodus chapter
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
     // After the static props are merged, index existing opaque triangles.

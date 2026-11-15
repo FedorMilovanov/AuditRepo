@@ -34,7 +34,13 @@ try{
    w.scene.traverse(o=>{if(o.userData?.exhibitId)groups.push(o.userData.exhibitId);});
    const names=[];
    w.zones.group.traverse(o=>{if(o.name)names.push(o.name)});
+   const natural=[];const museum=[];
+   w.scene.traverse(o=>{
+     if(o.name==='horeb-natural-witness-rock')natural.push(o);
+     if(o.name==='legacy-exhibit-stele')museum.push(o);
+   });
    return {mode:w.expeditionMode,ids:w.exhibitPos.map(p=>p.e.id),groups,
+     naturalRocks:natural.length,museumSteles:museum.length,
      pos:w.position,shoes:w.shoes,colliderCount:w.obstacles.length,
      terrain:names.includes('horeb-exterior-terrain'),
      cave:names.some(n=>['cave-vault-continuous','cave-floor-continuous',
@@ -47,7 +53,7 @@ try{
     !chapter.groups.every(id=>chapter.ids.includes(id))||
     chapter.pos.z > -322 || chapter.pos.z < -346 ||
     chapter.shoes!=='shod'||chapter.err||chapter.canvasCount!==1||
-    !chapter.terrain||chapter.cave||
+    !chapter.terrain||chapter.cave||chapter.naturalRocks!==2||chapter.museumSteles!==0||
     !chapter.zoneHud.includes('Призвание Моисея'))
    throw new Error('WRONG PHYSICAL HOREB CHAPTER '+JSON.stringify(chapter));
  // Art witnesses must include the visitor's REAL first impression, not
@@ -150,15 +156,20 @@ try{
  await page.waitForFunction(()=>window.__horeb?.world?.expeditionMode==='legacy',{timeout:90000});
  const legacy=await page.evaluate(()=>{
    const w=window.__horeb.world;
-   const ids=[];
-   w.scene.traverse(o=>{if(o.userData?.exhibitId)ids.push(o.userData.exhibitId);});
-   return {mode:w.expeditionMode,exhibits:w.exhibitPos.length,
+   const ids=[];let steles=0;let natural=0;
+   w.scene.traverse(o=>{
+     if(o.userData?.exhibitId)ids.push(o.userData.exhibitId);
+     if(o.name==='legacy-exhibit-stele')steles++;
+     if(o.name==='horeb-natural-witness-rock')natural++;
+   });
+   return {mode:w.expeditionMode,exhibits:w.exhibitPos.length,steles,natural,
       groups:ids.length,unique:new Set(ids).size,pos:w.position,shoes:w.shoes,
       hasCave:!!w.zones.group.getObjectByName('cave-vault-continuous'),
       canvases:document.querySelectorAll('canvas').length};
  });
  if(legacy.mode!=='legacy'||legacy.exhibits!==42||legacy.groups<42||
-    legacy.unique!==42||!legacy.hasCave||Math.abs(legacy.pos.z+2)>0.5||
+    legacy.unique!==42||legacy.steles!==42||legacy.natural!==0||
+    !legacy.hasCave||Math.abs(legacy.pos.z+2)>0.5||
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
