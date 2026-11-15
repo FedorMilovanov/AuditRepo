@@ -1,5 +1,18 @@
 # HOREB 3D — каноническая матрица приёмки
 
+> **W1 — STORY WORLDS / EXODUS CHRONOLOGY (15.11.2026):**
+> утверждена новая архитектура: мир Бытия и патриархов отдельно; HOREB —
+> Исход 3–40, куст → возвращение Моисея в Египет → море → Марра →
+> пустыня Син → Рефидим → Синай. Введён только маршрутный
+> `data/storyWorlds.ts`, не перестроенная геометрия.
+> **W1 gate пока PENDING exact-HEAD CI**; предыдущий полный инженерный
+> baseline `d139e096` завершился 6/6 jobs + Validate/Preflight SUCCESS
+> ([run #43564579834](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43564579834)).
+> Исторические разделы ниже описывают прежнюю художественную галерею.
+> Текущее художественное состояние пропасти, олив и выхода — HOLD.
+> Новый маршрут ещё НЕ обладает статусом PHYSICALLY_BUILT.
+
+
 **Сверено 12 ноября 2026 · AuditRepo Draft PR #543; без Product merge/deploy.**
 **Последний полностью инженерно подтверждённый КОДОВЫЙ SHA:** `aca333e5acdb11ddaeab0c92299e4baca6f01327`.
 **Точные workflow:** [HOREB 3D Lab QA #43120578724](https://github.com/FedorMilovanov/AuditRepo/actions/runs/43120578724) — **6/6 jobs SUCCESS**;

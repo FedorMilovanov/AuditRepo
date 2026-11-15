@@ -1,5 +1,7 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
+import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
+  worldForResearchId, chapterForResearchId } from '../.test-build/data/storyWorlds.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -33,6 +35,46 @@ const ids = new Set(EXHIBITS.map((e) => e.id));
 t('E1 exactly 42 exhibits', EXHIBITS.length === 42);
 t('E1 all 42 Research IDs present', RESEARCH_IDS_42.every((id) => ids.has(id)));
 t('E1 no extra IDs', [...ids].every((id) => RESEARCH_IDS_42.includes(id)));
+// World-split W1 is a fail-closed CURATORIAL plan, never a teleport,
+// automatic Research approval, or physical movement of 42 legacy props.
+const worlds = STORY_STOPS.flatMap(s => s.exhibitIds.map(id => ({ id, world: s.world })));
+const assigned = new Set(worlds.map(x => x.id));
+t('W1 all 42 Research IDs assigned exactly once to separate story worlds',
+  validateStoryWorlds(EXHIBITS).length === 0 &&
+  worlds.length === 42 && assigned.size === 42 &&
+  [...assigned].every(id => ids.has(id)));
+t('W1 world boundaries isolate Genesis, Exodus, later OT and future NT',
+  new Set(STORY_STOPS.map(s => s.world)).size === 4 &&
+  worlds.filter(x => x.world === 'genesis').length === 7 &&
+  worlds.filter(x => x.world === 'exodus').length === 9 &&
+  worlds.filter(x => x.world === 'later-ot').length === 16 &&
+  worlds.filter(x => x.world === 'nt-future').length === 10 &&
+  worldForResearchId('el-roi') === 'genesis' &&
+  worldForResearchId('nissi') === 'exodus' &&
+  worldForResearchId('tsur') === 'later-ot' &&
+  worldForResearchId('abba') === 'nt-future' &&
+  worldForResearchId('unverified-research-id') === null);
+t('W1 chronological Exodus follows the actual biblical order after the bush',
+  EXODUS_CHAPTER_ORDER.join('>') ===
+    'horeb-call>egypt-return>exodus-and-sea>marah>wilderness-sin>rephidim>sinai-covenant' &&
+  chapterForResearchId('ehyeh') === 'horeb-call' &&
+  chapterForResearchId('yah') === 'exodus-and-sea' &&
+  chapterForResearchId('rapha') === 'marah' &&
+  chapterForResearchId('nissi') === 'rephidim' &&
+  chapterForResearchId('mekoddishkem') === 'sinai-covenant' &&
+  chapterForResearchId('el-olam') === 'patriarchs');
+t('W1 Egypt and wilderness stages do not invent non-research names',
+  STORY_STOPS.find(s => s.id === 'egypt-return')?.exhibitIds.length === 0 &&
+  STORY_STOPS.find(s => s.id === 'wilderness-sin')?.exhibitIds.length === 0);
+t('W1 curatorial route cannot silently publish unapproved sources',
+  validateStoryWorlds(EXHIBITS.map((e,i) =>
+    i === 0 ? { ...e, publicationState: 'PUBLISHED' } : e))
+    .some(e => e.includes('cannot approve')));
+t('W1 curatorial route rejects removed, duplicated or extra source entries',
+  validateStoryWorlds(EXHIBITS.slice(1)).length > 0 &&
+  validateStoryWorlds([...EXHIBITS, EXHIBITS[0]]).length > 0 &&
+  validateStoryWorlds([...EXHIBITS, { id: 'future-placeholder', publicationState: 'HOLD' }])
+    .length > 0);
 // E2 STORY-SPECIFIC — every scene has >=2 anchor props + unique signature.
 t('E2 every exhibit has >=2 anchor props', EXHIBITS.every((e) => e.anchorProps.length >= 2));
 const sig = new Set(EXHIBITS.map((e) => `${e.environmentKey}::${e.meaningfulAction}`));
