@@ -613,8 +613,19 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     const terrainHeight = (x: number, z: number): number => {
       const dw = Math.hypot(x / 1.3, (z - (BUSH.z + 10)) * 0.9);
       const mask = ss(36, 150, dw);
-      const horeb = 330 * Math.exp(-((x - 30) ** 2 + (z + 760) ** 2) / (2 * 150 ** 2));
-      const ridge = Math.pow(fbm(x * 0.006, 1, z * 0.006, 5), 2.2) * 260;
+      // W3: the original 330m mountain peaked at x=30, z=-760:
+      // its rising near flank stood ~64m high directly ahead at z=-500
+      // and darkened the entire new Exodus lookout. Form the ridges
+      // OUTSIDE the forward wadi, leaving open sky and a distant valley
+      // without deleting the mountain landscape.
+      const offAxis = ss(35, 105, Math.abs(x - exodusTrailCentreX(z)));
+      const eastMountain = 165 * Math.exp(
+        -((x - 225) ** 2 + (z + 800) ** 2) / (2 * 170 ** 2));
+      const westMountain = 110 * Math.exp(
+        -((x + 215) ** 2 + (z + 850) ** 2) / (2 * 175 ** 2));
+      const horeb = (eastMountain + westMountain) * offAxis;
+      const ridge = Math.pow(fbm(x * 0.006, 1, z * 0.006, 5), 2.2) *
+        115 * offAxis;
       const near = fbm(x * 0.12, 2, z * 0.12, 3) * 0.22;
       const backWall = ss(-345, -322, z) * 60 * ss(14, 60, Math.abs(x));
       // An eroded alluvial fan begins OUTSIDE the cave, away from the
@@ -629,7 +640,10 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       // A carved natural alluvial valley in the SAME actual exterior
       // triangles: no ribbon/second plane or extra collider/draw calls.
       // Fade near the existing cave and sacred outer bush perimeter.
-      const longitudinal = ss(-344, -360, z) * (1-ss(-450, -466, z));
+      // Continue the *same* alluvial basin into the landscape beyond the
+      // reachable lookout. Otherwise the trail ends against a dark,
+      // sharply rising terrain hump just behind the allowed boundary.
+      const longitudinal = ss(-344, -360, z) * (1-ss(-650, -700, z));
       const sacredClearance = ss(R_OUTER+0.6, R_OUTER+4.1,
         Math.hypot(x-BUSH.x, z-BUSH.z));
       const distance = Math.abs(x-exodusTrailCentreX(z));
@@ -701,7 +715,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const outdoor = [(0.26 + hcol * 0.08) * v,
         (0.2 + hcol * 0.05) * v, (0.17 + hcol * 0.06) * v];
       // Local natural gravel sorting, not bright markers.
-      const trailTint = ss(-344,-360,z)*(1-ss(-450,-466,z)) *
+      const trailTint = ss(-344,-360,z)*(1-ss(-650,-700,z)) *
         (1-ss(2,4.6,Math.abs(x-exodusTrailCentreX(z)))) *
         ss(R_OUTER+0.6,R_OUTER+4.1,Math.hypot(x-BUSH.x,z-BUSH.z));
       for (let k=0;k<3;k++) outdoor[k] *= 1+trailTint*(k===0?0.12:0.08);

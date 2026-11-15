@@ -990,6 +990,30 @@ for (const lowMode of [true, false]) {
       Number.isFinite(shoulder.y) && shoulder.y>centre.y+0.3);
     t('W2 original exterior mesh extends beyond new walking lookout '+(lowMode?'LOW':'HIGH'),
       minZ(terrain)<EXODUS_TRAIL_LIMIT_Z-50);
+    // W3 real line-of-sight regression: old 330m mountain at x≈30
+    // blocked the centre of the wadi just beyond the look-out and
+    // produced an oversized triangular sky silhouette in zone 7.
+    // Measure existing terrain vertices, NOT just the new parametric
+    // profile or a screenshot with a successful CI label.
+    let centralForwardStations=0;
+    let highestForwardStation=-Infinity;
+    let sideMountainStations=0;
+    for(let i=0;i<pos.count;i++){
+      const x=pos.getX(i), y=pos.getY(i), z=pos.getZ(i);
+      if(z<-475 && z>-575 && Math.abs(x-exodusTrailCentreX(z))<11){
+        centralForwardStations++;
+        highestForwardStation=Math.max(highestForwardStation,y);
+      }
+      if(z<-690 && z>-880 && Math.abs(x)>110 && y>15)
+        sideMountainStations++;
+    }
+    console.log('W3 FORWARD SKYLINE '+(lowMode?'LOW':'HIGH')+
+      ' '+JSON.stringify({centralForwardStations,highestForwardStation,sideMountainStations}));
+    t('W3 real terrain leaves open forward sightline past Exodus lookout '+(lowMode?'LOW':'HIGH'),
+      centralForwardStations>10 && highestForwardStation<4);
+    t('W3 retaining substantial mountains to both flanks '+(lowMode?'LOW':'HIGH'),
+      sideMountainStations>10);
+
   }
 }
 
