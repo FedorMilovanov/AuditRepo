@@ -399,7 +399,7 @@ export default function HorebApp() {
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
           {webgl ? <button data-testid="horeb-chapter-start" className="btn btn-primary" onClick={() => start('horeb')}>Начать Хорив · Исход 3–4</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
-          <button className="btn" onClick={() => setScreen('reader')}>Все 42 досье · читать</button>
+          <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>
