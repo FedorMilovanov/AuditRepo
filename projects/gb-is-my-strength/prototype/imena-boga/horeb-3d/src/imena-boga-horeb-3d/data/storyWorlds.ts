@@ -111,11 +111,54 @@ export const EGYPT_EPISODES = [
   { id: 'passover', reference: 'Исх. 12:1–51', title: 'Пасха и исход',
     summary: 'Установление Пасхи, последняя казнь и выход из Египта; дальнейший путь к морю относится к новой главе.' },
 ] as const;
+/** W6C concept gate: a scene design is not a historical site identification.
+ * Episode order and verse references come ONLY from EGYPT_EPISODES above.
+ * No Egypt mesh, route coordinates, Research IDs, or right to publish exist.
+ * Physical scenes require separate evidence, art, rights, and QA acceptance.
+ */
+export type EgyptEpisodeId = (typeof EGYPT_EPISODES)[number]['id'];
+const EGYPT_STAGE_CONCEPTS = {
+  return: {
+    space: 'раздельные точки повествования, а не непрерывная тропа',
+    possibleTreatment: 'смена глав между возвращением Моисея, встречей с Аароном и Египтом',
+    cannotClaim: 'маршрут Мадиам—Хорив—Египет с измеренными расстояниями',
+  },
+  pharaoh: {
+    space: 'условная административная аудиенция, место точно не установлено',
+    possibleTreatment: 'отдельный эпизод обращения Моисея и Аарона к фараону',
+    cannotClaim: 'личность фараона, конкретный дворец, подлинный тронный зал',
+  },
+  judgments: {
+    space: 'несколько разнесённых событий без единой подтверждённой карты',
+    possibleTreatment: 'последовательные повествовательные сцены без объяснения механизма чудес',
+    cannotClaim: 'географическая точность каждого суда или природное объяснение казней',
+  },
+  passover: {
+    space: 'домашний контекст Пасхи и отдельное повествование о выходе',
+    possibleTreatment: 'сцена чтения о домах и переход к следующей исторической главе',
+    cannotClaim: 'аутентичность конкретного жилища или GPS-путь исхода',
+  },
+} as const satisfies Record<EgyptEpisodeId, {
+  space: string; possibleTreatment: string; cannotClaim: string;
+}>;
+
+export const EGYPT_SPATIAL_BLUEPRINT = EGYPT_EPISODES.map(episode => ({
+  episodeId: episode.id,
+  passage: episode.reference,
+  ...EGYPT_STAGE_CONCEPTS[episode.id],
+  geographicalCoordinates: null,
+  physicalResearchExhibits: [] as const,
+  physicalSceneReady: false as const,
+  releaseGate: 'HOLD' as const,
+  transition: 'chapter-cut' as const,
+}));
+
 export const HOREB_CALL_START = { x: 0, z: -338 } as const;
 export function sceneExhibitsForMode<T extends { readonly id: string }>(
   registry: readonly T[], mode: ExpeditionMode,
 ): T[] {
   if (mode === 'legacy') return [...registry];
+  if (mode !== 'horeb') throw new Error('3D expedition mode not approved: ' + String(mode));
   const activeIds = new Set(HOREB_CALL_STOP.exhibitIds);
   return registry.filter(item => activeIds.has(item.id));
 }

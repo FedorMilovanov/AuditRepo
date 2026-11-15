@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
-import { EGYPT_EPISODES, EGYPT_RETURN_STOP } from '../src/imena-boga-horeb-3d/data/storyWorlds';
+import { EGYPT_EPISODES, EGYPT_RETURN_STOP, EGYPT_SPATIAL_BLUEPRINT, sceneExhibitsForMode, type ExpeditionMode } from '../src/imena-boga-horeb-3d/data/storyWorlds';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, EXODUS_TRAIL_LOOKOUT_Z, exodusTrailCentreX, isHorebDepartureLookout } from '../src/imena-boga-horeb-3d/engine/nav';
@@ -35,6 +35,28 @@ t('Egypt source-led sequence has four distinct episodes in biblical order, never
   EGYPT_EPISODES.every(e => e.title.length > 8 && e.summary.length > 40) &&
   EGYPT_RETURN_STOP.id === 'egypt-return' &&
   EGYPT_RETURN_STOP.exhibitIds.length === 0);
+
+t('W6C Egypt is four separate gated concepts, not live physical scenery',
+  EGYPT_SPATIAL_BLUEPRINT.length === EGYPT_EPISODES.length &&
+  EGYPT_SPATIAL_BLUEPRINT.map(s => s.episodeId).join('|') ===
+    EGYPT_EPISODES.map(e => e.id).join('|') &&
+  new Set(EGYPT_SPATIAL_BLUEPRINT.map(s => s.space)).size === 4 &&
+  new Set(EGYPT_SPATIAL_BLUEPRINT.map(s => s.cannotClaim)).size === 4 &&
+  EGYPT_SPATIAL_BLUEPRINT.every((s, i) =>
+    s.passage === EGYPT_EPISODES[i].reference &&
+    s.geographicalCoordinates === null &&
+    s.physicalResearchExhibits.length === 0 &&
+    s.physicalSceneReady === false &&
+    s.releaseGate === 'HOLD' &&
+    s.transition === 'chapter-cut' &&
+    [s.space, s.possibleTreatment, s.cannotClaim].every(text => !!text.trim())));
+let unknownModeRejected = false;
+try { sceneExhibitsForMode(EXHIBITS, 'egypt' as ExpeditionMode); }
+catch { unknownModeRejected = true; }
+t('Unapproved Egypt cannot silently enter the existing 3D engine',
+  unknownModeRejected &&
+  sceneExhibitsForMode(EXHIBITS, 'horeb').map(x => x.id).join('|') === 'ehyeh|yhwh' &&
+  sceneExhibitsForMode(EXHIBITS, 'legacy').length === 42);
 
 let totalHigh = 0, totalLow = 0;
 const errors: string[] = [];
