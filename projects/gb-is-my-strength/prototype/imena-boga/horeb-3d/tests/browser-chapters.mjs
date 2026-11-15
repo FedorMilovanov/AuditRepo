@@ -50,6 +50,10 @@ try{
     !chapter.terrain||chapter.cave||
     !chapter.zoneHud.includes('Призвание Моисея'))
    throw new Error('WRONG PHYSICAL HOREB CHAPTER '+JSON.stringify(chapter));
+ // Art witnesses must include the visitor's REAL first impression, not
+ // only the north-facing rock after a controlled camera turn. A screenshot
+ // alone is evidence for human review, never automatic visual acceptance.
+ await page.screenshot({path:join(out,'smoke-chapter-horeb-entry.png')});
  // A shared historical map shortcut must not open a hidden legacy dialog
  // and freeze controls inside the independent Horeb chapter.
  await page.keyboard.press('m');
@@ -81,13 +85,41 @@ try{
  const south=await actualState();
  if(south.z>=origin.z-4 || south.z<-352 || south.contextLost)
    throw new Error('W5B physical southward walk invalid '+JSON.stringify({origin,south}));
+ await page.screenshot({path:join(out,'smoke-chapter-horeb-approach.png')});
+ // The short chapter must enforce the SAME two sacred boundaries as the
+ // archive, with actual keyboard movement and a real E interaction. Prior
+ // geometry-only tests cannot prove that the visitor can remove sandals.
+ await page.keyboard.down('w');
+ await page.waitForFunction(()=>window.__horeb?.world?.position?.z<-350.1,
+   {polling:200,timeout:40000});
+ await page.keyboard.up('w');
+ const outer=await actualState();
+ const outerDistance=Math.hypot(outer.x,outer.z+366);
+ if(outerDistance<13.98||outer.shoes!=='shod'||outer.contextLost)
+   throw new Error('HOREB OUTER GUARD '+JSON.stringify({outer,outerDistance}));
+ await page.screenshot({path:join(out,'smoke-chapter-horeb-outer.png')});
+ await page.keyboard.press('e');
+ await page.waitForFunction(()=>window.__horeb?.world?.shoes==='unshod',
+   {polling:200,timeout:45000});
+ await page.keyboard.down('w');
+ await page.waitForFunction(()=>window.__horeb?.world?.position?.z<-358.1,
+   {polling:200,timeout:45000});
+ await page.keyboard.up('w');
+ await page.keyboard.down('w');
+ await new Promise(resolve=>setTimeout(resolve,1700));
+ await page.keyboard.up('w');
+ const inner=await actualState();
+ const innerDistance=Math.hypot(inner.x,inner.z+366);
+ if(innerDistance<6.48||innerDistance>8.0||inner.shoes!=='unshod'||inner.contextLost)
+   throw new Error('HOREB INNER GUARD '+JSON.stringify({inner,innerDistance}));
+ await page.screenshot({path:join(out,'smoke-chapter-horeb-inner.png')});
  await page.keyboard.down('s');
  await page.waitForFunction(()=>window.__horeb?.world?.position?.z>=-332.65,
-   {polling:200,timeout:30000});
+   {polling:200,timeout:60000});
  await page.keyboard.up('s');
  const north=await actualState();
  if(north.z>-332.30||north.z<-334||Math.abs(north.x)>0.5||
-    north.shoes!=='shod'||north.contextLost)
+    north.shoes!=='unshod'||north.contextLost)
    throw new Error('W5B real northern rock boundary failed '+JSON.stringify({south,north}));
  // Only camera direction changes here, by real arrow-key input, to
  // expose the rock escarpment in actual rendered screenshot evidence.
@@ -130,8 +162,8 @@ try{
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
- console.log('PASS W5A 2 Exodus-3 scene objects in Horeb and 42 in separate legacy scene; one WebGL engine; errors=0');
+ console.log('PASS W5C chapter: 2 Exodus-3 objects, 42 legacy, actual shod outer + unshod inner and north return; errors=0');
  writeFileSync(join(process.cwd(),'.test-build','chapters-witness.json'),
-   JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,north},errors,
+   JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,outer,outerDistance,inner,innerDistance,north},errors,
      source:'actual Chromium/WebGL keyboard + scene mesh inspection'},null,2));
 }catch(e){throw e}finally{await browser.close()}
