@@ -97,7 +97,7 @@ export const STORY_STOPS: readonly StoryStop[] = [
  */
 export type ExpeditionMode = 'horeb' | 'legacy';
 export const HOREB_CALL_STOP = STORY_STOPS.find(s => s.id === 'horeb-call')!;
-export const HOREB_CALL_START = { x: 0, z: -330 } as const;
+export const HOREB_CALL_START = { x: 0, z: -338 } as const;
 export function sceneExhibitsForMode<T extends { readonly id: string }>(
   registry: readonly T[], mode: ExpeditionMode,
 ): T[] {

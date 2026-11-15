@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { fbm, rng, glowTexture, shaftMaterial, caveSurfaceVariation } from './procedural';
 import { halfWidth, vaultHeight, LEDGE_X, TUNNEL_END, BUSH, R_OUTER, R_INNER, chasmFactor, exodusTrailCentreX } from './nav';
+import type { ExpeditionMode } from '../data/storyWorlds';
 
 export interface Obstacle { x: number; z: number; r: number }
 export interface Built {
@@ -210,7 +211,7 @@ function bake(x: number, y: number, z: number, out: [number, number, number]) {
   out[0] = r; out[1] = g; out[2] = b;
 }
 
-export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): Built {
+export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial, mode: ExpeditionMode = 'legacy'): Built {
   const group = new THREE.Group();
   const obstacles: Obstacle[] = [];
   const updaters: ((t: number, dt: number, px: number, pz: number, m: boolean) => void)[] = [];
@@ -243,7 +244,22 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
   let lastCaveFloorZ = TUNNEL_END - 4;
   // Both independently indexed meshes must share their mouth lighting normal.
   let caveMouthFloor: THREE.BufferGeometry | null = null;
+  // This geology resource is shared by outdoor scree and legacy altars.
+  const stoneGeo = new THREE.DodecahedronGeometry(1, 1);
+  {
+    const p = stoneGeo.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const v = new THREE.Vector3().fromBufferAttribute(p, i);
+      v.multiplyScalar(0.75 + 0.5 * fbm(v.x * 2 + 3, v.y * 2, v.z * 2, 2));
+      p.setXYZ(i, v.x, v.y, v.z);
+    }
+    stoneGeo.computeVertexNormals();
+  }
+  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7560, roughness: 0.95, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 0.85 });
 
+  // The old 42-gallery cave and all indoor effects exist only in the
+  // archival laboratory. The Horeb chapter builds outdoor earth directly.
+  if (mode === 'legacy') {
   // ── Тоннель / галереи: единая процедурная оболочка
   {
     const step = low ? 0.9 : 0.5, N = low ? 36 : 60;
@@ -534,17 +550,6 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
   }
 
   // ── Зона 3: каменные жертвенники и факелы
-  const stoneGeo = new THREE.DodecahedronGeometry(1, 1);
-  {
-    const p = stoneGeo.attributes.position;
-    for (let i = 0; i < p.count; i++) {
-      const v = new THREE.Vector3().fromBufferAttribute(p, i);
-      v.multiplyScalar(0.75 + 0.5 * fbm(v.x * 2 + 3, v.y * 2, v.z * 2, 2));
-      p.setXYZ(i, v.x, v.y, v.z);
-    }
-    stoneGeo.computeVertexNormals();
-  }
-  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7560, roughness: 0.95, map: rockMat.map, bumpMap: rockMat.bumpMap, bumpScale: 0.85 });
   const flameTex = glowTexture('rgba(255,230,170,1)', 'rgba(255,90,20,0)');
   const torches: THREE.Sprite[] = [];
   const altarAt = (x: number, z: number, seed: number) => {
@@ -606,7 +611,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     lamp.position.set(p[0] * 1.18, 0.35, p[1] - 0.9); lamp.scale.set(0.18, 0.26, 1); group.add(lamp);
   }
 
-  // ── Зона 7: открытый ландшафт у Хорива
+  } // end legacy gallery shell, smoke, altars, chasm and niche lighting
+
+  // ── Зона 7: одно настоящее наружное пространство для обоих режимов
   {
     // One elevation function for both terrain vertices and distant rock crags.
     // Crags stay outside the player corridor and never alter the bush guards.
@@ -657,7 +664,14 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       // ±2.5m collision limit was invisible on a 20m flat valley.
       const bank = longitudinal*sacredClearance *
         ss(6,10,distance)*1.15*(1-ss(26,34,distance));
-      return naturalRock*(1-w)+alluvial*w+bank;
+      // The standalone chapter has no false museum cave. Build its
+      // northern escarpment INTO the existing mesh's actual vertices.
+      // The legacy mouth remains exactly unmodified.
+      const northScarp = mode === 'horeb'
+        ? 8.8*ss(-335,-323,z)*(1-ss(12,33,Math.abs(x))) *
+          (0.94+0.06*fbm(x*0.19,2,z*0.17,3))
+        : 0;
+      return naturalRock*(1-w)+alluvial*w+bank+northScarp;
     };
     const seg = low ? 110 : 200;
     const tg = new THREE.PlaneGeometry(1200, 1000, seg, seg);
@@ -705,8 +719,8 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
       const stationBlend = ss(-348, lastCaveFloorZ, z);
       const x = alignedX * stationBlend + gradedX * (1 - stationBlend);
       p.setX(i, x);
-      const mouth = ss(-340, lastCaveFloorZ, z) *
-        (1 - ss(5, 9, Math.abs(x)));
+      const mouth = mode === 'legacy' ? ss(-340, lastCaveFloorZ, z) *
+        (1 - ss(5, 9, Math.abs(x))) : 0;
       const outdoorY = terrainHeight(x, z);
       const y = outdoorY * (1 - mouth) + floorHeight(x, z) * mouth;
       p.setY(i, y);
@@ -743,6 +757,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     // discontinuities: independent computeVertexNormals gives each side its
     // own edge normal. Weld lighting normals at identical mouth stations.
     // No added surfaces, materials, lighting, or physics interventions.
+    if (mode === 'legacy') {
     const mouthFloor = caveMouthFloor;
     if (!mouthFloor) throw new Error('Missing cave floor before exterior normal join');
     const caveBoundaryPositions = mouthFloor.getAttribute('position');
@@ -775,6 +790,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     }
     if (matchedNormals !== (low ? 17 : 29))
       throw new Error('Incomplete cave mouth lighting normal join');
+    } // standalone outdoor terrain has no separate cave mesh to weld
     const terrainMat = rockMat.clone();
     terrainMat.side = THREE.FrontSide;
     const exteriorTerrain = new THREE.Mesh(tg, terrainMat);
@@ -802,6 +818,9 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     crags.instanceMatrix.needsUpdate = true;
     group.add(crags);
 
+    // The old archive has a real cave portal. Horeb has a continuous
+    // northern natural-rock slope and no pretend door into other epochs.
+    if (mode === 'legacy') {
     // Скальная стена с выходом
     const shape = new THREE.Shape();
     shape.moveTo(-260, -2); shape.lineTo(260, -2); shape.lineTo(260, 120); shape.lineTo(-260, 120); shape.lineTo(-260, -2);
@@ -841,6 +860,7 @@ export function buildZones(low: boolean, rockMat: THREE.MeshStandardMaterial): B
     cliff.rotation.y = Math.PI;
     cliff.position.set(0, 0, TUNNEL_END - 1.5);
     group.add(cliff);
+    }
 
     // Природные камни-рубежи: внешний порог — рассыпь мелких камней; внутренний — низкий скальный гребень
     const r = rng(5);

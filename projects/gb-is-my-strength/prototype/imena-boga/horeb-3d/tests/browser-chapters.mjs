@@ -32,8 +32,13 @@ try{
    const w=window.__horeb.world;
    const groups=[];
    w.scene.traverse(o=>{if(o.userData?.exhibitId)groups.push(o.userData.exhibitId);});
+   const names=[];
+   w.zones.group.traverse(o=>{if(o.name)names.push(o.name)});
    return {mode:w.expeditionMode,ids:w.exhibitPos.map(p=>p.e.id),groups,
      pos:w.position,shoes:w.shoes,colliderCount:w.obstacles.length,
+     terrain:names.includes('horeb-exterior-terrain'),
+     cave:names.some(n=>['cave-vault-continuous','cave-floor-continuous',
+       'horeb-outer-rock-face','chasm-deep-floor'].includes(n)),
      err:w.contextLost,canvasCount:document.querySelectorAll('canvas').length,
      zoneHud:document.querySelector('.hud')?.textContent||''};
  });
@@ -42,6 +47,7 @@ try{
     !chapter.groups.every(id=>chapter.ids.includes(id))||
     chapter.pos.z > -322 || chapter.pos.z < -346 ||
     chapter.shoes!=='shod'||chapter.err||chapter.canvasCount!==1||
+    !chapter.terrain||chapter.cave||
     !chapter.zoneHud.includes('Призвание Моисея'))
    throw new Error('WRONG PHYSICAL HOREB CHAPTER '+JSON.stringify(chapter));
  // A shared historical map shortcut must not open a hidden legacy dialog
@@ -59,6 +65,36 @@ try{
    JSON.parse(localStorage.getItem('imena-horeb.progress.v1')||'null'));
  if(savedBefore && ((savedBefore.visited||[]).some(z=>z!==0)||savedBefore.last))
    throw new Error('CHAPTER POLLUTED LEGACY PROGRESS '+JSON.stringify(savedBefore));
+ // Walk by real keyboard in the chapter toward the sacred threshold,
+ // then back to the physically sculpted northern rock. No teleport,
+ // test state rewrites, fake doors, or weakened holy boundaries.
+ const actualState=()=>page.evaluate(()=>{
+   const w=window.__horeb.world;
+   return {x:w.position.x,z:w.position.z,shoes:w.shoes,frame:w.renderer.info.render.frame,
+     contextLost:w.contextLost};
+ });
+ const origin=await actualState();
+ await page.keyboard.down('w');
+ await page.waitForFunction(()=>window.__horeb?.world?.position?.z<-343,
+   {polling:200,timeout:24000});
+ await page.keyboard.up('w');
+ const south=await actualState();
+ if(south.z>=origin.z-4 || south.z<-352 || south.contextLost)
+   throw new Error('W5B physical southward walk invalid '+JSON.stringify({origin,south}));
+ await page.keyboard.down('s');
+ await page.waitForFunction(()=>window.__horeb?.world?.position?.z>=-332.65,
+   {polling:200,timeout:30000});
+ await page.keyboard.up('s');
+ const north=await actualState();
+ if(north.z>-332.30||north.z<-334||Math.abs(north.x)>0.5||
+    north.shoes!=='shod'||north.contextLost)
+   throw new Error('W5B real northern rock boundary failed '+JSON.stringify({south,north}));
+ // Only camera direction changes here, by real arrow-key input, to
+ // expose the rock escarpment in actual rendered screenshot evidence.
+ await page.keyboard.down('ArrowRight');
+ await new Promise(resolve=>setTimeout(resolve,1900));
+ await page.keyboard.up('ArrowRight');
+ await page.screenshot({path:join(out,'smoke-chapter-horeb-scarp.png')});
  await page.screenshot({path:join(out,'smoke-chapter-horeb.png')});
  // Chapter's own reset action returns to intro without deleting the
  // historical lab checkpoints (or marking its zone-7 walk as completed).
@@ -86,14 +122,16 @@ try{
    w.scene.traverse(o=>{if(o.userData?.exhibitId)ids.push(o.userData.exhibitId);});
    return {mode:w.expeditionMode,exhibits:w.exhibitPos.length,
       groups:ids.length,unique:new Set(ids).size,pos:w.position,shoes:w.shoes,
+      hasCave:!!w.zones.group.getObjectByName('cave-vault-continuous'),
       canvases:document.querySelectorAll('canvas').length};
  });
  if(legacy.mode!=='legacy'||legacy.exhibits!==42||legacy.groups<42||
-    legacy.unique!==42||Math.abs(legacy.pos.z+2)>0.5||
+    legacy.unique!==42||!legacy.hasCave||Math.abs(legacy.pos.z+2)>0.5||
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
  console.log('PASS W5A 2 Exodus-3 scene objects in Horeb and 42 in separate legacy scene; one WebGL engine; errors=0');
  writeFileSync(join(process.cwd(),'.test-build','chapters-witness.json'),
-   JSON.stringify({chapter,legacy,errors,source:'actual Chromium/WebGL'},null,2));
+   JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,north},errors,
+     source:'actual Chromium/WebGL keyboard + scene mesh inspection'},null,2));
 }catch(e){throw e}finally{await browser.close()}

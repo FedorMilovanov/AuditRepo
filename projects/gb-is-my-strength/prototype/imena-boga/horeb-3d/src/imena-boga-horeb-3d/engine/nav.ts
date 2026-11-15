@@ -4,6 +4,8 @@ export const BUSH = { x: 0, z: -366 };
 export const R_OUTER = 14; // внешний порог: в обуви ближе нельзя
 export const R_INNER = 6.5; // внутренний рубеж: нельзя никогда
 export const TUNNEL_END = -318;
+/** Standalone Horeb's real northern rock escarpment, not a cave doorway. */
+export const HOREB_NORTH_EDGE_Z = -332.5;
 /** Physically walkable departure to the left of Horeb's protected bush.
  * These are world coordinates, NOT a teleport into historical Egypt. */
 export const EXODUS_TRAIL_LOOKOUT_Z = -434;
@@ -98,9 +100,14 @@ export function separateObstacle(
 export type Block = null | 'wall' | 'outer' | 'inner';
 
 /** Ограничить позицию. Возвращает новую позицию и причину блокировки. */
-export function constrain(x: number, z: number, shod: boolean): { x: number; z: number; block: Block } {
+export function constrain(x: number, z: number, shod: boolean, mode: 'legacy' | 'horeb' = 'legacy'): { x: number; z: number; block: Block } {
   if (!Number.isFinite(x) || !Number.isFinite(z)) return { ...START, block: 'wall' };
   let block: Block = null;
+  // The separate scene physically rises into northern rock. Never enter
+  // the absent galleries from this chapter (legacy limits unchanged).
+  if (mode === 'horeb' && z > HOREB_NORTH_EDGE_Z) {
+    z = HOREB_NORTH_EDGE_Z; block = 'wall';
+  }
   const M = 0.55;
   if (z > 3) { z = 3; block = 'wall'; }
   if (z > TUNNEL_END - 1) {
@@ -139,9 +146,9 @@ export function constrain(x: number, z: number, shod: boolean): { x: number; z: 
 }
 
 /** Любая восстановленная/внешняя позиция проходит через ту же защиту (fail-closed: обувь считается надетой). */
-export function sanitizeSpawn(p: { x: number; z: number } | null | undefined): { x: number; z: number } {
+export function sanitizeSpawn(p: { x: number; z: number } | null | undefined, mode: 'legacy' | 'horeb' = 'legacy'): { x: number; z: number } {
   if (!p || !Number.isFinite(p.x) || !Number.isFinite(p.z)) return { ...START };
-  const c = constrain(p.x, p.z, true);
+  const c = constrain(p.x, p.z, true, mode);
   return { x: c.x, z: c.z };
 }
 

@@ -124,7 +124,7 @@ export class World {
     try {
       w.build();
       if (signal?.aborted || !canvas.isConnected) throw new DOMException('Scene creation cancelled', 'AbortError');
-      const s = sanitizeSpawn(spawn ?? (mode === 'horeb' ? HOREB_CALL_START : null));
+      const s = sanitizeSpawn(spawn ?? (mode === 'horeb' ? HOREB_CALL_START : null), mode);
       w.pos.set(s.x, s.z);
       w.bind();
       w.applySettings(settings);
@@ -143,7 +143,7 @@ export class World {
     const { tex, bump } = rockTextures(low ? 256 : 512);
     tex.repeat.set(1, 1);
     const rock = new THREE.MeshStandardMaterial({ vertexColors: true, map: tex, bumpMap: bump, bumpScale: 1.15, roughness: 0.96, metalness: 0, side: THREE.DoubleSide });
-    this.zones = buildZones(low, rock);
+    this.zones = buildZones(low, rock, this.expeditionMode);
     this.scene.add(this.zones.group);
     this.obstacles.push(...this.zones.obstacles);
     this.bush = buildBurningBush(low);
@@ -481,7 +481,7 @@ export class World {
   teleportZone(zone: number) { const s = ZONE_SPAWN[zone] ?? ZONE_SPAWN[0]; this.teleportTo(s.x, s.z); this.yaw = 0; this.pitch = 0; }
   teleportTo(x: number, z: number) {
     if (this.shoes === 'removing') return;
-    const c = constrain(x, z, this.shoes !== 'unshod');
+    const c = constrain(x, z, this.shoes !== 'unshod', this.expeditionMode);
     this.pos.set(c.x, c.z); this.vel.set(0, 0); this.block = null; this.emit(true);
   }
   /** Saved references can be opened from anywhere, but their physical
@@ -633,7 +633,7 @@ export class World {
         nx = pushed.x; nz = pushed.z;
       }
     }
-    const c = constrain(nx, nz, shod);
+    const c = constrain(nx, nz, shod, this.expeditionMode);
     const moving = il > 0.05;
     const prevBlock = this.block;
     const nearOuter = shod && distToBush(c.x, c.z) < R_OUTER + 0.9; // полоса остановки у порога

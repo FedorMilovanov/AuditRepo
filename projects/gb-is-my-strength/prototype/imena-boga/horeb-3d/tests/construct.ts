@@ -731,6 +731,37 @@ if (gardenRecord) {
     OLIVE_GROVE_OFFSETS.every(([dx, dz]) => Number.isFinite(dx) && Number.isFinite(dz)) &&
     OLIVE_GROVE_OFFSETS.every(([dx]) => Math.abs(anchorX + dx) > 0.29 + 0.35 + 0.05));
 }
+// W5B standalone Horeb MUST NOT physically generate older and later
+// Biblical gallery rooms, altars or indoor geology. Inspect actual built
+// THREE meshes and real LOW/HIGH terrain vertices, not a UI flag.
+for (const low of [true,false]) {
+  const standalone = buildZones(low, new THREE.MeshStandardMaterial({ vertexColors: true }), 'horeb');
+  const names: string[] = [];
+  standalone.group.traverse(obj => { if (obj.name) names.push(obj.name); });
+  const terrain = standalone.group.getObjectByName('horeb-exterior-terrain');
+  const forbidden = ['cave-vault-continuous', 'cave-floor-continuous',
+    'horeb-outer-rock-face', 'chasm-deep-floor'];
+  t('W5B ' + (low?'LOW':'HIGH') + ' chapter contains genuine exterior but no old cave',
+    !!terrain && !names.some(name=>forbidden.includes(name)) &&
+    standalone.obstacles.length===0 &&
+    !!standalone.group.getObjectByName('outer-threshold-scree') &&
+    !!standalone.group.getObjectByName('inner-threshold-scree'));
+  if (terrain instanceof THREE.Mesh) {
+    const vertices = terrain.geometry.getAttribute('position');
+    const nearest = (x: number,z: number) => {
+      let d=Infinity,y=NaN;
+      for(let i=0;i<vertices.count;i++){
+        const dd=Math.hypot(vertices.getX(i)-x,vertices.getZ(i)-z);
+        if(dd<d){d=dd;y=vertices.getY(i);}
+      }
+      return {d,y};
+    };
+    const north=nearest(0,-326),walk=nearest(0,-343);
+    console.log('W5B REAL NORTH ROCK '+(low?'LOW':'HIGH')+' '+JSON.stringify({north,walk}));
+    t('W5B '+(low?'LOW':'HIGH')+' sculpted real northern rock beyond walking start',
+      north.d<6 && walk.d<6 && north.y>walk.y+2.7 && walk.y<1.0);
+  }
+}
 const zoneGeometry = buildZones(true, new THREE.MeshStandardMaterial({ vertexColors: true }));
 // Zone-6 geometry is a literal deformation OF the cave shell, not detached
 // paper spikes or a theatrical portal, and cannot intersect walking height.

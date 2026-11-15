@@ -86,9 +86,20 @@ t('W5 legacy scene still retains all 42 unique Research exhibits',
   sceneExhibitsForMode(EXHIBITS,'legacy').length===42 &&
   sceneExhibitsForMode(EXHIBITS,'legacy').every((e,i)=>e.id===EXHIBITS[i].id));
 t('W5 dedicated chapter spawn is on the existing safe outer path',
-  N.constrain(HOREB_CALL_START.x,HOREB_CALL_START.z,true).block===null &&
+  N.constrain(HOREB_CALL_START.x,HOREB_CALL_START.z,true,'horeb').block===null &&
   N.distToBush(HOREB_CALL_START.x,HOREB_CALL_START.z)>N.R_OUTER &&
-  N.sanitizeSpawn(HOREB_CALL_START).z===HOREB_CALL_START.z);
+  N.sanitizeSpawn(HOREB_CALL_START,'horeb').z===HOREB_CALL_START.z);
+t('W5B physical north ridge closes absent old gallery only in Horeb',
+  N.HOREB_NORTH_EDGE_Z>N.TUNNEL_END-30 &&
+  N.HOREB_NORTH_EDGE_Z<N.TUNNEL_END-10 &&
+  N.constrain(0,-315,true,'horeb').z===N.HOREB_NORTH_EDGE_Z &&
+  N.constrain(0,-315,true,'horeb').block==='wall' &&
+  N.constrain(0,-315,true,'legacy').z===-315 &&
+  N.sanitizeSpawn({x:0,z:-88},'horeb').z===N.HOREB_NORTH_EDGE_Z);
+t('W5B bush radii and physical southbound wadi remain unchanged',
+  N.constrain(0,-353,true,'horeb').block==='outer' &&
+  N.constrain(0,-365,false,'horeb').block==='inner' &&
+  N.constrain(N.exodusTrailCentreX(-430),-430,true,'horeb').block===null);
 // E2 STORY-SPECIFIC — every scene has >=2 anchor props + unique signature.
 t('E2 every exhibit has >=2 anchor props', EXHIBITS.every((e) => e.anchorProps.length >= 2));
 const sig = new Set(EXHIBITS.map((e) => `${e.environmentKey}::${e.meaningfulAction}`));
