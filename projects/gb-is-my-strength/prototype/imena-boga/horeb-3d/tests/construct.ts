@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
+import { EGYPT_EPISODES, EGYPT_RETURN_STOP } from '../src/imena-boga-horeb-3d/data/storyWorlds';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, EXODUS_TRAIL_LOOKOUT_Z, exodusTrailCentreX, isHorebDepartureLookout } from '../src/imena-boga-horeb-3d/engine/nav';
@@ -25,6 +26,15 @@ t('Horeb departure viewpoint is only visible near actual south trail terminus',
   !isHorebDepartureLookout(22, -433, 'horeb') &&
   !isHorebDepartureLookout(NaN, -433, 'horeb') &&
   !isHorebDepartureLookout(-8, -451, 'horeb'));
+
+t('Egypt source-led sequence has four distinct episodes in biblical order, never 3D names',
+  EGYPT_EPISODES.length === 4 &&
+  EGYPT_EPISODES.map(e => e.id).join('|') === 'return|pharaoh|judgments|passover' &&
+  EGYPT_EPISODES.map(e => e.reference).join('|') ===
+    'Исх. 4:18–31|Исх. 5:1–7:7|Исх. 7:8–11:10|Исх. 12:1–51' &&
+  EGYPT_EPISODES.every(e => e.title.length > 8 && e.summary.length > 40) &&
+  EGYPT_RETURN_STOP.id === 'egypt-return' &&
+  EGYPT_RETURN_STOP.exhibitIds.length === 0);
 
 let totalHigh = 0, totalLow = 0;
 const errors: string[] = [];

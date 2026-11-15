@@ -98,6 +98,19 @@ export const STORY_STOPS: readonly StoryStop[] = [
 export type ExpeditionMode = 'horeb' | 'legacy';
 export const HOREB_CALL_STOP = STORY_STOPS.find(s => s.id === 'horeb-call')!;
 export const EGYPT_RETURN_STOP = STORY_STOPS.find(s => s.id === 'egypt-return')!;
+
+/** Source-order reading plan only. No approved 3D Egyptian locations or
+ * additional Research names have been assigned to these episodes. */
+export const EGYPT_EPISODES = [
+  { id: 'return', reference: 'Исх. 4:18–31', title: 'Возвращение Моисея',
+    summary: 'От Иофора к возвращению в Египет, встрече с Аароном и обращению к старейшинам.' },
+  { id: 'pharaoh', reference: 'Исх. 5:1–7:7', title: 'Противостояние с фараоном',
+    summary: 'Требование отпустить народ, усиление принудительного труда и Божье обетование избавления.' },
+  { id: 'judgments', reference: 'Исх. 7:8–11:10', title: 'Знамения и суды',
+    summary: 'Повествование о знамениях, казнях и отказе фараона; не реконструкция природного механизма чудес.' },
+  { id: 'passover', reference: 'Исх. 12:1–51', title: 'Пасха и исход',
+    summary: 'Установление Пасхи, последняя казнь и выход из Египта; дальнейший путь к морю относится к новой главе.' },
+] as const;
 export const HOREB_CALL_START = { x: 0, z: -338 } as const;
 export function sceneExhibitsForMode<T extends { readonly id: string }>(
   registry: readonly T[], mode: ExpeditionMode,

@@ -15,7 +15,7 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER, isHorebDepartureLookout } from './engine/nav';
@@ -613,10 +613,18 @@ export default function HorebApp() {
           <p>Это конец построенной прогулки по Хориву, а не дорога до Египта. Реальная география пути не восстановлена.</p>
           <p>В Исх. 3:12 Бог обещает Моисею, что народ будет служить Ему на этой горе. В Исх. 4:18–20 Моисей возвращается к Иофору, затем отправляется в Египет с семьёй.</p>
           <p className="text-sm text-muted">{EGYPT_RETURN_STOP.place} · {EGYPT_RETURN_STOP.biblicalRange}.</p>
-          <p className="text-sm text-bronze">Следующая историческая глава пока не построена. Здесь нет телепорта в Египет, нового Research ID или притворной реконструкции расстояний.</p>
+          <p className="font-display text-lg text-parch">Порядок чтения · четыре эпизода</p>
+          <ol data-testid="egypt-reading-sequence" className="space-y-3">
+            {EGYPT_EPISODES.map((episode, i) => <li key={episode.id} className="border-l-2 border-bronze/30 pl-3">
+              <p className="font-display text-lg text-parch">{i + 1}. {episode.title}</p>
+              <p className="text-sm text-bronze">{episode.reference}</p>
+              <p className="text-sm text-parch/80 mt-1">{episode.summary}</p>
+            </li>)}
+          </ol>
+          <p className="text-sm text-bronze">Следующая историческая глава пока не построена. Здесь нет телепорта в Египет, неподтверждённых музейных объектов или притворной реконструкции расстояний.</p>
           <div className="flex flex-wrap gap-3 pt-2">
             <button className="btn btn-primary" onClick={() => setDialog(null)}>Вернуться на тропу</button>
-            <button className="btn" onClick={() => leaveWorld('reader')}>Читать 42 досье</button>
+            <button className="btn" onClick={() => leaveWorld('reader')}>Атлас имён Бога · 42 досье</button>
           </div>
         </div>
       </Modal>}

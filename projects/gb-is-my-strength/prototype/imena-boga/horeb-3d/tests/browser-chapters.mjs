@@ -297,7 +297,38 @@ try{
    if(!claim.includes('Исх. 3:12')||!claim.includes('Исх. 4:18–20')||
        !claim.includes('не построена')||!claim.includes('нет телепорта'))
      throw new Error('DEPARTURE MUST MARK NEXT CHAPTER UNBUILT AND NON-GEOGRAPHICAL');
+   const episodes=await next.$$eval('[data-testid="egypt-reading-sequence"] > li',
+     nodes=>nodes.map(node=>node.textContent||''));
+   const expectedRefs=['Исх. 4:18–31','Исх. 5:1–7:7',
+     'Исх. 7:8–11:10','Исх. 12:1–51'];
+   if(episodes.length!==4||episodes.some((s,i)=>!s.includes(expectedRefs[i]))||
+      episodes.some((s)=>s.includes('готовая 3D-сцена')))
+     throw new Error('EGYPT READING ACTS WRONG '+JSON.stringify(episodes));
    await next.screenshot({path:join(out,'smoke-chapter-departure-reader.png')});
+   // Width-only responsive reflow: toggling isMobile on an already-open
+   // Puppeteer page reloads it and destroys the active dialog.
+   await next.setViewport({width:390,height:844,deviceScaleFactor:2});
+   const modalLayout=await next.evaluate(()=>{
+     const m=document.querySelector('[role="dialog"]');
+     return {modal:!!m,refs:[...document.querySelectorAll('[data-testid="egypt-reading-sequence"] > li')].length,
+       height:m?.clientHeight,scrollHeight:m?.scrollHeight,screenHeight:innerHeight,
+       noSideOverflow:!!m&&m.scrollWidth<=m.clientWidth+1};
+   });
+   if(!modalLayout.modal||modalLayout.refs!==4||!modalLayout.noSideOverflow||
+      modalLayout.height>modalLayout.screenHeight*.9||modalLayout.scrollHeight<=modalLayout.height)
+     throw new Error('EGYPT READING MOBILE SCROLL '+JSON.stringify(modalLayout));
+   await next.evaluate(()=>{
+     const m=document.querySelector('[role="dialog"]');
+     m.scrollTop=m.scrollHeight;
+   });
+   const bottomAccessible=await next.evaluate(()=>{
+     const m=document.querySelector('[role="dialog"]');
+     const b=[...m.querySelectorAll('button')].find(n=>n.textContent?.includes('Атлас имён Бога'));
+     const a=b?.getBoundingClientRect(),r=m.getBoundingClientRect();
+     return !!a&&a.top>=r.top&&a.bottom<=r.bottom&&a.width>100;
+   });
+   if(!bottomAccessible)throw new Error('EGYPT MOBILE BOTTOM ACTION NOT REACHABLE');
+   await next.screenshot({path:join(out,'smoke-chapter-departure-mobile.png')});
    await next.keyboard.press('Escape');
    await next.waitForFunction(()=>!document.querySelector('[role="dialog"]'),
      {timeout:12000});
