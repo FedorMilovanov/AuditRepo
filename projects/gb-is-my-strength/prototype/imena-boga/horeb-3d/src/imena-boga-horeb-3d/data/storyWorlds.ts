@@ -90,6 +90,21 @@ export const STORY_STOPS: readonly StoryStop[] = [
     description: 'Значения имеют интертекстуальные связи с ВЗ; всё равно не помещать НЗ в Хорив.' },
 ] as const;
 
+/** First 3D slice: physically separate Horeb from the legacy 42-item lab.
+ * The two IDs are derived from the SAME canonical chronology, not from
+ * an invented duplicate source registry. The complete 42 entries remain
+ * in the accessible reader and the explicit legacy QA laboratory.
+ */
+export type ExpeditionMode = 'horeb' | 'legacy';
+export const HOREB_CALL_STOP = STORY_STOPS.find(s => s.id === 'horeb-call')!;
+export const HOREB_CALL_START = { x: 0, z: -330 } as const;
+export function sceneExhibitsForMode<T extends { readonly id: string }>(
+  registry: readonly T[], mode: ExpeditionMode,
+): T[] {
+  if (mode === 'legacy') return [...registry];
+  const activeIds = new Set(HOREB_CALL_STOP.exhibitIds);
+  return registry.filter(item => activeIds.has(item.id));
+}
 export const EXODUS_CHAPTER_ORDER: readonly StoryChapter[] = [
   'horeb-call', 'egypt-return', 'exodus-and-sea', 'marah',
   'wilderness-sin', 'rephidim', 'sinai-covenant',

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
+import { HOREB_CALL_START, sceneExhibitsForMode, type ExpeditionMode } from '../data/storyWorlds';
 import { SITE_CLUES, type SiteClueId } from '../data/siteClues';
 import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
@@ -98,7 +99,7 @@ export class World {
   settings: WorldSettings;
   private listeners: [EventTarget, string, EventListener, AddEventListenerOptions?][] = [];
 
-  private constructor(private canvas: HTMLCanvasElement, settings: WorldSettings, private onState: (s: WorldState) => void, private onEvent: (e: string) => void) {
+  private constructor(private canvas: HTMLCanvasElement, settings: WorldSettings, private onState: (s: WorldState) => void, private onEvent: (e: string) => void, readonly expeditionMode: ExpeditionMode) {
     this.settings = settings;
     this.renderer = new THREE.WebGLRenderer({
       canvas, antialias: settings.quality === 'high',
@@ -116,14 +117,14 @@ export class World {
     this.scene.add(this.ambient, this.hemi, this.moon);
   }
 
-  static async create(canvas: HTMLCanvasElement, settings: WorldSettings, spawn: { x: number; z: number } | null, onState: (s: WorldState) => void, onEvent: (e: string) => void, signal?: AbortSignal) {
+  static async create(canvas: HTMLCanvasElement, settings: WorldSettings, spawn: { x: number; z: number } | null, onState: (s: WorldState) => void, onEvent: (e: string) => void, signal?: AbortSignal, mode: ExpeditionMode = 'legacy') {
     try { await (document as Document & { fonts?: FontFaceSet }).fonts?.ready; } catch { /* шрифты необязательны */ }
     if (signal?.aborted || !canvas.isConnected) throw new DOMException('Scene creation cancelled', 'AbortError');
-    const w = new World(canvas, settings, onState, onEvent);
+    const w = new World(canvas, settings, onState, onEvent, mode);
     try {
       w.build();
       if (signal?.aborted || !canvas.isConnected) throw new DOMException('Scene creation cancelled', 'AbortError');
-      const s = sanitizeSpawn(spawn);
+      const s = sanitizeSpawn(spawn ?? (mode === 'horeb' ? HOREB_CALL_START : null));
       w.pos.set(s.x, s.z);
       w.bind();
       w.applySettings(settings);
@@ -173,7 +174,10 @@ export class World {
     // A SpriteMaterial without a map renders a visible square billboard.
     const propGlow = glowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
     const editorialOk = validateExhibits(EXHIBITS).length === 0; // fail-closed
-    for (const e of editorialOk ? EXHIBITS : []) {
+    // Only physically install the chapter's own 3D exhibits and colliders.
+    // The legacy laboratory still installs all 42 for unchanged QA.
+    // Never make an excluded story's prop, beacon, or story target here.
+    for (const e of editorialOk ? sceneExhibitsForMode(EXHIBITS, this.expeditionMode) : []) {
       const pl = PLACEMENTS[e.id];
       if (!pl) continue; // fail-closed: экспонат без размещения не попадает в 3D (но есть в HTML)
       const [x, z] = pl;

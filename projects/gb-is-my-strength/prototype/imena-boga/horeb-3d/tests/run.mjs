@@ -1,7 +1,8 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
 import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
-  worldForResearchId, chapterForResearchId } from '../.test-build/data/storyWorlds.js';
+  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START,
+  sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -75,6 +76,19 @@ t('W1 curatorial route rejects removed, duplicated or extra source entries',
   validateStoryWorlds([...EXHIBITS, EXHIBITS[0]]).length > 0 &&
   validateStoryWorlds([...EXHIBITS, { id: 'future-placeholder', publicationState: 'HOLD' }])
     .length > 0);
+// W5: the actual physical scene selector uses ONLY Exodus 3.
+const chapterIds=sceneExhibitsForMode(EXHIBITS, 'horeb').map(e=>e.id);
+t('W5 new Horeb chapter physically selects only two Exodus 3 witnesses',
+  HOREB_CALL_STOP.id==='horeb-call' &&
+  chapterIds.join('|')==='ehyeh|yhwh' &&
+  !chapterIds.some(id=>['abba','el-roi','nissi','tsur'].includes(id)));
+t('W5 legacy scene still retains all 42 unique Research exhibits',
+  sceneExhibitsForMode(EXHIBITS,'legacy').length===42 &&
+  sceneExhibitsForMode(EXHIBITS,'legacy').every((e,i)=>e.id===EXHIBITS[i].id));
+t('W5 dedicated chapter spawn is on the existing safe outer path',
+  N.constrain(HOREB_CALL_START.x,HOREB_CALL_START.z,true).block===null &&
+  N.distToBush(HOREB_CALL_START.x,HOREB_CALL_START.z)>N.R_OUTER &&
+  N.sanitizeSpawn(HOREB_CALL_START).z===HOREB_CALL_START.z);
 // E2 STORY-SPECIFIC — every scene has >=2 anchor props + unique signature.
 t('E2 every exhibit has >=2 anchor props', EXHIBITS.every((e) => e.anchorProps.length >= 2));
 const sig = new Set(EXHIBITS.map((e) => `${e.environmentKey}::${e.meaningfulAction}`));

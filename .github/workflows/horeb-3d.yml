@@ -93,6 +93,13 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:smoke
+      - name: Verify separate Horeb chapter has only Exodus 3 exhibits
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:chapters
       - name: Open every one of the 42 dossiers with E
         env:
           HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}

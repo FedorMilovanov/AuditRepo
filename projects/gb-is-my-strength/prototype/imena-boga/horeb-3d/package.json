@@ -15,6 +15,7 @@
     "test:browser:journey": "node tests/browser-journey.mjs",
     "test:browser:side": "node tests/browser-side-journey.mjs",
     "test:browser:quality": "node tests/browser-quality.mjs",
+    "test:browser:chapters": "node tests/browser-chapters.mjs",
     "test:browser:firefox": "node tests/browser-firefox-smoke.mjs",
     "test:hardware:soak": "node tests/browser-hardware-soak.mjs"
   },

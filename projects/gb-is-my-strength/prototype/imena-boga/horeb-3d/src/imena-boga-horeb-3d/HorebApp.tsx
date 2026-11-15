@@ -15,6 +15,7 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
+import { HOREB_CALL_STOP, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
@@ -136,6 +137,9 @@ function StudyJourneyPanel({ observed, understood, clues, fields, expeditionComp
 
 export default function HorebApp() {
   const [screen, setScreen] = useState<Screen>(() => (location.hash === '#read' ? 'reader' : 'intro'));
+  // Two explicitly distinct scene modes, one engine. Do not infer historical
+  // routes from 42 old lab positions or expose Genesis/NT props at Horeb.
+  const [routeMode, setRouteMode] = useState<ExpeditionMode>('horeb');
   // A failed GPU context needs a fresh canvas, not a timed intro→world race.
   const [worldEpoch, setWorldEpoch] = useState(0);
   const [settings, setSettings] = useState<UiSettings>(readSettings);
@@ -182,6 +186,9 @@ export default function HorebApp() {
   }, [settings, isTouch]);
 
   const saveCheckpoint = useCallback((pos: { x: number; z: number }) => {
+    // Old 42-zone checkpoint must NEVER become a Horeb chapter spawn,
+    // or vice versa. This short first chapter starts afresh on each visit.
+    if (routeMode !== 'legacy') return;
     if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) return;
     const point = { x: pos.x, z: pos.z };
     checkpointRef.current = point;
@@ -190,7 +197,7 @@ export default function HorebApp() {
     setProgress((old) => old.last &&
       Math.hypot(old.last.x - point.x, old.last.z - point.z) < 0.01
       ? old : { ...old, last: point });
-  }, []);
+  }, [routeMode]);
 
   // WebGL adapter preference, antialiasing and low/high geometry are decided
   // at context creation. Applying only a new DPR to the old renderer was a
@@ -218,7 +225,7 @@ export default function HorebApp() {
     let w: World | null = null;
     import('./engine/World').then(({ World }) => {
       if (cancelled) return null;
-      return World.create(canvas, resolved, resumePos.current, (s) => {
+      return World.create(canvas, resolved, routeMode === 'legacy' ? resumePos.current : null, (s) => {
         stateRef.current = s;
         setWs(s);
         const prev = checkpointRef.current;
@@ -230,7 +237,7 @@ export default function HorebApp() {
         if (e === 'pointerlock-denied') setToast('Захват мыши недоступен — обзор перетаскиванием.');
         if (e === 'shoes-removed') setToast('Обувь снята. Тропа к месту наблюдения открыта; к ветвям — нельзя.');
         if (e === 'auto-lowered') setToast('Разрешение снижено для плавности.');
-      }, controller.signal);
+      }, controller.signal, routeMode);
     }).then((world) => {
       if (!world) return;
       if (cancelled) { world.dispose(); return; }
@@ -254,7 +261,7 @@ export default function HorebApp() {
       worldRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen, worldEpoch, resolved.quality]);
+  }, [screen, worldEpoch, resolved.quality, routeMode]);
 
   useEffect(() => { worldRef.current?.applySettings(resolved); }, [resolved]);
   useEffect(() => { worldRef.current?.setInputLocked(dialog !== null); }, [dialog, ws === null]);
@@ -307,7 +314,14 @@ export default function HorebApp() {
     return () => window.removeEventListener('keydown', onKey);
   }, [screen, dialog, interact, inspectSiteClue]);
 
-  const start = () => { setErr(null); setFinale('none'); setScreen('world'); };
+  const start = (mode: ExpeditionMode) => {
+    setErr(null); setFinale('none'); setRouteMode(mode);
+    // Retain old lab checkpoints only in the lab. Chapter spawn is its
+    // safe, independent outer approach from the canonical story contract.
+    resumePos.current = mode === 'legacy' ? progress.last : null;
+    checkpointRef.current = mode === 'legacy' ? progress.last : null;
+    setScreen('world');
+  };
   const leaveWorld = (next: 'intro' | 'reader') => {
     const pos = worldRef.current?.position;
     if (pos) saveCheckpoint(pos);
@@ -345,7 +359,7 @@ export default function HorebApp() {
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
   const zoneInfo = ZONES[zone];
-  const walkingBeat = ws?.journeyBeat
+  const walkingBeat = routeMode === 'legacy' && ws?.journeyBeat
     ? JOURNEY_BEATS.find(beat => beat.id === ws.journeyBeat) : null;
   const nextLesson = nextLearningLesson(learning);
   // User-approved subdued HUD: let the bush take visual focus at close range.
@@ -376,21 +390,26 @@ export default function HorebApp() {
       <div className="relative z-10 mx-auto max-w-3xl px-6 pt-[12vh] sm:pt-[16vh] text-center">
         <p className="eyebrow reveal">Интерактивная экспозиция · лабораторный прототип</p>
         <h1 className="font-display text-5xl sm:text-7xl tracking-[0.12em] mt-5 reveal d1">ИМЕНА БОГА</h1>
-        <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Перед Святым</p>
+        <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Хорив · Призвание Моисея</p>
         <p className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
-          Путь через каменные галереи к открытой земле у Хорива. География и пещерные переходы — художественная экспозиция;
-          каждое письменное свидетельство указано книгой и стихом.
+          Исход 3–4. Подойдите к месту неопалимой купины, откройте два
+          письменных свидетельства и продолжите прогулку по каменистой долине.
+          Местность художественно реконструирована, точная география Хорива не установлена.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
-          {webgl ? <button className="btn btn-primary" onClick={start}>{progress.last ? 'Продолжить путешествие' : 'Начать путешествие'}</button>
+          {webgl ? <button data-testid="horeb-chapter-start" className="btn btn-primary" onClick={() => start('horeb')}>Начать Хорив · Исход 3–4</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
-          <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
+          <button className="btn" onClick={() => setScreen('reader')}>Все 42 досье · читать</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>
         </div>
-        <section className="mt-6 mx-auto max-w-xl rounded-sm border border-bronze/30 bg-black/55 p-4 text-left" aria-label="Путевой дневник">
-          <p className="eyebrow">Экспедиция смыслов · свободный маршрут</p>
+        <section className="mt-6 mx-auto max-w-xl rounded-sm border border-bronze/30 bg-black/55 p-4 text-left" aria-label="Архивная лабораторная экспозиция">
+          <p className="eyebrow">Лабораторный архив · прежний маршрут</p>
+          <p className="mt-2 text-sm text-parch/75">42 свидетельства разных библейских эпох.
+            Это отдельная проверочная галерея, а не хронологическая сцена Хорива.</p>
+          {webgl && <button data-testid="legacy-journey-start" className="btn mt-3" onClick={() => start('legacy')}>{progress.last ? 'Продолжить путешествие' : 'Начать путешествие'}</button>}
+          <p className="eyebrow mt-5">Исследовательский дневник лаборатории</p>
           <p className="font-display text-xl text-parch mt-2">Осмыслено {learning.understood.length} из {PILOT_LESSONS.length} ключевых сюжетов</p>
           <p className="text-sm text-parch/75 mt-2">{nextLesson
             ? 'Следующее исследование: ' + nextLesson.title + '. Осмотрите сцену, сопоставьте текст и ответьте на вопрос.'
@@ -442,9 +461,15 @@ export default function HorebApp() {
 
       <div className="hud transition-opacity duration-700" style={{ opacity: hudOpacity }}>
         <div className="absolute top-3 left-3 sm:top-5 sm:left-6 max-w-[60vw] rounded-sm border border-parch/10 bg-black/65 px-3 py-2 shadow-lg backdrop-blur-sm" aria-live="polite">
-          <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
-          <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>
-          {zone !== 6 && <p data-testid="journey-progress-hud" className="text-xs text-bronze/90 mt-1">Экспедиция смыслов: {learning.understood.length}/{PILOT_LESSONS.length}</p>}
+          {routeMode === 'horeb' ? <>
+            <p className="eyebrow">Исход 3–4 · самостоятельная глава</p>
+            <p className="font-display text-xl sm:text-2xl leading-tight">Призвание Моисея</p>
+            <p className="text-xs text-bronze/90 mt-1">Купина · ${HOREB_CALL_STOP.exhibitIds.length} свидетельства · открытая долина</p>
+          </> : <>
+            <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
+            <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>
+            {zone !== 6 && <p data-testid="journey-progress-hud" className="text-xs text-bronze/90 mt-1">Экспедиция смыслов: {learning.understood.length}/{PILOT_LESSONS.length}</p>}
+          </>}
           {ws && ws.zone >= 6 && <p className="text-xs text-muted mt-1">{ws.shoes === 'shod' ? 'В обуви' : ws.shoes === 'removing' ? 'Снимаете обувь…' : 'Босиком'}</p>}
         </div>
         <nav className="absolute top-3 right-3 sm:top-5 sm:right-6 flex flex-wrap justify-end gap-1.5 max-w-[60vw]" aria-label="Управление экспозицией">
@@ -452,10 +477,10 @@ export default function HorebApp() {
             <button data-testid="quiet-menu" className="btn-ghost" onClick={() => setDialog({ kind: 'menu' })}>Меню</button>
             {!isTouch && <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>}
           </> : <>
-          <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>
+          {routeMode === 'legacy' && <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>}
           <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки ({bookmarks.length})</button>
-          <button className="btn-ghost" onClick={() => setDialog({ kind: 'learning' })}>Дневник ({learning.understood.length}/8)</button>
+          {routeMode === 'legacy' && <button className="btn-ghost" onClick={() => setDialog({ kind: 'learning' })}>Дневник ({learning.understood.length}/8)</button>}
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'sources' })}>Источники</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'settings' })}>Настройки</button>
           <button className="btn-ghost" onClick={exitWorld}>Выйти</button>
@@ -534,7 +559,8 @@ export default function HorebApp() {
           <p className="text-sm text-parch/75 mt-2">Рядом — Исх. 3:12–15: обещание «Я буду с тобою», самоназвание <Original e={EXHIBITS.find((e) => e.id === 'ehyeh')!} /> и имя <Original e={EXHIBITS.find((e) => e.id === 'yhwh')!} /> — разные формы в разных стихах.</p>
           <div className="flex flex-wrap gap-2 mt-4">
             <button className="btn" onClick={() => leaveWorld('reader')}>Открыть Атлас (чтение)</button>
-            <button className="btn" onClick={() => { setFinale('seen'); worldRef.current?.teleportZone(1); }}>Вернуться в галереи</button>
+            {routeMode === 'legacy' ? <button className="btn" onClick={() => { setFinale('seen'); worldRef.current?.teleportZone(1); }}>Вернуться в галереи</button>
+              : <button className="btn" onClick={() => { setFinale('seen'); exitWorld(); }}>Завершить главу</button>}
             <button className="btn-ghost" onClick={() => setFinale('seen')}>Скрыть</button>
           </div>
         </section>
@@ -561,9 +587,9 @@ export default function HorebApp() {
       </Modal>}
       {dialog?.kind === 'menu' && <Modal title="Управление экспозицией" onClose={() => setDialog(null)}>
         <div className="grid gap-3">
-          <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>
+          {routeMode === 'legacy' && <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>}
           <button className="btn" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки Писания ({bookmarks.length})</button>
-          <button className="btn" onClick={() => setDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>
+          {routeMode === 'legacy' && <button className="btn" onClick={() => setDialog({ kind: 'learning' })}>Путевой дневник ({learning.understood.length}/8)</button>}
           <button className="btn" onClick={() => leaveWorld('reader')}>Читать экспозицию</button>
           <button className="btn" onClick={() => setDialog({ kind: 'sources' })}>Источники и ограничения</button>
           <button className="btn" onClick={() => setDialog({ kind: 'settings' })}>Настройки доступности</button>
@@ -596,7 +622,7 @@ export default function HorebApp() {
         </Modal>
       )}
       {dialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setDialog(null)}><SourcesAndLimits />{EDITORIAL_ERRORS.length > 0 && <p className="text-red-300 mt-4">Редакционные ошибки реестра: {EDITORIAL_ERRORS.join('; ')}</p>}</Modal>}
-      {dialog?.kind === 'map' && ws && (
+      {dialog?.kind === 'map' && routeMode === 'legacy' && ws && (
         <Modal title="Схема маршрута" onClose={() => setDialog(null)}>
           <MiniMap x={ws.x} z={ws.z} current={ws.zone} visited={new Set(progress.visited)} onGo={(z) => { worldRef.current?.teleportZone(z); setDialog(null); }} />
           <div className="flex flex-wrap gap-2 mt-4">
