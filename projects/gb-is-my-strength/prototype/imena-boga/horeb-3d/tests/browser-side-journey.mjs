@@ -279,6 +279,11 @@ try {
       await face(0,'W2 outward facing '+i);
       await axis('x',p.x,'W2 outward x '+i,0.55);
       await axis('z',p.z,'W2 outward z '+i,0.55);
+      // A physical W-key crossing has slight lateral velocity if the
+      // earlier real-key arrow turn stopped at a ~0.08rad yaw. Re-center
+      // with another REAL A/D input at the destination, not by mutating
+      // position, loosening the waypoint gate, or bypassing collision.
+      await axis('x',p.x,'W2 outward re-center '+i,0.45);
       const at=await read(); safe(at,'W2 outward '+i);
       if(Math.abs(at.x-p.x)>0.85||Math.abs(at.z-p.z)>0.85)
         throw new Error('W2 actual outward missed '+JSON.stringify({p,at}));
