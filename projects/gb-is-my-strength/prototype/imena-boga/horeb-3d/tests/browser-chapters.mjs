@@ -173,7 +173,60 @@ try{
     legacy.shoes!=='shod'||legacy.canvases!==1||errors.length)
    throw new Error('LEGACY REGRESSION '+JSON.stringify({legacy,errors}));
  await page.screenshot({path:join(out,'smoke-chapter-legacy.png')});
- console.log('PASS W5C chapter: 2 Exodus-3 objects, 42 legacy, actual shod outer + unshod inner and north return; errors=0');
+ // Recheck the NEW chapter on a phone-sized touch viewport. The existing
+ // general smoke's prompt witness is in the 42-object archive, so it alone
+ // cannot prove both chapter stones retain readable touch interactions.
+ for (const [id,strafe,direction,turn] of [
+   ['ehyeh','a',-1,'ArrowLeft'], ['yhwh','d',1,'ArrowRight'],
+ ]) {
+   const phone=await browser.newPage();
+   try {
+     await phone.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+     await phone.goto(base+'/?e2e',{waitUntil:'domcontentloaded',timeout:45000});
+     await phone.click('[data-testid="horeb-chapter-start"]');
+     await phone.waitForFunction(()=>window.__horeb?.world?.renderer?.info?.render?.frame,
+       {timeout:90000});
+     await phone.keyboard.down('w');
+     await phone.waitForFunction(()=>window.__horeb.world.position.z<-344.5,
+       {timeout:90000});
+     await phone.keyboard.up('w');
+     await phone.keyboard.down(strafe);
+     await phone.waitForFunction((sign)=>sign<0
+       ? window.__horeb.world.position.x<-8 : window.__horeb.world.position.x>8,
+       {timeout:90000},direction);
+     await phone.keyboard.up(strafe);
+     await phone.keyboard.down(turn);
+     await phone.waitForFunction((expected)=>window.__horeb?.state()?.prompt?.id===expected,
+       {timeout:60000},id);
+     await phone.keyboard.up(turn);
+     const evidence=await phone.evaluate(()=>{
+       const b=document.querySelector('[data-testid="interaction-prompt"]');
+       const a=document.querySelector('[data-testid="touch-action"]');
+       const joy=document.querySelector('[data-testid="movement-joystick"]');
+       const r=b?.getBoundingClientRect(), ar=a?.getBoundingClientRect(),
+         jr=joy?.getBoundingClientRect();
+       return {mode:window.__horeb.world.expeditionMode,
+         ids:window.__horeb.world.exhibitPos.map(p=>p.e.id),
+         prompt:window.__horeb.state()?.prompt?.id,
+         oneTextGroup:b?.childElementCount===1 && b.firstElementChild?.tagName==='SPAN',
+         containsSource:b?.textContent?.includes('Исх. 3:'),
+         width:r?.width,height:r?.height,overflow:!!b&&b.scrollWidth>b.clientWidth+1,
+         clearsControls:!!r&&!!ar&&!!jr&&r.bottom+8<Math.min(ar.top,jr.top)};
+     });
+     if(evidence.mode!=='horeb'||evidence.ids.join('|')!=='ehyeh|yhwh'||
+        evidence.prompt!==id||!evidence.oneTextGroup||!evidence.containsSource||
+        evidence.width<300||evidence.height>105||evidence.overflow||
+        !evidence.clearsControls)
+       throw new Error('MOBILE HOREB WITNESS '+id+' '+JSON.stringify(evidence));
+     await phone.screenshot({path:join(out,'smoke-chapter-mobile-'+id+'.png')});
+     await phone.tap('[data-testid="interaction-prompt"]');
+     await phone.waitForSelector('[role="dialog"]',{timeout:12000});
+     const dossier=await phone.$eval('[role="dialog"]',el=>el.textContent||'');
+     if(!dossier.includes(id==='ehyeh'?'Я буду':'Тетраграмматон'))
+       throw new Error('MOBILE HOREB DOSSIER '+id);
+   }finally{await phone.close();}
+ }
+ console.log('PASS W5E chapter: 2 Exodus-3 natural stones with mobile tap, 42 legacy, and sacred guards; errors=0');
  writeFileSync(join(process.cwd(),'.test-build','chapters-witness.json'),
    JSON.stringify({chapter,legacy,physicalChapterWalk:{origin,south,outer,outerDistance,inner,innerDistance,north},errors,
      source:'actual Chromium/WebGL keyboard + scene mesh inspection'},null,2));
