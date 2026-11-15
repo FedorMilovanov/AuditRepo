@@ -701,6 +701,29 @@ try {
   });
   check('390px touch prompts and sandal action clear joystick by at least 8px',
     touchLayout.accessible, JSON.stringify(touchLayout));
+  // Layout-only pose inside the existing safe chapter-7 environment:
+  // a real witness has multiple text spans. The entire phrase must occupy
+  // ONE flex item on phones, not three independent skinny columns.
+  await mobile.evaluate(() => {
+    const w = window.__horeb.world;
+    w.teleportTo(-8, -345);
+    w.yaw = Math.PI / 4;
+    w.emit(true);
+  });
+  await mobile.waitForFunction(() => window.__horeb?.state()?.prompt?.id === 'ehyeh' &&
+    !!document.querySelector('[data-testid="interaction-prompt"]'), {timeout:10000});
+  const sourcePrompt = await mobile.evaluate(() => {
+    const button = document.querySelector('[data-testid="interaction-prompt"]');
+    const text = button?.firstElementChild;
+    const r = button?.getBoundingClientRect();
+    return {singleTextGroup:button?.childElementCount===1 && text?.tagName==='SPAN',
+      hasVerse:button?.textContent?.includes('Исх. 3:14'),
+      width:r?.width,height:r?.height,overflow:!!button && button.scrollWidth>button.clientWidth+1};
+  });
+  check('390px exhibit prompt uses one readable text group, no narrow columns',
+    sourcePrompt.singleTextGroup && sourcePrompt.hasVerse &&
+    sourcePrompt.width>=300 && sourcePrompt.height<=100 && !sourcePrompt.overflow,
+    JSON.stringify(sourcePrompt));
   await mobile.screenshot({path:join(shots,'smoke-05-mobile-world.png')});
   await mobile.close();
 

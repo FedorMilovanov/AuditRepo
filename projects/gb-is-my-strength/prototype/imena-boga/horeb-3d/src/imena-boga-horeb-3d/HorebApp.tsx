@@ -530,9 +530,13 @@ export default function HorebApp() {
 
       {/* Подсказка взаимодействия — кликабельна */}
       {ws?.prompt && !dialog && ws.shoes !== 'removing' && !(ws.prompt.kind === 'shoes' && gateOuter) && (
-        <button data-testid="interaction-prompt" className={`prompt absolute left-1/2 -translate-x-1/2 ${isTouch ? 'bottom-44' : 'bottom-8 sm:bottom-10'}`} onClick={interact}>
+        <button data-testid="interaction-prompt" className={`prompt absolute left-1/2 -translate-x-1/2 ${isTouch ? 'bottom-44 w-[92vw] justify-center text-center leading-snug' : 'bottom-8 sm:bottom-10'}`} onClick={interact}>
           {!isTouch && <span className="kbd">E</span>}
-          {ws.prompt.kind === 'shoes' ? 'Снять обувь' : <>Контекст и источники: <b className="font-normal text-parch">{promptEx?.displayLabelRu}</b> · {promptEx?.verseReference}</>}
+          {/* One flex item for the entire phrase: bare text nodes otherwise
+              become separate narrow columns on phone-width screens. */}
+          <span className="min-w-0">
+            {ws.prompt.kind === 'shoes' ? 'Снять обувь' : <>Контекст и источники: <b className="font-normal text-parch">{promptEx?.displayLabelRu}</b> · {promptEx?.verseReference}</>}
+          </span>
         </button>
       )}
 
