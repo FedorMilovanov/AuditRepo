@@ -271,8 +271,8 @@ export default function HorebApp() {
   // посещённые зоны
   const zone = ws?.zone ?? 0;
   useEffect(() => {
-    if (screen === 'world' && ws && !progress.visited.includes(ws.zone)) setProgress((p) => ({ ...p, visited: [...p.visited, ws.zone].sort() }));
-  }, [zone, screen]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (routeMode === 'legacy' && screen === 'world' && ws && !progress.visited.includes(ws.zone)) setProgress((p) => ({ ...p, visited: [...p.visited, ws.zone].sort() }));
+  }, [zone, screen, routeMode]); // eslint-disable-line react-hooks/exhaustive-deps
   // финал: тишина у границы наблюдения
   useEffect(() => {
     if (ws && ws.shoes === 'unshod' && ws.distBush < R_INNER + 1.6 && finale === 'none') setFinale('show');
@@ -343,6 +343,15 @@ export default function HorebApp() {
     setWorldEpoch((n) => n + 1);
   };
   const resetProgress = () => {
+    // A Horeb chapter restart must never erase 42-gallery progress.
+    // Chapter visits have no shared persistent checkpoint.
+    if (routeMode === 'horeb' && screen === 'world') {
+      setDialog(null);
+      setWs(null);
+      setFinale('none');
+      setScreen('intro');
+      return;
+    }
     resumePos.current = null;
     checkpointRef.current = null;
     checkpointAt.current = performance.now();

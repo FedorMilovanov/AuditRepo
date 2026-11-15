@@ -53,15 +53,31 @@ try{
    locked:window.__horeb.world.inputLocked,
  }));
  if(keyM.dialog||keyM.locked)throw new Error('HOREB legacy map key locked chapter '+JSON.stringify(keyM));
+ // Visiting zone 7 in Horeb must never write the legacy eight-zone
+ // completion journal, even while the scene is fully rendered.
+ const savedBefore=await page.evaluate(()=>
+   JSON.parse(localStorage.getItem('imena-horeb.progress.v1')||'null'));
+ if(savedBefore && ((savedBefore.visited||[]).some(z=>z!==0)||savedBefore.last))
+   throw new Error('CHAPTER POLLUTED LEGACY PROGRESS '+JSON.stringify(savedBefore));
  await page.screenshot({path:join(out,'smoke-chapter-horeb.png')});
- // Explicit exit is a real UI action. Legacy must still contain 42 scene
- // objects and use its previous independent start/progress.
- const exited=await page.evaluate(()=>{
-   const b=[...document.querySelectorAll('button')].find(x=>x.textContent?.trim()==='Выйти');
+ // Chapter's own reset action returns to intro without deleting the
+ // historical lab checkpoints (or marking its zone-7 walk as completed).
+ await page.evaluate(()=>{
+   const b=[...document.querySelectorAll('button')].find(x=>x.textContent?.trim()==='Настройки');
+   b?.click();
+ });
+ await page.waitForSelector('[role="dialog"]');
+ const reset=await page.evaluate(()=>{
+   const b=[...document.querySelectorAll('[role="dialog"] button')].find(x=>
+     x.textContent?.trim()==='Сбросить маршрут и выйти');
    b?.click();return !!b;
  });
- if(!exited)throw new Error('Chapter exit control missing');
+ if(!reset)throw new Error('Chapter reset action missing');
  await page.waitForSelector('[data-testid="legacy-journey-start"]');
+ const savedAfter=await page.evaluate(()=>
+   JSON.parse(localStorage.getItem('imena-horeb.progress.v1')||'null'));
+ if(savedAfter && ((savedAfter.visited||[]).some(z=>z!==0)||savedAfter.last))
+   throw new Error('CHAPTER RESET ERASED/MUTATED LEGACY DATA '+JSON.stringify(savedAfter));
  await page.click('[data-testid="legacy-journey-start"]');
  await page.waitForFunction(()=>window.__horeb?.world?.expeditionMode==='legacy',{timeout:90000});
  const legacy=await page.evaluate(()=>{
