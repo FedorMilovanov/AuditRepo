@@ -15,13 +15,13 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, MOSES_ORIGIN_BEATS, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER, isHorebDepartureLookout } from './engine/nav';
 
 type Screen = 'intro' | 'world' | 'reader';
-type Dialog = null | { kind: 'departure' } | { kind: 'learning' } | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
+type Dialog = null | { kind: 'origin' } | { kind: 'departure' } | { kind: 'learning' } | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
 const LS_SETTINGS = 'imena-horeb.settings.v1';
 const LS_PROGRESS = 'imena-horeb.progress.v1';
 
@@ -199,6 +199,7 @@ export default function HorebApp() {
   const [progress, setProgress] = useState(readProgress);
   const [dialog, setDialog] = useState<Dialog>(null);
   const [introDialog, setIntroDialog] = useState<Dialog>(null);
+  const [originIndex, setOriginIndex] = useState(0);
   const [ws, setWs] = useState<WorldState | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -453,14 +454,16 @@ export default function HorebApp() {
       <div className="relative z-10 mx-auto max-w-3xl px-6 pt-[12vh] sm:pt-[16vh] text-center">
         <p className="eyebrow reveal">Интерактивная экспозиция · лабораторный прототип</p>
         <h1 className="font-display text-5xl sm:text-7xl tracking-[0.12em] mt-5 reveal d1">ИМЕНА БОГА</h1>
-        <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Хорив · Призвание Моисея</p>
+        <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Моисей · От Нила до Исхода</p>
         <p className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
-          Исход 3–4. Подойдите к месту неопалимой купины, откройте два
-          письменных свидетельства и продолжите прогулку по каменистой долине.
-          Местность художественно реконструирована, точная география Хорива не установлена.
+          История начинается с младенца Моисея среди папируса у Нила,
+          продолжается в Мадиаме и ведёт к призванию на Хориве, возвращению в Египет
+          и освобождению народа. Сейчас Нил и Египет представлены текстовым прологом
+          и планом будущих сцен; 3D-прогулка построена только для Хорива.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
-          {webgl ? <button data-testid="horeb-chapter-start" className="btn btn-primary" onClick={() => start('horeb')}>Начать Хорив · Исход 3–4</button>
+          <button data-testid="moses-origin-start" className="btn btn-primary" onClick={() => { setOriginIndex(0); setIntroDialog({ kind: 'origin' }); }}>Начать с младенца Моисея · Исход 2</button>
+          {webgl ? <button data-testid="horeb-chapter-start" className="btn" onClick={() => start('horeb')}>Перейти к готовому 3D-Хориву · Исход 3–4</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
           <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
@@ -491,6 +494,29 @@ export default function HorebApp() {
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
           {(progress.visited.length > 1 || progress.last !== null) && <> <button data-testid="restart-route" className="link" onClick={resetProgress}>Начать маршрут заново</button> (дневник исследований, наблюдения и закладки сохранятся)</>}</p>
       </div>
+      {introDialog?.kind === 'origin' && <Modal wide title="Моисей · От Нила до Хорива" onClose={() => setIntroDialog(null)}>
+        <div data-testid="moses-origin-story" className="space-y-5 text-parch/85" aria-live="polite">
+          <div className="flex items-center justify-between gap-3 text-xs text-bronze">
+            <span>Кинематографический пролог · текстовый сценарий</span>
+            <span data-testid="moses-origin-progress">{originIndex + 1} / {MOSES_ORIGIN_BEATS.length}</span>
+          </div>
+          <div className="relative overflow-hidden rounded-sm border border-bronze/30 bg-gradient-to-b from-[#17232b] via-[#17231d] to-[#1c130b] p-5 sm:p-8 min-h-52">
+            <p className="text-xs tracking-widest text-bronze uppercase">Исход · {MOSES_ORIGIN_BEATS[originIndex].reference}</p>
+            <h2 data-testid="moses-origin-title" className="font-display text-3xl sm:text-4xl text-parch mt-5">{MOSES_ORIGIN_BEATS[originIndex].title}</h2>
+            <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl">{MOSES_ORIGIN_BEATS[originIndex].scene}</p>
+          </div>
+          <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/40 pl-3 text-muted">Историческое ограничение: {MOSES_ORIGIN_BEATS[originIndex].limit}</p>
+          <p className="text-xs text-muted">Это проверяемый сценарий будущих сцен, пока не построенные пространства Египта и Мадиама. Готовая 3D-глава начинается на Хориве.</p>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => setOriginIndex(i => Math.max(0, i - 1))}>Предыдущий эпизод</button>
+            {originIndex < MOSES_ORIGIN_BEATS.length - 1
+              ? <button data-testid="moses-origin-next" className="btn btn-primary" onClick={() => setOriginIndex(i => Math.min(MOSES_ORIGIN_BEATS.length - 1, i + 1))}>Следующий эпизод</button>
+              : webgl
+                ? <button data-testid="moses-origin-enter-horeb" className="btn btn-primary" onClick={() => { setIntroDialog(null); start('horeb'); }}>Войти в 3D-Хорив · Исход 3–4</button>
+                : <button data-testid="moses-origin-read" className="btn btn-primary" onClick={() => { setIntroDialog(null); setScreen('reader'); }}>Читать все 42 досье</button>}
+          </div>
+        </div>
+      </Modal>}
       {introDialog?.kind === 'learning' && <Modal wide title="Путевой дневник" onClose={() => setIntroDialog(null)}>
         <StudyJourneyPanel observed={learning.observed} understood={learning.understood} clues={siteClues} fields={fieldJournal}
           expeditionCompleted={expeditionCompleted}

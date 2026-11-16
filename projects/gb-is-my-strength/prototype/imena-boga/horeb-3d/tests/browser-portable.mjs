@@ -32,6 +32,17 @@ try {
   await page.waitForSelector('h1', { timeout: 45000 });
   const title = await page.$eval('h1', (h) => h.textContent);
   if (!title?.includes('ИМЕНА БОГА')) throw new Error('Offline intro title missing');
+  // The cinematic story must begin with the baby on the Nile even in
+  // offline/portable mode; no WebGL is required to see its six preludes.
+  await page.click('[data-testid="moses-origin-start"]');
+  const firstTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
+  if(firstTitle!=='Младенец у Нила')throw new Error('Portable story does not start with infant Moses');
+  for(let i=1;i<6;i++)await page.click('[data-testid="moses-origin-next"]');
+  const lastTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
+  if(lastTitle!=='Пастух на пути к Хориву')
+    throw new Error('Portable story does not end at Horeb: '+lastTitle);
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'));
   // The planned Egypt reading sequence is available before any WebGL world,
   // including from a portable file:// copy.
   await page.click('[data-testid="egypt-reading-intro"]');

@@ -1,7 +1,7 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
 import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
-  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START,
+  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START, MOSES_ORIGIN_BEATS,
   sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
@@ -55,15 +55,24 @@ t('W1 world boundaries isolate Genesis, Exodus, later OT and future NT',
   worldForResearchId('tsur') === 'later-ot' &&
   worldForResearchId('abba') === 'nt-future' &&
   worldForResearchId('unverified-research-id') === null);
-t('W1 chronological Exodus follows the actual biblical order after the bush',
+t('W7A Moses story begins at the Nile before the Horeb chapter',
   EXODUS_CHAPTER_ORDER.join('>') ===
-    'horeb-call>egypt-return>exodus-and-sea>marah>wilderness-sin>rephidim>sinai-covenant' &&
+    'moses-childhood>moses-midian>horeb-call>egypt-return>exodus-and-sea>marah>wilderness-sin>rephidim>sinai-covenant' &&
   chapterForResearchId('ehyeh') === 'horeb-call' &&
   chapterForResearchId('yah') === 'exodus-and-sea' &&
   chapterForResearchId('rapha') === 'marah' &&
   chapterForResearchId('nissi') === 'rephidim' &&
   chapterForResearchId('mekoddishkem') === 'sinai-covenant' &&
   chapterForResearchId('el-olam') === 'patriarchs');
+ t('W7A biblical prologue starts with infant and ends where real Horeb begins',
+  MOSES_ORIGIN_BEATS.length === 6 &&
+  MOSES_ORIGIN_BEATS[0].reference === 'Исх. 2:1–4' &&
+  MOSES_ORIGIN_BEATS[0].id === 'basket' &&
+  MOSES_ORIGIN_BEATS[5].reference === 'Исх. 3:1' &&
+  MOSES_ORIGIN_BEATS[5].id === 'shepherd' &&
+  MOSES_ORIGIN_BEATS.every(e => !!e.title && !!e.scene && !!e.limit) &&
+  STORY_STOPS.find(s => s.id === 'moses-childhood')?.exhibitIds.length === 0 &&
+  STORY_STOPS.find(s => s.id === 'moses-midian')?.exhibitIds.length === 0);
 t('W1 Egypt and wilderness stages do not invent non-research names',
   STORY_STOPS.find(s => s.id === 'egypt-return')?.exhibitIds.length === 0 &&
   STORY_STOPS.find(s => s.id === 'wilderness-sin')?.exhibitIds.length === 0);

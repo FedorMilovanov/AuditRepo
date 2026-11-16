@@ -71,8 +71,42 @@ try{
  await page.screenshot({path:join(out,'smoke-egypt-pharaoh-seven-beats.png')});
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'),{timeout:15000});
- await page.waitForSelector('[data-testid="horeb-chapter-start"]');
- await page.click('[data-testid="horeb-chapter-start"]');
+ // New main narrative starts with the infant on the Nile. The existing
+ // direct Horeb launch remains for QA and repeat visits, but is secondary.
+ await page.click('[data-testid="moses-origin-start"]');
+ await page.waitForSelector('[data-testid="moses-origin-story"]');
+ const expectedOrigins=['Младенец у Нила','Дочь фараона','Выбор и бегство',
+   'Колодец в Мадиаме','Бог услышал стенания','Пастух на пути к Хориву'];
+ for(let i=0;i<expectedOrigins.length;i++){
+   const t=await page.$eval('[data-testid="moses-origin-title"]',el=>el.textContent||'');
+   const step=await page.$eval('[data-testid="moses-origin-progress"]',el=>el.textContent||'');
+   if(t!==expectedOrigins[i]||step.trim()!==`${i+1} / 6`)
+     throw new Error('MOSES STORY ORDER '+JSON.stringify({i,t,step}));
+   if(i===0){
+     const warning=await page.$eval('[data-testid="moses-origin-limitation"]',el=>el.textContent||'');
+     if(!warning.includes('среди тростника')||!warning.includes('долгого путешествия'))
+       throw new Error('MOSES NILE CORRECTION MISSING');
+     await page.screenshot({path:join(out,'smoke-moses-baby-first.png')});
+     await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+     const mobilePrelude=await page.evaluate(()=>{
+       const modal=document.querySelector('[role="dialog"]');
+       const r=modal?.getBoundingClientRect();
+       const title=document.querySelector('[data-testid="moses-origin-title"]');
+       const next=document.querySelector('[data-testid="moses-origin-next"]');
+       return {visible:!!modal&&!!title&&!!next,
+         fits:!!r&&r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight,
+         noSideScroll:!!modal&&modal.scrollWidth<=modal.clientWidth+1};
+     });
+     if(!mobilePrelude.visible||!mobilePrelude.fits||!mobilePrelude.noSideScroll)
+       throw new Error('MOSES STORY PHONE WIDTH '+JSON.stringify(mobilePrelude));
+     await page.screenshot({path:join(out,'smoke-moses-baby-phone.png')});
+     await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
+   }
+   if(i<5)await page.click('[data-testid="moses-origin-next"]');
+ }
+ if(await page.evaluate(()=>!!window.__horeb))throw new Error('MOSES PRELUDE STARTED WEBGL EARLY');
+ await page.screenshot({path:join(out,'smoke-moses-horeb-transition.png')});
+ await page.click('[data-testid="moses-origin-enter-horeb"]');
  await page.waitForFunction(()=>!!window.__horeb?.world?.renderer?.info?.render?.frame,{timeout:90000});
  const chapter=await page.evaluate(()=>{
    const w=window.__horeb.world;

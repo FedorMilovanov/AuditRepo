@@ -5,14 +5,14 @@
  * Scriptures, speaker claims or approval flags into scene navigation.
  *
  * The Genesis world may include a creation PROLOGUE; Exodus main path follows
- * Exodus 3-40; later Hebrew Scriptures and NT remain independently curated.
+ * Exodus 1-40; later Hebrew Scriptures and NT remain independently curated.
  * An entry's primary chapter is not a claim that all its referenced parallel
  * passages belong to that single historical scene.
  */
 export type StoryWorld = 'genesis' | 'exodus' | 'later-ot' | 'nt-future';
 export type StoryChapter =
   | 'creation-prologue' | 'patriarchs'
-  | 'horeb-call' | 'egypt-return' | 'exodus-and-sea'
+  | 'moses-childhood' | 'moses-midian' | 'horeb-call' | 'egypt-return' | 'exodus-and-sea'
   | 'marah' | 'wilderness-sin' | 'rephidim' | 'sinai-covenant'
   | 'deuteronomy-epilogue' | 'later-ot-library' | 'nt-library';
 
@@ -28,7 +28,7 @@ export interface StoryStop {
 
 /** Narrative order is deliberate. Empty stops are genuine Biblical episodes
  * without additional approved names-ledger ID, not fabricated exhibits.
- * These are proposed narrative ROUTES; only the original 8-zone lab is live. */
+ * These are proposed narrative ROUTES; only standalone Horeb plus the legacy QA lab are physically built. */
 export const STORY_STOPS: readonly StoryStop[] = [
   { id: 'creation-prologue', world: 'genesis',
     biblicalRange: 'Быт. 1–11', place: 'Литературный пролог к миру Бытия',
@@ -39,6 +39,14 @@ export const STORY_STOPS: readonly StoryStop[] = [
     exhibitIds: ['el-elyon', 'el-shaddai', 'el-roi', 'el-olam', 'yireh', 'el-bethel'],
     navigation: 'future',
     description: 'Разные места и события Авраама, Агари и Иакова; не один общий колодец.' },
+  { id: 'moses-childhood', world: 'exodus',
+    biblicalRange: 'Исх. 1:8–2:10', place: 'Нил: рождение и спасение Моисея',
+    exhibitIds: [], navigation: 'main',
+    description: 'Начало истории с младенца среди тростника; фон — угнетение Израиля, но не установленный адрес берега или дворца.' },
+  { id: 'moses-midian', world: 'exodus',
+    biblicalRange: 'Исх. 2:11–25', place: 'Взросление Моисея, бегство, Мадиам',
+    exhibitIds: [], navigation: 'main',
+    description: 'Отдельные эпохи и места; события не представлять единым непрерывным маршрутом или точной картой.' },
   { id: 'horeb-call', world: 'exodus',
     biblicalRange: 'Исх. 3–4', place: 'Хорив: призвание Моисея, неопалимая купина',
     exhibitIds: ['ehyeh', 'yhwh'], navigation: 'main',
@@ -96,6 +104,37 @@ export const STORY_STOPS: readonly StoryStop[] = [
  * in the accessible reader and the explicit legacy QA laboratory.
  */
 export type ExpeditionMode = 'horeb' | 'legacy';
+/** Cinematic, source-grounded PRELUDE to the already implemented Horeb.
+ * Editorial vignettes are not photographs, geolocated sets, or completed
+ * playable chapters. The first frame is the infant, not a generic desert.
+ */
+export const MOSES_ORIGIN_BEATS = [
+  { id: 'basket', reference: 'Исх. 2:1–4',
+    title: 'Младенец у Нила',
+    scene: 'В зарослях папируса у берега стоит осмолённая корзина. Сестра ребёнка наблюдает издали. Угроза фараонова указа остаётся в предыстории.',
+    limit: 'В тексте корзину оставляют среди тростника у берега; долгого путешествия корзины по течению там нет.' },
+  { id: 'rescued', reference: 'Исх. 2:5–10',
+    title: 'Дочь фараона',
+    scene: 'Египетская царевна находит плачущего ребёнка. Благодаря его сестре младенец возвращается к родной матери на время вскармливания.',
+    limit: 'Библейский текст не называет царевну, не сообщает точный дворец, фасад здания или возраст мальчика при последующем переходе в дом царевны.' },
+  { id: 'grown', reference: 'Исх. 2:11–15',
+    title: 'Выбор и бегство',
+    scene: 'Уже взрослый Моисей видит тяжёлый труд своего народа и насилие над евреем. После убийства египтянина он вынужден бежать от фараона.',
+    limit: 'Нельзя романтизировать убийство или выдумывать сцены детства и учёбы во дворце, не описанные здесь.' },
+  { id: 'midian', reference: 'Исх. 2:16–22',
+    title: 'Колодец в Мадиаме',
+    scene: 'Моисей защищает дочерей мадиамского священника у колодца, остаётся у их семьи и женится на Сепфоре.',
+    limit: 'Местоположение конкретного колодца и архитектура дома не установлены текстом.' },
+  { id: 'cry', reference: 'Исх. 2:23–25',
+    title: 'Бог услышал стенания',
+    scene: 'Проходит время. Израиль стонет от тяжёлого труда; Бог слышит и вспоминает завет с Авраамом, Исааком и Иаковом.',
+    limit: 'Не изображать Божий завет как человеческий договор на свитке и не назначать точный год событий.' },
+  { id: 'shepherd', reference: 'Исх. 3:1',
+    title: 'Пастух на пути к Хориву',
+    scene: 'Моисей пасёт стадо Иофора и приходит к Хориву. Здесь начинается действующая 3D-глава о неопалимой купине.',
+    limit: 'Точная современная гора и маршрут пастуха не установлены. Хорив в проекте — художественный ландшафт.' },
+] as const;
+
 export const HOREB_CALL_STOP = STORY_STOPS.find(s => s.id === 'horeb-call')!;
 export const EGYPT_RETURN_STOP = STORY_STOPS.find(s => s.id === 'egypt-return')!;
 
@@ -241,7 +280,7 @@ export function sceneExhibitsForMode<T extends { readonly id: string }>(
   return registry.filter(item => activeIds.has(item.id));
 }
 export const EXODUS_CHAPTER_ORDER: readonly StoryChapter[] = [
-  'horeb-call', 'egypt-return', 'exodus-and-sea', 'marah',
+  'moses-childhood', 'moses-midian', 'horeb-call', 'egypt-return', 'exodus-and-sea', 'marah',
   'wilderness-sin', 'rephidim', 'sinai-covenant',
 ];
 
@@ -282,10 +321,12 @@ export function validateStoryWorlds(registry: readonly RoutableExhibit[]): strin
     errors.push('story route cannot approve Research / rights');
   const exodus = STORY_STOPS.filter(s => s.world === 'exodus');
   if (exodus.map(s => s.id).join('|') !== EXODUS_CHAPTER_ORDER.join('|'))
-    errors.push('Exodus 3–40 chapter order is broken');
-  if (exodus[0]?.exhibitIds.join('|') !== 'ehyeh|yhwh' ||
-      exodus[1]?.exhibitIds.length !== 0 ||
-      exodus[4]?.exhibitIds.length !== 0)
+    errors.push('Exodus 1–40 chapter order is broken');
+  if (STORY_STOPS.find(s => s.id === 'horeb-call')?.exhibitIds.join('|') !== 'ehyeh|yhwh' ||
+      STORY_STOPS.find(s => s.id === 'moses-childhood')?.exhibitIds.length !== 0 ||
+      STORY_STOPS.find(s => s.id === 'moses-midian')?.exhibitIds.length !== 0 ||
+      STORY_STOPS.find(s => s.id === 'egypt-return')?.exhibitIds.length !== 0 ||
+      STORY_STOPS.find(s => s.id === 'wilderness-sin')?.exhibitIds.length !== 0)
     errors.push('Horeb / Egypt / wilderness narrative boundaries lost');
   if (exodus.some(s => s.navigation !== 'main') ||
       STORY_STOPS.filter(s => s.world === 'nt-future').some(s => s.navigation !== 'future'))
