@@ -12,22 +12,41 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.45;
+  renderer.toneMappingExposure = 1.28;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x788e9b);
-  scene.fog = new THREE.FogExp2(0x9eaa9f, 0.018);
-  const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 110);
-  camera.position.set(4.2, 3.0, 9.7);
-  camera.lookAt(-0.5, 0.32, -2.6);
-  const hemi = new THREE.HemisphereLight(0xc1dcfa, 0x4a3c2b, 2.25);
-  const sun = new THREE.DirectionalLight(0xffc58b, 3.5);
+  scene.background = new THREE.Color(0xa6adb0);
+  scene.fog = new THREE.FogExp2(0xc6b7a0, 0.017);
+  const camera = new THREE.PerspectiveCamera(52, 1, 0.1, 110);
+  // Shoot FROM the river side: neither reeds nor the bank obscure the chest.
+  camera.position.set(-3.2, 2.4, 5.0);
+  camera.lookAt(0.42, 0.25, -2.15);
+  const skyGeo=new THREE.SphereGeometry(80,32,18);
+  const skyPosition=skyGeo.getAttribute('position');
+  const skyColors:number[]=[];
+  const dawn=new THREE.Color(0xe6b98d),blue=new THREE.Color(0x91a9b5),
+    lower=new THREE.Color(0x999f95);
+  for(let i=0;i<skyPosition.count;i++){
+    const y=skyPosition.getY(i)/80;
+    const color=dawn.clone();
+    if(y>0)color.lerp(blue,Math.min(1,y/0.7));
+    else color.lerp(lower,Math.min(1,-y/0.6));
+    skyColors.push(color.r,color.g,color.b);
+  }
+  skyGeo.setAttribute('color',new THREE.Float32BufferAttribute(skyColors,3));
+  const sky=new THREE.Mesh(skyGeo,new THREE.MeshBasicMaterial({
+    vertexColors:true,side:THREE.BackSide,depthWrite:false,fog:false,
+  }));
+  sky.name='nile-sunrise-sky';
+  scene.add(sky);
+  const hemi = new THREE.HemisphereLight(0xf7e4d4, 0x4a3c2b, 2.45);
+  const sun = new THREE.DirectionalLight(0xffd6a5, 2.9);
   sun.position.set(-8, 12, -18);
   scene.add(hemi, sun);
   const material = (color: number, roughness = 0.9) =>
     new THREE.MeshStandardMaterial({ color, roughness, metalness: 0, side: THREE.DoubleSide });
   const waterMaterial = new THREE.MeshStandardMaterial({
-    color: 0x34717a, roughness: 0.28, metalness: 0.1, side: THREE.DoubleSide,
+    color: 0x456c70, roughness: 0.68, metalness: 0, side: THREE.DoubleSide,
   });
   // River is a physically flat, shallow basin: no moving cradle or drift.
   const river = new THREE.Mesh(new THREE.PlaneGeometry(23, 42, 28, 36), waterMaterial);
@@ -35,7 +54,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   river.position.set(-4.8, -0.13, -9);
   river.name = 'nile-shallow-water';
   scene.add(river);
-  const shoreGeo = new THREE.PlaneGeometry(11, 43, 10, 42);
+  const shoreGeo = new THREE.PlaneGeometry(11, 43, 24, 62);
   shoreGeo.rotateX(-Math.PI / 2);
   const p = shoreGeo.getAttribute('position');
   for(let i=0;i<p.count;i++){
@@ -45,7 +64,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     p.setY(i, -0.14 + 0.12 * Math.max(0, d) + 0.016*Math.sin(x*1.8+z*.7));
   }
   shoreGeo.computeVertexNormals();
-  const shore = new THREE.Mesh(shoreGeo, material(0x997c54));
+  const shore = new THREE.Mesh(shoreGeo, material(0xb7a079));
   shore.position.set(7.4, 0, -8);
   shore.name='nile-natural-bank';
   scene.add(shore);
@@ -86,21 +105,22 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   foldedCloth.scale.set(0.19,0.13,0.22);
   foldedCloth.position.set(0.28,0.18,-0.03);
   basket.add(foldedCloth);
-  basket.position.set(0.08,-0.06,-2.1);
+  basket.position.set(0.14,0.02,-2.1);
   basket.rotation.y=-0.25;
+  basket.scale.setScalar(1.24);
   scene.add(basket);
   // Instanced papyrus stems and umbels, deterministic placement. Avoid
   // clustering over the cradle so the first shot has a readable focal point.
-  const stems=82, fronds=5;
-  const stemMat=material(0x647a43), headMat=material(0x879653,0.95);
+  const stems=104, fronds=6;
+  const stemMat=material(0x61774c), headMat=material(0x9ba66a,0.95);
   const shaft=new THREE.InstancedMesh(new THREE.CylinderGeometry(.023,.038,1,5),stemMat,stems);
   const petals=new THREE.InstancedMesh(new THREE.ConeGeometry(.048,.75,3),headMat,stems*fronds);
   shaft.name='nile-papyrus-stems';
   petals.name='nile-papyrus-umbels';
   const dummy=new THREE.Object3D();
   for(let i=0;i<stems;i++){
-    const z=-11+(i%41)*.35+Math.sin(i*1.41)*.26;
-    const onBank=i<70;
+    const z=-11+(i%52)*.29+Math.sin(i*1.41)*.29;
+    const onBank=i<88;
     const x=onBank?1.9+1.2*Math.sin(i*3.13)*.5: -8.8+.35*Math.sin(i*2.87);
     const height=1.25+(1+Math.sin(i*3.7))*.72;
     const sway=Math.sin(i*2.7)*.13;
@@ -152,8 +172,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     if(!visible||now-last<33)return;
     last=now;
     if(!reducedMotion) {
-      camera.position.x=4.2+Math.sin(now*.00012)*.09;
-      camera.lookAt(-.5,.32,-2.6);
+      camera.position.x=-3.2+Math.sin(now*.00012)*.08;
+      camera.lookAt(.42,.25,-2.15);
       strips.position.z=Math.sin(now*.00065)*.04;
     }
     renderer.render(scene,camera);
