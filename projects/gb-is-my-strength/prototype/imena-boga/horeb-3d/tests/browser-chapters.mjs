@@ -91,6 +91,14 @@ try{
        return !!canvas.getContext('webgl2') || !!canvas.getContext('webgl');
      });
      if(!rendered)throw new Error('NILE WEBGL PHYSICAL DIORAMA NOT INITIALIZED');
+     const nileGeometry=await page.$eval('[data-testid="moses-nile-3d"]',canvas=>({
+       shoreOffset:Number(canvas.dataset.nileShoreOffset),
+       stems:Number(canvas.dataset.nilePapyrusCount),
+       rays:Number(canvas.dataset.nileUmbelRays),
+     }));
+     if(!(nileGeometry.shoreOffset>0&&nileGeometry.shoreOffset<1)||
+        nileGeometry.stems!==104||nileGeometry.rays!==936)
+       throw new Error('NILE GEOMETRY MUST KEEP BASKET BY PAPYRUS SHORE '+JSON.stringify(nileGeometry));
      const warning=await page.$eval('[data-testid="moses-origin-limitation"]',el=>el.textContent||'');
      if(!warning.includes('среди тростника')||!warning.includes('долгого путешествия'))
        throw new Error('MOSES NILE CORRECTION MISSING');
