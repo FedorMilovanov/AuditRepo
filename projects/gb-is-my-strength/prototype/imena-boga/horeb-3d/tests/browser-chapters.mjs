@@ -140,6 +140,24 @@ try{
         await page.$('[data-testid="moses-nile-3d"]'))
        throw new Error('NILE DISCOVERY SCENE FAILED '+JSON.stringify(discovery));
      await page.screenshot({path:join(out,'smoke-moses-discovery-desktop.png')});
+     const widePos=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>({
+       x:Number(c.dataset.nileCameraX),z:Number(c.dataset.nileCameraZ)}));
+     await page.click('[data-testid="moses-nile-shot-toggle"]');
+     await page.waitForFunction(()=>{
+       const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+       return c?.dataset.nileView==='close'&&c?.dataset.nileCameraPhase==='settled';
+     },{timeout:6000});
+     const closePos=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>({
+       x:Number(c.dataset.nileCameraX),z:Number(c.dataset.nileCameraZ)}));
+     if(Math.abs(closePos.x-widePos.x)<.4||Math.abs(closePos.z-widePos.z)<1.5||
+        await page.$eval('[data-testid="moses-nile-shot-toggle"]',e=>e.getAttribute('aria-pressed'))!=='true')
+       throw new Error('NILE CLOSE SHOT MUST REALLY MOVE CAMERA '+JSON.stringify({widePos,closePos}));
+     await page.screenshot({path:join(out,'smoke-moses-discovery-close-desktop.png')});
+     await page.click('[data-testid="moses-nile-shot-toggle"]');
+     await page.waitForFunction(()=>{
+       const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+       return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
+     },{timeout:6000});
      await page.setViewport({width:390,height:844,deviceScaleFactor:1});
      const mobileDiscovery=await page.evaluate(()=>{
        const modal=document.querySelector('[role="dialog"]');
@@ -152,6 +170,21 @@ try{
      if(!mobileDiscovery.visible||!mobileDiscovery.fits||!mobileDiscovery.noSideScroll)
        throw new Error('NILE DISCOVERY PHONE LAYOUT '+JSON.stringify(mobileDiscovery));
      await page.screenshot({path:join(out,'smoke-moses-discovery-phone.png')});
+     await page.click('[data-testid="moses-nile-shot-toggle"]');
+     await page.waitForFunction(()=>{
+       const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+       return c?.dataset.nileView==='close'&&c?.dataset.nileCameraPhase==='settled';
+     },{timeout:6000});
+     const mobileCloseOk=await page.evaluate(()=>
+       document.documentElement.scrollWidth<=innerWidth&&
+       document.querySelector('[data-testid="moses-nile-shot-toggle"]')?.getAttribute('aria-pressed')==='true');
+     if(!mobileCloseOk)throw new Error('NILE CLOSE SHOT PHONE OVERFLOW OR TOGGLE FAILURE');
+     await page.screenshot({path:join(out,'smoke-moses-discovery-close-phone.png')});
+     await page.click('[data-testid="moses-nile-shot-toggle"]');
+     await page.waitForFunction(()=>{
+       const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+       return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
+     },{timeout:6000});
      await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
    }
    if(i<5){

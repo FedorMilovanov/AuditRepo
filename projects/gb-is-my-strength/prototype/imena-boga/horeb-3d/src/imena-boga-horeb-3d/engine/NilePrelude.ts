@@ -7,7 +7,9 @@
 import * as THREE from 'three';
 
 export type NileMoment = 'basket' | 'discovery';
-export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket') {
+export type NileView = 'wide' | 'close';
+export type NilePreludeControl = { dispose: () => void; setView: (view: NileView) => void };
+export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket'): NilePreludeControl {
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
   });
@@ -20,11 +22,14 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   scene.fog = new THREE.FogExp2(0xc6b7a0, 0.017);
   const camera = new THREE.PerspectiveCamera(43, 1, 0.1, 110);
   // Shoot FROM the river side: neither reeds nor the bank obscure the chest.
-  const shot = moment === 'discovery'
+  const wideShot = moment === 'discovery'
     ? { x: -1.55, y: 2.15, z: 3.2, focusX: 1.85, focusY: .92, focusZ: -2.0 }
     : { x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
-  camera.position.set(shot.x, shot.y, shot.z);
-  camera.lookAt(shot.focusX, shot.focusY, shot.focusZ);
+  // W8C second, closer cinematographic angle: the same real scene and
+  // stationary cradle, never a new physical path or false location.
+  const closeShot = { x: -.82, y: 1.82, z: 1.06, focusX: 1.44, focusY: .80, focusZ: -2.20 };
+  camera.position.set(wideShot.x, wideShot.y, wideShot.z);
+  camera.lookAt(wideShot.focusX,wideShot.focusY,wideShot.focusZ);
   const skyGeo=new THREE.SphereGeometry(80,32,18);
   const skyPosition=skyGeo.getAttribute('position');
   const skyColors:number[]=[];
@@ -299,6 +304,13 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     const linenOchre = material(0xb7a487);
     const linenBlue = material(0x7d9190);
     const collar = material(0xb29858,.65);
+    // Warm reflected light near the cradle and a cooler edge light on
+    // the garments create readable depth without a speculative palace.
+    const riverBounce=new THREE.PointLight(0xffe6c4,1.0,10,2);
+    riverBounce.position.set(-1.1,2.3,.2);
+    const rim=new THREE.DirectionalLight(0xadc9d8,.52);
+    rim.position.set(5,4,-5);
+    scene.add(riverBounce,rim);
 
     const addLimb = (
       root: THREE.Group, start: THREE.Vector3, end: THREE.Vector3,
@@ -440,6 +452,18 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
         hairBand.position.y=1.87;
         body.add(hairBand);
       }
+      // Soft contact shading keeps the staged figures on the sloping
+      // shore. A simple translucent disk avoids costly mobile shadow maps.
+      const contactShadow=new THREE.Mesh(
+        new THREE.CircleGeometry(.42,20),
+        new THREE.MeshBasicMaterial({
+          color:0x27342f,transparent:true,opacity:.16,
+          depthWrite:false,side:THREE.DoubleSide,
+        }));
+      contactShadow.name='shore-contact-shadow';
+      contactShadow.rotation.x=-Math.PI/2;
+      contactShadow.position.y=.023;
+      fig.add(contactShadow);
       fig.position.set(x,bankHeight(x,z),z);
       fig.scale.setScalar(height/1.95);
       figures.add(fig);
@@ -460,7 +484,51 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     strips.add(line);
   }
   scene.add(strips);
+  // One physical scene, two user-selectable camera compositions. Camera
+  // interpolation never moves the basket, figures or research witnesses.
   let frame=0, disposed=false, visible=true, last=0;
+  const fromShot={...wideShot}, toShot={...wideShot};
+  let currentShot={...wideShot};
+  let moveStart:number|null=null;
+  let selectedView:NileView='wide';
+  const applyShot=(now:number)=>{
+    if(moveStart!==null){
+      const t=Math.min(1,Math.max(0,(now-moveStart)/1050));
+      const eased=t*t*(3-2*t);
+      currentShot={
+        x:THREE.MathUtils.lerp(fromShot.x,toShot.x,eased),
+        y:THREE.MathUtils.lerp(fromShot.y,toShot.y,eased),
+        z:THREE.MathUtils.lerp(fromShot.z,toShot.z,eased),
+        focusX:THREE.MathUtils.lerp(fromShot.focusX,toShot.focusX,eased),
+        focusY:THREE.MathUtils.lerp(fromShot.focusY,toShot.focusY,eased),
+        focusZ:THREE.MathUtils.lerp(fromShot.focusZ,toShot.focusZ,eased),
+      };
+      if(t>=1)moveStart=null;
+    }
+    const microDrift=reducedMotion?0:Math.sin(now*.00012)*.025;
+    camera.position.set(currentShot.x+microDrift,currentShot.y,currentShot.z);
+    camera.lookAt(currentShot.focusX,currentShot.focusY,currentShot.focusZ);
+    canvas.dataset.nileCameraPhase=moveStart===null?'settled':'moving';
+    canvas.dataset.nileCameraX=camera.position.x.toFixed(3);
+    canvas.dataset.nileCameraZ=camera.position.z.toFixed(3);
+  };
+  const setView=(view:NileView)=>{
+    if(disposed||moment!=='discovery'||view===selectedView)return;
+    selectedView=view;
+    Object.assign(fromShot,currentShot);
+    Object.assign(toShot,view==='close'?closeShot:wideShot);
+    if(reducedMotion){
+      currentShot={...toShot};
+      moveStart=null;
+      applyShot(performance.now());
+    }else{
+      moveStart=performance.now();
+      // Do not allow test readers or UI to mistake the previous shot's
+      // "settled" status for the new shot before the first RAF.
+      canvas.dataset.nileCameraPhase='moving';
+    }
+    canvas.dataset.nileView=view;
+  };
   const resize=()=>{
     const width=Math.max(1,canvas.clientWidth),height=Math.max(1,canvas.clientHeight);
     renderer.setSize(width,height,false);
@@ -488,14 +556,15 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nileReachingPose=String(figures.children.some(f=>
     !!f.getObjectByName('reaching-attendant-pose')));
   canvas.dataset.nileReady='true';
+  canvas.dataset.nileView='wide';
+  canvas.dataset.nileCameraPhase='settled';
   const animate=(now:number)=>{
     if(disposed)return;
     frame=requestAnimationFrame(animate);
     if(!visible||now-last<33)return;
     last=now;
+    applyShot(now);
     if(!reducedMotion) {
-      camera.position.x=shot.x+Math.sin(now*.00012)*.055;
-      camera.lookAt(shot.focusX,shot.focusY,shot.focusZ);
       strips.position.z=Math.sin(now*.00065)*.04;
       // A few centimetres of surface movement, no swelling waves and
       // absolutely no motion on the baby's basket.
@@ -512,7 +581,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     canvas.dataset.nileRendered='true';
   };
   frame=requestAnimationFrame(animate);
-  return ()=>{
+  return {setView,dispose:()=>{
     disposed=true;
     cancelAnimationFrame(frame);
     observer?.disconnect();resizer?.disconnect();
@@ -536,5 +605,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     delete canvas.dataset.nileShoreOffset;
     delete canvas.dataset.nilePapyrusCount;
     delete canvas.dataset.nileUmbelRays;
-  };
+    delete canvas.dataset.nileView;
+    delete canvas.dataset.nileCameraPhase;
+    delete canvas.dataset.nileCameraX;
+    delete canvas.dataset.nileCameraZ;
+  }} satisfies NilePreludeControl;
 }

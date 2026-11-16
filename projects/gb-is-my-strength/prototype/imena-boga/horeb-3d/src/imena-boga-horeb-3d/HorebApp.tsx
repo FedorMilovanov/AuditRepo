@@ -502,7 +502,7 @@ export default function HorebApp() {
             <span data-testid="moses-origin-progress">{originIndex + 1} / {MOSES_ORIGIN_BEATS.length}</span>
           </div>
           <div className="relative overflow-hidden rounded-sm border border-bronze/30 bg-gradient-to-b from-[#17232b] via-[#17231d] to-[#1c130b] p-5 sm:p-8 min-h-52">
-            {originIndex < 2 && <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5"><NilePreludeCanvas key={originIndex} moment={originIndex === 0 ? 'basket' : 'discovery'} /></div>}
+            {originIndex < 2 && <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5"><NilePreludeCanvas key={originIndex} moment={originIndex === 0 ? 'basket' : 'discovery'} reducedMotion={settings.reducedMotion} /></div>}
             <p className="text-xs tracking-widest text-bronze uppercase">Исход · {MOSES_ORIGIN_BEATS[originIndex].reference}</p>
             <h2 data-testid="moses-origin-title" className="font-display text-3xl sm:text-4xl text-parch mt-5">{MOSES_ORIGIN_BEATS[originIndex].title}</h2>
             <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl">{MOSES_ORIGIN_BEATS[originIndex].scene}</p>

@@ -56,6 +56,19 @@ try {
      discovery.pleats!==3||discovery.drapes!==1||discovery.reaching!=='true'||
      await page.$('[data-testid="moses-nile-3d"]'))
     throw new Error('Offline Nile discovery failed '+JSON.stringify(discovery));
+  // Even a single-file offline build must support both cinematic shots.
+  await page.click('[data-testid="moses-nile-shot-toggle"]');
+  await page.waitForFunction(()=>{
+    const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+    return c?.dataset.nileView==='close'&&c?.dataset.nileCameraPhase==='settled';
+  },{timeout:6000});
+  if(await page.$eval('[data-testid="moses-nile-shot-toggle"]',e=>e.getAttribute('aria-pressed'))!=='true')
+    throw new Error('Offline Nile close shot button state mismatch');
+  await page.click('[data-testid="moses-nile-shot-toggle"]');
+  await page.waitForFunction(()=>{
+    const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+    return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
+  },{timeout:6000});
   await page.click('[data-testid="moses-origin-next"]');
   await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
   if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
