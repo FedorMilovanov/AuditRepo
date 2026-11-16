@@ -83,6 +83,14 @@ try{
    if(t!==expectedOrigins[i]||step.trim()!==`${i+1} / 6`)
      throw new Error('MOSES STORY ORDER '+JSON.stringify({i,t,step}));
    if(i===0){
+     await page.waitForFunction(()=>
+       document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true',
+       {timeout:30000});
+     const rendered=await page.$eval('[data-testid="moses-nile-3d"]',c=>{
+       const canvas=c;
+       return !!canvas.getContext('webgl2') || !!canvas.getContext('webgl');
+     });
+     if(!rendered)throw new Error('NILE WEBGL PHYSICAL DIORAMA NOT INITIALIZED');
      const warning=await page.$eval('[data-testid="moses-origin-limitation"]',el=>el.textContent||'');
      if(!warning.includes('среди тростника')||!warning.includes('долгого путешествия'))
        throw new Error('MOSES NILE CORRECTION MISSING');
@@ -102,7 +110,15 @@ try{
      await page.screenshot({path:join(out,'smoke-moses-baby-phone.png')});
      await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
    }
-   if(i<5)await page.click('[data-testid="moses-origin-next"]');
+   if(i<5){
+     await page.click('[data-testid="moses-origin-next"]');
+     if(i===0){
+       await page.waitForFunction(()=>
+         !document.querySelector('[data-testid="moses-nile-3d"]'));
+       const extra=await page.$$('canvas');
+       if(extra.length!==0)throw new Error('NILE CANVAS LEAKED INTO NEXT EPISODE');
+     }
+   }
  }
  if(await page.evaluate(()=>!!window.__horeb))throw new Error('MOSES PRELUDE STARTED WEBGL EARLY');
  await page.screenshot({path:join(out,'smoke-moses-horeb-transition.png')});

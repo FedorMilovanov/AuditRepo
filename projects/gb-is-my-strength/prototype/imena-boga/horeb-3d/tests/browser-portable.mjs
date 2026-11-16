@@ -35,6 +35,9 @@ try {
   // The cinematic story must begin with the baby on the Nile even in
   // offline/portable mode; no WebGL is required to see its six preludes.
   await page.click('[data-testid="moses-origin-start"]');
+  await page.waitForFunction(()=>
+    document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true',
+    {timeout:30000});
   const firstTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
   if(firstTitle!=='Младенец у Нила')throw new Error('Portable story does not start with infant Moses');
   for(let i=1;i<6;i++)await page.click('[data-testid="moses-origin-next"]');
