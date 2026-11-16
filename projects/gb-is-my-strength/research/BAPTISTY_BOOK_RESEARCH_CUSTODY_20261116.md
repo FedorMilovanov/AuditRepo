@@ -22,7 +22,7 @@
 | Retirement of Product originals | **BLOCKED until full chain** |
 | Audit status | **Research #520 MERGED, post-merge 248/248 parity VERIFIED** |
 
-Читать [Research README](https://github.com/FedorMilovanov/Research/blob/16c175bc831e8ce5b09e3068cc936a094d8b7138/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/README.md), [машинный манифест 248 файлов](https://github.com/FedorMilovanov/Research/blob/16c175bc831e8ce5b09e3068cc936a094d8b7138/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/SOURCE_CUSTODY_MANIFEST.json).
+Читать [Research README](https://github.com/FedorMilovanov/Research/blob/70defa6f947a6312b0fee2c98cb3411d045870b7/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/README.md), [машинный манифест 248 файлов](https://github.com/FedorMilovanov/Research/blob/70defa6f947a6312b0fee2c98cb3411d045870b7/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/SOURCE_CUSTODY_MANIFEST.json).
 
 ## Постслияние: контроль полного Research/main (16 ноября 2026)
 
