@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
-import { EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_RETURN_STOP, EGYPT_SPATIAL_BLUEPRINT, sceneExhibitsForMode, type ExpeditionMode } from '../src/imena-boga-horeb-3d/data/storyWorlds';
+import { EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, EGYPT_RETURN_STOP, EGYPT_SPATIAL_BLUEPRINT, sceneExhibitsForMode, type ExpeditionMode } from '../src/imena-boga-horeb-3d/data/storyWorlds';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, EXODUS_TRAIL_LOOKOUT_Z, exodusTrailCentreX, isHorebDepartureLookout } from '../src/imena-boga-horeb-3d/engine/nav';
@@ -44,6 +44,17 @@ t('W6D return episode keeps five textual scenes and the Zipporah ambiguity',
     'Исх. 4:18–20|Исх. 4:21–23|Исх. 4:24–26|Исх. 4:27–28|Исх. 4:29–31' &&
   EGYPT_RETURN_BEATS.filter(b => b.interpretation === 'ambiguous').map(b => b.id).join('|') === 'zipporah' &&
   EGYPT_RETURN_BEATS.every(b => !!b.reading.trim() && !!b.limitation.trim()));
+
+t('W6E Pharaoh and brickmaking have seven source-ordered textual beats',
+  EGYPT_PHARAOH_BEATS.length === 7 &&
+  EGYPT_PHARAOH_BEATS.map(b => b.reference).join('|') ===
+    'Исх. 5:1–5|Исх. 5:6–14|Исх. 5:15–21|Исх. 5:22–6:1|Исх. 6:2–13|Исх. 6:14–27|Исх. 6:28–7:7' &&
+  EGYPT_PHARAOH_BEATS.every(b => !!b.reading.trim() && !!b.limitation.trim()) &&
+  EGYPT_PHARAOH_BEATS[1].limitation.includes('НЕ') &&
+  EGYPT_PHARAOH_BEATS[4].limitation.includes('YHWH') &&
+  EGYPT_BRICKWORK_CONTEXT.catalog === '30.4.77' &&
+  EGYPT_BRICKWORK_CONTEXT.url === 'https://www.metmuseum.org/art/collection/search/544649' &&
+  EGYPT_BRICKWORK_CONTEXT.limitation.includes('не доказывает'));
 
 t('W6C Egypt is four separate gated concepts, not live physical scenery',
   EGYPT_SPATIAL_BLUEPRINT.length === EGYPT_EPISODES.length &&

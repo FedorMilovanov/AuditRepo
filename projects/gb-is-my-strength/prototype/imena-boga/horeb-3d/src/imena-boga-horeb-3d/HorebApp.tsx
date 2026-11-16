@@ -15,7 +15,7 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER, isHorebDepartureLookout } from './engine/nav';
@@ -86,6 +86,30 @@ function EgyptReadingSequence() {
                 </li>
               ))}
             </ol>
+          </details>
+        )}
+        {episode.id === 'pharaoh' && (
+          <details data-testid="egypt-pharaoh-notes" className="mt-3 rounded-sm border border-bronze/30 p-3">
+            <summary className="cursor-pointer text-sm text-bronze">
+              Разобрать Исх. 5:1–7:7 · семь эпизодов и исторический фон
+            </summary>
+            <ol className="mt-3 space-y-3">
+              {EGYPT_PHARAOH_BEATS.map(beat => (
+                <li key={beat.id} data-testid="egypt-pharaoh-beat" className="border-l border-bronze/30 pl-3 text-sm">
+                  <p className="text-parch font-semibold">{beat.title} · {beat.reference}</p>
+                  <p className="mt-1 text-parch/85">{beat.reading}</p>
+                  <p className="mt-1 text-muted">Ограничение реконструкции: {beat.limitation}</p>
+                </li>
+              ))}
+            </ol>
+            <section data-testid="egypt-brickwork-context" className="mt-4 border-t border-bronze/30 pt-3 text-sm">
+              <p className="text-parch">Исторический контекст: египетское изготовление кирпичей</p>
+              <p className="mt-1 text-muted">{EGYPT_BRICKWORK_CONTEXT.institution}, каталог {EGYPT_BRICKWORK_CONTEXT.catalog}, {EGYPT_BRICKWORK_CONTEXT.period}.</p>
+              <p className="mt-1 text-parch/80">{EGYPT_BRICKWORK_CONTEXT.limitation}</p>
+              <a href={EGYPT_BRICKWORK_CONTEXT.url} target="_blank" rel="noopener noreferrer" className="link inline-block mt-2">
+                Подлинная музейная карточка и изображение работы
+              </a>
+            </section>
           </details>
         )}
       </li>)}

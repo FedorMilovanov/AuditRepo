@@ -52,6 +52,23 @@ try{
     !returnEvidence[3].includes('у горы Божией'))
    throw new Error('EGYPT RETURN TEXT / AMBIGUITY '+JSON.stringify(returnEvidence));
  await page.screenshot({path:join(out,'smoke-egypt-return-five-beats.png')});
+ await page.click('[data-testid="egypt-pharaoh-notes"] summary');
+ const pharaohRefs=await page.$$eval('[data-testid="egypt-pharaoh-beat"]',
+   nodes=>nodes.map(node=>node.textContent||''));
+ const expectedPharaoh=['Исх. 5:1–5','Исх. 5:6–14','Исх. 5:15–21',
+   'Исх. 5:22–6:1','Исх. 6:2–13','Исх. 6:14–27','Исх. 6:28–7:7'];
+ const museum=await page.$eval('[data-testid="egypt-brickwork-context"]',el=>({
+   text:el.textContent||'',
+   href:el.querySelector('a')?.href||''
+ }));
+ if(pharaohRefs.length!==7||
+    pharaohRefs.some((s,i)=>!s.includes(expectedPharaoh[i]))||
+    !pharaohRefs[1].includes('НЕ приказ делать кирпичи вообще без соломы')||
+    !pharaohRefs[4].includes('имя YHWH')||
+    !museum.text.includes('не доказывает')||
+    museum.href!=='https://www.metmuseum.org/art/collection/search/544649')
+   throw new Error('PHARAOH READING EVIDENCE '+JSON.stringify({pharaohRefs,museum}));
+ await page.screenshot({path:join(out,'smoke-egypt-pharaoh-seven-beats.png')});
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'),{timeout:15000});
  await page.waitForSelector('[data-testid="horeb-chapter-start"]');

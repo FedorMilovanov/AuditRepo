@@ -143,6 +143,52 @@ export const EGYPT_RETURN_BEATS = [
     interpretation: 'narrative' },
 ] as const;
 
+/** W6E: seven successive TEXT-ONLY moments from Exodus 5:1–7:7.
+ * No reconstructed throne room, named pharaoh, Hebrew slave portrait,
+ * historical date, exact brick quota or 3D approval is implied. */
+export const EGYPT_PHARAOH_BEATS = [
+  { id: 'first-audience', reference: 'Исх. 5:1–5',
+    title: 'Первое обращение к фараону',
+    reading: 'Моисей и Аарон требуют отпустить народ для поклонения Господу. Фараон отвергает требование и возвращает их к работе.',
+    limitation: 'Библейский текст не называет фараона и не описывает архитектуру зала аудиенции.' },
+  { id: 'bricks-and-straw', reference: 'Исх. 5:6–14',
+    title: 'Солома и прежняя норма кирпичей',
+    reading: 'Распорядители перестают выдавать солому, люди собирают её сами, но ежедневное количество кирпичей не уменьшается; начальников израильтян бьют.',
+    limitation: 'Текст не сообщает численного размера нормы, техники конкретной мастерской или адреса производства. Это НЕ приказ делать кирпичи вообще без соломы.' },
+  { id: 'foremen-complaint', reference: 'Исх. 5:15–21',
+    title: 'Жалоба надзирателей и упрёк Моисею',
+    reading: 'Израильские начальники труда обращаются к фараону, не получают облегчения и обвиняют Моисея и Аарона в ухудшении своего положения.',
+    limitation: 'Нельзя объединять египетских принуждающих надсмотрщиков и израильских начальников в одну должность.' },
+  { id: 'moses-complaint', reference: 'Исх. 5:22–6:1',
+    title: 'Обращение Моисея к Господу',
+    reading: 'Моисей спрашивает, почему бедствие усилилось; Бог отвечает обещанием избавить народ.',
+    limitation: 'Это отдельный разговор с Богом, а не продолжение речи Моисея перед фараоном.' },
+  { id: 'divine-promise', reference: 'Исх. 6:2–13',
+    title: 'Имя Господа и обетование избавления',
+    reading: 'Бог напоминает о завете с праотцами, обещает освобождение и поручает Моисею говорить с народом и фараоном.',
+    limitation: 'Исх. 6:3 не следует упрощать до утверждения, будто имя YHWH впервые появляется только здесь: в Бытии оно уже встречается; толкование требует отдельной текстологической сверки.' },
+  { id: 'genealogy', reference: 'Исх. 6:14–27',
+    title: 'Родословная Моисея и Аарона',
+    reading: 'Повествование называет роды Рувима, Симеона и Левия, затем прослеживает происхождение Моисея и Аарона.',
+    limitation: 'Это литературная родословная в тексте, а не разрешение реконструировать внешность, точные даты или жилища перечисленных людей.' },
+  { id: 'renewed-commission', reference: 'Исх. 6:28–7:7',
+    title: 'Повторное поручение перед знамениями',
+    reading: 'Бог вновь поручает Моисею и Аарону обратиться к фараону; текст указывает их возраст, но ещё не описывает первую казнь.',
+    limitation: 'Не переносить знамения и казни из Исх. 7:8 и далее внутрь этого эпизода.' },
+] as const;
+
+/** A contextual artwork, not a picture of Moses or proof of Exodus dating.
+ * Rights are stated by the Museum on the object record; the project uses
+ * the LINK only, without embedding or re-licensing an image. */
+export const EGYPT_BRICKWORK_CONTEXT = {
+  institution: 'The Metropolitan Museum of Art',
+  work: 'Brickmakers, Tomb of Rekhmire',
+  catalog: '30.4.77',
+  period: 'XVIII династия, ок. 1479–1425 гг. до н. э.',
+  url: 'https://www.metmuseum.org/art/collection/search/544649',
+  limitation: 'Роспись, известная по современной копии Нины де Гарис Дэвис, показывает египетскую технологию кирпичного производства, но не доказывает участие изображённых работников в событиях Исхода и не устанавливает дату этих событий.',
+} as const;
+
 /** W6C concept gate: a scene design is not a historical site identification.
  * Episode order and verse references come ONLY from EGYPT_EPISODES above.
  * No Egypt mesh, route coordinates, Research IDs, or right to publish exist.

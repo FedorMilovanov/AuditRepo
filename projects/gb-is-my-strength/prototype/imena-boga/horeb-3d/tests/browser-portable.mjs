@@ -41,6 +41,11 @@ try {
   await page.click('[data-testid="egypt-return-notes"] summary');
   const beats = await page.$$eval('[data-testid="egypt-return-beat"]', nodes => nodes.length);
   if (beats !== 5) throw new Error('Offline Exodus 4:18-31 notes missing: ' + beats);
+  await page.click('[data-testid="egypt-pharaoh-notes"] summary');
+  const pharaohBeats=await page.$$eval('[data-testid="egypt-pharaoh-beat"]', nodes=>nodes.length);
+  const museumHref=await page.$eval('[data-testid="egypt-brickwork-context"] a', el=>el.href);
+  if(pharaohBeats!==7||museumHref!=='https://www.metmuseum.org/art/collection/search/544649')
+    throw new Error('Offline Exodus 5:1-7:7 notes missing: '+pharaohBeats);
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 10000 });
   const start = await page.evaluate(() => {
