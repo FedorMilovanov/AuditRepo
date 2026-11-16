@@ -118,13 +118,49 @@ try{
      await page.screenshot({path:join(out,'smoke-moses-baby-phone.png')});
      await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
    }
+   if(i===1){
+     // The former cradle canvas must be gone. This is a NEW scene on
+     // the same engine, with THREE grounded anonymous figures.
+     await page.waitForFunction(()=>
+       document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileRendered==='true',
+       {timeout:30000});
+     const discovery=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>({
+       moment:c.dataset.nileMoment,
+       figures:Number(c.dataset.nileFigures),
+       stems:Number(c.dataset.nilePapyrusCount),
+       canvasCount:document.querySelectorAll('canvas').length,
+     }));
+     if(discovery.moment!=='discovery'||discovery.figures!==3||
+        discovery.stems!==104||discovery.canvasCount!==1||
+        await page.$('[data-testid="moses-nile-3d"]'))
+       throw new Error('NILE DISCOVERY SCENE FAILED '+JSON.stringify(discovery));
+     await page.screenshot({path:join(out,'smoke-moses-discovery-desktop.png')});
+     await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+     const mobileDiscovery=await page.evaluate(()=>{
+       const modal=document.querySelector('[role="dialog"]');
+       const r=modal?.getBoundingClientRect();
+       const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+       return {visible:!!c&&c.dataset.nileRendered==='true',
+         fits:!!r&&r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight,
+         noSideScroll:!!modal&&modal.scrollWidth<=modal.clientWidth+1};
+     });
+     if(!mobileDiscovery.visible||!mobileDiscovery.fits||!mobileDiscovery.noSideScroll)
+       throw new Error('NILE DISCOVERY PHONE LAYOUT '+JSON.stringify(mobileDiscovery));
+     await page.screenshot({path:join(out,'smoke-moses-discovery-phone.png')});
+     await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
+   }
    if(i<5){
      await page.click('[data-testid="moses-origin-next"]');
      if(i===0){
        await page.waitForFunction(()=>
-         !document.querySelector('[data-testid="moses-nile-3d"]'));
-       const extra=await page.$$('canvas');
-       if(extra.length!==0)throw new Error('NILE CANVAS LEAKED INTO NEXT EPISODE');
+         !document.querySelector('[data-testid="moses-nile-3d"]')&&
+         !!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
+     }
+     if(i===1){
+       await page.waitForFunction(()=>
+         !document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
+       if((await page.$$('canvas')).length!==0)
+         throw new Error('NILE DISCOVERY WEBGL CANVAS LEAKED INTO THIRD EPISODE');
      }
    }
  }

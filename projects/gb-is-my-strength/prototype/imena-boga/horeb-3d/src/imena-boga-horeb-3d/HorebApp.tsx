@@ -459,8 +459,8 @@ export default function HorebApp() {
         <p className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
           История начинается с младенца Моисея среди папируса у Нила,
           продолжается в Мадиаме и ведёт к призванию на Хориве, возвращению в Египет
-          и освобождению народа. Сейчас Нил и Египет представлены текстовым прологом
-          и планом будущих сцен; 3D-прогулка построена только для Хорива.
+          и освобождению народа. На Ниле готовы две короткие 3D-диорамы; другие этапы пока изложены текстом,
+          а свободная 3D-прогулка построена только для Хорива.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
           <button data-testid="moses-origin-start" className="btn btn-primary" onClick={() => { setOriginIndex(0); setIntroDialog({ kind: 'origin' }); }}>Начать с младенца Моисея · Исход 2</button>
@@ -502,13 +502,13 @@ export default function HorebApp() {
             <span data-testid="moses-origin-progress">{originIndex + 1} / {MOSES_ORIGIN_BEATS.length}</span>
           </div>
           <div className="relative overflow-hidden rounded-sm border border-bronze/30 bg-gradient-to-b from-[#17232b] via-[#17231d] to-[#1c130b] p-5 sm:p-8 min-h-52">
-            {originIndex === 0 && <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5"><NilePreludeCanvas /></div>}
+            {originIndex < 2 && <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5"><NilePreludeCanvas key={originIndex} moment={originIndex === 0 ? 'basket' : 'discovery'} /></div>}
             <p className="text-xs tracking-widest text-bronze uppercase">Исход · {MOSES_ORIGIN_BEATS[originIndex].reference}</p>
             <h2 data-testid="moses-origin-title" className="font-display text-3xl sm:text-4xl text-parch mt-5">{MOSES_ORIGIN_BEATS[originIndex].title}</h2>
             <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl">{MOSES_ORIGIN_BEATS[originIndex].scene}</p>
           </div>
           <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/40 pl-3 text-muted">Историческое ограничение: {MOSES_ORIGIN_BEATS[originIndex].limit}</p>
-          <p className="text-xs text-muted">Это проверяемый сценарий будущих сцен, пока не построенные пространства Египта и Мадиама. Готовая 3D-глава начинается на Хориве.</p>
+          <p className="text-xs text-muted">Первые два эпизода — короткие художественные 3D-диорамы, но не игровые уровни. Свободная прогулка построена только на Хориве; остальные пространства ещё не созданы.</p>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => setOriginIndex(i => Math.max(0, i - 1))}>Предыдущий эпизод</button>
             {originIndex < MOSES_ORIGIN_BEATS.length - 1

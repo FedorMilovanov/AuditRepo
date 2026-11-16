@@ -6,7 +6,8 @@
  */
 import * as THREE from 'three';
 
-export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean) {
+export type NileMoment = 'basket' | 'discovery';
+export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket') {
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
   });
@@ -19,8 +20,11 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   scene.fog = new THREE.FogExp2(0xc6b7a0, 0.017);
   const camera = new THREE.PerspectiveCamera(43, 1, 0.1, 110);
   // Shoot FROM the river side: neither reeds nor the bank obscure the chest.
-  camera.position.set(-1.8, 1.75, 1.15);
-  camera.lookAt(0.55, 0.32, -2.3);
+  const shot = moment === 'discovery'
+    ? { x: -1.55, y: 2.15, z: 3.2, focusX: 1.85, focusY: .92, focusZ: -2.0 }
+    : { x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
+  camera.position.set(shot.x, shot.y, shot.z);
+  camera.lookAt(shot.focusX, shot.focusY, shot.focusZ);
   const skyGeo=new THREE.SphereGeometry(80,32,18);
   const skyPosition=skyGeo.getAttribute('position');
   const skyColors:number[]=[];
@@ -192,6 +196,10 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     let x=onBank?1.32+hash(i*1.91+1.35)*1.55:-6+hash(i*3.13+.75)*1.3;
     // A deliberate gap gives the basket its own focus among the plants.
     if(onBank && Math.abs(z+2.1)<1.7 && x<2.25)x=2.25+hash(i+7)*.35;
+    // On discovery, give the approaching maid a readable outline, while
+    // maintaining reeds on the waterline. Do not clear the first shot.
+    if(moment==='discovery' && onBank && Math.hypot(x-2.1,z+1.85)<.86)
+      x=3.15+hash(i*7.19)*.4;
     const height=1.0+hash(i*4.31+1.1)*1.8;
     const sway=(hash(i*5.81)-.5)*.16;
     const baseY=.05;
@@ -276,6 +284,93 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   pebblesMesh.instanceMatrix.needsUpdate=true;
   if(pebblesMesh.instanceColor)pebblesMesh.instanceColor.needsUpdate=true;
   scene.add(pebblesMesh);
+
+  // W8A: the SAME river and basket, a second staged moment (Exod. 2:5–6).
+  // Three anonymous, restrained figures: Pharaoh's unnamed daughter,
+  // one maid approaching the reeds, and another attendant on the bank.
+  // They are sculptural narrative silhouettes, NOT portraits, period-
+  // identified costumes, or a reenactment of an identified historical site.
+  const figures = new THREE.Group();
+  figures.name = 'nile-discovery-figures';
+  if (moment === 'discovery') {
+    const skin = material(0xb68b70,.96);
+    const darkHair = material(0x302d27);
+    const linenPale = material(0xdde2d3);
+    const linenOchre = material(0xb7a487);
+    const linenBlue = material(0x7d9190);
+    const collar = material(0xb29858,.65);
+
+    const addLimb = (
+      root: THREE.Group, start: THREE.Vector3, end: THREE.Vector3,
+      radius: number, mat: THREE.Material,
+    ) => {
+      const delta=end.clone().sub(start);
+      const limb=new THREE.Mesh(new THREE.CylinderGeometry(radius*.84,radius,delta.length(),7),mat);
+      limb.position.copy(start).add(end).multiplyScalar(.5);
+      limb.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());
+      root.add(limb);
+    };
+
+    function createFigure(
+      name:string, x:number, z:number, height:number,
+      garment:THREE.Material, gesture:'point'|'reach'|'rest',
+      royal:boolean,
+    ){
+      const fig=new THREE.Group();
+      fig.name=name;
+      const body=new THREE.Group();
+      fig.add(body);
+      const skirt=new THREE.Mesh(new THREE.CylinderGeometry(.24,.43,1.08,14),garment);
+      skirt.position.y=.63;
+      body.add(skirt);
+      const upper=new THREE.Mesh(new THREE.CylinderGeometry(.25,.22,.50,12),garment);
+      upper.position.y=1.27;
+      body.add(upper);
+      const neck=new THREE.Mesh(new THREE.CylinderGeometry(.095,.11,.18,8),skin);
+      neck.position.y=1.59;
+      body.add(neck);
+      const head=new THREE.Mesh(new THREE.SphereGeometry(.205,14,10),skin);
+      head.position.y=1.78;
+      body.add(head);
+      const hair=new THREE.Mesh(
+        new THREE.SphereGeometry(.218,14,10,0,Math.PI*2,0,Math.PI*.59),
+        darkHair);
+      hair.position.set(0,1.82,-.012);
+      body.add(hair);
+      // Small hair locks flank the face without detailed facial features.
+      for(const side of [-1,1]){
+        const lock=new THREE.Mesh(new THREE.CylinderGeometry(.057,.078,.29,7),darkHair);
+        lock.position.set(side*.18,1.63,-.045);
+        body.add(lock);
+      }
+      const leftFrom=new THREE.Vector3(-.23,1.42,0);
+      const rightFrom=new THREE.Vector3(.23,1.42,0);
+      let leftTo=new THREE.Vector3(-.35,.95,.02);
+      if(gesture==='point')leftTo=new THREE.Vector3(-.61,1.15,.23);
+      if(gesture==='reach')leftTo=new THREE.Vector3(-.55,.76,.42);
+      const rightTo=new THREE.Vector3(.36,.92,-.05);
+      addLimb(body,leftFrom,leftTo,.085,skin);
+      addLimb(body,rightFrom,rightTo,.085,skin);
+      if(royal){
+        const necklace=new THREE.Mesh(new THREE.TorusGeometry(.20,.035,5,20),collar);
+        necklace.position.set(0,1.47,.09);
+        necklace.rotation.x=-.20;
+        body.add(necklace);
+        // A plain linen shoulder mantle; no invented royal insignia.
+        const mantle=new THREE.Mesh(new THREE.CylinderGeometry(.28,.29,.13,12),linenBlue);
+        mantle.position.y=1.43;
+        body.add(mantle);
+      }
+      fig.position.set(x,bankHeight(x,z),z);
+      fig.scale.setScalar(height/1.95);
+      figures.add(fig);
+    }
+    createFigure('daughter-of-pharaoh-silhouette',3.05,-2.4,2.15,linenPale,'point',true);
+    createFigure('attendant-fetching-basket',2.08,-1.9,1.83,linenOchre,'reach',false);
+    createFigure('attendant-walking-bank',4.42,-3.65,1.87,linenBlue,'rest',false);
+  }
+  scene.add(figures);
+
   // A few gold dawn streaks on the physical water surface.
   const shimmerMat=new THREE.MeshBasicMaterial({color:0xffd2a0,transparent:true,opacity:.22,depthWrite:false});
   const strips=new THREE.Group();
@@ -304,6 +399,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nileShoreOffset=(shore.position.x-3.2-basket.position.x).toFixed(3);
   canvas.dataset.nilePapyrusCount=String(shaft.count);
   canvas.dataset.nileUmbelRays=String(spokes.count);
+  canvas.dataset.nileMoment=moment;
+  canvas.dataset.nileFigures=String(figures.children.length);
   canvas.dataset.nileReady='true';
   const animate=(now:number)=>{
     if(disposed)return;
@@ -311,8 +408,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     if(!visible||now-last<33)return;
     last=now;
     if(!reducedMotion) {
-      camera.position.x=-1.8+Math.sin(now*.00012)*.055;
-      camera.lookAt(.55,.32,-2.3);
+      camera.position.x=shot.x+Math.sin(now*.00012)*.055;
+      camera.lookAt(shot.focusX,shot.focusY,shot.focusZ);
       strips.position.z=Math.sin(now*.00065)*.04;
       // A few centimetres of surface movement, no swelling waves and
       // absolutely no motion on the baby's basket.
@@ -344,6 +441,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     renderer.dispose();
     renderer.forceContextLoss();
     delete canvas.dataset.nileReady;
+    delete canvas.dataset.nileMoment;
+    delete canvas.dataset.nileFigures;
     delete canvas.dataset.nileRendered;
     delete canvas.dataset.nileShoreOffset;
     delete canvas.dataset.nilePapyrusCount;

@@ -40,7 +40,22 @@ try {
     {timeout:30000});
   const firstTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
   if(firstTitle!=='Младенец у Нила')throw new Error('Portable story does not start with infant Moses');
-  for(let i=1;i<6;i++)await page.click('[data-testid="moses-origin-next"]');
+  await page.click('[data-testid="moses-origin-next"]');
+  await page.waitForFunction(()=>
+    document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileRendered==='true',
+    {timeout:30000});
+  const discovery=await page.$eval('[data-testid="moses-nile-discovery-3d"]',el=>({
+    moment:el.dataset.nileMoment,
+    figures:Number(el.dataset.nileFigures),
+    count:document.querySelectorAll('canvas').length,
+  }));
+  if(discovery.moment!=='discovery'||discovery.figures!==3||discovery.count!==1||
+     await page.$('[data-testid="moses-nile-3d"]'))
+    throw new Error('Offline Nile discovery failed '+JSON.stringify(discovery));
+  await page.click('[data-testid="moses-origin-next"]');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
+  if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
+  for(let i=3;i<6;i++)await page.click('[data-testid="moses-origin-next"]');
   const lastTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
   if(lastTitle!=='Пастух на пути к Хориву')
     throw new Error('Portable story does not end at Horeb: '+lastTitle);
