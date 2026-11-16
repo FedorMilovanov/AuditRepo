@@ -15,7 +15,7 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER, isHorebDepartureLookout } from './engine/nav';
@@ -72,6 +72,22 @@ function EgyptReadingSequence() {
         <p className="font-display text-lg text-parch">{i + 1}. {episode.title}</p>
         <p className="text-sm text-bronze">{episode.reference}</p>
         <p className="text-sm text-parch/80 mt-1">{episode.summary}</p>
+        {episode.id === 'return' && (
+          <details data-testid="egypt-return-notes" className="mt-3 rounded-sm border border-bronze/30 p-3">
+            <summary className="cursor-pointer text-sm text-bronze">
+              Разобрать Исх. 4:18–31 · пять эпизодов и границы реконструкции
+            </summary>
+            <ol className="mt-3 space-y-3">
+              {EGYPT_RETURN_BEATS.map(beat => (
+                <li key={beat.id} data-testid="egypt-return-beat" className="border-l border-bronze/30 pl-3 text-sm">
+                  <p className="text-parch font-semibold">{beat.title} · {beat.reference}</p>
+                  <p className="mt-1 text-parch/85">{beat.reading}</p>
+                  <p className="mt-1 text-muted">{beat.interpretation === 'ambiguous' ? 'Текстуальная неоднозначность: ' : 'Ограничение изображения: '}{beat.limitation}</p>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
       </li>)}
     </ol>
   </>;

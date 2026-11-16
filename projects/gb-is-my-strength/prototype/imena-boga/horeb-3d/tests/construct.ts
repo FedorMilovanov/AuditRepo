@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { RUSSIAN_DRAFT_CUES } from '../src/imena-boga-horeb-3d/data/russianCues';
-import { EGYPT_EPISODES, EGYPT_RETURN_STOP, EGYPT_SPATIAL_BLUEPRINT, sceneExhibitsForMode, type ExpeditionMode } from '../src/imena-boga-horeb-3d/data/storyWorlds';
+import { EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_RETURN_STOP, EGYPT_SPATIAL_BLUEPRINT, sceneExhibitsForMode, type ExpeditionMode } from '../src/imena-boga-horeb-3d/data/storyWorlds';
 import { readFileSync } from 'node:fs';
 import { buildExhibitProps, mergePropsGroup, OLIVE_GROVE_OFFSETS, BEERSHEBA_WELL_COLLIDER_RADIUS } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation, TUNNEL_END, LEDGE_X, EXODUS_TRAIL_LIMIT_Z, EXODUS_TRAIL_LOOKOUT_Z, exodusTrailCentreX, isHorebDepartureLookout } from '../src/imena-boga-horeb-3d/engine/nav';
@@ -35,6 +35,15 @@ t('Egypt source-led sequence has four distinct episodes in biblical order, never
   EGYPT_EPISODES.every(e => e.title.length > 8 && e.summary.length > 40) &&
   EGYPT_RETURN_STOP.id === 'egypt-return' &&
   EGYPT_RETURN_STOP.exhibitIds.length === 0);
+
+t('W6D return episode keeps five textual scenes and the Zipporah ambiguity',
+  EGYPT_RETURN_BEATS.length === 5 &&
+  EGYPT_RETURN_BEATS.map(b => b.id).join('|') ===
+    'leave-midian|message-to-pharaoh|zipporah|aaron-at-mountain|elders' &&
+  EGYPT_RETURN_BEATS.map(b => b.reference).join('|') ===
+    'Исх. 4:18–20|Исх. 4:21–23|Исх. 4:24–26|Исх. 4:27–28|Исх. 4:29–31' &&
+  EGYPT_RETURN_BEATS.filter(b => b.interpretation === 'ambiguous').map(b => b.id).join('|') === 'zipporah' &&
+  EGYPT_RETURN_BEATS.every(b => !!b.reading.trim() && !!b.limitation.trim()));
 
 t('W6C Egypt is four separate gated concepts, not live physical scenery',
   EGYPT_SPATIAL_BLUEPRINT.length === EGYPT_EPISODES.length &&

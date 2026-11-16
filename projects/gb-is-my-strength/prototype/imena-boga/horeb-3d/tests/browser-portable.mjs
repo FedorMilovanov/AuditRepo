@@ -38,6 +38,9 @@ try {
   await page.waitForSelector('[data-testid="egypt-intro-reading"]');
   const stages = await page.$$eval('[data-testid="egypt-reading-sequence"] > li', nodes => nodes.length);
   if (stages !== 4) throw new Error('Offline Egypt reading sequence missing: ' + stages);
+  await page.click('[data-testid="egypt-return-notes"] summary');
+  const beats = await page.$$eval('[data-testid="egypt-return-beat"]', nodes => nodes.length);
+  if (beats !== 5) throw new Error('Offline Exodus 4:18-31 notes missing: ' + beats);
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 10000 });
   const start = await page.evaluate(() => {

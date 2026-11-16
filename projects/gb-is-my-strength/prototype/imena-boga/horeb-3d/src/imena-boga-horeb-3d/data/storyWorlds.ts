@@ -111,6 +111,38 @@ export const EGYPT_EPISODES = [
   { id: 'passover', reference: 'Исх. 12:1–51', title: 'Пасха и исход',
     summary: 'Установление Пасхи, последняя казнь и выход из Египта; дальнейший путь к морю относится к новой главе.' },
 ] as const;
+
+/** W6D: text-grounded beats of the FIRST Egypt episode. These are reader
+ * notes, not approved scenery, archaeological identifications or copies of
+ * licensed Bible translations. Keep ambiguous referents unresolved. */
+export const EGYPT_RETURN_BEATS = [
+  { id: 'leave-midian', reference: 'Исх. 4:18–20',
+    title: 'Прощание с Иофором',
+    reading: 'Моисей получает разрешение уйти, отправляется с женой и сыновьями; текст упоминает осла и Божий жезл.',
+    limitation: 'Точное положение Мадиама и длина пути не установлены этим текстом.',
+    interpretation: 'narrative' },
+  { id: 'message-to-pharaoh', reference: 'Исх. 4:21–23',
+    title: 'Наставление перед встречей с фараоном',
+    reading: 'Бог объявляет Моисею, что именно следует сказать фараону, в том числе о первородном сыне Израиле.',
+    limitation: 'Это наставление на пути, а не уже состоявшаяся сцена в тронном зале.',
+    interpretation: 'narrative' },
+  { id: 'zipporah', reference: 'Исх. 4:24–26',
+    title: 'Трудный эпизод с Сепфорой',
+    reading: 'На месте ночлега Сепфора совершает обрезание сына. Краткий рассказ содержит неясные местоимения.',
+    limitation: 'Нельзя выдавать личность того, кому угрожала смерть, жест Сепфоры и причины происшествия за бесспорно установленные детали постановки.',
+    interpretation: 'ambiguous' },
+  { id: 'aaron-at-mountain', reference: 'Исх. 4:27–28',
+    title: 'Встреча Аарона у горы Божией',
+    reading: 'Аарон идёт в пустыню и встречает Моисея у горы Божией; Моисей передаёт ему слова и знамения.',
+    limitation: 'Эта встреча не описана как встреча во дворце или на улицах Египта.',
+    interpretation: 'narrative' },
+  { id: 'elders', reference: 'Исх. 4:29–31',
+    title: 'Собрание старейшин Израиля',
+    reading: 'Моисей и Аарон собирают старейшин, передают слова Господа и знамения; народ верит и поклоняется.',
+    limitation: 'Точное здание и адрес собрания в тексте не названы.',
+    interpretation: 'narrative' },
+] as const;
+
 /** W6C concept gate: a scene design is not a historical site identification.
  * Episode order and verse references come ONLY from EGYPT_EPISODES above.
  * No Egypt mesh, route coordinates, Research IDs, or right to publish exist.

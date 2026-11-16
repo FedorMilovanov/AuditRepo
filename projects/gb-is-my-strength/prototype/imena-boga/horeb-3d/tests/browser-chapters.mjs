@@ -39,6 +39,19 @@ try{
     !introSource.note.includes('ещё не построена')||
     !introSource.note.includes('не добавляет новых имён Бога'))
    throw new Error('EGYPT READING INTRO MUST NOT REQUIRE 3D '+JSON.stringify(introSource));
+ // The five first-episode text beats are visible without WebGL; a native
+ // details/summary disclosure is focusable and does not start a 3D world.
+ await page.click('[data-testid="egypt-return-notes"] summary');
+ const returnEvidence=await page.$$eval('[data-testid="egypt-return-beat"]',
+   nodes=>nodes.map(node=>node.textContent||''));
+ const beatRefs=['Исх. 4:18–20','Исх. 4:21–23','Исх. 4:24–26',
+   'Исх. 4:27–28','Исх. 4:29–31'];
+ if(returnEvidence.length!==5||
+    returnEvidence.some((s,i)=>!s.includes(beatRefs[i]))||
+    !returnEvidence[2].includes('неясные местоимения')||
+    !returnEvidence[3].includes('у горы Божией'))
+   throw new Error('EGYPT RETURN TEXT / AMBIGUITY '+JSON.stringify(returnEvidence));
+ await page.screenshot({path:join(out,'smoke-egypt-return-five-beats.png')});
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'),{timeout:15000});
  await page.waitForSelector('[data-testid="horeb-chapter-start"]');
