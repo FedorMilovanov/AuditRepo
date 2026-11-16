@@ -313,19 +313,51 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
 
     function createFigure(
       name:string, x:number, z:number, height:number,
-      garment:THREE.Material, gesture:'point'|'reach'|'rest',
+      garment:THREE.MeshStandardMaterial, gesture:'point'|'reach'|'rest',
       royal:boolean,
     ){
       const fig=new THREE.Group();
       fig.name=name;
       const body=new THREE.Group();
+      body.name=gesture==='reach'?'reaching-attendant-pose':'upright-silhouette-pose';
       fig.add(body);
-      const skirt=new THREE.Mesh(new THREE.CylinderGeometry(.24,.43,1.08,14),garment);
-      skirt.position.y=.63;
-      body.add(skirt);
-      const upper=new THREE.Mesh(new THREE.CylinderGeometry(.25,.22,.50,12),garment);
-      upper.position.y=1.27;
+      // W8B: pleated linen sculpted as a smooth, subtly irregular cloth
+      // surface instead of a sharp 14-sided mannequin cone. Fold color is
+      // derived from the same local material, never an imported texture.
+      const gownGeo=new THREE.CylinderGeometry(.23,.43,1.12,36,12);
+      const gownPos=gownGeo.getAttribute('position');
+      const gownColors:number[]=[];
+      for(let k=0;k<gownPos.count;k++){
+        const x=gownPos.getX(k), y=gownPos.getY(k), z=gownPos.getZ(k);
+        const angle=Math.atan2(z,x);
+        const fold=Math.sin(angle*12+.27)*.033+Math.cos(angle*7-.5)*.022;
+        const flare=THREE.MathUtils.smoothstep(.5-y,.26,1.06);
+        gownPos.setX(k,x*(1+fold*flare));
+        gownPos.setZ(k,z*(1+fold*flare));
+        const shade=1+fold*.85-.085*flare+.026*Math.sin(angle*6+y*3.4);
+        const c=new THREE.Color(shade,shade*.993,shade*.974);
+        gownColors.push(c.r,c.g,c.b);
+      }
+      gownGeo.setAttribute('color',new THREE.Float32BufferAttribute(gownColors,3));
+      gownGeo.computeVertexNormals();
+      const gownMat=new THREE.MeshStandardMaterial({
+        color:garment.color.clone(),vertexColors:true,roughness:.96,
+        side:THREE.DoubleSide,
+      });
+      const gown=new THREE.Mesh(gownGeo,gownMat);
+      gown.name='linen-pleats';
+      gown.position.y=.62;
+      body.add(gown);
+      const upper=new THREE.Mesh(new THREE.SphereGeometry(1,24,14),garment);
+      upper.scale.set(.25,.31,.21);
+      upper.position.y=1.28;
       body.add(upper);
+      // A visible cross-fold at the waist joins fabric sections smoothly.
+      const waistband=new THREE.Mesh(new THREE.TorusGeometry(.245,.024,5,28),garment);
+      waistband.rotation.x=Math.PI/2;
+      waistband.scale.set(1,.80,1);
+      waistband.position.y=1.04;
+      body.add(waistband);
       const neck=new THREE.Mesh(new THREE.CylinderGeometry(.095,.11,.18,8),skin);
       neck.position.y=1.59;
       body.add(neck);
@@ -343,23 +375,70 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
         lock.position.set(side*.18,1.63,-.045);
         body.add(lock);
       }
-      const leftFrom=new THREE.Vector3(-.23,1.42,0);
-      const rightFrom=new THREE.Vector3(.23,1.42,0);
-      let leftTo=new THREE.Vector3(-.35,.95,.02);
-      if(gesture==='point')leftTo=new THREE.Vector3(-.61,1.15,.23);
-      if(gesture==='reach')leftTo=new THREE.Vector3(-.55,.76,.42);
-      const rightTo=new THREE.Vector3(.36,.92,-.05);
-      addLimb(body,leftFrom,leftTo,.085,skin);
-      addLimb(body,rightFrom,rightTo,.085,skin);
+      // Two-segment arms and small hands convey deliberate, readable
+      // gestures. The attendant bends toward the cradle rather than
+      // pointing a stiff cylinder directly at the baby.
+      const leftFrom=new THREE.Vector3(-.22,1.43,.02);
+      const rightFrom=new THREE.Vector3(.22,1.43,.02);
+      const leftElbow=gesture==='reach'
+        ? new THREE.Vector3(-.35,1.04,.08)
+        : gesture==='point'
+          ? new THREE.Vector3(-.38,1.27,.12)
+          : new THREE.Vector3(-.36,1.03,.01);
+      const leftWrist=gesture==='reach'
+        ? new THREE.Vector3(-.66,.80,.39)
+        : gesture==='point'
+          ? new THREE.Vector3(-.61,1.11,.24)
+          : new THREE.Vector3(-.36,.93,.06);
+      const rightElbow=new THREE.Vector3(.36,1.15,0);
+      const rightWrist=new THREE.Vector3(.38,.93,.10);
+      const sleeve=material(garment.color.getHex(),.95);
+      for(const [shoulder,elbow,wrist] of [
+        [leftFrom,leftElbow,leftWrist],[rightFrom,rightElbow,rightWrist],
+      ]){
+        addLimb(body,shoulder,elbow,.115,sleeve);
+        addLimb(body,elbow,wrist,.061,skin);
+        const hand=new THREE.Mesh(new THREE.SphereGeometry(.071,10,8),skin);
+        hand.position.copy(wrist);
+        hand.scale.set(.72,1.15,.48);
+        body.add(hand);
+      }
+      // Exposed feet ground the silhouette on the uneven bank.
+      for(const side of [-1,1]){
+        const foot=new THREE.Mesh(new THREE.SphereGeometry(1,10,7),skin);
+        foot.scale.set(.105,.048,.155);
+        foot.position.set(side*.18,.075,.09);
+        body.add(foot);
+      }
+      if(gesture==='reach'){
+        body.rotation.z=.13;
+        body.position.x=-.06;
+      }
       if(royal){
         const necklace=new THREE.Mesh(new THREE.TorusGeometry(.20,.035,5,20),collar);
         necklace.position.set(0,1.47,.09);
         necklace.rotation.x=-.20;
         body.add(necklace);
-        // A plain linen shoulder mantle; no invented royal insignia.
-        const mantle=new THREE.Mesh(new THREE.CylinderGeometry(.28,.29,.13,12),linenBlue);
-        mantle.position.y=1.43;
-        body.add(mantle);
+        // A pleated shoulder wrap distinguishes the daughter from
+        // attendants without using a fabricated dynasty, crown or emblem.
+        const wrapGeo=new THREE.CylinderGeometry(.255,.35,.37,32,5,true);
+        const wrapPos=wrapGeo.getAttribute('position');
+        for(let i=0;i<wrapPos.count;i++){
+          const x=wrapPos.getX(i),z=wrapPos.getZ(i);
+          const angle=Math.atan2(z,x);
+          const fold=1+.048*Math.cos(angle*9+.3);
+          wrapPos.setX(i,x*fold);
+          wrapPos.setZ(i,z*fold);
+        }
+        wrapGeo.computeVertexNormals();
+        const wrap=new THREE.Mesh(wrapGeo,linenBlue);
+        wrap.name='linen-shoulder-drape';
+        wrap.position.y=1.34;
+        body.add(wrap);
+        const hairBand=new THREE.Mesh(new THREE.TorusGeometry(.208,.024,5,24),collar);
+        hairBand.rotation.x=Math.PI/2;
+        hairBand.position.y=1.87;
+        body.add(hairBand);
       }
       fig.position.set(x,bankHeight(x,z),z);
       fig.scale.setScalar(height/1.95);
@@ -367,7 +446,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     }
     createFigure('daughter-of-pharaoh-silhouette',3.05,-2.4,2.15,linenPale,'point',true);
     createFigure('attendant-fetching-basket',2.08,-1.9,1.83,linenOchre,'reach',false);
-    createFigure('attendant-walking-bank',4.42,-3.65,1.87,linenBlue,'rest',false);
+    createFigure('attendant-walking-bank',3.72,-1.1,1.87,linenBlue,'rest',false);
   }
   scene.add(figures);
 
@@ -401,6 +480,13 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nileUmbelRays=String(spokes.count);
   canvas.dataset.nileMoment=moment;
   canvas.dataset.nileFigures=String(figures.children.length);
+  // Physical-art witnesses: actual, nested fabric and pose meshes.
+  canvas.dataset.nilePleatedFigures=String(figures.children.filter(f=>
+    !!f.getObjectByName('linen-pleats')).length);
+  canvas.dataset.nileRoyalDrapes=String(figures.children.filter(f=>
+    !!f.getObjectByName('linen-shoulder-drape')).length);
+  canvas.dataset.nileReachingPose=String(figures.children.some(f=>
+    !!f.getObjectByName('reaching-attendant-pose')));
   canvas.dataset.nileReady='true';
   const animate=(now:number)=>{
     if(disposed)return;
@@ -443,6 +529,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     delete canvas.dataset.nileReady;
     delete canvas.dataset.nileMoment;
     delete canvas.dataset.nileFigures;
+    delete canvas.dataset.nilePleatedFigures;
+    delete canvas.dataset.nileRoyalDrapes;
+    delete canvas.dataset.nileReachingPose;
     delete canvas.dataset.nileRendered;
     delete canvas.dataset.nileShoreOffset;
     delete canvas.dataset.nilePapyrusCount;

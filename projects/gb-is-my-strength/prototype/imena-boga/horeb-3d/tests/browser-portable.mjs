@@ -47,9 +47,13 @@ try {
   const discovery=await page.$eval('[data-testid="moses-nile-discovery-3d"]',el=>({
     moment:el.dataset.nileMoment,
     figures:Number(el.dataset.nileFigures),
+    pleats:Number(el.dataset.nilePleatedFigures),
+    drapes:Number(el.dataset.nileRoyalDrapes),
+    reaching:el.dataset.nileReachingPose,
     count:document.querySelectorAll('canvas').length,
   }));
   if(discovery.moment!=='discovery'||discovery.figures!==3||discovery.count!==1||
+     discovery.pleats!==3||discovery.drapes!==1||discovery.reaching!=='true'||
      await page.$('[data-testid="moses-nile-3d"]'))
     throw new Error('Offline Nile discovery failed '+JSON.stringify(discovery));
   await page.click('[data-testid="moses-origin-next"]');

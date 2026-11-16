@@ -127,10 +127,15 @@ try{
      const discovery=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>({
        moment:c.dataset.nileMoment,
        figures:Number(c.dataset.nileFigures),
+       pleatedFigures:Number(c.dataset.nilePleatedFigures),
+       royalDrapes:Number(c.dataset.nileRoyalDrapes),
+       reachingPose:c.dataset.nileReachingPose,
        stems:Number(c.dataset.nilePapyrusCount),
        canvasCount:document.querySelectorAll('canvas').length,
      }));
      if(discovery.moment!=='discovery'||discovery.figures!==3||
+        discovery.pleatedFigures!==3||discovery.royalDrapes!==1||
+        discovery.reachingPose!=='true'||
         discovery.stems!==104||discovery.canvasCount!==1||
         await page.$('[data-testid="moses-nile-3d"]'))
        throw new Error('NILE DISCOVERY SCENE FAILED '+JSON.stringify(discovery));
