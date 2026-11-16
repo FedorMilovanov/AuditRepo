@@ -12,7 +12,7 @@
 | Research repository | FedorMilovanov/Research |
 | Research base | 3701153bcb5c7439ec07b9698bff3917492398de |
 | Research PR | https://github.com/FedorMilovanov/Research/pull/520 |
-| Research candidate HEAD | 16c175bc831e8ce5b09e3068cc936a094d8b7138 |
+| Final Research PR HEAD | 481c381c60294874975cc7f80708d2e71464e3da |
 | Research destination | БАПТИСТЫ РОССИИ/BOOK_RESEARCH/ |
 | Source files | **248 из 248**, отсутствие коллизий |
 | Source bytes | **20 691 314** |
@@ -20,9 +20,17 @@
 | SHA-256 sorted content-set | 6dc68b35b9b346a795e31483022136b049b7771bc302011806699dc6454c1249 |
 | Source edits | **0** (byte-preserving copy, no text repair, no rights/evidence upgrades) |
 | Retirement of Product originals | **BLOCKED until full chain** |
-| Audit status | **VERIFIED ON CANDIDATE; Research CI/merge pending at creation** |
+| Audit status | **Research #520 MERGED, post-merge 248/248 parity VERIFIED** |
 
 Читать [Research README](https://github.com/FedorMilovanov/Research/blob/16c175bc831e8ce5b09e3068cc936a094d8b7138/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/README.md), [машинный манифест 248 файлов](https://github.com/FedorMilovanov/Research/blob/16c175bc831e8ce5b09e3068cc936a094d8b7138/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/SOURCE_CUSTODY_MANIFEST.json).
+
+## Постслияние: контроль полного Research/main (16 ноября 2026)
+
+- **Research PR #520:** MERGED, коммит `70defa6f947a6312b0fee2c98cb3411d045870b7`; финальный PR HEAD `481c381c60294874975cc7f80708d2e71464e3da` включает актуальную ветку main без отката параллельной редакции Вормса и Марбурга.
+- На финальном HEAD обязательные **4/4 GitHub checks SUCCESS**: Workflow hygiene, Secret scanning, Repository authority integrity, Atonement corpus integrity. Реформационные изменения из main при обновлении ветки сохранены.
+- **Независимая post-merge проверка Git Trees:** Research/main `70defa6f…` содержит **250** объектов в `BOOK_RESEARCH/`: 248 оригинальных файлов + README + manifest; для всех **248/248** подтверждены те же относительный путь, Git blob SHA1 и размер из исходного Product `e71d4ca3…`; **0 расхождений**, суммарно **20 691 314 байт**. Git trees Product и Research без усечения.
+- Дельта Product `e71d4ca3…` → текущий просмотренный Product `c3aef453…` не меняла `baptisty-rossii/research/`; перенос охватывает весь исходный каталог на дату приёмки.
+- **Stage A — CLOSED (custody only). Stage B — OPEN:** дальнейший source-to-claim review и встраивание в 20 плановых глав не закрыты; Product research не удалён, публикационные права/HOLD и редакционное утверждение не повышались. Не заменять этим актом научный proof ledger.
 
 ## Научные и публикационные границы
 
