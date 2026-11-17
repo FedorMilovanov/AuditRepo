@@ -102,7 +102,7 @@ try {
       }
       const text=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
       const expected3D=index===1&&stage===0;
-      const actualCanvasCount=(await page.$('canvas')).length;
+      const actualCanvasCount=(await page.$$('canvas')).length;
       const scene=expected3D?await page.$eval('[data-testid="moses-midian-well-3d"]',e=>({
         world:e.dataset.midianWorld,
         rendered:e.dataset.midianRendered,
