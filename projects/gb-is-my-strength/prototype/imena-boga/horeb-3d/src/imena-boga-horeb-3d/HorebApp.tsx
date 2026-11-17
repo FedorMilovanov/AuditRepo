@@ -462,11 +462,12 @@ export default function HorebApp() {
         <p className="eyebrow reveal">Интерактивная экспозиция · лабораторный прототип</p>
         <h1 className="font-display text-5xl sm:text-7xl tracking-[0.12em] mt-5 reveal d1">ИМЕНА БОГА</h1>
         <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Моисей · От Нила до Исхода</p>
-        <p className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
-          История начинается с младенца Моисея среди папируса у Нила,
-          продолжается в Мадиаме и ведёт к призванию на Хориве, возвращению в Египет
-          и освобождению народа. На Ниле готовы две короткие 3D-диорамы; другие этапы пока изложены текстом,
-          а свободная 3D-прогулка построена только для Хорива.
+        <p data-testid="moses-world-overview" className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
+          Начните историю с младенца Моисея у Нила, исследуйте берег и колодец
+          Мадиама в настоящем 3D и перейдите к самостоятельной экспедиции на Хорив.
+          Это отдельные исследуемые пространства, пока ещё художественные прототипы.
+          Египет взрослого Моисея, дом Рагуила, рождение Гирсама и дальнейший Исход
+          пока не построены в 3D — их последовательность доступна в режиме чтения.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
           <button data-testid="moses-origin-start" className="btn btn-primary" onClick={() => { setOriginIndex(0); setRescueStage(0); setPreHorebStage(0); setIntroDialog({ kind: 'origin' }); }}>Начать с младенца Моисея · Исход 2</button>

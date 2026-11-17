@@ -28,6 +28,12 @@ try{
  // Egypt reading must be directly accessible from the intro and never
  // require a successful WebGL scene or traversal to the southern lookout.
  await page.waitForSelector('[data-testid="egypt-reading-intro"]');
+ const worldOverview=await page.$eval('[data-testid="moses-world-overview"]',
+   el=>el.textContent||'');
+ if(!worldOverview.includes('колодец')||!worldOverview.includes('Хорив')||
+    !worldOverview.includes('пока не построены в 3D')||
+    worldOverview.includes('только для Хорива'))
+   throw new Error('W11A INTRO WORLD STATUS IS STALE '+worldOverview);
  await page.click('[data-testid="egypt-reading-intro"]');
  await page.waitForSelector('[data-testid="egypt-intro-reading"]');
  const introSource=await page.evaluate(()=>({

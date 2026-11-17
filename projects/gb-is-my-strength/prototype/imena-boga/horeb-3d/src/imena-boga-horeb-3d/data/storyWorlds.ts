@@ -28,7 +28,9 @@ export interface StoryStop {
 
 /** Narrative order is deliberate. Empty stops are genuine Biblical episodes
  * without additional approved names-ledger ID, not fabricated exhibits.
- * These are proposed narrative ROUTES; only standalone Horeb plus the legacy QA lab are physically built. */
+ * W11A: Horeb, the limited Nile shore and the Midian well now each have real
+ * walkable WebGL geometry; the other narrative stops remain future worlds.
+ * Legacy QA continues to contain the 42 separate Research dossiers. */
 export const STORY_STOPS: readonly StoryStop[] = [
   { id: 'creation-prologue', world: 'genesis',
     biblicalRange: 'Быт. 1–11', place: 'Литературный пролог к миру Бытия',
