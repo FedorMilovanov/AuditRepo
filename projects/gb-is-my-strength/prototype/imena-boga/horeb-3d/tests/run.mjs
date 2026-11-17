@@ -5,6 +5,7 @@ import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
   sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
+import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -15,6 +16,37 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W10B: renderer and physical camera use this same terrain, coast and
+// seeded plant topology. No hard-coded hidden rectangular water barrier.
+const nileZSamples=[-19,-14,-9,-5,-2.1,0,3,7,8.5];
+t('W10B shoreline/nav share one curving physical coast',
+  nileZSamples.every(z=>{
+    const coast=nileShoreX(z);
+    return Number.isFinite(coast)&&
+      Math.abs(nileGroundY(coast,z)+.14)<1e-6&&
+      nileGroundY(coast+5,z)>nileGroundY(coast+.2,z)&&
+      !nileCanWalk(coast+.05,z,'basket')&&
+      nileCanWalk(7.1,z,'basket');
+  }));
+t('W10B no river walking, invalid coordinates or escaping terrain',
+  !nileCanWalk(NaN,0,'basket')&&
+  !nileCanWalk(Infinity,0,'basket')&&
+  !nileCanWalk(-10,0,'basket')&&
+  !nileCanWalk(5,NILE_WALK.maxZ+.01,'basket')&&
+  !nileCanWalk(5,NILE_WALK.minZ-.01,'basket')&&
+  !nileCanWalk(NILE_WALK.maxX+.01,0,'basket'));
+t('W10B papyrus instancing is deterministic and clears the cradle vista',
+  Array.from({length:104},(_,i)=>{
+    const a=nilePapyrusRoot(i,'basket');
+    const b=nilePapyrusRoot(i,'basket');
+    return JSON.stringify(a)===JSON.stringify(b)&&a.height>=1.85&&a.height<3.5&&
+      (i>=91||Math.abs(a.z+2.1)>=2.2);
+  }).every(Boolean));
+t('W10B cradle has same physical pedestrian collision in both moments',
+  !nileCanWalk(NILE_CRADLE.x+NILE_CRADLE.r*.85,NILE_CRADLE.z,'basket')&&
+  !nileCanWalk(NILE_CRADLE.x+NILE_CRADLE.r*.85,NILE_CRADLE.z,'discovery'));
+t('W10B figures block walking only in rescue episode',
+  nileCanWalk(3.05,-2.4,'basket')&&!nileCanWalk(3.05,-2.4,'discovery'));
 t('eight original museum walking moments in ascending depth',
   JOURNEY_BEATS.length === 8 &&
   new Set(JOURNEY_BEATS.map(b => b.id)).size === 8 &&

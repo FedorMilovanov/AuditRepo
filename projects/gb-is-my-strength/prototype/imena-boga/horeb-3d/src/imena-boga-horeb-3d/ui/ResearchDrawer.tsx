@@ -10,7 +10,14 @@ export function Modal({ title, onClose, children, wide = false }: { title: strin
     const el = ref.current;
     el?.querySelector<HTMLElement>('[data-autofocus]')?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeRef.current(); return; }
+      if (e.key === 'Escape') {
+        e.preventDefault(); e.stopPropagation();
+        // Nested fullscreen experiences close first, keeping the story
+        // dialog and its keyboard focus alive. Generic modal semantics.
+        const nestedExit=el?.querySelector<HTMLButtonElement>('[data-modal-escape-exit]');
+        if(nestedExit){nestedExit.click();return;}
+        closeRef.current();return;
+      }
       if (e.key === 'Tab' && el) {
         const focusable = Array.from(el.querySelectorAll<HTMLElement>(
           'a[href],button,select,input,textarea,[tabindex]:not([tabindex="-1"])'

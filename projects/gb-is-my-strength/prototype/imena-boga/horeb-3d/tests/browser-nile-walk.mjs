@@ -22,6 +22,9 @@ const base=(process.env.HOREB_BASE_URL||'http://127.0.0.1:5173').replace(/\/$/,'
 const read=()=>page.$eval('[data-testid="moses-nile-3d"]',c=>({
  mode:c.dataset.nileMode,x:Number(c.dataset.nileCameraX),
  z:Number(c.dataset.nileCameraZ),y:Number(c.dataset.nileWalkY),
+ shoreDistance:Number(c.dataset.nileShoreDistance),
+ ground:Number(c.dataset.nileGroundHeight),
+ fineBranches:Number(c.dataset.nilePapyrusFineBranches),
  rendered:c.dataset.nileRendered==='true',
  bounds:c.dataset.nileWalkBounds,
 }));
@@ -38,7 +41,8 @@ try{
    const r=el.getBoundingClientRect();
    return {x:r.x,y:r.y,width:r.width,height:r.height,winX:innerWidth,winY:innerHeight};
  });
- if(!first.rendered||first.bounds!=='4.3,8.9,-15,8'||
+ if(!first.rendered||first.bounds!=='shore+0.27,9.45,-20,9'||
+    first.fineBranches!==2808||Math.abs(first.y-first.ground-1.64)>.006||
     size.width<size.winX-2||size.height<size.winY-2||Math.abs(size.x)>1||Math.abs(size.y)>1)
    throw new Error('W10 MUST BE FULLSCREEN REAL 3D '+JSON.stringify({first,size}));
  await page.keyboard.down('w');await sleep(800);await page.keyboard.up('w');
@@ -46,8 +50,9 @@ try{
  const next=await read();
  if(!(Math.hypot(next.x-first.x,next.z-first.z)>.75)&&next.mode==='walk')
    throw new Error('W10 KEYBOARD DOES NOT MOVE GROUNDED 3D CAMERA '+JSON.stringify({first,next}));
- if(!Number.isFinite(next.y)||next.x<4.3||next.x>8.9||next.z< -15||next.z>8)
-   throw new Error('W10 NAV GROUND BOUNDARY FAILED '+JSON.stringify(next));
+ if(!Number.isFinite(next.y)||next.x>9.45||next.z< -20||next.z>9||
+    next.shoreDistance<.269||Math.abs(next.y-next.ground-1.64)>.006)
+   throw new Error('W10B REAL TERRAIN/NAV CONTACT FAILED '+JSON.stringify(next));
  await page.screenshot({path:join(out,'w10-nile-walking-desktop.png')});
  // Prove pointer drag changes actual camera orientation, not a decorative UI.
  const cam=await page.$('[data-testid="moses-nile-3d"]');
@@ -82,9 +87,16 @@ try{
  if(Math.hypot(afterTouch.x-beforeTouch.x,afterTouch.z-beforeTouch.z)<.2)
    throw new Error('W10 MOBILE POINTER MOVEMENT INERT '+JSON.stringify({beforeTouch,afterTouch}));
  await page.screenshot({path:join(out,'w10-nile-walking-phone.png')});
- await page.click('[data-testid="nile-explore-close"]');
+ // Nested Escape must leave the chapter open and return keyboard focus to
+ // the entry button, not tear down the whole Bible story modal.
+ await page.keyboard.press('Escape');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileMode==='shot');
- if(await page.$('[data-testid="nile-explore-start"]')===null)throw new Error('CINEMATIC MODE NOT RESTORED');
+ const escapeState=await page.evaluate(()=>({
+   story:!!document.querySelector('[data-testid="moses-origin-story"]'),
+   focused:document.activeElement?.getAttribute('data-testid'),
+ }));
+ if(!escapeState.story||escapeState.focused!=='nile-explore-start')
+   throw new Error('W10B NESTED ESCAPE/FOCUS REGRESSION '+JSON.stringify(escapeState));
  // The rescue moment must be independently walkable in the same physical
  // Nile environment; new figures are geometry, not a static picture.
  await page.click('[data-testid="moses-origin-next"]');

@@ -12,6 +12,12 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
   const [view,setView]=useState<NileView>('wide');
   const [failed,setFailed]=useState(false);
   const [exploring,setExploring]=useState(false);
+  const launchRef=useRef<HTMLButtonElement>(null);
+  const wasExploring=useRef(false);
+  useEffect(()=>{
+    if(wasExploring.current&&!exploring)launchRef.current?.focus();
+    wasExploring.current=exploring;
+  },[exploring]);
   useEffect(()=>{
     const canvas=ref.current;
     if(!canvas)return;
@@ -71,7 +77,7 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
       Трёхмерная локация недоступна на этом устройстве. Текст источника сохранён в режиме чтения.
     </p>}
     {!failed && !exploring && <div className="absolute left-3 bottom-3 z-10 flex flex-wrap gap-2">
-      <button type="button" data-testid="nile-explore-start" onClick={()=>toggleExplore(true)}
+      <button ref={launchRef} type="button" data-testid="nile-explore-start" onClick={()=>toggleExplore(true)}
         className="rounded-sm border border-parch/65 bg-black/80 px-3 py-2 text-sm font-semibold text-parch shadow-md hover:bg-black/95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
         Исследовать берег в 3D
       </button>
@@ -83,16 +89,16 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
     </div>}
     {exploring && !failed && <>
       <div className="absolute left-3 right-3 top-3 z-20 flex items-start justify-between gap-3 pointer-events-none">
-        <div className="max-w-[65%] rounded-lg bg-black/75 border border-parch/25 px-3 py-2 text-parch shadow-lg">
-          <p className="font-semibold text-base">Берег Нила · {discovery?'обнаружение':'младенец'}</p>
-          <p className="text-xs leading-snug text-parch/90">WASD / стрелки — идти; перетаскивание — осмотреться. Доступная береговая полоса ограничена водой и сценой.</p>
+        <div className="max-w-[65%] rounded-lg bg-black/75 border border-parch/25 px-3 py-2.5 text-parch shadow-lg">
+          <p className="font-semibold text-base sm:text-lg">Берег Нила · {discovery?'обнаружение':'младенец'}</p>
+          <p className="text-xs sm:text-sm leading-snug text-parch/90">WASD / стрелки — идти; перетаскивание — осмотреться. Берег и вода имеют настоящие границы.</p>
         </div>
-        <button type="button" data-testid="nile-explore-close" onClick={()=>toggleExplore(false)}
+        <button type="button" data-testid="nile-explore-close" data-modal-escape-exit onClick={()=>toggleExplore(false)}
           className="pointer-events-auto shrink-0 rounded-lg bg-black/80 border border-parch/70 px-3 py-3 text-sm font-semibold text-parch shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
           Вернуться
         </button>
       </div>
-      <div className="absolute bottom-6 left-4 z-20 flex flex-col gap-1 items-center sm:bottom-8 sm:left-8" aria-label="Сенсорное управление перемещением">
+      <div className="absolute bottom-5 left-4 z-20 flex sm:hidden flex-col gap-1 items-center" aria-label="Сенсорное управление перемещением">
         {movementButton('forward','↑')}
         <div className="flex gap-1">
           {movementButton('left','←')}

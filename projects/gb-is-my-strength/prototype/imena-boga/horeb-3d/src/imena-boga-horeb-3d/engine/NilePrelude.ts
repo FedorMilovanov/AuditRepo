@@ -6,6 +6,7 @@
  * canvas; no map coordinates, Research exhibit, or checkpoint mutations.
  */
 import * as THREE from 'three';
+import { NILE_CRADLE, NILE_WALK, nileCanWalk, nileGroundY, nilePapyrusRoot, nileShoreX, nileHash } from './NileTerrain';
 
 export type NileMoment = 'basket' | 'discovery';
 export type NileView = 'wide' | 'close';
@@ -23,7 +24,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.28;
+  renderer.toneMappingExposure = 1.15;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xa6adb0);
@@ -56,8 +57,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   }));
   sky.name='nile-sunrise-sky';
   scene.add(sky);
-  const hemi = new THREE.HemisphereLight(0xf7e4d4, 0x4a3c2b, 2.45);
-  const sun = new THREE.DirectionalLight(0xffd6a5, 2.9);
+  const hemi = new THREE.HemisphereLight(0xf6e4cd, 0x4c5142, 1.95);
+  const sun = new THREE.DirectionalLight(0xffdbb0, 2.25);
   sun.position.set(-8, 12, -18);
   scene.add(hemi, sun);
   const material = (color: number, roughness = 0.9) =>
@@ -92,17 +93,21 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   const wetSand=new THREE.Color(0x777862),drySand=new THREE.Color(0xc4a881);
   for(let i=0;i<p.count;i++){
     const rawX=p.getX(i),z=p.getZ(i);
-    const edge=Math.sin(z*.34)*.17+Math.sin(z*.13)*.22;
-    // Start the bank at the actual waterline. Earlier the submerged part
-    // flickered through the waves as large triangular sandy islands.
-    const coastX=-3.2-edge;
+    const worldZ=z-8;
+    // One coast curve and one height function serve the mesh AND collisions.
+    // No independent hidden "wall" on the wet alluvial shore.
+    const coastX=nileShoreX(worldZ)-4.45;
     const x=coastX+((rawX+5.5)/11)*(5.5-coastX);
+    const worldX=x+4.45;
     p.setX(i,x);
-    const d=x+3.2+edge;
-    p.setY(i,-0.14+0.12*d+0.032*Math.sin(x*1.8+z*.7)*Math.min(1,d));
+    const d=worldX-nileShoreX(worldZ);
+    p.setY(i,nileGroundY(worldX,worldZ));
     const t=THREE.MathUtils.smoothstep(d,.1,3.8);
     const color=wetSand.clone().lerp(drySand,t);
-    color.multiplyScalar(.92+.07*(.5+.5*Math.sin(x*2.2+z*1.37)));
+    // Layered sediment gradients are deterministic, never texture jitter.
+    const mottling=.92+.07*(.5+.5*Math.sin(x*2.2+z*1.37))
+      +.025*Math.sin(x*4.1-z*2.9)*Math.cos(x*1.9+z*1.4);
+    color.multiplyScalar(mottling);
     bankColors.push(color.r,color.g,color.b);
   }
   shoreGeo.setAttribute('color',new THREE.Float32BufferAttribute(bankColors,3));
@@ -114,15 +119,33 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   shore.position.set(4.45, 0, -8);
   shore.name='nile-natural-bank';
   scene.add(shore);
-  // Low-poly distant haze, no named palace or fabricated precise site.
-  const farBank = new THREE.Mesh(new THREE.PlaneGeometry(14, 42), material(0x6f7f56));
-  farBank.rotation.x=-Math.PI/2;
-  farBank.position.set(-15, -0.04, -10);
+  // Far shore: sculpted alluvial surface rather than a flat green rectangle.
+  // This is scenic context, NOT a geolocated Nile settlement or monument.
+  const farGeo=new THREE.PlaneGeometry(19,43,26,68);
+  farGeo.rotateX(-Math.PI/2);
+  const fp=farGeo.getAttribute('position'),farColors:number[]=[];
+  const farWet=new THREE.Color(0x6f795d),farDry=new THREE.Color(0x9b9276);
+  for(let i=0;i<fp.count;i++){
+    const fx=fp.getX(i),fz=fp.getZ(i);
+    const inward=Math.max(0,-fx+9.5);
+    fp.setY(i,-.08+.06*inward+
+      .10*Math.sin(fz*.24+fx*.19)*THREE.MathUtils.smoothstep(inward,0,4));
+    const c=farWet.clone().lerp(farDry,THREE.MathUtils.smoothstep(inward,1,12));
+    c.multiplyScalar(.95+.045*Math.sin(fz*.9+fx*.7));
+    farColors.push(c.r,c.g,c.b);
+  }
+  farGeo.setAttribute('color',new THREE.Float32BufferAttribute(farColors,3));
+  farGeo.computeVertexNormals();
+  const farBank=new THREE.Mesh(farGeo,
+    new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,side:THREE.DoubleSide}));
+  farBank.rotation.set(0,0,0);
+  farBank.position.set(-25.1,0,-8);
+  farBank.name='nile-far-bank-relief';
   scene.add(farBank);
   // Wicker/papyrus chest: stationary, just inside the riverside growth.
   const basket = new THREE.Group();
   basket.name='moses-papyrus-cradle';
-  const weave=material(0x896136);
+  const weave=material(0x80613d);
   const darkWeave=material(0x5d3d26);
   const bowlGeo = new THREE.SphereGeometry(1, 28, 12, 0, Math.PI * 2, Math.PI/2, Math.PI/2);
   const bowl = new THREE.Mesh(bowlGeo, weave);
@@ -180,42 +203,39 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   foldedCloth.scale.set(0.19,0.13,0.22);
   foldedCloth.position.set(0.28,0.18,-0.03);
   basket.add(foldedCloth);
-  basket.position.set(0.55,0.02,-2.1);
+  // Approximate readable scale only; Scripture gives no basket dimensions.
+  // The base intersects the shallow water by a few centimetres, not mid-air.
+  basket.position.set(NILE_CRADLE.x,-.03,NILE_CRADLE.z);
   basket.rotation.y=-0.25;
-  basket.scale.setScalar(1.24);
+  basket.scale.setScalar(.88);
   scene.add(basket);
-  // Egyptian papyrus forms a fine many-rayed umbrella, not the large
-  // cone spikes used in the first blockout. Each stem has 9 thin rays
-  // ending in small ochre spikelets. Instances keep mobile GPU cost low.
-  const stems=104, rays=9;
-  const stemMat=material(0x61774c), headMat=material(0x8a9a60),
-    spikeletMat=material(0xaa9f68);
-  const shaft=new THREE.InstancedMesh(new THREE.CylinderGeometry(.018,.034,1,3),stemMat,stems);
-  const spokes=new THREE.InstancedMesh(new THREE.CylinderGeometry(.005,.009,1,3),headMat,stems*rays);
-  const spikelets=new THREE.InstancedMesh(new THREE.SphereGeometry(.033,5,4),spikeletMat,stems*rays);
-  const crowns=new THREE.InstancedMesh(new THREE.SphereGeometry(.056,5,4),headMat,stems);
+  // W10B: papyrus (Cyperus papyrus), informed by Met 30.4.60:
+  // fine, drooping branched umbels and tiny ochre seed-bearing tips,
+  // not cartoon spherical fruit on thick star-shaped plastic arms.
+  // Original geometry, no third-party meshes or textures.
+  const stems=104,rays=9,branchesPerRay=3;
+  const stemMat=material(0x556e53),headMat=material(0x6e7950),
+    spikeletMat=material(0x89784e);
+  const shaft=new THREE.InstancedMesh(new THREE.CylinderGeometry(.012,.024,1,5),stemMat,stems);
+  const spokes=new THREE.InstancedMesh(new THREE.CylinderGeometry(.003,.005,1,3),headMat,stems*rays);
+  const spikelets=new THREE.InstancedMesh(new THREE.ConeGeometry(.011,.075,4),
+    spikeletMat,stems*rays);
+  const crowns=new THREE.InstancedMesh(new THREE.SphereGeometry(.023,6,4),headMat,stems);
+  const fineBranches=new THREE.InstancedMesh(new THREE.CylinderGeometry(.0015,.0025,1,3),
+    headMat,stems*rays*branchesPerRay);
   shaft.name='nile-papyrus-stems';
   spokes.name='nile-papyrus-umbels';
   spikelets.name='nile-papyrus-spikelets';
   crowns.name='nile-papyrus-crowns';
-  // Smooth, seeded distribution: never render a picket-fence row of reeds.
-  const hash=(n:number)=>{const v=Math.sin(n*127.1)*43758.5453;return v-Math.floor(v);};
+  fineBranches.name='nile-papyrus-fine-branches';
+  const hash=nileHash;
   const dummy=new THREE.Object3D();
   const up=new THREE.Vector3(0,1,0);
   const origin=new THREE.Vector3(), tip=new THREE.Vector3();
+  const sideStart=new THREE.Vector3(),sideTip=new THREE.Vector3();
   for(let i=0;i<stems;i++){
-    const z=-16+hash(i*2.17+5.1)*24;
-    const onBank=i<91;
-    let x=onBank?1.32+hash(i*1.91+1.35)*1.55:-6+hash(i*3.13+.75)*1.3;
-    // A deliberate gap gives the basket its own focus among the plants.
-    if(onBank && Math.abs(z+2.1)<1.7 && x<2.25)x=2.25+hash(i+7)*.35;
-    // On discovery, give the approaching maid a readable outline, while
-    // maintaining reeds on the waterline. Do not clear the first shot.
-    if(moment==='discovery' && onBank && Math.hypot(x-2.1,z+1.85)<.86)
-      x=3.15+hash(i*7.19)*.4;
-    const height=1.0+hash(i*4.31+1.1)*1.8;
-    const sway=(hash(i*5.81)-.5)*.16;
-    const baseY=.05;
+    const {x,z,height,sway}=nilePapyrusRoot(i,moment);
+    const baseY=nileGroundY(x,z)-.045;
     dummy.position.set(x,baseY+height/2,z);
     dummy.rotation.set(0,0,sway);
     dummy.scale.set(1,height,1);
@@ -229,10 +249,10 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     crowns.setMatrixAt(i,dummy.matrix);
     for(let k=0;k<rays;k++){
       const angle=2*Math.PI*k/rays+i*.24;
-      const reach=.23+hash(i*13.7+k*3.7)*.25;
+      const reach=.30+hash(i*13.7+k*3.7)*.34;
       tip.set(
         origin.x+Math.cos(angle)*reach,
-        origin.y-.055-hash(i*11+k)*.09,
+        origin.y-.12-hash(i*11+k)*.15,
         origin.z+Math.sin(angle)*reach);
       const direction=tip.clone().sub(origin);
       dummy.position.copy(origin).add(tip).multiplyScalar(.5);
@@ -241,23 +261,34 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
       dummy.updateMatrix();
       spokes.setMatrixAt(i*rays+k,dummy.matrix);
       dummy.position.copy(tip);
+      dummy.position.y-=.038;
       dummy.quaternion.identity();
-      dummy.scale.setScalar(.7+hash(i*11+k)*.8);
+      dummy.scale.setScalar(.65+hash(i*11+k)*.55);
       dummy.updateMatrix();
       spikelets.setMatrixAt(i*rays+k,dummy.matrix);
+      for(let j=0;j<branchesPerRay;j++){
+        const offset=(j-1)*.30;
+        sideStart.copy(origin).lerp(tip,.48+j*.16);
+        sideTip.set(
+          sideStart.x+Math.cos(angle+offset)*(.11+j*.035),
+          sideStart.y-.085-hash(i*19+k*7+j)*.07,
+          sideStart.z+Math.sin(angle+offset)*(.11+j*.035),
+        );
+        const vec=sideTip.clone().sub(sideStart);
+        dummy.position.copy(sideStart).add(sideTip).multiplyScalar(.5);
+        dummy.quaternion.setFromUnitVectors(up,vec.clone().normalize());
+        dummy.scale.set(1,vec.length(),1);
+        dummy.updateMatrix();
+        fineBranches.setMatrixAt((i*rays+k)*branchesPerRay+j,dummy.matrix);
+      }
     }
   }
-  for(const mesh of [shaft,spokes,spikelets,crowns])mesh.instanceMatrix.needsUpdate=true;
-  scene.add(shaft,spokes,spikelets,crowns);
+  for(const mesh of [shaft,spokes,spikelets,crowns,fineBranches])
+    mesh.instanceMatrix.needsUpdate=true;
+  scene.add(shaft,spokes,spikelets,crowns,fineBranches);
   // Natural bank detail: small dry sedges and scattered eroded pebbles.
   // These are low-cost instances, not a uniform modern landscaped lawn.
-  const bankHeight=(worldX:number,worldZ:number)=>{
-    const x=worldX-4.45,z=worldZ+8;
-    const edge=Math.sin(z*.34)*.17+Math.sin(z*.13)*.22;
-    const d=x+3.2+edge;
-    return -.14+.12*Math.max(0,d)+
-      .032*Math.sin(x*1.8+z*.7)*Math.min(1,Math.max(0,d));
-  };
+  const bankHeight=nileGroundY;
   const tufts=73, blades=3;
   const sedge=new THREE.InstancedMesh(
     new THREE.ConeGeometry(.027,.46,3),material(0x7f8050),tufts*blades);
@@ -540,7 +571,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   // W10: the same physical shoreline is now a navigable region. A grounded
   // foot position is derived from the actual bank height function used by
   // the visible mesh. Never allow the camera to enter the water or figures.
-  const walk={x:7.2,z:1.6,yaw:1.06,pitch:-.22};
+  const walk:{x:number;z:number;yaw:number;pitch:number}={
+    x:NILE_WALK.startX,z:NILE_WALK.startZ,
+    yaw:NILE_WALK.startYaw,pitch:NILE_WALK.startPitch};
   let exploring=false, previousWalkTime=0, dragPointer:number|null=null;
   let dragX=0,dragY=0;
   const directions:Record<NileDirection,boolean>={
@@ -554,19 +587,15 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     walk.yaw-=THREE.MathUtils.clamp(dx,-140,140)*.0037;
     walk.pitch=THREE.MathUtils.clamp(walk.pitch-THREE.MathUtils.clamp(dy,-120,120)*.0031,-.85,.62);
   };
-  const allowed=(x:number,z:number)=>{
-    if(x<4.3||x>8.9||z< -15||z>8)return false;
-    if(moment==='discovery'&&figures.children.some(f=>
-      Math.hypot(x-f.position.x,z-f.position.z)<.92))return false;
-    return true;
-  };
+  const allowed=(x:number,z:number)=>nileCanWalk(x,z,moment);
   const setExplore=(enabled:boolean)=>{
     if(disposed)return;
     exploring=enabled;
     Object.keys(directions).forEach(key=>directions[key as NileDirection]=false);
     previousWalkTime=0;
     if(enabled){
-      walk.x=7.2;walk.z=1.6;walk.yaw=1.06;walk.pitch=-.22;
+      walk.x=NILE_WALK.startX;walk.z=NILE_WALK.startZ;
+      walk.yaw=NILE_WALK.startYaw;walk.pitch=NILE_WALK.startPitch;
       canvas.dataset.nileMode='walk';
     }else{
       canvas.dataset.nileMode='shot';
@@ -624,19 +653,21 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     const right=Number(directions.right)-Number(directions.left);
     const magnitude=Math.hypot(forward,right);
     if(magnitude>0){
-      const step=3.15*elapsed/magnitude;
+      const step=NILE_WALK.speed*elapsed/magnitude;
       const dx=(-Math.sin(walk.yaw)*forward+Math.cos(walk.yaw)*right)*step;
       const dz=(-Math.cos(walk.yaw)*forward-Math.sin(walk.yaw)*right)*step;
       if(allowed(walk.x+dx,walk.z))walk.x+=dx;
       if(allowed(walk.x,walk.z+dz))walk.z+=dz;
     }
-    const height=bankHeight(walk.x,walk.z)+1.65;
+    const height=bankHeight(walk.x,walk.z)+NILE_WALK.eyeHeight;
     camera.position.set(walk.x,height,walk.z);
     camera.lookAt(walk.x-Math.sin(walk.yaw)*Math.cos(walk.pitch),
       height+Math.sin(walk.pitch),walk.z-Math.cos(walk.yaw)*Math.cos(walk.pitch));
     canvas.dataset.nileCameraX=walk.x.toFixed(3);
     canvas.dataset.nileCameraZ=walk.z.toFixed(3);
     canvas.dataset.nileWalkY=height.toFixed(3);
+    canvas.dataset.nileShoreDistance=(walk.x-nileShoreX(walk.z)).toFixed(3);
+    canvas.dataset.nileGroundHeight=bankHeight(walk.x,walk.z).toFixed(3);
     canvas.dataset.nileLookYaw=walk.yaw.toFixed(3);
     canvas.dataset.nileLookPitch=walk.pitch.toFixed(3);
     canvas.dataset.nileCameraPhase='walk';
@@ -655,7 +686,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   window.addEventListener('resize',resize);
   resize();
   // Geometry witness for browser acceptance (derived from real meshes).
-  canvas.dataset.nileShoreOffset=(shore.position.x-3.2-basket.position.x).toFixed(3);
+  canvas.dataset.nileShoreOffset=(nileShoreX(basket.position.z)-basket.position.x).toFixed(3);
   canvas.dataset.nilePapyrusCount=String(shaft.count);
   canvas.dataset.nileUmbelRays=String(spokes.count);
   canvas.dataset.nileMoment=moment;
@@ -671,7 +702,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nileView='wide';
   canvas.dataset.nileCameraPhase='settled';
   canvas.dataset.nileMode='shot';
-  canvas.dataset.nileWalkBounds='4.3,8.9,-15,8';
+  canvas.dataset.nileWalkBounds=`shore+${NILE_WALK.shoreClearance},${NILE_WALK.maxX},${NILE_WALK.minZ},${NILE_WALK.maxZ}`;
+  canvas.dataset.nilePapyrusFineBranches=String(fineBranches.count);
   const animate=(now:number)=>{
     if(disposed)return;
     frame=requestAnimationFrame(animate);
@@ -731,6 +763,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     delete canvas.dataset.nileCameraX;
     delete canvas.dataset.nileCameraZ;
     delete canvas.dataset.nileWalkY;
+    delete canvas.dataset.nileGroundHeight;
+    delete canvas.dataset.nileShoreDistance;
+    delete canvas.dataset.nilePapyrusFineBranches;
     delete canvas.dataset.nileLookYaw;
     delete canvas.dataset.nileLookPitch;
     delete canvas.dataset.nileWalkBounds;
