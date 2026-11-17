@@ -7,6 +7,7 @@
  */
 import * as THREE from 'three';
 import { NILE_CRADLE, NILE_WALK, nileCanWalk, nileGroundY, nilePapyrusRoot, nileShoreX, nileHash } from './NileTerrain';
+import { NILE_WATER_LEVEL, nileWaterHeight, nileWaterNearshore, nileWaterMottle } from './NileWater';
 
 export type NileMoment = 'basket' | 'discovery';
 export type NileView = 'wide' | 'close';
@@ -63,9 +64,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   scene.add(hemi, sun);
   const material = (color: number, roughness = 0.9) =>
     new THREE.MeshStandardMaterial({ color, roughness, metalness: 0, side: THREE.DoubleSide });
-  const waterMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff, vertexColors: true, roughness: 0.5,
-    metalness: 0.04, side: THREE.DoubleSide,
+  const waterMaterial = new THREE.MeshPhysicalMaterial({
+    color:0xffffff,vertexColors:true,roughness:.43,metalness:0,
+    clearcoat:.16,clearcoatRoughness:.3,side:THREE.DoubleSide,
   });
   // Lightly animated surface, but the cradle never drifts or changes position.
   // The wet bank must physically join the same shoreline as the basket.
@@ -73,17 +74,17 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   waterGeo.rotateX(-Math.PI / 2);
   const waterPosition = waterGeo.getAttribute('position');
   const waterColors:number[]=[];
-  const deep = new THREE.Color(0x426a75), shallow=new THREE.Color(0x82917a);
+  const deep=new THREE.Color(0x365c66),shallow=new THREE.Color(0x7e876b);
   for(let i=0;i<waterPosition.count;i++){
-    const worldX=waterPosition.getX(i)-4.8;
-    const waveTint=0.5+0.5*Math.sin(worldX*.8+waterPosition.getZ(i)*.45);
-    const color=deep.clone().lerp(shallow,THREE.MathUtils.smoothstep(worldX,-2.0,1.2)*.65);
-    color.multiplyScalar(.94+.07*waveTint);
+    const x=waterPosition.getX(i)-4.8,z=waterPosition.getZ(i)-9;
+    const shallows=nileWaterNearshore(x,z);
+    const color=deep.clone().lerp(shallow,.68*shallows);
+    color.multiplyScalar(nileWaterMottle(x,z));
     waterColors.push(color.r,color.g,color.b);
   }
   waterGeo.setAttribute('color',new THREE.Float32BufferAttribute(waterColors,3));
   const river = new THREE.Mesh(waterGeo,waterMaterial);
-  river.position.set(-4.8, -0.13, -9);
+  river.position.set(-4.8,NILE_WATER_LEVEL,-9);
   river.name = 'nile-shallow-water';
   scene.add(river);
   const shoreGeo = new THREE.PlaneGeometry(11, 43, 24, 62);
@@ -513,16 +514,9 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   }
   scene.add(figures);
 
-  // A few gold dawn streaks on the physical water surface.
-  const shimmerMat=new THREE.MeshBasicMaterial({color:0xffd2a0,transparent:true,opacity:.22,depthWrite:false});
-  const strips=new THREE.Group();
-  for(let i=0;i<18;i++){
-    const line=new THREE.Mesh(new THREE.PlaneGeometry(.28+(i%4)*.13,.015),shimmerMat);
-    line.rotation.x=-Math.PI/2;
-    line.position.set(-3.9+Math.sin(i*2.8)*1.6,-.117,-9+(i%9)*1.3);
-    strips.add(line);
-  }
-  scene.add(strips);
+  // The old 18 planar gold strips looked like graphic scratches and could
+  // float above the waves. Sunlight now catches the physical water material;
+  // no separate animated ornament is placed on the river.
   // One physical scene, two user-selectable camera compositions. Camera
   // interpolation never moves the basket, figures or research witnesses.
   let frame=0, disposed=false, visible=true, last=0;
@@ -711,14 +705,11 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     last=now;
     if(exploring)updateWalking(now);else applyShot(now);
     if(!reducedMotion) {
-      strips.position.z=Math.sin(now*.00065)*.04;
-      // A few centimetres of surface movement, no swelling waves and
-      // absolutely no motion on the baby's basket.
+      // Quiet ripples are damped along the exact shore curve. Both banks
+      // remain grounded; the baby's basket never drifts with the surface.
       for(let i=0;i<waterPosition.count;i++){
-        const x=waterPosition.getX(i),z=waterPosition.getZ(i);
-        waterPosition.setY(i,
-          .014*Math.sin(x*1.4+z*.65+now*.0008)+
-          .007*Math.sin(x*2.8-z*1.1-now*.0013));
+        const x=waterPosition.getX(i)-4.8,z=waterPosition.getZ(i)-9;
+        waterPosition.setY(i,nileWaterHeight(x,z,now,false)-NILE_WATER_LEVEL);
       }
       waterPosition.needsUpdate=true;
       waterGeo.computeVertexNormals();

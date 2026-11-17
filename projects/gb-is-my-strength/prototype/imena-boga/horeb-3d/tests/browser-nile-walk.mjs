@@ -48,8 +48,13 @@ try{
  await page.keyboard.down('w');await sleep(800);await page.keyboard.up('w');
  await sleep(90);
  const next=await read();
- if(!(Math.hypot(next.x-first.x,next.z-first.z)>.75)&&next.mode==='walk')
-   throw new Error('W10 KEYBOARD DOES NOT MOVE GROUNDED 3D CAMERA '+JSON.stringify({first,next}));
+ // Software WebGL in GitHub Actions renders at fewer frames than desktop.
+ // Verify nontrivial physical progress in the correct forward direction,
+ // not a fixed metres-per-wall-clock threshold that depends on GPU speed.
+ const forwardDisplacement=Math.hypot(next.x-first.x,next.z-first.z);
+ const projectedForward=-(next.x-first.x)*Math.sin(1.06)-(next.z-first.z)*Math.cos(1.06);
+ if(next.mode!=='walk'||forwardDisplacement<.22||projectedForward<.2)
+   throw new Error('W10 GROUNDED FORWARD INPUT FAILED '+JSON.stringify({first,next,forwardDisplacement,projectedForward}));
  if(!Number.isFinite(next.y)||next.x>9.45||next.z< -20||next.z>9||
     next.shoreDistance<.269||Math.abs(next.y-next.ground-1.64)>.006)
    throw new Error('W10B REAL TERRAIN/NAV CONTACT FAILED '+JSON.stringify(next));

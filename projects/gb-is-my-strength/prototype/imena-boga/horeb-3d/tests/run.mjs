@@ -6,6 +6,7 @@ import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
+import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -19,6 +20,29 @@ const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAI
 // W10B: renderer and physical camera use this same terrain, coast and
 // seeded plant topology. No hard-coded hidden rectangular water barrier.
 const nileZSamples=[-19,-14,-9,-5,-2.1,0,3,7,8.5];
+// W10C: the physical water mesh and its test agree about wave height,
+// shoreline damping, season-neutral color, and reduced-motion stillness.
+t('W10C silt-tinted shallows vary smoothly and remain finite',
+  [-20,-8,-2,0,4].every(z=>{
+    const shore=nileShoreX(z);
+    return nileWaterNearshore(shore,z)===1&&
+      nileWaterNearshore(shore-9,z)===0&&
+      nileWaterNearshore(shore-2,z)>0&&
+      nileWaterMottle(shore-2,z)>.94&&nileWaterMottle(shore-2,z)<1.06;
+  }));
+t('W10C waves meet the real shoreline without sharp steps',
+  [-18,-3,0,6].every(z=>{
+    const shore=nileShoreX(z);
+    return Math.abs(nileWaterHeight(shore,z,10603,false)-NILE_WATER_LEVEL)<1e-8&&
+      Math.abs(nileWaterHeight(shore-.1,z,10603,false)-NILE_WATER_LEVEL)<.0013&&
+      Math.abs(nileWaterHeight(shore-7,z,10603,false)-NILE_WATER_LEVEL)<.011;
+  }));
+t('W10C reduced-motion freezes river surface independent of time',
+  [-9,-4,0].every(x=>[-4,0,3].every(z=>
+    nileWaterHeight(x,z,0,true)===NILE_WATER_LEVEL&&
+    nileWaterHeight(x,z,120000,true)===NILE_WATER_LEVEL)));
+t('W10C far channel is gently animated when motion is enabled',
+  Math.abs(nileWaterHeight(-7,-4,0,false)-nileWaterHeight(-7,-4,8000,false))>.00025);
 t('W10B shoreline/nav share one curving physical coast',
   nileZSamples.every(z=>{
     const coast=nileShoreX(z);
