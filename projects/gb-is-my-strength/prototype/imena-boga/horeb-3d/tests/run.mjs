@@ -7,6 +7,7 @@ import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
+import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -17,6 +18,16 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+t('W11A Midian well and trough have genuine grounded collisions',
+  !midianWalkable(0,0)&&!midianWalkable(-2.9,-.35)&&
+  midianWalkable(5.2,7.6)&&!midianWalkable(Number.NaN,0)&&
+  !midianWalkable(MIDIAN_BOUNDS.x+.1,0));
+t('W11A Midian ground varies smoothly along the actual walking path',
+  Array.from({length:60},(_,i)=>i).every(i=>{
+    const z=-10+i*.35;
+    return Number.isFinite(midianGround(5,z))&&
+      Math.abs(midianGround(5,z+.1)-midianGround(5,z))<.06;
+  }));
 // W10B: renderer and physical camera use this same terrain, coast and
 // seeded plant topology. No hard-coded hidden rectangular water barrier.
 const nileZSamples=[-19,-14,-9,-5,-2.1,0,3,7,8.5];
