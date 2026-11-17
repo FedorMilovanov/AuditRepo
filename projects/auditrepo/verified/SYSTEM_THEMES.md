@@ -2,12 +2,12 @@
 
 Системные темы группируют проявления по общему механизму. `active-work` используется только при наличии строки в MASTER.
 
-## AR-THEME-TRUSTED-STATE — machine-green не равен reviewed truth (`active-work`)
+## AR-THEME-TRUSTED-STATE — machine-green не равен reviewed truth (`historical / resolved`)
 
 - Проявления: strict history audit принимает regex-classification как terminal disposition; structure gate принимает неоговорённый промежуточный project shape; open issues смешивают evidence и backlog semantics.
 - Механизм: validators проверяют синтаксис/распознаваемость состояния, но не всегда требуют durable semantic owner и terminal proof.
 - Класс результата: fail-closed admission для рискованных terminal claims, без превращения всех исторических файлов в blocking surface.
-- Current row: `AR-ISSUE-LIFECYCLE-001`; history and project-contract manifestations closed in waves 2–3.
+- Current rows: none. Historical issue-lifecycle owner decision retired after fresh direct GitHub readback: #489, #485, #484 closed 2026-11-03; #437 closed 2026-11-05. No open labels needed for already closed administrative records. History and project-contract manifestations closed in waves 2–3.
 
 ## AR-THEME-EVIDENCE-GROWTH — сохранность без admission budget (`historical / resolved`)
 
