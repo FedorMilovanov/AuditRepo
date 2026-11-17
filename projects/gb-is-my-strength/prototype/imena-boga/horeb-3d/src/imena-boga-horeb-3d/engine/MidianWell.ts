@@ -3,8 +3,9 @@
  * An artistic world, NOT an archaeological identification of the well.
  */
 import * as THREE from 'three';
-import {addMidianLandscape} from './MidianLandscape.js';
+import {addMidianLandscape,MIDIAN_ROCK_COLLIDERS} from './MidianLandscape.js';
 import {addMidianWellMasonry} from './MidianMasonry.js';
+import {addMidianTrough,MIDIAN_TROUGH} from './MidianTrough.js';
 
 export type MidianDirection = 'forward'|'backward'|'left'|'right';
 export type MidianControl = {
@@ -25,7 +26,12 @@ export function midianWalkable(x:number,z:number):boolean{
   if(!Number.isFinite(x)||!Number.isFinite(z)||Math.abs(x)>MIDIAN_BOUNDS.x||
       Math.abs(z)>MIDIAN_BOUNDS.z)return false;
   if(Math.hypot(x,z)<1.72)return false;
-  if(Math.abs(x+2.9)<1.9&&Math.abs(z+.35)<1.1)return false;
+  if(Math.abs(x-MIDIAN_TROUGH.x)<MIDIAN_TROUGH.halfX&&
+     Math.abs(z-MIDIAN_TROUGH.z)<MIDIAN_TROUGH.halfZ)return false;
+  for(const rock of MIDIAN_ROCK_COLLIDERS){
+    const dx=(x-rock.x)/rock.rx,dz=(z-rock.z)/rock.rz;
+    if(dx*dx+dz*dz<1)return false;
+  }
   return true;
 }
 export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean):MidianControl{
@@ -81,16 +87,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   well.position.y=midianGround(0,0);
   scene.add(well);
   const masonry=addMidianWellMasonry(well);
-  // Watering trough beside the well: a second physical obstacle.
-  const trough=new THREE.Group();trough.name='midian-trough';
-  trough.position.set(-2.9,midianGround(-2.9,-.35),-.35);
-  scene.add(trough);
-  const troughWater=new THREE.Mesh(new THREE.BoxGeometry(2.45,.035,.54),mat(0x668083,.35));
-  troughWater.position.y=.19;trough.add(troughWater);
-  for(const [x,z,sx,sz] of [[0,-.4,2.9,.28],[0,.4,2.9,.28],[-1.4,0,.28,.9],[1.4,0,.28,.9]]){
-    const b=new THREE.Mesh(new THREE.BoxGeometry(sx,.42,sz),stone[1]);
-    b.position.set(x,.19,z);b.castShadow=true;trough.add(b);
-  }
+  const trough=addMidianTrough(scene,midianGround);
   // Unlabelled pottery: not an assertion about number of daughters or jars.
   const profile=[new THREE.Vector2(.14,0),new THREE.Vector2(.29,.08),
     new THREE.Vector2(.31,.24),new THREE.Vector2(.23,.43),
@@ -205,6 +202,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   canvas.dataset.midianScrubTwigs=String(scenery.twigs);
   canvas.dataset.midianRockInstances=String(scenery.rocks);
   canvas.dataset.midianObstacle='well,water-trough';
+  canvas.dataset.midianTroughStones=String(trough.stones);
   frame=requestAnimationFrame(tick);
   function dispose(){
     if(disposed)return;

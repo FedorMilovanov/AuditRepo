@@ -49,6 +49,26 @@ function ridgeRing(scene:THREE.Scene,depth:number,tint:number):void{
   mesh.name='midian-geometric-sandstone-horizon';
   mesh.receiveShadow=true;scene.add(mesh);
 }
+export type MidianRockInstance={index:number;x:number;z:number;k:number;sx:number;sy:number;sz:number;ry:number;rx:number;rz:number};
+export function midianRockPoint(index:number):MidianRockInstance|null{
+  const angle=hash(index*5.7)*Math.PI*2,r=16+hash(index*4.3+18)*13;
+  const x=Math.cos(angle)*r,z=Math.sin(angle)*r*1.07;
+  if(Math.abs(x)>27||Math.abs(z)>31||midianApproachClearance(x,z)<3)return null;
+  const k=.34+hash(index*1.97+7)*1.35;
+  const sx=k*(.9+hash(index*1.31)*.6);
+  const sy=k*(.24+hash(index*3.17)*.21);
+  const sz=k*(.8+hash(index*.83)*.51);
+  return {index,x,z,k,sx,sy,sz,ry:hash(index*.77)*Math.PI*2,
+    // Ellipse approximates the real rotated rock; conservative for walking.
+    rx:sx*.68,rz:sz*.68};
+}
+/** Only instances near the physical walking region matter to collision. */
+export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
+  Array.from({length:145},(_,i)=>midianRockPoint(i)).filter(
+    (r):r is MidianRockInstance=>r!==null&&
+      Math.abs(r.x)<19.7&&Math.abs(r.z)<23.7),
+);
+
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
   {ridges:number;rocks:number;scrubs:number;twigs:number}{
   // Two complete rings prevent scenery vanishing when the player turns.
@@ -60,14 +80,11 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
   const dummy=new THREE.Object3D();
   let rockCount=0;
   for(let i=0;i<145;i++){
-    const angle=hash(i*5.7)*Math.PI*2,r=16+hash(i*4.3+18)*13;
-    const x=Math.cos(angle)*r,z=Math.sin(angle)*r*1.07;
-    if(Math.abs(x)>27||Math.abs(z)>31||midianApproachClearance(x,z)<3)continue;
-    const k=.34+hash(i*1.97+7)*1.35;
-    dummy.position.set(x,ground(x,z)+k*.18,z);
-    dummy.rotation.set(.08*hash(i*2.6),hash(i*.77)*Math.PI*2,.12*hash(i*1.9));
-    dummy.scale.set(k*(.9+hash(i*1.31)*.6),
-      k*(.24+hash(i*3.17)*.21),k*(.8+hash(i*.83)*.51));
+    const rock=midianRockPoint(i);
+    if(!rock)continue;
+    dummy.position.set(rock.x,ground(rock.x,rock.z)+rock.k*.18,rock.z);
+    dummy.rotation.set(.08*hash(i*2.6),rock.ry,.12*hash(i*1.9));
+    dummy.scale.set(rock.sx,rock.sy,rock.sz);
     dummy.updateMatrix();rocks.setMatrixAt(rockCount++,dummy.matrix);
   }
   rocks.count=rockCount;rocks.instanceMatrix.needsUpdate=true;

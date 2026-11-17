@@ -8,8 +8,9 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {midianApproachClearance,midianScrubPoint} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
+import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -20,6 +21,31 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W11D: visible rock instances must physically block the grounded player.
+t('W11D large landscape rocks block camera at their actual render centers',
+  MIDIAN_ROCK_COLLIDERS.length>0&&
+  MIDIAN_ROCK_COLLIDERS.every(r=>{
+    const again=midianRockPoint(r.index);
+    return again&&Math.abs(r.x-again.x)<1e-8&&
+      Math.abs(r.z-again.z)<1e-8&&
+      (!((Math.abs(r.x)<18)&&(Math.abs(r.z)<22))||
+        !midianWalkable(r.x,r.z));
+  }));
+t('W11D safe walking approach remains clear of all large rocks',
+  midianWalkable(5.2,7.6));
+// W11D: trough geometry must match a shared collision footprint.
+t('W11D real stone trough remains inside its actual pedestrian collision', 
+  !midianWalkable(MIDIAN_TROUGH.x,MIDIAN_TROUGH.z)&&
+  !midianWalkable(MIDIAN_TROUGH.x+.9,MIDIAN_TROUGH.z+.4)&&
+  midianWalkable(MIDIAN_TROUGH.x,MIDIAN_TROUGH.z+1.5));
+t('W11D rough-hewn trough walls are real solid meshes with finite corners',(()=>{
+  const g=makeMidianTroughStone(.7,.4,.24,53);
+  const p=g.getAttribute('position'),c=g.getAttribute('color');
+  const ok=p.count===36&&c.count===36&&
+    Array.from({length:p.count},(_,i)=>
+      [p.getX(i),p.getY(i),p.getZ(i)]).flat().every(Number.isFinite);
+  g.dispose();return ok;
+})());
 // W11C: the physical ring is not a painted texture or floating brick boxes.
 t('W11C well retains 96 individually modelled volumetric stone wedges',
   MIDIAN_STONE_TOTAL===96);

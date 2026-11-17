@@ -33,12 +33,13 @@ try{
  const shape=await page.$eval('[data-testid="moses-midian-well-3d"]',e=>({
   world:e.dataset.midianWorld,stones:Number(e.dataset.midianWellStones),
   obstacles:e.dataset.midianObstacle,
+  troughStones:Number(e.dataset.midianTroughStones),
   ridges:Number(e.dataset.midianRidges),
   twigs:Number(e.dataset.midianScrubTwigs),
   rocks:Number(e.dataset.midianRockInstances),
  }));
  if(shape.world!=='well'||shape.stones!==96||shape.obstacles!=='well,water-trough'||
-   shape.ridges!==2||shape.twigs<150||shape.rocks<50)
+   shape.ridges!==2||shape.twigs<150||shape.rocks<50||shape.troughStones!==10)
    throw Error('MIDIAN GEOMETRY NOT RENDERED '+JSON.stringify(shape));
  await page.screenshot({path:join(out,'w11a-midian-well-desktop.png')});
  await page.click('[data-testid="midian-explore-start"]');
