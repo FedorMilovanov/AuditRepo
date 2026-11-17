@@ -316,6 +316,12 @@ try {
     await face(0,'W2 home facing');
     await axis('z',-346.7,'W2 return home z',0.75);
     await axis('x',0,'W2 return home x',0.65);
+    // Real A/D strafing when yaw is slightly off zero can move Z by
+    // ~1 metre on the long software-rendered W2 journey. Re-center using
+    // the same physical W/S keys, not a teleport, state mutation or a
+    // relaxed acceptance radius. This was observed on run 44073263826:
+    // x=0.0966,z=-345.6667 after the former x-only final correction.
+    await axis('z',-346.7,'W2 return home z final physical correction',0.40);
     const home=await read();safe(home,'W2 home');
     if(Math.abs(home.x)>0.8||Math.abs(home.z+346.7)>1)
       throw new Error('W2 home unreachable '+JSON.stringify(home));

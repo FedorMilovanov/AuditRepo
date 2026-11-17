@@ -81,7 +81,9 @@ try {
   await page.click('[data-testid="moses-origin-next"]');
   await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
   if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
-  // W9A same chronological stages in the offline single-file build.
+  // W11A.2: offline must load the REAL 3D Midian well in stage zero.
+  // Only later Midian household/Gershom moments stay textual.
+  // Do not regress this to a mere static illustration or intertitle.
   const prehorebRefs=[
     ['Исх. 2:11–12','Исх. 2:13–14','Исх. 2:15'],
     ['Исх. 2:16–17','Исх. 2:18–21','Исх. 2:22'],
@@ -93,9 +95,24 @@ try {
       throw new Error('Offline preHoreb stage count mismatch '+index);
     for(let stage=0;stage<refs.length;stage++){
       await page.click(`[data-testid="moses-prehoreb-stage-${stage}"]`);
+      if(index===1 && stage===0) {
+        await page.waitForFunction(()=>
+          document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true',
+          {timeout:30000});
+      }
       const text=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
-      if(!text.includes(refs[stage])||(await page.$$('canvas')).length)
-        throw new Error('Offline preHoreb stage failed '+refs[stage]);
+      const expected3D=index===1&&stage===0;
+      const actualCanvasCount=(await page.$('canvas')).length;
+      const scene=expected3D?await page.$eval('[data-testid="moses-midian-well-3d"]',e=>({
+        world:e.dataset.midianWorld,
+        rendered:e.dataset.midianRendered,
+        stones:Number(e.dataset.midianWellStones),
+      })):null;
+      if(!text.includes(refs[stage])||
+         actualCanvasCount!==(expected3D?1:0)||
+         (expected3D&&(scene?.world!=='well'||scene?.rendered!=='true'||scene?.stones!==96)))
+        throw new Error('Offline preHoreb physical 3D contract failed '+
+          JSON.stringify({ref:refs[stage],expected3D,actualCanvasCount,scene}));
     }
     await page.click('[data-testid="moses-origin-next"]');
   }
