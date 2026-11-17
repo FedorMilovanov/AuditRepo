@@ -560,7 +560,7 @@ export default function HorebApp() {
             <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl" data-testid="moses-origin-scene">{originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].scene : preHorebBeats ? preHorebBeats[preHorebStage].scene : MOSES_ORIGIN_BEATS[originIndex].scene}</p>
           </div>
           <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/50 pl-3 text-parch/85">Историческое ограничение: {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].transition : preHorebBeats ? preHorebBeats[preHorebStage].limitation : MOSES_ORIGIN_BEATS[originIndex].limit}</p>
-          <p className="text-xs text-parch/75">Первые два эпизода — короткие художественные 3D-диорамы, но не игровые уровни. Свободная прогулка построена только на Хориве; остальные пространства ещё не созданы.</p>
+          <p className="text-xs text-parch/75">Нил теперь можно исследовать пешком в 3D с помощью кнопки над сценой: это первый ограниченный береговой участок, пока не целый регион Египта. Полностью отдельная пешеходная глава построена для Хорива; другие локации ещё в разработке.</p>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => { setRescueStage(0); setPreHorebStage(0); setOriginIndex(i => Math.max(0, i - 1)); }}>Предыдущий эпизод</button>
             {originIndex < MOSES_ORIGIN_BEATS.length - 1

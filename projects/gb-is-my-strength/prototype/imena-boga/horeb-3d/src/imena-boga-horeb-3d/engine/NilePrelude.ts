@@ -1,6 +1,7 @@
 /**
- * Nile Prelude W7B: real, self-contained Three.js diorama, not a playable
- * archaeological location. The basket STAYS among reeds beside the bank.
+ * Nile W10: self-contained Three.js shoreline with a bounded first-person
+ * walk mode and optional original cinematic shots. Not an archaeologically
+ * identified site. The basket STAYS among reeds beside the bank.
  * Same Three.js renderer package as the Horeb engine, with its own short-lived
  * canvas; no map coordinates, Research exhibit, or checkpoint mutations.
  */
@@ -8,7 +9,14 @@ import * as THREE from 'three';
 
 export type NileMoment = 'basket' | 'discovery';
 export type NileView = 'wide' | 'close';
-export type NilePreludeControl = { dispose: () => void; setView: (view: NileView) => void };
+export type NileDirection = 'forward' | 'backward' | 'left' | 'right';
+export type NilePreludeControl = {
+  dispose: () => void;
+  setView: (view: NileView) => void;
+  setExplore: (enabled: boolean) => void;
+  setMovement: (direction: NileDirection, active: boolean) => void;
+  rotateView: (dx: number, dy: number) => void;
+};
 export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket'): NilePreludeControl {
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
@@ -529,6 +537,110 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     }
     canvas.dataset.nileView=view;
   };
+  // W10: the same physical shoreline is now a navigable region. A grounded
+  // foot position is derived from the actual bank height function used by
+  // the visible mesh. Never allow the camera to enter the water or figures.
+  const walk={x:7.2,z:1.6,yaw:1.06,pitch:-.22};
+  let exploring=false, previousWalkTime=0, dragPointer:number|null=null;
+  let dragX=0,dragY=0;
+  const directions:Record<NileDirection,boolean>={
+    forward:false,backward:false,left:false,right:false,
+  };
+  const setMovement=(direction:NileDirection,active:boolean)=>{
+    directions[direction]=exploring&&active;
+  };
+  const rotateView=(dx:number,dy:number)=>{
+    if(!exploring)return;
+    walk.yaw-=THREE.MathUtils.clamp(dx,-140,140)*.0037;
+    walk.pitch=THREE.MathUtils.clamp(walk.pitch-THREE.MathUtils.clamp(dy,-120,120)*.0031,-.85,.62);
+  };
+  const allowed=(x:number,z:number)=>{
+    if(x<4.3||x>8.9||z< -15||z>8)return false;
+    if(moment==='discovery'&&figures.children.some(f=>
+      Math.hypot(x-f.position.x,z-f.position.z)<.92))return false;
+    return true;
+  };
+  const setExplore=(enabled:boolean)=>{
+    if(disposed)return;
+    exploring=enabled;
+    Object.keys(directions).forEach(key=>directions[key as NileDirection]=false);
+    previousWalkTime=0;
+    if(enabled){
+      walk.x=7.2;walk.z=1.6;walk.yaw=1.06;walk.pitch=-.22;
+      canvas.dataset.nileMode='walk';
+    }else{
+      canvas.dataset.nileMode='shot';
+      moveStart=null;
+      currentShot={...(selectedView==='close'?closeShot:wideShot)};
+    }
+  };
+  const keyDirection=(key:string):NileDirection|null=>{
+    switch(key.toLowerCase()){
+      case 'w':case 'arrowup':return 'forward';
+      case 's':case 'arrowdown':return 'backward';
+      case 'a':case 'arrowleft':return 'left';
+      case 'd':case 'arrowright':return 'right';
+      default:return null;
+    }
+  };
+  const keyDown=(e:KeyboardEvent)=>{
+    if(!exploring)return;
+    const direction=keyDirection(e.key);
+    if(!direction||e.altKey||e.ctrlKey||e.metaKey)return;
+    e.preventDefault();directions[direction]=true;
+  };
+  const keyUp=(e:KeyboardEvent)=>{
+    const direction=keyDirection(e.key);
+    if(!direction||!exploring)return;
+    e.preventDefault();directions[direction]=false;
+  };
+  const clearMovement=()=>Object.keys(directions).forEach(key=>directions[key as NileDirection]=false);
+  const pointerDown=(e:PointerEvent)=>{
+    if(!exploring||e.button!==0)return;
+    dragPointer=e.pointerId;dragX=e.clientX;dragY=e.clientY;
+    canvas.setPointerCapture(e.pointerId);
+  };
+  const pointerMove=(e:PointerEvent)=>{
+    if(!exploring||e.pointerId!==dragPointer)return;
+    rotateView(e.clientX-dragX,e.clientY-dragY);
+    dragX=e.clientX;dragY=e.clientY;
+  };
+  const pointerUp=(e:PointerEvent)=>{
+    if(e.pointerId!==dragPointer)return;
+    dragPointer=null;
+    if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);
+  };
+  window.addEventListener('keydown',keyDown);
+  window.addEventListener('keyup',keyUp);
+  window.addEventListener('blur',clearMovement);
+  canvas.addEventListener('pointerdown',pointerDown);
+  canvas.addEventListener('pointermove',pointerMove);
+  canvas.addEventListener('pointerup',pointerUp);
+  canvas.addEventListener('pointercancel',pointerUp);
+  const updateWalking=(now:number)=>{
+    const elapsed=previousWalkTime?Math.min(.06,Math.max(0,(now-previousWalkTime)/1000)):0;
+    previousWalkTime=now;
+    const forward=Number(directions.forward)-Number(directions.backward);
+    const right=Number(directions.right)-Number(directions.left);
+    const magnitude=Math.hypot(forward,right);
+    if(magnitude>0){
+      const step=3.15*elapsed/magnitude;
+      const dx=(-Math.sin(walk.yaw)*forward+Math.cos(walk.yaw)*right)*step;
+      const dz=(-Math.cos(walk.yaw)*forward-Math.sin(walk.yaw)*right)*step;
+      if(allowed(walk.x+dx,walk.z))walk.x+=dx;
+      if(allowed(walk.x,walk.z+dz))walk.z+=dz;
+    }
+    const height=bankHeight(walk.x,walk.z)+1.65;
+    camera.position.set(walk.x,height,walk.z);
+    camera.lookAt(walk.x-Math.sin(walk.yaw)*Math.cos(walk.pitch),
+      height+Math.sin(walk.pitch),walk.z-Math.cos(walk.yaw)*Math.cos(walk.pitch));
+    canvas.dataset.nileCameraX=walk.x.toFixed(3);
+    canvas.dataset.nileCameraZ=walk.z.toFixed(3);
+    canvas.dataset.nileWalkY=height.toFixed(3);
+    canvas.dataset.nileLookYaw=walk.yaw.toFixed(3);
+    canvas.dataset.nileLookPitch=walk.pitch.toFixed(3);
+    canvas.dataset.nileCameraPhase='walk';
+  };
   const resize=()=>{
     const width=Math.max(1,canvas.clientWidth),height=Math.max(1,canvas.clientHeight);
     renderer.setSize(width,height,false);
@@ -558,12 +670,14 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nileReady='true';
   canvas.dataset.nileView='wide';
   canvas.dataset.nileCameraPhase='settled';
+  canvas.dataset.nileMode='shot';
+  canvas.dataset.nileWalkBounds='4.3,8.9,-15,8';
   const animate=(now:number)=>{
     if(disposed)return;
     frame=requestAnimationFrame(animate);
     if(!visible||now-last<33)return;
     last=now;
-    applyShot(now);
+    if(exploring)updateWalking(now);else applyShot(now);
     if(!reducedMotion) {
       strips.position.z=Math.sin(now*.00065)*.04;
       // A few centimetres of surface movement, no swelling waves and
@@ -581,8 +695,15 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     canvas.dataset.nileRendered='true';
   };
   frame=requestAnimationFrame(animate);
-  return {setView,dispose:()=>{
+  return {setView,setExplore,setMovement,rotateView,dispose:()=>{
     disposed=true;
+    window.removeEventListener('keydown',keyDown);
+    window.removeEventListener('keyup',keyUp);
+    window.removeEventListener('blur',clearMovement);
+    canvas.removeEventListener('pointerdown',pointerDown);
+    canvas.removeEventListener('pointermove',pointerMove);
+    canvas.removeEventListener('pointerup',pointerUp);
+    canvas.removeEventListener('pointercancel',pointerUp);
     cancelAnimationFrame(frame);
     observer?.disconnect();resizer?.disconnect();
     window.removeEventListener('resize',resize);
@@ -609,5 +730,10 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     delete canvas.dataset.nileCameraPhase;
     delete canvas.dataset.nileCameraX;
     delete canvas.dataset.nileCameraZ;
+    delete canvas.dataset.nileWalkY;
+    delete canvas.dataset.nileLookYaw;
+    delete canvas.dataset.nileLookPitch;
+    delete canvas.dataset.nileWalkBounds;
+    delete canvas.dataset.nileMode;
   }} satisfies NilePreludeControl;
 }
