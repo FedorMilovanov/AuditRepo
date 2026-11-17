@@ -3,6 +3,7 @@
  * An artistic world, NOT an archaeological identification of the well.
  */
 import * as THREE from 'three';
+import {addMidianLandscape} from './MidianLandscape';
 
 export type MidianDirection = 'forward'|'backward'|'left'|'right';
 export type MidianControl = {
@@ -50,7 +51,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   sun.shadow.normalBias=.04;
   scene.add(sun);
   const mat=(color:number,roughness=.96)=>new THREE.MeshStandardMaterial({color,roughness});
-  const stone=[mat(0x938271),mat(0xb3a189),mat(0x8e8273),mat(0xc3aa8d)];
+  const stone=[mat(0xa19482),mat(0xa89b89),mat(0x988d7d),mat(0xa69a89)];
   const clay=[mat(0xa66e52),mat(0xc28e66),mat(0x99654c)];
   const groundGeo=new THREE.PlaneGeometry(56,66,92,100);
   groundGeo.rotateX(-Math.PI/2);
@@ -72,36 +73,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   ground.name='midian-ground';
   ground.receiveShadow=true;
   scene.add(ground);
-  const boulderGeo=new THREE.DodecahedronGeometry(1,1);
-  const rockMat=[mat(0x908172),mat(0xa18d72),mat(0x81796c),mat(0xb49d80)];
-  for(let i=0;i<82;i++){
-    const a=hash(i*5.7)*Math.PI*2,r=10+hash(i*4.3+18)*19;
-    const x=Math.cos(a)*r,z=Math.sin(a)*r*1.3;
-    const k=.4+hash(i*1.97+7)*2.0;
-    const rock=new THREE.Mesh(boulderGeo,rockMat[i%4]);
-    rock.scale.set(k*1.4,k*.54,k*.94);
-    rock.position.set(x,midianGround(x,z)+k*.24,z);
-    rock.rotation.y=hash(i*.77)*Math.PI*2;
-    rock.castShadow=i%4===0;
-    rock.receiveShadow=true;
-    scene.add(rock);
-  }
-  const shrubMesh=new THREE.IcosahedronGeometry(1,1),trunkGeo=new THREE.CylinderGeometry(.045,.09,1,6);
-  const leafMat=[mat(0x657056),mat(0x778165),mat(0x5a654f)],trunkMat=mat(0x705d49);
-  for(let i=0;i<42;i++){
-    const a=hash(i*3.19+16)*Math.PI*2,r=5.5+hash(i*4.9+11)*18;
-    const x=Math.cos(a)*r,z=Math.sin(a)*r;
-    if(Math.hypot(x,z)<4.8)continue;
-    const size=.45+hash(i*9.9+4)*.78;
-    const trunk=new THREE.Mesh(trunkGeo,trunkMat);
-    trunk.scale.y=size;
-    trunk.position.set(x,midianGround(x,z)+size*.44,z);
-    const crown=new THREE.Mesh(shrubMesh,leafMat[i%3]);
-    crown.scale.set(size*.9,size*.51,size*.8);
-    crown.position.set(x,midianGround(x,z)+size*1.1,z);
-    crown.castShadow=i%4===0;
-    scene.add(trunk,crown);
-  }
+  const scenery=addMidianLandscape(scene,midianGround);
   // Stone wells are known; this size, design and location are purely scenic.
   const well=new THREE.Group();
   well.name='midian-well';
@@ -113,8 +85,10 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   for(let row=0;row<3;row++)for(let i=0;i<24;i++){
     const a=(i+(row%2)*.5)*Math.PI*2/24;
     const block=new THREE.Mesh(brickGeo,stone[(i+3*row)%4]);
-    block.position.set(Math.cos(a)*1.18,.18+row*.275,Math.sin(a)*1.18);
-    block.rotation.y=-a;
+    block.position.set(Math.cos(a)*1.18,.18+row*.275+(hash(i*7+row)-.5)*.025,
+      Math.sin(a)*1.18);
+    block.rotation.set(0,-a,(hash(i*3.1+row)-.5)*.035);
+    block.scale.set(1+(hash(i*1.8+row)-.5)*.08,1+(hash(i*3.4+row)-.5)*.06,1);
     block.castShadow=i%3===0;block.receiveShadow=true;well.add(block);
   }
   const copingGeo=new THREE.BoxGeometry(.58,.15,.48);
@@ -243,6 +217,9 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   canvas.dataset.midianWorld='well';
   canvas.dataset.midianMode='shot';
   canvas.dataset.midianWellStones='96';
+  canvas.dataset.midianRidges=String(scenery.ridges);
+  canvas.dataset.midianScrubTwigs=String(scenery.twigs);
+  canvas.dataset.midianRockInstances=String(scenery.rocks);
   canvas.dataset.midianObstacle='well,water-trough';
   frame=requestAnimationFrame(tick);
   function dispose(){

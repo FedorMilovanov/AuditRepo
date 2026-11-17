@@ -14,6 +14,7 @@ npx tsc --outDir .test-build --module es2022 --target es2022 --moduleResolution 
   src/imena-boga-horeb-3d/engine/NileTerrain.ts \
   src/imena-boga-horeb-3d/engine/NileWater.ts \
   src/imena-boga-horeb-3d/engine/MidianWell.ts \
+  src/imena-boga-horeb-3d/engine/MidianLandscape.ts \
   src/imena-boga-horeb-3d/engine/nav.ts \
   src/imena-boga-horeb-3d/engine/soundscape.ts \
   src/imena-boga-horeb-3d/engine/quality.ts

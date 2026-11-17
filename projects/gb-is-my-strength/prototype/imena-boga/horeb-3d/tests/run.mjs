@@ -8,6 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
+import {midianApproachClearance,midianScrubPoint} from '../.test-build/engine/MidianLandscape.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -18,6 +19,10 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W11B: avoid blocking the actual playable viewpoint with toy vegetation.
+t('W11B shrub placement is sparse and never blocks the approach corridor',
+  Array.from({length:76},(_,i)=>midianScrubPoint(i))
+    .filter(Boolean).every(p=>p&&midianApproachClearance(p.x,p.z)>=2.55));
 t('W11A Midian well and trough have genuine grounded collisions',
   !midianWalkable(0,0)&&!midianWalkable(-2.9,-.35)&&
   midianWalkable(5.2,7.6)&&!midianWalkable(Number.NaN,0)&&
