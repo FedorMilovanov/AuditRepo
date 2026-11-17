@@ -101,15 +101,26 @@ try{
  // be unmounted, with exactly one live canvas (never two overlapping worlds).
  await page.click('[data-testid="moses-prehoreb-stage-1"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianRendered==='true');
- if((await page.$('canvas')).length!==1 || await page.$('[data-testid="moses-midian-well-3d"]'))
-   throw Error('MIDIAN WELL NOT REPLACED BY SINGLE HOMESTEAD CANVAS');
+ const household=await page.evaluate(()=>({
+   count:document.querySelectorAll('canvas').length,
+   well:!!document.querySelector('[data-testid="moses-midian-well-3d"]'),
+   homestead:!!document.querySelector('[data-testid="moses-midian-homestead-3d"]'),
+ }));
+ if(household.count!==1||household.well||!household.homestead)
+   throw Error('MIDIAN WELL NOT REPLACED BY SINGLE HOMESTEAD CANVAS '+JSON.stringify(household));
  // The following Gershom narrative is text-only and must release BOTH worlds.
  await page.click('[data-testid="moses-prehoreb-stage-2"]');
  await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-midian-homestead-3d"]'));
- if((await page.$('canvas')).length!==0)throw Error('MIDIAN WEBGL LEAKED INTO GERSHOM');
+ const gershomCanvasCount=await page.evaluate(()=>document.querySelectorAll('canvas').length);
+ if(gershomCanvasCount!==0)throw Error('MIDIAN WEBGL LEAKED INTO GERSHOM '+gershomCanvasCount);
  await page.click('[data-testid="moses-prehoreb-stage-0"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true');
- if((await page.$$('canvas')).length!==1||errors.length)
-   throw Error('MIDIAN REMOUNT / PAGE ERROR '+JSON.stringify(errors));
+ const returnState=await page.evaluate(()=>({
+   count:document.querySelectorAll('canvas').length,
+   well:!!document.querySelector('[data-testid="moses-midian-well-3d"]'),
+   homestead:!!document.querySelector('[data-testid="moses-midian-homestead-3d"]'),
+ }));
+ if(returnState.count!==1||!returnState.well||returnState.homestead||errors.length)
+   throw Error('MIDIAN REMOUNT / PAGE ERROR '+JSON.stringify({returnState,errors}));
  console.log('PASS W11A: real Midian well, ground movement, mobile, Esc, WebGL remount');
 }finally{await browser.close();}
