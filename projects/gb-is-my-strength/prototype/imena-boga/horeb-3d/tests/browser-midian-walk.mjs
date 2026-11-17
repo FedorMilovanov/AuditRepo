@@ -97,9 +97,16 @@ try{
  }));
  if(!focus.story||focus.target!=='midian-explore-start')
    throw Error('MIDIAN ESC / FOCUS '+JSON.stringify(focus));
+ // W12A: stage 1 now has its OWN homestead WebGL canvas. The old well must
+ // be unmounted, with exactly one live canvas (never two overlapping worlds).
  await page.click('[data-testid="moses-prehoreb-stage-1"]');
- await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-midian-well-3d"]'));
- if((await page.$$('canvas')).length!==0)throw Error('MIDIAN WEBGL LEAKED INTO HOUSEHOLD');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianRendered==='true');
+ if((await page.$('canvas')).length!==1 || await page.$('[data-testid="moses-midian-well-3d"]'))
+   throw Error('MIDIAN WELL NOT REPLACED BY SINGLE HOMESTEAD CANVAS');
+ // The following Gershom narrative is text-only and must release BOTH worlds.
+ await page.click('[data-testid="moses-prehoreb-stage-2"]');
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-midian-homestead-3d"]'));
+ if((await page.$('canvas')).length!==0)throw Error('MIDIAN WEBGL LEAKED INTO GERSHOM');
  await page.click('[data-testid="moses-prehoreb-stage-0"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true');
  if((await page.$$('canvas')).length!==1||errors.length)
