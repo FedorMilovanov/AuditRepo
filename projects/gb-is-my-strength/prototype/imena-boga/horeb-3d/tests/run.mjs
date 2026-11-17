@@ -9,6 +9,7 @@ import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileC
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {midianApproachClearance,midianScrubPoint} from '../.test-build/engine/MidianLandscape.js';
+import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
@@ -19,6 +20,17 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W11C: the physical ring is not a painted texture or floating brick boxes.
+t('W11C well retains 96 individually modelled volumetric stone wedges',
+  MIDIAN_STONE_TOTAL===96);
+t('W11C irregular well stone has correct flat-shaded triangular volume',(()=>{
+  const geo=makeMidianStoneGeometry(.95,1.40,0,.25,.1,.36,4);
+  const p=geo.getAttribute('position'),c=geo.getAttribute('color');
+  const valid=p.count===36&&c.count===36&&
+    Array.from({length:p.count},(_,i)=>[p.getX(i),p.getY(i),p.getZ(i)])
+      .flat().every(Number.isFinite);
+  geo.dispose();return valid;
+})());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
   Array.from({length:76},(_,i)=>midianScrubPoint(i))

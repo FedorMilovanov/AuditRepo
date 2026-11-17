@@ -4,6 +4,7 @@
  */
 import * as THREE from 'three';
 import {addMidianLandscape} from './MidianLandscape.js';
+import {addMidianWellMasonry} from './MidianMasonry.js';
 
 export type MidianDirection = 'forward'|'backward'|'left'|'right';
 export type MidianControl = {
@@ -79,25 +80,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   well.name='midian-well';
   well.position.y=midianGround(0,0);
   scene.add(well);
-  const water=new THREE.Mesh(new THREE.CylinderGeometry(1.02,1.02,.035,52),mat(0x2d484a,.24));
-  water.position.y=.2;well.add(water);
-  const brickGeo=new THREE.BoxGeometry(.52,.27,.39);
-  for(let row=0;row<3;row++)for(let i=0;i<24;i++){
-    const a=(i+(row%2)*.5)*Math.PI*2/24;
-    const block=new THREE.Mesh(brickGeo,stone[(i+3*row)%4]);
-    block.position.set(Math.cos(a)*1.18,.18+row*.275+(hash(i*7+row)-.5)*.025,
-      Math.sin(a)*1.18);
-    block.rotation.set(0,-a,(hash(i*3.1+row)-.5)*.035);
-    block.scale.set(1+(hash(i*1.8+row)-.5)*.08,1+(hash(i*3.4+row)-.5)*.06,1);
-    block.castShadow=i%3===0;block.receiveShadow=true;well.add(block);
-  }
-  const copingGeo=new THREE.BoxGeometry(.58,.15,.48);
-  for(let i=0;i<24;i++){
-    const a=(i+.1)*Math.PI*2/24;
-    const block=new THREE.Mesh(copingGeo,stone[(i+1)%4]);
-    block.position.set(Math.cos(a)*1.18,.98,Math.sin(a)*1.18);
-    block.rotation.y=-a;block.castShadow=i%3===0;well.add(block);
-  }
+  const masonry=addMidianWellMasonry(well);
   // Watering trough beside the well: a second physical obstacle.
   const trough=new THREE.Group();trough.name='midian-trough';
   trough.position.set(-2.9,midianGround(-2.9,-.35),-.35);
@@ -216,7 +199,8 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   }
   canvas.dataset.midianWorld='well';
   canvas.dataset.midianMode='shot';
-  canvas.dataset.midianWellStones='96';
+  canvas.dataset.midianWellStones=String(masonry.stones);
+  canvas.dataset.midianMasonry='annular-irregular-3d';
   canvas.dataset.midianRidges=String(scenery.ridges);
   canvas.dataset.midianScrubTwigs=String(scenery.twigs);
   canvas.dataset.midianRockInstances=String(scenery.rocks);
