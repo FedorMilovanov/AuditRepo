@@ -41,7 +41,7 @@ try{
  if(shape.world!=='well'||shape.stones!==96||shape.obstacles!=='well,water-trough'||
    shape.ridges!==2||shape.twigs<150||shape.rocks<50||shape.troughStones!==10)
    throw Error('MIDIAN GEOMETRY NOT RENDERED '+JSON.stringify(shape));
- await page.screenshot({path:join(out,'w11a-midian-well-desktop.png')});
+ await page.screenshot({path:join(out,'midian-shot-desktop.png')});
  await page.click('[data-testid="midian-explore-start"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianMode==='walk');
  await page.waitForFunction(()=>Number.isFinite(Number(document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianY)));
@@ -60,7 +60,7 @@ try{
  const along=-(after.x-first.x)*Math.sin(.62)-(after.z-first.z)*Math.cos(.62);
  if(after.mode!=='walk'||dist<.19||along<.17||Math.abs(after.y-after.ground-1.68)>.009)
    throw Error('MIDIAN CAMERA DOES NOT WALK ON GROUND '+JSON.stringify({first,after,dist,along}));
- await page.screenshot({path:join(out,'w11a-midian-walk-desktop.png')});
+ await page.screenshot({path:join(out,'midian-walk-desktop.png')});
  const camera=await page.$('[data-testid="moses-midian-well-3d"]');
  const cb=await camera.boundingBox();if(!cb)throw Error('MIDIAN WALK CANVAS INVISIBLE');
  const yaw=after.yaw;
@@ -88,7 +88,7 @@ try{
  const moved=await read();
  if(Math.hypot(moved.x-prior.x,moved.z-prior.z)<.15)
    throw Error('MIDIAN MOBILE INPUT INERT '+JSON.stringify({prior,moved}));
- await page.screenshot({path:join(out,'w11a-midian-walk-phone.png')});
+ await page.screenshot({path:join(out,'midian-walk-mobile390.png')});
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianMode==='shot');
  const focus=await page.evaluate(()=>({
