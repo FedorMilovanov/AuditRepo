@@ -81,7 +81,24 @@ try {
   await page.click('[data-testid="moses-origin-next"]');
   await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
   if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
-  for(let i=3;i<6;i++)await page.click('[data-testid="moses-origin-next"]');
+  // W9A same chronological stages in the offline single-file build.
+  const prehorebRefs=[
+    ['Исх. 2:11–12','Исх. 2:13–14','Исх. 2:15'],
+    ['Исх. 2:16–17','Исх. 2:18–21','Исх. 2:22'],
+    ['Исх. 2:23','Исх. 2:24–25'],
+  ];
+  for(let index=0;index<prehorebRefs.length;index++){
+    const refs=prehorebRefs[index];
+    if((await page.$$('[data-testid="moses-prehoreb-sequence"] button')).length!==refs.length)
+      throw new Error('Offline preHoreb stage count mismatch '+index);
+    for(let stage=0;stage<refs.length;stage++){
+      await page.click(`[data-testid="moses-prehoreb-stage-${stage}"]`);
+      const text=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
+      if(!text.includes(refs[stage])||(await page.$$('canvas')).length)
+        throw new Error('Offline preHoreb stage failed '+refs[stage]);
+    }
+    await page.click('[data-testid="moses-origin-next"]');
+  }
   const lastTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
   if(lastTitle!=='Пастух на пути к Хориву')
     throw new Error('Portable story does not end at Horeb: '+lastTitle);

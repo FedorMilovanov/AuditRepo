@@ -1,7 +1,7 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
 import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
-  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START, MOSES_ORIGIN_BEATS,
+  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START, MOSES_ORIGIN_BEATS, MOSES_PREHOREB_BEATS,
   sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
@@ -28,6 +28,22 @@ t('teleports, reverse walking, stationary and invalid input never fire narration
   journeyBeatCrossing(-8.3, -8, new Set()) === null &&
   journeyBeatCrossing(-8, -8, new Set()) === null &&
   journeyBeatCrossing(NaN, -8.12, new Set()) === null);
+// W9A regression: the story must not collapse two distinct Egyptian days,
+// invent a direct route to Midian or merge the well, household and Gershom.
+t('W9A Exodus 2:11–25 stages retain distinct sequence and references',
+  MOSES_PREHOREB_BEATS.grown.map(s=>s.reference).join('|') ===
+    'Исх. 2:11–12|Исх. 2:13–14|Исх. 2:15' &&
+  MOSES_PREHOREB_BEATS.midian.map(s=>s.reference).join('|') ===
+    'Исх. 2:16–17|Исх. 2:18–21|Исх. 2:22' &&
+  MOSES_PREHOREB_BEATS.cry.map(s=>s.reference).join('|') ===
+    'Исх. 2:23|Исх. 2:24–25');
+t('W9A historical limits and stage labels are explicit without new exhibit IDs',
+  Object.values(MOSES_PREHOREB_BEATS).flat().length === 8 &&
+  new Set(Object.values(MOSES_PREHOREB_BEATS).flat().map(s=>s.id)).size === 8 &&
+  Object.values(MOSES_PREHOREB_BEATS).flat().every(s=>s.title.length>9&&
+    s.scene.length>70&&s.limitation.length>50&&!!s.label) &&
+  MOSES_PREHOREB_BEATS.midian[1].limitation.includes('Рагуил/Иофор') &&
+  MOSES_PREHOREB_BEATS.cry[0].limitation.includes('не следует'));
 const errs = validateExhibits(EXHIBITS);
 if (errs.length) console.log(errs.join('\n'));
 t('registry passes editorial invariants', errs.length === 0);

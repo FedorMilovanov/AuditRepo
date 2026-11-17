@@ -16,7 +16,7 @@ import { EXPEDITION_STORAGE_KEY, normalizeExpeditionCompletion, completeExpediti
 import { HERO_STUDIES, HERO_STUDY_STORAGE_KEY, normalizeHeroStudyJournal, markHeroStudy, type HeroStudyId } from './data/heroStudies';
 import { RUSSIAN_DRAFT_CUES } from './data/russianCues';
 import { JOURNEY_BEATS } from './data/journeyBeats';
-import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, MOSES_ORIGIN_BEATS, MOSES_RESCUE_STAGES, type ExpeditionMode } from './data/storyWorlds';
+import { HOREB_CALL_STOP, EGYPT_RETURN_STOP, EGYPT_EPISODES, EGYPT_RETURN_BEATS, EGYPT_PHARAOH_BEATS, EGYPT_BRICKWORK_CONTEXT, MOSES_ORIGIN_BEATS, MOSES_RESCUE_STAGES, MOSES_PREHOREB_BEATS, type ExpeditionMode } from './data/storyWorlds';
 import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER, isHorebDepartureLookout } from './engine/nav';
@@ -202,6 +202,10 @@ export default function HorebApp() {
   const [introDialog, setIntroDialog] = useState<Dialog>(null);
   const [originIndex, setOriginIndex] = useState(0);
   const [rescueStage, setRescueStage] = useState(0);
+  const [preHorebStage, setPreHorebStage] = useState(0);
+  const preHorebBeats = originIndex === 2 ? MOSES_PREHOREB_BEATS.grown :
+    originIndex === 3 ? MOSES_PREHOREB_BEATS.midian :
+    originIndex === 4 ? MOSES_PREHOREB_BEATS.cry : null;
   const [ws, setWs] = useState<WorldState | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -464,7 +468,7 @@ export default function HorebApp() {
           а свободная 3D-прогулка построена только для Хорива.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
-          <button data-testid="moses-origin-start" className="btn btn-primary" onClick={() => { setOriginIndex(0); setRescueStage(0); setIntroDialog({ kind: 'origin' }); }}>Начать с младенца Моисея · Исход 2</button>
+          <button data-testid="moses-origin-start" className="btn btn-primary" onClick={() => { setOriginIndex(0); setRescueStage(0); setPreHorebStage(0); setIntroDialog({ kind: 'origin' }); }}>Начать с младенца Моисея · Исход 2</button>
           {webgl ? <button data-testid="horeb-chapter-start" className="btn" onClick={() => start('horeb')}>Перейти к готовому 3D-Хориву · Исход 3–4</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
           <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
@@ -515,6 +519,19 @@ export default function HorebApp() {
                   {stage.label}
                 </button>)}
             </div>}
+          {preHorebBeats && <div role="group" aria-label="Этапы жизни Моисея до Хорива"
+            data-testid="moses-prehoreb-sequence"
+            className={`grid gap-2 ${preHorebBeats.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+            {preHorebBeats.map((step, i) => <button type="button" key={step.id}
+              data-testid={`moses-prehoreb-stage-${i}`} aria-pressed={preHorebStage === i}
+              onClick={() => setPreHorebStage(i)}
+              className={`min-w-0 rounded-sm border px-2 py-3 text-xs leading-snug text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200 ${preHorebStage === i
+                ? 'border-bronze bg-bronze/20 text-parch'
+                : 'border-parch/20 bg-black/30 text-parch/75 hover:border-bronze/70'}`}>
+              <span className="block text-[10px] tracking-widest text-bronze mb-1">{String(i+1).padStart(2,'0')}</span>
+              {step.label}
+            </button>)}
+          </div>}
           <div className="relative overflow-hidden rounded-sm border border-bronze/30 bg-gradient-to-b from-[#17232b] via-[#17231d] to-[#1c130b] p-5 sm:p-8 min-h-52">
             {(originIndex === 0 || (originIndex === 1 && rescueStage === 0)) &&
               <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5">
@@ -529,16 +546,25 @@ export default function HorebApp() {
                 {rescueStage === 2 && <p className="relative text-sm text-parch/75">Прошло время — точный возраст не указан</p>}
                 <div className="w-20 h-px bg-bronze/65" aria-hidden="true" />
               </div>}
-            <p className="text-xs tracking-widest text-bronze uppercase">Исход · {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].reference : MOSES_ORIGIN_BEATS[originIndex].reference}</p>
+            {preHorebBeats && <div data-testid="moses-prehoreb-intertitle"
+              className="relative isolate -mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5 min-h-44 sm:min-h-52 overflow-hidden border-b border-bronze/30 bg-gradient-to-tr from-[#182123] via-[#2a302d] to-[#4d4035] flex flex-col items-center justify-center gap-3 text-center px-6 py-8">
+              <span className="absolute -right-2 -bottom-12 font-display text-parch/5 text-[9rem] sm:text-[12rem] leading-none pointer-events-none" aria-hidden="true">{String(preHorebStage+1).padStart(2,'0')}</span>
+              <span className="relative h-px w-20 bg-bronze/70" aria-hidden="true" />
+              <p className="relative text-xs uppercase tracking-[.17em] text-bronze">Следующий момент · Исход</p>
+              <p className="relative font-display text-2xl sm:text-3xl text-parch">{preHorebBeats[preHorebStage].title}</p>
+              <span className="relative h-px w-20 bg-bronze/70" aria-hidden="true" />
+              <p className="relative text-xs text-parch/75">Редакционное повествование · без вымышленной 3D-локации</p>
+            </div>}
+            <p className="text-xs tracking-widest text-bronze uppercase">Исход · {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].reference : preHorebBeats ? preHorebBeats[preHorebStage].reference : MOSES_ORIGIN_BEATS[originIndex].reference}</p>
             <h2 data-testid="moses-origin-title" className="font-display text-3xl sm:text-4xl text-parch mt-5">{MOSES_ORIGIN_BEATS[originIndex].title}</h2>
-            <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl" data-testid="moses-origin-scene">{originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].scene : MOSES_ORIGIN_BEATS[originIndex].scene}</p>
+            <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl" data-testid="moses-origin-scene">{originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].scene : preHorebBeats ? preHorebBeats[preHorebStage].scene : MOSES_ORIGIN_BEATS[originIndex].scene}</p>
           </div>
-          <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/40 pl-3 text-muted">Историческое ограничение: {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].transition : MOSES_ORIGIN_BEATS[originIndex].limit}</p>
+          <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/40 pl-3 text-muted">Историческое ограничение: {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].transition : preHorebBeats ? preHorebBeats[preHorebStage].limitation : MOSES_ORIGIN_BEATS[originIndex].limit}</p>
           <p className="text-xs text-muted">Первые два эпизода — короткие художественные 3D-диорамы, но не игровые уровни. Свободная прогулка построена только на Хориве; остальные пространства ещё не созданы.</p>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => { setRescueStage(0); setOriginIndex(i => Math.max(0, i - 1)); }}>Предыдущий эпизод</button>
+            <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => { setRescueStage(0); setPreHorebStage(0); setOriginIndex(i => Math.max(0, i - 1)); }}>Предыдущий эпизод</button>
             {originIndex < MOSES_ORIGIN_BEATS.length - 1
-              ? <button data-testid="moses-origin-next" className="btn btn-primary" onClick={() => { setRescueStage(0); setOriginIndex(i => Math.min(MOSES_ORIGIN_BEATS.length - 1, i + 1)); }}>Следующий эпизод</button>
+              ? <button data-testid="moses-origin-next" className="btn btn-primary" onClick={() => { setRescueStage(0); setPreHorebStage(0); setOriginIndex(i => Math.min(MOSES_ORIGIN_BEATS.length - 1, i + 1)); }}>Следующий эпизод</button>
               : webgl
                 ? <button data-testid="moses-origin-enter-horeb" className="btn btn-primary" onClick={() => { setIntroDialog(null); start('horeb'); }}>Войти в 3D-Хорив · Исход 3–4</button>
                 : <button data-testid="moses-origin-read" className="btn btn-primary" onClick={() => { setIntroDialog(null); setScreen('reader'); }}>Читать все 42 досье</button>}
