@@ -8,6 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -21,6 +22,22 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W12A: a distinct 3D encampment is physically accessible through its open
+// entrance, with walls, hearth and storage remaining real obstructions.
+t('W12A Midian household starts on safe walkable ground',
+  homesteadWalkable(HOMESTEAD_WALK.startX,HOMESTEAD_WALK.startZ));
+t('W12A household doorway allows full actual approach and interior walk',
+  Array.from({length:56},(_,i)=>HOMESTEAD_WALK.startZ-i*.22)
+    .every(z=>homesteadWalkable(0,z)));
+t('W12A physical tent wall and hearth are genuine obstacles',
+  !homesteadWalkable(HOMESTEAD_STRUCTURE.halfWidth,0)&&
+  !homesteadWalkable(2.7,HOMESTEAD_STRUCTURE.front)&&
+  !homesteadWalkable(HOMESTEAD_STRUCTURE.hearthX,HOMESTEAD_STRUCTURE.hearthZ)&&
+  homesteadWalkable(0,HOMESTEAD_STRUCTURE.front));
+t('W12A household height is continuous and measured by camera',
+  Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
+    Number.isFinite(homesteadGround(0,z))&&
+    Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
 // W11D: visible rock instances must physically block the grounded player.
 t('W11D large landscape rocks block camera at their actual render centers',
   MIDIAN_ROCK_COLLIDERS.length>0&&

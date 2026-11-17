@@ -28,8 +28,9 @@ export interface StoryStop {
 
 /** Narrative order is deliberate. Empty stops are genuine Biblical episodes
  * without additional approved names-ledger ID, not fabricated exhibits.
- * W11A: Horeb, the limited Nile shore and the Midian well now each have real
- * walkable WebGL geometry; the other narrative stops remain future worlds.
+ * W12A candidate: the Nile shoreline, Midian well, separate Midian family
+ * encampment and Horeb use physically different walkable 3D meshes.
+ * Gershom, Egypt of adult Moses and the other stories remain future worlds.
  * Legacy QA continues to contain the 42 separate Research dossiers. */
 export const STORY_STOPS: readonly StoryStop[] = [
   { id: 'creation-prologue', world: 'genesis',

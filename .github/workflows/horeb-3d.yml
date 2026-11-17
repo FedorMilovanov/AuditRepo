@@ -185,6 +185,18 @@ jobs:
               throw new Error('Invalid Midian PNG signature: ' + name);
           }
           console.log('Verified 3 independent Midian 3D viewport screenshots');
+          // W12A: actual independent tent world evidence, not borrowed from
+          // the well chapter or a mocked/still image of a camp.
+          const homestead = ['homestead-shot-desktop.png',
+            'homestead-walk-desktop.png','homestead-walk-mobile390.png'];
+          for (const name of homestead) {
+            const file = path.join(root, 'screenshots', name);
+            if (!fs.existsSync(file) || fs.statSync(file).size < 12000)
+              throw new Error('Missing/empty homestead 3D screenshot: ' + name);
+            if (fs.readFileSync(file).subarray(0, 8).toString('hex') !== '89504e470d0a1a0a')
+              throw new Error('Invalid homestead PNG signature: ' + name);
+          }
+          console.log('Verified 3 independent Midian homestead viewport screenshots');
           console.log('Verified', files.size, 'independent PNG visual witnesses, plus smoke and journey evidence');
           NODE
       - name: Preserve gallery and mobile evidence
@@ -219,6 +231,7 @@ jobs:
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/journey-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/midian-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/homestead-*.png
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/journey-witness.json
           compression-level: 0
           retention-days: 7

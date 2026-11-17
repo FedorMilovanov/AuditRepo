@@ -82,7 +82,7 @@ try {
   await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
   if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
   // W11A.2: offline must load the REAL 3D Midian well in stage zero.
-  // Only later Midian household/Gershom moments stay textual.
+  // Household is a second real WebGL environment; Gershom remains a text time transition.
   // Do not regress this to a mere static illustration or intertitle.
   const prehorebRefs=[
     ['Исх. 2:11–12','Исх. 2:13–14','Исх. 2:15'],
@@ -95,22 +95,24 @@ try {
       throw new Error('Offline preHoreb stage count mismatch '+index);
     for(let stage=0;stage<refs.length;stage++){
       await page.click(`[data-testid="moses-prehoreb-stage-${stage}"]`);
-      if(index===1 && stage===0) {
-        await page.waitForFunction(()=>
-          document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true',
-          {timeout:30000});
+      if(index===1 && stage<=1) {
+        await page.waitForFunction((name)=>
+          document.querySelector(`[data-testid="${name}"]`)?.dataset.midianRendered==='true',
+          {timeout:30000},stage===0?'moses-midian-well-3d':'moses-midian-homestead-3d');
       }
       const text=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
-      const expected3D=index===1&&stage===0;
+      const expected3D=index===1&&stage<=1;
       const actualCanvasCount=(await page.$$('canvas')).length;
-      const scene=expected3D?await page.$eval('[data-testid="moses-midian-well-3d"]',e=>({
+      const scene=expected3D?await page.$eval(stage===0?'[data-testid="moses-midian-well-3d"]':'[data-testid="moses-midian-homestead-3d"]',e=>({
         world:e.dataset.midianWorld,
         rendered:e.dataset.midianRendered,
-        stones:Number(e.dataset.midianWellStones),
+        stones:Number(e.dataset.midianWellStones),shelter:e.dataset.homesteadShelter,
+        roof:Number(e.dataset.homesteadRoofPanels),
+        side:Number(e.dataset.homesteadSidePanels),
       })):null;
       if(!text.includes(refs[stage])||
          actualCanvasCount!==(expected3D?1:0)||
-         (expected3D&&(scene?.world!=='well'||scene?.rendered!=='true'||scene?.stones!==96)))
+         (expected3D&&(scene?.world!==(stage===0?'well':'homestead')||scene?.rendered!=='true'||(stage===0?scene?.stones!==96:(scene?.shelter!=='3d-woven-fabric-and-posts'||scene?.roof!==2||scene?.side!==2)))))
         throw new Error('Offline preHoreb physical 3D contract failed '+
           JSON.stringify({ref:refs[stage],expected3D,actualCanvasCount,scene}));
     }

@@ -223,7 +223,7 @@ try{
    }
    if(i>=2 && i<=4){
      // W11A: the well in Midian is now physically built in Three.js.
-     // Subsequent household and Gershom stages remain time-separated text.
+     // Household is another separate 3D space; Gershom remains a time-separated textual moment.
      const refs=i===2?['Исх. 2:11–12','Исх. 2:13–14','Исх. 2:15']
        :i===3?['Исх. 2:16–17','Исх. 2:18–21','Исх. 2:22']
        :['Исх. 2:23','Исх. 2:24–25'];
@@ -231,22 +231,25 @@ try{
      if(controls.length!==refs.length)throw new Error('W9A STORY STAGE COUNT '+JSON.stringify({i,count:controls.length}));
      for(let stage=0;stage<refs.length;stage++){
        await page.click(`[data-testid="moses-prehoreb-stage-${stage}"]`);
-       if(i===3&&stage===0)await page.waitForFunction(()=>
-         document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true',
-         {timeout:30000});
+       if(i===3&&stage<=1)await page.waitForFunction((name)=>
+         document.querySelector(`[data-testid="${name}"]`)?.dataset.midianRendered==='true',
+         {timeout:30000},stage===0?'moses-midian-well-3d':'moses-midian-homestead-3d');
        const result=await page.evaluate((index)=>{
          const text=document.querySelector('[data-testid="moses-origin-story"]')?.textContent||'';
          const note=document.querySelector('[data-testid="moses-origin-limitation"]')?.textContent||'';
          const checked=document.querySelector(`[data-testid="moses-prehoreb-stage-${index}"]`)?.getAttribute('aria-pressed');
          const title=document.querySelector('[data-testid="moses-prehoreb-intertitle"]')?.textContent||'';
-         const well=document.querySelector('[data-testid="moses-midian-well-3d"]');
+         const well=document.querySelector('[data-testid="moses-midian-well-3d"],[data-testid="moses-midian-homestead-3d"]');
          return {text,note,checked,title,canvases:document.querySelectorAll('canvas').length,
-           midian:well?.dataset.midianWorld,rendered:well?.dataset.midianRendered};
+           midian:well?.dataset.midianWorld,rendered:well?.dataset.midianRendered,shelter:well?.dataset.homesteadShelter,
+           roof:Number(well?.dataset.homesteadRoofPanels),
+           side:Number(well?.dataset.homesteadSidePanels)};
        },stage);
        if(!result.text.includes(refs[stage])||result.checked!=='true'||
-          result.canvases!==(i===3&&stage===0?1:0)||
-          (i===3&&stage===0
-            ?(result.midian!=='well'||result.rendered!=='true')
+          result.canvases!==(i===3&&stage<=1?1:0)||
+          (i===3&&stage<=1
+            ?(result.midian!==(stage===0?'well':'homestead')||result.rendered!=='true'||(stage===1&&(result.shelter!=='3d-woven-fabric-and-posts'||
+                result.roof!==2||result.side!==2)))
             :result.title.length<16)||result.note.length<65)
          throw new Error('W9A STORY STAGE FAILED '+JSON.stringify({i,stage,ref:refs[stage],result}));
      }

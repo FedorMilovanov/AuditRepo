@@ -464,9 +464,9 @@ export default function HorebApp() {
         <p className="font-display italic text-2xl sm:text-3xl text-bronze mt-3 reveal d2">Моисей · От Нила до Исхода</p>
         <p data-testid="moses-world-overview" className="mt-8 text-parch/75 leading-relaxed max-w-xl mx-auto reveal d3">
           Начните историю с младенца Моисея у Нила, исследуйте берег и колодец
-          Мадиама в настоящем 3D и перейдите к самостоятельной экспедиции на Хорив.
+          Мадиама и отдельную семейную стоянку в настоящем 3D, затем перейдите к самостоятельной экспедиции на Хорив.
           Это отдельные исследуемые пространства, пока ещё художественные прототипы.
-          Египет взрослого Моисея, дом Рагуила, рождение Гирсама и дальнейший Исход
+          Египет взрослого Моисея, рождение Гирсама и дальнейший Исход
           пока не построены в 3D — их последовательность доступна в режиме чтения.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center reveal d3">
@@ -548,11 +548,12 @@ export default function HorebApp() {
                 {rescueStage === 2 && <p className="relative text-sm text-parch/75">Прошло время — точный возраст не указан</p>}
                 <div className="w-20 h-px bg-bronze/65" aria-hidden="true" />
               </div>}
-            {originIndex === 3 && preHorebStage === 0 &&
+            {originIndex === 3 && preHorebStage <= 1 &&
               <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5">
-                <MidianCanvas key="midian-well" reducedMotion={settings.reducedMotion} />
+                <MidianCanvas key={preHorebStage===0?'midian-well':'midian-homestead'}
+                  world={preHorebStage===0?'well':'homestead'} reducedMotion={settings.reducedMotion} />
               </div>}
-            {preHorebBeats && !(originIndex === 3 && preHorebStage === 0) && <div data-testid="moses-prehoreb-intertitle"
+            {preHorebBeats && !(originIndex === 3 && preHorebStage <= 1) && <div data-testid="moses-prehoreb-intertitle"
               className="relative isolate -mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5 min-h-44 sm:min-h-52 overflow-hidden border-b border-bronze/30 bg-gradient-to-tr from-[#182123] via-[#2a302d] to-[#4d4035] flex flex-col items-center justify-center gap-3 text-center px-6 py-8">
               <span className="absolute -right-2 -bottom-12 font-display text-parch/5 text-[9rem] sm:text-[12rem] leading-none pointer-events-none" aria-hidden="true">{String(preHorebStage+1).padStart(2,'0')}</span>
               <span className="relative h-px w-20 bg-bronze/70" aria-hidden="true" />
@@ -566,7 +567,7 @@ export default function HorebApp() {
             <p className="text-lg text-parch/90 leading-relaxed mt-5 max-w-2xl" data-testid="moses-origin-scene">{originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].scene : preHorebBeats ? preHorebBeats[preHorebStage].scene : MOSES_ORIGIN_BEATS[originIndex].scene}</p>
           </div>
           <p data-testid="moses-origin-limitation" className="text-sm leading-relaxed border-l-2 border-bronze/50 pl-3 text-parch/85">Историческое ограничение: {originIndex === 1 ? MOSES_RESCUE_STAGES[rescueStage].transition : preHorebBeats ? preHorebBeats[preHorebStage].limitation : MOSES_ORIGIN_BEATS[originIndex].limit}</p>
-          <p className="text-xs text-parch/75">Нил и первый участок Мадиама у колодца теперь можно исследовать пешком в 3D; оба остаются художественными прототипами. Полностью отдельная 3D-глава построена для Хорива. Дом Рагуила, рождение Гирсама и другие эпизоды ещё в работе.</p>
+          <p className="text-xs text-parch/75">Нил и первый участок Мадиама у колодца теперь можно исследовать пешком в 3D; оба остаются художественными прототипами. Полностью отдельная 3D-глава построена для Хорива. Рождение Гирсама и другие эпизоды ещё в работе; семейная стоянка существует только как условный 3D-прототип.</p>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button data-testid="moses-origin-back" className="btn" disabled={originIndex === 0} onClick={() => { setRescueStage(0); setPreHorebStage(0); setOriginIndex(i => Math.max(0, i - 1)); }}>Предыдущий эпизод</button>
             {originIndex < MOSES_ORIGIN_BEATS.length - 1
