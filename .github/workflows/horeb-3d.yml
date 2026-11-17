@@ -188,7 +188,8 @@ jobs:
           // W12A: actual independent tent world evidence, not borrowed from
           // the well chapter or a mocked/still image of a camp.
           const homestead = ['homestead-shot-desktop.png',
-            'homestead-walk-desktop.png','homestead-walk-mobile390.png'];
+            'homestead-walk-desktop.png', 'homestead-walk-interior.png',
+            'homestead-walk-mobile390.png'];
           for (const name of homestead) {
             const file = path.join(root, 'screenshots', name);
             if (!fs.existsSync(file) || fs.statSync(file).size < 12000)
@@ -196,7 +197,7 @@ jobs:
             if (fs.readFileSync(file).subarray(0, 8).toString('hex') !== '89504e470d0a1a0a')
               throw new Error('Invalid homestead PNG signature: ' + name);
           }
-          console.log('Verified 3 independent Midian homestead viewport screenshots');
+          console.log('Verified 4 independent Midian homestead viewport screenshots');
           console.log('Verified', files.size, 'independent PNG visual witnesses, plus smoke and journey evidence');
           NODE
       - name: Preserve gallery and mobile evidence

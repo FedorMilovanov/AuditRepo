@@ -117,10 +117,14 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     post.position.set(x,homesteadGround(x,z)+height*.5,z);
     post.castShadow=true;post.name='shelter-structural-post';pivot.add(post);
   }
+  // No centre pole at the front doorway: the original front post at x=0,
+  // z=+2.85 intersected the only intended physical entry corridor while
+  // homesteadWalkable() incorrectly let the visitor walk through its mesh.
+  // Four corner posts plus one rear ridge post support an open A-frame portal.
   for(const z of [-2.85,2.85]){
     for(const x of [-2.95,2.95])timber(x,z,1.52,.105);
-    timber(0,z,3.05,.125);
   }
+  timber(0,-2.85,3.05,.125);
   function beam(from:THREE.Vector3,to:THREE.Vector3,r:number,material:THREE.Material,name:string){
     const delta=to.clone().sub(from);
     const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,delta.length(),8),material);
@@ -130,6 +134,13 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   beam(new THREE.Vector3(0,3.08,-2.85),new THREE.Vector3(0,3.08,2.85),
     .064,support,'shelter-ridge-beam');
+  // Two actual sloping braces carry the front ridge into the existing corner
+  // posts, keeping the whole 2.84 m central doorway visibly unobstructed.
+  for(const x of [-2.95,2.95]){
+    beam(new THREE.Vector3(x,homesteadGround(x,2.85)+1.52,2.85),
+      new THREE.Vector3(0,homesteadGround(0,2.85)+3.08,2.85),
+      .063,support,'shelter-open-front-truss');
+  }
   // Two 24×16 fabric surfaces: actual curvature and draped side seams.
   for(const side of [-1,1]){
     const g=new THREE.PlaneGeometry(1,1,24,16);
@@ -356,6 +367,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadRoofPanels=String(countMesh('midian-shelter-woven-3d-roof'));
   canvas.dataset.homesteadSidePanels=String(countMesh('midian-shelter-real-cloth-sidewall'));
   canvas.dataset.homesteadPosts=String(countMesh('shelter-structural-post'));
+  canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));
   canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
   frame=requestAnimationFrame(render);
   function dispose(){

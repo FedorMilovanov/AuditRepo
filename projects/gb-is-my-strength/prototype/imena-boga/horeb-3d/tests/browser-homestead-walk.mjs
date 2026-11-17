@@ -40,12 +40,13 @@ try{
     roofPanels:Number(e.dataset.homesteadRoofPanels),
     sidePanels:Number(e.dataset.homesteadSidePanels),
     posts:Number(e.dataset.homesteadPosts),
+    frontTrusses:Number(e.dataset.homesteadFrontTrusses),
     rear:Number(e.dataset.homesteadRearGables),
   }));
   if(witness.world!=='homestead'||witness.roof!=='3d-woven-fabric-and-posts'||
      witness.door!=='walkable'||witness.hills!=='1'||
      witness.roofPanels!==2||witness.sidePanels!==2||
-     witness.posts!==6||witness.rear!==1)
+     witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1)
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));
   await page.screenshot({path:join(out,'homestead-shot-desktop.png')});
   await page.click('[data-testid="midian-homestead-explore-start"]');
@@ -71,6 +72,28 @@ try{
   await page.mouse.move(rect.x+rect.width*.31,rect.y+rect.height*.43,{steps:6});
   await page.mouse.up();await sleep(65);
   if(Math.abs((await read()).yaw-b.yaw)<.19)throw Error('HOMESTEAD pointer look broken');
+  // Reverse the deliberate orientation test so every visual witness looks
+  // toward the actual shelter, rather than photographing empty horizon.
+  await page.mouse.move(rect.x+rect.width*.31,rect.y+rect.height*.43);
+  await page.mouse.down();
+  await page.mouse.move(rect.x+rect.width*.6,rect.y+rect.height*.54,{steps:6});
+  await page.mouse.up();await sleep(80);
+  if(Math.abs((await read()).yaw-b.yaw)>.12)
+    throw Error('HOMESTEAD camera did not return to entry orientation');
+  // Real keyboard input must take the visitor THROUGH the centre opening;
+  // a source-code-only "walkable" boolean cannot certify that walk in 3D.
+  await page.keyboard.down('w');
+  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianZ)<1.9,{timeout:30000});
+  await page.keyboard.up('w');await sleep(90);
+  const inside=await read();
+  if(inside.mode!=='walk'||Math.abs(inside.x)>.35||inside.z>=1.9)
+    throw Error('HOMESTEAD centre entry is not physically traversable '+JSON.stringify(inside));
+  await page.screenshot({path:join(out,'homestead-walk-interior.png')});
+  // Preserve the meaningful mobile composition from the canonical start.
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='shot');
+  await page.click('[data-testid="midian-homestead-explore-start"]');
+  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='walk');
   await page.setViewport({width:390,height:844,deviceScaleFactor:1});
   await sleep(140);
   const mobile=await page.$eval('[data-testid="midian-viewport"]',e=>{
