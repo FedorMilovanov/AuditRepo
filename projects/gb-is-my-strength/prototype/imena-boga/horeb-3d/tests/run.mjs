@@ -43,6 +43,26 @@ t('W10C reduced-motion freezes river surface independent of time',
     nileWaterHeight(x,z,120000,true)===NILE_WATER_LEVEL)));
 t('W10C far channel is gently animated when motion is enabled',
   Math.abs(nileWaterHeight(-7,-4,0,false)-nileWaterHeight(-7,-4,8000,false))>.00025);
+// W10E: botanically plausible groups with a clear rescue vista; deep-channel
+// poles are prohibited. Every expected root is still the renderer's root.
+t('W10E papyrus forms five wetland thickets outside the rescue vista',
+  Array.from({length:91},(_,i)=>nilePapyrusRoot(i,'basket')).every(r=>
+    r.x>nileShoreX(r.z)+.1&&Math.abs(r.z-NILE_CRADLE.z)>=2.2));
+t('W10E thirteen water-growing stems stay in actual nearshore shallows',
+  Array.from({length:13},(_,i)=>nilePapyrusRoot(91+i,'basket')).every(r=>
+    r.x<=nileShoreX(r.z)-.15&&r.x>=nileShoreX(r.z)-1.01));
+t('W10E shoreline and graded ground stay continuous along walking corridor',
+  Array.from({length:113},(_,i)=>-19+i*.25).every(z=>{
+    const s=nileShoreX(z),next=nileShoreX(z+.25);
+    return Math.abs(next-s)<.09&&
+      Math.abs(nileGroundY(s,z)+.14)<1e-8&&
+      Math.abs(nileGroundY(7.1,z)-nileGroundY(7.1,z+.25))<.15&&
+      nileCanWalk(7.1,z,'basket');
+  }));
+t('W10E bank roots remain true physical obstacles',
+  Array.from({length:91},(_,i)=>nilePapyrusRoot(i,'basket'))
+    .filter(r=>r.x>nileShoreX(r.z)+.4)
+    .slice(0,12).every(r=>!nileCanWalk(r.x,r.z,'basket')));
 t('W10B shoreline/nav share one curving physical coast',
   nileZSamples.every(z=>{
     const coast=nileShoreX(z);
