@@ -3,7 +3,7 @@
  * An artistic world, NOT an archaeological identification of the well.
  */
 import * as THREE from 'three';
-import {addMidianLandscape} from './MidianLandscape';
+import {addMidianLandscape} from './MidianLandscape.js';
 
 export type MidianDirection = 'forward'|'backward'|'left'|'right';
 export type MidianControl = {
