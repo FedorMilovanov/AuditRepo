@@ -7,7 +7,10 @@ const chrome=[process.env.HOREB_BROWSER_PATH,
  'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
  '/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&existsSync(x));
 if(!chrome)throw new Error('A real Chromium/Chrome binary is required');
-const browser=await puppeteer.launch({executablePath:chrome,headless:true,protocolTimeout:120000});
+const args=process.env.HOREB_SWIFTSHADER==='1'
+ ? ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']:[];
+if(process.env.HOREB_NO_SANDBOX==='1')args.push('--no-sandbox','--disable-setuid-sandbox');
+const browser=await puppeteer.launch({executablePath:chrome,headless:true,args,protocolTimeout:120000});
 const out=join(process.cwd(),'.test-build','screenshots');
 mkdirSync(out,{recursive:true});
 const page=await browser.newPage();
