@@ -76,7 +76,7 @@ try{
  await page.click('[data-testid="moses-origin-start"]');
  await page.waitForSelector('[data-testid="moses-origin-story"]');
  const expectedOrigins=['Младенец у Нила','Дочь фараона','Выбор и бегство',
-   'Колодец в Мадиаме','Бог услышал стенания','Пастух на пути к Хориву'];
+   'Жизнь в Мадиаме','Бог услышал стенания','Пастух на пути к Хориву'];
  for(let i=0;i<expectedOrigins.length;i++){
    const t=await page.$eval('[data-testid="moses-origin-title"]',el=>el.textContent||'');
    const step=await page.$eval('[data-testid="moses-origin-progress"]',el=>el.textContent||'');
