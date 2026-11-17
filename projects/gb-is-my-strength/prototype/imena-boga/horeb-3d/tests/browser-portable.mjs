@@ -69,6 +69,15 @@ try {
     const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
     return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
   },{timeout:6000});
+  // W8D: the two later moments are readable offline and leave no
+  // 3D scene pretending to depict the passage of unknown years.
+  for(const [stage,reference] of [[1,'Исх. 2:7–9'],[2,'Исх. 2:10']]){
+    await page.click(`[data-testid="moses-rescue-stage-${stage}"]`);
+    const content=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
+    if(!content.includes(reference)||!(await page.$('[data-testid="moses-rescue-intertitle"]'))||
+       (await page.$$('canvas')).length)
+      throw new Error('Offline Moses rescue sequence failed '+JSON.stringify({stage,reference}));
+  }
   await page.click('[data-testid="moses-origin-next"]');
   await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
   if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');

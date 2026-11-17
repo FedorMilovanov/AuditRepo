@@ -186,6 +186,34 @@ try{
        return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
      },{timeout:6000});
      await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
+     // W8D: textual intertitles happen AFTER the river discovery and must
+     // never pretend to be a 3D palace, nursing room or historical portrait.
+     for(const [stage,reference] of [[1,'Исх. 2:7–9'],[2,'Исх. 2:10']]){
+       await page.click(`[data-testid="moses-rescue-stage-${stage}"]`);
+       const intertitle=await page.$eval('[data-testid="moses-rescue-intertitle"]',e=>e.textContent||'');
+       const visibleRef=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
+       if(!intertitle||!visibleRef.includes(reference)||
+          !(await page.$eval(`[data-testid="moses-rescue-stage-${stage}"]`,e=>e.getAttribute('aria-pressed')==='true'))||
+          (await page.$$('canvas')).length!==0)
+         throw new Error('MOSES RESCUE TEXTUAL TIME BREAK '+JSON.stringify({stage,reference,intertitle}));
+       if(stage===2){
+         if(!intertitle.includes('точный возраст не указан'))
+           throw new Error('MOSES ADOPTION MUST MARK UNSPECIFIED AGE');
+         await page.screenshot({path:join(out,'smoke-moses-rescue-adoption-desktop.png')});
+       }
+     }
+     await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+     const intertitleFits=await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&
+       !!document.querySelector('[data-testid="moses-rescue-intertitle"]'));
+     if(!intertitleFits)throw new Error('MOSES RESCUE INTERTITLE PHONE OVERFLOW');
+     await page.screenshot({path:join(out,'smoke-moses-rescue-adoption-phone.png')});
+     await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
+     await page.click('[data-testid="moses-rescue-stage-0"]');
+     await page.waitForFunction(()=>
+       document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileRendered==='true',
+       {timeout:30000});
+     if((await page.$$('canvas')).length!==1)
+       throw new Error('MOSES DISCOVERY WEBGL REMOUNT FAILED');
    }
    if(i<5){
      await page.click('[data-testid="moses-origin-next"]');

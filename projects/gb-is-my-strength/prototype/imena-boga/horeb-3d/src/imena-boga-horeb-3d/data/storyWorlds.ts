@@ -135,6 +135,27 @@ export const MOSES_ORIGIN_BEATS = [
     limit: 'Точная современная гора и маршрут пастуха не установлены. Хорив в проекте — художественный ландшафт.' },
 ] as const;
 
+/** W8D: source-ordered micro-scenes inside the SECOND Nile episode.
+ * ONLY the discovery is physically staged in Three.js. The nursing
+ * arrangement and later adoption are time-separated textual intertitles:
+ * do not invent a palace interior, precise ages or a second 3D location.
+ * Original editorial paraphrases, not verbatim licensed Bible text.
+ */
+export const MOSES_RESCUE_STAGES = [
+  { id:'discovery', reference:'Исх. 2:5–6', title:'Корзина среди тростника',
+    label:'Обнаружение',
+    scene:'Дочь фараона видит корзину среди тростника. Служанка приносит её. Царевна открывает корзину, замечает плачущего мальчика и проявляет сострадание.',
+    transition:'Это единственный момент эпизода, представленный в 3D. Имена царевны и служанок текст не сообщает.' },
+  { id:'nursing', reference:'Исх. 2:7–9', title:'Сестра и родная мать',
+    label:'Мать-кормилица',
+    scene:'Сестра ребёнка предлагает найти женщину, которая сможет его кормить. По разрешению царевны она зовёт родную мать мальчика; та берёт его на вскармливание.',
+    transition:'Сестра, мать и их разговор не помещаются искусственно в ту же 3D-композицию обнаружения.' },
+  { id:'adoption', reference:'Исх. 2:10', title:'Имя Моисей',
+    label:'Имя Моисей',
+    scene:'Когда ребёнок подрос, мать привела его к дочери фараона. Он стал её сыном и получил имя Моисей — повествование связывает имя со спасением из воды.',
+    transition:'Между вскармливанием и усыновлением прошло время, но возраст мальчика, точная продолжительность и дворцовая обстановка здесь не названы.' },
+] as const;
+
 export const HOREB_CALL_STOP = STORY_STOPS.find(s => s.id === 'horeb-call')!;
 export const EGYPT_RETURN_STOP = STORY_STOPS.find(s => s.id === 'egypt-return')!;
 
