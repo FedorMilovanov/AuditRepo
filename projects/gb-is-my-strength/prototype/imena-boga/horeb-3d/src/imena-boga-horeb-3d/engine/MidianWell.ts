@@ -58,7 +58,6 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   sun.shadow.normalBias=.04;
   scene.add(sun);
   const mat=(color:number,roughness=.96)=>new THREE.MeshStandardMaterial({color,roughness});
-  const stone=[mat(0xa19482),mat(0xa89b89),mat(0x988d7d),mat(0xa69a89)];
   const clay=[mat(0xa66e52),mat(0xc28e66),mat(0x99654c)];
   const groundGeo=new THREE.PlaneGeometry(56,66,92,100);
   groundGeo.rotateX(-Math.PI/2);
