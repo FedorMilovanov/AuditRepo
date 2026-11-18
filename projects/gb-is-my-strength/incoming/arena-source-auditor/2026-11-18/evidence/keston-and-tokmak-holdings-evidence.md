@@ -244,3 +244,89 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 [lppi-nlr]: https://nlr.ru/res/inv/ukazat55/record_full.php?record_ID=177403
 [lppi-cat]: https://primo.nlr.ru/permalink/f/df0lai/07NLR_LMS010848874
 [nlkr-archive]: http://nlkr.gov.kg/departments/otdel-arhivnogo-fonda/
+
+## Дополнение XII — 18.11.2026 UTC
+
+### XII: газета и тираж
+
+| Свидетель | Что проверено | Предел вывода |
+| --- | --- | --- |
+| [*The Australian Church Record*, PDF издателя][acr-xii] | c1 — шапка **25 марта 1985**, **№1821** (отметка `MAR 28 1985` не дата шапки). c6, `WORLD REVIEW`, между заметками о переводах Библии и видеослужении Тайваня: *Underground printing works discovered*, подпись **Keston College**; «By 1982… about half a million items of religious literature in seven languages». | c0 захватывает полосу 12 от **11.03.1985**, c5–7 смешивают колонки и соседние статьи, в c6 есть футер полосы 4. Ни номер чанка, ни соседний футер, ни поисковый фрагмент о с. 5 не доказывают печатную страницу заметки. |
+| [Moore College, карточка 58913][acr-moore] / [манифест][acr-iiif] | Дата именно **25.03.1985**, `Identifier=5a03694f-f282-4dba-a50a-f0cca8026ec4`, **8 кадров**, источник — печатный экземпляр **Donald Robinson Library**. Видимый transcript содержит соседние новости и фрагмент с футером от 11.03; нужная заметка в нём не прочитана. У [сервиса кадра `_3`][acr-img-info] получены метаданные, JPG и thumbnail — HTTP 500. | Кадр `_3` испытан по манифесту, **не** установленный кадр заметки. Нужны образ полосы с колонтитулом и титульная полоса для привязки; это не отказ архива. Режим `In copyright – educational use permitted` указан для исследования/учёбы с кредитом Moore Theological College, не для свободной перепубликации. Ранее найденная карточка 58933 относится к 16.12, не к этому выпуску. |
+| [National Library of Australia, Bib ID 1839657][acr-nla] | Газета, **NX 468**, указан комплект **21.01.1954–06.07.1987** и возможность запроса в читальный зал/Copies Direct; авторские права оговорены по выпуску и статье. | Запасной адрес: диапазон включает дату, но наличие и комплектность самого №1821 по карточке серии не проверены. |
+
+В первом абзаце заметки ***Friedensstimme*** назван источником сообщения о раскрытии типографии близ **Алма-Аты**; арест Григория и Андрея Вольфов приведён как предполагаемый (`presumably`). Изъятие **30 000 Библий / 6 т бумаги** — часть этого сообщения, не проверенная опись. Следующий абзац с оценкой выпуска относится к издательству в целом; **не приписывать его прямо Friedensstimme** только из-за первого абзаца. Три прежних текста разобраны в [проходе IX](../PRINT-RUN-AND-TOKMAK.md): **350 тыс.** разных изданий в отчёте 22.05.1976, **около полумиллиона** в сообщении о совещаниях с отсылкой к БЛ №1/1977, **около полумиллиона Евангелий и духовных сборников к 1983 г.** у **Л. М. Алексеевой**. Различаются дата, категории и источник сообщения; неизвестна зависимость этих оценок и методика. *ACR* не заменяет проверку прим. 23, экземпляров Бюл. №111/112 или самого комплекта ВИ №3–4 (1976). [Seago, прим. 31–33][seago-xii] ссылается на английскую с. 211 Алексеевой, а не даёт новый учёт её цифры.
+
+Для поиска исходной заметки или источника оценки: [Klippenstein, *RCL* 14.1][rcl-fs] c0/5 различает *Nachrichten von den Feldern der Verfolgung*, *Prisoners’ Bulletin* и *Article 227*. Это кандидаты для сверки канала, не найдённые перепечатки текста ACR. У [Keston News Service №224, 02.05.1985][kns224] в титульном извлечении Чугуевка (с. 2) и съезд (с. 3), не локус заметки от марта. В *RCL* [10.1, с. 81–83][rcl-10a] начальный фрагмент — сводка Keston, заканчивающая учёт 1981 годом; [10.3, `Soviet Religious Samizdat`][rcl-10c] c2–4 описывает, среди прочего, Бюл. №97 с номером Keston **[3627]**, не №102/106. Эти выборки не представляют именной указатель. [*Religious Prisoners in the USSR*, Greenfire 1987][gb-keston] (160 с., ISBN 9780947697778) не дал `Kinas` в поиске Google Books. Это не чтение книги; его не нужно отождествлять с *Christian Prisoners in the USSR 1985/6* (Keston Book №11) или датировкой `Religious… 1985` в библиографических отсылках.
+
+### XII: папки и именные листы
+
+[KC.29, TARO][taro] c1–3, 6, 16–17 и [BARD][kc] — два входа к одной описи; `Box / Folder` не равно листу. Дополнительно к маршрутам **27/5**, **27/9** и **28/23**:
+
+| Раздел | Папки и крайние даты | Что проверять, если доступны |
+| --- | --- | --- |
+| Series 1, General | **3/11** *Trials*, 1974–1987; **4/9** *Imprisonment*, 1982; **5/2**, 1987; **5/10** *House searches. Confiscation of Literature and Property*, 1977–1989. Резерв: **2/3** *List of Names*, 1974–1982; **8/6** Council of Relatives, 1971–1988. | Раздельно осуждение, освобождение, аресты и изъятие; ранний срок проверять по датированному именному листу. Сверять, является ли материал новым документом или копией сообщений Совета. |
+| Series 2, Samizdat | **17/5** *Imprisonment. General*, 1981–1984; **18/16** Council of Relatives, 1970–1983; **30/31–34**, *Вестник истины* №1(77)–4(80), 1982. | Имена Кинаса, Клауса, Сухорукова, Шевченко; сама телеграмма или её отдельная копия, язык, дата и исходящие реквизиты. Ни одна папка пока не прочитана по имени. |
+| Тираж и встреча 1966 г. | Series 1 **8/10**, *Printing Press. Underground Publication. General*, 1967–1987 и б/д; **8/12**, *Underground Production of Literature*, 1971–1986 и б/д. Series 2 **31/27–28** — *Khristianin Publishing House*, 1971–1980 и б/д / 1983; **31/29**, *Account of a Meeting between CCECB and AUCECB*, 1966. | Образы страниц о тиражах, происхождение отчёта. Дата встречи не дата её перепечатки; «издательство» в названии папки не подтверждает географию печати. |
+
+**ВИ 1982: открылась текстовая выборка Stunda.** [№1(77)][vi82-1] c0/9/13–14: по оглавлению начало отчёта на **с. 22**, редакционная ремарка «с некоторыми сокращениями» и дата встречи **23.03.1966**; письмо «Надежда и помощь моя — Господь!» с **с. 33**, подписано **Надежда И.** [№2(78)][vi82-2] и [№4(80)][vi82-4] — начальные фрагменты с оглавлениями; №4 указывает Д. В. Минякова (с. 26) и Н. П. Храпова (с. 29). [№3(79)][vi82-3] c0/13–14/16: «Радуюсь в Господе», **с. 38** по оглавлению, — письма **П. В. Румачика**, включая письмо от 04.05.1981; стихотворение «Брату в ссылке» (с. 44) не идентифицирует Кинаса. Колофон в конце извлечения: «Москва», «Отпечатано в типографии издательства „Христианин“». Это выходные сведения конкретного выпуска, не доказательство физического места печати. Эти фрагменты не добавили именной записи Кинаса; **не** исчерпывающая проверка номеров. Происхождение копий Stunda не выяснено. У [Baylor 1059407][vi82-baylor] и [IIIF][vi82-baylor-iiif] №1 имеет **48 кадров** при описании **44 с.**; JPG `_4` не получен. [Toronto, карточка `-20`][vi82-toronto] — ещё один каталог, не сличение экземпляров.
+
+**Искомые образы не подменены текстом.** У [«Второй литературы»][yl-series] ссылки на оба тома Любарского ведут к прежним PDF [вып. 5][y5pdf] / [вып. 6][y6pdf]. Веб-оглавление [вып. 6][y6toc] даёт диапазоны **К 110–132 / С 193–208 / Ш 235–242**, но не ссылки на именные листы. Другой индекс вып. 5 ведёт на [републикацию, вернувшую 504][y5-alt]; [«Мемориал», 21443][memo5] не открылся. Именные листы не прочитаны и никакого отрицательного вывода о наличии записей нет. [CMU canvas 4][cmu-manifest] повторно идентифицирован, но [лист №20][cmu-list] доступен здесь только в извлечении/OCR. [№139, п. 4][b139pdf] остаётся текстовым сообщением; номер печатной полосы не установлен. Совпадающая дата окончания срока не доказывает независимость двух сообщений, первый срок, ссылку или фактический учёт по освобождении.
+
+### XII: судебная регистрация
+
+1. **Держатель неизвестен.** [Каталог Судебного департамента][suddep-xii] в поисковом индексе даёт Чуйское управление: `chuysd@e-sot.kg`, +996 312 56-20-14 (прямое веб-извлечение не открылось). Это третий маршрут выяснения, кроме [двух современных канцелярий][tokmok-court] и Чуйского РУ архивной службы; контакты и правопреемство переспросить. В [инструкции, утв. постановлением Пленума ВС КР от 28.07.2022 №14][court-instructions] поисковое извлечение §22 п. 175 описывает алфавитный журнал на каждого обвиняемого (форма 10) и УСК; п. 221 — отметку при сдаче в архив. Сам PDF не прочитан. Эти названия помогают составить адресный запрос, но форма №10 в 1982 г. не доказана. У Чуйского РУ **244/1, §107** заканчивается 1974 г., «на месте» с 1975 г. относится к путеводителю, не к сегодняшней проверке наличия.
+2. **Передача и доступ — отдельные вопросы.** [Закон КР №125 о Национальном архивном фонде][archive-law-xii], c3/c5, ст. 17–20 и 27–29: ведомственное и постоянное хранение, передача при реорганизации, доступ и ограничения. Ст. 18¹ относится к передаче в зависимости от обнародования, не объявляет ведомственные следственные дела открытыми. Нужны реквизиты передачи/утраты и ответ держателя, а не вывод из общих сроков. Веб-сводка [УПК на 01.04.1998][upk-xii] и библиографическая ссылка [Коомбаева на издание 1986 г., №38][koombaev-xii] не дают редакцию УПК на 08.06.1982. Закон о судоустройстве **28.11.1981**, *Ведомости* **№23, ст. 203**, остаётся не прочитан.
+3. **Реабилитация — только запрос реквизитов, не вывод.** [Закон КР №1538-XII, ред. 30.12.2024][rehab-law-xii] c0–1, ст. 5 называет некоторые религиозные составы, но не устанавливает статью приговора Кинаса; ст. 6 предусматривает прокурорскую проверку и направление по месту последнего судебного решения, ст. 7 различает судебный акт и справку. [№207][rehab-amend-xii], опубликован 10.01.2025, добавил, в частности, порядок работы комиссии; доступ для её исследователей к материалам **1917–1953 гг.** (ст. 6²) не равен общему открытию дел 1982 г. Не смешивать этот специальный порядок с вопросом о реквизитах уже состоявшегося решения или проверки по ст. 6–7. Ни подтверждения реабилитации, ни номера материала здесь нет.
+
+### Новые черновики запросов
+
+**Moore College / Donald Robinson Library (если не удастся прочитать полосы — NLA).**
+
+> Could you identify the printed page of “Underground printing works discovered” (byline Keston College), *The Australian Church Record*, no. 1821, 25 March 1985, Moore item 58913? The publisher's text extraction includes a leaf dated 11 March and mixes the columns. I need the masthead and the complete page bearing the article, including its folio, for research collation. Please distinguish access for study from permission to reproduce. This is not a paid order.
+
+**Keston Center, дополнение к запросам по №102/106/139.**
+
+> Could you check KC.29, Series 1, box 3 folder 11, box 4 folder 9, box 5 folders 2 and 10, and Series 2, box 17 folder 5 and box 18 folder 16, for Ivan Ervinovich Kinas and the Tokmak case of 1982? Please check Pavel Ivanovich Sukhorukov and Daniil Prokopyevich Shevchenko separately. Please identify each relevant leaf and whether it is a bulletin excerpt, telegram, translated report or court document. For the production estimate credited to Keston College in March 1985, are there related notes or press releases in box 8 folders 10 and 12, or a source behind the 1983 Khristianin folder (31/28)? If present, please give dates and citation/scan terms separately.
+
+**Чуйское управление Суддепа — только маршрутизация.**
+
+> Прошу сообщить, кто хранит регистрационные журналы, алфавитные карточки, книги приговоров и описи уголовных дел суда, заседавшего в Токмаке 8 июня 1982 г. По сообщению Бюллетеня №106 осуждён Иван Эрвинович Кинас, 1951 г. р.; название суда не установлено. Если регистрация передана или хранится отдельно от дел, нужны держатель, дата и № акта, фонд/опись/единица хранения либо адрес для запроса. Сведения о порядке доступа прошу сообщить отдельно от ответа о наличии.
+
+**Прокуратура / правопреемник суда — только реквизиты результата, если он был.**
+
+> Прошу уточнить, есть ли зарегистрированный материал проверки, судебное решение или справка о реабилитации И. Э. Кинаса по делу, о котором сообщено как об осуждении 08.06.1982 в Токмаке. Ищу дату, номер, орган и доступный порядок запроса по ст. 6–7 Закона КР №1538-XII. Это информационный запрос, не заявление о начале реабилитации и не утверждение, что такая проверка уже проводилась.
+
+Запросы не отправлены; оплат, заказов копий и прав на публикацию нет. Самостоятельного архивного ответа о хранении или утрате не получено.
+
+### Срез доставки XII
+
+До записи XII `arena/fa045b53-auditrepo` локально и на origin — `276cf5c36bcda2d1bce111d727b467a16765b7c9`, AuditRepo `main` — `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`. В **20:26 UTC** сверены **27** путей накопленного diff этой ветки с **750** файловыми записями **10** открытых PR AuditRepo: **0 пересечений** по `filename` и `previous_filename`. Использована пагинация списка PR и `/files`, количество записей сверено с REST `changed_files`, base/head и удалённые ссылки до и после совпали. Это снимок владения путями в AuditRepo, не проверка совместимости с чужим merge или разрешение на него.
+
+[acr-xii]: https://www.australianchurchrecord.net/wp-content/uploads/2018/11/25th-March-1985.pdf
+[acr-moore]: https://archives.moore.edu.au/Documents/Detail/1985-03-25-the-australian-church-record-1985/58913
+[acr-iiif]: https://iiif.quartexcollections.com/moore/iiif/35d9fc89-40c9-4512-a08c-e22b0259974b/manifest
+[acr-img-info]: https://iiif.quartexcollections.com/moore/iiif/d56a766c-0a70-459e-8b0a-9793acfccfb8/info.json
+[acr-nla]: https://catalogue.nla.gov.au/catalog/1839657
+[vi82-1]: http://rusbaptist.stunda.org/vi/1982-1.pdf
+[vi82-2]: http://rusbaptist.stunda.org/vi/1982-2.pdf
+[vi82-3]: http://rusbaptist.stunda.org/vi/1982-3.pdf
+[vi82-4]: http://rusbaptist.stunda.org/vi/1982-4.pdf
+[vi82-baylor]: https://digitalcollections-baylor.quartexcollections.com/Documents/Detail/vestnik-istiny-no.-1-77-1982/1059407
+[vi82-baylor-iiif]: https://iiif.quartexcollections.com/digitalcollections-baylor/iiif/2848989d-34c5-4b4a-8bc4-fb8ef54187b4/manifest
+[vi82-toronto]: https://samizdat.library.utoronto.ca/content/vestnik-istiny-dukhovno-nadziratelnyi-zhurnal-soiuza-tserkvei-evangelskikh-khristian-20
+[seago-xii]: https://baylor-ir.tdl.org/bitstreams/9ae8057f-75ae-4bb1-8d9e-e199ac15cbed/download
+[kns224]: https://digitalcollections-baylor.quartexcollections.com/Documents/Detail/keston-news-service-no-224/1052984
+[rcl-fs]: https://www.biblicalstudies.gospelstudies.org.uk/pdf/rcl/14-1_017.pdf
+[rcl-10a]: https://biblicalstudies.org.uk/pdf/rcl/10-1_081.pdf
+[rcl-10c]: https://biblicalstudies.org.uk/pdf/rcl/10-3_317.pdf
+[gb-keston]: https://books.google.com/books?id=ybvYAAAAMAAJ&q=Kinas
+[yl-series]: https://vtoraya-literatura.com/periodical-2230
+[y5-alt]: https://dokumen.pub/5-151983.html
+[suddep-xii]: https://suddep.sot.kg/page/contacts
+[court-instructions]: https://admin-sot.sot.kg/public/sites/4/2022/08/Dlya-Plenuma-Russ.variant-posle-ISPRAVLENIJ-p.249-325-17.10.2022-12-1.pdf
+[archive-law-xii]: https://cbd.minjust.gov.kg/288/edition/24558/ru
+[upk-xii]: https://continent-online.com/Document/?doc_id=30211919
+[koombaev-xii]: https://www.dissercat.com/content/polozhenie-lichnosti-v-ugolovnom-sudoproizvodstve-po-materialam-kyrgyzskoi-respubliki-i-ross
+[rehab-law-xii]: https://cbd.minjust.gov.kg/751/edition/1234978/ru
+[rehab-amend-xii]: https://cbd.minjust.gov.kg/4-5454/edition/24561/ru
