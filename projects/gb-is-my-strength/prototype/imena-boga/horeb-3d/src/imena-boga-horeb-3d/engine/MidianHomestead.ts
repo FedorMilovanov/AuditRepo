@@ -13,6 +13,12 @@ export const HOMESTEAD_STRUCTURE=Object.freeze({
   halfWidth:3.1,back:-3.0,front:3.0,doorHalfWidth:1.42,
   hearthX:-5.35,hearthZ:1.45,hearthRadius:.94,
 });
+/** Author-defined mesh subdivisions, not claims about an Exodus-era textile.
+ * Kept bounded to avoid shader/texture costs on software WebGL and phones. */
+export const HOMESTEAD_TEXTILE_DETAIL=Object.freeze({
+  roofU:36,roofV:22,sideU:24,sideV:14,
+  rearU:28,rearV:14,matU:28,matV:20,
+});
 const hash=(n:number)=>{const v=Math.sin(n*137.19+17.2)*47358.34;return v-Math.floor(v);};
 /** The very same deterministic rock instances drive visible geometry and
  * walkable-space collision, so a displayed large stone cannot be ghosted. */
@@ -209,7 +215,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   // Two 24×16 fabric surfaces: actual curvature and draped side seams.
   for(const side of [-1,1]){
-    const g=new THREE.PlaneGeometry(1,1,24,16);
+    const g=new THREE.PlaneGeometry(1,1,HOMESTEAD_TEXTILE_DETAIL.roofU,HOMESTEAD_TEXTILE_DETAIL.roofV);
     const p=g.getAttribute('position');const vertexColor:number[]=[];
     for(let i=0;i<p.count;i++){
       const u=p.getX(i)+.5,v=p.getY(i)+.5;
@@ -219,8 +225,12 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       const ripple=.034*Math.sin(u*32+v*11)+.017*Math.cos(u*17-v*19);
       const y=3.07-u*1.80-sag+ripple;
       p.setXYZ(i,x,y+homesteadGround(x,z),z);
-      const c=.93+.06*Math.sin(u*19+v*5)+.045*Math.cos(u*42-v*7);
-      vertexColor.push(c,c*.98,c*.945);
+      // Longitudinal fabric bands and a modest cross-weft variation.
+      // Colour variations follow actual subdivided fabric vertices.
+      const bands=.96+.078*Math.sin(u*20.2+v*.72)+.033*Math.cos(u*43-v*3.9);
+      const weft=.978+.027*Math.sin(v*74+u*6.2);
+      const c=bands*weft;
+      vertexColor.push(c,c*.979,c*.952);
     }
     g.setAttribute('color',new THREE.Float32BufferAttribute(vertexColor,3));
     g.computeVertexNormals();
@@ -230,7 +240,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     pivot.add(fabric);
     // The actual perimeter below the eaves is made of 3D cloth, not an
     // invisible full-height walking barrier behind roof geometry.
-    const sideGeo=new THREE.PlaneGeometry(1,1,18,10);
+    const sideGeo=new THREE.PlaneGeometry(1,1,HOMESTEAD_TEXTILE_DETAIL.sideU,HOMESTEAD_TEXTILE_DETAIL.sideV);
     const sidePos=sideGeo.getAttribute('position'),sideColors:number[]=[];
     for(let i=0;i<sidePos.count;i++){
       const u=sidePos.getX(i)+.5,v=sidePos.getY(i)+.5;
@@ -252,10 +262,30 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       .04,rope,'shelter-edge-cord');
   }
   // Rear fabric is solid; front remains genuinely open for walking.
-  const rear=new THREE.Mesh(new THREE.PlaneGeometry(5.92,1.46,12,8),
-    new THREE.MeshStandardMaterial({color:0x9d866e,roughness:1,side:THREE.DoubleSide}));
-  rear.position.set(0,homesteadGround(0,-2.97)+.73,-2.97);
-  rear.receiveShadow=true;rear.name='shelter-rear-cloth';pivot.add(rear);
+  // The rear is a visibly draped, continuous real surface, not one
+  // billboard-flat brown rectangle. Its displacement stays within the
+  // already-colliding rear wall band at z=-3.0 (±0.18 m).
+  const rearGeo=new THREE.PlaneGeometry(5.92,1.46,
+    HOMESTEAD_TEXTILE_DETAIL.rearU,HOMESTEAD_TEXTILE_DETAIL.rearV);
+  const rearPos=rearGeo.getAttribute('position'),rearColors:number[]=[];
+  for(let i=0;i<rearPos.count;i++){
+    const x=rearPos.getX(i),v=(rearPos.getY(i)+.73)/1.46;
+    const folds=.050*Math.sin((x+2.96)*3.6+v*.8)+
+      .020*Math.sin((x+2.96)*8.7-v*1.3);
+    const z=-2.97+folds;
+    const y=homesteadGround(x,z)+.73+rearPos.getY(i);
+    rearPos.setXYZ(i,x,y,z);
+    const shade=.92+.062*Math.cos((x+2.96)*4.0+v*.6)+
+      .025*Math.sin((x+2.96)*10.9+v*6.1);
+    rearColors.push(shade,shade*.985,shade*.963);
+  }
+  rearGeo.setAttribute('color',new THREE.Float32BufferAttribute(rearColors,3));
+  rearGeo.computeVertexNormals();
+  const rear=new THREE.Mesh(rearGeo,new THREE.MeshStandardMaterial({
+    vertexColors:true,color:0xa58e77,roughness:1,side:THREE.DoubleSide,
+  }));
+  rear.castShadow=true;rear.receiveShadow=true;
+  rear.name='shelter-rear-cloth';pivot.add(rear);
   // A filled triangular upper gable joins the roof rather than leaving an
   // impossible gap above a solid lower back wall.
   const rearBase=homesteadGround(0,-2.98);
@@ -278,10 +308,24 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       .021,rope,'shelter-real-tension-rope');
   }
   // A woven floor mat, relief from meshes rather than an image overlay.
-  const matGeo=new THREE.PlaneGeometry(4.6,3.3,12,10);
+  const matGeo=new THREE.PlaneGeometry(4.6,3.3,
+    HOMESTEAD_TEXTILE_DETAIL.matU,HOMESTEAD_TEXTILE_DETAIL.matV);
   matGeo.rotateX(-Math.PI/2);
-  matGeo.translate(0,homesteadGround(0,0)+.027,-.38);
-  const matFloor=new THREE.Mesh(matGeo,mat(0x897057));
+  const matPos=matGeo.getAttribute('position'),matColors:number[]=[];
+  for(let i=0;i<matPos.count;i++){
+    const x=matPos.getX(i),z=matPos.getZ(i)-.38;
+    const relief=.007*Math.sin(x*20.6)*Math.cos(z*19.2);
+    matPos.setXYZ(i,x,homesteadGround(x,z)+.027+relief,z);
+    const border=Math.abs(x)>2.08||Math.abs(z+.38)>1.46;
+    const weave=.935+.047*Math.sin(x*14.2)+.038*Math.sin(z*20.4+x*1.3);
+    const c=weave*(border?.81:1);
+    matColors.push(c,c*.959,c*.901);
+  }
+  matGeo.setAttribute('color',new THREE.Float32BufferAttribute(matColors,3));
+  matGeo.computeVertexNormals();
+  const matFloor=new THREE.Mesh(matGeo,new THREE.MeshStandardMaterial({
+    color:0x947b60,vertexColors:true,roughness:1,side:THREE.DoubleSide,
+  }));
   matFloor.name='shelter-3d-floor-mat';matFloor.receiveShadow=true;
   pivot.add(matFloor);
 
@@ -439,6 +483,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));
   canvas.dataset.homesteadRockInstances=String(count);
   canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
+  // Count actual render triangles, not merely declared subdivision labels.
+  canvas.dataset.homesteadRearDrapeFaces=String((rearGeo.index?.count||0)/3);
+  canvas.dataset.homesteadWovenMatFaces=String((matGeo.index?.count||0)/3);
   frame=requestAnimationFrame(render);
   function dispose(){
     if(disposed)return;disposed=true;cancelAnimationFrame(frame);observer.disconnect();reset();

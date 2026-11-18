@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -38,6 +38,17 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12C.2: varied cloth relief must remain a bounded real mesh, not a
+// single flat billboard or a high-frequency fragment-shader effect.
+t('W12C.2 rear cloth and floor have finite low-cost physical subdivisions',
+  HOMESTEAD_TEXTILE_DETAIL.rearU>=24&&HOMESTEAD_TEXTILE_DETAIL.rearV>=12&&
+  HOMESTEAD_TEXTILE_DETAIL.matU>=24&&HOMESTEAD_TEXTILE_DETAIL.matV>=18&&
+  HOMESTEAD_TEXTILE_DETAIL.rearU*HOMESTEAD_TEXTILE_DETAIL.rearV*2<1100&&
+  HOMESTEAD_TEXTILE_DETAIL.matU*HOMESTEAD_TEXTILE_DETAIL.matV*2<1500);
+t('W12C.2 roof and side cloth remain physically subdivided but bounded',
+  HOMESTEAD_TEXTILE_DETAIL.roofU>=30&&HOMESTEAD_TEXTILE_DETAIL.roofV>=18&&
+  HOMESTEAD_TEXTILE_DETAIL.sideU>=20&&HOMESTEAD_TEXTILE_DETAIL.sideV>=12&&
+  HOMESTEAD_TEXTILE_DETAIL.roofU*HOMESTEAD_TEXTILE_DETAIL.roofV*4<4500);
 // W12C.1: four independent distant hill masses, not a full 360-degree wall.
 t('W12C.1 distant hills leave open azimuth gaps rather than enclosing an arena',
   HOMESTEAD_RIDGE_SECTORS.length===4&&
