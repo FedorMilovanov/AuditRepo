@@ -8,6 +8,7 @@ import type { MidianControl,MidianDirection } from './MidianWell.js';
 
 export const HOMESTEAD_WALK=Object.freeze({
   maxX:18,maxZ:22,eye:1.68,speed:3.1,startX:0,startZ:10,
+  phoneStartZ:14.5,phoneVerticalFov:72,
 });
 export const HOMESTEAD_STRUCTURE=Object.freeze({
   halfWidth:3.1,back:-3.0,front:3.0,doorHalfWidth:1.42,
@@ -395,7 +396,14 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   function setExplore(on:boolean){
     if(disposed)return;
     exploring=on;reset();last=0;
-    if(on){walk.x=HOMESTEAD_WALK.startX;walk.z=HOMESTEAD_WALK.startZ;walk.yaw=0;walk.pitch=-.08;}
+    if(on){
+      walk.x=HOMESTEAD_WALK.startX;
+      // On a 390 px portrait viewport, the original 10m placement cropped
+      // both eaves. Start on physically navigable ground farther away.
+      walk.z=window.innerWidth<=520?
+        HOMESTEAD_WALK.phoneStartZ:HOMESTEAD_WALK.startZ;
+      walk.yaw=0;walk.pitch=-.08;
+    }
     canvas.dataset.midianMode=on?'walk':'shot';
   }
   function setMovement(d:MidianDirection,on:boolean){moving[d]=on&&exploring;}
@@ -420,7 +428,11 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   const resize=()=>{
     const b=canvas.getBoundingClientRect();
     const w=Math.max(1,Math.round(b.width)),h=Math.max(1,Math.round(b.height));
-    renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.fov=window.innerWidth<=520?HOMESTEAD_WALK.phoneVerticalFov:56;
+    camera.updateProjectionMatrix();
+    canvas.dataset.homesteadCameraVerticalFov=String(camera.fov);
   };
   const observer=new ResizeObserver(resize);observer.observe(canvas);resize();
   window.addEventListener('keydown',keyDown);window.addEventListener('keyup',keyUp);

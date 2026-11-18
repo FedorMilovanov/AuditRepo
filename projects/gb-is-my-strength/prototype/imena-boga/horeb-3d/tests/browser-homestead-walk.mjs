@@ -99,10 +99,17 @@ try{
   // Preserve the meaningful mobile composition from the canonical start.
   await page.keyboard.press('Escape');
   await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='shot');
+  // Use the real narrow viewport BEFORE the entry action: otherwise the
+  // same 10 m desktop start leaks into the phone screenshot.
+  await page.setViewport({width:390,height:844,deviceScaleFactor:1});
   await page.click('[data-testid="midian-homestead-explore-start"]');
   await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='walk');
-  await page.setViewport({width:390,height:844,deviceScaleFactor:1});
-  await sleep(140);
+  await sleep(180);
+  const phoneStart=await read();
+  const phoneFov=await page.$eval('[data-testid="moses-midian-homestead-3d"]',
+    e=>Number(e.dataset.homesteadCameraVerticalFov));
+  if(Math.abs(phoneStart.z-14.5)>.1||Math.abs(phoneStart.x)>.1||phoneFov!==72)
+    throw Error('HOMESTEAD portrait establishing position/lens '+JSON.stringify({phoneStart,phoneFov}));
   const mobile=await page.$eval('[data-testid="midian-viewport"]',e=>{
     const r=e.getBoundingClientRect();
     return {w:r.width,h:r.height,hasKeys:!!e.querySelector('[data-testid="midian-move-forward"]')};
@@ -110,6 +117,12 @@ try{
   if(mobile.w<389||mobile.h<843||!mobile.hasKeys)
     throw Error('HOMESTEAD mobile controls hidden '+JSON.stringify(mobile));
   await page.screenshot({path:join(out,'homestead-walk-mobile390.png')});
+  // Phone framing is not an unreachable vanity camera: movement must
+  // physically advance along the same collision-checked access route.
+  await page.keyboard.down('w');await sleep(820);await page.keyboard.up('w');
+  const phoneForward=await read();
+  if(phoneStart.z-phoneForward.z<.12)
+    throw Error('HOMESTEAD portrait player cannot reach shelter '+JSON.stringify({phoneStart,phoneForward}));
   await page.keyboard.press('Escape');
   await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='shot');
   const focus=await page.evaluate(()=>document.activeElement?.getAttribute('data-testid'));

@@ -38,6 +38,15 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12C.3: the mobile establishing camera still begins on ground from
+// which the centre corridor leads physically to the same tent opening.
+t('W12C.3 portrait camera approach corridor remains unobstructed',
+  HOMESTEAD_WALK.phoneStartZ>HOMESTEAD_WALK.startZ+3&&
+  HOMESTEAD_WALK.phoneStartZ<HOMESTEAD_WALK.maxZ&&
+  Array.from({length:25},(_,i)=>HOMESTEAD_WALK.phoneStartZ-i*.2)
+    .every(z=>homesteadWalkable(0,z)));
+t('W12C.3 mobile portrait lens remains in a controlled wide-angle range',
+  HOMESTEAD_WALK.phoneVerticalFov>=68&&HOMESTEAD_WALK.phoneVerticalFov<=76);
 // W12C.2: varied cloth relief must remain a bounded real mesh, not a
 // single flat billboard or a high-frequency fragment-shader effect.
 t('W12C.2 rear cloth and floor have finite low-cost physical subdivisions',
