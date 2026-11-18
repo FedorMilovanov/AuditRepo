@@ -791,3 +791,10 @@ for(const [source,id,quote,required,forbidden] of [
  for(const token of forbidden)if(entry.includes(token))throw Error('W91 Research UI overclaim returned: '+id+' / '+token);
 }
 console.log('W91_RESEARCH_UI_SPEAKER_VARIANT_PASS',JSON.stringify({cards:7,release:'BLOCKED',externalScholarReviews:0}));
+
+// W91 methodology disclosure is readable, restrained prose, not a release gate.
+const w91Intro=fs.readFileSync(path.join(root,'sozvezdie','src','components','Intro.tsx'),'utf8');
+for(const token of ['Это рабочая исследовательская редакция','по критическим аппаратам','спорные этимологии','Независимая научная рецензия ещё не']){
+ if(!w91Intro.includes(token))throw Error('Panorama research methodology boundary vanished: '+token);
+}
+console.log('W91_PANORAMA_METHOD_SCOPE_PASS');

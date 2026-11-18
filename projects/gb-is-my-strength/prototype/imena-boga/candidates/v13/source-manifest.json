@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "11ffdfdcf2553f38356502bbc853afc789ceea1088ec122244147a1ff1e63258",
-      "bytes_normalized": 58179
+      "sha256": "6f0fd4dd38fad80022eff2aaed80bb40fecf0bc8fa3fef7d1aba568972f9cc21",
+      "bytes_normalized": 58766
     },
     "checks/visual_review.cjs": {
       "sha256": "e66ca6dd134f72da5027e9996769a107c37818b3b02b84687da266d599f154a5",
@@ -252,8 +252,8 @@
       "bytes_normalized": 9639
     },
     "sozvezdie/src/components/Intro.tsx": {
-      "sha256": "7d1bf9cc32db87f64b08d32c1eb03da6e7482862883506b42a1ae6350e8a19e5",
-      "bytes_normalized": 7639
+      "sha256": "e44a4754e3972b7c44bc7a013197dd6d0e4bd33f438ef756306d78f3af0a86b9",
+      "bytes_normalized": 8155
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
       "sha256": "d45dfe4adf37ad9204a8a2e6b094a574423c36e61e161596c3ae86b0adfa6a64",
