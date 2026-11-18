@@ -39,7 +39,7 @@ export const HOMESTEAD_GROUND_DETAIL=Object.freeze({
 /** W12D.3 small, self-contained repeatable natural-fibre microstructure.
  * No downloaded texture or historical claim of specific fabric technology. */
 export const HOMESTEAD_WEAVE_DETAIL=Object.freeze({
-  size:128,repeatU:8,repeatV:5,bumpScale:.014,
+  size:128,repeatU:6,repeatV:4,bumpScale:.007,
 });
 export function homesteadWeaveIntensity(x:number,y:number):number{
   const warp=Math.pow(.5+.5*Math.cos(x*Math.PI/4),6);
@@ -49,8 +49,11 @@ export function homesteadWeaveIntensity(x:number,y:number):number{
   const unit=2*Math.PI/HOMESTEAD_WEAVE_DETAIL.size;
   const variation=.014*Math.sin(unit*(x*3+y*2))+
     .009*Math.cos(unit*(x*5-y*4));
-  return Math.min(1,Math.max(.78,
-    .908+.047*warp+.054*weft+.029*alternate*(warp-weft)+variation));
+  // A strong crossing-grid reads as graph paper in a near-wall shot.
+  // Fibre relief is now anisotropic and subdued, with no high-contrast
+  // alternating checker; broader fabric folds remain in vertex geometry.
+  return Math.min(1,Math.max(.88,
+    .946+.027*warp+.017*weft+.004*alternate*(warp-weft)+variation));
 }
 export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
   Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),

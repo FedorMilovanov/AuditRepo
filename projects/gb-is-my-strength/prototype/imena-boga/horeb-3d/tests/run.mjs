@@ -50,6 +50,15 @@ t('W12D.0 rear gable closes canopy behind all drape folds',
   HOMESTEAD_REAR_GABLE_Z< -3.045&&
   [-2.96,-2.5,0,2.5,2.96].every(x=>
     homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.3.1: local contrast guard, avoiding the visually distracting
+// high-contrast grid seen in the original W12D.3 interior screenshot.
+t('W12D.3.1 neighbouring yarn texels avoid graph-paper contrast',
+  HOMESTEAD_WEAVE_DETAIL.repeatU===6&&
+  HOMESTEAD_WEAVE_DETAIL.repeatV===4&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale<=.008&&
+  Array.from({length:49},(_,i)=>i*2.13).every(x=>
+    Math.abs(homesteadWeaveIntensity(x,24)-
+      homesteadWeaveIntensity(x+1,24))<.055));
 // W12D.3: one seamless small tile, genuinely varying yarn illumination.
 t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
   HOMESTEAD_WEAVE_DETAIL.size===128&&
@@ -57,7 +66,8 @@ t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
   HOMESTEAD_WEAVE_DETAIL.bumpScale<.03&&
   (()=>{const v=Array.from({length:64},(_,i)=>
     homesteadWeaveIntensity(i*1.7,i*3.1));
-    return Math.max(...v)-Math.min(...v)>.055&&
+    return Math.max(...v)-Math.min(...v)>.025&&
+      Math.max(...v)-Math.min(...v)<.10&&
       v.every(x=>x>=.78&&x<=1);
   })()&&
   Array.from({length:19},(_,i)=>i*6.7).every(x=>
