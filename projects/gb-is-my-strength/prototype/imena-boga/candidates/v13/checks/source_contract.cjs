@@ -1049,3 +1049,29 @@ for(const banned of [
  'в утешении пленного Израиля (Ис. 54:5'
 ])if(w104.includes(banned))throw Error('W104 old conflation restored: '+banned);
 console.log('W104_OSENU_FORMS_NOT_IDENTICAL_PASS');
+
+
+// W105: Exodus 3:12–15 is one narrative unit. Morphology of ehyeh cannot
+// on its own establish the full Christian doctrine of divine aseity, a
+// single chronological tense, or a historical etymology of the Tetragrammaton.
+const w105Src=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w105Start=w105Src.indexOf("id: 'ehyeh-asher-ehyeh'");
+const w105End=w105Src.indexOf("id: 'el-rachum-ve-channun'",w105Start+1);
+if(w105Start<0||w105End<=w105Start)throw Error('W105 Ehyeh card unavailable');
+const w105=w105Src.slice(w105Start,w105End);
+for(const fragment of [
+ 'Варианты перевода: «Я есмь Тот, Кто Я есмь» / «Я буду Тем, Кем Я буду»',
+ 'Синодальное «Я есмь Сущий» — переводческая традиция',
+ 'в 3:14 повторяется форма אֶהְיֶה (Qal yiqtol, первое лицо единственного числа',
+ 'в 3:15 названо יהוה',
+ 'не доказывает точную историческую этимологию יהוה',
+ 'Это богословское прочтение, а не непосредственное словарное значение yiqtol',
+ 'Исследователи по-разному объясняют параллель между именем и памятью в 3:15',
+ 'но греческий текст LXX там содержит более полную формулу Ἐγώ εἰμι ὁ ὤν'
+])if(!w105.includes(fragment))throw Error('W105 Ehyeh source guard absent: '+fragment);
+for(const forbidden of [
+ 'в древнем мире знать имя божества означало понимать его сущность и область влияния',
+ 'один лишь Бог «есмь» в чистом, вечном настоящем',
+ 'Таким образом, «Я есмь Сущий» означает: Я определяю Себя Сам'
+])if(w105.includes(forbidden))throw Error('W105 earlier assertion restored: '+forbidden);
+console.log('W105_EHYEH_CONTEXT_THEOLOGY_SCOPE_PASS');
