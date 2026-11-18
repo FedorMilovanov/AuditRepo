@@ -14,6 +14,25 @@ export const HOMESTEAD_STRUCTURE=Object.freeze({
   hearthX:-5.35,hearthZ:1.45,hearthRadius:.94,
 });
 const hash=(n:number)=>{const v=Math.sin(n*137.19+17.2)*47358.34;return v-Math.floor(v);};
+/** The very same deterministic rock instances drive visible geometry and
+ * walkable-space collision, so a displayed large stone cannot be ghosted. */
+export const HOMESTEAD_ROCK_COUNT=64;
+export type HomesteadRockPoint={
+  index:number;x:number;z:number;a:number;size:number;
+  sx:number;sy:number;sz:number;tiltX:number;tiltZ:number;
+};
+export function homesteadRockPoint(index:number):HomesteadRockPoint{
+  const a=hash(index*7.1)*Math.PI*2,r=12+hash(index*6.2+3)*18;
+  const x=Math.sin(a)*r,z=Math.cos(a)*r,size=.44+hash(index*2.14)*1.28;
+  return {index,x,z,a,size,sx:size*1.5,sy:size*.34,sz:size*.78,
+    tiltX:.12*hash(index*2.5),tiltZ:.14*hash(index*.71)};
+}
+export const HOMESTEAD_ROCK_COLLIDERS=Object.freeze(
+  Array.from({length:HOMESTEAD_ROCK_COUNT},(_,i)=>homesteadRockPoint(i))
+    .filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX+2&&
+      Math.abs(r.z)<HOMESTEAD_WALK.maxZ+2)
+);
+
 export function homesteadGround(x:number,z:number):number{
   const outer=Math.min(1,Math.max(0,(Math.hypot(x,z)-9.8)/11));
   const slope=.045*Math.sin(x*.23+z*.13)+.048*Math.cos(z*.25-x*.1);
@@ -34,6 +53,12 @@ export function homesteadWalkable(x:number,z:number):boolean{
     Math.abs(x)>h.doorHalfWidth)return false;
   if(Math.hypot(x-h.hearthX,z-h.hearthZ)<h.hearthRadius)return false;
   if(Math.hypot(x-4.4,z+.85)<.67)return false;
+  for(const rock of HOMESTEAD_ROCK_COLLIDERS){
+    // Inverse of the same Y rotation applied to the rendered rock instance.
+    const dx=x-rock.x,dz=z-rock.z,c=Math.cos(rock.a),sn=Math.sin(rock.a);
+    const lx=c*dx-sn*dz,lz=sn*dx+c*dz;
+    if((lx/(rock.sx*.78))**2+(lz/(rock.sz*.78))**2<1)return false;
+  }
   return true;
 }
 export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boolean):MidianControl{
@@ -248,16 +273,14 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   // Sparse large stones beyond approach lines.
   const natural=mat(0x9a8872);
-  const scatter=new THREE.InstancedMesh(rockGeo,natural,64);
+  const scatter=new THREE.InstancedMesh(rockGeo,natural,HOMESTEAD_ROCK_COUNT);
   const transform=new THREE.Object3D();
   let count=0;
-  for(let i=0;i<64;i++){
-    const a=hash(i*7.1)*Math.PI*2,r=12+hash(i*6.2+3)*18;
-    const x=Math.sin(a)*r,z=Math.cos(a)*r;
-    const size=.44+hash(i*2.14)*1.28;
-    transform.position.set(x,homesteadGround(x,z)+size*.18,z);
-    transform.rotation.set(.12*hash(i*2.5),a,.14*hash(i*.71));
-    transform.scale.set(size*1.5,size*.34,size*.78);
+  for(let i=0;i<HOMESTEAD_ROCK_COUNT;i++){
+    const rock=homesteadRockPoint(i);
+    transform.position.set(rock.x,homesteadGround(rock.x,rock.z)+rock.size*.18,rock.z);
+    transform.rotation.set(rock.tiltX,rock.a,rock.tiltZ);
+    transform.scale.set(rock.sx,rock.sy,rock.sz);
     transform.updateMatrix();scatter.setMatrixAt(count++,transform.matrix);
   }
   scatter.instanceMatrix.needsUpdate=true;
@@ -368,6 +391,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadSidePanels=String(countMesh('midian-shelter-real-cloth-sidewall'));
   canvas.dataset.homesteadPosts=String(countMesh('shelter-structural-post'));
   canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));
+  canvas.dataset.homesteadRockInstances=String(count);
   canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
   frame=requestAnimationFrame(render);
   function dispose(){

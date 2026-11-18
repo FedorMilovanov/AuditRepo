@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -38,6 +38,19 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12B.1: home rocks cannot be hollow decorative instancing with no collision.
+t('W12B.1 homestead visible boulders and physical colliders share coordinates',
+  HOMESTEAD_ROCK_COUNT===64&&HOMESTEAD_ROCK_COLLIDERS.length>20&&
+  HOMESTEAD_ROCK_COLLIDERS.every(r=>{
+    const again=homesteadRockPoint(r.index);
+    const fields=['x','z','a','size','sx','sy','sz','tiltX','tiltZ'];
+    return fields.every(f=>Math.abs(r[f]-again[f])<1e-10);
+  }));
+t('W12B.1 physically accessible boulder centres cannot be walked through',
+  HOMESTEAD_ROCK_COLLIDERS.filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX&&
+    Math.abs(r.z)<HOMESTEAD_WALK.maxZ).length>15&&
+  HOMESTEAD_ROCK_COLLIDERS.filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX&&
+    Math.abs(r.z)<HOMESTEAD_WALK.maxZ).every(r=>!homesteadWalkable(r.x,r.z)));
 // W11D: visible rock instances must physically block the grounded player.
 t('W11D large landscape rocks block camera at their actual render centers',
   MIDIAN_ROCK_COLLIDERS.length>0&&

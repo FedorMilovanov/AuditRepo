@@ -42,11 +42,12 @@ try{
     posts:Number(e.dataset.homesteadPosts),
     frontTrusses:Number(e.dataset.homesteadFrontTrusses),
     rear:Number(e.dataset.homesteadRearGables),
+    rocks:Number(e.dataset.homesteadRockInstances),
   }));
   if(witness.world!=='homestead'||witness.roof!=='3d-woven-fabric-and-posts'||
      witness.door!=='walkable'||witness.hills!=='1'||
      witness.roofPanels!==2||witness.sidePanels!==2||
-     witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1)
+     witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||witness.rocks!==64)
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));
   await page.screenshot({path:join(out,'homestead-shot-desktop.png')});
   await page.click('[data-testid="midian-homestead-explore-start"]');
