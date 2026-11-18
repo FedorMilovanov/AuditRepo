@@ -1,0 +1,462 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "node": "22.23.4",
+  "playwright": "1.62.1",
+  "scope": "real UI, same browser context and origin except explicit fresh import control",
+  "scenarios": [
+    {
+      "name": "delete-while-editing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": [],
+      "localHttp": [],
+      "quizBefore": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "id": "apostasy.p1.lexeme",
+        "count": 6,
+        "key": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "options": [
+          [
+            "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "quiz-option is-correct",
+            true
+          ],
+          [
+            "Доктрину можно строить на одном слове без контекста",
+            "quiz-option is-wrong",
+            true
+          ],
+          [
+            "Каждый глагол Писания кодирует полный порядок спасения",
+            "quiz-option",
+            true
+          ],
+          [
+            "Греческие глаголы вообще нельзя переводить",
+            "quiz-option",
+            true
+          ]
+        ],
+        "confidence": "sure",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "progress": "Пройдено: 6 · рекорд 5",
+        "calibration": "83%",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "source": [
+          "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "Перечитать: Часть I · §1"
+        ]
+      },
+      "source": "#odno-slovo",
+      "initial": {
+        "id": "note1795025480922vizq4",
+        "text": "Первое наблюдение: сверить ответ с разделом источника.",
+        "quoteText": "",
+        "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "savedAt": 1795025480922
+      },
+      "peerDeleteMessage": "Запись удалена Отменить",
+      "staleEditor": {
+        "open": true,
+        "draft": "Моя правка: перечитать абзац и уточнить вывод.",
+        "submit": true
+      },
+      "claimedUpdate": {
+        "message": "Заметка обновлена.",
+        "editorOpen": false,
+        "storeA": {
+          "notes": [],
+          "quotes": []
+        },
+        "storeB": {
+          "notes": [],
+          "quotes": []
+        }
+      },
+      "undoMessage": "Запись восстановлена.",
+      "afterUndo": {
+        "notes": [
+          {
+            "id": "note1795025480922vizq4",
+            "text": "Первое наблюдение: сверить ответ с разделом источника.",
+            "quoteText": "",
+            "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+            "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "savedAt": 1795025480922
+          }
+        ],
+        "quotes": []
+      },
+      "exportAfterUndo": {
+        "name": "gb-moya-biblioteka.md",
+        "bytes": 412,
+        "rawSha256": "af1d98183897abcfcb1e4804599c3eda27662e1cc5e2a8378235d9f3946dcde5",
+        "normalizedSha256": "832f5b0e7b0634e769f487bdd6f7d8ef773c35210034544fb84c1fdfc024a391",
+        "text": "# Моя библиотека · Господь Бог — Сила Моя\n\n## Заметка — Отступничество: что Библия на самом деле называет отпадением от веры\n\nПервое наблюдение: сверить ответ с разделом источника.\n\nИсточник: http://local.invalid/articles/otstuplenie-chto-govorit-bibliya/\n"
+      },
+      "quizUnchanged": true,
+      "ok": true
+    },
+    {
+      "name": "delete-while-editing",
+      "viewport": {
+        "width": 1359,
+        "height": 900
+      },
+      "pageErrors": [],
+      "localHttp": [],
+      "quizBefore": {
+        "question": "Почему, по собственному признанию Уильяма Уистона, тот отказался идти слушать проповедь Гилла в 1748 году?",
+        "verdict": "Неверно",
+        "progress": "Вопрос 1 из 4",
+        "explanations": [
+          "Уистон отказался, узнав, что Гилл написал комментарий на Песнь Песней.",
+          "Уильям Уистон, известный унитарий и переводчик Иосифа Флавия, записал в мемуарах, что отказался идти слушать Гилла, узнав о его книге на Песнь Песней. Для Уистона это было чем-то «недостойным» серьёзного богослова. Риппон иронично прокомментировал этот жест. Эпизод хорошо показывает, насколько необычной для современников казалась широта гилловской экзегезы."
+        ],
+        "options": [
+          [
+            "Гилл был известен как гиперкальвинист, и Уистон избегал таких споров.",
+            "quiz-option is-incorrect",
+            true
+          ],
+          [
+            "Уистон узнал, что Гилл написал толкование в folio на Песнь Песней, и на этом основании отказался идти его слушать.",
+            "quiz-option is-correct",
+            true
+          ],
+          [
+            "Они расходились в понимании крещения погружением, и Уистон не хотел конфликта.",
+            "quiz-option",
+            true
+          ],
+          [
+            "Уистон считал Гилла богословским дилетантом, не достойным его внимания.",
+            "quiz-option",
+            true
+          ]
+        ],
+        "source": [
+          "#sec-canticles",
+          "Песнь Песней (1728) — аллегория Христа и Церкви"
+        ]
+      },
+      "source": "#sec-canticles",
+      "initial": {
+        "id": "note17950254846424qdxn",
+        "text": "Первое наблюдение: сверить ответ с разделом источника.",
+        "quoteText": "",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный",
+        "url": "/articles/dzhon-gill-chast-2-uchenyi/",
+        "savedAt": 1795025484642
+      },
+      "peerDeleteMessage": "Запись удалена Отменить",
+      "staleEditor": {
+        "open": true,
+        "draft": "Моя правка: перечитать абзац и уточнить вывод.",
+        "submit": true
+      },
+      "claimedUpdate": {
+        "message": "Заметка обновлена.",
+        "editorOpen": false,
+        "storeA": {
+          "notes": [],
+          "quotes": []
+        },
+        "storeB": {
+          "notes": [],
+          "quotes": []
+        }
+      },
+      "emptyExportAfterReload": {
+        "message": "Библиотека пуста.",
+        "downloads": []
+      },
+      "quizUnchanged": true,
+      "ok": true
+    },
+    {
+      "name": "same-note-concurrent-edits",
+      "viewport": {
+        "width": 1359,
+        "height": 900
+      },
+      "pageErrors": [],
+      "localHttp": [],
+      "quizBefore": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "id": "apostasy.p1.lexeme",
+        "count": 6,
+        "key": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "options": [
+          [
+            "Греческие глаголы вообще нельзя переводить",
+            "quiz-option is-wrong",
+            true
+          ],
+          [
+            "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "quiz-option is-correct",
+            true
+          ],
+          [
+            "Доктрину можно строить на одном слове без контекста",
+            "quiz-option",
+            true
+          ],
+          [
+            "Каждый глагол Писания кодирует полный порядок спасения",
+            "quiz-option",
+            true
+          ]
+        ],
+        "confidence": "sure",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "progress": "Пройдено: 4 · рекорд 3",
+        "calibration": "75%",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "source": [
+          "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "Перечитать: Часть I · §1"
+        ]
+      },
+      "source": "#odno-slovo",
+      "initial": {
+        "id": "note1795025490536xp3xe",
+        "text": "Первое наблюдение: сверить ответ с разделом источника.",
+        "quoteText": "",
+        "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "savedAt": 1795025490537
+      },
+      "peerExport": {
+        "name": "gb-moya-biblioteka.md",
+        "bytes": 410,
+        "rawSha256": "114263356bbb24e59b83c10788689d44061d32a0e5e78427aa78435c7148cd3e",
+        "normalizedSha256": "43b865a7f41408624744ad16c282674b20fb24592cefe450b24dca2d48b551d2",
+        "text": "# Моя библиотека · Господь Бог — Сила Моя\n\n## Заметка — Отступничество: что Библия на самом деле называет отпадением от веры\n\nУточнение из другой вкладки: сравнить два объяснения.\n\nИсточник: http://local.invalid/articles/otstuplenie-chto-govorit-bibliya/\n"
+      },
+      "backupBeforeOverwrite": {
+        "sha256": "143280be69147e3ea35f2f1f4cbe6e135d37770e2b95b588ba61d1417dfcab02",
+        "version": 3,
+        "text": "Уточнение из другой вкладки: сравнить два объяснения."
+      },
+      "editorAfterRemoteEdit": {
+        "open": true,
+        "text": "Моя правка: перечитать абзац и уточнить вывод.",
+        "status": {
+          "text": "Заметка сохранена.",
+          "notice": true,
+          "error": false
+        },
+        "store": {
+          "notes": [
+            {
+              "id": "note1795025490536xp3xe",
+              "text": "Уточнение из другой вкладки: сравнить два объяснения.",
+              "quoteText": "",
+              "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+              "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+              "savedAt": 1795025490537
+            }
+          ],
+          "quotes": []
+        }
+      },
+      "finalMessage": "Заметка обновлена.",
+      "final": {
+        "notes": [
+          {
+            "id": "note1795025490536xp3xe",
+            "text": "Моя правка: перечитать абзац и уточнить вывод.",
+            "quoteText": "",
+            "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+            "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "savedAt": 1795025490537
+          }
+        ],
+        "quotes": []
+      },
+      "afterOverwrite": {
+        "name": "gb-moya-biblioteka.md",
+        "bytes": 396,
+        "rawSha256": "f03f4bbf9f74856712c5e3c05464b9e3e11abde4293dab23faccf400e10fff6f",
+        "normalizedSha256": "69640371459cd63fa8bee3d3b2203965b78e1c738189bc3df3ba6beb480ca54e",
+        "text": "# Моя библиотека · Господь Бог — Сила Моя\n\n## Заметка — Отступничество: что Библия на самом деле называет отпадением от веры\n\nМоя правка: перечитать абзац и уточнить вывод.\n\nИсточник: http://local.invalid/articles/otstuplenie-chto-govorit-bibliya/\n"
+      },
+      "importOnExistingId": {
+        "prompt": "В копии 0 цитат, 1 заметок, 0 статей. Существующие записи сохранятся; дубликаты будут пропущены.",
+        "message": "Импорт завершён без замены существующих записей.",
+        "after": {
+          "notes": [
+            {
+              "id": "note1795025490536xp3xe",
+              "text": "Моя правка: перечитать абзац и уточнить вывод.",
+              "quoteText": "",
+              "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+              "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+              "savedAt": 1795025490537
+            }
+          ],
+          "quotes": []
+        },
+        "sameDocument": true
+      },
+      "importOnEmpty": {
+        "prompt": "В копии 0 цитат, 1 заметок, 0 статей. Существующие записи сохранятся; дубликаты будут пропущены.",
+        "message": "Импорт завершён без замены существующих записей.",
+        "after": {
+          "notes": [
+            {
+              "id": "note1795025490536xp3xe",
+              "text": "Уточнение из другой вкладки: сравнить два объяснения.",
+              "quoteText": "",
+              "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+              "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+              "savedAt": 1795025490537
+            }
+          ],
+          "quotes": []
+        }
+      },
+      "quizUnchanged": true,
+      "ok": true
+    },
+    {
+      "name": "distinct-notes-and-quote-context",
+      "viewport": {
+        "width": 1359,
+        "height": 900
+      },
+      "pageErrors": [],
+      "localHttp": [],
+      "quizBefore": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "id": "apostasy.p1.lexeme",
+        "count": 6,
+        "key": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "options": [
+          [
+            "Греческие глаголы вообще нельзя переводить",
+            "quiz-option is-wrong",
+            true
+          ],
+          [
+            "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "quiz-option is-correct",
+            true
+          ],
+          [
+            "Каждый глагол Писания кодирует полный порядок спасения",
+            "quiz-option",
+            true
+          ],
+          [
+            "Доктрину можно строить на одном слове без контекста",
+            "quiz-option",
+            true
+          ]
+        ],
+        "confidence": "sure",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "progress": "Пройдено: 6 · рекорд 5",
+        "calibration": "83%",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "source": [
+          "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "Перечитать: Часть I · §1"
+        ]
+      },
+      "source": "#odno-slovo",
+      "quote": {
+        "id": "quote1795025501050a6fnf",
+        "text": "Кумранские фрагменты",
+        "quoteText": "",
+        "title": "Бытие 6, Енох, Иуда и Пётр",
+        "url": "/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B",
+        "savedAt": 1795025501050
+      },
+      "linkedEditorContext": "К цитате: «Кумранские фрагменты»",
+      "noteBeforeUpdate": {
+        "id": "note17950255015279vw8d",
+        "text": "Цитата нужна для проверки ответа.\nНе смешивать наблюдение и вывод.",
+        "quoteText": "Кумранские фрагменты",
+        "title": "Бытие 6, Енох, Иуда и Пётр",
+        "url": "/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B",
+        "savedAt": 1795025501527
+      },
+      "visibleWhileFiltered": [
+        {
+          "id": "note1795025499203wm0mu",
+          "type": "note"
+        }
+      ],
+      "exportWhileFiltered": {
+        "name": "gb-moya-biblioteka.md",
+        "bytes": 1158,
+        "rawSha256": "46fa316f41b1d59d89bd65aea90a33c671ff42f51524794ee6bbbb3db100980b",
+        "normalizedSha256": "4ab2042a03c2755cd71bcbfb34a28263b38c15c613e9a68aa91589e6b5881ff0",
+        "text": "# Моя библиотека · Господь Бог — Сила Моя\n\n## Заметка — Бытие 6, Енох, Иуда и Пётр\n\nЦитата нужна для проверки ответа.\nНе смешивать наблюдение и вывод.\n\nК цитате: Кумранские фрагменты\n\nИсточник: http://local.invalid/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B\n\n## Цитата — Бытие 6, Енох, Иуда и Пётр\n\n> Кумранские фрагменты\n\nИсточник: http://local.invalid/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B\n\n## Заметка — Отступничество: что Библия на самом деле называет отпадением от веры\n\nМоя правка: перечитать абзац и уточнить вывод.\n\nИсточник: http://local.invalid/articles/otstuplenie-chto-govorit-bibliya/\n"
+      },
+      "afterDeletingQuote": {
+        "notes": [
+          {
+            "id": "note17950255015279vw8d",
+            "text": "Цитата нужна для проверки ответа.\nНе смешивать наблюдение и вывод.",
+            "quoteText": "Кумранские фрагменты",
+            "title": "Бытие 6, Енох, Иуда и Пётр",
+            "url": "/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B",
+            "savedAt": 1795025501527
+          },
+          {
+            "id": "note1795025499203wm0mu",
+            "text": "Моя правка: перечитать абзац и уточнить вывод.",
+            "quoteText": "",
+            "title": "Отступничество: что Библия на самом деле называет отпадением от веры",
+            "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "savedAt": 1795025499203
+          }
+        ],
+        "quotes": []
+      },
+      "exportAfterDeletingQuote": {
+        "name": "gb-moya-biblioteka.md",
+        "bytes": 847,
+        "rawSha256": "d7b56edfe85f6f6991661cbb25c819b44caf257e06b51cfb66cadf11ea521bd2",
+        "normalizedSha256": "22b996d370f4a1b147aaf06ec1919ec2d38d9b149704df3f2d0d946a5e41ae2a",
+        "text": "# Моя библиотека · Господь Бог — Сила Моя\n\n## Заметка — Бытие 6, Енох, Иуда и Пётр\n\nЦитата нужна для проверки ответа.\nНе смешивать наблюдение и вывод.\n\nК цитате: Кумранские фрагменты\n\nИсточник: http://local.invalid/hard-texts/genesis-6/#main-content:~:text=%D0%9A%D1%83%D0%BC%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D1%84%D1%80%D0%B0%D0%B3%D0%BC%D0%B5%D0%BD%D1%82%D1%8B\n\n## Заметка — Отступничество: что Библия на самом деле называет отпадением от веры\n\nМоя правка: перечитать абзац и уточнить вывод.\n\nИсточник: http://local.invalid/articles/otstuplenie-chto-govorit-bibliya/\n"
+      },
+      "quizUnchanged": true,
+      "ok": true
+    }
+  ],
+  "chromium": "153.0.8010.0",
+  "distSha256": {
+    "_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js": "24dfad4cff4bccfc268256061a7d20a7fd9e451259fae77d29405e3a8e0a92c8",
+    "_astro/ReaderActionsRuntime.BWQE1cBa.css": "e5f4cca04d0966fdf1db54d030b522ea948a4788453f9f712bb5496c102c5bd3",
+    "_astro/ReaderActionsRuntime.DUDpvCW2.css": "d2dc416d7c868f1aefaac451085eff8652b20a07cb2c84400db31102233b39e3",
+    "_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js": "c052e1289a2350ac9d3e2958210d7b03a82c0bbd715ee980aff7433b5d5c906d",
+    "articles/dzhon-gill-chast-2-uchenyi/index.html": "221bd7267b659d2886a0dfe103798bf02951bc0431fb36ca70d449d472e08633",
+    "articles/otstuplenie-chto-govorit-bibliya/index.html": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+    "css/floating-cluster.css": "88e6300e0326fb7c80f03b034f4c4a589fc70ab781195a65d0fb10f2620ccc09",
+    "css/highlights-runtime.css": "f6f6ad4778932f3930d785dfbe96087a98f6ebb6cae0f8263f26c2484cbcf7ad",
+    "hard-texts/genesis-6/index.html": "002060e79351079aabdd3a3b7649afd52bd55fd26fc1a4e394047df6604b6a75",
+    "js/floating-cluster-controller.js": "bd2d040cab7c4298a28db36eef9899bd6fdfda1d7e62f6b69c209e914173fc7a",
+    "js/highlights.js": "fa19053e089d131528f94eb5cb999459c276095ab34019cda4d64d6fc243ac02",
+    "js/reader-library-dock.js": "bd7f9d748f11ad62f34a6f235918ce4741534d68679ebcffb3b6a4fbb9973e9d",
+    "js/reader-library-presenter.js": "de05306a5a613291e35f8bbfe0c3f50be4c7a160913cdecb95985fd7ba163cf9",
+    "js/reader-library-v3.js": "58cc0d0a29367cbb36e96cd19a2343993b40d751f7af716461fcc1b8616b50a5",
+    "js/site.js": "b9fdd79fb95b5d93d74bdfc0c12682bcedb977110c77a6059fd97bbbaddf39a0"
+  },
+  "screenshot": {
+    "file": "updated-note-is-absent.png",
+    "sha256": "ec6236ae66c2eea127939b7ff6ebe3660dbbbd2a9a123c595bf4a35a618ab0e5"
+  },
+  "passed": 4,
+  "total": 4
+}
