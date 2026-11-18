@@ -159,7 +159,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        `${entry.transliteration} (${entry.original}) — ${entry.russianName}. Тип библейского выражения: ${entry.category}. Значение и перевод: ${entry.literalMeaning}`
+        `${entry.transliteration} (${entry.original}) — ${entry.russianName}. Тип библейского выражения: ${entry.category}. Смысл в контексте: ${entry.literalMeaning}`
       );
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
@@ -191,7 +191,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
     const textToRead = [
       `${entry.transliteration} — ${entry.russianName}.`,
       `Тип библейского выражения: ${entry.category}.`,
-      `Значение и перевод: ${entry.literalMeaning}.`,
+      `Смысл в контексте: ${entry.literalMeaning}.`,
       entry.summary,
       ...entry.deepExegesis,
       `Христианское прочтение во свете Христа: ${entry.christologicalFulfillment}`,
@@ -467,7 +467,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 className="font-body-editorial relative z-10 mt-3 text-sm sm:text-base"
                 style={{ color: 'var(--gb-ink-secondary)' }}
               >
-                <strong>Значение и перевод:</strong> {entry.literalMeaning}
+                <strong>Смысл в контексте:</strong> {entry.literalMeaning}
               </p>
             </div>
           </div>

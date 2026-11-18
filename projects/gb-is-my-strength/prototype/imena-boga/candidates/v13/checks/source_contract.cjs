@@ -872,3 +872,14 @@ for(const token of [
 if(w95AtlasIntro.includes('вся полнота Божественного Имени сосредоточена в Иисусе Христе —'))
  throw Error('W95 New Testament speaker overclaim returned');
 console.log('W95_ABBA_SPEAKER_SEPARATION_PASS');
+
+// W96: the W92 semantic-label correction must cover every consumer of
+// the explanatory `literalMeaning` field, not only the compact preview.
+// Full dossier copy, speech synthesis and visible UI share one honest label.
+const w96Modal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+if(w96Modal.split('Смысл в контексте:').length-1!==3 ||
+   w96Modal.includes('Значение и перевод:') ||
+   w96Modal.split('Смысл в контексте: ${entry.literalMeaning}').length-1!==2 ||
+   !w96Modal.includes('<strong>Смысл в контексте:</strong> {entry.literalMeaning}'))
+ throw Error('W96 full Atlas dossier semantic-label mismatch across view/copy/speech');
+console.log('W96_ATLAS_DOSSIER_CONTEXT_LABEL_PASS');

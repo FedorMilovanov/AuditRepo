@@ -64,8 +64,8 @@
       "bytes_normalized": 18399
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "40691c762e57238eff878aa07355c84e1852e411fe65436f460d822d8e93226a",
-      "bytes_normalized": 32268
+      "sha256": "01813a9fea2f75d0fdffde53e850c2638c2b15c36cc6fe249de24654340c0761",
+      "bytes_normalized": 32262
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "24506fd5e70c3050f8b11702bb2ce9d6c18f1674fac1e6ee32f9130eecc87c6b",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "93e40c94352999a6be01f5ed3020a65cf57cc286b14f47b1cf0ce8de0ef8b436",
-      "bytes_normalized": 64336
+      "sha256": "34d6aa0f74cd1a2432c672155f0b99b88ad2c18d329ee568e585a264d0a87d64",
+      "bytes_normalized": 65134
     },
     "checks/visual_review.cjs": {
       "sha256": "1444aa7530b0d25c1a43b16e88904190604c10eb2302d25488514e31ed3cc21f",
