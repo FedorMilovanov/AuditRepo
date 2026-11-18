@@ -97,15 +97,15 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         }}
       />
 
-      <div className="mx-auto flex h-full max-w-[1680px] min-w-0 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
+      <div className="mx-auto flex h-full max-w-[1680px] min-w-0 flex-wrap items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
         {/* Authentic gospod-bog.ru Brand Logo */}
         <a
           href="#top"
-          className="group flex min-w-0 shrink items-center gap-1.5 overflow-hidden text-decoration-none select-none xl:shrink-0"
+          className="group flex min-w-0 shrink-0 items-center gap-1.5 overflow-visible text-decoration-none select-none"
           aria-label="Господь Бог — Сила Моя — в начало статьи"
         >
           <span
-            className="font-serif-display min-w-0 truncate whitespace-nowrap text-base sm:text-[17px] font-bold tracking-wide transition-all"
+            className="font-serif-display min-w-0 whitespace-nowrap text-base sm:text-[17px] font-bold tracking-wide transition-all"
             style={{ color: 'var(--gb-ink)' }}
           >
             Господь Бог
@@ -144,7 +144,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         </div>
 
         {/* Right Reader Controls */}
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
           {/* Reading Progress Percentage (wide screens) */}
           <span
             className="font-ui hidden xl:inline-flex items-center gap-1 text-[11px] font-semibold tabular-nums"

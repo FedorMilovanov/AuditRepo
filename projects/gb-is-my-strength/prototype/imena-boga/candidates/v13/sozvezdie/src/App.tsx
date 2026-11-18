@@ -309,14 +309,14 @@ export default function App() {
           scrolled ? "border-b border-gold-500/15 bg-ink-950" : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
           <a
             href="https://gospod-bog.ru"
             aria-label="Господь Бог — Сила Моя"
-            className="flex min-h-[44px] min-w-0 shrink items-center overflow-hidden whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
+            className="flex min-h-[44px] min-w-0 shrink-0 items-center whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
-            <span className="min-w-0 truncate sm:hidden">Господь Бог</span>
-            <span className="hidden min-w-0 truncate sm:inline">Господь Бог — Сила Моя</span>
+            <span className="min-w-0 sm:hidden">Господь Бог</span>
+            <span className="hidden min-w-0 sm:inline">Господь Бог — Сила Моя</span>
           </a>
 
           {/* live current-section state */}
@@ -345,7 +345,7 @@ export default function App() {
             <span className="hidden font-hebrew text-sm text-gold-400/90 sm:block">שְׁמוֹת</span>
           )}
 
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="ml-auto flex shrink-0 items-center gap-1">
             <div id="sozvezdie-header-index-slot" className="xl:hidden" />
             <div id="sozvezdie-header-reader-slot" className="xl:hidden" />
             <a

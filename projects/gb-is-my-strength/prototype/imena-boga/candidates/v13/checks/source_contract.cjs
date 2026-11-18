@@ -844,3 +844,18 @@ for(const token of [
  'Как все ветхозаветные имена сходятся'
 ])if(w93AtlasData.includes(token))throw Error('W93 mixed referent or overclaim reappeared: '+token);
 console.log('W93_JEREMIAH_23_6_REF_SCOPE_PASS');
+
+// W94: 200%-root zoom must not visually ellipsize the 320/390px site
+// identity. Let fixed-header content reflow without shrinking 44px buttons.
+const w94AtlasNavbar=fs.readFileSync(path.join(root,'atlas','src','components','SiteNavbar.tsx'),'utf8');
+const w94PanoramaApp=fs.readFileSync(path.join(root,'sozvezdie','src','App.tsx'),'utf8');
+const w94Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+for(const [source,tokens,forbidden] of [
+ [w94AtlasNavbar,['max-w-[1680px] min-w-0 flex-wrap','group flex min-w-0 shrink-0','ml-auto flex shrink-0 items-center'],['min-w-0 truncate whitespace-nowrap text-base']],
+ [w94PanoramaApp,['max-w-7xl flex-wrap items-center','min-w-0 shrink-0 items-center','ml-auto flex shrink-0 items-center'],['min-w-0 truncate sm:hidden']],
+ [w94Visual,['const headerBrandTextClipped=','d.headerBrandPaintOverflow||d.headerBrandTextClipped'],[]]
+]){
+ for(const token of tokens)if(!source.includes(token))throw Error('W94 responsive brand guard missing: '+token);
+ for(const token of forbidden)if(source.includes(token))throw Error('W94 stale brand ellipsis returned: '+token);
+}
+console.log('W94_ZOOM_200_HEADER_BRAND_REFLOW_PASS');

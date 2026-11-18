@@ -1015,6 +1015,12 @@ async function visit(browser,engine,app,width,base){
     }).map(el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};});
     const headerBrandPaintOverflow=!!brand&&brand.scrollWidth>brand.clientWidth+2&&
       !['hidden','clip'].includes(brandStyle?.overflowX);
+    // W94: a visually ellipsized brand is a defect even with aria-label
+    // and even though clipped overflow does not increase document width.
+    const headerBrandTextClipped=!!brand&&[...brand.querySelectorAll('span')].some(span=>{
+      const style=getComputedStyle(span);
+      return style.display!=='none'&&span.scrollWidth>span.clientWidth+2;
+    });
     const headerOverlap=!!b&&headerControls.some(r=>
       Math.min(b.right,r.right)-Math.max(b.left,r.left)>2 &&
       Math.min(b.bottom,r.bottom)-Math.max(b.top,r.top)>2);
@@ -1172,7 +1178,7 @@ async function visit(browser,engine,app,width,base){
     return {rootFontPx:parseFloat(getComputedStyle(root).fontSize),
       headerBrandFound:!!b,headerBrandWidth:b?.width??null,
       headerBrandAccessible:!!brand?.getAttribute('aria-label'),
-      headerBrandPaintOverflow,headerOverlap,headerControlsOutOfBounds,headerUndersizedControls,
+      headerBrandPaintOverflow,headerBrandTextClipped,headerOverlap,headerControlsOutOfBounds,headerUndersizedControls,
       headerControlsCount:headerControls.length,
       kickerLabelsFound,kickerOverflow,kickerOverlap,
       kickerCount:kickerAudit.length,kickerFailures,
@@ -1207,7 +1213,7 @@ async function visit(browser,engine,app,width,base){
       d.headingLeft< -2||d.headingRight>d.viewport+2||
       d.headingScrollWidth>d.headingClientWidth+2||
       !d.controlFound||d.controlLeft< -2||d.controlRight>d.viewport+2||d.controlWidth<24||
-      !d.headerBrandFound||d.headerBrandWidth<48||!d.headerBrandAccessible||d.headerBrandPaintOverflow||
+      !d.headerBrandFound||d.headerBrandWidth<48||!d.headerBrandAccessible||d.headerBrandPaintOverflow||d.headerBrandTextClipped||
       d.headerOverlap||d.headerControlsOutOfBounds||d.headerUndersizedControls>0||d.headerControlsCount<1||
       (app==='sozvezdie'&&(!d.kickerLabelsFound||d.kickerOverflow||d.kickerOverlap||
         d.kickerCount!==29||d.kickerFailures.length>0||
