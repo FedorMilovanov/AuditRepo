@@ -883,3 +883,28 @@ if(w96Modal.split('Смысл в контексте:').length-1!==3 ||
    !w96Modal.includes('<strong>Смысл в контексте:</strong> {entry.literalMeaning}'))
  throw Error('W96 full Atlas dossier semantic-label mismatch across view/copy/speech');
 console.log('W96_ATLAS_DOSSIER_CONTEXT_LABEL_PASS');
+
+
+// W97: Research/16 (Jer 23:6 king vs Jer 33:16 city; MT vs Greek)
+ // and Research/08 (Abba addresses Father; ego eimi is not a stand-alone proper name).
+const w97Data=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+function w97Entry(id,nextId) {
+  const start=w97Data.indexOf("id: '"+id+"'");
+  const end=w97Data.indexOf("id: '"+nextId+"'",start+1);
+  if(start<0||end<start)throw Error('W97 entry boundaries missing: '+id);
+  return w97Data.slice(start,end);
+}
+const w97Jer=w97Entry('yhwh-tsidkenu','yhwh-shoftenu');
+for(const required of ['Иер. 33:16 — к Иерусалиму','Христианское мессианское прочтение','не доказываются одной грамматикой','иной формулу с именем Иоседек']){
+  if(!w97Jer.includes(required))throw Error('W97 Jeremiah context/edition guard missing: '+required);
+}
+for(const banned of ['что доказывает Его истинное Божество','Как подчеркивали Жан Кальвин']){
+  if(w97Jer.includes(banned))throw Error('W97 Jeremiah unverified attribution/lexical proof returned: '+banned);
+}
+const w97Abba=w97Entry('abba-ho-pater','ruach-parakletos');
+for(const required of ['Ин. 1:1, 14','Ин. 20:17; Рим. 8:15','не является собственным именем Бога','Ин. 9:9','Ин. 8:58']){
+  if(!w97Abba.includes(required))throw Error('W97 Abba vs ego eimi role guard missing: '+required);
+}
+if(w97Abba.includes('семи великих образах спасения'))
+  throw Error('W97 fused seven predicate sayings into literal proper name');
+console.log('W97_RESEARCH_PROPHETIC_ABBA_SEPARATION_PASS');
