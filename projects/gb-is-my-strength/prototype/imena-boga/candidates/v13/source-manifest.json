@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "2a775ac5a807862f48049dfd70667cdb24a8f32b9af063b9799d18b4aef24132",
-      "bytes_normalized": 75508
+      "sha256": "f5b42334c8eb370ed1786bccd0a400b486be3779bba6c4c5608c8bda4a8de16f",
+      "bytes_normalized": 75555
     },
     "checks/visual_review.cjs": {
       "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",
