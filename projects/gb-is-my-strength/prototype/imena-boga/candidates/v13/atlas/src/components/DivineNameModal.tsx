@@ -216,7 +216,11 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
 
   const handleCopyVerse = async (synodal: string, ref: string, idx: number) => {
     try {
-      await navigator.clipboard.writeText(`${synodal} (${ref})`);
+      const hasEditorialOriginal = /\[[^\]]*[\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]/u.test(synodal);
+      const editorialNote = hasEditorialOriginal
+        ? '\nРедакторские пояснения: слова оригинала в квадратных скобках добавлены к русской цитате и отсутствуют в Синодальном переводе.'
+        : '';
+      await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}`);
       setCopiedVerseIdx(idx);
       window.setTimeout(() => setCopiedVerseIdx(null), 1800);
     } catch {
@@ -481,6 +485,10 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
               <BookOpen className="h-4 w-4" />
               <span>Ключевые тексты Священного Писания</span>
             </h3>
+            <p className="font-ui mb-3 text-xs leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
+              Русские цитаты опираются на Синодальный перевод; многоточия обозначают сокращения.
+              Слова оригинала в квадратных скобках — редакторские пояснения, не часть русского текста.
+            </p>
 
             <div className="space-y-3">
               {entry.keyVerses.map((v, idx) => (

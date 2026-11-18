@@ -954,3 +954,20 @@ for(const required of [
 for(const old of ['Господь [יָהּ] — сила моя','Он соделался моим спасением','имя Ему: Господь [יָהּ]','В повествовании Исх. 15:2'])
  if(w99Yah.includes(old))throw Error('W99 mixed or inaccurate quotation returned: '+old);
 console.log('W99_YAH_SYNODAL_VERBATIM_PASS');
+
+
+// W100: originals in square brackets are editorial additions, not words
+// found in the chosen Russian translation; copied snippets must disclose
+// this status instead of silently passing annotations as Scripture.
+const w100Modal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+for(const required of [
+'Слова оригинала в квадратных скобках — редакторские пояснения',
+'многоточия обозначают сокращения',
+'const hasEditorialOriginal =',
+'const editorialNote = hasEditorialOriginal',
+'слова оригинала в квадратных скобках добавлены к русской цитате',
+'await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}`)'
+])if(!w100Modal.includes(required))throw Error('W100 quoted-text attribution/copy guard missing: '+required);
+if(w100Modal.includes('await navigator.clipboard.writeText(`${synodal} (${ref})`);'))
+ throw Error('W100 bare annotated verse copy returned without source clarification');
+console.log('W100_EDITED_SCRIPTURE_GLOSS_COPY_PASS');
