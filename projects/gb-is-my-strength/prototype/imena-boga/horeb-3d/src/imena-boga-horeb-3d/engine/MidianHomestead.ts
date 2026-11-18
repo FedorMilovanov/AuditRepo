@@ -16,6 +16,14 @@ export const HOMESTEAD_STRUCTURE=Object.freeze({
 const hash=(n:number)=>{const v=Math.sin(n*137.19+17.2)*47358.34;return v-Math.floor(v);};
 /** The very same deterministic rock instances drive visible geometry and
  * walkable-space collision, so a displayed large stone cannot be ghosted. */
+/** W12C.1: geographically unclaimed original scenic eroded highlands.
+ * Deliberately disconnected azimuth sectors; no closed circular bowl. */
+export const HOMESTEAD_RIDGE_SECTORS=Object.freeze([
+  Object.freeze({centre:2.70,halfSpan:.82,distance:47,height:7.0,seed:1.4}),
+  Object.freeze({centre:3.78,halfSpan:.68,distance:53,height:8.2,seed:3.1}),
+  Object.freeze({centre:1.16,halfSpan:.55,distance:55,height:4.5,seed:5.7}),
+  Object.freeze({centre:5.08,halfSpan:.52,distance:52,height:5.8,seed:7.9}),
+]);
 export const HOMESTEAD_ROCK_COUNT=64;
 export type HomesteadRockPoint={
   index:number;x:number;z:number;a:number;size:number;
@@ -100,33 +108,66 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }));
   floor.name='midian-homestead-physical-ground';floor.receiveShadow=true;scene.add(floor);
 
-  // A continuous mesh horizon with varying physical crest heights, 360°.
-  const vertices:number[]=[],triangles:number[]=[],hue:number[]=[];
-  const c0=new THREE.Color(0x897b6e),c1=new THREE.Color(0xb9a995);
-  const steps=120;
-  for(let i=0;i<=steps;i++){
-    const a=2*Math.PI*i/steps;
-    const crest=3.1+3.3*Math.sin(a*4.6+.12)**2+
-      2.8*Math.sin(a*8.2+1.3)**2+1.1*Math.sin(a*20.1)**2;
-    for(let row=0;row<3;row++){
-      const t=row/2,r=48-t*4;
-      vertices.push(Math.sin(a)*r,row===0?-4:row===1?crest*.43:crest,Math.cos(a)*r);
-      const c=c0.clone().lerp(c1,t*.60);
-      hue.push(c.r,c.g,c.b);
-    }
-    if(i)for(let row=0;row<2;row++){
-      const x=(i-1)*3+row,y=i*3+row;
-      triangles.push(x,y,x+1,x+1,y,y+1);
-    }
-  }
-  const ridge=new THREE.BufferGeometry();
-  ridge.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
-  ridge.setAttribute('color',new THREE.Float32BufferAttribute(hue,3));
-  ridge.setIndex(triangles);ridge.computeVertexNormals();
-  const distant=new THREE.Mesh(ridge,new THREE.MeshStandardMaterial({
+  // Four disconnected, volumetric eroded mountain masses. Every crest
+  // has inner/outer foot slopes: no omnidirectional vertical "arena wall".
+  // All of this lies beyond the physically traversable ground and carries
+  // no claim about the geography of the biblical Midian episode.
+  const rockBase=new THREE.Color(0x9a8975),rockCrest=new THREE.Color(0x786d60);
+  const hillMaterial=new THREE.MeshStandardMaterial({
     vertexColors:true,roughness:1,side:THREE.DoubleSide,
+  });
+  for(const sector of HOMESTEAD_RIDGE_SECTORS){
+    const vertices:number[]=[],triangles:number[]=[],hue:number[]=[];
+    const steps=48,depth=[-13,-7,0,8,16],heights=[-.3,.32,1,.46,-1];
+    for(let i=0;i<=steps;i++){
+      const t=i/steps,a=sector.centre+(t*2-1)*sector.halfSpan;
+      const taper=Math.pow(Math.max(0,Math.sin(Math.PI*t)),.72);
+      const relief=.79+.13*Math.sin(t*9.4+sector.seed)+
+        .075*Math.sin(t*23.7+sector.seed*2.1)+.045*Math.cos(t*37.2-sector.seed);
+      const crest=sector.height*taper*relief;
+      const wandering=1.3*Math.sin(a*5.4+sector.seed)+
+        .85*Math.sin(a*11.2-sector.seed*.8);
+      for(let row=0;row<depth.length;row++){
+        const r=sector.distance+depth[row]+wandering;
+        const y=row===0?-.38:row===4?-.8:
+          crest*heights[row]+.13*Math.sin(t*15.5+row+sector.seed);
+        vertices.push(Math.sin(a)*r,y,Math.cos(a)*r);
+        const c=rockBase.clone().lerp(rockCrest,row===2?.65:row===1?.30:.12);
+        c.multiplyScalar(.94+.055*Math.sin(t*17+row*3.4+sector.seed));
+        hue.push(c.r,c.g,c.b);
+      }
+      if(i)for(let row=0;row<depth.length-1;row++){
+        const x=(i-1)*depth.length+row,y=i*depth.length+row;
+        triangles.push(x,y,x+1,x+1,y,y+1);
+      }
+    }
+    const ridge=new THREE.BufferGeometry();
+    ridge.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
+    ridge.setAttribute('color',new THREE.Float32BufferAttribute(hue,3));
+    ridge.setIndex(triangles);ridge.computeVertexNormals();
+    const distant=new THREE.Mesh(ridge,hillMaterial);
+    distant.name='midian-homestead-eroded-ridge-sector';scene.add(distant);
+  }
+
+  // Low-cost authored atmosphere: a physical skydome with a subtle warmer
+  // horizon, rather than one flat grey camera background. It follows the
+  // camera but stays behind geometry. No network texture or GPU-heavy clouds.
+  const skyGeometry=new THREE.SphereGeometry(110,32,20);
+  const skyPosition=skyGeometry.getAttribute('position'),skyColors:number[]=[];
+  const skyHorizon=new THREE.Color(0xc7bbae),skyUpper=new THREE.Color(0xaeb9bb);
+  for(let i=0;i<skyPosition.count;i++){
+    const h=THREE.MathUtils.clamp(skyPosition.getY(i)/110,0,1);
+    const t=THREE.MathUtils.smoothstep(h,0,.74);
+    const c=skyHorizon.clone().lerp(skyUpper,t*.82);
+    skyColors.push(c.r,c.g,c.b);
+  }
+  skyGeometry.setAttribute('color',new THREE.Float32BufferAttribute(skyColors,3));
+  const sky=new THREE.Mesh(skyGeometry,new THREE.MeshBasicMaterial({
+    vertexColors:true,side:THREE.BackSide,depthWrite:false,fog:false,toneMapped:false,
   }));
-  distant.name='midian-homestead-geometric-distant-hills';scene.add(distant);
+  sky.name='midian-homestead-atmospheric-skydome';
+  sky.renderOrder=-100;
+  scene.add(sky);
 
   // Structural frame, actual posts and gently sagging fabric roof.
   const support=mat(0x665744),rope=mat(0xa38b6b),cloth=new THREE.MeshStandardMaterial({
@@ -364,6 +405,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       camera.position.set(walk.x,y,walk.z);
       camera.lookAt(walk.x-Math.sin(walk.yaw)*Math.cos(walk.pitch),
         y+Math.sin(walk.pitch),walk.z-Math.cos(walk.yaw)*Math.cos(walk.pitch));
+      sky.position.copy(camera.position);
       canvas.dataset.midianX=walk.x.toFixed(3);
       canvas.dataset.midianZ=walk.z.toFixed(3);
       canvas.dataset.midianY=y.toFixed(3);
@@ -372,6 +414,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     }else{
       last=0;camera.position.set(9.7,6.3,12.1);
       camera.lookAt(0,1.25,0);
+      sky.position.copy(camera.position);
     }
     if(!document.hidden)renderer.render(scene,camera);
     canvas.dataset.midianRendered='true';
@@ -387,6 +430,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadShelter='3d-woven-fabric-and-posts';
   canvas.dataset.homesteadDoor='walkable';
   canvas.dataset.homesteadHills='1';
+  canvas.dataset.homesteadRidgeSectors=String(
+    countMesh('midian-homestead-eroded-ridge-sector'));
+  canvas.dataset.homesteadSky=String(countMesh('midian-homestead-atmospheric-skydome'));
   canvas.dataset.homesteadRoofPanels=String(countMesh('midian-shelter-woven-3d-roof'));
   canvas.dataset.homesteadSidePanels=String(countMesh('midian-shelter-real-cloth-sidewall'));
   canvas.dataset.homesteadPosts=String(countMesh('shelter-structural-post'));

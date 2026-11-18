@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -38,6 +38,14 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12C.1: four independent distant hill masses, not a full 360-degree wall.
+t('W12C.1 distant hills leave open azimuth gaps rather than enclosing an arena',
+  HOMESTEAD_RIDGE_SECTORS.length===4&&
+  HOMESTEAD_RIDGE_SECTORS.reduce((sum,s)=>sum+2*s.halfSpan,0)<2*Math.PI*.88&&
+  HOMESTEAD_RIDGE_SECTORS.every(s=>s.distance-s.height*.03-16>HOMESTEAD_WALK.maxZ+5));
+t('W12C.1 distant hill profiles have distinct physical scales',
+  new Set(HOMESTEAD_RIDGE_SECTORS.map(s=>s.distance)).size>=3&&
+  new Set(HOMESTEAD_RIDGE_SECTORS.map(s=>s.height)).size>=3);
 // W12B.1: home rocks cannot be hollow decorative instancing with no collision.
 t('W12B.1 homestead visible boulders and physical colliders share coordinates',
   HOMESTEAD_ROCK_COUNT===64&&HOMESTEAD_ROCK_COLLIDERS.length>20&&
