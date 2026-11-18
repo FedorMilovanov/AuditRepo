@@ -44,6 +44,8 @@ try{
     rear:Number(e.dataset.homesteadRearGables),
     rearTriangles:Number(e.dataset.homesteadRearGableTriangles),
     rocks:Number(e.dataset.homesteadRockInstances),
+    pebbles:Number(e.dataset.homesteadPebbleInstances),
+    pebbleDrawCalls:Number(e.dataset.homesteadPebbleDrawCalls),
     hillsCount:Number(e.dataset.homesteadRidgeSectors),
     skydome:Number(e.dataset.homesteadSky),
     rearClothFaces:Number(e.dataset.homesteadRearDrapeFaces),
@@ -55,6 +57,7 @@ try{
      witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||
      witness.rearTriangles!==96||witness.rocks!==64||
      witness.hillsCount!==4||witness.skydome!==1||
+     witness.pebbles!==720||witness.pebbleDrawCalls!==1||
      witness.rearClothFaces!==784||witness.wovenMatFaces!==1120)
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));
   await page.screenshot({path:join(out,'homestead-shot-desktop.png')});

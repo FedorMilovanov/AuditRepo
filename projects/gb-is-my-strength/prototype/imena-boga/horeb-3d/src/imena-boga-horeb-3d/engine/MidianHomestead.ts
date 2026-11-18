@@ -31,6 +31,16 @@ export const HOMESTEAD_RIDGE_SECTORS=Object.freeze([
   Object.freeze({centre:1.16,halfSpan:.55,distance:55,height:4.5,seed:5.7}),
   Object.freeze({centre:5.08,halfSpan:.52,distance:52,height:5.8,seed:7.9}),
 ]);
+export const HOMESTEAD_GROUND_DETAIL=Object.freeze({
+  washDepth:.135,washHalfWidth:1.85,pebbleCount:720,
+});
+export function homesteadWashCenter(z:number):number{
+  return 9.4+.9*Math.sin(z*.15+.9);
+}
+export function homesteadWashRelief(x:number,z:number):number{
+  const d=(x-homesteadWashCenter(z))/HOMESTEAD_GROUND_DETAIL.washHalfWidth;
+  return -HOMESTEAD_GROUND_DETAIL.washDepth*Math.exp(-d*d);
+}
 export const HOMESTEAD_ROCK_COUNT=64;
 export type HomesteadRockPoint={
   index:number;x:number;z:number;a:number;size:number;
@@ -53,7 +63,10 @@ export function homesteadGround(x:number,z:number):number{
   const slope=.045*Math.sin(x*.23+z*.13)+.048*Math.cos(z*.25-x*.1);
   const softened=slope*(.55+.45*outer);
   const terrace=.34*outer*outer;
-  return softened+terrace-.065*Math.exp(-Math.pow((z-4.2)/2.8,2));
+  const micro=.016*Math.sin(x*1.12+z*.64)*Math.cos(z*.83-x*.28)+
+    .007*Math.sin(x*2.17-z*.67);
+  return softened+terrace-.065*Math.exp(-Math.pow((z-4.2)/2.8,2))+
+    homesteadWashRelief(x,z)+micro;
 }
 /** Rear sheet seam is derived from the very same canopy height function.
  * The cloth is a visual reconstruction, not a historically attested tent. */
@@ -114,12 +127,20 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   desert.rotateX(-Math.PI/2);
   const attr=desert.getAttribute('position'),colors:number[]=[];
   const sand=new THREE.Color(0xb9a488),stoneTint=new THREE.Color(0x8c7868);
+  const washTint=new THREE.Color(0x857761);
   for(let i=0;i<attr.count;i++){
     const x=attr.getX(i),z=attr.getZ(i);
     attr.setY(i,homesteadGround(x,z));
     const value=Math.min(1,Math.hypot(x,z)/34);
+    // Visible sediment bands and irregular, non-tiled stone/sand variation.
+    // Vertex colours share the physical terrain's world-space position.
+    const wash=Math.exp(-Math.pow((x-homesteadWashCenter(z))/2.5,2));
+    const broad=Math.sin(x*.42+z*.27+Math.sin(z*.11)*.6)*
+      Math.cos(z*.36-x*.14);
+    const grain=Math.sin(x*2.19+z*.83)*Math.sin(z*1.93-x*.46);
     const col=sand.clone().lerp(stoneTint,value*.63);
-    col.multiplyScalar(.96+.045*Math.sin(x*.79+z*.37)*Math.cos(z*.26));
+    col.lerp(washTint,wash*.25);
+    col.multiplyScalar(.87+.085*(.5+.5*broad)+.10*(.5+.5*grain));
     colors.push(col.r,col.g,col.b);
   }
   desert.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
@@ -310,8 +331,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   for(let i=0;i<=HOMESTEAD_GABLE_SEGMENTS;i++){
     const x=-2.96+5.92*i/HOMESTEAD_GABLE_SEGMENTS;
     const upperY=homesteadRearGableTop(x);
-    // Rear fabric folds reach z=-3.04 at their deepest points. Keep this
-    // closure behind all folds, rather than crossing them and z-fighting.
+    // Keep the closure behind all folds, avoiding material intersections.
     const baseY=Math.min(homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)+1.40,
       upperY-.06);
     gablePositions.push(x,baseY,HOMESTEAD_REAR_GABLE_Z,
@@ -402,6 +422,31 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   scatter.instanceMatrix.needsUpdate=true;
   scatter.name='homestead-instanced-natural-stone';
   scene.add(scatter);
+
+  // Small scale ground breakup, using ONE instanced draw call. These 720
+  // surface pebbles are under ~35mm tall; unlike the substantial visible
+  // boulders above, they do not warrant blocking a walking camera.
+  const pebbleGeo=new THREE.IcosahedronGeometry(1,0);
+  const pebbles=new THREE.InstancedMesh(pebbleGeo,
+    mat(0xb9a68b),HOMESTEAD_GROUND_DETAIL.pebbleCount);
+  const pebbleShade=new THREE.Color(),pebbleLight=new THREE.Color(0xc2b196);
+  for(let i=0;i<HOMESTEAD_GROUND_DETAIL.pebbleCount;i++){
+    let x=(hash(i*6.37+1.8)-.5)*61;
+    const z=(hash(i*4.91+8.3)-.5)*61;
+    if(Math.abs(x)<3.8&&z>-3.5&&z<3.5)x+=x<0?-4.2:4.2;
+    const size=.026+hash(i*3.43+2.1)*.048;
+    transform.position.set(x,homesteadGround(x,z)+size*.14,z);
+    transform.rotation.set(.14*hash(i*3.1),hash(i*5.4)*Math.PI*2,.11*hash(i*.37));
+    transform.scale.set(size*1.65,size*.32,size*.96);
+    transform.updateMatrix();pebbles.setMatrixAt(i,transform.matrix);
+    pebbleShade.set(0x9f8c73).lerp(pebbleLight,hash(i*2.31));
+    pebbles.setColorAt(i,pebbleShade);
+  }
+  pebbles.instanceMatrix.needsUpdate=true;
+  if(pebbles.instanceColor)pebbles.instanceColor.needsUpdate=true;
+  pebbles.name='homestead-instanced-small-ground-pebble';
+  pebbles.castShadow=false;pebbles.receiveShadow=true;
+  scene.add(pebbles);
 
   // Runtime walk coordinates are mutable numbers, not frozen start literals.
   const walk:{x:number;z:number;yaw:number;pitch:number}={
@@ -527,6 +572,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadPosts=String(countMesh('shelter-structural-post'));
   canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));
   canvas.dataset.homesteadRockInstances=String(count);
+  canvas.dataset.homesteadPebbleInstances=String(pebbles.count);
+  canvas.dataset.homesteadPebbleDrawCalls=String(
+    countMesh('homestead-instanced-small-ground-pebble'));
   canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
   canvas.dataset.homesteadRearGableTriangles=String((gable.index?.count||0)/3);
   // Count actual render triangles, not merely declared subdivision labels.

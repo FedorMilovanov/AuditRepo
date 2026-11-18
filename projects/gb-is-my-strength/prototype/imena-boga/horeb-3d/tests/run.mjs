@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -50,6 +50,25 @@ t('W12D.0 rear gable closes canopy behind all drape folds',
   HOMESTEAD_REAR_GABLE_Z< -3.045&&
   [-2.96,-2.5,0,2.5,2.96].every(x=>
     homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.1: weathered dry-ground contours use ONE shared physical height
+// source for camera, mesh vertices, props and their actual walk path.
+t('W12D.1 wadi-like dry wash is an explicit non-historical terrain variation',
+  HOMESTEAD_GROUND_DETAIL.pebbleCount===720&&
+  HOMESTEAD_GROUND_DETAIL.washDepth>.10&&
+  Array.from({length:15},(_,i)=>-21+i*3).every(z=>{
+    const centre=homesteadWashCenter(z);
+    const depression=homesteadWashRelief(centre,z);
+    return centre>7&&centre<12&&
+      depression<-.11&&Math.abs(homesteadWashRelief(centre+7,z))<.002;
+  }));
+t('W12D.1 ground remains finite, continuous and central approach passable',
+  Array.from({length:39},(_,i)=>-18+i).every(x=>
+    Array.from({length:45},(_,j)=>-21+j).every(z=>
+      Number.isFinite(homesteadGround(x,z))&&
+      Math.abs(homesteadGround(x+.1,z)-homesteadGround(x,z))<.09&&
+      Math.abs(homesteadGround(x,z+.1)-homesteadGround(x,z))<.09))&&
+  Array.from({length:56},(_,i)=>HOMESTEAD_WALK.phoneStartZ-i*.22)
+    .every(z=>homesteadWalkable(0,z)));
 // W12C.3: the mobile establishing camera still begins on ground from
 // which the centre corridor leads physically to the same tent opening.
 t('W12C.3 portrait camera approach corridor remains unobstructed',
