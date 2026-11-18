@@ -895,7 +895,7 @@ function w97Entry(id,nextId) {
   return w97Data.slice(start,end);
 }
 const w97Jer=w97Entry('yhwh-tsidkenu','yhwh-shoftenu');
-for(const required of ['Иер. 33:16 — к Иерусалиму','Христианское мессианское прочтение','не доказываются одной грамматикой','иной формулу с именем Иоседек']){
+for(const required of ['Иер. 33:16 — к Иерусалиму','Христианское мессианское прочтение','не доказываются одной грамматикой','иную формулу с именем Иоседек']){
   if(!w97Jer.includes(required))throw Error('W97 Jeremiah context/edition guard missing: '+required);
 }
 for(const banned of ['что доказывает Его истинное Божество','Как подчеркивали Жан Кальвин']){
