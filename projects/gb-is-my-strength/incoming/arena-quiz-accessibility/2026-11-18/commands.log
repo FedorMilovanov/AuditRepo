@@ -1,0 +1,65 @@
+# 2026-11-18 UTC — этап 4, клавиатура и программные состояния квизов. Product read-only.
+# FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713
+# AuditRepo arena/9713b5a4-auditrepo at fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor and overlap]
+git status --short --branch
+git rev-parse HEAD
+git ls-remote origin refs/heads/main
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 40 --json number,title,headRefName
+gh pr view 2167 -R FedorMilovanov/gb-is-my-strength --json title,body,mergeCommit
+# Same Product anchor and AuditRepo base. Open #2338/#2324/#2323/#2322/#2311/#2300 do not own these transitions.
+# #2167 merge 2ee584d3020b35f5ac7229415fd556affa18c7d3 fixed the generic Next being hidden,
+# not this desktop learning-sheet control visible before answer. No change to the closure ledger.
+# Existing QL-02/QL-05 compared with the first intake's diagnostics; not treated as new tickets.
+
+[Reproduction]
+# From AuditRepo. PRODUCT is the absolute path to the exact source archive plus built dist and node_modules.
+# Follow ../../arena-quiz-learning/2026-11-18/commands.log for installation and production-like build
+# with GB_BUILD_INSTANT=2026-11-18T13:24:28Z. The files served in this phase were not changed.
+# TOOLS is the Node 22.23.4 / @sparticuz/chromium 153.0.0 npm prefix with AL2023 libs/lib.
+# CHROMIUM is the absolute executable path from Chromium.executablePath().
+R=$(pwd)
+D="$R/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18"
+G="$R/projects/gb-is-my-strength/incoming/arena-quiz-accessibility/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-a11y.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --version
+node --check "$G/harness/keyboard.mjs"
+node "$D/harness/census.cjs" "$PRODUCT" "$OUT"
+(cd "$PRODUCT" && node "$G/harness/keyboard.mjs" "$PRODUCT" "$OUT" "$CHROMIUM")
+# Last argument can filter a scenario substring, e.g. sheet-boundary, sheet-escape, map-keyboard.
+# Writes keyboard-witness.json and, for the Gill I wide check, next-before-answer.png (dialog scrolled to Next).
+# Replay from the saved script in a separate empty OUT: census and question corpus identical, 37/37 again.
+# Questions in the shuffled decks, option order, and incidental focus labels may differ; saved trace not replaced.
+
+[Observations and harness controls]
+# 26 phase checks: 11 wide routes with active Next before answer; 11 mobile controls with no rendered/AX button;
+# 2 routes at 1359 + 2 at 1360, same light non-touch profile. Confidence SVG box 418×418 wide / 13×13 compact.
+# 11 extended scenarios: three native, six sheet (incl. Escape controls and keyboard skip), real iframe, disclosures.
+# Chromium AX: Playwright ariaSnapshot plus CDP Accessibility.getPartialAXTree for exact live/name/state nodes.
+# Mobile modal leakage after Next: Gill I and generic series, non-ignored focused background skip link while open.
+# Escape result sampled after 520ms, exceeding the 8 attempts at 60ms intervals (0..420ms) in site-utils.js.
+# Browser keys are ordinary Tab/Shift+Tab, ArrowRight, Enter and Escape; #sec-quiz/#quiz are native start fragments.
+# The Settings opener and the map's first topic alone use initial locator.focus; neither follow-up flow refocuses via JS.
+# The 11+11 phase checks and four boundary checks use ordinary pointer clicks for entry; click is not forced.
+# The native source handoff uses native keyboard activation and page.goBack (browser history).
+# Service Workers blocked. Host resolver denies non-local lookups. No pageerror or HTTP >=400 on local origin in 37/37.
+# No full AT output, Windows HCM, physical phone, live domain, Safari or Firefox in this package.
+# Initial incorrect expectations: mobile Next did not reach a new confidence button within 12 tabs; measured focus
+# on the actual background link instead. Map first retry probe matched 1/4 in the outgoing score card; wait for
+# the actual first question heading and option nodes after AnimatePresence. Keyboard retry after mount works.
+# The capture scrolls the dialog itself to the enabled pre-answer Next; does not manipulate author styles.
+
+[AuditRepo intake]
+# CHANGED contains staged paths from all four intake packages, no other files.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+git diff --cached --check
+# No Product modifications, commit, push, PR or matrix/status transition.

@@ -1,0 +1,67 @@
+# 2026-11-18 UTC — редакционная сверка этапа 2. Точно тот же Product SHA и dist, что в этапе 1.
+# FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713
+# AuditRepo arena/9713b5a4-auditrepo на fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor / scope]
+git status --short --branch
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main
+# 9edef94ece08012223c1364bec7ddcd561cf5713, повторно сверено.
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 40
+gh issue list -R FedorMilovanov/gb-is-my-strength --state all --search '"Грэнтем"'
+# #2338/#2324/#2323/#2322/#2311/#2300 не конкурируют с проверенными владельцами. Поиск по «Грэнтем» пуст; не утверждение об отсутствии любых связанных задач.
+# Не менялись ни Product source, ни его build config. Новый intake отделён от первого.
+
+[Index / deterministic baselines / editorial reading]
+# Выполнять из AuditRepo. PRODUCT = абсолютный путь exact-archive worktree со сборкой;
+# TOOLS = префикс pinned Node/Chromium из этапа 1; CHROMIUM = абсолютный путь бинарника.
+# Установка и сборка с GB_BUILD_INSTANT=2026-11-18T13:24:28Z: ../../arena-quiz-learning/2026-11-18/commands.log.
+R=$(pwd)
+FIRST="$R/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18"
+E="$R/projects/gb-is-my-strength/incoming/arena-quiz-editorial/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-editorial.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --version
+node "$FIRST/harness/census.cjs" "$PRODUCT" "$OUT"
+node --check "$E/harness/analyze.cjs"
+node "$E/harness/analyze.cjs" "$PRODUCT" "$OUT" "$OUT"
+# 250 contexts: article 153 (131 present/22 absent), panel 62 (62 present),
+# map 25 (16 label-only/9 absent), cards 10. Тексты карты из quizData.ts; 25/25 вопросов есть в compiled artifact.
+# 99/153 по длине (6 верхних ступеней), 67/153 по второй позиции (5), EV=41.6666666667 для uniform.
+cmp "$OUT/score-baselines.json" "$E/evidence/score-baselines.json"
+# review-contexts.json — временный общий индекс; не доказательство, что excerpt покрывает весь раздел.
+# Вручную тексты/варианты/ключи сверены с точными owner-путями и параграфами; выводы и локаторы 34 строк в review-sample.tsv.
+# Положительные контроли: `foxe`, §V CSBI XIII, Q7 Лота, Q6 церковной дисциплины.
+(cd "$PRODUCT" && node scripts/konfessii-historical-evidence-contract.cjs)
+# PASS. Gill claim surface, series handoff и native parity PASS — проведены на этапе 1, не повторялись целиком.
+
+[Browser on local dist]
+node --check "$E/harness/browser.mjs"
+(cd "$PRODUCT" && node "$E/harness/browser.mjs" "$PRODUCT" "$OUT" "$CHROMIUM")
+# 15/15: 8 нативных проходов по длине (45 кликов); 2 целевых нативных прогона (4 вопроса/перехода);
+# 3 разных вопроса панели с переходом; 1 проход карты только по цвету (25/25); 1 сравнение двух ответов f3.
+# Ни JS pageerror, ни локальных HTTP >=400. Селекторы не подменяют DOM/данные/скоринг.
+# Черновые расхождения: innerText отдаёт CSS-верхний регистр «РЕЗУЛЬТАТ»;
+# текстовый селектор через глоссарный термин в Gill III пропускал абзац. Оба исправлены в harness.
+# Порядок остальных карточек панели случаен; skippedOtherItems и порядок показанных опций при повторе меняются.
+
+[External document used only for QE-05]
+gh api --method GET repos/LetsChurch/lets.church/contents/packages/web/src/routes/_main/about/theology.tsx -f ref=05f8a99aa3b8e15f55c5d7b6f2b139c74218cad8 --jq .content | base64 --decode > "$OUT/csbi-lets-church.tsx"
+gh api --method GET repos/NonlinearFruit/Creeds.json/contents/creeds/chicago_statement_on_biblical_inerrancy.json -f ref=2ae21a4c5387ecc91f474c9d3d67c826d2a6b9d5 --jq .content | base64 --decode > "$OUT/csbi-creeds.json"
+sha256sum "$OUT/csbi-lets-church.tsx" "$OUT/csbi-creeds.json"
+# ce5ed265eef6242308ad573b3ba9e6a5224b0470d48da59390d0961e99684c62 (LetsChurch)
+# dd34b9cdc230905d3c8b1fc0361bc9f0c82cb659b6edd33c29c37336eca838df (Creeds.json)
+# Из заголовков Article ([IVXL]+): обе копии I–XIX, без XX. Art. XIII прямо упоминает тематическое расположение,
+# различный отбор в параллельных местах и свободное цитирование. Факсимиле 1978 г. не открывалось.
+# Прямого запроса к public gospod-bog.ru и теста Telegram на этапе 2 нет.
+
+[AuditRepo intake]
+# CHANGED — список staged изменённых путей; оба intake, без постоянной матрицы/ledger.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+git diff --cached --check
+# Валидация intake/structure/admission/coverage/whitespace; без коммита, push и PR.

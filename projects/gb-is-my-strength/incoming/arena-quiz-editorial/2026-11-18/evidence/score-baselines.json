@@ -1,0 +1,617 @@
+[
+  {
+    "route": "/articles/20-antisovetov-pastoru/",
+    "questions": 10,
+    "customTierCount": 5,
+    "longestPicksZeroBased": [
+      0,
+      3,
+      3,
+      3,
+      0,
+      1,
+      3,
+      1,
+      1,
+      1
+    ],
+    "lengthScore": 5,
+    "secondScore": 3,
+    "lengthTitle": "Неплохо",
+    "lengthDescription": "Начало положено. Статья требует вдумчивого повторного чтения — она написана для тех, кто хочет не просто знать, а понимать.",
+    "topTitle": "Мастер богословской диагностики",
+    "topScores": [
+      10
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 9.5367431640625e-7,
+    "uniformExpectedScore": 2.5,
+    "soloUniqueLongestCorrect": 5
+  },
+  {
+    "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      2,
+      1,
+      3,
+      1,
+      3,
+      3,
+      0
+    ],
+    "lengthScore": 1,
+    "secondScore": 2,
+    "lengthTitle": "1 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 1
+  },
+  {
+    "route": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      3,
+      2,
+      1,
+      1,
+      2,
+      0
+    ],
+    "lengthScore": 4,
+    "secondScore": 2,
+    "lengthTitle": "4 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 4
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-1-chelovek/",
+    "questions": 4,
+    "customTierCount": 3,
+    "longestPicksZeroBased": [
+      2,
+      1,
+      2,
+      0
+    ],
+    "lengthScore": 2,
+    "secondScore": 3,
+    "lengthTitle": "Вдумчивый читатель",
+    "lengthDescription": "Хороший результат! Вы уловили суть детства, обращения и семейной жизни Гилла.",
+    "topTitle": "Богослов-исследователь",
+    "topScores": [
+      4
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.00390625,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 2
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+    "questions": 4,
+    "customTierCount": 3,
+    "longestPicksZeroBased": [
+      1,
+      1,
+      1,
+      3
+    ],
+    "lengthScore": 3,
+    "secondScore": 3,
+    "lengthTitle": "Внимательный читатель",
+    "lengthDescription": "Хороший результат! Вы уловили суть докторской степени, полемики с Уистоном и экзегетического метода.",
+    "topTitle": "Учёный-экзегет",
+    "topScores": [
+      4
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.00390625,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-3-nasledie/",
+    "questions": 4,
+    "customTierCount": 3,
+    "longestPicksZeroBased": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "lengthScore": 4,
+    "secondScore": 4,
+    "lengthTitle": "Хранитель наследия",
+    "lengthDescription": "Вы продемонстрировали глубочайшее понимание полемики, влияния и памяти о Гилле. Великолепно!",
+    "topTitle": "Хранитель наследия",
+    "topScores": [
+      4
+    ],
+    "topByLength": true,
+    "topBySecond": true,
+    "uniformTopProbability": 0.00390625,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 4
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-4-ekzeget/",
+    "questions": 4,
+    "customTierCount": 3,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      2,
+      2
+    ],
+    "lengthScore": 4,
+    "secondScore": 1,
+    "lengthTitle": "Внимательный экзегет",
+    "lengthDescription": "Вы уловили метод Гилла на всех уровнях — герменевтику, построчную полемику с Уитби и различение долга веры. Превосходно!",
+    "topTitle": "Внимательный экзегет",
+    "topScores": [
+      4
+    ],
+    "topByLength": true,
+    "topBySecond": false,
+    "uniformTopProbability": 0.00390625,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 4
+  },
+  {
+    "route": "/articles/dzhon-gill-spravochnik/",
+    "questions": 4,
+    "customTierCount": 3,
+    "longestPicksZeroBased": [
+      1,
+      2,
+      1,
+      1
+    ],
+    "lengthScore": 4,
+    "secondScore": 3,
+    "lengthTitle": "Справочник освоен",
+    "lengthDescription": "Вы уверенно ориентируетесь в хронологии, трудах и спорных вопросах наследия Гилла.",
+    "topTitle": "Справочник освоен",
+    "topScores": [
+      4
+    ],
+    "topByLength": true,
+    "topBySecond": false,
+    "uniformTopProbability": 0.00390625,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+    "questions": 10,
+    "customTierCount": 5,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      2,
+      1,
+      2,
+      0,
+      3,
+      1,
+      2,
+      2
+    ],
+    "lengthScore": 9,
+    "secondScore": 4,
+    "lengthTitle": "Отлично",
+    "lengthDescription": "Сильное понимание темы. Вы различаете основные категории и готовы к более глубокому изучению.",
+    "topTitle": "Мастер библейской герменевтики",
+    "topScores": [
+      10
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 9.5367431640625e-7,
+    "uniformExpectedScore": 2.5,
+    "soloUniqueLongestCorrect": 9
+  },
+  {
+    "route": "/articles/kod-da-vinchi/",
+    "questions": 10,
+    "customTierCount": 5,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      2,
+      1,
+      2,
+      1,
+      0,
+      0,
+      0,
+      2
+    ],
+    "lengthScore": 7,
+    "secondScore": 3,
+    "lengthTitle": "Зоркий критик",
+    "lengthDescription": "Отличный результат. Основные ловушки вы распознали — разве что пара деталей ещё ускользнула.",
+    "topTitle": "Мастер различения",
+    "topScores": [
+      9,
+      10
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.00035563684397703593,
+    "uniformExpectedScore": 3.3333333333333335,
+    "soloUniqueLongestCorrect": 7
+  },
+  {
+    "route": "/articles/kogda-uhodit-kogda-ostavatsya/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      3,
+      0,
+      0,
+      1,
+      0,
+      3
+    ],
+    "lengthScore": 6,
+    "secondScore": 2,
+    "lengthTitle": "6 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 5
+  },
+  {
+    "route": "/articles/krajne-li-isporcheno-serdce/",
+    "questions": 12,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      2,
+      0,
+      1,
+      2,
+      1,
+      1,
+      0,
+      1,
+      2,
+      2,
+      1,
+      1
+    ],
+    "lengthScore": 3,
+    "secondScore": 4,
+    "lengthTitle": "3 из 12",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "12 из 12",
+    "topScores": [
+      12
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000018816764231589197,
+    "uniformExpectedScore": 4,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/articles/lot-i-sodom/",
+    "questions": 8,
+    "customTierCount": 4,
+    "longestPicksZeroBased": [
+      0,
+      1,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "lengthScore": 8,
+    "secondScore": 5,
+    "lengthTitle": "Внимательный экзегет",
+    "lengthDescription": "Вы удержали вместе текст Бытия, каноническую оценку Лота и границы исторических доказательств.",
+    "topTitle": "Внимательный экзегет",
+    "topScores": [
+      7,
+      8
+    ],
+    "topByLength": true,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0003814697265625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 7
+  },
+  {
+    "route": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      3,
+      2,
+      2,
+      1,
+      0,
+      0,
+      1,
+      2
+    ],
+    "lengthScore": 6,
+    "secondScore": 2,
+    "lengthTitle": "6 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 6
+  },
+  {
+    "route": "/articles/priznaki-zdorovoy-cerkvi/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      0,
+      0,
+      2,
+      1,
+      3,
+      0,
+      2,
+      1
+    ],
+    "lengthScore": 7,
+    "secondScore": 2,
+    "lengthTitle": "7 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 7
+  },
+  {
+    "route": "/articles/sem-tipov-razlichenie-uchiteley/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      3
+    ],
+    "lengthScore": 4,
+    "secondScore": 2,
+    "lengthTitle": "4 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 4
+  },
+  {
+    "route": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      3,
+      0,
+      3,
+      2,
+      3,
+      0,
+      0,
+      3
+    ],
+    "lengthScore": 2,
+    "secondScore": 2,
+    "lengthTitle": "2 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 2
+  },
+  {
+    "route": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+    "questions": 8,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      3,
+      0,
+      2,
+      3,
+      2,
+      2,
+      1
+    ],
+    "lengthScore": 5,
+    "secondScore": 2,
+    "lengthTitle": "5 из 8",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "8 из 8",
+    "topScores": [
+      8
+    ],
+    "topByLength": false,
+    "topBySecond": false,
+    "uniformTopProbability": 0.0000152587890625,
+    "uniformExpectedScore": 2,
+    "soloUniqueLongestCorrect": 5
+  },
+  {
+    "route": "/nagornaya/chast-1/",
+    "questions": 3,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      1,
+      0
+    ],
+    "lengthScore": 2,
+    "secondScore": 3,
+    "lengthTitle": "2 из 3",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "3 из 3",
+    "topScores": [
+      3
+    ],
+    "topByLength": false,
+    "topBySecond": true,
+    "uniformTopProbability": 0.037037037037037035,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 2
+  },
+  {
+    "route": "/nagornaya/chast-2/",
+    "questions": 4,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      1,
+      0,
+      1
+    ],
+    "lengthScore": 3,
+    "secondScore": 4,
+    "lengthTitle": "3 из 4",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "4 из 4",
+    "topScores": [
+      4
+    ],
+    "topByLength": false,
+    "topBySecond": true,
+    "uniformTopProbability": 0.012345679012345678,
+    "uniformExpectedScore": 1.3333333333333333,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/nagornaya/chast-3/",
+    "questions": 3,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      1,
+      1
+    ],
+    "lengthScore": 3,
+    "secondScore": 3,
+    "lengthTitle": "3 из 3",
+    "lengthDescription": "Все ответы верны.",
+    "topTitle": "3 из 3",
+    "topScores": [
+      3
+    ],
+    "topByLength": true,
+    "topBySecond": true,
+    "uniformTopProbability": 0.037037037037037035,
+    "uniformExpectedScore": 1,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/nagornaya/chast-4/",
+    "questions": 5,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      2,
+      2,
+      1,
+      1,
+      1
+    ],
+    "lengthScore": 3,
+    "secondScore": 5,
+    "lengthTitle": "3 из 5",
+    "lengthDescription": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+    "topTitle": "5 из 5",
+    "topScores": [
+      5
+    ],
+    "topByLength": false,
+    "topBySecond": true,
+    "uniformTopProbability": 0.004115226337448559,
+    "uniformExpectedScore": 1.6666666666666665,
+    "soloUniqueLongestCorrect": 3
+  },
+  {
+    "route": "/nagornaya/chast-5/",
+    "questions": 4,
+    "customTierCount": 0,
+    "longestPicksZeroBased": [
+      1,
+      2,
+      1,
+      1
+    ],
+    "lengthScore": 4,
+    "secondScore": 3,
+    "lengthTitle": "4 из 4",
+    "lengthDescription": "Все ответы верны.",
+    "topTitle": "4 из 4",
+    "topScores": [
+      4
+    ],
+    "topByLength": true,
+    "topBySecond": false,
+    "uniformTopProbability": 0.012345679012345678,
+    "uniformExpectedScore": 1.3333333333333333,
+    "soloUniqueLongestCorrect": 4
+  }
+]

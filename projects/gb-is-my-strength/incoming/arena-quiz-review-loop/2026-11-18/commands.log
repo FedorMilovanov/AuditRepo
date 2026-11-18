@@ -1,0 +1,69 @@
+# 2026-11-18 UTC — этап 3, после неверного ответа. Только чтение Product.
+# FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713
+# AuditRepo arena/9713b5a4-auditrepo на fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor / owner overlap]
+git status --short --branch
+git rev-parse HEAD
+git ls-remote origin refs/heads/main
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 40 --json number,title,headRefName
+gh pr view 2222 -R FedorMilovanov/gb-is-my-strength --json title,body,mergeCommit
+# Product anchor и база AuditRepo прежние. Открытые Product #2338/#2324/#2323/#2322/#2311/#2300:
+# журнал, зависимости, описание Arena Chromium и черновик статьи; нет активной правки этих квизов.
+# #2222 merge 3dbb2cc1fa445f85ab1f70f1177adf9df4aca3a8: попадание на раздел и незаблокированный Back,
+# не продолжение той же попытки. Подтверждённое в этапе 1 прохождение 55/55 не пересчитывалось.
+
+[Reproduce in a fresh scratch output directory]
+# Из корня AuditRepo. PRODUCT = абсолютный путь к exact archive со сборкой и node_modules.
+# Сборка не менялась: GB_BUILD_INSTANT=2026-11-18T13:24:28Z, см. ../../arena-quiz-learning/2026-11-18/commands.log.
+# TOOLS = npm-префикс Node 22.23.4 и @sparticuz/chromium 153.0.0 с AL2023 libs/lib;
+# CHROMIUM = абсолютный путь исполняемого файла из Chromium.executablePath().
+R=$(pwd)
+D="$R/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18"
+F="$R/projects/gb-is-my-strength/incoming/arena-quiz-review-loop/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-review.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --version
+node --check "$F/harness/browser.mjs"
+node "$D/harness/census.cjs" "$PRODUCT" "$OUT"
+(cd "$PRODUCT" && node "$F/harness/browser.mjs" "$PRODUCT" "$OUT" "$CHROMIUM")
+# Optional final argument filters by scenario substring (e.g. panel-same-path or bfcache).
+# Writes browser-witness.json and, with native-no-source-floor, krajne-empty-review.png.
+# Fresh repeat from the saved harness: census.json and question-corpus.json byte-identical to prior census;
+# 13/13 again. Browser timestamps, answer order, the first reopened question and the number of
+# cards visited en route to the selected item vary. Keep the original passing witness.
+
+[Browser observations]
+# 4 native scenarios / 5 attempts / 40 answers: two 7/8 with different missed destinations and equal
+# result cards; perfect 8/8 after explicit repeat; 0/12 with no destination; authored advice at 1/4.
+# 4 panel scenarios: same-document resume (with and without fragment Back), cross-document cold Back,
+# same path with ?utm_source=reader lost on link click, six-question cycle rollover (83% calibration).
+# 3 map scenarios: equal 3/4/75% with o1 vs o3 missed; glossary read preserves the card but repeated
+# active topic click clears it; actual navigation to the series and cold Back remount at 1/25.
+# 2 BFCache diagnostics on cache-header-only local proxy: synthetic A/B and unmodified Product bytes.
+# Standard scenarios use built-in Playwright disable flag, A04 no-store. Diagnostic excludes the flag,
+# replaces response cache-control with max-age=0, must-revalidate, observes actual pageshow + CDP;
+# both return with persisted=false and BackForwardCacheDisabledForDelegate / BrowsingInstanceNotSwapped.
+# No measurement of a real restored document; no extrapolation to other browsers or production headers.
+# Same native layout and filtered local navigation in both browser runs; Product data not modified.
+# No JS pageerror or local HTTP >=400 in completed scenarios. Headless DNS confines requests to loopback;
+# Service Workers blocked in every test context. No requests to real gospod-bog.ru or Telegram.
+# Draft harness had 12/13: glossary comparison mixed harness-only question id/choice metadata with DOM.
+# Fixed the comparison, recorded definition text/expanded state; two clean 13/13 runs afterwards.
+
+[AuditRepo intake]
+# CHANGED contains staged paths for the three intake packages. No Product, MASTER or ledger paths.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+git diff --cached --check
+# PASS: validation, structure, artifact admission, matrix regression, coverage and whitespace.
+# Matrix unchanged: 44 open / 0 closed; 1823 diagnostic contexts are not new accepted rows.
+# Offline cross-check: 24 Markdown references plus 2 inline files, 8 dist digests, exact cited counts;
+# staged inventory 8 + 8 + 5. The earlier 16 staged entries (path/mode/blob) are unchanged.
+# No commit, push, PR or state transition for any earlier finding.

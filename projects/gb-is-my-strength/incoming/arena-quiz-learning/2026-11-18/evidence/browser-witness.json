@@ -1,0 +1,5015 @@
+{
+  "productSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "auditDate": "2026-11-18",
+  "scope": "Local production-like dist. An ok flag refers to execution, not absence of the defect being measured.",
+  "engine": "153.0.8010.0",
+  "playwright": "1.62.1",
+  "profiles": {
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "reduce"
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true,
+      "colorScheme": "dark",
+      "reducedMotion": "reduce"
+    }
+  },
+  "abortedNonessentialThirdParty": [
+    "mc.yandex.ru"
+  ],
+  "artifactCensus": {
+    "htmlPages": 117,
+    "articleRoutes": 23,
+    "articleQuestions": 153,
+    "articleBySource": {
+      "ok": 131,
+      "absent": 22
+    },
+    "articleAnswerIndex": {
+      "0": 31,
+      "1": 67,
+      "2": 37,
+      "3": 18
+    },
+    "articleMissingExplanation": 0,
+    "articleFullExplanation": 153,
+    "learningRoutes": 68,
+    "learningDecks": 11,
+    "learningUnique": 62,
+    "learningProjected": 91,
+    "learningBySource": {
+      "ok": 62
+    },
+    "learningOutlineEmpty": 47,
+    "learningOutlineLinks": 185,
+    "learningOutlineBySource": {
+      "ok": 185
+    },
+    "disclosureRoutes": 1,
+    "disclosureQuestions": 10,
+    "reflectionBlocks": [
+      "/nagornaya/chast-3/",
+      "/nagornaya/chast-5/"
+    ],
+    "mapQuestions": 25,
+    "mapByTopic": {
+      "origins": 4,
+      "figures": 9,
+      "unions": 4,
+      "persecution": 4,
+      "modern": 2,
+      "doctrines": 2
+    },
+    "mapSourceLabels": 16,
+    "mapAnswerIndex": {
+      "0": 6,
+      "1": 14,
+      "2": 5
+    }
+  },
+  "articleRuns": [
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 10 из 10",
+      "sources": 10,
+      "markupLeaks": 0,
+      "correctClicked": 10,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 10 из 10",
+      "sources": 10,
+      "markupLeaks": 0,
+      "correctClicked": 10,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-3-nasledie/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-3-nasledie/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-4-ekzeget/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-4-ekzeget/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-spravochnik/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/dzhon-gill-spravochnik/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 10 из 10",
+      "sources": 0,
+      "markupLeaks": 0,
+      "correctClicked": 10,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 10 из 10",
+      "sources": 0,
+      "markupLeaks": 0,
+      "correctClicked": 10,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/kod-da-vinchi/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 5 из 10",
+      "sources": 10,
+      "markupLeaks": 0,
+      "correctClicked": 5,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/kod-da-vinchi/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 5 из 10",
+      "sources": 10,
+      "markupLeaks": 0,
+      "correctClicked": 5,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 10
+    },
+    {
+      "route": "/articles/kogda-uhodit-kogda-ostavatsya/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/kogda-uhodit-kogda-ostavatsya/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 12 из 12",
+      "sources": 0,
+      "markupLeaks": 0,
+      "correctClicked": 12,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 12
+    },
+    {
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 12 из 12",
+      "sources": 0,
+      "markupLeaks": 0,
+      "correctClicked": 12,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 6,
+      "answersChecked": 12
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/priznaki-zdorovoy-cerkvi/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/priznaki-zdorovoy-cerkvi/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/sem-tipov-razlichenie-uchiteley/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/sem-tipov-razlichenie-uchiteley/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 4 из 8",
+      "sources": 8,
+      "markupLeaks": 0,
+      "correctClicked": 4,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 8
+    },
+    {
+      "route": "/nagornaya/chast-1/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 3",
+      "sources": 3,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 3
+    },
+    {
+      "route": "/nagornaya/chast-1/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 3",
+      "sources": 3,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 3
+    },
+    {
+      "route": "/nagornaya/chast-2/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/nagornaya/chast-2/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/nagornaya/chast-3/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 3",
+      "sources": 3,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 3
+    },
+    {
+      "route": "/nagornaya/chast-3/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 3",
+      "sources": 3,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 3
+    },
+    {
+      "route": "/nagornaya/chast-4/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 3 из 5",
+      "sources": 5,
+      "markupLeaks": 0,
+      "correctClicked": 3,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 5
+    },
+    {
+      "route": "/nagornaya/chast-4/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 3 из 5",
+      "sources": 5,
+      "markupLeaks": 0,
+      "correctClicked": 3,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 5
+    },
+    {
+      "route": "/nagornaya/chast-5/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    },
+    {
+      "route": "/nagornaya/chast-5/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "Результат: 2 из 4",
+      "sources": 4,
+      "markupLeaks": 0,
+      "correctClicked": 2,
+      "bonusButtonCount": 0,
+      "pageErrors": [],
+      "localErrors": [],
+      "bonusPayload": 0,
+      "answersChecked": 4
+    }
+  ],
+  "sheetRuns": [
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 2,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Автор",
+        "status": "Найдено: 18",
+        "results": 18
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 9,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+      "ok": true,
+      "terms": {
+        "count": 4,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/chto-bibliya-nazyvaet-serdcem/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 10,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/diotrefy-nashego-vremeni/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 17,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Всего",
+        "status": "Найдено: 3",
+        "results": 3
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "ok": true,
+      "terms": {
+        "count": 15,
+        "defaultTab": "tabTerms",
+        "inBody": 25,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 2,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Серия",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.man.ordination.year",
+        "gill.man.daughter-sermon",
+        "gill.man.horsleydown.years",
+        "gill.man.goatyard-declaration.year",
+        "gill.man.education",
+        "gill.man.horsleydown.place"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-chast-1-chelovek/#sec-ordination-1720",
+        "text": "Перечитать: Часть I · Рукоположение 22 марта 1720 года",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "ok": true,
+      "terms": {
+        "count": 27,
+        "defaultTab": "tabTerms",
+        "inBody": 47,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 1,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Серия",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.exegete.1tim2-4",
+        "gill.man.horsleydown.place",
+        "gill.scholar.systematics",
+        "gill.exegete.rejection-vs-reprobation",
+        "gill.context.academies",
+        "gill.exegete.duty-faith",
+        "gill.man.horsleydown.years",
+        "gill.exegete.2pet3-9",
+        "gill.legacy.rippon",
+        "gill.legacy.islam",
+        "gill.man.goatyard-declaration.year",
+        "gill.exegete.rabbi-yohanan",
+        "gill.legacy.america",
+        "gill.exegete.world-texts",
+        "gill.context.salters-hall.year",
+        "gill.legacy.spurgeon",
+        "gill.man.education",
+        "gill.context.particular-vs-general",
+        "gill.scholar.canticles",
+        "gill.exegete.method-coordinates",
+        "gill.reference.body-structure",
+        "gill.context.great-ejection.year",
+        "gill.reference.terms",
+        "gill.exegete.seven-texts",
+        "gill.man.daughter-sermon",
+        "gill.reference.lifespan",
+        "gill.legacy.toplady",
+        "gill.scholar.mishnah",
+        "gill.legacy.hypercalvinism",
+        "gill.legacy.rediscovery",
+        "gill.reference.disputes",
+        "gill.man.ordination.year"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 32,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-chast-4-ekzeget/#sec-1tim-2-4",
+        "text": "Перечитать: Часть III · 1 Тимофею 2:4",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-3-nasledie/",
+      "ok": true,
+      "terms": {
+        "count": 20,
+        "defaultTab": "tabTerms",
+        "inBody": 36,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 1,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Серия",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.legacy.toplady",
+        "gill.legacy.america",
+        "gill.legacy.islam",
+        "gill.legacy.spurgeon",
+        "gill.legacy.rediscovery",
+        "gill.legacy.hypercalvinism",
+        "gill.legacy.rippon"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 7,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-chast-3-nasledie/#sec-toplady-memoir",
+        "text": "Перечитать: Часть IV · Топлэди о Гилле",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-4-ekzeget/",
+      "ok": true,
+      "terms": {
+        "count": 16,
+        "defaultTab": "tabTerms",
+        "inBody": 26,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 1,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Серия",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.exegete.duty-faith",
+        "gill.exegete.rejection-vs-reprobation",
+        "gill.exegete.1tim2-4",
+        "gill.exegete.world-texts",
+        "gill.exegete.2pet3-9",
+        "gill.exegete.seven-texts",
+        "gill.exegete.method-coordinates",
+        "gill.exegete.rabbi-yohanan"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 8,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-chast-4-ekzeget/#sec-duty-faith",
+        "text": "Перечитать: Часть III · Долг веры: против ярлыка «гипер»",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+      "ok": true,
+      "terms": {
+        "count": 18,
+        "defaultTab": "tabTerms",
+        "inBody": 30,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 10,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.context.academies",
+        "gill.context.particular-vs-general",
+        "gill.context.salters-hall.year",
+        "gill.context.great-ejection.year"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 4,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-istoricheskiy-kontekst/#sec-academies",
+        "text": "Перечитать: Исторический контекст · Диссентерские академии",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-spravochnik/",
+      "ok": true,
+      "terms": {
+        "count": 8,
+        "defaultTab": "tabTerms",
+        "inBody": 9,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 8,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "gill.reference.body-structure",
+        "gill.reference.disputes",
+        "gill.reference.lifespan",
+        "gill.reference.terms"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 4,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "../../articles/dzhon-gill-spravochnik/#sec-body-structure",
+        "text": "Перечитать: Справочник · Структура «Свода богословия»",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/kak-hranit-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/kak-menyaetsya-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/kogda-chelovek-uhodit-ot-very/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 20,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Отступники",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 1,
+      "deckOrder": [
+        "apostasy.p5.means",
+        "apostasy.p5.not-every-crisis",
+        "apostasy.p5.not-final",
+        "apostasy.p5.consequences",
+        "apostasy.p5.assurance",
+        "apostasy.p5.discipline"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "/articles/kogda-chelovek-uhodit-ot-very/#means",
+        "text": "Перечитать: Часть V · §14",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/kogda-uhodit-kogda-ostavatsya/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 6,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 18,
+        "defaultTab": "tabTerms",
+        "inBody": 43,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/myslennaya-zhizn-serdca/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/novoe-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 7,
+        "defaultTab": "tabTerms",
+        "inBody": 13,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/osvobozhdennoe-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/otreklis-ot-hrista-istoriya-cerkvi/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 15,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Отступники",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "apostasy.p4.pliny",
+        "apostasy.p4.cranmer",
+        "apostasy.p4.cyprian",
+        "apostasy.p4.foxe",
+        "apostasy.p4.novatian",
+        "apostasy.p4.lapsi"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "/articles/otreklis-ot-hrista-istoriya-cerkvi/#pliny",
+        "text": "Перечитать: Часть IV · §1",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "ok": true,
+      "terms": {
+        "count": 8,
+        "defaultTab": "tabTerms",
+        "inBody": 16,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 15,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Отступники",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "apostasy.p1.joshua22",
+        "apostasy.p1.rocky",
+        "apostasy.p1.two-texts",
+        "apostasy.p1.perseverance-not",
+        "apostasy.p1.lexeme",
+        "apostasy.p1.hardening"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/#joshua-22",
+        "text": "Перечитать: Часть I · §14",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/otstupniki-biblii-iuda-saul-ierovoam-dimas/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 7,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 16,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Отступники",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "apostasy.p2.saul",
+        "apostasy.p2.balaam",
+        "apostasy.p2.titus",
+        "apostasy.p2.jeroboam",
+        "apostasy.p2.judas-john6",
+        "apostasy.p2.demas"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "/articles/otstupniki-biblii-iuda-saul-ierovoam-dimas/#saul",
+        "text": "Перечитать: Часть II · §2",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/petr-i-iuda-padenie-ili-otstuplenie/",
+      "ok": true,
+      "terms": {
+        "count": 4,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 20,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Отступники",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 1,
+      "deckOrder": [
+        "apostasy.p3.tears",
+        "apostasy.p3.denial",
+        "apostasy.p3.second-timothy",
+        "apostasy.p3.luke22",
+        "apostasy.p3.james",
+        "apostasy.p3.manasseh"
+      ],
+      "cycleBoundary": true,
+      "staleSourceTransitions": 6,
+      "sourceBeforeAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "#",
+        "text": "",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "sourceBeforeSecondAnswer": {
+        "hidden": true,
+        "display": "block",
+        "href": "/articles/petr-i-iuda-padenie-ili-otstuplenie/#tears",
+        "text": "Перечитать: Часть III · §3",
+        "box": 1,
+        "tabIndex": 0
+      },
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/podrostok-za-kadrom-chto-delat-tserkvi/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 9",
+        "results": 9
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/podrostok-za-kadrom-dvoynaya-zhizn/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 7,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 12",
+        "results": 12
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/",
+      "ok": true,
+      "terms": {
+        "count": 6,
+        "defaultTab": "tabTerms",
+        "inBody": 7,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 11",
+        "results": 11
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/priznaki-zdorovoy-cerkvi/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/religioznoe-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 4,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/",
+      "ok": true,
+      "terms": {
+        "count": 9,
+        "defaultTab": "tabTerms",
+        "inBody": 22,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/sem-tipov-razlichenie-uchiteley/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-hrista-k-nemoshchnym/",
+      "ok": true,
+      "terms": {
+        "count": 7,
+        "defaultTab": "tabTerms",
+        "inBody": 14,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-i-duh/",
+      "ok": true,
+      "terms": {
+        "count": 6,
+        "defaultTab": "tabTerms",
+        "inBody": 11,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-i-iskushenie/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 1,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-i-sokrovishche/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 1,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-i-telo/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-i-yazyk/",
+      "ok": true,
+      "terms": {
+        "count": 5,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-ne-v-odinochku/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 1,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-pod-skorbyu/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/serdce-spravochnik/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/skrytye-idoly-serdca/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/sovest-vnutrenniy-sud/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/starye-dorozhki-serdca/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/strah-bozhij-rabskij-ili-synovnij/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/svoboda-vo-hriste/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/tma-na-serdce/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 7,
+        "empty": 0
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Тёмная",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/",
+      "ok": true,
+      "terms": {
+        "count": 6,
+        "defaultTab": "tabTerms",
+        "inBody": 10,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 1,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Подросток",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/dva-sezda-1884/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/goneniya-i-sovest/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/iniciativnaya-gruppa/",
+      "ok": true,
+      "terms": {
+        "count": 4,
+        "defaultTab": "tabTerms",
+        "inBody": 7,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/noch-na-kure/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 6,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/peterburgskaya-liniya/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/podpolnaya-pechat/",
+      "ok": true,
+      "terms": {
+        "count": 0,
+        "defaultTab": "tabTerms",
+        "inBody": 0,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/sovetskaya-noch/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 4,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/spravochnik/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "читать",
+        "status": "Найдено: 2",
+        "results": 2
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/vsehib-1944/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/baptisty-rossii/yuzhnaya-shtunda/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 11,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Коротко",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/",
+      "ok": true,
+      "terms": {
+        "count": 1,
+        "defaultTab": "tabTerms",
+        "inBody": 2,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 5,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/",
+      "ok": true,
+      "terms": {
+        "count": 3,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/",
+      "ok": true,
+      "terms": {
+        "count": 2,
+        "defaultTab": "tabTerms",
+        "inBody": 3,
+        "fallback": 0
+      },
+      "outline": {
+        "count": 0,
+        "empty": 1
+      },
+      "notes": {
+        "empty": 1,
+        "store": true
+      },
+      "search": {
+        "token": "Трудные",
+        "status": "Найдено: 1",
+        "results": 1
+      },
+      "deck": 0,
+      "pageErrors": [],
+      "localErrors": []
+    }
+  ],
+  "mapRuns": [
+    {
+      "route": "/konfessii/russkij-baptizm/",
+      "profile": "desktop",
+      "ok": true,
+      "result": "13 / 25",
+      "topicA11y": {
+        "text": "Современность",
+        "pressed": null,
+        "selected": null
+      },
+      "questions": [
+        {
+          "id": "o1",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o2",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o5",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f2",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u2",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u3",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p2",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "m1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "d1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "d2",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-pavlov-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-pavlov-2",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-kargel-1",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-mazaev-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-source-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-law-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        }
+      ],
+      "pageErrors": [],
+      "localErrors": []
+    },
+    {
+      "route": "/konfessii/russkij-baptizm/",
+      "profile": "mobile",
+      "ok": true,
+      "result": "13 / 25",
+      "topicA11y": {
+        "text": "Современность",
+        "pressed": null,
+        "selected": null
+      },
+      "questions": [
+        {
+          "id": "o1",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o2",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "o5",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f2",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "f4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u2",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u3",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "u4",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p2",
+          "correctIndex": 2,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "p3",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "m1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "d1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "d2",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-pavlov-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-pavlov-2",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-kargel-1",
+          "correctIndex": 0,
+          "preAnswerColors": [
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-mazaev-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-source-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        },
+        {
+          "id": "v6-law-1",
+          "correctIndex": 1,
+          "preAnswerColors": [
+            "rgb(240, 238, 235)",
+            "rgb(110, 231, 183)",
+            "rgb(240, 238, 235)",
+            "rgb(240, 238, 235)"
+          ],
+          "enabled": true,
+          "correctGreen": true
+        }
+      ],
+      "pageErrors": [],
+      "localErrors": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "route": "/app/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "links": [
+        "https://t.me/milovanovaibot?startapp=v1_site_app__home",
+        "https://t.me/milovanovaibot",
+        "https://t.me/milovanovaibot?startapp=v1_site_ch3__chapter3",
+        "https://t.me/milovanovaibot?startapp=v1_site_ch4__chapter4"
+      ],
+      "ok": true
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "terms": {
+        "count": 27,
+        "defaultTab": "tabTerms",
+        "inBody": 47,
+        "fallback": 0
+      },
+      "openFocus": {
+        "tag": "BUTTON",
+        "id": "tabTerms",
+        "cls": "gill-tab",
+        "name": "Термины",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "term": "диссентер\nкоснись, чтобы раскрыть определение",
+      "termExpanded": "true",
+      "outlineHref": "#sec-hebrew",
+      "afterOutline": {
+        "hash": "",
+        "active": "",
+        "locked": "",
+        "open": false
+      },
+      "afterSearch": {
+        "hash": "",
+        "active": "",
+        "locked": "",
+        "open": false
+      },
+      "confidenceFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-conf__btn is-picked",
+        "name": "Кажется",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "firstTabAfterConfidence": {
+        "tag": "A",
+        "id": "glsQuizSource",
+        "cls": "quiz-source",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "feedbackFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option is-wrong",
+        "name": "Работа с Мишной",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "firstTabAfterFeedback": {
+        "tag": "A",
+        "id": "glsQuizSource",
+        "cls": "quiz-source",
+        "name": "Перечитать: Часть IV · Гиперкальвинизм — спорное наследие",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "nextFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterNext": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "fourWrong": [
+        {
+          "id": "gill.legacy.hypercalvinism",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "gill.exegete.duty-faith",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "gill.scholar.canticles",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "gill.reference.disputes",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        }
+      ],
+      "progressAfterReload": {
+        "meterVisible": false,
+        "streak": ""
+      },
+      "ok": true
+    },
+    {
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "launchFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterLaunch": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Кривой, обманчивый, коварный — от корня «хватать за пятку», того же, что в имени Иаков",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "feedbackFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Следующий вопрос",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterFeedback": {
+        "tag": "A",
+        "id": "",
+        "cls": "heading-anchor",
+        "name": "Скопировать ссылку на раздел",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "twoReverseFromAfter": {
+        "tag": "A",
+        "id": "",
+        "cls": "heading-anchor",
+        "name": "Скопировать ссылку на раздел",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "nextFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterNext": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Грех не вменяется верующему — и потому постепенно исчезает из его природы",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "result": "РЕЗУЛЬТАТ: 0 ИЗ 12",
+      "resultFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterResult": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Пройти ещё раз",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "restartFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterRestart": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Кривой, обманчивый, коварный — от корня «хватать за пятку», того же, что в имени Иаков",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "ok": true
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "launchFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-paper lot-page gb-cluster-single-active hm-tbhidden",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterLaunch": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Он выбрал хорошо орошаемую Иорданскую равнину",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "feedbackFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Следующий вопрос",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterFeedback": {
+        "tag": "A",
+        "id": "",
+        "cls": "heading-anchor",
+        "name": "Скопировать ссылку на раздел",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "twoReverseFromAfter": {
+        "tag": "A",
+        "id": "",
+        "cls": "",
+        "name": "Раздел «Бытие 13: выбор долины»",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "nextFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-paper lot-page gb-cluster-single-active hm-tbhidden",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterNext": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Он становится царём города",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "result": "РЕЗУЛЬТАТ: 0 ИЗ 8",
+      "resultFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-paper lot-page gb-cluster-single-active hm-tbhidden",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterResult": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Пройти ещё раз",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "restartFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "gbs-paper lot-page gb-cluster-single-active hm-tbhidden",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterRestart": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Он выбрал хорошо орошаемую Иорданскую равнину",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "ok": true
+    },
+    {
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "terms": {
+        "count": 8,
+        "defaultTab": "tabTerms",
+        "inBody": 16,
+        "fallback": 0
+      },
+      "openFocus": {
+        "tag": "BUTTON",
+        "id": "tabTerms",
+        "cls": "gill-tab",
+        "name": "Термины",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "term": "отступничество\nкоснись, чтобы раскрыть определение",
+      "termExpanded": "true",
+      "outlineHref": "#odno-slovo",
+      "afterOutline": {
+        "hash": "",
+        "active": "",
+        "locked": "",
+        "open": false
+      },
+      "afterSearch": {
+        "hash": "",
+        "active": "",
+        "locked": "",
+        "open": false
+      },
+      "confidenceFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-conf__btn is-picked",
+        "name": "Кажется",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "firstTabAfterConfidence": {
+        "tag": "A",
+        "id": "glsQuizSource",
+        "cls": "quiz-source",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "feedbackFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option is-wrong",
+        "name": "Никогда не слышит слово",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "firstTabAfterFeedback": {
+        "tag": "A",
+        "id": "glsQuizSource",
+        "cls": "quiz-source",
+        "name": "Перечитать: Часть I · §2",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "nextFocus": {
+        "tag": "BUTTON",
+        "id": "glsQuizNext",
+        "cls": "quiz-next",
+        "name": "Следующий вопрос",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": true
+      },
+      "firstTabAfterNext": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "toc-sheet__handle",
+        "name": "Закрыть обучение",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "fourWrong": [
+        {
+          "id": "apostasy.p1.rocky",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "apostasy.p1.hardening",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "apostasy.p1.lexeme",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        },
+        {
+          "id": "apostasy.p1.joshua22",
+          "verdict": "Неверно — и вы это чувствовали. Честная оценка своих знаний.",
+          "meter": "100%"
+        }
+      ],
+      "progressAfterReload": {
+        "meterVisible": false,
+        "streak": ""
+      },
+      "ok": true
+    },
+    {
+      "route": "/nagornaya/chast-4/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "launchFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterLaunch": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "«Вдохновлено Богом» — Бог вдохнул Свой Дух в уже написанные человеческие слова",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "feedbackFocus": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Следующий вопрос",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterFeedback": {
+        "tag": "A",
+        "id": "",
+        "cls": "heading-anchor",
+        "name": "Скопировать ссылку на раздел",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "twoReverseFromAfter": {
+        "tag": "A",
+        "id": "",
+        "cls": "",
+        "name": "II. Доктрина Θεόπνευστος: Писание как Творческий Выдох Бога",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "nextFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterNext": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "Все различия в параллелях являются результатом ошибок переписчиков и должны быть устранены",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "result": "РЕЗУЛЬТАТ: 5 ИЗ 5",
+      "resultFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterResult": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-next",
+        "name": "Пройти ещё раз",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "restartFocus": {
+        "tag": "BODY",
+        "id": "",
+        "cls": "nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active",
+        "name": "",
+        "withinArticleQuiz": false,
+        "withinSheetQuiz": false
+      },
+      "firstTabAfterRestart": {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "quiz-option",
+        "name": "«Вдохновлено Богом» — Бог вдохнул Свой Дух в уже написанные человеческие слова",
+        "withinArticleQuiz": true,
+        "withinSheetQuiz": false
+      },
+      "ok": true
+    }
+  ],
+  "targeted": [
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "notes",
+      "savedVisibleInLibrary": true,
+      "panelNotes": "Сохранённых заметок пока нет.",
+      "persisted": {
+        "notes": 1,
+        "quotes": 0
+      },
+      "savedVisibleInLibraryAfterReload": true,
+      "ok": true
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "quote-selection",
+      "selected": "Доктор Многотомный — защитник Троицы против унитаризма, самостоятельно",
+      "legacySelectionScript": false,
+      "popupInDOM": 0,
+      "saveVisible": false,
+      "noteFromSelectionVisible": false,
+      "ok": true
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "desktop-entry",
+      "mobileTrigger": false,
+      "desktopTrigger": true,
+      "heading": "Разобраться и запомнить",
+      "terms": 27,
+      "quizTabVisible": true,
+      "ok": true
+    },
+    {
+      "route": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "stale",
+      "question1": "В каком году произошло Великое изгнание нонконформистского духовенства?",
+      "question2": "В каком году произошёл доктринальный раскол на Солтерс-Холл?",
+      "previousSource": {
+        "href": "../../articles/dzhon-gill-istoricheskiy-kontekst/#sec-great-ejection",
+        "readable": true,
+        "still": "../../articles/dzhon-gill-istoricheskiy-kontekst/#sec-great-ejection",
+        "text": "Перечитать: Исторический контекст · Тень 1662 года"
+      },
+      "afterClick": {
+        "hash": "#sec-great-ejection",
+        "active": "sec-great-ejection",
+        "locked": "",
+        "open": false
+      },
+      "ok": true
+    },
+    {
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "desktop-entry",
+      "mobileTrigger": false,
+      "desktopTrigger": true,
+      "heading": "Разобраться и запомнить",
+      "terms": 18,
+      "quizTabVisible": false,
+      "ok": true
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "lot",
+      "feedback": "Неверно\n\nВерно: Быт 13 подчёркивает привлекательность хорошо орошаемой равнины.\n\nТекст показывает выбор территории и сразу сообщает нравственную характеристику жителей Содома, но не раскрывает внутренний монолог Лота и не называет его городскую должность.\n\nРаздел «Бытие 13: выбор долины»",
+      "ok": true
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "quote-selection",
+      "selected": "Лота легко превратить в плоский нравоучительный образ: человек",
+      "legacySelectionScript": false,
+      "popupInDOM": 0,
+      "saveVisible": false,
+      "noteFromSelectionVisible": false,
+      "ok": true
+    },
+    {
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "desktop-entry",
+      "mobileTrigger": false,
+      "desktopTrigger": true,
+      "heading": "Разобраться и запомнить",
+      "terms": 8,
+      "quizTabVisible": true,
+      "ok": true
+    },
+    {
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "stale",
+      "question1": "Какой урок статья извлекает из Нав. 22 (жертвенник у Иордана)?",
+      "question2": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+      "previousSource": {
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/#joshua-22",
+        "readable": true,
+        "still": "/articles/otstuplenie-chto-govorit-bibliya/#joshua-22",
+        "text": "Перечитать: Часть I · §14"
+      },
+      "afterClick": {
+        "hash": "#joshua-22",
+        "active": "joshua-22",
+        "locked": "",
+        "open": false
+      },
+      "ok": true
+    },
+    {
+      "route": "/baptisty-rossii/dva-sezda-1884/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "desktop-entry",
+      "mobileTrigger": false,
+      "desktopTrigger": true,
+      "heading": "Разобраться и запомнить",
+      "terms": 2,
+      "quizTabVisible": false,
+      "ok": true
+    },
+    {
+      "route": "/baptisty-rossii/dva-sezda-1884/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "notes",
+      "savedVisibleInLibrary": true,
+      "panelNotes": "Сохранённых заметок пока нет.",
+      "persisted": {
+        "notes": 1,
+        "quotes": 0
+      },
+      "savedVisibleInLibraryAfterReload": true,
+      "ok": true
+    },
+    {
+      "route": "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "desktop-entry",
+      "mobileTrigger": false,
+      "desktopTrigger": true,
+      "heading": "Разобраться и запомнить",
+      "terms": 1,
+      "quizTabVisible": false,
+      "ok": true
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "quote-control",
+      "selected": "Основные толкования Быт. 6:1–4 и границы каждого чтения.",
+      "legacySelectionScript": true,
+      "popupInDOM": 1,
+      "saveVisible": true,
+      "noteFromSelectionVisible": true,
+      "storedQuote": "Основные толкования Быт. 6:1–4 и границы каждого чтения.",
+      "quotesAfterReload": 1,
+      "notesTabQuote": "Основные толкования Быт. 6:1–4 и границы каждого чтения.",
+      "actualNotes": 0,
+      "ok": true
+    },
+    {
+      "route": "/konfessii/russkij-baptizm/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "scenario": "map-before-answer",
+      "question": "Когда и где был крещён первый русский баптист Никита Воронин?",
+      "topicFilters": [
+        {
+          "key": "origins",
+          "label": "Истоки",
+          "progress": "1 / 4",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "o1"
+        },
+        {
+          "key": "figures",
+          "label": "Фигуры",
+          "progress": "1 / 9",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "o4"
+        },
+        {
+          "key": "unions",
+          "label": "Союзы",
+          "progress": "1 / 4",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "u1"
+        },
+        {
+          "key": "persecution",
+          "label": "Гонения",
+          "progress": "1 / 4",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "p1"
+        },
+        {
+          "key": "doctrines",
+          "label": "Вероучение",
+          "progress": "1 / 2",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "d1"
+        },
+        {
+          "key": "modern",
+          "label": "Современность",
+          "progress": "1 / 2",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "m1"
+        },
+        {
+          "key": "all",
+          "label": "Все темы",
+          "progress": "1 / 25",
+          "score": "0 ПРАВИЛЬНО",
+          "firstQuestion": "o1"
+        }
+      ],
+      "ok": true
+    }
+  ],
+  "disclosureRuns": [
+    {
+      "route": "/articles/diotrefy-nashego-vremeni/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localErrors": [],
+      "title": "Проверь различения",
+      "questions": [
+        {
+          "summary": "1. Что в 3 Ин. 9–10 является корнем поведения Диотрефа?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Недостаток образования",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Любовь к первенству",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Отсутствие харизмы",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Слабая администрация",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Текст связывает несколько действий — непринятие свидетельства, злые слова, контроль гостеприимства и изгнание — с любовью к первенству.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "2. Почему статья не называет каждого участника «современным Диотрефом»?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Потому что имена запрещены",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что важнее проверяемый механизм и точный статус доказательств",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что все дела закрыты",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что церковная власть не подлежит оценке",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Библейский образ служит аналитической рамкой, а не универсальным судебным ярлыком.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "3. Как следует использовать качественную вторичную публикацию?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Как единственное доказательство спорного утверждения",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Только для иллюстрации эмоций",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Для уточнения контекста и хронологии наряду с первичными документами",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Для прямой цитаты без точного указателя",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Добросовестная вторичная публикация помогает понять контекст и хронологию, но спорные утверждения нужно сверять с первичными документами и независимыми свидетельствами.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "4. Что означает различие между Королевской комиссией и уголовным судом?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Они всегда противоречат друг другу",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Комиссия и суд отвечают на разные вопросы и имеют разные стандарты",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Комиссия равна приговору",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Оправдание удаляет исторические документы",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Институциональное расследование может оценивать практики и реакцию, а уголовный процесс — конкретный состав и доказательства по нему.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "5. Что является главным предметом карточки Robert Morris?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Сенсационные подробности",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Доказанная вина всех членов совета",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Связь духовного статуса, доверия и задержки раскрытия",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Спор о богословской школе",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Уголовный исход зафиксирован, но тема статьи — властный механизм и институциональная способность назвать зло.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "6. Какое утверждение запрещено в карточке Doug Wilson?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Анализировать конфессиональную процедуру",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Сравнивать проверку и ответ субъекта",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Переносить преступления других лиц на Wilson",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Оценивать независимость проверки",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Личная ответственность не переносится по ассоциации; каждый тезис требует собственной доказательной опоры.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "7. Почему вывод проверки безопасности нельзя автоматически назвать уголовным приговором?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Потому что защита уязвимых не важна",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что это иной процесс, мандат и стандарт вывода",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что церковь выше суда",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что документы закрыты",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Различение процессов защищает и пострадавших, и точность: церковный вывод может быть серьёзным, не становясь уголовным приговором.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "8. Что отличает подотчётность от декоративного совета?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Количество заседаний",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Способность получать информацию, возражать и реально ограничивать центр",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Возраст членов совета",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Публичность всех личных разговоров",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Множественность на бумаге не помогает, если совет лишён информации, независимости и реального полномочия корректировать лидера.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "9. Как статья обращается с продолжающимися расследованиями Bethel?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Предрешает результат",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Игнорирует официальные признания",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Разделяет уже признанное и ещё проверяемое",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Считает отсутствие финального отчёта оправданием",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Текущая институциональная хронология позволяет описать признания и реформы, не объявляя завершённым незаконченный процесс.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "10. Каков пастырский вывод статьи?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Составить список плохих знаменитостей",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Отменить всякую сильную власть",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Проверять механизмы власти, плоды, подотчётность и отношение к правде",
+              "correct": true,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Считать конфликт доказательством злоупотребления",
+              "correct": false,
+              "color": "rgb(26, 26, 26)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Цель — не партийный ярлык, а проверяемая церковная практика, в которой власть остаётся служебной и стоит под Словом.",
+          "answerInputs": 0
+        }
+      ],
+      "ok": true
+    },
+    {
+      "route": "/articles/diotrefy-nashego-vremeni/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localErrors": [],
+      "title": "Проверь различения",
+      "questions": [
+        {
+          "summary": "1. Что в 3 Ин. 9–10 является корнем поведения Диотрефа?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Недостаток образования",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Любовь к первенству",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Отсутствие харизмы",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Слабая администрация",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Текст связывает несколько действий — непринятие свидетельства, злые слова, контроль гостеприимства и изгнание — с любовью к первенству.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "2. Почему статья не называет каждого участника «современным Диотрефом»?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Потому что имена запрещены",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что важнее проверяемый механизм и точный статус доказательств",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что все дела закрыты",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что церковная власть не подлежит оценке",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Библейский образ служит аналитической рамкой, а не универсальным судебным ярлыком.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "3. Как следует использовать качественную вторичную публикацию?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Как единственное доказательство спорного утверждения",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Только для иллюстрации эмоций",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Для уточнения контекста и хронологии наряду с первичными документами",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Для прямой цитаты без точного указателя",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Добросовестная вторичная публикация помогает понять контекст и хронологию, но спорные утверждения нужно сверять с первичными документами и независимыми свидетельствами.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "4. Что означает различие между Королевской комиссией и уголовным судом?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Они всегда противоречат друг другу",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Комиссия и суд отвечают на разные вопросы и имеют разные стандарты",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Комиссия равна приговору",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Оправдание удаляет исторические документы",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Институциональное расследование может оценивать практики и реакцию, а уголовный процесс — конкретный состав и доказательства по нему.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "5. Что является главным предметом карточки Robert Morris?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Сенсационные подробности",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Доказанная вина всех членов совета",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Связь духовного статуса, доверия и задержки раскрытия",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Спор о богословской школе",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Уголовный исход зафиксирован, но тема статьи — властный механизм и институциональная способность назвать зло.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "6. Какое утверждение запрещено в карточке Doug Wilson?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Анализировать конфессиональную процедуру",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Сравнивать проверку и ответ субъекта",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Переносить преступления других лиц на Wilson",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Оценивать независимость проверки",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Личная ответственность не переносится по ассоциации; каждый тезис требует собственной доказательной опоры.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "7. Почему вывод проверки безопасности нельзя автоматически назвать уголовным приговором?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Потому что защита уязвимых не важна",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что это иной процесс, мандат и стандарт вывода",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что церковь выше суда",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Потому что документы закрыты",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Различение процессов защищает и пострадавших, и точность: церковный вывод может быть серьёзным, не становясь уголовным приговором.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "8. Что отличает подотчётность от декоративного совета?",
+          "hiddenBefore": true,
+          "correctIndex": 1,
+          "items": [
+            {
+              "text": "Количество заседаний",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Способность получать информацию, возражать и реально ограничивать центр",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Возраст членов совета",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Публичность всех личных разговоров",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Множественность на бумаге не помогает, если совет лишён информации, независимости и реального полномочия корректировать лидера.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "9. Как статья обращается с продолжающимися расследованиями Bethel?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Предрешает результат",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Игнорирует официальные признания",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Разделяет уже признанное и ещё проверяемое",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Считает отсутствие финального отчёта оправданием",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Текущая институциональная хронология позволяет описать признания и реформы, не объявляя завершённым незаконченный процесс.",
+          "answerInputs": 0
+        },
+        {
+          "summary": "10. Каков пастырский вывод статьи?",
+          "hiddenBefore": true,
+          "correctIndex": 2,
+          "items": [
+            {
+              "text": "Составить список плохих знаменитостей",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Отменить всякую сильную власть",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Проверять механизмы власти, плоды, подотчётность и отношение к правде",
+              "correct": true,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            },
+            {
+              "text": "Считать конфликт доказательством злоупотребления",
+              "correct": false,
+              "color": "rgb(230, 225, 215)",
+              "role": null,
+              "weight": "400"
+            }
+          ],
+          "explanation": "Разбор: Цель — не партийный ярлык, а проверяемая церковная практика, в которой власть остаётся служебной и стоит под Словом.",
+          "answerInputs": 0
+        }
+      ],
+      "ok": true
+    }
+  ],
+  "editorialChecks": {
+    "validKeyCount": {
+      "native": 153,
+      "sheetProjected": 91,
+      "iframe": 25
+    },
+    "outsideKeyRange": 0,
+    "normalizedDuplicateOptionQuestions": 0,
+    "inlineScoreTierGapRoutes": [],
+    "inlineOptionCounts": {
+      "4": 112,
+      "3": 41
+    },
+    "nagornayaSecondPosition": 18,
+    "inlineUniqueLongestCorrect": 96,
+    "nagornayaUniqueLongestCorrect": 15,
+    "inlineFullBeginsWithExactNonemptyShort": 43,
+    "bonusPayloadByRoute": {
+      "/articles/20-antisovetov-pastoru/": 6,
+      "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": 6,
+      "/articles/krajne-li-isporcheno-serdce/": 6
+    },
+    "mapReadinessContract": {
+      "runner": "node scripts/konfessii-map-audit.js",
+      "exit": 0,
+      "requiredBrowser": true,
+      "requiredDist": true,
+      "viewportProfiles": [
+        "desktop",
+        "android-430",
+        "iphone-390",
+        "android-360",
+        "mobile-320"
+      ],
+      "firstRunLearningCoach": true,
+      "quizStateContract": false
+    }
+  }
+}
