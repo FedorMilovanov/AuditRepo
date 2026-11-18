@@ -1,0 +1,1601 @@
+{
+  "productCommit": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "playwright": "1.62.1",
+  "node": "v22.23.4",
+  "args": [
+    "--no-sandbox",
+    "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1"
+  ],
+  "profiles": {
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true,
+      "colorScheme": "dark",
+      "reducedMotion": "reduce"
+    },
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "reduce"
+    }
+  },
+  "serviceWorkers": "block",
+  "artifactSha256": {
+    "/articles/dzhon-gill-chast-1-chelovek/index.html": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+    "/articles/dzhon-gill-chast-2-uchenyi/index.html": "221bd7267b659d2886a0dfe103798bf02951bc0431fb36ca70d449d472e08633",
+    "/articles/krajne-li-isporcheno-serdce/index.html": "260410973432f82aff8b7dcc36e01a676e3647f6a21c394eebafb56f44d4052f",
+    "/articles/otstuplenie-chto-govorit-bibliya/index.html": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+    "/js/search.js": "b155da51fe3cdf1bdbf72433b0a650faedcf161ea5fb1f61506f6df9eb20bf7a",
+    "/pagefind/pagefind-entry.json": "c2d4fe813b4a92856e2cc819b433a6b21af3182b4344436ce94fb3e4ef47da18",
+    "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js": "24dfad4cff4bccfc268256061a7d20a7fd9e451259fae77d29405e3a8e0a92c8"
+  },
+  "scope": {
+    "panels": 68,
+    "withQuiz": 11,
+    "extraSearchRoots": [
+      {
+        "route": "/articles/dzhon-gill-chast-1-chelovek/",
+        "deck": true,
+        "roots": [
+          {
+            "tag": "article",
+            "cls": "article-body"
+          },
+          {
+            "tag": "section",
+            "cls": "gb-note-endnotes"
+          }
+        ]
+      },
+      {
+        "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+        "deck": true,
+        "roots": [
+          {
+            "tag": "article",
+            "cls": "article-body"
+          },
+          {
+            "tag": "section",
+            "cls": "gb-note-endnotes"
+          }
+        ]
+      },
+      {
+        "route": "/articles/krajne-li-isporcheno-serdce/",
+        "deck": false,
+        "roots": [
+          {
+            "tag": "article",
+            "cls": ""
+          },
+          {
+            "tag": "section",
+            "cls": "gb-note-endnotes"
+          }
+        ]
+      }
+    ]
+  },
+  "runs": [
+    {
+      "name": "visible-phrase-vs-footnote",
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "23 ноября 1697 года по старому стилю в Кеттеринге",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": false,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "23 ноября 1697 года",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "Самообразование вне университетской траектории",
+              "snippet": "Джон Гилл родился 23 ноября 1697 года по старому стилю ⟦сноска: Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стил…",
+              "marks": [
+                "23 ноября 1697 года"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Nov. 23, o. s. 1697",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [
+            {
+              "heading": "Самообразование вне университетской траектории",
+              "snippet": "…н на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стилю это 4 декабря. См.: Rippon, A Brief Memoir.⟧ в Кеттеринге. Риппон и…",
+              "marks": [
+                "Nov. 23, o. s. 1697"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": false,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": true,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            },
+            {
+              "id": "note-end-articles-dzhon-gill-chast-1-chelovek-note-26bf1dbddece",
+              "tag": "LI",
+              "parentId": "",
+              "root": 1,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "1. Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стилю это 4 декабря. См.: Rippon, A Brief Memoir. ↩",
+              "endnoteRootClipped": true,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-1-chelovek/"
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-013",
+          "tag": "P",
+          "rect": {
+            "top": 275,
+            "bottom": 633
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": false
+        },
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 2930,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "visible-phrase-vs-footnote",
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "23 ноября 1697 года по старому стилю в Кеттеринге",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": false,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "visible",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "23 ноября 1697 года",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "Самообразование вне университетской траектории",
+              "snippet": "Джон Гилл родился 23 ноября 1697 года по старому стилю ⟦сноска: Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стил…",
+              "marks": [
+                "23 ноября 1697 года"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "visible",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Nov. 23, o. s. 1697",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [
+            {
+              "heading": "Самообразование вне университетской траектории",
+              "snippet": "…н на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стилю это 4 декабря. См.: Rippon, A Brief Memoir.⟧ в Кеттеринге. Риппон и…",
+              "marks": [
+                "Nov. 23, o. s. 1697"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-013",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": false,
+              "renderedExcerpt": "Джон Гилл родился 23 ноября 1697 года по старому стилю в Кеттеринге. Риппон и поздняя Baptist Encyclopedia описывают его отца Эдварда как торговца шерстяными изделиями, дьякона и участника формирования отдельной Particular Baptist общины. О внутреннем религиозном в",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "footnote",
+                  "pagefindIgnored": true,
+                  "rawIncludes": true,
+                  "visibility": "visible",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            },
+            {
+              "id": "note-end-articles-dzhon-gill-chast-1-chelovek-note-26bf1dbddece",
+              "tag": "LI",
+              "parentId": "",
+              "root": 1,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "1. Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»; по новому стилю это 4 декабря. См.: Rippon, A Brief Memoir. ↩",
+              "endnoteRootClipped": true,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-1-chelovek/"
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-013",
+          "tag": "P",
+          "rect": {
+            "top": 385,
+            "bottom": 586
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": false
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 2239,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "visible-phrase-vs-definition",
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Кархемише (605 до н.э.)",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": false,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Иеремия служил в последние десятилетия",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "I. Исторический фон: почему Иеремия говорит так резко",
+              "snippet": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише ⟦определение: Битва при Кархемише (605 г. до н.э.): вавилонский ц…",
+              "marks": [
+                "Иеремия служил в последние десятилетия"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Навуходоносор II разгромил египтян",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [
+            {
+              "heading": "I. Исторический фон: почему Иеремия говорит так резко",
+              "snippet": "…Кархемише (605 г. до н.э.): вавилонский царь Навуходоносор II разгромил египтян и их ассирийских союзников на берегах Евфрата. После этой победы Вавил…",
+              "marks": [
+                "Навуходоносор II разгромил египтян"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": false,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": true,
+                  "visibility": "hidden",
+                  "opacity": "1",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/krajne-li-isporcheno-serdce/"
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-016",
+          "tag": "P",
+          "rect": {
+            "top": 288,
+            "bottom": 620
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": false
+        },
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 1306,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "visible-phrase-vs-definition",
+      "route": "/articles/krajne-li-isporcheno-serdce/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Кархемише (605 до н.э.)",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": false,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Иеремия служил в последние десятилетия",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "I. Исторический фон: почему Иеремия говорит так резко",
+              "snippet": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише ⟦определение: Битва при Кархемише (605 г. до н.э.): вавилонский ц…",
+              "marks": [
+                "Иеремия служил в последние десятилетия"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": false,
+                  "visibility": "hidden",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "q": "Навуходоносор II разгромил египтян",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [
+            {
+              "heading": "I. Исторический фон: почему Иеремия говорит так резко",
+              "snippet": "…Кархемише (605 г. до н.э.): вавилонский царь Навуходоносор II разгромил египтян и их ассирийских союзников на берегах Евфрата. После этой победы Вавил…",
+              "marks": [
+                "Навуходоносор II разгромил египтян"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-016",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": false,
+              "renderedExcerpt": "Иеремия служил в последние десятилетия Иудейского царства. После битвы при Кархемише (605 до н.э.) Вавилон стал доминирующей силой; Иудея превратилась в вассала, а затем пережила кризисы 597 и 587/586 годов, завершившиеся разрушением Иерусалима. Пророчество Иеремии",
+              "endnoteRootClipped": false,
+              "auxiliary": [
+                {
+                  "kind": "definition",
+                  "pagefindIgnored": true,
+                  "rawIncludes": true,
+                  "visibility": "hidden",
+                  "opacity": "0",
+                  "open": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/krajne-li-isporcheno-serdce/"
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-016",
+          "tag": "P",
+          "rect": {
+            "top": 399,
+            "bottom": 572
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": false
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 1435,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "visible-caption-table-quote-and-cap",
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Перо и чернильница — символ многолетней",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "FIGCAPTION",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Перо и чернильница — символ многолетней рукописной работы над циклом проповедей и толкованием Песни Песней.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Сопоставление цитат ВЗ с масоретским текстом",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "TD",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Сопоставление цитат ВЗ с масоретским текстом",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Богословие будучи ничем иным",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "DIV",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "«Взявшись написать Систему богословия, или Свод догматического богословия; и Богословие будучи ничем иным, как говорением о Боге, или рассуждением о Нём; Его природе, именах, совершенствах и Лицах; Его намерениях, провидении, путях, делах и слове: Я начну с Бытия Б",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Называть его первым трудом такого рода",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "«Полный свод богословия» — зрелая баптистская систематика",
+              "snippet": "…х трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем …",
+              "marks": [
+                "Называть его первым трудом такого рода"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-109",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Завершив к 1766 году девятитомный библейский комментарий, в 1769 году Гилл опубликовал A Body of Doctrinal Divinity в двух томах quarto — один из важнейших систематических трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Гилл",
+          "count": 20,
+          "status": "Найдено: 20",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "Текст статьи",
+              "snippet": "Серия о Джоне Гилле объединяет историческое введение, четыре тематические части — «Человек», «Учёный», «Экзегет», «Наследие» — и отдельный справочник.…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Гилл стал пастором в 1720 году — на следующий год после спора в Солтерс-Холле (1719). Диссентеры обсуждали, следует ли требовать подписания специально…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "…з важнейших исторических достижений служения Гилла среди английских кальвинистских баптистов. Это значимая историографическая оценка, но она не превра…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "В 1731 году Гилл опубликовал The Doctrine of the Trinity Stated and Vindicated («Учение о Троице, изложенное и защищённое»). Это был остро полемически…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Гилл маршировал через отцов Церкви: Игнатий, Поликарп, Иустин Мученик — в Никейский символ и каппадокийцев, через Реформацию к своему времени. Он пока…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Для Гилла Троица была не второстепенной доктриной. Это был «фундаментальный артикул откровенной религии», как единство Бога — основание естественной р…",
+              "marks": [
+                "Гилл"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-001",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Серия о Джоне Гилле объединяет историческое введение, четыре тематические части — «Человек», «Учёный», «Экзегет», «Наследие» — и отдельный справочник. Каждый материал решает свою задачу: восстанавливает биографию, интеллектуальный профиль, экзегетический метод или ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-012",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Гилл стал пастором в 1720 году — на следующий год после спора в Солтерс-Холле (1719). Диссентеры обсуждали, следует ли требовать подписания специальной тринитарной формулы; голосование 24 февраля и последующая подписка 3 марта были разными событиями. Среди отказавш",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-014",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Майкл Хайкин рассматривает защиту тринитарной ортодоксии как одно из важнейших исторических достижений служения Гилла среди английских кальвинистских баптистов. Это значимая историографическая оценка, но она не превращает сложную историю пресвитериан, англикан, инд",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-017",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "В 1731 году Гилл опубликовал The Doctrine of the Trinity Stated and Vindicated («Учение о Троице, изложенное и защищённое»). Это был остро полемический трактат:",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-018",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Гилл маршировал через отцов Церкви: Игнатий, Поликарп, Иустин Мученик — в Никейский символ и каппадокийцев, через Реформацию к своему времени. Он показывал: унитарианство и арианство — не восстановление древности, а современное отступление. Троица — не средневекова",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-019",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Для Гилла Троица была не второстепенной доктриной. Это был «фундаментальный артикул откровенной религии», как единство Бога — основание естественной религии. Удалить Троицу — значит разрушить само Евангелие. Если Христос не истинно Бог, Его жертва недостаточна. Есл",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-021",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Когда Гилл поселился в Лондоне, он встретил Джона Скеппа — пастора баптистской церкви в Крипплгейте, автора Divine Energy. Скепп, не имея «либерального образования», приобрёл глубокое знание еврейского языка и раввинистической литературы. Общение с ним, по Риппону,",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-022",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "После смерти Скеппа Гилл выкупил большую часть его еврейской и раввинистической библиотеки. Это был перелом. Теперь у него были:",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Г",
+          "count": 0,
+          "status": "Введите минимум 2 символа",
+          "inputFocused": true,
+          "readerProjectionIncludes": null,
+          "results": [],
+          "candidates": []
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "rawMatchingBlocks": 100,
+      "ok": true
+    },
+    {
+      "name": "visible-caption-table-quote-and-cap",
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Перо и чернильница — символ многолетней",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "FIGCAPTION",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Перо и чернильница — символ многолетней рукописной работы над циклом проповедей и толкованием Песни Песней.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Сопоставление цитат ВЗ с масоретским текстом",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "TD",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Сопоставление цитат ВЗ с масоретским текстом",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Богословие будучи ничем иным",
+          "count": 0,
+          "status": "Ничего не найдено",
+          "inputFocused": true,
+          "readerProjectionIncludes": false,
+          "results": [],
+          "candidates": [
+            {
+              "id": "",
+              "tag": "DIV",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "«Взявшись написать Систему богословия, или Свод догматического богословия; и Богословие будучи ничем иным, как говорением о Боге, или рассуждением о Нём; Его природе, именах, совершенствах и Лицах; Его намерениях, провидении, путях, делах и слове: Я начну с Бытия Б",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Называть его первым трудом такого рода",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "«Полный свод богословия» — зрелая баптистская систематика",
+              "snippet": "…х трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем …",
+              "marks": [
+                "Называть его первым трудом такого рода"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-109",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Завершив к 1766 году девятитомный библейский комментарий, в 1769 году Гилл опубликовал A Body of Doctrinal Divinity в двух томах quarto — один из важнейших систематических трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Гилл",
+          "count": 20,
+          "status": "Найдено: 20",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "Текст статьи",
+              "snippet": "Серия о Джоне Гилле объединяет историческое введение, четыре тематические части — «Человек», «Учёный», «Экзегет», «Наследие» — и отдельный справочник.…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Гилл стал пастором в 1720 году — на следующий год после спора в Солтерс-Холле (1719). Диссентеры обсуждали, следует ли требовать подписания специально…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "…з важнейших исторических достижений служения Гилла среди английских кальвинистских баптистов. Это значимая историографическая оценка, но она не превра…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "В 1731 году Гилл опубликовал The Doctrine of the Trinity Stated and Vindicated («Учение о Троице, изложенное и защищённое»). Это был остро полемически…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Гилл маршировал через отцов Церкви: Игнатий, Поликарп, Иустин Мученик — в Никейский символ и каппадокийцев, через Реформацию к своему времени. Он пока…",
+              "marks": [
+                "Гилл"
+              ]
+            },
+            {
+              "heading": "«Учение о Троице» — манифест против унитарианства",
+              "snippet": "Для Гилла Троица была не второстепенной доктриной. Это был «фундаментальный артикул откровенной религии», как единство Бога — основание естественной р…",
+              "marks": [
+                "Гилл"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-001",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Серия о Джоне Гилле объединяет историческое введение, четыре тематические части — «Человек», «Учёный», «Экзегет», «Наследие» — и отдельный справочник. Каждый материал решает свою задачу: восстанавливает биографию, интеллектуальный профиль, экзегетический метод или ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-012",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Гилл стал пастором в 1720 году — на следующий год после спора в Солтерс-Холле (1719). Диссентеры обсуждали, следует ли требовать подписания специальной тринитарной формулы; голосование 24 февраля и последующая подписка 3 марта были разными событиями. Среди отказавш",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-014",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Майкл Хайкин рассматривает защиту тринитарной ортодоксии как одно из важнейших исторических достижений служения Гилла среди английских кальвинистских баптистов. Это значимая историографическая оценка, но она не превращает сложную историю пресвитериан, англикан, инд",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-017",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "В 1731 году Гилл опубликовал The Doctrine of the Trinity Stated and Vindicated («Учение о Троице, изложенное и защищённое»). Это был остро полемический трактат:",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-018",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Гилл маршировал через отцов Церкви: Игнатий, Поликарп, Иустин Мученик — в Никейский символ и каппадокийцев, через Реформацию к своему времени. Он показывал: унитарианство и арианство — не восстановление древности, а современное отступление. Троица — не средневекова",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-019",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Для Гилла Троица была не второстепенной доктриной. Это был «фундаментальный артикул откровенной религии», как единство Бога — основание естественной религии. Удалить Троицу — значит разрушить само Евангелие. Если Христос не истинно Бог, Его жертва недостаточна. Есл",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-021",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Когда Гилл поселился в Лондоне, он встретил Джона Скеппа — пастора баптистской церкви в Крипплгейте, автора Divine Energy. Скепп, не имея «либерального образования», приобрёл глубокое знание еврейского языка и раввинистической литературы. Общение с ним, по Риппону,",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-022",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "После смерти Скеппа Гилл выкупил большую часть его еврейской и раввинистической библиотеки. Это был перелом. Теперь у него были:",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        },
+        {
+          "q": "Г",
+          "count": 0,
+          "status": "Введите минимум 2 символа",
+          "inputFocused": true,
+          "readerProjectionIncludes": null,
+          "results": [],
+          "candidates": []
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "rawMatchingBlocks": 100,
+      "ok": true
+    },
+    {
+      "name": "quiz-miss-search-quote-reopen-outline-control",
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+          "count": 2,
+          "status": "Найдено: 2",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "1. Одно слово не рассказывает весь порядок спасения",
+              "snippet": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "marks": [
+                "Лексема — доказательство внутри контекста, а не готовая система спасения"
+              ]
+            },
+            {
+              "heading": "Текст статьи",
+              "snippet": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "marks": [
+                "Лексема — доказательство внутри контекста, а не готовая система спасения"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-025",
+              "tag": "BLOCKQUOTE",
+              "parentId": "article-content",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-026",
+              "tag": "P",
+              "parentId": "gill-search-p-025",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/otstuplenie-chto-govorit-bibliya/"
+      ],
+      "answeredToReach": 2,
+      "item": "apostasy.p1.lexeme",
+      "quizBefore": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 2",
+        "calibration": "0%",
+        "source": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo"
+      },
+      "tabSteps": [
+        true
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-025",
+          "tag": "BLOCKQUOTE",
+          "rect": {
+            "top": 398,
+            "bottom": 511
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": true
+        },
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 4607,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "focusSettled": {
+        "tag": "BODY",
+        "id": ""
+      },
+      "queryRetained": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+      "quizAfterSearch": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 2",
+        "calibration": "0%",
+        "source": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo"
+      },
+      "outlineHref": "#odno-slovo",
+      "outlineLanding": {
+        "target": {
+          "id": "odno-slovo",
+          "tag": "H2",
+          "rect": {
+            "top": 391,
+            "bottom": 461
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": true
+        },
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 2641,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "quiz-miss-search-quote-reopen-outline-control",
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [],
+      "queries": [
+        {
+          "q": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+          "count": 2,
+          "status": "Найдено: 2",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "1. Одно слово не рассказывает весь порядок спасения",
+              "snippet": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "marks": [
+                "Лексема — доказательство внутри контекста, а не готовая система спасения"
+              ]
+            },
+            {
+              "heading": "Текст статьи",
+              "snippet": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "marks": [
+                "Лексема — доказательство внутри контекста, а не готовая система спасения"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-025",
+              "tag": "BLOCKQUOTE",
+              "parentId": "article-content",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            },
+            {
+              "id": "gill-search-p-026",
+              "tag": "P",
+              "parentId": "gill-search-p-025",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Лексема — доказательство внутри контекста, а не готовая система спасения.",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/otstuplenie-chto-govorit-bibliya/"
+      ],
+      "answeredToReach": 1,
+      "item": "apostasy.p1.lexeme",
+      "quizBefore": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo"
+      },
+      "tabSteps": [
+        true,
+        true
+      ],
+      "landing": {
+        "target": {
+          "id": "gill-search-p-026",
+          "tag": "P",
+          "rect": {
+            "top": 471,
+            "bottom": 500
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": true
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 3112,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "focusSettled": {
+        "tag": "BODY",
+        "id": ""
+      },
+      "queryRetained": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+      "quizAfterSearch": {
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo"
+      },
+      "outlineHref": "#odno-slovo",
+      "outlineLanding": {
+        "target": {
+          "id": "odno-slovo",
+          "tag": "H2",
+          "rect": {
+            "top": 483,
+            "bottom": 514
+          },
+          "hit": true,
+          "hasFocus": false,
+          "queryInRenderedText": true
+        },
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "active": {
+          "tag": "BODY",
+          "id": ""
+        },
+        "scrollY": 1942,
+        "maskHidden": "true",
+        "overflow": "visible",
+        "hash": ""
+      },
+      "ok": true
+    },
+    {
+      "name": "local-to-global-search-control",
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "mobile",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [
+        "/pagefind/pagefind.js",
+        "/pagefind/pagefind.js",
+        "/pagefind/pagefind-worker.js",
+        "/pagefind/pagefind-entry.json?ts=1795017369089",
+        "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+        "/pagefind/wasm.ru.pagefind",
+        "/pagefind/index/ru_38eb1f8.pf_index",
+        "/pagefind/fragment/ru_7ee5d1c.pf_fragment"
+      ],
+      "queries": [
+        {
+          "q": "Грэнтем",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "«Полный свод богословия» — зрелая баптистская систематика",
+              "snippet": "…птистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти, вышел третий т…",
+              "marks": [
+                "Грэнтем"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-109",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Завершив к 1766 году девятитомный библейский комментарий, в 1769 году Гилл опубликовал A Body of Doctrinal Divinity в двух томах quarto — один из важнейших систематических трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "global": {
+        "afterHandoff": "",
+        "learningHidden": "true",
+        "focused": true,
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "localQueryStillThere": "Грэнтем"
+      },
+      "ok": true
+    },
+    {
+      "name": "local-to-global-search-control",
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "profile": "desktop",
+      "pageErrors": [],
+      "localHttpErrors": [],
+      "pagefindResponses": [
+        "/pagefind/pagefind.js",
+        "/pagefind/pagefind.js",
+        "/pagefind/pagefind-worker.js",
+        "/pagefind/pagefind-entry.json?ts=1795017371112",
+        "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+        "/pagefind/wasm.ru.pagefind",
+        "/pagefind/index/ru_38eb1f8.pf_index",
+        "/pagefind/fragment/ru_7ee5d1c.pf_fragment"
+      ],
+      "queries": [
+        {
+          "q": "Грэнтем",
+          "count": 1,
+          "status": "Найдено: 1",
+          "inputFocused": true,
+          "readerProjectionIncludes": true,
+          "results": [
+            {
+              "heading": "«Полный свод богословия» — зрелая баптистская систематика",
+              "snippet": "…птистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти, вышел третий т…",
+              "marks": [
+                "Грэнтем"
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "gill-search-p-109",
+              "tag": "P",
+              "parentId": "",
+              "root": 0,
+              "rawIncludes": true,
+              "renderedIncludes": true,
+              "renderedExcerpt": "Завершив к 1766 году девятитомный библейский комментарий, в 1769 году Гилл опубликовал A Body of Doctrinal Divinity в двух томах quarto — один из важнейших систематических трудов партикулярных баптистов XVIII века. Называть его первым трудом такого рода среди всех ",
+              "endnoteRootClipped": false,
+              "auxiliary": []
+            }
+          ]
+        }
+      ],
+      "mainNavigations": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "global": {
+        "afterHandoff": "",
+        "learningHidden": "true",
+        "focused": true,
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "localQueryStillThere": "Грэнтем"
+      },
+      "ok": true
+    }
+  ],
+  "browser": "153.0.8010.0"
+}
