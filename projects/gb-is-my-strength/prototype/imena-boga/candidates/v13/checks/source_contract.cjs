@@ -859,3 +859,16 @@ for(const [source,tokens,forbidden] of [
  for(const token of forbidden)if(source.includes(token))throw Error('W94 stale brand ellipsis returned: '+token);
 }
 console.log('W94_ZOOM_200_HEADER_BRAND_REFLOW_PASS');
+
+// W95: Research 08 fixes speaker/source distinctions in the New Testament.
+// Mk 14:36: Jesus addresses the Father; Rom 8:15: believers cry;
+// Gal 4:6: the Spirit of the Son cries; Revelation designations separately.
+const w95AtlasIntro=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
+for(const token of [
+ 'Иисус обращается к Отцу «Авва, Отче» (Мк. 14:36)',
+ 'в Рим. 8:15 так взывают верующие, а в Гал. 4:6 — Дух Сына',
+ '«Я есмь» и «Альфа и Омега» требуют отдельного анализа говорящего и контекста',
+])if(!w95AtlasIntro.includes(token))throw Error('W95 Research source/speaker distinction missing: '+token);
+if(w95AtlasIntro.includes('вся полнота Божественного Имени сосредоточена в Иисусе Христе —'))
+ throw Error('W95 New Testament speaker overclaim returned');
+console.log('W95_ABBA_SPEAKER_SEPARATION_PASS');
