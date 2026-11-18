@@ -38,6 +38,11 @@ export const HOMESTEAD_GROUND_DETAIL=Object.freeze({
  * Exodus 2 family possessions or any excavated Midianite dwelling. */
 /** W12D.3 small, self-contained repeatable natural-fibre microstructure.
  * No downloaded texture or historical claim of specific fabric technology. */
+/** W12D.4 - restrained, shadowless illumination from pale sand into the
+ * underside of the canopy. Roof must still cast its real shadow on the room. */
+export const HOMESTEAD_SAND_BOUNCE=Object.freeze({
+  intensity:.50,color:0xffdfbe,
+});
 export const HOMESTEAD_WEAVE_DETAIL=Object.freeze({
   size:128,repeatU:6,repeatV:4,bumpScale:.007,
 });
@@ -151,6 +156,15 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   sun.shadow.camera.left=-24;sun.shadow.camera.right=24;
   sun.shadow.camera.top=24;sun.shadow.camera.bottom=-24;
   sun.shadow.normalBias=.045;scene.add(sun);
+  // Real-world light scatters from bright ground up into a fabric canopy.
+  // One weak shadow-free fill preserves the key directional sun and keeps the
+  // roof from reading as black cardboard from inside the doorway.
+  const bounce=new THREE.DirectionalLight(
+    HOMESTEAD_SAND_BOUNCE.color,HOMESTEAD_SAND_BOUNCE.intensity);
+  bounce.position.set(1,-3.8,5.4);
+  bounce.castShadow=false;
+  bounce.name='midian-homestead-sand-bounce';
+  scene.add(bounce);
   const mat=(color:number,roughness=1)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0});
   // One 128x128 RGBA texture is shared by all fibre-covered meshes. Mipmapped
   // tiling preserves close-up yarn relief without loading external resources.
@@ -320,7 +334,10 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     g.setAttribute('color',new THREE.Float32BufferAttribute(vertexColor,3));
     g.computeVertexNormals();
     const fabric=new THREE.Mesh(g,cloth);
-    fabric.castShadow=true;fabric.receiveShadow=true;
+    // This double-sided thin roof used to shadow itself heavily from the
+    // inside, producing near-black wedge surfaces. Keep its real castShadow
+    // onto the walls/mat, but prevent its own GPU shadow-map self-occlusion.
+    fabric.castShadow=true;fabric.receiveShadow=false;
     fabric.name='midian-shelter-woven-3d-roof';
     pivot.add(fabric);
     // The actual perimeter below the eaves is made of 3D cloth, not an
@@ -655,6 +672,19 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     countMesh('midian-homestead-eroded-ridge-sector'));
   canvas.dataset.homesteadSky=String(countMesh('midian-homestead-atmospheric-skydome'));
   canvas.dataset.homesteadRoofPanels=String(countMesh('midian-shelter-woven-3d-roof'));
+  // Witness actual Three.js shadow flags, not only a declared lighting mode.
+  let roofCast=0,roofSelfShadow=0,bounceCount=0;
+  scene.traverse(node=>{
+    if(node instanceof THREE.Mesh&&node.name==='midian-shelter-woven-3d-roof'){
+      if(node.castShadow)roofCast++;
+      if(node.receiveShadow)roofSelfShadow++;
+    }
+    if(node instanceof THREE.DirectionalLight&&
+      node.name==='midian-homestead-sand-bounce'&&!node.castShadow)bounceCount++;
+  });
+  canvas.dataset.homesteadRoofCastShadows=String(roofCast);
+  canvas.dataset.homesteadRoofSelfShadows=String(roofSelfShadow);
+  canvas.dataset.homesteadBounceLights=String(bounceCount);
   canvas.dataset.homesteadSidePanels=String(countMesh('midian-shelter-real-cloth-sidewall'));
   canvas.dataset.homesteadPosts=String(countMesh('shelter-structural-post'));
   canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));

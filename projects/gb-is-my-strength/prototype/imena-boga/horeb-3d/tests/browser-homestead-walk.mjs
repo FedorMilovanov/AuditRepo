@@ -38,6 +38,9 @@ try{
     roof:e.dataset.homesteadShelter,
     door:e.dataset.homesteadDoor,hills:e.dataset.homesteadHills,
     roofPanels:Number(e.dataset.homesteadRoofPanels),
+    roofCastShadows:Number(e.dataset.homesteadRoofCastShadows),
+    roofSelfShadows:Number(e.dataset.homesteadRoofSelfShadows),
+    bounceLights:Number(e.dataset.homesteadBounceLights),
     sidePanels:Number(e.dataset.homesteadSidePanels),
     posts:Number(e.dataset.homesteadPosts),
     frontTrusses:Number(e.dataset.homesteadFrontTrusses),
@@ -59,6 +62,8 @@ try{
   if(witness.world!=='homestead'||witness.roof!=='3d-woven-fabric-and-posts'||
      witness.door!=='walkable'||witness.hills!=='1'||
      witness.roofPanels!==2||witness.sidePanels!==2||
+     witness.roofCastShadows!==2||witness.roofSelfShadows!==0||
+     witness.bounceLights!==1||
      witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||
      witness.rearTriangles!==96||witness.rocks!==64||
      witness.hillsCount!==4||witness.skydome!==1||

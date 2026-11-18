@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -50,6 +50,13 @@ t('W12D.0 rear gable closes canopy behind all drape folds',
   HOMESTEAD_REAR_GABLE_Z< -3.045&&
   [-2.96,-2.5,0,2.5,2.96].every(x=>
     homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.4: sand-colored hemispheric bounce is a modest fill, not a second sun
+// or a manufactured architectural feature; its exact actual count and the
+// two roof shadow flags are checked by real Chromium below.
+t('W12D.4 bounce is bounded beneath the key sun, preserving contrast',
+  HOMESTEAD_SAND_BOUNCE.intensity>=.3&&
+  HOMESTEAD_SAND_BOUNCE.intensity<=.6&&
+  HOMESTEAD_SAND_BOUNCE.color===0xffdfbe);
 // W12D.3.1: local contrast guard, avoiding the visually distracting
 // high-contrast grid seen in the original W12D.3 interior screenshot.
 t('W12D.3.1 neighbouring yarn texels avoid graph-paper contrast',
