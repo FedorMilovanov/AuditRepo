@@ -1,0 +1,63 @@
+# 2026-11-18 UTC — stage 13, held Web Speech during a real article quiz change.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0; Draft #570.
+
+[Exact anchors and overlap]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+for repo in AuditRepo gb-is-my-strength; do
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# Clean previous HEAD a9551427e217d65e6fffdd3d5b7b7be0ce8c3b36 / 76 paths; preflight 44389136768 and validate 44389136717 SUCCESS.
+# Initial diffs: Product #2339 9a7fccd→798b85f, #2341 3ba40b5→6c9cb87, #2342 054a8ab→11216ee, #2343 f8b11de→cbe3ebe,
+# #2344 163ec32→b434d30, #2345 0b021c3→eb8ffc5, and bare 8a8dced→9e77d9d: Journal/G3 / associated style, SEO, content and tests.
+# Paginated file lists used for the PRs, exact /compare for updates. Earlier #2339 font/preload/SW changes remain outside this anchor.
+# During run: /compare/dceed04b4fa42bfff16891759b730118f933f645...a682d395930de16f950a0bbe7ba2f5e2cc3dd2d4 (#2340, 4 Journal files)
+# and /compare/9e77d9d3fcd86ce8c6cb62a7b0aa2e0b5b05d258...fcd4a46e512be181672ce82102aefdc2c91129bb (bare, 3 Journal files).
+# Before publication: #2341 6c9cb87aa2d5e0ff67f1f8c69c1e3d98f56d00b6...d70b33c77dc8e6cf49d935e845f3ea8352678acf, +1 commit/5 Journal paths;
+# full /pulls/2341/files: 13 paths. No selected native quiz, ReaderProjection, TTS or control owner change in these diffs.
+# Audit #538 7b9d97f50d5551223e3238b5d9bc61054c5e3dc9...755d3cd5c9fe79b1b8a1f6eb28b08dc0f56dca77, +1/4 Atlas v13 paths;
+# full /pulls/538/files: 180 paths, none in quiz intake. #543 dd90c52a→5b875856: Horeb, separate. Neither main moved.
+
+[Exact dist and Product controls]
+# Read-only reuse of stage 12 Product / dist; see arena-quiz-native-print commands.log for codeload/package bootstrap.
+# npm ci; GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like; npm run page-ownership:dist:production-like.
+# Initial dist pin check against stage 10: 38/38. No Pagefind necessary, no Product source changes.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# CHROMIUM is resolved through @sparticuz/chromium@153.0.0; Node 22.23.4 and extracted AL2023 libs in TOOLS.
+export PLAYWRIGHT_BROWSERS_PATH="$OUT/pw"
+rev=$(cd "$PRODUCT" && node -p 'require("./node_modules/playwright-core/browsers.json").browsers.find(b=>b.name==="chromium-headless-shell").revision')
+pwdir="$PLAYWRIGHT_BROWSERS_PATH/chromium_headless_shell-$rev/chrome-headless-shell-linux64"
+mkdir -p "$pwdir"; ln -s "$CHROMIUM" "$pwdir/chrome-headless-shell"
+(cd "$PRODUCT" && node scripts/reader-projection-source-contract.mjs && node scripts/tts-reader-runtime-browser-test.js && node scripts/reader-projection-browser-contract.mjs)
+# PASS 70/70, PASS fixture, PASS 194/194. Existing tests not presented as transition witnesses.
+
+[Already-running queue versus current quiz]
+W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18"
+Y="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-projection/2026-11-18/evidence/quiz-projection-witness.json"
+node --check "$W/harness/active-playback.mjs"
+for run in a b; do
+  node "$W/harness/active-playback.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a/active-playback-witness.json" "$OUT/run-b/active-playback-witness.json" "$Y" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# Both runs 11/11, 21 complete Play sessions + 1 stopped prefix each. 35 dist pins; 38 stage-10 pins also checked, 10 shared.
+# Both receipts 40777816b6c1d8f36ef1af87bc06408f7eb7b9b0aae06efc27aa7c0851669229; 16 complete text streams per run match stage 10.
+# Browser inputs only, hold/release only at Web Speech. Pilot fixes: authored initial aria-label «Озвучка»; a new pending
+# utterance can precede its first boundary/ring update (measure unchanged ring across the quiz action, not ring==internal
+# progress at all instants); visible expanded rate panel is .is-open:not([inert]); Stop gives one active cancellation in
+# two cancel calls (canonical and legacy cleanup). Keep separate platform counts. None of these pilot oracles were Product changes.
+# New Play matched the current projection in each row and retained ordinary text. One compact JSON kept, so as not to duplicate identical replays.
+
+[Admission and publication]
+# CHANGED = cumulative diff against fcf2e69b. Explicitly stage only this intake; this log is admitted with git add -f.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# Only publish to existing Draft; compare exact head/base/state/check-runs. No Product/MASTER/ledger/Drive write, merge or deploy.
+# No native print receipt arrived; QPDF-01 stays PENDING_NATIVE_DIALOG. Local preview can still supply the pinned fixture.
