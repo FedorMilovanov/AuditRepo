@@ -36,6 +36,22 @@ export const HOMESTEAD_GROUND_DETAIL=Object.freeze({
 });
 /** W12D.2 authored generic household storage forms; NOT a claim about
  * Exodus 2 family possessions or any excavated Midianite dwelling. */
+/** W12D.3 small, self-contained repeatable natural-fibre microstructure.
+ * No downloaded texture or historical claim of specific fabric technology. */
+export const HOMESTEAD_WEAVE_DETAIL=Object.freeze({
+  size:128,repeatU:8,repeatV:5,bumpScale:.014,
+});
+export function homesteadWeaveIntensity(x:number,y:number):number{
+  const warp=Math.pow(.5+.5*Math.cos(x*Math.PI/4),6);
+  const weft=Math.pow(.5+.5*Math.cos(y*Math.PI/4),6);
+  const alternate=((Math.floor(x/8)+Math.floor(y/8))%2===0)?1:-1;
+  // Integer Fourier modes on the 128px tile keep opposite edges seamless.
+  const unit=2*Math.PI/HOMESTEAD_WEAVE_DETAIL.size;
+  const variation=.014*Math.sin(unit*(x*3+y*2))+
+    .009*Math.cos(unit*(x*5-y*4));
+  return Math.min(1,Math.max(.78,
+    .908+.047*warp+.054*weft+.029*alternate*(warp-weft)+variation));
+}
 export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
   Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),
   Object.freeze({x:2.08,z:-1.42,radius:.33,height:.36}),
@@ -133,6 +149,27 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   sun.shadow.camera.top=24;sun.shadow.camera.bottom=-24;
   sun.shadow.normalBias=.045;scene.add(sun);
   const mat=(color:number,roughness=1)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0});
+  // One 128x128 RGBA texture is shared by all fibre-covered meshes. Mipmapped
+  // tiling preserves close-up yarn relief without loading external resources.
+  const size=HOMESTEAD_WEAVE_DETAIL.size,texels=new Uint8Array(size*size*4);
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const o=(y*size+x)*4;
+    const v=Math.round(255*homesteadWeaveIntensity(x,y));
+    texels[o]=v;texels[o+1]=Math.max(0,v-3);
+    texels[o+2]=Math.max(0,v-7);texels[o+3]=255;
+  }
+  const weaveMap=new THREE.DataTexture(texels,size,size,THREE.RGBAFormat);
+  weaveMap.colorSpace=THREE.SRGBColorSpace;
+  weaveMap.wrapS=weaveMap.wrapT=THREE.RepeatWrapping;
+  weaveMap.repeat.set(HOMESTEAD_WEAVE_DETAIL.repeatU,HOMESTEAD_WEAVE_DETAIL.repeatV);
+  weaveMap.generateMipmaps=true;
+  weaveMap.minFilter=THREE.LinearMipmapLinearFilter;
+  weaveMap.magFilter=THREE.LinearFilter;
+  weaveMap.needsUpdate=true;
+  const woven=(color:number)=>new THREE.MeshStandardMaterial({
+    color,vertexColors:true,roughness:1,side:THREE.DoubleSide,
+    map:weaveMap,bumpMap:weaveMap,bumpScale:HOMESTEAD_WEAVE_DETAIL.bumpScale,
+  });
   const desert=new THREE.PlaneGeometry(64,64,96,96);
   desert.rotateX(-Math.PI/2);
   const attr=desert.getAttribute('position'),colors:number[]=[];
@@ -222,9 +259,8 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   scene.add(sky);
 
   // Structural frame, actual posts and gently sagging fabric roof.
-  const support=mat(0x665744),rope=mat(0xa38b6b),cloth=new THREE.MeshStandardMaterial({
-    vertexColors:true,color:0xb7a08b,roughness:1,side:THREE.DoubleSide,
-  });
+  const support=mat(0x665744),rope=mat(0xa38b6b),
+    cloth=woven(0xb7a08b);
   const pivot=new THREE.Group();
   pivot.name='midian-homestead-3d-shelter';
   scene.add(pivot);
@@ -327,9 +363,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   rearGeo.setAttribute('color',new THREE.Float32BufferAttribute(rearColors,3));
   rearGeo.computeVertexNormals();
-  const rear=new THREE.Mesh(rearGeo,new THREE.MeshStandardMaterial({
-    vertexColors:true,color:0xa58e77,roughness:1,side:THREE.DoubleSide,
-  }));
+  const rear=new THREE.Mesh(rearGeo,woven(0xa58e77));
   rear.castShadow=true;rear.receiveShadow=true;
   rear.name='shelter-rear-cloth';pivot.add(rear);
   // The previous single TRIANGLE did not follow the curved rear roof
@@ -337,7 +371,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   // on both sides of the ridge. Build ONE indexed gable whose upper profile
   // derives from the roof's actual rear-row height (plus a 55mm overlap).
   const gable=new THREE.BufferGeometry();
-  const gablePositions:number[]=[],gableColours:number[]=[],gableIndices:number[]=[];
+  const gablePositions:number[]=[],gableColours:number[]=[],gableIndices:number[]=[],gableUV:number[]=[];
   for(let i=0;i<=HOMESTEAD_GABLE_SEGMENTS;i++){
     const x=-2.96+5.92*i/HOMESTEAD_GABLE_SEGMENTS;
     const upperY=homesteadRearGableTop(x);
@@ -346,6 +380,8 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       upperY-.06);
     gablePositions.push(x,baseY,HOMESTEAD_REAR_GABLE_Z,
       x,upperY,HOMESTEAD_REAR_GABLE_Z);
+    const u=(x+2.96)/5.92;
+    gableUV.push(u,0,u,Math.max(.02,(upperY-baseY)/2.3));
     const shade=.91+.05*Math.cos(x*2.5);
     gableColours.push(shade,shade*.985,shade*.962,
       shade*.968,shade*.954,shade*.932);
@@ -356,10 +392,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   gable.setAttribute('position',new THREE.Float32BufferAttribute(gablePositions,3));
   gable.setAttribute('color',new THREE.Float32BufferAttribute(gableColours,3));
+  gable.setAttribute('uv',new THREE.Float32BufferAttribute(gableUV,2));
   gable.setIndex(gableIndices);gable.computeVertexNormals();
-  const endCloth=new THREE.Mesh(gable,new THREE.MeshStandardMaterial({
-    color:0xa58e77,vertexColors:true,roughness:1,side:THREE.DoubleSide,
-  }));
+  const endCloth=new THREE.Mesh(gable,woven(0xa58e77));
   endCloth.castShadow=true;endCloth.receiveShadow=true;
   endCloth.name='shelter-solid-rear-gable';
   pivot.add(endCloth);
@@ -384,9 +419,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }
   matGeo.setAttribute('color',new THREE.Float32BufferAttribute(matColors,3));
   matGeo.computeVertexNormals();
-  const matFloor=new THREE.Mesh(matGeo,new THREE.MeshStandardMaterial({
-    color:0x947b60,vertexColors:true,roughness:1,side:THREE.DoubleSide,
-  }));
+  const matFloor=new THREE.Mesh(matGeo,woven(0x947b60));
   matFloor.name='shelter-3d-floor-mat';matFloor.receiveShadow=true;
   pivot.add(matFloor);
 
@@ -408,9 +441,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     storageColors.push(weave,weave*.93,weave*.82);
   }
   storageGeo.setAttribute('color',new THREE.Float32BufferAttribute(storageColors,3));
-  const storageMaterial=new THREE.MeshStandardMaterial({
-    color:0x9d825f,vertexColors:true,roughness:1,side:THREE.DoubleSide,
-  });
+  const storageMaterial=woven(0x9d825f);
   const rimGeo=new THREE.TorusGeometry(.94,.055,6,28);
   const rimMaterial=mat(0x6f5338),insideMaterial=mat(0x503b2c);
   const storageBottomGeo=new THREE.CircleGeometry(.80,28);
@@ -637,6 +668,19 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     countMesh('homestead-inner-storage-basket'));
   canvas.dataset.homesteadStorageRims=String(
     countMesh('homestead-inner-storage-rim'));
+  canvas.dataset.homesteadWovenTexturePixels=String(size*size);
+  canvas.dataset.homesteadWovenBumpScale=String(HOMESTEAD_WEAVE_DETAIL.bumpScale);
+  // These are actual mesh/material map bindings, not declared feature flags.
+  let bound=0;
+  scene.traverse(o=>{
+    if(o instanceof THREE.Mesh){
+      for(const m of Array.isArray(o.material)?o.material:[o.material]){
+        if(m instanceof THREE.MeshStandardMaterial&&m.map===weaveMap&&
+          m.bumpMap===weaveMap)bound++;
+      }
+    }
+  });
+  canvas.dataset.homesteadWovenMaterialBindings=String(bound);
   frame=requestAnimationFrame(render);
   function dispose(){
     if(disposed)return;disposed=true;cancelAnimationFrame(frame);observer.disconnect();reset();
@@ -653,6 +697,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);
     });
     geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());
+    weaveMap.dispose(); // shared GPU image needs explicit cleanup on WebGL remount
     renderer.dispose();renderer.forceContextLoss();
     for(const name of Object.keys(canvas.dataset))if(name.startsWith('midian')||name.startsWith('homestead'))delete canvas.dataset[name];
   }

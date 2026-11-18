@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -50,6 +50,21 @@ t('W12D.0 rear gable closes canopy behind all drape folds',
   HOMESTEAD_REAR_GABLE_Z< -3.045&&
   [-2.96,-2.5,0,2.5,2.96].every(x=>
     homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.3: one seamless small tile, genuinely varying yarn illumination.
+t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
+  HOMESTEAD_WEAVE_DETAIL.size===128&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale>0&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale<.03&&
+  (()=>{const v=Array.from({length:64},(_,i)=>
+    homesteadWeaveIntensity(i*1.7,i*3.1));
+    return Math.max(...v)-Math.min(...v)>.055&&
+      v.every(x=>x>=.78&&x<=1);
+  })()&&
+  Array.from({length:19},(_,i)=>i*6.7).every(x=>
+    Math.abs(homesteadWeaveIntensity(x,37.4)-
+      homesteadWeaveIntensity(x+128,37.4))<1e-10&&
+    Math.abs(homesteadWeaveIntensity(19.6,x)-
+      homesteadWeaveIntensity(19.6,x+128))<1e-10));
 // W12D.2: small household forms must remain walk-blocking props, not
 // ghost scenery, while preserving the actual central visitor route.
 t('W12D.2 generic interior storage forms are bounded and independently colliding',
