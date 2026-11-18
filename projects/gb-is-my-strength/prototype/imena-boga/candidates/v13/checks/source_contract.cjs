@@ -908,3 +908,28 @@ for(const required of ['Ин. 1:1, 14','Ин. 20:17; Рим. 8:15','не явл�
 if(w97Abba.includes('семи великих образах спасения'))
   throw Error('W97 fused seven predicate sayings into literal proper name');
 console.log('W97_RESEARCH_PROPHETIC_ABBA_SEPARATION_PASS');
+
+
+// W98: lexical form of YAH must not assert a verified first syllable
+// of the disputed historical YHWH pronunciation; QANNA does not authorize
+// unsourced quotations from named Puritans.
+const w98Data=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+function w98Between(startId,nextId){
+ const a=w98Data.indexOf("id: '"+startId+"'"),b=w98Data.indexOf("id: '"+nextId+"'",a+1);
+ if(a<0||b<a)throw Error('W98 missing stable cards: '+startId);
+ return w98Data.slice(a,b);
+}
+const w98Yah=w98Between('yah','ehyeh-asher-ehyeh');
+for(const snippet of ['краткая форма божественного имени יהוה','нельзя достоверно установить древнейшее произношение','«Хвалите Ях!»','не становится ещё одним самостоятельным личным именем']){
+ if(!w98Yah.includes(snippet))throw Error('W98 YAH lexical/translation guard absent: '+snippet);
+}
+for(const bad of ['сокращённую форму первого слога','перешёл без перевода во все языки Церкви','он призывает древнее заветное имя']){
+ if(w98Yah.includes(bad))throw Error('W98 YAH historical overclaim restored: '+bad);
+}
+const w98Qanna=w98Between('el-qanna','yhwh-yireh');
+for(const snippet of ['Исх. 34:14 и Втор. 4:24','исключительной верности','богословская аналогия, а не буквальный перевод']){
+ if(!w98Qanna.includes(snippet))throw Error('W98 QANNA semantic guard missing: '+snippet);
+}
+if(w98Qanna.includes('Как отмечали пуританские богословы (Стивен Чарнок, Томас Уотсон)'))
+ throw Error('W98 unverified named Puritan quotation returned');
+console.log('W98_YAH_QANNA_SOURCE_HONESTY_PASS');
