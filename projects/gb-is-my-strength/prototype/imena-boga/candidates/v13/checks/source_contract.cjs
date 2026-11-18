@@ -1026,3 +1026,26 @@ for(const forbidden of [
  'Сам Господь называет Своё слово и исповедание о Себе тем Камнем'
 ])if(w103Tsur.includes(forbidden))throw Error('W103 overclaim restored: '+forbidden);
 console.log('W103_TSUR_REFERENT_SCOPE_PASS');
+
+
+// W104: exact Psalm 95:6 (Russian Ps 94:6) form vs related texts.
+// Job 35:10 contains Eloah, not the tetragrammaton; Isaiah 54:5 uses
+// another participial form. Do not inflate one lexeme into four identical names.
+const w104Src=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w104Start=w104Src.indexOf("id: 'yhwh-osenou'");
+const w104End=w104Src.indexOf("id: 'el-shaddai'",w104Start+1);
+if(w104Start<0||w104End<=w104Start)throw Error('W104 YaHWeH Osenu card bounds missing');
+const w104=w104Src.slice(w104Start,w104End);
+for(const required of [
+ 'Псалом 94:6 — יְהוָה עֹשֵׂנוּ',
+ 'Исаия 51:13 — иная форма יְהוָה עֹשֶׂךָ',
+ 'Исаия 54:5 и Иов 35:10 — родственные, но не тождественные выражения',
+ 'Иов 35:10 говорит אֱלוֹהַּ עֹשָׂי',
+ 'это не повтор точной формы Пс. 94:6',
+ 'их нельзя представлять одинаковыми словосочетаниями'
+])if(!w104.includes(required))throw Error('W104 lexical-form guard absent: '+required);
+for(const banned of [
+ "occurrences: 'Псалом 94:6; Исаия 51:13; 54:5; Иов 35:10'",
+ 'в утешении пленного Израиля (Ис. 54:5'
+])if(w104.includes(banned))throw Error('W104 old conflation restored: '+banned);
+console.log('W104_OSENU_FORMS_NOT_IDENTICAL_PASS');
