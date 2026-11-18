@@ -187,7 +187,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
               {entry.russianName}
             </p>
             <p className="font-ui mt-1.5 text-xs" style={{ color: 'var(--gb-muted)' }}>
-              Буквально: <span style={{ color: 'var(--gb-ink-secondary)' }}>{entry.literalMeaning}</span>
+              Смысл в контексте: <span style={{ color: 'var(--gb-ink-secondary)' }}>{entry.literalMeaning}</span>
             </p>
           </div>
 

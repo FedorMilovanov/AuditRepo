@@ -810,3 +810,23 @@ if(!w91PreviewCard.includes("entry.strongs.length > 22 ? 'Индексы Стр�
    !w91Index.includes('{item.strongs}'))
  throw Error('W91 long Hebrew lexical codes must be condensed in preview and preserved in dossier/index');
 console.log('W91_LEXICAL_CODES_PREMIUM_PREVIEW_PASS');
+
+
+// W92: referential accuracy and lexical-vs-theological-label reader safeguards.
+// Source: Synodal Proverbs 18:10; Gill, A Body of Doctrinal Divinity I.3.
+// A valid interface distinguishes lexeme, human confession and translation.
+const w92AtlasIntro=fs.readFileSync(path.join(root,'atlas','src','App.tsx'),'utf8');
+const w92AtlasCard=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
+for(const token of [
+ 'reference="Притч. 18:10"',
+ 'Баптистский богослов XVIII века',
+ 'Это пересказ, а не дословная русская цитата',
+ 'названия мест или жертвенников',
+])if(!w92AtlasIntro.includes(token))throw Error('W92 Atlas theological/source accuracy missing: '+token);
+for(const token of ['reference="Притч. 18:11"','пуританский баптистский богослов','ожидать глубокого познания самой сущности','произносит Свои имена']){
+ if(w92AtlasIntro.includes(token))throw Error('W92 Atlas old overclaim returned: '+token);
+}
+if(!w92AtlasCard.includes('Смысл в контексте: <span') ||
+    w92AtlasCard.includes('Буквально: <span'))
+ throw Error('W92 Atlas preview conflates contextual theology with literal lexeme meaning');
+console.log('W92_ATLAS_PROVERBS_GILL_LEXICAL_SCOPE_PASS');
