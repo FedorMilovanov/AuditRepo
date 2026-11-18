@@ -53,6 +53,8 @@ try{
     weaveBump:Number(e.dataset.homesteadWovenBumpScale),
     baskets:Number(e.dataset.homesteadStorageBaskets),
     rims:Number(e.dataset.homesteadStorageRims),
+    basketBands:Number(e.dataset.homesteadStorageBands),
+    basketBandDrawCalls:Number(e.dataset.homesteadStorageBandDrawCalls),
     pebbleDrawCalls:Number(e.dataset.homesteadPebbleDrawCalls),
     hillsCount:Number(e.dataset.homesteadRidgeSectors),
     skydome:Number(e.dataset.homesteadSky),
@@ -69,6 +71,7 @@ try{
      witness.hillsCount!==4||witness.skydome!==1||
      witness.pebbles!==720||witness.pebbleDrawCalls!==1||
      witness.baskets!==2||witness.rims!==2||
+     witness.basketBands!==10||witness.basketBandDrawCalls!==1||
      witness.weavePixels!==16384||witness.weaveBindings!==9||
      !(witness.weaveBump>.005&&witness.weaveBump<.03)||
      witness.rearClothFaces!==784||witness.wovenMatFaces!==1120)

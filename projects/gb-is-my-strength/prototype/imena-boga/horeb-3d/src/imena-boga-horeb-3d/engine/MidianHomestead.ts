@@ -60,6 +60,13 @@ export function homesteadWeaveIntensity(x:number,y:number):number{
   return Math.min(1,Math.max(.88,
     .946+.027*warp+.017*weft+.004*alternate*(warp-weft)+variation));
 }
+/** W12D.5 non-mechanical coiled bindings for two hypothetical domestic vessels.
+ * These are generic craft details, not an archaeological reconstruction. */
+export const HOMESTEAD_BASKET_DETAIL=Object.freeze({
+  levels:Object.freeze([.20,.37,.56,.73,.89]),
+  radii:Object.freeze([.985,1,.990,.967,.94]),
+  tube:.020,segments:48,
+});
 export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
   Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),
   Object.freeze({x:2.08,z:-1.42,radius:.33,height:.36}),
@@ -484,6 +491,44 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     inset.name='homestead-inner-storage-opening';pivot.add(inset);
   }
 
+  // Shared hand-wound coils: one instanced draw call for both small baskets.
+  // Gentle non-periodic waviness helps avoid rigid industrial banding.
+  const coilGeo=new THREE.TorusGeometry(1,HOMESTEAD_BASKET_DETAIL.tube,
+    5,HOMESTEAD_BASKET_DETAIL.segments);
+  const coilPos=coilGeo.getAttribute('position');
+  for(let i=0;i<coilPos.count;i++){
+    const x=coilPos.getX(i),y=coilPos.getY(i),z=coilPos.getZ(i);
+    const a=Math.atan2(y,x);
+    const irregular=1+.010*Math.sin(a*7+.4)+.006*Math.sin(a*13+1.4);
+    coilPos.setXYZ(i,x*irregular,y*irregular,z+.035*Math.sin(a*5+.72));
+  }
+  coilGeo.computeVertexNormals();
+  const coilCount=HOMESTEAD_INTERIOR_STORAGE.length*
+    HOMESTEAD_BASKET_DETAIL.levels.length;
+  const coils=new THREE.InstancedMesh(coilGeo,mat(0x907052),coilCount);
+  const coilTransform=new THREE.Object3D();
+  const coilColors=[new THREE.Color(0x997e5b),new THREE.Color(0x8d7051)];
+  let coilIndex=0;
+  for(const [basketIndex,prop] of HOMESTEAD_INTERIOR_STORAGE.entries()){
+    const ground=homesteadGround(prop.x,prop.z);
+    for(let level=0;level<HOMESTEAD_BASKET_DETAIL.levels.length;level++){
+      coilTransform.position.set(prop.x,
+        ground+prop.height*HOMESTEAD_BASKET_DETAIL.levels[level],prop.z);
+      coilTransform.rotation.set(-Math.PI/2,0,basketIndex*.13+level*.17);
+      const radius=prop.radius*(HOMESTEAD_BASKET_DETAIL.radii[level]+.017);
+      coilTransform.scale.setScalar(radius);
+      coilTransform.updateMatrix();
+      coils.setMatrixAt(coilIndex,coilTransform.matrix);
+      coils.setColorAt(coilIndex,coilColors[(basketIndex+level)%2]);
+      coilIndex++;
+    }
+  }
+  coils.instanceMatrix.needsUpdate=true;
+  if(coils.instanceColor)coils.instanceColor.needsUpdate=true;
+  coils.castShadow=false;coils.receiveShadow=true;
+  coils.name='homestead-inner-storage-woven-bands';
+  pivot.add(coils);
+
   // Hearth and storing vessels: actual 3D but not a staged invented meal.
   const hearthMat=[mat(0x7a6a59),mat(0x9e8970),mat(0x8b7964)];
   const rockGeo=new THREE.DodecahedronGeometry(1,1);
@@ -701,6 +746,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     countMesh('homestead-inner-storage-basket'));
   canvas.dataset.homesteadStorageRims=String(
     countMesh('homestead-inner-storage-rim'));
+  canvas.dataset.homesteadStorageBands=String(coils.count);
+  canvas.dataset.homesteadStorageBandDrawCalls=String(
+    countMesh('homestead-inner-storage-woven-bands'));
   canvas.dataset.homesteadWovenTexturePixels=String(size*size);
   canvas.dataset.homesteadWovenBumpScale=String(HOMESTEAD_WEAVE_DETAIL.bumpScale);
   // These are actual mesh/material map bindings, not declared feature flags.

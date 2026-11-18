@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -82,6 +82,15 @@ t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
       homesteadWeaveIntensity(x+128,37.4))<1e-10&&
     Math.abs(homesteadWeaveIntensity(19.6,x)-
       homesteadWeaveIntensity(19.6,x+128))<1e-10));
+// W12D.5: subtle handmade surface detail must remain tightly bounded.
+t('W12D.5 basket relief remains bounded and shares one instance mesh',
+  HOMESTEAD_BASKET_DETAIL.levels.length===5&&
+  HOMESTEAD_BASKET_DETAIL.radii.length===5&&
+  HOMESTEAD_BASKET_DETAIL.segments===48&&
+  HOMESTEAD_BASKET_DETAIL.tube>=.015&&HOMESTEAD_BASKET_DETAIL.tube<=.03&&
+  HOMESTEAD_BASKET_DETAIL.levels.every((v,i,a)=>
+    v>.1&&v<.95&&(i===0||v>a[i-1]))&&
+  HOMESTEAD_BASKET_DETAIL.radii.every(v=>v>.9&&v<1.02));
 // W12D.2: small household forms must remain walk-blocking props, not
 // ghost scenery, while preserving the actual central visitor route.
 t('W12D.2 generic interior storage forms are bounded and independently colliding',
