@@ -7,6 +7,12 @@ Draft PR: https://github.com/FedorMilovanov/AuditRepo/pull/543
 
 **Это не заказ на новый проект.** Настоящий React/Three.js/HOREB уже импортирован, исходный ZIP хранится как immutable, расширение до 42 различных Research ID выполнено в той же ветке. Не пытайся снова добавить 17 карточек, создавая дубли.
 
+## Текущий baseline · W12D.5.1, 18.11.2026
+
+**Живой PR HEAD при фиксации:** `6ea560ab4e05b90c2938d32d074d25695622f9b1`; исходники и четыре side-пешеходных задания + Validate/Preflight SUCCESS, длинный Chromium [#44341542105](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44341542105) ещё выполняется. **Не наследовать 6/6 PASS** W12D.5 `820a1c9`: его обвязки корзин получили ART FAIL. W12D.5.1 локально прошла Vite, TypeScript, Chrome/SwiftShader с 390 px, реальным входом, ESC и WebGL remount; новая модель требует принятия по свежим CI PNG. W12D.4 имела точечный ART PASS исправления самозатенения крыши, но общий Midian ART и релиз остаются HOLD. Полный актуальный протокол: [AGENT_HANDOFF.md](AGENT_HANDOFF.md) и [PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543).
+
+**Секции с более ранними baseline G13/W1 ниже являются историческим рабочим контекстом**, не описанием актуального HEAD и не разрешением пропустить новый exact-SHA CI.
+
 ## 1. Синхронизация и безопасность — обязательная первая операция
 
 1. `git status --short` — прежде чем переключаться, сохрани любые незакоммиченные пользовательские файлы, не делай `reset --hard`.
@@ -20,10 +26,10 @@ Draft PR: https://github.com/FedorMilovanov/AuditRepo/pull/543
 - **42 уникальных Research ID** (29 baseline + 13 extension), 42/42 `PLACEMENTS`, 42 тематические группы объектов; это **не** 42 собственных имени Бога и **не** редакционное разрешение.
 - 8 пространственных зон, Хорив, несгорающий куст, правила снятия обуви, внешнее и внутреннее ограничения, без визуализации Бога; HTML fallback.
 - `engine/exhibitProps.ts` строит сюжетные предметы: колодцы, шатры, жертвенники, овец, пещеры, дороги, городские модели и др. `mergePropsGroup` сохраняет world transforms и fail-closed на несовместимых геометриях.
-- **Последний полностью доказанный инженерный baseline G13:** `eaa9b90a4d5fb0c59e07492c8c9c0b149654c19e`, [QA #42685624277](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624277) + Validate #42685624179 + Preflight #42685624308 = **3/3 SUCCESS**. Все 42/42 боковые экспозиции достигнуты настоящим WASD/стрелки/E в четырёх непересекающихся shard 10+18+12+2 с возвратом к проходу; независимый 0→7→0, 135/135 engineer, 34/34 Chrome smoke, 42/42 досье и 8+3+3 PNG PASS. В более новой ветке исправляются визуальные witness, test/production debug bridge и материал мелкого источника; эти изменения **не наследуют** PASS старого SHA. Перед очередной работой сверить живой HEAD и полный exact-HEAD CI.
+- **Исторический baseline G13 (не нынешний HEAD):** `eaa9b90a4d5fb0c59e07492c8c9c0b149654c19e`, [QA #42685624277](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42685624277) + Validate #42685624179 + Preflight #42685624308 = **3/3 SUCCESS**. Все 42/42 боковые экспозиции достигнуты настоящим WASD/стрелки/E в четырёх непересекающихся shard 10+18+12+2 с возвратом к проходу; независимый 0→7→0, 135/135 engineer, 34/34 Chrome smoke, 42/42 досье и 8+3+3 PNG PASS. В более новой ветке исправляются визуальные witness, test/production debug bridge и материал мелкого источника; эти изменения **не наследуют** PASS старого SHA. Перед очередной работой сверить живой HEAD и полный exact-HEAD CI.
 - Новые исходники: `tests/browser-journey.mjs` (настоящий проход WASD и возвращение без телепортов); обновлённая `SceneZones.ts` и `procedural.ts` (камень и дальний Хорив); `exhibitProps.ts` (колодец/оливы). Все проверки на **новом HEAD** обязательны.
 - Команды: `npm ci && npm run build && npx tsc --noEmit && sh tests/test.sh`, затем при поднятом dev-server `npm run test:browser:smoke`, `npm run test:browser:exhibits`, `npm run test:browser:quality`, `npm run test:browser:journey`, `npm run test:browser:visual`. CI фиксирует PASS/FAIL, а не SKIP; evidence = `.test-build/journey-witness.json`, PNG и visual-witness.json. Journey на программном GPU может работать несколько минут.
-- AuditRepo `preflight` и `validate` и новый HOREB source/Chrome workflow зелёные; **всегда сверяй CI на точном текущем HEAD**.
+- AuditRepo Validate/Preflight и HOREB QA необходимо проверять **на точном текущем HEAD**: отдельные PASS/IN_PROGRESS не означают terminal-green всех шести; не переносить статус между SHA.
 - SwiftShader в CI не является аппаратным бенчмарком; ранее RTX 3060 в Chrome показала 56–60 FPS на отдельном старом HEAD, а для нынешнего нужны новые замеры.
 - Дополнительные ветки Arena — исторические кандидаты, **не** новые канонические проекты. Их содержание уже оценено, выбор базы сделан.
 
