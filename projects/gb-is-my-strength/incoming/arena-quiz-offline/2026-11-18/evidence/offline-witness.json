@@ -1,0 +1,2412 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "node": "22.23.4",
+  "playwright": "1.62.1",
+  "workerGeneration": "gb-v202-library-v3-local-20261106",
+  "method": {
+    "noStoreServer": true,
+    "blockServerWhenOffline": true,
+    "realServiceWorker": true,
+    "noCacheSeeding": true,
+    "bfcache": "Playwright default disabled"
+  },
+  "scenarios": [
+    {
+      "name": "first-visit-offline-reload",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "events": [
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-presenter.js?v=cef6e2a5",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-v3.js?v=e036d5a6",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-presenter.js?v=cef6e2a5",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-v3.js?v=e036d5a6",
+          "status": 200,
+          "serviceWorker": true
+        }
+      ],
+      "pageErrors": [],
+      "firstLoadControlled": false,
+      "firstCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ]
+        }
+      },
+      "before": {
+        "id": "apostasy.p1.lexeme",
+        "total": 6,
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "key": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "confidence": "sure",
+        "choices": [
+          {
+            "text": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "className": "quiz-option is-correct",
+            "disabled": true
+          },
+          {
+            "text": "Каждый глагол Писания кодирует полный порядок спасения",
+            "className": "quiz-option is-wrong",
+            "disabled": true
+          },
+          {
+            "text": "Доктрину можно строить на одном слове без контекста",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Греческие глаголы вообще нельзя переводить",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 3 · рекорд 2",
+        "calibration": "67%",
+        "source": {
+          "href": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "label": "Перечитать: Часть I · §1"
+        }
+      },
+      "priorCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ]
+        }
+      },
+      "toast": "Вы офлайн — эта страница не сохранена",
+      "source": {
+        "id": "odno-slovo",
+        "text": "1. Одно слово не рассказывает весь порядок спасения",
+        "hit": true,
+        "top": 400,
+        "bottom": 452,
+        "scroll": 2595,
+        "viewport": 844,
+        "visible": true,
+        "focused": true,
+        "learningHidden": "true",
+        "overflow": "visible"
+      },
+      "localSearch": {
+        "query": "Лексема — доказательство",
+        "matches": [
+          "Текст статьи …о по себе не кодирует весь порядок спасения: лексема — доказательство внутри контекста, а не готовая система. Ни еврейское שוב, ни греческие ἐπιστρέφω…",
+          "1. Одно слово не рассказывает весь порядок спасения Лексема — доказательство внутри контекста, а не готовая система спасения.",
+          "Текст статьи Лексема — доказательство внутри контекста, а не готовая система спасения."
+        ],
+        "landed": {
+          "id": "gill-search-p-013",
+          "text": "Ни одно слово само по себе не кодирует весь порядок спасения: лексема — доказательство внутри контекста, а не готовая система. Ни еврейское שוב, ни греческие ἐπιστρέφω и πάλιν не сообщают автоматически прежний духовный статус человека.",
+          "hit": true,
+          "top": 352,
+          "bottom": 557,
+          "scroll": 1806,
+          "viewport": 844,
+          "visible": true,
+          "focused": false,
+          "learningHidden": "true",
+          "overflow": "visible"
+        }
+      },
+      "offlineNote": {
+        "text": "Офлайн: перечитать раздел и сверить объяснение теста.",
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/"
+      },
+      "sameDocument": true,
+      "offlineReload": {
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+        "status": 200,
+        "response": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "serviceWorker": true,
+        "sha256": "6bfcacc9c4d699c35d69bf6988d3753575738e6a12eb3332d0edd427b3597af6",
+        "title": "404 — Страница не найдена · Господь Бог — Сила Моя",
+        "h1": "Страница не найдена",
+        "worker": {
+          "online": false,
+          "controller": "/sw.js"
+        },
+        "type": "reload"
+      },
+      "offlineFallback": {
+        "code": "404",
+        "wording": "Возможно, ссылка устарела, материал был перемещён или адрес введён с ошибкой. Если вы пришли по старой внешней ссылке, попробуйте перейти на главную, открыть каталог статей или выбрать одну из ключевых серий сайта.",
+        "hasQuiz": false,
+        "hasRetry": false,
+        "notice": "",
+        "y": 0
+      },
+      "offlineOpenUrl": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+      "retry": {
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+        "status": 200,
+        "response": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "serviceWorker": true,
+        "sha256": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+        "title": "Отступничество: что Библия на самом деле называет отпадением от веры | Господь Бог — Сила Моя",
+        "h1": "Отступничество: что Библия на самом деле называет отпадением от веры",
+        "worker": {
+          "online": true,
+          "controller": "/sw.js"
+        },
+        "type": "reload"
+      },
+      "quizAfterReload": {
+        "id": "apostasy.p1.two-texts",
+        "total": 6,
+        "question": "Почему 1 Ин. 2:19 и Иак. 5:19–20 «нужны друг другу»?",
+        "key": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+        "confidence": null,
+        "choices": [
+          {
+            "text": "Оба текста запрещают увещевать ушедших",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Иаков исправляет ошибку Иоанна",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Оба текста говорят об одном и том же человеке",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": null,
+        "explanation": null,
+        "live": "",
+        "seen": "",
+        "calibration": null,
+        "source": null
+      },
+      "noteAfterReload": {
+        "text": "Офлайн: перечитать раздел и сверить объяснение теста.",
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/"
+      },
+      "ok": true,
+      "origin": {
+        "servedOffline": 0,
+        "deniedOffline": 0,
+        "navigation": [
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "status": 200
+          },
+          {
+            "phase": "restored",
+            "method": "GET",
+            "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "status": 200
+          }
+        ],
+        "pagefindHead": []
+      }
+    },
+    {
+      "name": "controlled-visit-offline-reload",
+      "viewport": {
+        "width": 1359,
+        "height": 900
+      },
+      "events": [
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-presenter.js?v=cef6e2a5",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-v3.js?v=e036d5a6",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-presenter.js?v=cef6e2a5",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-v3.js?v=e036d5a6",
+          "status": 200,
+          "serviceWorker": true
+        }
+      ],
+      "pageErrors": [],
+      "firstLoadControlled": false,
+      "firstCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ]
+        }
+      },
+      "controlledVisit": {
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "status": 200,
+        "response": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "serviceWorker": true,
+        "sha256": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+        "title": "Отступничество: что Библия на самом деле называет отпадением от веры | Господь Бог — Сила Моя",
+        "h1": "Отступничество: что Библия на самом деле называет отпадением от веры",
+        "worker": {
+          "online": true,
+          "controller": "/sw.js"
+        },
+        "type": "reload"
+      },
+      "before": {
+        "id": "apostasy.p1.lexeme",
+        "total": 6,
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "key": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "confidence": "sure",
+        "choices": [
+          {
+            "text": "Каждый глагол Писания кодирует полный порядок спасения",
+            "className": "quiz-option is-wrong",
+            "disabled": true
+          },
+          {
+            "text": "Доктрину можно строить на одном слове без контекста",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "className": "quiz-option is-correct",
+            "disabled": true
+          },
+          {
+            "text": "Греческие глаголы вообще нельзя переводить",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 5 · рекорд 4",
+        "calibration": "80%",
+        "source": {
+          "href": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "label": "Перечитать: Часть I · §1"
+        }
+      },
+      "priorCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-content",
+          "gb-v202-library-v3-local-20261106-data",
+          "gb-v202-library-v3-local-20261106-images",
+          "gb-v202-library-v3-local-20261106-meta",
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js",
+            "/_astro/ReaderActionsRuntime.BWQE1cBa.css",
+            "/_astro/ReaderActionsRuntime.DUDpvCW2.css",
+            "/_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js",
+            "/_astro/ReaderIntegratedRailToggle.CqgwtCkl.css",
+            "/_astro/ReaderMobilePlayGroup.Bt8U2-k1.css",
+            "/_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js",
+            "/_astro/SeriesReaderChrome.CiFdTxIG.css",
+            "/_astro/SiteSectionsMenu.7-azJ7Ap.css",
+            "/_astro/favorite-store.10q-YCE0.js",
+            "/_astro/reader-paper-and-rail.CbtCfSJl.css",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=1",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/Lora/lora-cyrillic-400.woff2",
+            "/fonts/Lora/lora-cyrillic-400i.woff2",
+            "/fonts/Lora/lora-cyrillic-500i.woff2",
+            "/fonts/Lora/lora-cyrillic-600.woff2",
+            "/fonts/Lora/lora-latin-400.woff2",
+            "/fonts/Lora/lora-latin-400i.woff2",
+            "/fonts/Lora/lora-latin-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-latin-400.woff2",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/glossary.js?v=c7f8b6e9",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/js/vosk-tts-engine.js?v=8a878744",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ],
+          "content": [
+            "/articles/otstuplenie-chto-govorit-bibliya/"
+          ],
+          "data": [
+            "/data/glossary-policy.json",
+            "/data/glossary.json"
+          ]
+        }
+      },
+      "toast": "Вы офлайн — эта страница доступна",
+      "source": {
+        "id": "odno-slovo",
+        "text": "1. Одно слово не рассказывает весь порядок спасения",
+        "hit": true,
+        "top": 482,
+        "bottom": 513,
+        "scroll": 1867,
+        "viewport": 900,
+        "visible": true,
+        "focused": true,
+        "learningHidden": "true",
+        "overflow": "visible"
+      },
+      "localSearch": {
+        "query": "Лексема — доказательство",
+        "matches": [
+          "Текст статьи …о по себе не кодирует весь порядок спасения: лексема — доказательство внутри контекста, а не готовая система. Ни еврейское שוב, ни греческие ἐπιστρέφω…",
+          "1. Одно слово не рассказывает весь порядок спасения Лексема — доказательство внутри контекста, а не готовая система спасения.",
+          "Текст статьи Лексема — доказательство внутри контекста, а не готовая система спасения."
+        ],
+        "landed": {
+          "id": "gill-search-p-013",
+          "text": "Ни одно слово само по себе не кодирует весь порядок спасения: лексема — доказательство внутри контекста, а не готовая система. Ни еврейское שוב, ни греческие ἐπιστρέφω и πάλιν не сообщают автоматически прежний духовный статус человека.",
+          "hit": true,
+          "top": 428,
+          "bottom": 543,
+          "scroll": 1448,
+          "viewport": 900,
+          "visible": true,
+          "focused": false,
+          "learningHidden": "true",
+          "overflow": "visible"
+        }
+      },
+      "offlineNote": {
+        "text": "Офлайн: перечитать раздел и сверить объяснение теста.",
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/"
+      },
+      "sameDocument": true,
+      "offlineReload": {
+        "url": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+        "status": 200,
+        "response": "/articles/otstuplenie-chto-govorit-bibliya/",
+        "serviceWorker": true,
+        "sha256": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+        "title": "Отступничество: что Библия на самом деле называет отпадением от веры | Господь Бог — Сила Моя",
+        "h1": "Отступничество: что Библия на самом деле называет отпадением от веры",
+        "worker": {
+          "online": false,
+          "controller": "/sw.js"
+        },
+        "type": "reload"
+      },
+      "quizAfterReload": {
+        "id": "apostasy.p1.two-texts",
+        "total": 6,
+        "question": "Почему 1 Ин. 2:19 и Иак. 5:19–20 «нужны друг другу»?",
+        "key": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+        "confidence": null,
+        "choices": [
+          {
+            "text": "Оба текста говорят об одном и том же человеке",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Иаков исправляет ошибку Иоанна",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Оба текста запрещают увещевать ушедших",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": null,
+        "explanation": null,
+        "live": "",
+        "seen": "",
+        "calibration": null,
+        "source": null
+      },
+      "noteAfterReload": {
+        "text": "Офлайн: перечитать раздел и сверить объяснение теста.",
+        "href": "/articles/otstuplenie-chto-govorit-bibliya/"
+      },
+      "ok": true,
+      "origin": {
+        "servedOffline": 0,
+        "deniedOffline": 0,
+        "navigation": [
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "status": 200
+          },
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/otstuplenie-chto-govorit-bibliya/",
+            "status": 200
+          }
+        ],
+        "pagefindHead": []
+      }
+    },
+    {
+      "name": "quiz-cross-source-unvisited",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "events": [
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-1-chelovek/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-1-chelovek/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "online-control",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-1-chelovek/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "online-control",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "online-control",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "online-control",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        }
+      ],
+      "pageErrors": [],
+      "priorCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-content",
+          "gb-v202-library-v3-local-20261106-data",
+          "gb-v202-library-v3-local-20261106-images",
+          "gb-v202-library-v3-local-20261106-meta",
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js",
+            "/_astro/ReaderActionsRuntime.BWQE1cBa.css",
+            "/_astro/ReaderActionsRuntime.DUDpvCW2.css",
+            "/_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js",
+            "/_astro/ReaderIntegratedRailToggle.CqgwtCkl.css",
+            "/_astro/ReaderMobilePlayGroup.Bt8U2-k1.css",
+            "/_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js",
+            "/_astro/SeriesReaderChrome.CiFdTxIG.css",
+            "/_astro/SiteSectionsMenu.7-azJ7Ap.css",
+            "/_astro/favorite-store.10q-YCE0.js",
+            "/_astro/reader-paper-and-rail.CbtCfSJl.css",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/note-registry.css?v=00226917",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/relationship-panel.css?v=03dead36",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=1781282355",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/Lora/lora-cyrillic-400.woff2",
+            "/fonts/Lora/lora-cyrillic-400i.woff2",
+            "/fonts/Lora/lora-cyrillic-600.woff2",
+            "/fonts/Lora/lora-latin-400.woff2",
+            "/fonts/Lora/lora-latin-400i.woff2",
+            "/fonts/Lora/lora-latin-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-500.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-latin-400.woff2",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/glossary.js?v=c7f8b6e9",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/js/vosk-tts-engine.js?v=8a878744",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ],
+          "content": [
+            "/articles/dzhon-gill-chast-2-uchenyi/"
+          ],
+          "data": [
+            "/data/glossary-policy.json",
+            "/data/glossary.json"
+          ]
+        }
+      },
+      "before": {
+        "id": "gill.man.horsleydown.years",
+        "total": 32,
+        "question": "Сколько лет Гилл прослужил пастором в Хорслидауне?",
+        "key": "51 год",
+        "confidence": "sure",
+        "choices": [
+          {
+            "text": "32 года",
+            "className": "quiz-option is-wrong",
+            "disabled": true
+          },
+          {
+            "text": "16 лет",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "71 год",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "51 год",
+            "className": "quiz-option is-correct",
+            "disabled": true
+          }
+        ],
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Гилл возглавлял общину в Хорслидауне (Саутварк) пятьдесят один год — редкий пример пожизненной оседлости для пастора его эпохи.",
+        "live": "Неверно. Гилл возглавлял общину в Хорслидауне (Саутварк) пятьдесят один год — редкий пример пожизненной оседлости для пастора его эпохи.",
+        "seen": "Пройдено: 15 · рекорд 14",
+        "calibration": "93%",
+        "source": {
+          "href": "../../articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+          "label": "Перечитать: Часть I · Пасторское служение в Хорслидауне"
+        }
+      },
+      "landing": {
+        "url": "/articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-1-chelovek/",
+        "serviceWorker": true,
+        "sha256": "6bfcacc9c4d699c35d69bf6988d3753575738e6a12eb3332d0edd427b3597af6",
+        "title": "404 — Страница не найдена · Господь Бог — Сила Моя",
+        "h1": "Страница не найдена",
+        "worker": {
+          "online": false,
+          "controller": "/sw.js"
+        },
+        "type": "navigate"
+      },
+      "fallback": {
+        "code": "404",
+        "wording": "Возможно, ссылка устарела, материал был перемещён или адрес введён с ошибкой. Если вы пришли по старой внешней ссылке, попробуйте перейти на главную, открыть каталог статей или выбрать одну из ключевых серий сайта.",
+        "hasQuiz": false,
+        "hasRetry": false,
+        "notice": "",
+        "y": 0
+      },
+      "noticeAfterRestore": "Соединение восстановлено",
+      "onRetry": {
+        "url": "/articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-1-chelovek/",
+        "serviceWorker": true,
+        "sha256": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+        "title": "Джон Гилл (1697–1771). Часть I: Человек — детство, призвание, семья",
+        "h1": "Джон Гилл (1697–1771). Часть I: Человек",
+        "worker": {
+          "online": true,
+          "controller": "/sw.js"
+        },
+        "type": "reload"
+      },
+      "retryTargetBeforeIntervention": {
+        "id": "part-pastor",
+        "text": "II. Пасторское служение в Хорслидауне",
+        "hit": false,
+        "top": -25711,
+        "bottom": -25599,
+        "scroll": 38511,
+        "viewport": 844,
+        "visible": true,
+        "focused": false,
+        "learningHidden": "true",
+        "overflow": "visible"
+      },
+      "onlineNewNavigation": {
+        "url": "/articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-1-chelovek/",
+        "serviceWorker": true,
+        "sha256": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+        "title": "Джон Гилл (1697–1771). Часть I: Человек — детство, призвание, семья",
+        "h1": "Джон Гилл (1697–1771). Часть I: Человек",
+        "worker": {
+          "online": true,
+          "controller": "/sw.js"
+        },
+        "type": "navigate"
+      },
+      "boundTarget": {
+        "id": "part-pastor",
+        "text": "II. Пасторское служение в Хорслидауне",
+        "hit": true,
+        "top": 88,
+        "bottom": 200,
+        "scroll": 12712,
+        "viewport": 844,
+        "visible": true,
+        "focused": false,
+        "learningHidden": "true",
+        "overflow": "visible"
+      },
+      "ok": true,
+      "origin": {
+        "servedOffline": 0,
+        "deniedOffline": 0,
+        "navigation": [
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          },
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          },
+          {
+            "phase": "restored",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-1-chelovek/",
+            "status": 200
+          },
+          {
+            "phase": "restored",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-1-chelovek/",
+            "status": 200
+          }
+        ],
+        "pagefindHead": []
+      }
+    },
+    {
+      "name": "quiz-cross-source-visited",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "events": [
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-1-chelovek/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-1-chelovek/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        }
+      ],
+      "pageErrors": [],
+      "previsit": {
+        "url": "/articles/dzhon-gill-chast-1-chelovek/",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-1-chelovek/",
+        "serviceWorker": true,
+        "sha256": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+        "title": "Джон Гилл (1697–1771). Часть I: Человек — детство, призвание, семья",
+        "h1": "Джон Гилл (1697–1771). Часть I: Человек",
+        "worker": {
+          "online": true,
+          "controller": "/sw.js"
+        },
+        "type": "navigate"
+      },
+      "priorCache": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-content",
+          "gb-v202-library-v3-local-20261106-data",
+          "gb-v202-library-v3-local-20261106-images",
+          "gb-v202-library-v3-local-20261106-meta",
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js",
+            "/_astro/ReaderActionsRuntime.BWQE1cBa.css",
+            "/_astro/ReaderActionsRuntime.DUDpvCW2.css",
+            "/_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js",
+            "/_astro/ReaderIntegratedRailToggle.CqgwtCkl.css",
+            "/_astro/ReaderMobilePlayGroup.Bt8U2-k1.css",
+            "/_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js",
+            "/_astro/SeriesReaderChrome.CiFdTxIG.css",
+            "/_astro/SiteSectionsMenu.7-azJ7Ap.css",
+            "/_astro/favorite-store.10q-YCE0.js",
+            "/_astro/reader-paper-and-rail.CbtCfSJl.css",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/note-registry.css?v=00226917",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/relationship-panel.css?v=03dead36",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=1781282355",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/Lora/lora-cyrillic-400.woff2",
+            "/fonts/Lora/lora-cyrillic-400i.woff2",
+            "/fonts/Lora/lora-cyrillic-500.woff2",
+            "/fonts/Lora/lora-cyrillic-600.woff2",
+            "/fonts/Lora/lora-latin-400.woff2",
+            "/fonts/Lora/lora-latin-400i.woff2",
+            "/fonts/Lora/lora-latin-600.woff2",
+            "/fonts/NotoSerifHebrew/notoserifhebrew-500.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-500.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-latin-400.woff2",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/glossary.js?v=c7f8b6e9",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/js/vosk-tts-engine.js?v=8a878744",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ],
+          "content": [
+            "/articles/dzhon-gill-chast-1-chelovek/",
+            "/articles/dzhon-gill-chast-2-uchenyi/"
+          ],
+          "data": [
+            "/data/glossary-policy.json",
+            "/data/glossary.json"
+          ]
+        }
+      },
+      "before": {
+        "id": "gill.man.horsleydown.years",
+        "total": 32,
+        "question": "Сколько лет Гилл прослужил пастором в Хорслидауне?",
+        "key": "51 год",
+        "confidence": "sure",
+        "choices": [
+          {
+            "text": "51 год",
+            "className": "quiz-option is-correct",
+            "disabled": true
+          },
+          {
+            "text": "32 года",
+            "className": "quiz-option is-wrong",
+            "disabled": true
+          },
+          {
+            "text": "16 лет",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "71 год",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Гилл возглавлял общину в Хорслидауне (Саутварк) пятьдесят один год — редкий пример пожизненной оседлости для пастора его эпохи.",
+        "live": "Неверно. Гилл возглавлял общину в Хорслидауне (Саутварк) пятьдесят один год — редкий пример пожизненной оседлости для пастора его эпохи.",
+        "seen": "Пройдено: 30 · рекорд 29",
+        "calibration": "97%",
+        "source": {
+          "href": "../../articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+          "label": "Перечитать: Часть I · Пасторское служение в Хорслидауне"
+        }
+      },
+      "landing": {
+        "url": "/articles/dzhon-gill-chast-1-chelovek/#part-pastor",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-1-chelovek/",
+        "serviceWorker": true,
+        "sha256": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+        "title": "Джон Гилл (1697–1771). Часть I: Человек — детство, призвание, семья",
+        "h1": "Джон Гилл (1697–1771). Часть I: Человек",
+        "worker": {
+          "online": false,
+          "controller": "/sw.js"
+        },
+        "type": "navigate"
+      },
+      "boundTarget": {
+        "id": "part-pastor",
+        "text": "II. Пасторское служение в Хорслидауне",
+        "hit": true,
+        "top": 88,
+        "bottom": 200,
+        "scroll": 12712,
+        "viewport": 844,
+        "visible": true,
+        "focused": false,
+        "learningHidden": "true",
+        "overflow": "visible"
+      },
+      "ok": true,
+      "origin": {
+        "servedOffline": 0,
+        "deniedOffline": 0,
+        "navigation": [
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          },
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-1-chelovek/",
+            "status": 200
+          },
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          }
+        ],
+        "pagefindHead": []
+      }
+    },
+    {
+      "name": "global-search-reconnect-after-offline-open",
+      "viewport": {
+        "width": 1359,
+        "height": 900
+      },
+      "events": [
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/js/search.js?v=75df3eab",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/pagefind-worker.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/pagefind-entry.json?ts=1795023249710",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/wasm.ru.pagefind",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/index/ru_38eb1f8.pf_index",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "online",
+          "tag": "primary",
+          "method": "GET",
+          "path": "/pagefind/fragment/ru_7ee5d1c.pf_fragment",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/search.js?v=75df3eab",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "fresh",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "error": "net::ERR_INTERNET_DISCONNECTED"
+        },
+        {
+          "phase": "offline",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "offline",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/js/search.js?v=75df3eab",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/pagefind-worker.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/pagefind-entry.json?ts=1795023264945",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/wasm.ru.pagefind",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/index/ru_38eb1f8.pf_index",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored",
+          "tag": "deferred",
+          "method": "GET",
+          "path": "/pagefind/fragment/ru_7ee5d1c.pf_fragment",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/sw-register.js?v=921dd6a2",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/highlights.js?v=e3e21e86",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/reader-library-dock.js?v=b550fdd1",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/js/search.js?v=75df3eab",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": false
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/data/search-manifest.json",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "HEAD",
+          "path": "/pagefind/pagefind.js",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/pagefind.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/pagefind-worker.js",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/pagefind-entry.json?ts=1795023267292",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/wasm.ru.pagefind",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/index/ru_38eb1f8.pf_index",
+          "status": 200,
+          "serviceWorker": true
+        },
+        {
+          "phase": "restored-reload",
+          "tag": "fresh",
+          "method": "GET",
+          "path": "/pagefind/fragment/ru_7ee5d1c.pf_fragment",
+          "status": 200,
+          "serviceWorker": true
+        }
+      ],
+      "pageErrors": [],
+      "onlineSearch": {
+        "finderReady": true,
+        "finderFailed": false,
+        "online": true,
+        "q": "Грэнтем",
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "empty": null,
+        "results": 1
+      },
+      "warm": {
+        "online": true,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-content",
+          "gb-v202-library-v3-local-20261106-data",
+          "gb-v202-library-v3-local-20261106-images",
+          "gb-v202-library-v3-local-20261106-meta",
+          "gb-v202-library-v3-local-20261106-pagefind",
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js",
+            "/_astro/ReaderActionsRuntime.BWQE1cBa.css",
+            "/_astro/ReaderActionsRuntime.DUDpvCW2.css",
+            "/_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js",
+            "/_astro/ReaderIntegratedRailToggle.CqgwtCkl.css",
+            "/_astro/ReaderMobilePlayGroup.Bt8U2-k1.css",
+            "/_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js",
+            "/_astro/SeriesReaderChrome.CiFdTxIG.css",
+            "/_astro/SiteSectionsMenu.7-azJ7Ap.css",
+            "/_astro/favorite-store.10q-YCE0.js",
+            "/_astro/reader-paper-and-rail.CbtCfSJl.css",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/note-registry.css?v=00226917",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/relationship-panel.css?v=03dead36",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=1781282355",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/Lora/lora-cyrillic-400.woff2",
+            "/fonts/Lora/lora-cyrillic-400i.woff2",
+            "/fonts/Lora/lora-cyrillic-600.woff2",
+            "/fonts/Lora/lora-latin-400.woff2",
+            "/fonts/Lora/lora-latin-400i.woff2",
+            "/fonts/Lora/lora-latin-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-500.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-latin-400.woff2",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/glossary.js?v=c7f8b6e9",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/search.js?v=75df3eab",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/js/vosk-tts-engine.js?v=8a878744",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ],
+          "content": [
+            "/articles/dzhon-gill-chast-2-uchenyi/"
+          ],
+          "data": [
+            "/data/glossary-policy.json",
+            "/data/glossary.json",
+            "/data/search-manifest.json"
+          ],
+          "pagefind": [
+            "/pagefind/fragment/ru_7ee5d1c.pf_fragment",
+            "/pagefind/index/ru_38eb1f8.pf_index",
+            "/pagefind/pagefind-entry.json?ts=1795023249710",
+            "/pagefind/pagefind-worker.js",
+            "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+            "/pagefind/wasm.ru.pagefind"
+          ]
+        }
+      },
+      "sameDocOfflineSearch": {
+        "finderReady": true,
+        "finderFailed": false,
+        "online": false,
+        "q": "Грэнтем",
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "empty": null,
+        "results": 1
+      },
+      "offlineNewDocument": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi/",
+        "status": 200,
+        "response": "/articles/dzhon-gill-chast-2-uchenyi/",
+        "serviceWorker": true,
+        "sha256": "221bd7267b659d2886a0dfe103798bf02951bc0431fb36ca70d449d472e08633",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "h1": "Джон Гилл (1697–1771). Часть II: Учёный",
+        "worker": {
+          "online": false,
+          "controller": "/sw.js"
+        },
+        "type": "navigate"
+      },
+      "freshDocOfflineSearch": {
+        "finderReady": false,
+        "finderFailed": true,
+        "online": false,
+        "q": "Грэнтем",
+        "hit": null,
+        "empty": "Ничего не найдено",
+        "results": 0
+      },
+      "offlineCache": {
+        "online": false,
+        "controller": "/sw.js",
+        "controllerState": "activated",
+        "names": [
+          "gb-v202-library-v3-local-20261106-content",
+          "gb-v202-library-v3-local-20261106-data",
+          "gb-v202-library-v3-local-20261106-images",
+          "gb-v202-library-v3-local-20261106-meta",
+          "gb-v202-library-v3-local-20261106-pagefind",
+          "gb-v202-library-v3-local-20261106-static"
+        ],
+        "payloads": {
+          "static": [
+            "/404.html",
+            "/_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js",
+            "/_astro/ReaderActionsRuntime.BWQE1cBa.css",
+            "/_astro/ReaderActionsRuntime.DUDpvCW2.css",
+            "/_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js",
+            "/_astro/ReaderIntegratedRailToggle.CqgwtCkl.css",
+            "/_astro/ReaderMobilePlayGroup.Bt8U2-k1.css",
+            "/_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js",
+            "/_astro/SeriesReaderChrome.CiFdTxIG.css",
+            "/_astro/SiteSectionsMenu.7-azJ7Ap.css",
+            "/_astro/favorite-store.10q-YCE0.js",
+            "/_astro/reader-paper-and-rail.CbtCfSJl.css",
+            "/apple-touch-icon.png",
+            "/css/command-palette.css?v=3b88813f",
+            "/css/enhancements-runtime.css?v=d195a91d",
+            "/css/floating-cluster.css?v=18742944",
+            "/css/highlights-runtime.css?v=56e14002",
+            "/css/home.css?v=4a2fa9a3",
+            "/css/mobile-hotfix.css?v=9cfd6aee",
+            "/css/nagornaya-mobile-toc.css?v=623e0845",
+            "/css/note-registry.css?v=00226917",
+            "/css/reader-preferences.css?v=f424e5ed",
+            "/css/relationship-panel.css?v=03dead36",
+            "/css/series-samizdat.css?v=6d9658bd",
+            "/css/site.css?v=511fb678",
+            "/css/sw-toast.css?v=1781282355",
+            "/css/sw-toast.css?v=2e540077",
+            "/favicon-48.png",
+            "/favicon.ico",
+            "/fonts/Lora/lora-cyrillic-400.woff2",
+            "/fonts/Lora/lora-cyrillic-400i.woff2",
+            "/fonts/Lora/lora-cyrillic-600.woff2",
+            "/fonts/Lora/lora-latin-400.woff2",
+            "/fonts/Lora/lora-latin-400i.woff2",
+            "/fonts/Lora/lora-latin-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-500.woff2",
+            "/fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+            "/fonts/SourceSans3/sourcesans3-latin-400.woff2",
+            "/fonts/fonts.css?v=864cc57a",
+            "/js/bookmark-engine.js?v=e7d193e0",
+            "/js/enhancements.js?v=15476429",
+            "/js/floating-cluster-controller.js?v=01161dcb",
+            "/js/glossary.js?v=c7f8b6e9",
+            "/js/highlights.js?v=e3e21e86",
+            "/js/nagornaya-bar-extras.js?v=3c7e0bdd",
+            "/js/nagornaya-mobile-toc.js?v=a0b23b1c",
+            "/js/reader-library-dock.js?v=b550fdd1",
+            "/js/reader-library-presenter.js?v=cef6e2a5",
+            "/js/reader-library-v3.js?v=e036d5a6",
+            "/js/reader-preferences-head.js?v=3ddf9706",
+            "/js/reader-preferences.js?v=78887cf1",
+            "/js/reader-state.js?v=b3deb501",
+            "/js/scroll-perf.js?v=454d6f7b",
+            "/js/search.js?v=75df3eab",
+            "/js/site-utils.js?v=e80f1dfb",
+            "/js/site.js?v=9fa8818a",
+            "/js/sw-register.js?v=921dd6a2",
+            "/js/vosk-tts-engine.js?v=8a878744",
+            "/nagornaya/tw.min.css?v=bee34e73",
+            "/pagefind/pagefind.js"
+          ],
+          "content": [
+            "/articles/dzhon-gill-chast-2-uchenyi/"
+          ],
+          "data": [
+            "/data/glossary-policy.json",
+            "/data/glossary.json",
+            "/data/search-manifest.json"
+          ],
+          "pagefind": [
+            "/pagefind/fragment/ru_7ee5d1c.pf_fragment",
+            "/pagefind/index/ru_38eb1f8.pf_index",
+            "/pagefind/pagefind-entry.json?ts=1795023249710",
+            "/pagefind/pagefind-worker.js",
+            "/pagefind/pagefind.ru_9e6317b74b.pf_meta",
+            "/pagefind/wasm.ru.pagefind"
+          ]
+        }
+      },
+      "cachedBootstrapSha256": "252d272bd34d483d19a752060f6a065114d15ab12c42d8f905ca565e2768a009",
+      "reconnectedToast": "Соединение восстановлено",
+      "retrySearch": {
+        "finderReady": false,
+        "finderFailed": true,
+        "online": true,
+        "q": "Грэнтем",
+        "hit": null,
+        "empty": "Ничего не найдено",
+        "results": 0
+      },
+      "metadataFallbackAtRestore": {
+        "q": "Джон Гилл",
+        "count": 7,
+        "firstHit": "Джон Гилл (1697–1771) — биографическая серия Серия из 6 материалов о Джоне Гилле: исторический контекст, биография в трёх частях, отдельная статья о богословии и справочник. По первичным источникам. Редактор: Фёдор Милованов · ~239 мин СЕРИЯ"
+      },
+      "quizPreservedUntilReload": true,
+      "delayedFirstSearch": {
+        "finderReady": true,
+        "finderFailed": false,
+        "online": true,
+        "q": "Грэнтем",
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "empty": null,
+        "results": 1
+      },
+      "onlineAfterReload": {
+        "finderReady": true,
+        "finderFailed": false,
+        "online": true,
+        "q": "Грэнтем",
+        "hit": "Джон Гилл (1697–1771). Часть II: Учёный Называть его первым трудом такого рода среди всех баптистов было бы неточно: общий баптист Томас Грэнтем выпустил Christianismus Primitivus ещё в 1678 году. В 1770 году, за год до смерти,",
+        "empty": null,
+        "results": 1
+      },
+      "freshQuiz": {
+        "id": "gill.scholar.systematics",
+        "total": 32,
+        "question": "Чем примечателен «Полный свод богословия» Гилла?",
+        "key": "Это первая систематическая сумма богословия, написанная баптистом",
+        "confidence": null,
+        "choices": [
+          {
+            "text": "Это единственный труд Гилла на латыни",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Это сборник проповедей его учеников",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Это первая систематическая сумма богословия, написанная баптистом",
+            "className": "quiz-option",
+            "disabled": true
+          },
+          {
+            "text": "Это первый английский перевод Мишны",
+            "className": "quiz-option",
+            "disabled": true
+          }
+        ],
+        "verdict": null,
+        "explanation": null,
+        "live": "",
+        "seen": "",
+        "calibration": null,
+        "source": null
+      },
+      "ok": true,
+      "origin": {
+        "servedOffline": 0,
+        "deniedOffline": 1,
+        "navigation": [
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          },
+          {
+            "phase": "online",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          },
+          {
+            "phase": "restored-reload",
+            "method": "GET",
+            "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+            "status": 200
+          }
+        ],
+        "pagefindHead": [
+          {
+            "phase": "online",
+            "method": "HEAD",
+            "path": "/pagefind/pagefind.js",
+            "status": 200
+          },
+          {
+            "phase": "restored",
+            "method": "HEAD",
+            "path": "/pagefind/pagefind.js",
+            "status": 200
+          },
+          {
+            "phase": "restored-reload",
+            "method": "HEAD",
+            "path": "/pagefind/pagefind.js",
+            "status": 200
+          }
+        ]
+      }
+    }
+  ],
+  "chromium": "153.0.8010.0",
+  "distSha256": {
+    "404.html": "6bfcacc9c4d699c35d69bf6988d3753575738e6a12eb3332d0edd427b3597af6",
+    "articles/dzhon-gill-chast-1-chelovek/index.html": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+    "articles/dzhon-gill-chast-2-uchenyi/index.html": "221bd7267b659d2886a0dfe103798bf02951bc0431fb36ca70d449d472e08633",
+    "articles/otstuplenie-chto-govorit-bibliya/index.html": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+    "data/search-manifest.json": "14dd4881fdbb1b44843482ec0d959da195fc907530fa0ea993f7274bdb76d808",
+    "js/highlights.js": "fa19053e089d131528f94eb5cb999459c276095ab34019cda4d64d6fc243ac02",
+    "js/reader-library-dock.js": "bd7f9d748f11ad62f34a6f235918ce4741534d68679ebcffb3b6a4fbb9973e9d",
+    "js/reader-library-presenter.js": "de05306a5a613291e35f8bbfe0c3f50be4c7a160913cdecb95985fd7ba163cf9",
+    "js/reader-library-v3.js": "58cc0d0a29367cbb36e96cd19a2343993b40d751f7af716461fcc1b8616b50a5",
+    "js/search.js": "b155da51fe3cdf1bdbf72433b0a650faedcf161ea5fb1f61506f6df9eb20bf7a",
+    "js/sw-register.js": "55bf878c03307ca9203b9a1e992f95d1b861a9a91742ccd1a5506888120224b4",
+    "pagefind/fragment/ru_7ee5d1c.pf_fragment": "d1e1a7db3263192b5e9cd129029b8a12cf994433a485f5e7c3bab57067c21672",
+    "pagefind/index/ru_38eb1f8.pf_index": "489f580f09f2b4e69081e3d562b9fe4a84a73d7783a1a51f22c134e367f10f85",
+    "pagefind/pagefind-entry.json": "c2d4fe813b4a92856e2cc819b433a6b21af3182b4344436ce94fb3e4ef47da18",
+    "pagefind/pagefind-worker.js": "4ca50d25bcab9e1c3afbc00ab5f7761114e83c8fc1b83d38655af1558b650c2a",
+    "pagefind/pagefind.js": "252d272bd34d483d19a752060f6a065114d15ab12c42d8f905ca565e2768a009",
+    "pagefind/pagefind.ru_9e6317b74b.pf_meta": "9c9ab35745f533b68f4a4a6fb986b766e543f5e638bd51ba23795e8100edfd3e",
+    "pagefind/wasm.ru.pagefind": "e0eb287c0c61f63aca25690f01af0160f042b4b8c6114e38e9414e20ec124b00",
+    "sw.js": "bb819eefeb367797643b820409be424c876862bb6e13b31740a4e9c4d9c5c301"
+  },
+  "screenshots": [
+    {
+      "file": "offline-source-404.png",
+      "sha256": "9d653526f4e9e389fa5c9766dae655a035cb191a21363064f4f6f144bbebf6a9"
+    },
+    {
+      "file": "reconnected-search-empty.png",
+      "sha256": "44ea7dedb7f044f61db7533ad1791788f100af500b169e5710ddceb52fe0f4c0"
+    }
+  ],
+  "passed": 5,
+  "total": 5
+}
