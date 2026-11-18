@@ -966,7 +966,7 @@ for(const required of [
 'const hasEditorialOriginal =',
 'const editorialNote = hasEditorialOriginal',
 'слова оригинала в квадратных скобках добавлены к русской цитате',
-'await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}`)'
+'await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}${editorialOmissionNote}`)'
 ])if(!w100Modal.includes(required))throw Error('W100 quoted-text attribution/copy guard missing: '+required);
 if(w100Modal.includes('await navigator.clipboard.writeText(`${synodal} (${ref})`);'))
  throw Error('W100 bare annotated verse copy returned without source clarification');
@@ -988,3 +988,21 @@ for(const required of [
  "problem('BLOCKER','atlas-clipboard-browser-mismatch'"
 ])if(!w101Qa.includes(required))throw Error('W101 real browser clipboard witness missing: '+required);
 console.log('W101_ATLAS_COPY_BROWSER_COVERAGE_PASS');
+
+// W102: isolated UI clipboard copy needs a second, independent warning for
+// incomplete scripture excerpts; annotations and ellipses can coexist.
+const w102Modal=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+const w102Visual=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+for(const required of [
+ 'const editorialOmissionNote = /…|\\.{3}/u.test(synodal)',
+ 'Редакторские сокращения: многоточия обозначают пропущенные фрагменты цитаты.',
+ 'await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}${editorialOmissionNote}`)'
+])if(!w102Modal.includes(required))throw Error('W102 missing independent ellipsis disclosure: '+required);
+for(const required of [
+ "id:'el',text:'Господь, Господь, Бог [אֵל]'",
+ "id:'yhwh-roi',text:'Как пастырь Он будет пасти стадо Своё'",
+ 'hasOmissionNote===x.ellipsis',
+ 'verseIndex:1',
+ 'hasOmissionNote,disclosure'
+])if(!w102Visual.includes(required))throw Error('W102 browser 4-case coverage missing: '+required);
+console.log('W102_ELLIPSIS_COPY_DISCLOSURE_PASS');

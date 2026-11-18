@@ -220,7 +220,10 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
       const editorialNote = hasEditorialOriginal
         ? '\nРедакторские пояснения: слова оригинала в квадратных скобках добавлены к русской цитате и отсутствуют в Синодальном переводе.'
         : '';
-      await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}`);
+      const editorialOmissionNote = /…|\.{3}/u.test(synodal)
+        ? '\nРедакторские сокращения: многоточия обозначают пропущенные фрагменты цитаты.'
+        : '';
+      await navigator.clipboard.writeText(`${synodal} (${ref})${editorialNote}${editorialOmissionNote}`);
       setCopiedVerseIdx(idx);
       window.setTimeout(() => setCopiedVerseIdx(null), 1800);
     } catch {

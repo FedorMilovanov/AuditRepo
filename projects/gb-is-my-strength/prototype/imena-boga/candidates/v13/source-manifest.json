@@ -64,8 +64,8 @@
       "bytes_normalized": 18399
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "65ae5b8395ef3a92a52ea3e1881ffbb34c9fa6a900afe6ec2d9e7ddddc66d40c",
-      "bytes_normalized": 33167
+      "sha256": "e977200391fc0e2e5c1190bc7a9fad9fbb7d73acb1620a09b5bbb561be19e981",
+      "bytes_normalized": 33427
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "24506fd5e70c3050f8b11702bb2ce9d6c18f1674fac1e6ee32f9130eecc87c6b",
@@ -180,12 +180,12 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "dcc3346b7feff8ef005e0c5ad917a68e54f6fe2851b87e80b9836d4837ef7f7e",
-      "bytes_normalized": 72700
+      "sha256": "3388577d3614c8477cd8bf8244038c32362f54b49d7d772969a90927b32414be",
+      "bytes_normalized": 73926
     },
     "checks/visual_review.cjs": {
-      "sha256": "caa4ff64f244ad7b646e6ca01d33f07f86d05b92ef0b5b2baccc3e1a816117a5",
-      "bytes_normalized": 88680
+      "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",
+      "bytes_normalized": 89248
     },
     "README.md": {
       "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",

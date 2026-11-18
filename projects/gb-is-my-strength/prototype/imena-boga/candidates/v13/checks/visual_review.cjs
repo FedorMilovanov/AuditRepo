@@ -1462,8 +1462,10 @@ async function auditAtlasClipboard(browser,engine,base){
  const ctx=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,locale:'ru-RU',reducedMotion:'reduce'});
  const page=await ctx.newPage();
  const cases=[
-  {id:'elohim',text:'В начале сотворил Бог [אֱלֹהִים]',ref:'Бытие 1:1',gloss:true},
-  {id:'yah',text:'Господь крепость моя и слава моя, Он был мне спасением',ref:'Исход 15:2',gloss:false}
+  {id:'elohim',text:'В начале сотворил Бог [אֱלֹהִים]',ref:'Бытие 1:1',gloss:true,ellipsis:false},
+  {id:'yah',text:'Господь крепость моя и слава моя, Он был мне спасением',ref:'Исход 15:2',gloss:false,ellipsis:false},
+  {id:'el',text:'Господь, Господь, Бог [אֵל]',ref:'Исход 34:6',gloss:true,ellipsis:true},
+  {id:'yhwh-roi',text:'Как пастырь Он будет пасти стадо Своё',ref:'Исаия 40:11',gloss:false,ellipsis:true,verseIndex:1}
  ];
  try{
   for(const x of cases){
@@ -1478,15 +1480,16 @@ async function auditAtlasClipboard(browser,engine,base){
       writeText:async s=>{window.__copiedVerse.push(String(s))}
      }});
     });
-    await modal.getByRole('button',{name:'Копировать стих'}).first().click();
+    await modal.getByRole('button',{name:'Копировать стих'}).nth(x.verseIndex||0).click();
     await page.waitForFunction(()=>Array.isArray(window.__copiedVerse)&&window.__copiedVerse.length===1,null,{timeout:5000});
     const text=await page.evaluate(()=>window.__copiedVerse[0]);
     const hasNote=text.includes('Редакторские пояснения: слова оригинала в квадратных скобках добавлены к русской цитате');
-    const hasHebrew=text.includes('[אֱלֹהִים]');
+    const hasHebrew=/\[[^\]]*[\u0590-\u05ff]/u.test(text);
+    const hasOmissionNote=text.includes('Редакторские сокращения: многоточия обозначают пропущенные фрагменты цитаты.');
     const disclosure=await modal.locator('p',{hasText:'Слова оригинала в квадратных скобках'}).first().isVisible();
-    const passes=text.includes(x.text)&&text.includes('('+x.ref+')')&&hasNote===x.gloss&&hasHebrew===x.gloss&&disclosure;
-    record('atlas-clipboard-browser',{engine,width:390,id:x.id,passes,hasNote,hasHebrew,disclosure,chars:text.length});
-    if(!passes)problem('BLOCKER','atlas-clipboard-browser-mismatch',{engine,id:x.id,hasNote,hasHebrew,disclosure,preview:text.slice(0,200)});
+    const passes=text.includes(x.text)&&text.includes('('+x.ref+')')&&hasNote===x.gloss&&hasHebrew===x.gloss&&hasOmissionNote===x.ellipsis&&disclosure;
+    record('atlas-clipboard-browser',{engine,width:390,id:x.id,passes,hasNote,hasHebrew,hasOmissionNote,disclosure,chars:text.length});
+    if(!passes)problem('BLOCKER','atlas-clipboard-browser-mismatch',{engine,id:x.id,hasNote,hasHebrew,hasOmissionNote,disclosure,preview:text.slice(0,200)});
     await shot(page,engine+'-atlas-390-clipboard-'+x.id);
    });
   }
