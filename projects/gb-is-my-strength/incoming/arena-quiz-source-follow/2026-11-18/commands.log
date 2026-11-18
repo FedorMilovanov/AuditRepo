@@ -1,0 +1,60 @@
+# 2026-11-18 UTC — stage 14, actual viewport after a quiz-source handoff and then a new article utterance.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0; Draft #570.
+
+[Coordination / exact owners]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+for repo in AuditRepo gb-is-my-strength; do
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# Previous 082f15cfa2a9642337908d14c29cc3d99fd9fd4a / 82 / OPEN Draft, preflight 44403896631 and validate 44403895999 SUCCESS.
+# Initial Product delta: #2344 b434d30a07ded45968a623f58a3da62fd0be8fb1...259074909f0d1a35aca255adbb12bd40e99b3044,
+# +1/2 paths. Compare patch of package.json removes Journal editorial command from validate:all; /pulls/2344/files: 9 paths.
+# Later #2340 a682d395930de16f950a0bbe7ba2f5e2cc3dd2d4...7d74f9d74c3366fb613b083051ec6e0279f09385 +1/2 docs/test paths; full 19.
+# Audit bare refs 82201fb862359b9435d50049c19187a5387c5a61...f2fa039e87d6b9649f5d57f86f03fbf1e3da16c2 +1/5 Baptist 1971 witness paths;
+# 24082796d0fe3645d70c39b69c67cc45852d6753...98343a3a0559ab8526df32dee7df507bf8c6d62d +1/3 Keston/Tokmak evidence paths.
+# Exact /compare payloads and paginated PR lists inspected; no shared intake or selected runtime owner. Both main refs unchanged.
+# #2222 remains fixed for the original handoff. Source inspection: native link has no TTS hook; Learning handoff focuses correct target;
+# reader-tts-lifecycle ignores same-document exit; active reader-tts.js:505–515,576–605 follow on next connected element.
+
+[Product baseline]
+# Reuse exact stage 12 dist (build and executable setup in arena-quiz-native-print commands.log). No Product source edit or Pagefind needed.
+# Initial SHA-256 recheck against stage 13: 35/35. Node 22.23.4, Playwright 1.62.1, @sparticuz/chromium@153.0.0 with AL2023 libs.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# PLAYWRIGHT_BROWSERS_PATH is the headless-shell symlink fixture from stage 13; resolve CHROMIUM as in stage 12.
+export PLAYWRIGHT_BROWSERS_PATH="$OUT/pw" GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
+rev=$(cd "$PRODUCT" && node -p 'require("./node_modules/playwright-core/browsers.json").browsers.find(b=>b.name==="chromium-headless-shell").revision')
+slot="$PLAYWRIGHT_BROWSERS_PATH/chromium_headless_shell-$rev/chrome-headless-shell-linux64"
+mkdir -p "$slot"; ln -s "$CHROMIUM" "$slot/chrome-headless-shell"
+(cd "$PRODUCT" && node scripts/tts-reader-runtime-browser-test.js && node scripts/series-quiz-source-handoff-browser-contract.mjs)
+# PASS runtime fixture; 55/55 handoff (native mobile Dark, reduced, includes cross-document and missing-anchor guard).
+
+[Crossing a settled source landing with the next article phrase]
+W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18"
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18/evidence/active-playback-witness.json"
+node --check "$W/harness/source-follow.mjs"
+for run in a b; do
+  node "$W/harness/source-follow.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$Q" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# First pilot 7/8: Learning shuffles options as well as cards; indexing authored answers by position selected a correct option.
+# Corrected the probe to click a known wrong answer by its rendered name; did not seed the shuffle or rewrite Product state.
+# Final both 8/8, 35 exact shared pins. Each has 4 actual departures + 4 stable controls. Scroll geometry and speech match;
+# raw JSON differs due to real quiz order. Same-document Back and retained attempt verified independently of viewport effect.
+# Playback clock controlled only at Web Speech; scroll observer delegates native scrollIntoView, checks actual settled geometry and hit.
+# Two 390×844 screenshots from run A, before/after only, inspected. Run B's two PNGs verified by checker in scratch, not copied.
+
+[Admission and publication]
+# CHANGED = cumulative paths against fcf2e69b. Stage only new intake; commands.log admitted by explicit git add -f.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# Only the existing Draft #570; verify exact head/base, check runs and no merge. No Product/MASTER/ledger change or deploy/Drive write.
+# No native PDF receipt in this turn. Stage 12 preview still supplies the anchored article; QPDF-01 remains pending.
