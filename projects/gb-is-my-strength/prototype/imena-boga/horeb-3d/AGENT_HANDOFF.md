@@ -1,5 +1,18 @@
 # HOREB 3D — каноническая передача разработчикам
 
+## ТЕКУЩАЯ ПЕРЕДАЧА · 18.11.2026 · W12B.1
+
+**Репозиторий / PR:** `FedorMilovanov/AuditRepo`, единственный Draft [#543](https://github.com/FedorMilovanov/AuditRepo/pull/543), ветка `lane/horeb-3d-lab-20261108`. **Точный проверенный кодовый SHA:** `e0df5449254f8790caeff263525b67b680584ef3`; фактический HEAD ветки проверять в GitHub.
+
+**Последняя инженерно принятая версия движка:** W12B.1 `e0df5449254f8790caeff263525b67b680584ef3`, [6/6 HOREB QA](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44244095919) SUCCESS, Validate/Preflight SUCCESS. Итог: исходниковые тесты 134/134, геометрия 198/198, размещение 8/8, четыре реальных пешеходных shard + полный Chromium (4 PNG семьи, включая интерьер) успешны. Последующие документационные коммиты нуждаются в своём exact-HEAD CI, не путать кодовый baseline с новым состоянием ветки.
+
+**Архитектура миров:** старт от младенца на Ниле; настоящие 3D Нил, колодец Мадиама, семейная стоянка Мадиама, Хорив. Действующие 42 исследовательских досье сохранены в legacy-лаборатории. Гирсам, большинство Египта и следующие миры Исхода ещё текстовые. W12B исправляет переднюю центральную стойку и добавляет реальное прохождение в навес, 4 PNG (wide/walk/interior/mobile). Исторический дом Рагуила не установлен; художественный, реальный мобильный GPU, Research/rights/voice/release допуски **HOLD**.
+
+**Пределы изменений:** только существующий PR, никакого merge/deploy/force-push; не трогать локально незаконченный Windows `NilePrelude.ts` W10D. Следующая художественная работа — убедительные материалы, земля и обитатели сцены, с независимой проверкой реальных кадров.
+
+## АРХИВ ПРЕДЫДУЩИХ ПЕРЕДАЧ — СТАТУСЫ НИЖЕ ИСТОРИЧЕСКИЕ, НЕ ДЕЙСТВУЮЩИЙ HEAD
+
+
 > **W12A candidate · 18.11.2026 · DETACHED, NOT IN PR HEAD.** An entirely independent Three.js family encampment is staged for Исх. 2:18–21 with physical tent roof/side cloth/gable, stone ground and horizon, actual fireplace and wooden supports, open central entrance and shared camera/collision contract. Shared accessible controller `ui/MidianCanvas.tsx` chooses between separate Midian well and household scene generators; scene-specific WebGL data-testid and labels. Source tests, full Chrome `browser-homestead-walk.mjs`, portable `file://`, 390px screenshot evidence requirements are staged, not accepted. Fictional people, animals, sound, specific site/dwelling history, real-device GPU, rights and release remain **HOLD**. Birth of Gershom remains a *textual* transition. Exact QA of prior W11D.2 `8193563` must complete before staged W12A is committed. Existing dirty Windows `NilePrelude.ts` W10D is protected; no new PR/branch or force-push.
 
 > W11A (17.11.2026): Исх. 2:16–17 теперь представлен отдельной исследуемой WebGL-локацией колодца Мадиама, с настоящим рельефом, препятствиями и мобильной навигацией. Это инженерный кандидат, ART HOLD. Семь дочерей, пастухи, Моисей, 3D-дом Рагуила и рождение Гирсама ещё не реализованы. NilePrelude.ts не изменён: Windows W10D содержит незакоммиченные правки, сохранить их до синхронизации. Новый тест browser-midian-walk.mjs входит в обязательный Chromium. Exact-HEAD HOREB 6/6, Validate, Preflight обязательны до приёмки.
