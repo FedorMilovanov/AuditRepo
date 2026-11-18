@@ -21,7 +21,7 @@
 
 ## 1. Blinken OSA Archivum · две единицы в коробке 21
 
-**Куда:** `archivum@ceu.edu`. [Digitization on Demand](https://archivum.org/collections/digitization-on-demand) — регистрация исследователя и формуляр, обычно до двух папок в месяц; если нужен платный заказ, сначала запросить условия и стоимость.
+**Куда:** `archivum@ceu.edu`. [Digitization on Demand](https://archivum.org/collections/digitization-on-demand) — регистрация исследователя и формуляр, обычно до двух папок в месяц; если нужен платный заказ, сначала запросить условия и стоимость. До начала 2027 года недоступна [архивная серия `300-85-11`](https://catalog.archivum.org/catalog/jmLJ9l1p?tab=description), а не целевые единицы из серии `-9`. Справочный том XV (`947.085 SOB`) — отдельный путь, возможность копирования по нему не подтверждена.
 
 **Subject:** Research copies of AS 878 and AS 879 — HU OSA 300-85-9:21/61–62
 
@@ -57,7 +57,15 @@
 
 > Pourriez-vous confirmer que le numéro 115 (I, 1975) de *Le Messager / Вестник русского христианского движения* est disponible sous la cote 8 P 4959 (Sudoc PPN 039769968) ? Pour une recherche privée, je souhaite obtenir les p. 222–223 imprimées, article «Христианское издательство в Советской России», ainsi que les mentions d’édition du même numéro. Merci de préciser la disponibilité et le coût avant toute commande.
 
+**University of Michigan, альтернативный подтверждённый по каталогу том.** [Offsite Shelving, № 115–116 (1975)](https://search.lib.umich.edu/catalog/record/990004990480106381/get-this/39015078380105), **`BV 970 .R98`, `39015078380105`**, `On shelf`. [HathiTrust](https://babel.hathitrust.org/cgi/pt?id=mdp.39015078380105) даёт только поиск. [Сканирование печатной коллекции](https://www.lib.umich.edu/find-borrow-request/request-digital-copies-or-duplication/scans-print-collection/) — для аффилированных читателей, не открытая форма для всех. Внешнему читателю — уточнить в [справочной службе](https://www.lib.umich.edu/ask-librarian) или через свою библиотеку, доступна ли копия **печатных 222–223** с выходными данными именно № 115, а не № 116 того же переплёта. Заказ и публикационные права не подтверждены.
+
+> Could you advise if a research copy of printed pp. 222–223 from issue 1 (no. 115), 1975, of *Le Messager / Vestnik Russkogo khristianskogo dvizheniia* can be supplied to an external researcher through a library? The catalog shows nos. 115–116 together, call number BV 970 .R98, barcode 39015078380105. I need the pages for «Христианское издательство в Советской России» and, if possible, the imprint of no. 115. Please confirm availability and any costs before arranging a scan.
+
 **Прага, после уточнения доступности.** [Славянская библиотека](https://www.nkp.cz/en/about-us/organizational-structure/public-services-slavonic-library), `sluzby.sk@nkp.cz`: SLK `000540423`, ед. `000280` / `S400`, **`Rp 000715`**, штрихкод `3186410707`, `R. 1975 č. 115-116`. На срезе каталог сообщает о перемещении фонда и невозможности выдачи. Сначала спросить, доступна ли исследовательская копия указанных полос после перемещения, а не подавать заказ на недоступную единицу.
+
+**Мюнхен, резерв.** В выдаче [1](https://zdb-katalog.de/title.xhtml?idn=014284529&view=full&lang=de) `ZDB 780595-0`, ISSN `0767-7294`, у Bayerische Staatsbibliothek указан `Z 69.1731`; диапазон включает 1975 год, конкретный выпуск не проверен. [Доставка BSB](https://www.bsb-muenchen.de/en/search-and-service/registration-loan-order/ordering-media-or-copies/subito/), `dokumentlieferung@bsb-muenchen.de`: уточнить наличие и доставку за пределы Германии через subito, стоимость и допустимый объём **до заказа**. СДС т. XV — отдельное издание; если по РХД ответа нет, не подменять его томом СДС, а уточнить СДС отдельным запросом по AS 878/879 и титулу.
+
+> Könnten Sie bitte prüfen, ob *Vestnik Russkogo christianskogo dviženija / Le Messager*, 1975, Heft 1 (Nr. 115), Signatur Z 69.1731, vollständig vorliegt? Für meine Forschung benötige ich die gedruckten Seiten 222–223 und nach Möglichkeit die Verlagsangaben desselben Heftes. Ist eine Kopie über subito möglich? Bitte teilen Sie mir vor einer Bestellung Verfügbarkeit und Kosten mit.
 
 **Тема:** «Вестник Русского христианского движения», 1975, № 1 (115), с. 222–223
 
