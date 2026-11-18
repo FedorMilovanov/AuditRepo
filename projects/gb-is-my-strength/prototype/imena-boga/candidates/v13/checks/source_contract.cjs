@@ -937,3 +937,20 @@ if(!w98Qanna.includes('קַנָּא שְׁמוֹ') || w98Qanna.includes('שְׁ�
  throw Error('W98b Exodus 34:14 Hebrew word-order regression');
 console.log('W98B_QANNA_MT_WORD_ORDER_PASS');
 console.log('W98_YAH_QANNA_SOURCE_HONESTY_PASS');
+
+
+// W99: preserve quoted Synodal Russian verses exactly; locate Hebrew
+// annotations in separate note fields rather than within the quotations.
+const w99Src=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w99Start=w99Src.indexOf("id: 'yah'"), w99Finish=w99Src.indexOf("id: 'ehyeh-asher-ehyeh'",w99Start+1);
+if(w99Start<0||w99Finish<w99Start)throw Error('W99 stable Yah id bounds missing');
+const w99Yah=w99Src.slice(w99Start,w99Finish);
+for(const required of [
+"synodal: '«Господь крепость моя и слава моя, Он был мне спасением».',",
+"synodal: '«Пойте Богу нашему, пойте имени Его, превозносите Шествующего на небесах; имя Ему: Господь, и радуйтесь пред лицем Его».',",
+"note: 'Синодальная цитата без редакторских вставок;",
+"note: 'В еврейском тексте за русским «Господь» стоит יָהּ"
+])if(!w99Yah.includes(required))throw Error('W99 Synodal and original distinction missing: '+required);
+for(const old of ['Господь [יָהּ] — сила моя','Он соделался моим спасением','имя Ему: Господь [יָהּ]','В повествовании Исх. 15:2'])
+ if(w99Yah.includes(old))throw Error('W99 mixed or inaccurate quotation returned: '+old);
+console.log('W99_YAH_SYNODAL_VERBATIM_PASS');
