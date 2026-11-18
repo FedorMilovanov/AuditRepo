@@ -105,8 +105,16 @@ try{
   // same 10 m desktop start leaks into the phone screenshot.
   await page.setViewport({width:390,height:844,deviceScaleFactor:1});
   await page.click('[data-testid="midian-homestead-explore-start"]');
-  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='walk');
-  await sleep(180);
+  // The mode flag changes synchronously; coordinates update on the next
+  // actual WebGL animation frame. A fixed 180ms sleep can race SwiftShader
+  // and read the old interior z=1.837 after opening portrait walk mode.
+  await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset;
+    return d?.midianMode==='walk'&&
+      Math.abs(Number(d.midianZ)-14.5)<.08&&
+      Math.abs(Number(d.midianX))<.08&&
+      Number(d.homesteadCameraVerticalFov)===72;
+  },{timeout:20000});
   const phoneStart=await read();
   const phoneFov=await page.$eval('[data-testid="moses-midian-homestead-3d"]',
     e=>Number(e.dataset.homesteadCameraVerticalFov));
@@ -121,8 +129,17 @@ try{
   await page.screenshot({path:join(out,'homestead-walk-mobile390.png')});
   // Phone framing is not an unreachable vanity camera: movement must
   // physically advance along the same collision-checked access route.
-  await page.keyboard.down('w');await sleep(820);await page.keyboard.up('w');
-  const phoneForward=await read();
+  await page.keyboard.down('w');
+  let phoneForward;
+  try{
+    await page.waitForFunction(startZ=>{
+      const z=Number(document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianZ);
+      return Number.isFinite(z)&&z<startZ-.15;
+    },{timeout:12000},phoneStart.z);
+    phoneForward=await read();
+  }finally{
+    await page.keyboard.up('w');
+  }
   if(phoneStart.z-phoneForward.z<.12)
     throw Error('HOMESTEAD portrait player cannot reach shelter '+JSON.stringify({phoneStart,phoneForward}));
   // Actual Chrome touch injection, not just a DOM button-exists assertion
@@ -138,7 +155,10 @@ try{
   });
   let afterTouch;
   try{
-    await sleep(1150);
+    await page.waitForFunction(startZ=>{
+      const z=Number(document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianZ);
+      return Number.isFinite(z)&&z<startZ-.15;
+    },{timeout:15000},beforeTouch.z);
     afterTouch=await read();
   }finally{
     await touchSession.send('Input.dispatchTouchEvent',{
