@@ -373,7 +373,10 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   scatter.name='homestead-instanced-natural-stone';
   scene.add(scatter);
 
-  const walk={x:HOMESTEAD_WALK.startX,z:HOMESTEAD_WALK.startZ,yaw:0,pitch:-.08};
+  // Runtime walk coordinates are mutable numbers, not frozen start literals.
+  const walk:{x:number;z:number;yaw:number;pitch:number}={
+    x:HOMESTEAD_WALK.startX,z:HOMESTEAD_WALK.startZ,yaw:0,pitch:-.08,
+  };
   let exploring=false,disposed=false,last=0,frame=0,dragId:number|null=null,lastX=0,lastY=0;
   const moving:Record<MidianDirection,boolean>={forward:false,backward:false,left:false,right:false};
   const reset=()=>{for(const k of Object.keys(moving) as MidianDirection[])moving[k]=false;};
