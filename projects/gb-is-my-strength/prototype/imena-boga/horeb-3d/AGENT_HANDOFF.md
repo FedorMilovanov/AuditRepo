@@ -1,6 +1,14 @@
 # HOREB 3D — каноническая передача разработчикам
 
-## ТЕКУЩАЯ ПЕРЕДАЧА · 18.11.2026 · W12D.7
+## ТЕКУЩАЯ ПЕРЕДАЧА · W12E.0, 18.11.2026
+
+**Канонический Draft PR #543**, `FedorMilovanov/AuditRepo`, ветка `lane/horeb-3d-lab-20261108`. **Последний terminal-green CODE SHA W12D.7** `05eabff` — [HOREB QA #44391796471 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44391796471), Validate/Preflight SUCCESS, 152/152 source, 198/198 geometry, 8/8 placement. Но на реальных интерьерах видна прямая линия между раздельными задней тканью и фронтоном; слабые складки не устранили её. Отдельный детачный W12D.8 попытался сгладить цвет/глубину двух полотен, **визуально не решил проблему и не был опубликован**.
+
+**Новая W12E.0** — один физический 36×15 задний меш/1080 треугольников вместо 2 мешей/880 треугольников; прежний бюджет 1100 сохранён, texture 128² и коллизии неизменны, один draw call и material binding удалён. Локально успешны Vite/TypeScript, source 153/153, geometry 198/198, placement 8/8 и реальный Chrome/CPU SwiftShader со штатным `browser-homestead-walk.mjs`, физическим входом, mobile390 и WebGL-remount. Настоящие сравнительные PNG подтверждают устранение горизонтальной полосы. **Требуется собственный exact-HEAD CI 6/6, Validate, Preflight и PNG review**; никакие PASS от W12D.7 автоматически не наследуются.
+
+**Ограничения:** 3D Нил, колодец, стоянка и Хорив; 42 Research ID — отдельный архив, не 42 личных имени. Никакого исторически точного жилища Исх. 2 не заявляется. Полный ART, реальные GPU, редактура/Research/rights, персонажи, стада, голоса и релиз — HOLD. Не менять `main`, Product, Research, грязную локальную W10D `NilePrelude.ts`; никаких новых PR/веток, force-push или деплоя. Подробный первичный акт: `audit/W12E0_CONTINUOUS_REAR_CANVAS_CANDIDATE.md`.
+
+### Архив передачи W12D.7
 
 **Канонические репозиторий и PR:** `FedorMilovanov/AuditRepo`, [Draft #543](https://github.com/FedorMilovanov/AuditRepo/pull/543), единственная ветка `lane/horeb-3d-lab-20261108`. Первым действием проверить фактический HEAD и все exact-SHA GitHub jobs: сведения ниже отражают **последний полностью принятый кодовый SHA W12D.6**, не наследуются автоматически новым коммитом.
 

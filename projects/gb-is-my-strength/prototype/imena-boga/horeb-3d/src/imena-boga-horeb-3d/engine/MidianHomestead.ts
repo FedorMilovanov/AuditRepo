@@ -18,7 +18,7 @@ export const HOMESTEAD_STRUCTURE=Object.freeze({
  * Kept bounded to avoid shader/texture costs on software WebGL and phones. */
 export const HOMESTEAD_TEXTILE_DETAIL=Object.freeze({
   roofU:36,roofV:22,sideU:24,sideV:14,
-  rearU:28,rearV:14,matU:28,matV:20,
+  rearU:36,rearV:15,matU:28,matV:20,
 });
 /** W12D.7: gently draped rear wall inside existing physical rear-wall band.
  * Original artistic scene variation, NOT a reconstructed historic textile. */
@@ -149,6 +149,20 @@ export function homesteadRoofBackHeight(x:number):number{
 }
 export function homesteadRearGableTop(x:number):number{
   return homesteadRoofBackHeight(x)+.055;
+}
+/** W12E.0: one single continuous rear sheet. No rectangle/gable seam.
+ * Top edge remains 55mm behind the roof silhouette; all cloth vertices
+ * stay in the original rear-wall collision band. */
+export function homesteadContinuousRearPoint(x:number,v:number):{x:number;y:number;z:number}{
+  const t=Math.max(0,Math.min(1,v));
+  const drift=homesteadRearDrapeOffset(x,Math.min(1,t*1.9));
+  const lowerZ=-2.97+drift;
+  const b=Math.max(0,Math.min(1,(t-.54)/.46));
+  const smooth=b*b*(3-2*b);
+  const z=lowerZ+((HOMESTEAD_REAR_GABLE_Z+.015)-lowerZ)*smooth;
+  const floorY=homesteadGround(x,z)+.025;
+  const roofY=homesteadRearGableTop(x);
+  return {x,y:floorY+(roofY-floorY)*t,z};
 }
 
 export function homesteadWalkable(x:number,z:number):boolean{
@@ -402,61 +416,41 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       new THREE.Vector3(x,1.37+homesteadGround(x,2.85),2.85),
       .04,rope,'shelter-edge-cord');
   }
-  // Rear fabric is solid; front remains genuinely open for walking.
-  // The rear is a visibly draped, continuous real surface, not one
-  // billboard-flat brown rectangle. Its displacement stays within the
-  // already-colliding rear wall band at z=-3.0 (±0.18 m).
-  const rearGeo=new THREE.PlaneGeometry(5.92,1.46,
-    HOMESTEAD_TEXTILE_DETAIL.rearU,HOMESTEAD_TEXTILE_DETAIL.rearV);
-  const rearPos=rearGeo.getAttribute('position'),rearColors:number[]=[];
-  for(let i=0;i<rearPos.count;i++){
-    const x=rearPos.getX(i),v=(rearPos.getY(i)+.73)/1.46;
-    // A few wider, deliberately uneven 3D folds rather than another
-    // high-frequency pixel detail; retain rear collision safety envelope.
-    const z=-2.97+homesteadRearDrapeOffset(x,v);
-    const y=homesteadGround(x,z)+.73+rearPos.getY(i);
-    rearPos.setXYZ(i,x,y,z);
-    const shade=.937+.055*Math.cos((x+2.96)*2.8+v*.63)+
-      .024*Math.sin((x+2.96)*6.7-v*1.25);
-    rearColors.push(shade,shade*.985,shade*.963);
-  }
-  rearGeo.setAttribute('color',new THREE.Float32BufferAttribute(rearColors,3));
-  rearGeo.computeVertexNormals();
-  const rear=new THREE.Mesh(rearGeo,woven(0xa58e77));
-  rear.castShadow=true;rear.receiveShadow=true;
-  rear.name='shelter-rear-cloth';pivot.add(rear);
-  // The previous single TRIANGLE did not follow the curved rear roof
-  // edge. In interior Chromium frames, literal daylight wedges were visible
-  // on both sides of the ridge. Build ONE indexed gable whose upper profile
-  // derives from the roof's actual rear-row height (plus a 55mm overlap).
-  const gable=new THREE.BufferGeometry();
-  const gablePositions:number[]=[],gableColours:number[]=[],gableIndices:number[]=[],gableUV:number[]=[];
-  for(let i=0;i<=HOMESTEAD_GABLE_SEGMENTS;i++){
-    const x=-2.96+5.92*i/HOMESTEAD_GABLE_SEGMENTS;
-    const upperY=homesteadRearGableTop(x);
-    // Keep the closure behind all folds, avoiding material intersections.
-    const baseY=Math.min(homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)+1.40,
-      upperY-.06);
-    gablePositions.push(x,baseY,HOMESTEAD_REAR_GABLE_Z,
-      x,upperY,HOMESTEAD_REAR_GABLE_Z);
-    const u=(x+2.96)/5.92;
-    gableUV.push(u,0,u,Math.max(.02,(upperY-baseY)/2.3));
-    const shade=.91+.05*Math.cos(x*2.5);
-    gableColours.push(shade,shade*.985,shade*.962,
-      shade*.968,shade*.954,shade*.932);
-    if(i){
-      const a=(i-1)*2,b=i*2;
-      gableIndices.push(a,b,a+1,a+1,b,b+1);
+  // W12E.0: ONE continuous rear cloth from ground to the actual roof
+  // profile. The separate rectangular curtain plus triangular gable created
+  // an unavoidable hard horizontal lighting/UV seam, even after attempting
+  // limited optical blending in rejected detached W12D.8.
+  // The single mesh spans the entire wall with shared vertices and normals.
+  const rearGeo=new THREE.BufferGeometry();
+  const rearPos:number[]=[],rearColours:number[]=[],rearUV:number[]=[],rearIdx:number[]=[];
+  const rearU=HOMESTEAD_TEXTILE_DETAIL.rearU,rearV=HOMESTEAD_TEXTILE_DETAIL.rearV;
+  for(let i=0;i<=rearU;i++){
+    const x=-2.96+5.92*i/rearU;
+    for(let j=0;j<=rearV;j++){
+      const v=j/rearV;
+      const pt=homesteadContinuousRearPoint(x,v);
+      rearPos.push(pt.x,pt.y,pt.z);
+      const t=x+2.96;
+      const shade=.933+.042*Math.cos(t*3.0+v*.65)+
+        .020*Math.sin(t*6.8-v*1.1);
+      rearColours.push(shade,shade*.985,shade*.961);
+      rearUV.push(i/rearU,v*((homesteadRearGableTop(x)-
+        homesteadGround(x,-2.97))/2.3));
+      if(i>0&&j>0){
+        const c=i*(rearV+1)+j;
+        const p=c-(rearV+1);
+        rearIdx.push(p-1,c-1,p,p,c-1,c);
+      }
     }
   }
-  gable.setAttribute('position',new THREE.Float32BufferAttribute(gablePositions,3));
-  gable.setAttribute('color',new THREE.Float32BufferAttribute(gableColours,3));
-  gable.setAttribute('uv',new THREE.Float32BufferAttribute(gableUV,2));
-  gable.setIndex(gableIndices);gable.computeVertexNormals();
-  const endCloth=new THREE.Mesh(gable,woven(0xa58e77));
-  endCloth.castShadow=true;endCloth.receiveShadow=true;
-  endCloth.name='shelter-solid-rear-gable';
-  pivot.add(endCloth);
+  rearGeo.setAttribute('position',new THREE.Float32BufferAttribute(rearPos,3));
+  rearGeo.setAttribute('color',new THREE.Float32BufferAttribute(rearColours,3));
+  rearGeo.setAttribute('uv',new THREE.Float32BufferAttribute(rearUV,2));
+  rearGeo.setIndex(rearIdx);rearGeo.computeVertexNormals();
+  const rearCanvas=new THREE.Mesh(rearGeo,woven(0xa58e77));
+  rearCanvas.castShadow=true;rearCanvas.receiveShadow=true;
+  rearCanvas.name='shelter-continuous-rear-canvas';
+  pivot.add(rearCanvas);
   for(const x of [-2.95,2.95]){
     beam(new THREE.Vector3(x,1.46+homesteadGround(x,2.85),2.85),
       new THREE.Vector3(x*1.32,homesteadGround(x*1.32,5.23)+.08,5.23),
@@ -762,8 +756,12 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadPebbleInstances=String(pebbles.count);
   canvas.dataset.homesteadPebbleDrawCalls=String(
     countMesh('homestead-instanced-small-ground-pebble'));
-  canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
-  canvas.dataset.homesteadRearGableTriangles=String((gable.index?.count||0)/3);
+  canvas.dataset.homesteadRearGables=String(countMesh('shelter-continuous-rear-canvas'));
+  canvas.dataset.homesteadRearGableTriangles=String((rearGeo.index?.count||0)/3);
+  canvas.dataset.homesteadContinuousRearPanels=String(
+    countMesh('shelter-continuous-rear-canvas'));
+  canvas.dataset.homesteadDiscardedRearSeamMeshes=String(
+    countMesh('shelter-rear-cloth')+countMesh('shelter-solid-rear-gable'));
   // Count actual render triangles, not merely declared subdivision labels.
   canvas.dataset.homesteadRearDrapeFaces=String((rearGeo.index?.count||0)/3);
   canvas.dataset.homesteadWovenMatFaces=String((matGeo.index?.count||0)/3);

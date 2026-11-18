@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -38,8 +38,8 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
-// W12D.7: rear wall uses the SAME physical 28x14 mesh; macro folds must
-// remain wholly inside the existing collision band and in front of gable.
+// W12D.7: bounded source folds persist inside the W12E.0 single rear sheet;
+// every offset stays in the original physical back-wall collision band.
 t('W12D.7 macro folds are smooth, substantial and collision-bounded',
   (()=>{let lo=Infinity,hi=-Infinity,maxNeighbour=0;
     for(let i=0;i<=120;i++){
@@ -58,9 +58,30 @@ t('W12D.7 macro folds are smooth, substantial and collision-bounded',
     }
     return Number.isFinite(lo)&&Number.isFinite(hi)&&
       lo>=-.055&&hi<=.145&&hi-lo>.14&&maxNeighbour<.028&&
-      HOMESTEAD_TEXTILE_DETAIL.rearU===28&&
-      HOMESTEAD_TEXTILE_DETAIL.rearV===14;
+      HOMESTEAD_TEXTILE_DETAIL.rearU===36&&
+      HOMESTEAD_TEXTILE_DETAIL.rearV===15;
   })());
+// W12E.0: one single continuous canopy rear wall has no hard
+// horizontal mesh join; physically bounded at every authored vertex.
+t('W12E.0 one continuous rear canvas closes roof without seam or collision escape',
+  HOMESTEAD_TEXTILE_DETAIL.rearU===36&&
+  HOMESTEAD_TEXTILE_DETAIL.rearV===15&&
+  HOMESTEAD_TEXTILE_DETAIL.rearU*HOMESTEAD_TEXTILE_DETAIL.rearV*2<1100&&
+  Array.from({length:37},(_,i)=>-2.96+5.92*i/36).every(x=>{
+    const top=homesteadContinuousRearPoint(x,1);
+    const bottom=homesteadContinuousRearPoint(x,0);
+    return Math.abs(top.y-homesteadRearGableTop(x))<1e-8&&
+      Math.abs(top.z-(HOMESTEAD_REAR_GABLE_Z+.015))<1e-8&&
+      bottom.y<top.y-1&&
+      Array.from({length:16},(_,j)=>j/15).every(v=>{
+        const p=homesteadContinuousRearPoint(x,v);
+        return Number.isFinite(p.x)&&Number.isFinite(p.y)&&
+          Number.isFinite(p.z)&&
+          p.z>HOMESTEAD_REAR_GABLE_Z-.005&&
+          p.z<HOMESTEAD_STRUCTURE.back+.18&&
+          p.y>=bottom.y-.04&&p.y<=top.y+.04;
+      });
+  }));
 // W12D.0: the physically rendered rear roof edge and the back gable top
 // must share the same curved profile, not a single straight triangle.
 t('W12D.0 roof rear edge is fully covered by its real gable profile',

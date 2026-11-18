@@ -1,6 +1,14 @@
 # HOREB 3D — Имена Бога: перед Святым
 
-## Актуальное состояние · 18.11.2026 · W12D.7 — ограниченная коррекция складок стоянки
+## Актуальное состояние · W12E.0, 18.11.2026
+
+**Последний полностью инженерно принятый кодовый SHA:** W12D.7 `05eabff` — [HOREB QA #44391796471 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44391796471), [Validate #44391796672](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44391796672), [Preflight #44391796449](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44391796449) SUCCESS, 152/152 source, 198/198 geometry, 8/8 placement, full Chromium and all four side pedestrian groups. Visual verdict: **no regression but only minor improvement of folds; hard horizontal seam still visible**.
+
+**W12E.0 new candidate:** replace the separated lower rear curtain and triangular gable with **one continuous 36×15 cloth mesh, 1080 triangles**, under the same <1100 rear geometry limit and using the existing single woven 128² texture, UV and physical rear-wall collision strip. One fewer mesh/draw call and mapped material. Isolated Windows Vite/TypeScript, 153/153 source, 198/198 geometry, 8/8 placement, actual Chrome/CPU SwiftShader + native `browser-homestead-walk.mjs` (physical entry, mobile 390 px, ESC, focus and remount) PASS, 0 JS errors. Direct actual local screenshots show the straight seam is gone. **New HEAD still needs exact-SHA HOREB QA 6/6, Validate, Preflight and fresh GitHub PNG review before engineering/art acceptance**.
+
+Существуют самостоятельные WebGL Нил (Исх. 2:1–6), колодец Мадиама (2:16–17), условная стоянка семьи (2:18–21) и Хорив (3–4); 42 Research-досье сохранены в отдельной лаборатории, не являются 42 личными именами Бога. Общий художественный уровень, права/Research, реальные Android/iOS GPU, живые фигуры/стада, озвучивание, дальнейшие 3D эпизоды и выпуск — **HOLD**. Только [Draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) и каноническая ветка `lane/horeb-3d-lab-20261108`; `main`, Product, Research и незавершённую локальную Windows W10D `NilePrelude.ts` не менять, без force-push, новых веток и деплоя.
+
+### Архив · состояние W12D.7 — ограниченная коррекция складок стоянки
 
 **Текущая кодовая волна:** W12D.7, отдельный кандидат на основе полностью проверенной W12D.6 `dd90c52a0218d4ca15f944e8ec307130a35f6493`. [W12D.6 HOREB QA #44378422909 — 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422909), [Validate #44378422708](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422708) и [Preflight #44378422704](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422704) SUCCESS; 151/151 source, 198/198 geometry, 8/8 placement, полный Chromium и четыре независимых пешеходных задания. Сравнены настоящие PNG `homestead-walk-interior.png` и `homestead-walk-mobile390.png` с W12D.5.1: сетка волокон стала менее механической, новых крупных пятен, световых щелей, смещения навеса, корзин или элементов управления нет. Это **локальный целевой ART PASS W12D.6**, не всей среды.
 

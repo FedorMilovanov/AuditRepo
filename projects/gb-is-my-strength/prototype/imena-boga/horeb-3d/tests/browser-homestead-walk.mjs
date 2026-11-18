@@ -60,6 +60,8 @@ try{
     hillsCount:Number(e.dataset.homesteadRidgeSectors),
     skydome:Number(e.dataset.homesteadSky),
     rearClothFaces:Number(e.dataset.homesteadRearDrapeFaces),
+    continuousRearPanels:Number(e.dataset.homesteadContinuousRearPanels),
+    discardedRearSeamMeshes:Number(e.dataset.homesteadDiscardedRearSeamMeshes),
     wovenMatFaces:Number(e.dataset.homesteadWovenMatFaces),
   }));
   if(witness.world!=='homestead'||witness.roof!=='3d-woven-fabric-and-posts'||
@@ -68,15 +70,16 @@ try{
      witness.roofCastShadows!==2||witness.roofSelfShadows!==0||
      witness.bounceLights!==1||
      witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||
-     witness.rearTriangles!==96||witness.rocks!==64||
+     witness.rearTriangles!==1080||witness.rocks!==64||
+     witness.continuousRearPanels!==1||witness.discardedRearSeamMeshes!==0||
      witness.hillsCount!==4||witness.skydome!==1||
      witness.pebbles!==720||witness.pebbleDrawCalls!==1||
      witness.baskets!==2||witness.rims!==2||
      witness.basketStrands!==16||witness.basketStrandDrawCalls!==1||
      witness.rejectedHoops!==0||
-     witness.weavePixels!==16384||witness.weaveBindings!==9||
+     witness.weavePixels!==16384||witness.weaveBindings!==8||
      !(witness.weaveBump>.005&&witness.weaveBump<.03)||
-     witness.rearClothFaces!==784||witness.wovenMatFaces!==1120)
+     witness.rearClothFaces!==1080||witness.wovenMatFaces!==1120)
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));
   await page.screenshot({path:join(out,'homestead-shot-desktop.png')});
   await page.click('[data-testid="midian-homestead-explore-start"]');
