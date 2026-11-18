@@ -46,19 +46,23 @@ export const HOMESTEAD_SAND_BOUNCE=Object.freeze({
 export const HOMESTEAD_WEAVE_DETAIL=Object.freeze({
   size:128,repeatU:6,repeatV:4,bumpScale:.007,
 });
+/** W12D.6: soft aperiodic-looking yarn without a fixed checker grid.
+ * All phase fields are INTEGER Fourier modes over the same 128px tile,
+ * ensuring x/y edge continuity and one unchanged shared GPU texture.
+ * This is visual material variation, not a specific historical fabric. */
 export function homesteadWeaveIntensity(x:number,y:number):number{
-  const warp=Math.pow(.5+.5*Math.cos(x*Math.PI/4),6);
-  const weft=Math.pow(.5+.5*Math.cos(y*Math.PI/4),6);
-  const alternate=((Math.floor(x/8)+Math.floor(y/8))%2===0)?1:-1;
-  // Integer Fourier modes on the 128px tile keep opposite edges seamless.
   const unit=2*Math.PI/HOMESTEAD_WEAVE_DETAIL.size;
-  const variation=.014*Math.sin(unit*(x*3+y*2))+
-    .009*Math.cos(unit*(x*5-y*4));
-  // A strong crossing-grid reads as graph paper in a near-wall shot.
-  // Fibre relief is now anisotropic and subdued, with no high-contrast
-  // alternating checker; broader fabric folds remain in vertex geometry.
+  const driftX=.85*Math.sin(unit*(x*2+y*3))+
+    .35*Math.cos(unit*(x*5-y*2));
+  const driftY=.68*Math.cos(unit*(y*3-x*2))+
+    .23*Math.sin(unit*(y*5+x*4));
+  const warp=Math.pow(.5+.5*Math.cos((x+driftX)*Math.PI/4),5);
+  const weft=Math.pow(.5+.5*Math.cos((y+driftY)*Math.PI/4),5);
+  const variation=.011*Math.sin(unit*(x*3+y*2))+
+    .008*Math.cos(unit*(x*5-y*4))+
+    .002*Math.sin(unit*(x*7+y*5));
   return Math.min(1,Math.max(.88,
-    .946+.027*warp+.017*weft+.004*alternate*(warp-weft)+variation));
+    .950+.018*warp+.009*weft+variation));
 }
 /** W12D.5.1: fine ascending fibres following the actual curved basket body.
  * They deliberately avoid the dark horizontal metal-hoop silhouette from

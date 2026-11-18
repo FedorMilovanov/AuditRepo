@@ -66,6 +66,21 @@ t('W12D.3.1 neighbouring yarn texels avoid graph-paper contrast',
   Array.from({length:49},(_,i)=>i*2.13).every(x=>
     Math.abs(homesteadWeaveIntensity(x,24)-
       homesteadWeaveIntensity(x+1,24))<.055));
+// W12D.6: the close-view natural-fibre tile must not align its yarn
+// crossings into the same graph-paper lattice every eight texels.
+t('W12D.6 fabric breaks fixed 8px warp grid without seams or noisy jumps',
+  (()=>{let dif=0,n=0;
+    for(let i=0;i<16;i++)for(let j=0;j<16;j++){
+      const x=i*8,y=j*8;
+      dif+=Math.abs(homesteadWeaveIntensity(x,y)-
+        homesteadWeaveIntensity(x+8,y));n++;
+    }
+    return dif/n>.011&&dif/n<.03&&
+      Math.abs(homesteadWeaveIntensity(0,43.7)-
+        homesteadWeaveIntensity(128,43.7))<1e-10&&
+      Math.abs(homesteadWeaveIntensity(23.4,0)-
+        homesteadWeaveIntensity(23.4,128))<1e-10;
+  })());
 // W12D.3: one seamless small tile, genuinely varying yarn illumination.
 t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
   HOMESTEAD_WEAVE_DETAIL.size===128&&
