@@ -1,0 +1,78 @@
+# 2026-11-18 UTC — этап 7: ответ → исходный фрагмент → сохранение → возврат.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713 (read-only).
+# AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0, Draft #570.
+
+[Anchor and adjacent work]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+gh pr view 570 -R FedorMilovanov/AuditRepo --json state,isDraft,headRefName,headRefOid,changedFiles,reviews,statusCheckRollup
+# Prior head dbd284e7959453b3c1551bf4a5c12993d3c52fb1 OPEN/Draft, 37 paths, 0 reviews,
+# validate 44346885576 and preflight 44346885596 success.
+# On session restore HEAD was at base and 37 artifacts untracked: only after fetch, ancestry check
+# and 37/37 byte matches to the prior published blobs was the index aligned with git reset --mixed.
+# No removal or replacement of workspace file content.
+gh pr list -R FedorMilovanov/AuditRepo --state open --limit 60 --json number,title,headRefName,headRefOid
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 60 --json number,title,headRefName,headRefOid
+gh pr diff 2338 -R FedorMilovanov/gb-is-my-strength --name-only
+gh api repos/FedorMilovanov/gb-is-my-strength/compare/f7ba60e61b452442ceb273521ceb45ec06e23396...b2ae614730b0c2e164d3b07453797074253d9698 --jq '.files[].filename'
+gh pr diff 545 -R FedorMilovanov/AuditRepo --name-only
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/538/files?per_page=100' --jq '.[].filename'
+# Large #538 unified diff exits HTTP 406; PR files endpoint supplies path list.
+# Checked remaining open PR file lists (gh pr diff --name-only or gh api pulls/N/files) and the seven Product Arena
+# tip file lists (gh api repos/FedorMilovanov/gb-is-my-strength/commits/SHA --jq '.files[].filename'). No owner overlap.
+# #545 = development prototype, not Product library; #562 = MASTER-only. Product #2338 = Journal/G3/assets/index files.
+gh api repos/FedorMilovanov/AuditRepo/compare/6ee13af6eaeb7b25eb2b93466e9dc13b2dac05ca...104704ea0b5f769b3fe06b17fac4e7bc8719e057 --jq '.files[].filename'
+# Three sources/reprints/images intake documents, no overlapping stage-7 path.
+# Historical Product #120 at 26efb71193b4fbc370755b71f7c7fa1a88e305e7 and issue #112 CLOSED:
+# dedupe/ARIA work, not a test of the current Learning → Library → Learning transition.
+
+[Fresh exact archive and build]
+# PRODUCT, TOOLS, CHROMIUM are absolute paths, prepared as in ../../arena-quiz-learning/2026-11-18/commands.log.
+# Source archive https://codeload.github.com/FedorMilovanov/gb-is-my-strength/tar.gz/9edef94ece08012223c1364bec7ddcd561cf5713
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
+R=$(pwd)
+D="$R/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18"
+N="$R/projects/gb-is-my-strength/incoming/arena-quiz-notes-handoff/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-notes-handoff.XXXXXX")
+(cd "$PRODUCT" && npm ci --no-audit --no-fund)
+(cd "$PRODUCT" && GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like)
+(cd "$PRODUCT" && npm run page-ownership:dist:production-like && npm run pagefind:build:dist)
+# PASS, 378 packages; 117 HTML, 112 Astro routes, Pagefind 103 pages/28877 words. Stage-6 dist pins matched 14/14.
+(cd "$PRODUCT" && node scripts/highlights-runtime-regression-test.js && node scripts/reader-library-dist-coverage.cjs)
+# PASS, legacy store/ARIA/dedupe and dist library coverage + lazy assets. Coverage counts script inclusion, not UI handoff.
+(cd "$PRODUCT" && node scripts/series-quiz-source-handoff-browser-contract.mjs)
+# PASS 55/55; same-/cross-document source links and missing-target negative case. No assertion of linked-note landing.
+(cd "$PRODUCT" && node "$D/harness/census.cjs" "$PRODUCT" "$OUT")
+# D census recheck: 23 native quiz routes/153 questions, 68 panels/11 decks. Stage-7 harness does its own HTML census.
+
+[Browser witness and replay]
+node --check "$N/harness/notes.mjs"
+for run in run-a run-b; do
+  (cd "$PRODUCT" && node "$N/harness/notes.mjs" "$PRODUCT" "$OUT/$run" "$CHROMIUM")
+done
+# Optional fourth harness argument filters on scenario name, route or width.
+# Chromium 153.0.8010.0, Playwright 1.62.1, Node 22.23.4 (AL2023 libraries, explicit binary).
+# Two complete runs from the intake harness: 8/8 twice, 15 identical dist SHA-256s cross-checked against disk,
+# 0 local HTTP >=400 and 0 pageerror. Two PNG digests and dimensions checked per run: 390x336 and 390x709.
+# Commit run-a witness/PNG only; dynamic question order and counters may differ in run-b. Same-attempt comparisons are exact.
+# Separate browser contexts, UI writes only, real mouse drags (read-only Range geometry), no service worker, no external DNS.
+# Initial exploratory wait for library list visibility tripped on the editor, which hides that list while open.
+# Replaced with a presenter attachment wait; actual buttons/notes still checked by visible UI, no force-click.
+# A linked-note URL did not land the text in Headless Shell even after waiting. Minimal HTML with same directive
+# reproduces fallback to #main-content; ordinary #target works. Do not turn this environment control into a Product bug.
+# Back is deliberately interpreted with Playwright default disabled BFCache. Dist files are not changed for this audit.
+
+[AuditRepo admission]
+# CHANGED = actual cumulative path list against fcf2e69b, including staged additions.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+git diff --cached --check
+# Intake only on current branch. Recheck refs, push normally, update only existing Draft #570, verify checks on new head.
