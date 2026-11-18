@@ -932,4 +932,8 @@ for(const snippet of ['Исх. 34:14 и Втор. 4:24','исключитель�
 }
 if(w98Qanna.includes('Как отмечали пуританские богословы (Стивен Чарнок, Томас Уотсон)'))
  throw Error('W98 unverified named Puritan quotation returned');
+
+if(!w98Qanna.includes('קַנָּא שְׁמוֹ') || w98Qanna.includes('שְׁמוֹ קַנָּא'))
+ throw Error('W98b Exodus 34:14 Hebrew word-order regression');
+console.log('W98B_QANNA_MT_WORD_ORDER_PASS');
 console.log('W98_YAH_QANNA_SOURCE_HONESTY_PASS');
