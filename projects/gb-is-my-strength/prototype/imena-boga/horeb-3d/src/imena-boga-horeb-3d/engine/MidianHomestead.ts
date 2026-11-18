@@ -60,12 +60,12 @@ export function homesteadWeaveIntensity(x:number,y:number):number{
   return Math.min(1,Math.max(.88,
     .946+.027*warp+.017*weft+.004*alternate*(warp-weft)+variation));
 }
-/** W12D.5 non-mechanical coiled bindings for two hypothetical domestic vessels.
- * These are generic craft details, not an archaeological reconstruction. */
+/** W12D.5.1: fine ascending fibres following the actual curved basket body.
+ * They deliberately avoid the dark horizontal metal-hoop silhouette from
+ * W12D.5. Generic illustrative craft, not a dating/archaeology assertion. */
 export const HOMESTEAD_BASKET_DETAIL=Object.freeze({
-  levels:Object.freeze([.20,.37,.56,.73,.89]),
-  radii:Object.freeze([.985,1,.990,.967,.94]),
-  tube:.020,segments:48,
+  strandsPerBasket:8,pathSamples:15,segments:48,tube:.011,
+  skinOffset:.012,
 });
 export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
   Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),
@@ -491,43 +491,51 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     inset.name='homestead-inner-storage-opening';pivot.add(inset);
   }
 
-  // Shared hand-wound coils: one instanced draw call for both small baskets.
-  // Gentle non-periodic waviness helps avoid rigid industrial banding.
-  const coilGeo=new THREE.TorusGeometry(1,HOMESTEAD_BASKET_DETAIL.tube,
-    5,HOMESTEAD_BASKET_DETAIL.segments);
-  const coilPos=coilGeo.getAttribute('position');
-  for(let i=0;i<coilPos.count;i++){
-    const x=coilPos.getX(i),y=coilPos.getY(i),z=coilPos.getZ(i);
-    const a=Math.atan2(y,x);
-    const irregular=1+.010*Math.sin(a*7+.4)+.006*Math.sin(a*13+1.4);
-    coilPos.setXYZ(i,x*irregular,y*irregular,z+.035*Math.sin(a*5+.72));
+  // Subtle freehand ascending fibres follow each true lathe body's profile.
+  // Unlike the rejected W12D.5 horizontal hoops, this is sparse, fine and
+  // does not form evenly stacked rings. One shared instanced draw call.
+  const profileRadius=(t:number):number=>{
+    for(let i=1;i<storageProfile.length;i++){
+      const lo=storageProfile[i-1],hi=storageProfile[i];
+      if(t<=hi.y){
+        const f=THREE.MathUtils.clamp((t-lo.y)/(hi.y-lo.y),0,1);
+        return THREE.MathUtils.lerp(lo.x,hi.x,f);
+      }
+    }
+    return storageProfile[storageProfile.length-1].x;
+  };
+  const strandPoints:THREE.Vector3[]=[];
+  for(let i=0;i<HOMESTEAD_BASKET_DETAIL.pathSamples;i++){
+    const t=.12+.79*i/(HOMESTEAD_BASKET_DETAIL.pathSamples-1);
+    const angle=-.17+.34*t+.025*Math.sin(t*8);
+    const radius=profileRadius(t)+HOMESTEAD_BASKET_DETAIL.skinOffset;
+    strandPoints.push(new THREE.Vector3(
+      radius*Math.cos(angle),t,radius*Math.sin(angle)));
   }
-  coilGeo.computeVertexNormals();
-  const coilCount=HOMESTEAD_INTERIOR_STORAGE.length*
-    HOMESTEAD_BASKET_DETAIL.levels.length;
-  const coils=new THREE.InstancedMesh(coilGeo,mat(0x907052),coilCount);
-  const coilTransform=new THREE.Object3D();
-  const coilColors=[new THREE.Color(0x997e5b),new THREE.Color(0x8d7051)];
-  let coilIndex=0;
+  const strandCurve=new THREE.CatmullRomCurve3(strandPoints,false,'centripetal');
+  const strandGeo=new THREE.TubeGeometry(strandCurve,
+    HOMESTEAD_BASKET_DETAIL.segments,HOMESTEAD_BASKET_DETAIL.tube,5,false);
+  const strandCount=HOMESTEAD_INTERIOR_STORAGE.length*
+    HOMESTEAD_BASKET_DETAIL.strandsPerBasket;
+  const strands=new THREE.InstancedMesh(strandGeo,mat(0xad906c),strandCount);
+  const fibreTransform=new THREE.Object3D();
+  let fibreIndex=0;
   for(const [basketIndex,prop] of HOMESTEAD_INTERIOR_STORAGE.entries()){
     const ground=homesteadGround(prop.x,prop.z);
-    for(let level=0;level<HOMESTEAD_BASKET_DETAIL.levels.length;level++){
-      coilTransform.position.set(prop.x,
-        ground+prop.height*HOMESTEAD_BASKET_DETAIL.levels[level],prop.z);
-      coilTransform.rotation.set(-Math.PI/2,0,basketIndex*.13+level*.17);
-      const radius=prop.radius*(HOMESTEAD_BASKET_DETAIL.radii[level]+.017);
-      coilTransform.scale.setScalar(radius);
-      coilTransform.updateMatrix();
-      coils.setMatrixAt(coilIndex,coilTransform.matrix);
-      coils.setColorAt(coilIndex,coilColors[(basketIndex+level)%2]);
-      coilIndex++;
+    for(let s=0;s<HOMESTEAD_BASKET_DETAIL.strandsPerBasket;s++){
+      const angle=s*2*Math.PI/HOMESTEAD_BASKET_DETAIL.strandsPerBasket+
+        .035*Math.sin(s*2.3+basketIndex);
+      fibreTransform.position.set(prop.x,ground,prop.z);
+      fibreTransform.rotation.set(0,angle,0);
+      fibreTransform.scale.set(prop.radius,prop.height,prop.radius);
+      fibreTransform.updateMatrix();
+      strands.setMatrixAt(fibreIndex++,fibreTransform.matrix);
     }
   }
-  coils.instanceMatrix.needsUpdate=true;
-  if(coils.instanceColor)coils.instanceColor.needsUpdate=true;
-  coils.castShadow=false;coils.receiveShadow=true;
-  coils.name='homestead-inner-storage-woven-bands';
-  pivot.add(coils);
+  strands.instanceMatrix.needsUpdate=true;
+  strands.castShadow=false;strands.receiveShadow=false;
+  strands.name='homestead-inner-storage-ascending-fibres';
+  pivot.add(strands);
 
   // Hearth and storing vessels: actual 3D but not a staged invented meal.
   const hearthMat=[mat(0x7a6a59),mat(0x9e8970),mat(0x8b7964)];
@@ -746,9 +754,9 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     countMesh('homestead-inner-storage-basket'));
   canvas.dataset.homesteadStorageRims=String(
     countMesh('homestead-inner-storage-rim'));
-  canvas.dataset.homesteadStorageBands=String(coils.count);
-  canvas.dataset.homesteadStorageBandDrawCalls=String(
-    countMesh('homestead-inner-storage-woven-bands'));
+  canvas.dataset.homesteadStorageStrands=String(strands.count);
+  canvas.dataset.homesteadStorageStrandDrawCalls=String(
+    countMesh('homestead-inner-storage-ascending-fibres'));
   canvas.dataset.homesteadWovenTexturePixels=String(size*size);
   canvas.dataset.homesteadWovenBumpScale=String(HOMESTEAD_WEAVE_DETAIL.bumpScale);
   // These are actual mesh/material map bindings, not declared feature flags.
