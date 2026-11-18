@@ -1,0 +1,4862 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "node": "22.23.4",
+  "playwright": "1.62.1",
+  "axe": {
+    "version": "4.10.3",
+    "sha256": "880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb"
+  },
+  "records": [
+    {
+      "scenario": "sheet-preferences-after-miss",
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "state": {
+        "id": "gill.man.horsleydown.place",
+        "question": "В каком лондонском районе Гилл возглавлял общину?",
+        "correctText": "Саутварк",
+        "options": [
+          {
+            "text": "Кеттеринг",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "Гринвич",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Вестминстер",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Саутварк",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Хорслидаун находится в Саутварке — районе на южном берегу Темзы, который стал местом всего пасторского служения Гилла.",
+        "live": "Неверно. Хорслидаун находится в Саутварке — районе на южном берегу Темзы, который стал местом всего пасторского служения Гилла.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "../../articles/dzhon-gill-chast-1-chelovek/#sec-context-southwark",
+          "label": "Перечитать: Часть I · Исторический контекст: Саутварк"
+        }
+      },
+      "checkpoints": [
+        {
+          "label": "initial",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "light",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "light",
+            "mode": "rich",
+            "darkClass": false,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 16,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(26, 26, 26)",
+            "bg": "rgb(244, 242, 237)"
+          }
+        },
+        {
+          "label": "night",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "rich",
+            "darkClass": true,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 16,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "plain",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "plain",
+            "darkClass": true,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 16,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "five A+",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "plain",
+            "darkClass": true,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 20,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "sepia",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "sepia",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "sepia",
+            "mode": "plain",
+            "darkClass": false,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 20,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(73, 55, 32)",
+            "bg": "rgb(232, 217, 186)"
+          }
+        },
+        {
+          "label": "rich again",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "sepia",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "sepia",
+            "mode": "rich",
+            "darkClass": false,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 20,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(73, 55, 32)",
+            "bg": "rgb(232, 217, 186)"
+          }
+        }
+      ],
+      "next": {
+        "id": "gill.man.ordination.year",
+        "seen": "Пройдено: 1"
+      },
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "sheet-preferences-after-miss",
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": {
+        "viewport": {
+          "width": 1359,
+          "height": 900
+        }
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "state": {
+        "id": "apostasy.p1.two-texts",
+        "question": "Почему 1 Ин. 2:19 и Иак. 5:19–20 «нужны друг другу»?",
+        "correctText": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+        "options": [
+          {
+            "text": "Оба текста запрещают увещевать ушедших",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "Иаков исправляет ошибку Иоанна",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Оба текста говорят об одном и том же человеке",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Один текст говорит о вышедших, которые «не были из нас», другой — о человеке «среди вас», которого можно обратить назад; ни один не отменяет другой",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Канон держит оба свидетельства одновременно: окончательный выход может обнаружить отсутствие принадлежности — и при этом уклонившийся брат остаётся адресатом обращения назад.",
+        "live": "Неверно. Канон держит оба свидетельства одновременно: окончательный выход может обнаружить отсутствие принадлежности — и при этом уклонившийся брат остаётся адресатом обращения назад.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "/articles/otstuplenie-chto-govorit-bibliya/#ioann-i-iakov",
+          "label": "Перечитать: Часть I · §8"
+        }
+      },
+      "checkpoints": [
+        {
+          "label": "initial",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "light",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "light",
+            "mode": "rich",
+            "darkClass": false,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 18,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(26, 26, 26)",
+            "bg": "rgb(244, 242, 237)"
+          }
+        },
+        {
+          "label": "night",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "rich",
+            "darkClass": true,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 18,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "plain",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "plain",
+            "darkClass": true,
+            "scale": 1
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 18,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "five A+",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "dark",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "dark",
+            "mode": "plain",
+            "darkClass": true,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 22.5,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(230, 225, 215)",
+            "bg": "rgb(22, 26, 33)"
+          }
+        },
+        {
+          "label": "sepia",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "sepia",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "plain",
+              "motion": "system"
+            },
+            "theme": "sepia",
+            "mode": "plain",
+            "darkClass": false,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 22.5,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(73, 55, 32)",
+            "bg": "rgb(232, 217, 186)"
+          }
+        },
+        {
+          "label": "rich again",
+          "prefs": {
+            "state": {
+              "version": 1,
+              "theme": "sepia",
+              "fontScale": 1.25,
+              "lineHeight": "normal",
+              "measure": "normal",
+              "textMode": "rich",
+              "motion": "system"
+            },
+            "theme": "sepia",
+            "mode": "rich",
+            "darkClass": false,
+            "scale": 1.25
+          },
+          "sameState": true,
+          "typography": {
+            "prose": 22.5,
+            "quiz": {
+              "question": 18,
+              "choice": 14,
+              "verdict": 12.5,
+              "explanation": 13,
+              "source": 12.5
+            }
+          },
+          "colors": {
+            "text": "rgb(73, 55, 32)",
+            "bg": "rgb(232, 217, 186)"
+          }
+        }
+      ],
+      "next": {
+        "id": "apostasy.p1.perseverance-not",
+        "seen": "Пройдено: 1"
+      },
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "wide-clip-after-resize",
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": {
+        "viewport": {
+          "width": 1359,
+          "height": 900
+        }
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "tabsToOption": 6,
+      "checkpoints": {
+        "compactArmed": {
+          "viewport": [
+            1359,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 397.3,
+            "w": 478,
+            "h": 481.8,
+            "bottom": 879,
+            "top": 0,
+            "client": 482,
+            "extent": 482,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 273.8,
+            "w": 480,
+            "h": 606.3,
+            "bottom": 880,
+            "top": 0,
+            "client": 604,
+            "extent": 604,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 863,
+              "w": 446,
+              "h": 0,
+              "bottom": 863,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 471.5,
+              "y": 788,
+              "w": 134.7,
+              "h": 52,
+              "bottom": 840,
+              "hit": true,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 576.8,
+              "w": 446,
+              "h": 46,
+              "bottom": 622.8,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 866.5,
+              "y": 302.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 342.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideArmed": {
+          "viewport": [
+            1360,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 389.3,
+            "w": 418,
+            "h": 941.8,
+            "bottom": 1331,
+            "top": 0,
+            "client": 942,
+            "extent": 942,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 244,
+            "w": 420,
+            "h": 640,
+            "bottom": 884,
+            "top": 0,
+            "client": 638,
+            "extent": 1086,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 33.6,
+              "y": 1285,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 1331,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 33.6,
+              "y": 1260.5,
+              "w": 96,
+              "h": 21,
+              "bottom": 1281.5,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 611.7,
+              "w": 418,
+              "h": 53.7,
+              "bottom": 665.4,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 55.6,
+              "y": 304.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 344.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "compactArmedAgain": {
+          "viewport": [
+            1359,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 397.3,
+            "w": 478,
+            "h": 481.8,
+            "bottom": 879,
+            "top": 0,
+            "client": 482,
+            "extent": 482,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 273.8,
+            "w": 480,
+            "h": 606.3,
+            "bottom": 880,
+            "top": 0,
+            "client": 604,
+            "extent": 604,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 863,
+              "w": 446,
+              "h": 0,
+              "bottom": 863,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 471.5,
+              "y": 788,
+              "w": 134.7,
+              "h": 52,
+              "bottom": 840,
+              "hit": true,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 576.8,
+              "w": 446,
+              "h": 46,
+              "bottom": 622.8,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 866.5,
+              "y": 302.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 342.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortBeforeWheel": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 0,
+            "client": 116,
+            "extent": 660,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 766,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 746.3,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 768.2,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 780.2,
+              "w": 446,
+              "h": 46,
+              "bottom": 826.2,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 395.3,
+              "w": 446,
+              "h": 46,
+              "bottom": 441.3,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortAfterWheel": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 543,
+            "client": 116,
+            "extent": 660,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 766,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 203.3,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 225.2,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 237.2,
+              "w": 446,
+              "h": 46,
+              "bottom": 283.2,
+              "hit": true,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -147.7,
+              "w": 446,
+              "h": 46,
+              "bottom": -101.7,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortFocused": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 526,
+            "client": 116,
+            "extent": 660,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 766,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 220.3,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 242.2,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 254.2,
+              "w": 446,
+              "h": 46,
+              "bottom": 300.2,
+              "hit": true,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -130.7,
+              "w": 446,
+              "h": 46,
+              "bottom": -84.7,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideBeforeWheel": {
+          "viewport": [
+            1360,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 225.3,
+            "w": 418,
+            "h": 734.8,
+            "bottom": 960,
+            "top": 0,
+            "client": 735,
+            "extent": 735,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 80,
+            "w": 420,
+            "h": 224,
+            "bottom": 304,
+            "top": 0,
+            "client": 222,
+            "extent": 879,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 33.6,
+              "y": 886.5,
+              "w": 366,
+              "h": 60.4,
+              "bottom": 946.9,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 169.6,
+              "y": 914,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 960,
+              "hit": false,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 480.2,
+              "w": 418,
+              "h": 53.7,
+              "bottom": 533.9,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 55.6,
+              "y": 140.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 180.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideAfterWheel": {
+          "viewport": [
+            1360,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 225.3,
+            "w": 418,
+            "h": 734.8,
+            "bottom": 960,
+            "top": 0,
+            "client": 735,
+            "extent": 735,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 80,
+            "w": 420,
+            "h": 224,
+            "bottom": 304,
+            "top": 0,
+            "client": 222,
+            "extent": 879,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 33.6,
+              "y": 886.5,
+              "w": 366,
+              "h": 60.4,
+              "bottom": 946.9,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 169.6,
+              "y": 914,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 960,
+              "hit": false,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 480.2,
+              "w": 418,
+              "h": 53.7,
+              "bottom": 533.9,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 55.6,
+              "y": 140.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 180.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        }
+      },
+      "state": {
+        "id": "gill.man.goatyard-declaration.year",
+        "question": "В каком году была принята Декларация Козьего Двора?",
+        "correctText": "1729",
+        "options": [
+          {
+            "text": "1729",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          },
+          {
+            "text": "1662",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "1720",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "1719",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Декларация Козьего Двора 1729 года зафиксировала исповедание общины Гилла — важный документ для понимания архитектуры его богословия.",
+        "live": "Неверно. Декларация Козьего Двора 1729 года зафиксировала исповедание общины Гилла — важный документ для понимания архитектуры его богословия.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "../../articles/dzhon-gill-chast-1-chelovek/#sec-goatyardDecl",
+          "label": "Перечитать: Часть I · Декларация Козьего Двора 1729 года"
+        }
+      },
+      "tabsToNext": 2,
+      "activation": {
+        "kind": "Enter on retained Next",
+        "after": "gill.man.daughter-sermon",
+        "seen": "Пройдено: 1"
+      },
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "wide-clip-after-resize",
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": {
+        "viewport": {
+          "width": 1359,
+          "height": 900
+        }
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "tabsToOption": 5,
+      "checkpoints": {
+        "compactArmed": {
+          "viewport": [
+            1359,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 347.9,
+            "w": 478,
+            "h": 531.1,
+            "bottom": 879,
+            "top": 0,
+            "client": 531,
+            "extent": 531,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 224.4,
+            "w": 480,
+            "h": 655.6,
+            "bottom": 880,
+            "top": 0,
+            "client": 654,
+            "extent": 654,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 863,
+              "w": 446,
+              "h": 0,
+              "bottom": 863,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 471.5,
+              "y": 788,
+              "w": 134.7,
+              "h": 52,
+              "bottom": 840,
+              "hit": true,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 485.6,
+              "w": 446,
+              "h": 64.6,
+              "bottom": 550.2,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 866.5,
+              "y": 253.4,
+              "w": 40,
+              "h": 40,
+              "bottom": 293.4,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideArmed": {
+          "viewport": [
+            1360,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 389.3,
+            "w": 418,
+            "h": 1060.7,
+            "bottom": 1449.9,
+            "top": 0,
+            "client": 1061,
+            "extent": 1061,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 244,
+            "w": 420,
+            "h": 640,
+            "bottom": 884,
+            "top": 0,
+            "client": 638,
+            "extent": 1205,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 33.6,
+              "y": 1403.9,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 1449.9,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 33.6,
+              "y": 1379.4,
+              "w": 96,
+              "h": 21,
+              "bottom": 1400.4,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 562.1,
+              "w": 418,
+              "h": 79.8,
+              "bottom": 641.9,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 55.6,
+              "y": 304.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 344.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "compactArmedAgain": {
+          "viewport": [
+            1359,
+            900
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 347.9,
+            "w": 478,
+            "h": 531.1,
+            "bottom": 879,
+            "top": 0,
+            "client": 531,
+            "extent": 531,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 224.4,
+            "w": 480,
+            "h": 655.6,
+            "bottom": 880,
+            "top": 0,
+            "client": 654,
+            "extent": 654,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 863,
+              "w": 446,
+              "h": 0,
+              "bottom": 863,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 471.5,
+              "y": 788,
+              "w": 134.7,
+              "h": 52,
+              "bottom": 840,
+              "hit": true,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 485.6,
+              "w": 446,
+              "h": 64.6,
+              "bottom": 550.2,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 866.5,
+              "y": 253.4,
+              "w": 40,
+              "h": 40,
+              "bottom": 293.4,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortBeforeWheel": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 0,
+            "client": 116,
+            "extent": 709,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 815,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 795.6,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 817.5,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 829.5,
+              "w": 446,
+              "h": 46,
+              "bottom": 875.5,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": 353.5,
+              "w": 446,
+              "h": 64.6,
+              "bottom": 418,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortAfterWheel": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 593,
+            "client": 116,
+            "extent": 709,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 815,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 202.6,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 224.5,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 236.5,
+              "w": 446,
+              "h": 46,
+              "bottom": 282.5,
+              "hit": true,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -239.5,
+              "w": 446,
+              "h": 64.6,
+              "bottom": -175,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortFocused": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 575,
+            "client": 116,
+            "extent": 709,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 815,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 220.6,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 242.5,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 254.5,
+              "w": 446,
+              "h": 46,
+              "bottom": 300.5,
+              "hit": true,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -221.5,
+              "w": 446,
+              "h": 64.6,
+              "bottom": -157,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideBeforeWheel": {
+          "viewport": [
+            1360,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 225.3,
+            "w": 418,
+            "h": 853.7,
+            "bottom": 1078.9,
+            "top": 0,
+            "client": 854,
+            "extent": 854,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 80,
+            "w": 420,
+            "h": 224,
+            "bottom": 304,
+            "top": 0,
+            "client": 222,
+            "extent": 998,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 33.6,
+              "y": 1005.4,
+              "w": 205,
+              "h": 23,
+              "bottom": 1028.4,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 33.6,
+              "y": 1032.9,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 1078.9,
+              "hit": false,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 430.6,
+              "w": 418,
+              "h": 79.8,
+              "bottom": 510.4,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 55.6,
+              "y": 140.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 180.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "wideAfterWheel": {
+          "viewport": [
+            1360,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": true,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 33.6,
+            "y": 225.3,
+            "w": 418,
+            "h": 853.7,
+            "bottom": 1078.9,
+            "top": 0,
+            "client": 854,
+            "extent": 854,
+            "overflowY": "visible"
+          },
+          "box": {
+            "x": 32.6,
+            "y": 80,
+            "w": 420,
+            "h": 224,
+            "bottom": 304,
+            "top": 0,
+            "client": 222,
+            "extent": 998,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 33.6,
+              "y": 1005.4,
+              "w": 205,
+              "h": 23,
+              "bottom": 1028.4,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 33.6,
+              "y": 1032.9,
+              "w": 214.1,
+              "h": 46,
+              "bottom": 1078.9,
+              "hit": false,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 33.6,
+              "y": 430.6,
+              "w": 418,
+              "h": 79.8,
+              "bottom": 510.4,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 55.6,
+              "y": 140.8,
+              "w": 40,
+              "h": 40,
+              "bottom": 180.8,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortReturned": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 575,
+            "client": 116,
+            "extent": 709,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 815,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 220.6,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 242.5,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 254.5,
+              "w": 446,
+              "h": 46,
+              "bottom": 300.5,
+              "hit": true,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -221.5,
+              "w": 446,
+              "h": 64.6,
+              "bottom": -157,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        "shortReturnedAfterWheel": {
+          "viewport": [
+            1359,
+            320
+          ],
+          "fine": true,
+          "touchPoints": 0,
+          "mq64": true,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "glsQuizNext",
+            "inside": true
+          },
+          "body": {
+            "x": 440.5,
+            "y": 182.7,
+            "w": 478,
+            "h": 116.3,
+            "bottom": 299,
+            "top": 593,
+            "client": 116,
+            "extent": 709,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 439.5,
+            "y": 59.2,
+            "w": 480,
+            "h": 240.8,
+            "bottom": 300,
+            "top": 0,
+            "client": 239,
+            "extent": 815,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 456.5,
+              "y": 202.6,
+              "w": 446,
+              "h": 21.9,
+              "bottom": 224.5,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 456.5,
+              "y": 236.5,
+              "w": 446,
+              "h": 46,
+              "bottom": 282.5,
+              "hit": true,
+              "focused": true
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 456.5,
+              "y": -239.5,
+              "w": 446,
+              "h": 64.6,
+              "bottom": -175,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 866.5,
+              "y": 88.2,
+              "w": 40,
+              "h": 40,
+              "bottom": 128.2,
+              "hit": true,
+              "focused": false
+            }
+          }
+        }
+      },
+      "state": {
+        "id": "apostasy.p1.lexeme",
+        "question": "Что статья называет ошибкой при выводе учения о спасении из одного библейского глагола («отпал», «вернулся»)?",
+        "correctText": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+        "options": [
+          {
+            "text": "Каждый глагол Писания кодирует полный порядок спасения",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "Лексема — доказательство внутри контекста, а не готовая система спасения",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          },
+          {
+            "text": "Доктрину можно строить на одном слове без контекста",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Греческие глаголы вообще нельзя переводить",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "live": "Неверно. Статья начинает с того, что библейский язык не свёртывает весь порядок спасения в одну лексему: слово доказывает внутри своего контекста, а не заменяет систему.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "/articles/otstuplenie-chto-govorit-bibliya/#odno-slovo",
+          "label": "Перечитать: Часть I · §1"
+        }
+      },
+      "tabsToNext": 2,
+      "activation": {
+        "kind": "pointer source + reopen + pointer Next",
+        "target": "odno-slovo",
+        "after": "apostasy.p1.perseverance-not",
+        "seen": "Пройдено: 1"
+      },
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "short-touch-resize",
+      "route": "/articles/otstuplenie-chto-govorit-bibliya/",
+      "profile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "armed": {
+        "id": "apostasy.p1.perseverance-not",
+        "question": "Что стойкость святых НЕ означает, согласно статье?",
+        "correctText": "Что верующие не могут тяжело падать и потому не нуждаются в предупреждениях",
+        "options": [
+          {
+            "text": "Что Бог сохраняет Своих до конца",
+            "disabled": false,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Что Христос ходатайствует за Своих",
+            "disabled": false,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Что верующие не могут тяжело падать и потому не нуждаются в предупреждениях",
+            "disabled": false,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Что предупреждения Писания — настоящее средство сохранения",
+            "disabled": false,
+            "correct": false,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": false,
+        "verdict": "",
+        "explanation": "",
+        "live": "",
+        "seen": "",
+        "calibration": "",
+        "source": null
+      },
+      "portrait": {
+        "viewport": [
+          390,
+          844
+        ],
+        "fine": false,
+        "touchPoints": 1,
+        "mq64": false,
+        "mq85": false,
+        "overlay": "false",
+        "settings": "true",
+        "expanded": "true",
+        "lock": "hidden",
+        "pageY": 0,
+        "active": {
+          "tag": "BUTTON",
+          "id": "",
+          "inside": true
+        },
+        "body": {
+          "x": 0,
+          "y": 325.1,
+          "w": 390,
+          "h": 518.9,
+          "bottom": 844,
+          "top": 0,
+          "client": 519,
+          "extent": 519,
+          "overflowY": "auto"
+        },
+        "box": {
+          "x": 0,
+          "y": 181.8,
+          "w": 390,
+          "h": 662.2,
+          "bottom": 844,
+          "top": 0,
+          "client": 661,
+          "extent": 661,
+          "overflowY": "hidden"
+        },
+        "targets": {
+          "source": {
+            "x": 16,
+            "y": 828,
+            "w": 358,
+            "h": 0,
+            "bottom": 828,
+            "hit": false,
+            "focused": false
+          },
+          "next": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "bottom": 0,
+            "hit": false,
+            "focused": false
+          },
+          "confidence": {
+            "x": 31,
+            "y": 753,
+            "w": 105.3,
+            "h": 52,
+            "bottom": 805,
+            "hit": true,
+            "focused": true
+          },
+          "option": {
+            "x": 16,
+            "y": 451.6,
+            "w": 358,
+            "h": 46,
+            "bottom": 497.6,
+            "hit": true,
+            "focused": false
+          },
+          "close": {
+            "x": 338,
+            "y": 207.8,
+            "w": 40,
+            "h": 40,
+            "bottom": 247.8,
+            "hit": true,
+            "focused": false
+          }
+        }
+      },
+      "landscape": [
+        {
+          "viewport": [
+            844,
+            390
+          ],
+          "fine": false,
+          "touchPoints": 1,
+          "mq64": false,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 0,
+            "y": 172.4,
+            "w": 844,
+            "h": 217.6,
+            "bottom": 390,
+            "top": 0,
+            "client": 218,
+            "extent": 482,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 0,
+            "y": 54.6,
+            "w": 844,
+            "h": 335.4,
+            "bottom": 390,
+            "top": 0,
+            "client": 334,
+            "extent": 583,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 16,
+              "y": 638.1,
+              "w": 812,
+              "h": 0,
+              "bottom": 638.1,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 31,
+              "y": 563.1,
+              "w": 256.7,
+              "h": 52,
+              "bottom": 615.1,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 16,
+              "y": 298.9,
+              "w": 812,
+              "h": 46,
+              "bottom": 344.9,
+              "hit": true,
+              "focused": false
+            },
+            "close": {
+              "x": 792,
+              "y": 77.9,
+              "w": 40,
+              "h": 40,
+              "bottom": 117.9,
+              "hit": true,
+              "focused": false
+            }
+          }
+        }
+      ],
+      "state": {
+        "id": "apostasy.p1.perseverance-not",
+        "question": "Что стойкость святых НЕ означает, согласно статье?",
+        "correctText": "Что верующие не могут тяжело падать и потому не нуждаются в предупреждениях",
+        "options": [
+          {
+            "text": "Что Бог сохраняет Своих до конца",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "Что Христос ходатайствует за Своих",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Что верующие не могут тяжело падать и потому не нуждаются в предупреждениях",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          },
+          {
+            "text": "Что предупреждения Писания — настоящее средство сохранения",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Стойкость — не обещание отсутствия тяжёлых падений: Бог сохраняет Своих в том числе через предупреждения, увещание и покаяние, а не в обход них.",
+        "live": "Неверно. Стойкость — не обещание отсутствия тяжёлых падений: Бог сохраняет Своих в том числе через предупреждения, увещание и покаяние, а не в обход них.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "/articles/otstuplenie-chto-govorit-bibliya/#perseverance-not",
+          "label": "Перечитать: Часть I · §12"
+        }
+      },
+      "answered": [
+        {
+          "viewport": [
+            844,
+            390
+          ],
+          "fine": false,
+          "touchPoints": 1,
+          "mq64": false,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BUTTON",
+            "id": "",
+            "inside": true
+          },
+          "body": {
+            "x": 0,
+            "y": 171.9,
+            "w": 844,
+            "h": 218.1,
+            "bottom": 390,
+            "top": 0,
+            "client": 218,
+            "extent": 621,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 0,
+            "y": 54.6,
+            "w": 844,
+            "h": 335.4,
+            "bottom": 390,
+            "top": 0,
+            "client": 334,
+            "extent": 722,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 16,
+              "y": 697.2,
+              "w": 812,
+              "h": 21.9,
+              "bottom": 719.1,
+              "hit": false,
+              "focused": false
+            },
+            "next": {
+              "x": 16,
+              "y": 731.1,
+              "w": 812,
+              "h": 46,
+              "bottom": 777.1,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 16,
+              "y": 330.5,
+              "w": 812,
+              "h": 46,
+              "bottom": 376.5,
+              "hit": true,
+              "focused": true
+            },
+            "close": {
+              "x": 792,
+              "y": 77.4,
+              "w": 40,
+              "h": 40,
+              "bottom": 117.4,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        {
+          "viewport": [
+            844,
+            390
+          ],
+          "fine": false,
+          "touchPoints": 1,
+          "mq64": false,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 0,
+            "y": 171.9,
+            "w": 844,
+            "h": 218.1,
+            "bottom": 390,
+            "top": 330,
+            "client": 218,
+            "extent": 621,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 0,
+            "y": 54.6,
+            "w": 844,
+            "h": 335.4,
+            "bottom": 390,
+            "top": 0,
+            "client": 334,
+            "extent": 722,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 16,
+              "y": 367.2,
+              "w": 812,
+              "h": 21.9,
+              "bottom": 389.1,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 16,
+              "y": 401.1,
+              "w": 812,
+              "h": 46,
+              "bottom": 447.1,
+              "hit": false,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 16,
+              "y": 0.5,
+              "w": 812,
+              "h": 46,
+              "bottom": 46.5,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 792,
+              "y": 77.4,
+              "w": 40,
+              "h": 40,
+              "bottom": 117.4,
+              "hit": true,
+              "focused": false
+            }
+          }
+        },
+        {
+          "viewport": [
+            844,
+            390
+          ],
+          "fine": false,
+          "touchPoints": 1,
+          "mq64": false,
+          "mq85": false,
+          "overlay": "false",
+          "settings": "true",
+          "expanded": "true",
+          "lock": "hidden",
+          "pageY": 0,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "inside": false
+          },
+          "body": {
+            "x": 0,
+            "y": 171.9,
+            "w": 844,
+            "h": 218.1,
+            "bottom": 390,
+            "top": 403,
+            "client": 218,
+            "extent": 621,
+            "overflowY": "auto"
+          },
+          "box": {
+            "x": 0,
+            "y": 54.6,
+            "w": 844,
+            "h": 335.4,
+            "bottom": 390,
+            "top": 0,
+            "client": 334,
+            "extent": 722,
+            "overflowY": "hidden"
+          },
+          "targets": {
+            "source": {
+              "x": 16,
+              "y": 294.2,
+              "w": 812,
+              "h": 21.9,
+              "bottom": 316.1,
+              "hit": true,
+              "focused": false
+            },
+            "next": {
+              "x": 16,
+              "y": 328.1,
+              "w": 812,
+              "h": 46,
+              "bottom": 374.1,
+              "hit": true,
+              "focused": false
+            },
+            "confidence": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "hit": false,
+              "focused": false
+            },
+            "option": {
+              "x": 16,
+              "y": -72.5,
+              "w": 812,
+              "h": 46,
+              "bottom": -26.5,
+              "hit": false,
+              "focused": false
+            },
+            "close": {
+              "x": 792,
+              "y": 77.4,
+              "w": 40,
+              "h": 40,
+              "bottom": 117.4,
+              "hit": true,
+              "focused": false
+            }
+          }
+        }
+      ],
+      "portraitAgain": {
+        "viewport": [
+          390,
+          844
+        ],
+        "fine": false,
+        "touchPoints": 1,
+        "mq64": false,
+        "mq85": false,
+        "overlay": "false",
+        "settings": "true",
+        "expanded": "true",
+        "lock": "hidden",
+        "pageY": 0,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "inside": false
+        },
+        "body": {
+          "x": 0,
+          "y": 260.5,
+          "w": 390,
+          "h": 583.5,
+          "bottom": 844,
+          "top": 134,
+          "client": 584,
+          "extent": 718,
+          "overflowY": "auto"
+        },
+        "box": {
+          "x": 0,
+          "y": 118.2,
+          "w": 390,
+          "h": 725.8,
+          "bottom": 844,
+          "top": 0,
+          "client": 725,
+          "extent": 844,
+          "overflowY": "hidden"
+        },
+        "targets": {
+          "source": {
+            "x": 16,
+            "y": 746.8,
+            "w": 358,
+            "h": 21.9,
+            "bottom": 768.7,
+            "hit": true,
+            "focused": false
+          },
+          "next": {
+            "x": 16,
+            "y": 780.7,
+            "w": 358,
+            "h": 48,
+            "bottom": 828.7,
+            "hit": true,
+            "focused": false
+          },
+          "confidence": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "bottom": 0,
+            "hit": false,
+            "focused": false
+          },
+          "option": {
+            "x": 16,
+            "y": 285.1,
+            "w": 358,
+            "h": 46,
+            "bottom": 331.1,
+            "hit": true,
+            "focused": false
+          },
+          "close": {
+            "x": 338,
+            "y": 143.2,
+            "w": 40,
+            "h": 40,
+            "bottom": 183.2,
+            "hit": true,
+            "focused": false
+          }
+        }
+      },
+      "returned": {
+        "viewport": [
+          844,
+          390
+        ],
+        "fine": false,
+        "touchPoints": 1,
+        "mq64": false,
+        "mq85": false,
+        "overlay": "false",
+        "settings": "true",
+        "expanded": "true",
+        "lock": "hidden",
+        "pageY": 0,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "inside": false
+        },
+        "body": {
+          "x": 0,
+          "y": 171.9,
+          "w": 844,
+          "h": 218.1,
+          "bottom": 390,
+          "top": 403,
+          "client": 218,
+          "extent": 621,
+          "overflowY": "auto"
+        },
+        "box": {
+          "x": 0,
+          "y": 54.6,
+          "w": 844,
+          "h": 335.4,
+          "bottom": 390,
+          "top": 0,
+          "client": 334,
+          "extent": 722,
+          "overflowY": "hidden"
+        },
+        "targets": {
+          "source": {
+            "x": 16,
+            "y": 294.2,
+            "w": 812,
+            "h": 21.9,
+            "bottom": 316.1,
+            "hit": true,
+            "focused": false
+          },
+          "next": {
+            "x": 16,
+            "y": 328.1,
+            "w": 812,
+            "h": 46,
+            "bottom": 374.1,
+            "hit": true,
+            "focused": false
+          },
+          "confidence": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "bottom": 0,
+            "hit": false,
+            "focused": false
+          },
+          "option": {
+            "x": 16,
+            "y": -72.5,
+            "w": 812,
+            "h": 46,
+            "bottom": -26.5,
+            "hit": false,
+            "focused": false
+          },
+          "close": {
+            "x": 792,
+            "y": 77.4,
+            "w": 40,
+            "h": 40,
+            "bottom": 117.4,
+            "hit": true,
+            "focused": false
+          }
+        }
+      },
+      "next": "apostasy.p1.two-texts",
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "lifecycle-64em-crossing",
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "profile": {
+        "viewport": {
+          "width": 1024,
+          "height": 900
+        }
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "state": {
+        "id": "gill.man.horsleydown.place",
+        "question": "В каком лондонском районе Гилл возглавлял общину?",
+        "correctText": "Саутварк",
+        "options": [
+          {
+            "text": "Гринвич",
+            "disabled": true,
+            "correct": false,
+            "wrong": true
+          },
+          {
+            "text": "Кеттеринг",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          },
+          {
+            "text": "Саутварк",
+            "disabled": true,
+            "correct": true,
+            "wrong": false
+          },
+          {
+            "text": "Вестминстер",
+            "disabled": true,
+            "correct": false,
+            "wrong": false
+          }
+        ],
+        "picked": "sure",
+        "confidenceHidden": true,
+        "verdict": "Неверно — а уверенность была высокой. Такие «уверенные ошибки» важнее всего пересмотреть.",
+        "explanation": "Хорслидаун находится в Саутварке — районе на южном берегу Темзы, который стал местом всего пасторского служения Гилла.",
+        "live": "Неверно. Хорслидаун находится в Саутварке — районе на южном берегу Темзы, который стал местом всего пасторского служения Гилла.",
+        "seen": "Пройдено: 1",
+        "calibration": "0%",
+        "source": {
+          "href": "../../articles/dzhon-gill-chast-1-chelovek/#sec-context-southwark",
+          "label": "Перечитать: Часть I · Исторический контекст: Саутварк"
+        }
+      },
+      "transitions": [
+        {
+          "tabs": 2,
+          "open": {
+            "viewport": [
+              1024,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": true,
+            "mq85": false,
+            "overlay": "false",
+            "settings": "true",
+            "expanded": "true",
+            "lock": "hidden",
+            "pageY": 0,
+            "active": {
+              "tag": "BUTTON",
+              "id": "glsQuizNext",
+              "inside": true
+            },
+            "body": {
+              "x": 273,
+              "y": 263.9,
+              "w": 478,
+              "h": 615.1,
+              "bottom": 879,
+              "top": 9,
+              "client": 615,
+              "extent": 640,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 272,
+              "y": 140.4,
+              "w": 480,
+              "h": 739.6,
+              "bottom": 880,
+              "top": 0,
+              "client": 738,
+              "extent": 747,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 289,
+                "y": 799,
+                "w": 446,
+                "h": 21.9,
+                "bottom": 820.9,
+                "hit": true,
+                "focused": false
+              },
+              "next": {
+                "x": 289,
+                "y": 832.9,
+                "w": 446,
+                "h": 46,
+                "bottom": 878.9,
+                "hit": true,
+                "focused": true
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 289,
+                "y": 413.5,
+                "w": 446,
+                "h": 46,
+                "bottom": 459.5,
+                "hit": true,
+                "focused": false
+              },
+              "close": {
+                "x": 699,
+                "y": 169.4,
+                "w": 40,
+                "h": 40,
+                "bottom": 209.4,
+                "hit": true,
+                "focused": false
+              }
+            }
+          },
+          "closed": {
+            "viewport": [
+              1023,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": false,
+            "mq85": false,
+            "overlay": "true",
+            "settings": "true",
+            "expanded": "false",
+            "lock": "visible",
+            "pageY": 0,
+            "active": {
+              "tag": "BODY",
+              "id": "",
+              "inside": false
+            },
+            "body": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "top": 0,
+              "client": 0,
+              "extent": 0,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "top": 0,
+              "client": 0,
+              "extent": 0,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "next": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "close": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              }
+            }
+          },
+          "opener": "#mobSettingsBtn",
+          "reopened": {
+            "viewport": [
+              1023,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": false,
+            "mq85": false,
+            "overlay": "false",
+            "settings": "true",
+            "expanded": "true",
+            "lock": "hidden",
+            "pageY": 0,
+            "active": {
+              "tag": "BUTTON",
+              "id": "tabTerms",
+              "inside": true
+            },
+            "body": {
+              "x": 272.5,
+              "y": 263.9,
+              "w": 478,
+              "h": 615.1,
+              "bottom": 879,
+              "top": 9,
+              "client": 615,
+              "extent": 640,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 271.5,
+              "y": 140.4,
+              "w": 480,
+              "h": 739.6,
+              "bottom": 880,
+              "top": 0,
+              "client": 738,
+              "extent": 747,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 288.5,
+                "y": 799,
+                "w": 446,
+                "h": 21.9,
+                "bottom": 820.9,
+                "hit": true,
+                "focused": false
+              },
+              "next": {
+                "x": 288.5,
+                "y": 832.9,
+                "w": 446,
+                "h": 46,
+                "bottom": 878.9,
+                "hit": true,
+                "focused": false
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 288.5,
+                "y": 413.5,
+                "w": 446,
+                "h": 46,
+                "bottom": 459.5,
+                "hit": true,
+                "focused": false
+              },
+              "close": {
+                "x": 698.5,
+                "y": 169.4,
+                "w": 40,
+                "h": 40,
+                "bottom": 209.4,
+                "hit": true,
+                "focused": false
+              }
+            }
+          },
+          "sameState": true
+        },
+        {
+          "tabs": 3,
+          "open": {
+            "viewport": [
+              1023,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": false,
+            "mq85": false,
+            "overlay": "false",
+            "settings": "true",
+            "expanded": "true",
+            "lock": "hidden",
+            "pageY": 0,
+            "active": {
+              "tag": "BUTTON",
+              "id": "glsQuizNext",
+              "inside": true
+            },
+            "body": {
+              "x": 272.5,
+              "y": 263.9,
+              "w": 478,
+              "h": 615.1,
+              "bottom": 879,
+              "top": 9,
+              "client": 615,
+              "extent": 640,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 271.5,
+              "y": 140.4,
+              "w": 480,
+              "h": 739.6,
+              "bottom": 880,
+              "top": 0,
+              "client": 738,
+              "extent": 747,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 288.5,
+                "y": 799,
+                "w": 446,
+                "h": 21.9,
+                "bottom": 820.9,
+                "hit": true,
+                "focused": false
+              },
+              "next": {
+                "x": 288.5,
+                "y": 832.9,
+                "w": 446,
+                "h": 46,
+                "bottom": 878.9,
+                "hit": true,
+                "focused": true
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 288.5,
+                "y": 413.5,
+                "w": 446,
+                "h": 46,
+                "bottom": 459.5,
+                "hit": true,
+                "focused": false
+              },
+              "close": {
+                "x": 698.5,
+                "y": 169.4,
+                "w": 40,
+                "h": 40,
+                "bottom": 209.4,
+                "hit": true,
+                "focused": false
+              }
+            }
+          },
+          "closed": {
+            "viewport": [
+              1024,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": true,
+            "mq85": false,
+            "overlay": "true",
+            "settings": "true",
+            "expanded": "false",
+            "lock": "visible",
+            "pageY": 0,
+            "active": {
+              "tag": "BODY",
+              "id": "",
+              "inside": false
+            },
+            "body": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "top": 0,
+              "client": 0,
+              "extent": 0,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "bottom": 0,
+              "top": 0,
+              "client": 0,
+              "extent": 0,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "next": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "close": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              }
+            }
+          },
+          "opener": "#mobSettingsBtn",
+          "reopened": {
+            "viewport": [
+              1024,
+              900
+            ],
+            "fine": true,
+            "touchPoints": 0,
+            "mq64": true,
+            "mq85": false,
+            "overlay": "false",
+            "settings": "true",
+            "expanded": "true",
+            "lock": "hidden",
+            "pageY": 0,
+            "active": {
+              "tag": "BUTTON",
+              "id": "tabTerms",
+              "inside": true
+            },
+            "body": {
+              "x": 273,
+              "y": 263.9,
+              "w": 478,
+              "h": 615.1,
+              "bottom": 879,
+              "top": 9,
+              "client": 615,
+              "extent": 640,
+              "overflowY": "auto"
+            },
+            "box": {
+              "x": 272,
+              "y": 140.4,
+              "w": 480,
+              "h": 739.6,
+              "bottom": 880,
+              "top": 0,
+              "client": 738,
+              "extent": 747,
+              "overflowY": "hidden"
+            },
+            "targets": {
+              "source": {
+                "x": 289,
+                "y": 799,
+                "w": 446,
+                "h": 21.9,
+                "bottom": 820.9,
+                "hit": true,
+                "focused": false
+              },
+              "next": {
+                "x": 289,
+                "y": 832.9,
+                "w": 446,
+                "h": 46,
+                "bottom": 878.9,
+                "hit": true,
+                "focused": false
+              },
+              "confidence": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0,
+                "bottom": 0,
+                "hit": false,
+                "focused": false
+              },
+              "option": {
+                "x": 289,
+                "y": 413.5,
+                "w": 446,
+                "h": 46,
+                "bottom": 459.5,
+                "hit": true,
+                "focused": false
+              },
+              "close": {
+                "x": 699,
+                "y": 169.4,
+                "w": 40,
+                "h": 40,
+                "bottom": 209.4,
+                "hit": true,
+                "focused": false
+              }
+            }
+          },
+          "sameState": true
+        }
+      ],
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "native-feedback-preferences",
+      "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "profile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "steps": [
+        {
+          "state": {
+            "question": "Что модель пяти стадий утверждает — и чего она не утверждает?",
+            "progress": "Вопрос 1 из 8",
+            "verdict": "Неверно",
+            "explanations": [
+              "Стадии описывают повторяющийся порядок разложения, но модель честно ограничена: она не выносит автоматического приговора и не описывает обязательный порядок для каждой церкви.",
+              "Часть II начинается с ограничения: повторяемость механизмов полезна, но её нельзя превращать в закон природы. Модель не утверждает, что всякая большая церковь неизбежно становится нездоровой, что известность пастора сама по себе является идолом, что всякий конфликт совета с ведущим пастором доказывает авторитаризм и что всякий падший лидер прошёл все пять стадий именно в этом порядке. Она утверждает более скромное и проверяемое: когда платформа становится незаменимой, независимая проверка слабеет, несогласие дорожает, репутация опережает истину, а покаяние начинает управлять впечатлением — личная проблема получает системную защиту."
+            ],
+            "options": [
+              {
+                "text": "Это описательная карта индивидуальных психологических черт пастора: стадии позволяют диагностировать его личность по одному публичному конфликту",
+                "className": "quiz-option is-incorrect",
+                "disabled": true
+              },
+              {
+                "text": "Это универсальный закон: любая достаточно большая церковь проходит пять стадий в одном и том же порядке, и любое отклонение от модели само по себе доказывает скрытое злоупотребление, даже без проверки фактов и доказательств",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Это повторяющаяся причинная траектория в документированных случаях, а не закон природы: модель не утверждает, что всякая большая церковь неизбежно нездорова и что всякий конфликт совета доказывает авторитаризм",
+                "className": "quiz-option is-correct",
+                "disabled": true
+              },
+              {
+                "text": "Это разовый чек-лист для диагностической беседы: пройдя его один раз, член получает готовый вердикт о здоровье своей церкви",
+                "className": "quiz-option",
+                "disabled": true
+              }
+            ],
+            "source": [
+              {
+                "href": "#metod",
+                "label": "Что эта модель утверждает — и чего не утверждает"
+              }
+            ]
+          },
+          "themes": [
+            {
+              "theme": "light",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                5.97,
+                7.13
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#8b3434",
+                "bgColor": "#f7f1ec",
+                "contrastRatio": 7.1,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#8b3434",
+                      "bgColor": "#f7f1ec",
+                      "contrastRatio": 7.1,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#1a1a1a",
+                      "bgColor": "#f4f2ed",
+                      "contrastRatio": 15.55,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#1a1a1a",
+                      "bgColor": "#f4f2ed",
+                      "contrastRatio": 15.55,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#8b3434",
+                      "bgColor": "#f7f1ec",
+                      "contrastRatio": 7.1,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            },
+            {
+              "theme": "dark",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(22, 26, 33, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                1.71,
+                2.18
+              ],
+              "axeHeading": {
+                "status": "violations",
+                "fgColor": "#8b3434",
+                "bgColor": "#1d1b21",
+                "contrastRatio": 2.14,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#8b3434",
+                      "bgColor": "#1d1b21",
+                      "contrastRatio": 2.14,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": null,
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#e6e1d7",
+                      "bgColor": "#161a21",
+                      "contrastRatio": 13.38,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#e6e1d7",
+                      "bgColor": "#161a21",
+                      "contrastRatio": 13.38,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#d4a574",
+                      "bgColor": "#1d1b21",
+                      "contrastRatio": 7.66,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            },
+            {
+              "theme": "sepia",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                5.97,
+                7.13
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#8b3434",
+                "bgColor": "#f6efe8",
+                "contrastRatio": 6.98,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#8b3434",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 6.98,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#e8d9ba",
+                      "contrastRatio": 8.14,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#e8d9ba",
+                      "contrastRatio": 8.14,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#654b80",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 6.41,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            }
+          ]
+        },
+        {
+          "state": {
+            "question": "Как статья различает личный грех лидера и системное зло?",
+            "progress": "Вопрос 2 из 8",
+            "verdict": "Верно",
+            "explanations": [
+              "Ключевое различение серии: личная ошибка ещё не система. Система — это устройство, при котором ошибка защищена от подотчётности, информации и света.",
+              "Часть II выносит в отдельный раздел различение личного греха и системного зла. Личный грех — событие с виновником; системное зло — механизм: подотчётность становится декоративной, информация концентрируется, страх управляет вопросами, и грех перестаёт быть ошибкой человека, превращаясь в состояние системы. Отсюда и ранние маркеры: они наблюдаемы в устройстве, а не в настроениях."
+            ],
+            "options": [
+              {
+                "text": "Система — это механизм, который защищает грех от света и делает его самоподдерживающимся, а не просто сумма личных грехов",
+                "className": "quiz-option is-correct",
+                "disabled": true
+              },
+              {
+                "text": "Личный грех всегда предшествует системе: пока не появится грешащий человек, нездоровая структура не может возникнуть и существовать",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Категории независимы: при нравственном лидере система по определению здорова, а при слабом лидере она неизбежно нездорова, каковы бы ни были механизмы",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Системное зло становится наблюдаемым только после публичного скандала: до него различение между личным грехом и системой невозможно",
+                "className": "quiz-option",
+                "disabled": true
+              }
+            ],
+            "source": [
+              {
+                "href": "#lichnoe-sistemnoe",
+                "label": "Личный грех и системное зло — не одно"
+              }
+            ]
+          },
+          "themes": [
+            {
+              "theme": "sepia",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                4.81,
+                5.75
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#286c40",
+                "bgColor": "#f1f3e9",
+                "contrastRatio": 5.66,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#286c40",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 5.66,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#e8d9ba",
+                      "contrastRatio": 8.14,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#e8d9ba",
+                      "contrastRatio": 8.14,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#654b80",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 6.52,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            },
+            {
+              "theme": "dark",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(22, 26, 33, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                2.11,
+                2.7
+              ],
+              "axeHeading": {
+                "status": "violations",
+                "fgColor": "#286c40",
+                "bgColor": "#161e22",
+                "contrastRatio": 2.66,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#286c40",
+                      "bgColor": "#161e22",
+                      "contrastRatio": 2.66,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": null,
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#e6e1d7",
+                      "bgColor": "#161a21",
+                      "contrastRatio": 13.38,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#e6e1d7",
+                      "bgColor": "#161a21",
+                      "contrastRatio": 13.38,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#d4a574",
+                      "bgColor": "#161e22",
+                      "contrastRatio": 7.58,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            },
+            {
+              "theme": "light",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                4.81,
+                5.75
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#286c40",
+                "bgColor": "#f2f5ed",
+                "contrastRatio": 5.75,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#286c40",
+                      "bgColor": "#f2f5ed",
+                      "contrastRatio": 5.75,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#1a1a1a",
+                      "bgColor": "#f4f2ed",
+                      "contrastRatio": 15.55,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#1a1a1a",
+                      "bgColor": "#f4f2ed",
+                      "contrastRatio": 15.55,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#286c40",
+                      "bgColor": "#f2f5ed",
+                      "contrastRatio": 5.75,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            }
+          ]
+        }
+      ],
+      "sameDocument": true,
+      "ok": true
+    },
+    {
+      "scenario": "native-feedback-preferences",
+      "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "profile": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "pageErrors": [],
+      "localHttpFailures": [],
+      "steps": [
+        {
+          "state": {
+            "question": "Что модель пяти стадий утверждает — и чего она не утверждает?",
+            "progress": "Вопрос 1 из 8",
+            "verdict": "Неверно",
+            "explanations": [
+              "Стадии описывают повторяющийся порядок разложения, но модель честно ограничена: она не выносит автоматического приговора и не описывает обязательный порядок для каждой церкви.",
+              "Часть II начинается с ограничения: повторяемость механизмов полезна, но её нельзя превращать в закон природы. Модель не утверждает, что всякая большая церковь неизбежно становится нездоровой, что известность пастора сама по себе является идолом, что всякий конфликт совета с ведущим пастором доказывает авторитаризм и что всякий падший лидер прошёл все пять стадий именно в этом порядке. Она утверждает более скромное и проверяемое: когда платформа становится незаменимой, независимая проверка слабеет, несогласие дорожает, репутация опережает истину, а покаяние начинает управлять впечатлением — личная проблема получает системную защиту."
+            ],
+            "options": [
+              {
+                "text": "Это описательная карта индивидуальных психологических черт пастора: стадии позволяют диагностировать его личность по одному публичному конфликту",
+                "className": "quiz-option is-incorrect",
+                "disabled": true
+              },
+              {
+                "text": "Это универсальный закон: любая достаточно большая церковь проходит пять стадий в одном и том же порядке, и любое отклонение от модели само по себе доказывает скрытое злоупотребление, даже без проверки фактов и доказательств",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Это повторяющаяся причинная траектория в документированных случаях, а не закон природы: модель не утверждает, что всякая большая церковь неизбежно нездорова и что всякий конфликт совета доказывает авторитаризм",
+                "className": "quiz-option is-correct",
+                "disabled": true
+              },
+              {
+                "text": "Это разовый чек-лист для диагностической беседы: пройдя его один раз, член получает готовый вердикт о здоровье своей церкви",
+                "className": "quiz-option",
+                "disabled": true
+              }
+            ],
+            "source": [
+              {
+                "href": "#metod",
+                "label": "Что эта модель утверждает — и чего не утверждает"
+              }
+            ]
+          },
+          "themes": [
+            {
+              "theme": "light",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                5.97,
+                7.13
+              ],
+              "axeHeading": {
+                "status": "incomplete",
+                "contrastRatio": 0,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": "bgGradient",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [],
+                "incomplete": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "theme": "dark",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(22, 26, 33, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                1.71,
+                2.18
+              ],
+              "axeHeading": {
+                "status": "incomplete",
+                "contrastRatio": 0,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": "bgGradient",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [],
+                "incomplete": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "theme": "sepia",
+              "sameState": true,
+              "heading": {
+                "text": "Неверно",
+                "color": "rgb(139, 52, 52)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.545098 0.203922 0.203922 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                5.97,
+                7.13
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#8b3434",
+                "bgColor": "#f6efe8",
+                "contrastRatio": 6.98,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#8b3434",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 6.98,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 9.95,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 9.95,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#metod\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#654b80",
+                      "bgColor": "#f6efe8",
+                      "contrastRatio": 6.41,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            }
+          ]
+        },
+        {
+          "state": {
+            "question": "Как статья различает личный грех лидера и системное зло?",
+            "progress": "Вопрос 2 из 8",
+            "verdict": "Верно",
+            "explanations": [
+              "Ключевое различение серии: личная ошибка ещё не система. Система — это устройство, при котором ошибка защищена от подотчётности, информации и света.",
+              "Часть II выносит в отдельный раздел различение личного греха и системного зла. Личный грех — событие с виновником; системное зло — механизм: подотчётность становится декоративной, информация концентрируется, страх управляет вопросами, и грех перестаёт быть ошибкой человека, превращаясь в состояние системы. Отсюда и ранние маркеры: они наблюдаемы в устройстве, а не в настроениях."
+            ],
+            "options": [
+              {
+                "text": "Система — это механизм, который защищает грех от света и делает его самоподдерживающимся, а не просто сумма личных грехов",
+                "className": "quiz-option is-correct",
+                "disabled": true
+              },
+              {
+                "text": "Личный грех всегда предшествует системе: пока не появится грешащий человек, нездоровая структура не может возникнуть и существовать",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Категории независимы: при нравственном лидере система по определению здорова, а при слабом лидере она неизбежно нездорова, каковы бы ни были механизмы",
+                "className": "quiz-option",
+                "disabled": true
+              },
+              {
+                "text": "Системное зло становится наблюдаемым только после публичного скандала: до него различение между личным грехом и системой невозможно",
+                "className": "quiz-option",
+                "disabled": true
+              }
+            ],
+            "source": [
+              {
+                "href": "#lichnoe-sistemnoe",
+                "label": "Личный грех и системное зло — не одно"
+              }
+            ]
+          },
+          "themes": [
+            {
+              "theme": "sepia",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                4.81,
+                5.75
+              ],
+              "axeHeading": {
+                "status": "passes",
+                "fgColor": "#286c40",
+                "bgColor": "#f1f3e9",
+                "contrastRatio": 5.66,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "fgColor": "#286c40",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 5.66,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 10.12,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "fgColor": "#493720",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 10.12,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "fgColor": "#654b80",
+                      "bgColor": "#f1f3e9",
+                      "contrastRatio": 6.52,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ],
+                "incomplete": []
+              }
+            },
+            {
+              "theme": "dark",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(22, 26, 33, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                2.11,
+                2.7
+              ],
+              "axeHeading": {
+                "status": "incomplete",
+                "contrastRatio": 0,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": "bgGradient",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [],
+                "incomplete": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "theme": "light",
+              "sameState": true,
+              "heading": {
+                "text": "Верно",
+                "color": "rgb(40, 108, 64)",
+                "fontSize": "13px",
+                "directLayers": true,
+                "hit": true,
+                "backgrounds": [
+                  "rgba(255, 253, 248, 0.92)",
+                  "color(srgb 0.156863 0.423529 0.25098 / 0.06)",
+                  "rgba(0, 0, 0, 0)"
+                ],
+                "normalComposition": true
+              },
+              "wcagBounds": [
+                4.81,
+                5.75
+              ],
+              "axeHeading": {
+                "status": "incomplete",
+                "contrastRatio": 0,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "bold",
+                "messageKey": "bgGradient",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "axe": {
+                "violations": [],
+                "passes": [],
+                "incomplete": [
+                  {
+                    "target": [
+                      ".quiz-feedback > strong"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--short"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-explanation--full"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "normal",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  },
+                  {
+                    "target": [
+                      ".quiz-feedback > a[href$=\"#lichnoe-sistemnoe\"]"
+                    ],
+                    "data": {
+                      "contrastRatio": 0,
+                      "fontSize": "9.8pt (13px)",
+                      "fontWeight": "bold",
+                      "messageKey": "bgGradient",
+                      "expectedContrastRatio": "4.5:1"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "sameDocument": true,
+      "ok": true
+    }
+  ],
+  "chromium": "153.0.8010.0",
+  "distSha256": {
+    "_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js": "24dfad4cff4bccfc268256061a7d20a7fd9e451259fae77d29405e3a8e0a92c8",
+    "_astro/ReaderActionsRuntime.BWQE1cBa.css": "e5f4cca04d0966fdf1db54d030b522ea948a4788453f9f712bb5496c102c5bd3",
+    "_astro/ReaderActionsRuntime.DUDpvCW2.css": "d2dc416d7c868f1aefaac451085eff8652b20a07cb2c84400db31102233b39e3",
+    "_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js": "c052e1289a2350ac9d3e2958210d7b03a82c0bbd715ee980aff7433b5d5c906d",
+    "articles/anatomiya-padeniya-pyat-stadiy/index.html": "995afe15aa2e06f6be814b79cd73a2082adc6d8984caad4ddbcf2722d2f247ae",
+    "articles/dzhon-gill-chast-1-chelovek/index.html": "f3608320ac3d3b8936254741b34fac8bf2312fac66059150aa8f801351b03fd4",
+    "articles/otstuplenie-chto-govorit-bibliya/index.html": "1b58c0fbbe3903d9c085b79eb037fd65dd21d5a78bef7cc89469a0a77e766e11",
+    "css/floating-cluster.css": "88e6300e0326fb7c80f03b034f4c4a589fc70ab781195a65d0fb10f2620ccc09",
+    "css/reader-preferences.css": "26db17a3d655b755626ab99e5b5f324de19c2d50bbc09aa78151fa1e48483127",
+    "css/site.css": "732da3886d49bad4ae266796e7a58bd884ce0d7ec0e167a1cfad151a389ecc61",
+    "js/floating-cluster-controller.js": "bd2d040cab7c4298a28db36eef9899bd6fdfda1d7e62f6b69c209e914173fc7a",
+    "js/reader-preferences-head.js": "5c417d671862f04e4444bd034baab021ec75e9608de73c21b1dbefe6b492891a",
+    "js/reader-preferences.js": "b8edae4ef5c471f1eb9b7bb48c5c8a2a0c10dfffc0c2dc6486de244afa93cbcc",
+    "js/site-utils.js": "e70f34a3f2b80a7933694ee5b95db71e92331fe0f979df8594646634458695f3"
+  },
+  "total": 8,
+  "passed": 8,
+  "screenshots": [
+    {
+      "file": "compact-short-quiz.png",
+      "sha256": "55fcc5bbf2d4bb741525457a7633eb69618dc541e54aaa9744a2d0ca8d1dbba3"
+    },
+    {
+      "file": "wide-short-quiz.png",
+      "sha256": "863884c8b9a7b284c6996da80e21a2e8131e003b91dd5f9c1fa8fc7f390a474e"
+    }
+  ]
+}

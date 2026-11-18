@@ -1,0 +1,68 @@
+# 2026-11-18 UTC — этап 6: состояние и достижимость действий при изменении настроек/viewport.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713; read-only.
+# AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0; Draft #570.
+
+[Anchor and adjacent work]
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+gh pr list -R FedorMilovanov/AuditRepo --state open --limit 60 --json number,title,headRefName,headRefOid,updatedAt
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 60 --json number,title,headRefName,headRefOid,updatedAt
+# 8 other AuditRepo and 7 Product Arena tips: read commit file lists via gh api repos/FedorMilovanov/REPO/commits/SHA.
+# AuditRepo #562 @0238de93 = MASTER only; #557 @3a48c5a8 = browser environment docs.
+# Product #2338 @f7ba60e61 = 17 Journal/G3/index/image paths; checked actual pr diff, no relevant owners.
+# Product arena/4786e4e2 @865480e7d = reading-time/product data and Pastor/Lot/Diotrophes owners,
+# not the learning sheet, shared scrolling CSS, preferences handlers or article-quiz feedback.
+gh pr diff 2338 -R FedorMilovanov/gb-is-my-strength --name-only
+gh pr diff 562 -R FedorMilovanov/AuditRepo --name-only
+gh api repos/FedorMilovanov/AuditRepo/compare/93f1c08d570f979aa6d22b2d6eb8e220272ea56a...8fa5a53d9c95af7d7e448eb4d0c4370b3bb1f02e
+gh api repos/FedorMilovanov/AuditRepo/compare/8fa5a53d9c95af7d7e448eb4d0c4370b3bb1f02e...e5474986ed9e61d4d07b188c29b43b8dd2de9ba5
+# Read R2 and both candidate patches at 93f1c08d, pagination follow-up 8fa5a53d, and new visual-page report e5474986.
+# Checked exact Product Body #legal-request-1966 against the reported wording and checked that 1966/1971 are absent from quizData.ts.
+# Compared R2 Voronin edit with exact Product 3D quizData.ts o1; map already uses Nikita. No change applied.
+# Compared source-auditor 6ee13af6 REPORT/FOLLOWUP/SOURCE-WITNESS-FOLLOWUP; CR-01 and CR-09 are editorial/source witnesses.
+# No open PR from arena/d608fa54-auditrepo at this snapshot. No new reviews on #570 at start.
+
+[Reproduction]
+# Obtain the exact archive and prepare TOOLS/PRODUCT using ../../arena-quiz-learning/2026-11-18/commands.log.
+# Reuse GB_BUILD_INSTANT=2026-11-18T13:24:28Z, production-like build, ownership and Pagefind.
+# PRODUCT/TOOLS are absolute directories; CHROMIUM is the Chromium 153.0.0 npm headless-shell binary path.
+R=$(pwd)
+L="$R/projects/gb-is-my-strength/incoming/arena-quiz-reader-adaptation/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-reader-adaptation.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+npm install --prefix "$OUT/axe" --no-audit --no-fund --save-exact --ignore-scripts axe-core@4.10.3
+AXE="$OUT/axe/node_modules/axe-core/axe.min.js"
+sha256sum "$AXE"
+# 880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb
+node --check "$L/harness/adaptation.mjs"
+(cd "$PRODUCT" && node "$L/harness/adaptation.mjs" "$PRODUCT" "$OUT" "$CHROMIUM" "$AXE")
+# Optional fifth argument filters scenario name, route or starting width.
+# No census input: harness uses the rendered quiz data read-only; independent contexts; no UI force-click,
+# DOM/CSS override, seeded RNG, direct preference writes or synthetic resize handler invocation.
+# No public navigation; names for external hosts blocked, SW blocked, reduced motion.
+
+[Observed checks and controls]
+# Two complete final runs, second from the installed intake harness: 8/8 expected outcomes each,
+# same 14 dist hashes, no local HTTP >=400 and no pageerror; performance.timeOrigin preserved in all cases.
+# Verified both PNG digests/dimensions in each run. Attached pair uses apostasy.p1.lexeme in one run;
+# unseeded decks can differ on replay (e.g. apostasy.p1.hardening). Not a byte-equality requirement for PNGs.
+# Pointer wheel starts on a hit-tested area of the body; hit test of Next/source does not scroll them into view.
+# Touch swipes use Chromium Input.dispatchTouchEvent; native pointer/tap at verified centers for decisive actions.
+# At 1359 and 1360 the mouse context/touchpoints are fixed; at 64em the independent lifecycle listener is tested separately.
+# Initial harness expected an axe ratio on the desktop: 7/8 because the true status is incomplete: bgGradient.
+# Retained that status, and independently bounded actual verdict contrast using the computed flat layers
+# over any underlay. Checked the heading is hit-testable, flat layers have no image/pseudos, no opacity/filter/blend change.
+# At 390 both dark-title axe findings cross-check with the same bounds; sepia/light controls measured too.
+# Historical 2026-10-23 contrast harness checked discovered quiz surfaces without answering, not this node.
+
+[AuditRepo admission]
+# CHANGED contains the actual staged paths or cumulative PR paths against the AuditRepo base.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+git diff --cached --check
+# Intake-only commit, regular push restricted to arena/9713b5a4-auditrepo. No merge, deployment, Product mutation or authority transition.
