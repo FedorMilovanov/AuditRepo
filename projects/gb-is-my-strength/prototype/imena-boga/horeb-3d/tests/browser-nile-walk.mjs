@@ -87,7 +87,22 @@ try{
  const box=await forward.boundingBox();
  if(!box)throw new Error('MOBILE WALK CONTROL HIDDEN');
  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
- await page.mouse.down();await sleep(530);await page.mouse.up();await sleep(95);
+ await page.mouse.down();
+ try{
+   // Slow software WebGL renders variable frame counts per wall-clock second.
+   // Verify the SAME actual >=0.20 m movement, waiting for enough simulated
+   // frames instead of assuming 530 ms always advances the player.
+   await page.waitForFunction(start=>{
+     const canvas=document.querySelector('[data-testid="moses-nile-3d"]');
+     const x=Number(canvas?.dataset.nileCameraX),z=Number(canvas?.dataset.nileCameraZ);
+     return Number.isFinite(x)&&Number.isFinite(z)&&
+       Math.hypot(x-start.x,z-start.z)>.235;
+   },{timeout:15000},beforeTouch);
+ }finally{
+   // Fail closed without allowing the synthetic pointer to remain held.
+   await page.mouse.up();
+ }
+ await sleep(95);
  const afterTouch=await read();
  if(Math.hypot(afterTouch.x-beforeTouch.x,afterTouch.z-beforeTouch.z)<.2)
    throw new Error('W10 MOBILE POINTER MOVEMENT INERT '+JSON.stringify({beforeTouch,afterTouch}));
