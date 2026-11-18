@@ -1,0 +1,213 @@
+{
+  "candidateBase": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "comparisonBuild": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "buildInstantUtc": "2026-11-18T13:24:28Z",
+  "environment": "Local production-like dist, headless Chromium. No external network in the browser. Text/structure comparison, not byte identity.",
+  "browser": "153.0.8010.0",
+  "checkedViewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1440,
+      "height": 950
+    }
+  ],
+  "candidateVisits": 22,
+  "controlVisits": 11,
+  "crossRouteFragments": 891,
+  "headingsIdsContentsCanonicalDatelinesCaptionsMediaAndSeriesDestinationParity": "PASS",
+  "unchangedBodiesExactMarkup": 5,
+  "mobileReferenceToc": {
+    "candidate": {
+      "fragment": "#what-to-search-next",
+      "overlayCloses": true,
+      "headingTopPx": 88
+    },
+    "base": {
+      "fragment": "#what-to-search-next",
+      "overlayCloses": true,
+      "headingTopPx": 88
+    }
+  },
+  "duplicateArticleIds": 0,
+  "brokenSamePageFragments": 0,
+  "candidateLocal4xx": 0,
+  "pageErrors": 0,
+  "routes": [
+    {
+      "route": "/baptisty-rossii/",
+      "http": 200,
+      "bodyChanged": false,
+      "samePageUniqueTargets": 9,
+      "seriesPaths": 19,
+      "figuresWithCaptions": 0,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/noch-na-kure/",
+      "http": 200,
+      "bodyChanged": false,
+      "samePageUniqueTargets": 8,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 3,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/yuzhnaya-shtunda/",
+      "http": 200,
+      "bodyChanged": false,
+      "samePageUniqueTargets": 7,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 3,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/dva-sezda-1884/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 8,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 2,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/peterburgskaya-liniya/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 12,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 4,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/goneniya-i-sovest/",
+      "http": 200,
+      "bodyChanged": false,
+      "samePageUniqueTargets": 14,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 1,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/sovetskaya-noch/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 14,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 2,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/vsehib-1944/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 16,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 2,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/iniciativnaya-gruppa/",
+      "http": 200,
+      "bodyChanged": false,
+      "samePageUniqueTargets": 14,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 4,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/podpolnaya-pechat/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 15,
+      "seriesPaths": 112,
+      "figuresWithCaptions": 4,
+      "summary": "one planned text change",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    },
+    {
+      "route": "/baptisty-rossii/spravochnik/",
+      "http": 200,
+      "bodyChanged": true,
+      "samePageUniqueTargets": 11,
+      "seriesPaths": 111,
+      "figuresWithCaptions": 1,
+      "summary": "unchanged",
+      "overflowPx": {
+        "390": 0,
+        "1440": 0
+      }
+    }
+  ],
+  "linkedSources": {
+    "sovetskaya-noch": [
+      "https://www.pravenc.ru/text/2578039.html",
+      "https://docs.historyrussia.org/ru/nodes/95659"
+    ],
+    "vsehib-1944": [
+      "https://azbyka.ru/otechnik/Istorija_Tserkvi/vlast-i-tserkov-v-vostochnoj-evrope-1944-1953/6",
+      "https://mbchurch.ru/publications/brotherly_journal/150/"
+    ],
+    "podpolnaya-pechat": [
+      "https://www.rp-net.ru/tools/d_cnt.php?IBLOCK_ID=47&ID=6906",
+      "https://document.wikireading.ru/19046"
+    ],
+    "spravochnik": [
+      "https://www.rp-net.ru/tools/d_cnt.php?IBLOCK_ID=47&ID=6906",
+      "https://document.wikireading.ru/19046"
+    ]
+  },
+  "excerpts": {
+    "dva-sezda-1884": "Через несколько недель после петербургского совещания южные баптисты собрались на отдельный съезд в Ново-Васильевке Таврической губернии. Протокол опубликован и в приложениях Валькевича, и в «Материалах» Дородницына 1908 года (док. № 323, с. 569 и далее). Его заголовок точен и сам по себе говорит о характере события: «Протокол конференции союза верующих крещёных христиан, или так называемых баптистов южной России и Кавказа, состоявшейся 30 апреля и 1 мая 1884 года в молитвенном доме баптистов».",
+    "peterburgskaya-liniya": "В истории русского евангельского движения Петербургская линия занимает особое место. Она не начинается с крещения в реке, как кавказская история Никиты Воронина, и не вырастает из сельской штунды, как южная ветвь. Её ранняя сцена — столица империи: частные дома, люди высшего общества, французский и английский язык, проповедь о личном обращении, а затем русская речь, домашние собрания, тюремное и больничное служение, книги, песни, союзы и собственные публичные институты.",
+    "sovetskaya-noch": "20 января по старому стилю (2 февраля) 1918 года Совет народных комиссаров принял декрет об отделении церкви от государства и школы от церкви. 23 января (5 февраля) декрет официально опубликовали в правительственной газете (№ 15). Он отменял государственные преимущества вероисповеданий, запрещал преподавание религии в общеобразовательных учреждениях, лишал церковные и религиозные общества прав юридического лица и объявлял их имущество народным достоянием, допуская передачу зданий и предметов в бесплатное пользование по решениям власти.",
+    "vsehib-1944": "Совет по делам религиозных культов при СНК СССР был учреждён постановлением № 572 от 19 мая 1944 года. 6 июня председателем назначили И. В. Полянского. В докладе М. А. Орлов относил создание Совета к июлю. Он также отмечал, что Совет помог созвать всесоюзное совещание в условиях войны.",
+    "podpolnaya-pechat": "В заявлении на имя председателя Совета Министров СССР А. Н. Косыгина от 5 июня 1971 года издательство сообщало о начале работы. По изложению Людмилы Алексеевой, издатели называли своё объединение добровольным: оно существовало на пожертвования и распространяло литературу бесплатно. Отдельное обращение издательства к верующим датировано 10 июня. Оба текста перепечатаны в «Вестнике Русского христианского движения» (1975, № 115, с. 222–223); архивные оригиналы не сверены.",
+    "spravochnik": [
+      "5 июня 1971 — заявление издательства «Христианин» на имя А. Н. Косыгина.",
+      "10 июня 1971 — отдельное обращение издательства к верующим.",
+      "Скан-копия «Инструктивного письма» старшим пресвитерам сохранилась, однако происхождение и точная дата исходного экземпляра ещё требуют сверки. Об официальной позиции ВСЕХБ в 1963 году позволяют судить отчёт и Устав, опубликованные в «Братском вестнике» № 6; их не следует принимать за свидетельство о реакции всех сторон церковного конфликта. Заявление издательства «Христианин» от 5 июня 1971 года и обращение к верующим от 10 июня перепечатаны в «Вестнике Русского христианского движения» (1975, № 115, с. 222–223). Архивные оригиналы не сверены. По событиям 1923 года и судьбе подпольных типографий остаются вопросы, на которые пока нельзя ответить по одним поздним воспоминаниям."
+    ]
+  }
+}

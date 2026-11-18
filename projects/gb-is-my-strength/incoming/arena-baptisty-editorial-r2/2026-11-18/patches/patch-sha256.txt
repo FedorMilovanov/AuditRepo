@@ -1,0 +1,2 @@
+c6c10aacf7530a9a8d909c4cc67136c43f1983a231b38ad39561049fd9101027  chronology-and-voronin.patch
+a02a462c4564e5cd979df6d1500a4b91c742b04cd5c4860bededae216d91b90d  underground-press-and-1971.patch
