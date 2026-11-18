@@ -409,3 +409,59 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 [reagan-xiii]: https://www.reaganlibrary.gov/public/digitallibrary/smof/nscintelligence/degraffenreid/r26/40-139-39149351-R26-058-2018.pdf
 [unc-kg-xiii]: https://guides.lib.unc.edu/sovietnewspapers
 [infoteka-xiii]: https://online.infoteka.com/browse/udb/3970
+
+## Дополнение XIV — 18.11.2026 UTC
+
+### XIV: Экземпляры Friedensstimme
+
+Прочитаны **карточки и описи** Centre for Mennonite Brethren Studies (CMBS), не собственно журнальные полосы. Издания и собрания не взаимозаменяемы:
+
+| Запись держателя | Что указано | Что это даёт для поиска |
+| --- | --- | --- |
+| [*Nachrichten: Von den Feldern der Verfolgung*][nach-xiv], c0 | Gummersbach: Missionswerk Friedensstimme, канадский офис — Vancouver; 1982: сентябрь/октябрь и ноябрь/декабрь; 1984, т. 9: **42, 45–47**; 1985, т. 10: **полный 48–53**. Название изменено в 1990 г. | Сверить даты на **47–49**, чтобы найти первый выпуск, в котором мог быть отчёт после 24–25.11.1984 и до перепечатки ACR 25.03.1985. Ни месяц, ни содержание из одного номера не выводятся. |
+| [*Prisoner Bulletin*][prisoner-xiv], c0 | Elkhart, квартальный; **1984 т. 5 №2–3**, **1986 т. 6 №1–2**. | Год 1985 не указан в этой карточке, а не доказанно отсутствует. Сверить шапку/выходные до отождествления с американским *Prisoners’ Bulletin* Клиппенстайна. Не считать эти номера теми же, что материалы Винса за май/ноябрь. |
+| [*Voice of Hope Mission (Friedensstimme)*][voh-xiv] и [*Friedensstimme*][fs-historic-xiv], c0 | Один отдельный перечень — выборка **1990–1997**, другой — историческая газета **1902–1920**. | Не замены немецкому номеру 1984/85. У [Tabor][tabor-xiv], c4, запись нужного заглавия указывает **1986**, без целевого экземпляра. |
+
+**Что считать подтверждением цепочки.** Нужна заметка с выходными данными, датой, заголовком и страницами; сверить имена (Egor/Georg/Grigori и Andrei Wolf/Wolff), **30 000**, **3+3 / 6 т**, формулировки об изъятии и аресте и указанный источник. Отдельно искать ссылку на оценку выпуска издательства «около полумиллиона … на семи языках к 1982 г.»; совпадение слов об обыске не атрибутирует оценку. [Клиппенстайн][rcl-fs], c4–5: *Article 227*, №1 (январь 1985), с. 14 — по группе ссылок в прим. 29 и `Ibid.` в прим. 30, **не** проверенная страница об Иссыке. [Запрос на этот лист, KNS и образ Moore 58913](#xiii-запросы-на-образ-и-исходную-сводку) остаётся открытым.
+
+**Черновик CMBS, не отправлен.** `cmbs@mbchurches.ca`; [справка CMBS][cmbs-about-xiv] предлагает короткие проверки, копии не гарантирует. Первый шаг — определить один выпуск, не заказывать комплект.
+
+> Could you confirm the cover dates for *Nachrichten: Von den Feldern der Verfolgung*, vol. 9 no. 47 and vol. 10 nos. 48–49? I am trying to identify a short report on searches at Issyk (Esik, near Alma-Ata) in late November 1984, involving the Wolf brothers. If the item can be identified from the contents or a brief look-up, could you send its title, issue/date and page range, and advise whether the relevant page and imprint are available for private research?
+
+**Черновик издателю, не отправлен.** Публичный адрес Missionswerk Friedensstimme: `info@friedensstimme.com` ([официальный контакт][fs-contact-xiv], не опись). У [FSO Bremen][fso-xiv] контакт библиотеки `fsobib@uni-bremen.de` — резерв, не подтверждённый комплект за нужные годы.
+
+> Können Sie im Register zu *Nachrichten von den Feldern der Verfolgung* die früheste Meldung über die Durchsuchungen am 24./25. November 1984 in Issyk (bei Alma-Ata, Brüder Wolf, 30.000 Bibeln) ermitteln? Bitte nennen Sie, falls vorhanden, Heftnummer, Datum, Seite und die dort angegebene Quelle. Ist die Meldung auch in einer englischen Ausgabe erschienen? Zunächst geht es nur um die Fundstelle; bitte teilen Sie die Bedingungen für eine Lesekopie und für einen etwaigen Abdruck getrennt mit.
+
+### XIV: Именные листы и переписка
+
+- **Собрание [Georgi Vins (Wiens)][vins-xiv], vol. 1092, file 1.** Items **5–6** — материалы *International Representation for the Council of Evangelical Baptist Churches of the Soviet Union, Inc.*, май / ноябрь 1984. Item **7** — *Gefangenliste, Der Evangeliumschristen-Baptisten in der UdSSR*, 1985 (написание описи). Item **8** — *And Ye Visited Me: A Prison Directory of the Evangelical Christian Baptists in the Soviet Union*, Elkhart, International Representation, 1984. История комплектования по описи неясна. File 2 (материалы Эвальда Унру, 1979–1983) — запасной поиск по корреспонденции, не опись полученной телеграммы. Совпадение имён в двух справочниках, если строки найдутся, само по себе не докажет независимость сведений.
+- **Проверенный пример рассылки.** [Бюл. №109 (9), сентябрь–октябрь 1982][b109-xiv], c0, «Ходатайства Совета РУ ЕХБ», начало письма: «(копия: Зарубежному представительству СЦ ЕХБ)». Это указано для обращения Совета **за сентябрь**, не для телеграммы в №106 о приговоре Кинаса и двух задержанных из Ферганы. Не подтверждены сама полученная копия, регистрация, переадресация или ответ властей. «Фергана» в [№110][b110-xiv], c0, «Ходатайства», — Меркулов А. В. и военный сюжет, не исход по Сухорукову и Шевченко.
+- **Keston — рабочие карточки, а не только выпуск KNS.** Zoe Knox, [*Keston College and Religious Samizdat*][knox-xiv], с. 22–24, прим. 49, 53, 55–57 и 61 (c3–4, c8), описывает правила обработки, учётные листы и перекрёстную сверку имён; её ссылка **Keston Materials / 64 / 2** — на инструкцию марта 1977 г., не на досье по Иссыку/Кинасу. Это основание спросить Baylor о входящей карточке, переводе и файле списка отдельно от номера KNS. *Religious Prisoners in the USSR: A Study by Keston College* (Kent, 1985 в прим. 61) — дополнительное библиографическое заглавие для запроса титула; не считать его тем же экземпляром, что *Christian Prisoners* 1983/4, 1985/6 или Greenfire 1987 без сверки титулов и редакций. Именные страницы из них не получены.
+- **Архивные проверки цепочки.** [Reagan Library, Speechwriting: Research Office, Box 202, Conference on Religious Liberty (6/7)][reagan-conf-xiv], c0–2: в третьем *CREED Human Rights Update* рубрика «Briefing with Michael Bourdeaux» сообщает о брифинге **04.12.1984**, Rayburn Building, и о доступной тогда записи. Рубрика не называет иссыкцев/Кинаса; самой записи здесь нет. Соседняя заметка о Библиях относится к делу в Чехословакии. В [Puebla Institute, *Religion and the Soviet State*, май 1988][puebla-xiv], c0, предисловие прямо указывает, что значительная часть информации получена от Keston; нельзя считать отчёт независимым подтверждением конкретного первичного сообщения. Не подменять KNS выпусками CREED или Puebla.
+- **Слабые совпадения.** У Л. Коваленко [*Облако свидетелей Христовых*, 4-е изд., Киев, 2006][kov-xiv], c0, в оглавлении «Мартиролог» с. 33 и дополнение с. 36. `Кинас И.` виден в поисковом индексе, но именной лист публичным извлечением не открыт, нет отчества и других признаков тождества. Не выводить биографию или гибель из рубрики, объединяющей мучеников и узников. Поиск по именам файлов *Gefangenliste*, *And Ye Visited Me*, *Prisoner Bulletin*, *International Representation*, «Облако свидетелей» в подключённом Drive вернул 0 файлов (не проверка содержимого всех папок, не доказательство отсутствия бумажных экземпляров).
+
+**Черновик CMBS по справочникам, не отправлен.** Начать с конкретных строк, не просить скан целого списка. Items 5–6 и *Prisoner Bulletin* проверять отдельно, если нужны дополнения к срокам.
+
+> Could you check the name index or alphabetic entries in the Georgi Vins (Wiens) collection, vol. 1092, file 1, items 7–8, for Ivan Ervinovich Kinas (Tokmak, arrested 13 February 1982), Pavel Ivanovich Sukhorukov and Daniil Prokopyevich Shevchenko (Fergana)? A page reference and the title-page transcription of the relevant item would be very helpful. If a line is found and access permits, may I consult a copy of the relevant leaf (and the facing leaf if it continues there), including the heading and printed page number? No full-directory copy is requested.
+
+Приоритет параллельной сверки: [судебный регистрационный след и исполнение](#xii-судебная-регистрация), [KC.29 27/5, 27/9 и 28/23, CMU Heinz 277/9 №20 canvas 4](#кинас-срок-и-освобождение). Ни статья обвинения, ни прежняя ссылка, ни исход по двум ферганцам, ни акт освобождения не установлены. Доступ к листу, текстовая атрибуция и разрешение на воспроизведение — три отдельных вопроса.
+
+[nach-xiv]: https://cmbs.mennonitebrethren.ca/publications/nachrichten-von-den-feldern-der-verfolgung/
+[prisoner-xiv]: https://cmbs.mennonitebrethren.ca/publications/prisoner-bulletin/
+[voh-xiv]: https://cmbs.mennonitebrethren.ca/publications/voice-of-hope-mission-friedensstimme/
+[fs-historic-xiv]: https://cmbs.mennonitebrethren.ca/publications/friedensstimme/
+[tabor-xiv]: https://tabor.edu/wp-content/uploads/2020/02/Newspapers-and-Periodicals-1.pdf
+[cmbs-about-xiv]: https://cmbs.mennonitebrethren.ca/about-us/
+[fs-contact-xiv]: https://www.friedensstimme.com/page/cms/018a891c113e716491ac410c6eabb5f0
+[fso-xiv]: https://www.forschungsstelle.uni-bremen.de/
+[vins-xiv]: https://cmbs.mennonitebrethren.ca/personal_papers/vins-wiensgeorgi-1928-1998/
+[b109-xiv]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/109-1982.pdf
+[b110-xiv]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/110-1982.pdf
+[knox-xiv]: https://www.researchgate.net/publication/399240862_1_Keston_College_and_Religious_Samizdat_Documenting_the_Persecution_of_Christians_in_the_Soviet_Union
+[reagan-conf-xiv]: https://www.reaganlibrary.gov/public/2025-04/40-533-5708464-202-009-2025.pdf
+[puebla-xiv]: https://www.reaganlibrary.gov/public/digitallibrary/smof/publicliaison/chumachenko/oa18288/40-092-40031983-oa18288-006-2017.pdf
+[kov-xiv]: https://uznik.net/pdf/oblako_svidet.pdf
+
+### Срез доставки XIV
+
+**Срез владения путями, 22:37:07–22:37:17 UTC.** AuditRepo `main` `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`, рабочая ветка перед коммитом `98343a3a0559ab8526df32dee7df507bf8c6d62d`. Проверены **27** накопленных путей intake против **774** записей файлов **10** открытых PR: **0** пересечений по `filename` / `previous_filename`. Списки PR и файлов пагинированы, объёмы сверены с `changed_files`; состав открытых PR, их head/base и удалённые refs совпали на концах среза. Тесты структуры, допуска артефактов, синтаксиса workflow, валидации и покрытия матрицы прошли локально; это не CI чужих веток и не публикация материалов.
