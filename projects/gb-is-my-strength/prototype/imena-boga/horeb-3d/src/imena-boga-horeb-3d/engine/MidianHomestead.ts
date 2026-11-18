@@ -523,7 +523,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     HOMESTEAD_BASKET_DETAIL.segments,HOMESTEAD_BASKET_DETAIL.tube,5,false);
   const strandCount=HOMESTEAD_INTERIOR_STORAGE.length*
     HOMESTEAD_BASKET_DETAIL.strandsPerBasket;
-  const strands=new THREE.InstancedMesh(strandGeo,mat(0xad906c),strandCount);
+  const strands=new THREE.InstancedMesh(strandGeo,mat(0x806044),strandCount);
   const fibreTransform=new THREE.Object3D();
   let fibreIndex=0;
   for(const [basketIndex,prop] of HOMESTEAD_INTERIOR_STORAGE.entries()){
