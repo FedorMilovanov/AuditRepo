@@ -42,6 +42,7 @@ try{
     posts:Number(e.dataset.homesteadPosts),
     frontTrusses:Number(e.dataset.homesteadFrontTrusses),
     rear:Number(e.dataset.homesteadRearGables),
+    rearTriangles:Number(e.dataset.homesteadRearGableTriangles),
     rocks:Number(e.dataset.homesteadRockInstances),
     hillsCount:Number(e.dataset.homesteadRidgeSectors),
     skydome:Number(e.dataset.homesteadSky),
@@ -51,7 +52,8 @@ try{
   if(witness.world!=='homestead'||witness.roof!=='3d-woven-fabric-and-posts'||
      witness.door!=='walkable'||witness.hills!=='1'||
      witness.roofPanels!==2||witness.sidePanels!==2||
-     witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||witness.rocks!==64||
+     witness.posts!==5||witness.frontTrusses!==2||witness.rear!==1||
+     witness.rearTriangles!==96||witness.rocks!==64||
      witness.hillsCount!==4||witness.skydome!==1||
      witness.rearClothFaces!==784||witness.wovenMatFaces!==1120)
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));

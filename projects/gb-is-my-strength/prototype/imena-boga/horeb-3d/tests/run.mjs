@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -38,6 +38,18 @@ t('W12A household height is continuous and measured by camera',
   Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
     Number.isFinite(homesteadGround(0,z))&&
     Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12D.0: the physically rendered rear roof edge and the back gable top
+// must share the same curved profile, not a single straight triangle.
+t('W12D.0 roof rear edge is fully covered by its real gable profile',
+  HOMESTEAD_GABLE_SEGMENTS===48&&
+  Array.from({length:97},(_,i)=>-2.96+5.92*i/96).every(x=>
+    Number.isFinite(homesteadRoofBackHeight(x))&&
+    homesteadRearGableTop(x)-homesteadRoofBackHeight(x)>.045&&
+    homesteadRearGableTop(x)-homesteadRoofBackHeight(x)<.07));
+t('W12D.0 rear gable closes canopy behind all drape folds',
+  HOMESTEAD_REAR_GABLE_Z< -3.045&&
+  [-2.96,-2.5,0,2.5,2.96].every(x=>
+    homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
 // W12C.3: the mobile establishing camera still begins on ground from
 // which the centre corridor leads physically to the same tent opening.
 t('W12C.3 portrait camera approach corridor remains unobstructed',

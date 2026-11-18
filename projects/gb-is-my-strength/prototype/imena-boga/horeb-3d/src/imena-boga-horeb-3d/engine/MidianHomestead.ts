@@ -55,6 +55,20 @@ export function homesteadGround(x:number,z:number):number{
   const terrace=.34*outer*outer;
   return softened+terrace-.065*Math.exp(-Math.pow((z-4.2)/2.8,2));
 }
+/** Rear sheet seam is derived from the very same canopy height function.
+ * The cloth is a visual reconstruction, not a historically attested tent. */
+export const HOMESTEAD_GABLE_SEGMENTS=48;
+export const HOMESTEAD_REAR_GABLE_Z=-3.065;
+export function homesteadRoofBackHeight(x:number):number{
+  const u=Math.min(1,Math.abs(x)/3.07);
+  // This duplicates EXACTLY the end-row (v=0) of the actual rear roof mesh.
+  const ripple=.034*Math.sin(u*32)+.017*Math.cos(u*17);
+  return homesteadGround(x,-2.95)+3.07-u*1.80+ripple;
+}
+export function homesteadRearGableTop(x:number):number{
+  return homesteadRoofBackHeight(x)+.055;
+}
+
 export function homesteadWalkable(x:number,z:number):boolean{
   if(!Number.isFinite(x)||!Number.isFinite(z)||Math.abs(x)>HOMESTEAD_WALK.maxX||
     Math.abs(z)>HOMESTEAD_WALK.maxZ)return false;
@@ -287,18 +301,34 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   }));
   rear.castShadow=true;rear.receiveShadow=true;
   rear.name='shelter-rear-cloth';pivot.add(rear);
-  // A filled triangular upper gable joins the roof rather than leaving an
-  // impossible gap above a solid lower back wall.
-  const rearBase=homesteadGround(0,-2.98);
+  // The previous single TRIANGLE did not follow the curved rear roof
+  // edge. In interior Chromium frames, literal daylight wedges were visible
+  // on both sides of the ridge. Build ONE indexed gable whose upper profile
+  // derives from the roof's actual rear-row height (plus a 55mm overlap).
   const gable=new THREE.BufferGeometry();
-  gable.setAttribute('position',new THREE.Float32BufferAttribute([
-    -2.96,1.46+rearBase,-2.985,
-     2.96,1.46+rearBase,-2.985,
-     0,3.035+rearBase,-2.985,
-  ],3));
-  gable.computeVertexNormals();
+  const gablePositions:number[]=[],gableColours:number[]=[],gableIndices:number[]=[];
+  for(let i=0;i<=HOMESTEAD_GABLE_SEGMENTS;i++){
+    const x=-2.96+5.92*i/HOMESTEAD_GABLE_SEGMENTS;
+    const upperY=homesteadRearGableTop(x);
+    // Rear fabric folds reach z=-3.04 at their deepest points. Keep this
+    // closure behind all folds, rather than crossing them and z-fighting.
+    const baseY=Math.min(homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)+1.40,
+      upperY-.06);
+    gablePositions.push(x,baseY,HOMESTEAD_REAR_GABLE_Z,
+      x,upperY,HOMESTEAD_REAR_GABLE_Z);
+    const shade=.91+.05*Math.cos(x*2.5);
+    gableColours.push(shade,shade*.985,shade*.962,
+      shade*.968,shade*.954,shade*.932);
+    if(i){
+      const a=(i-1)*2,b=i*2;
+      gableIndices.push(a,b,a+1,a+1,b,b+1);
+    }
+  }
+  gable.setAttribute('position',new THREE.Float32BufferAttribute(gablePositions,3));
+  gable.setAttribute('color',new THREE.Float32BufferAttribute(gableColours,3));
+  gable.setIndex(gableIndices);gable.computeVertexNormals();
   const endCloth=new THREE.Mesh(gable,new THREE.MeshStandardMaterial({
-    color:0x9d866e,roughness:1,side:THREE.DoubleSide,
+    color:0xa58e77,vertexColors:true,roughness:1,side:THREE.DoubleSide,
   }));
   endCloth.castShadow=true;endCloth.receiveShadow=true;
   endCloth.name='shelter-solid-rear-gable';
@@ -498,6 +528,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadFrontTrusses=String(countMesh('shelter-open-front-truss'));
   canvas.dataset.homesteadRockInstances=String(count);
   canvas.dataset.homesteadRearGables=String(countMesh('shelter-solid-rear-gable'));
+  canvas.dataset.homesteadRearGableTriangles=String((gable.index?.count||0)/3);
   // Count actual render triangles, not merely declared subdivision labels.
   canvas.dataset.homesteadRearDrapeFaces=String((rearGeo.index?.count||0)/3);
   canvas.dataset.homesteadWovenMatFaces=String((matGeo.index?.count||0)/3);
