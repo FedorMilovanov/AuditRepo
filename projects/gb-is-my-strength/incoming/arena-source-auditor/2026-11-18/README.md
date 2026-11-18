@@ -26,5 +26,7 @@
 | [evidence/collection-holdings-evidence.md](evidence/collection-holdings-evidence.md) | Прочитанные подписи, архивная опись и каталоги; непосланные запросы к музею, архивам и библиотекам. |
 | [SOURCE-WITNESS-FOLLOWUP.md](SOURCE-WITNESS-FOLLOWUP.md) | Седьмой проход: прочитанные тексты 1971 года, печатные и каталожные версии соглашения 1945-го, номера газеты для проверки процесса в Цесисе. |
 | [evidence/source-witness-evidence.md](evidence/source-witness-evidence.md) | Пагинация и уровень проверки, идентификаторы UETS и лист СБУ; непосланные запросы к держателям. |
+| [REPRINTS-AND-IMAGES.md](REPRINTS-AND-IMAGES.md) | Восьмой проход: два ноябрьских заявления 1974 г., адреса вклеек и фото Keston, отдельная рассылка №279с за 1945 г. |
+| [evidence/reprints-and-image-evidence.md](evidence/reprints-and-image-evidence.md) | Чтение перепечатки, локаторы иллюстраций, предел проверки дат и непосланные запросы. |
 
-Это [intake](../../README.md) по [операционной модели AuditRepo](../../../../../AUDITREPO_OPERATING_MODEL.md), не MASTER-решение, не разрешение на правку и не аудит всех внешних ссылок, прав и источников. Product, Research, активная матрица и PR не изменялись.
+Это [intake](../../README.md) по [операционной модели AuditRepo](../../../../../AUDITREPO_OPERATING_MODEL.md), не MASTER-решение, не разрешение на правку и не аудит всех внешних ссылок, прав и источников. Product, файлы Research, активная матрица и состояния PR не менялись. Передача находок в обсуждение Research не заменяет приёмку.
