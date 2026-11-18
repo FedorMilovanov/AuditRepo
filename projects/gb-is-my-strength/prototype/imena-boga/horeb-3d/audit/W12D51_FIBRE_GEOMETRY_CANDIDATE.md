@@ -10,3 +10,6 @@ Replace those rejected hoop rings with 8 fine, slightly rising/leaning profile-b
 New exact-SHA source/geometry/placement, Validate, Preflight, all 4 side-pedestrian groups and complete Chromium. Inspect actual interior, exterior, mobile390; reject if fibres resemble rigid dark hoops or float visibly off bodies, exhibit Z-fighting or hide the central corridor. W12D.4 roof local ART PASS is preserved, not general Midian ART PASS. All physical Android/iOS GPU, people, animals, historical evidence, Research/rights, voice and release remain HOLD.
 
 One existing Draft PR #543, no main, W10D, Research, extra branch or force push.
+
+## Stronger geometry guard
+The same six-point radius/height profile drives both LatheGeometry and fibre positions. An exported pure function exposes a normalised fibre track to source tests: every 3D sample must have strictly ascending Y, a radius matching the body, and a substantial change in azimuth. The real browser must also report 0 old hoop meshes. These are engineering guards; screenshot ART assessment remains mandatory.

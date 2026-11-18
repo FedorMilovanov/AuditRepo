@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -91,7 +91,15 @@ t('W12D.5.1 fibre relief is subtle, profile-following and one instanced mesh',
   HOMESTEAD_BASKET_DETAIL.tube>=.008&&
   HOMESTEAD_BASKET_DETAIL.tube<=.013&&
   HOMESTEAD_BASKET_DETAIL.skinOffset>=.008&&
-  HOMESTEAD_BASKET_DETAIL.skinOffset<=.020);
+  HOMESTEAD_BASKET_DETAIL.skinOffset<=.020&&
+  HOMESTEAD_BASKET_PROFILE.length===6&&
+  HOMESTEAD_BASKET_PROFILE.every(p=>p.radius>.4&&p.radius<=1&&p.height>=0&&p.height<1)&&
+  (()=>{const ps=Array.from({length:15},(_,i)=>homesteadBasketFibrePoint(.12+.79*i/14));
+    return ps.every((p,i)=>Number.isFinite(p.x)&&Number.isFinite(p.y)&&
+      Number.isFinite(p.z)&&Math.hypot(p.x,p.z)>.89&&Math.hypot(p.x,p.z)<1.04&&
+      (i===0||p.y>ps[i-1].y))&&ps.at(-1).y-ps[0].y>.75&&
+      Math.abs(ps.at(-1).z-ps[0].z)>.25;
+  })());
 // W12D.2: small household forms must remain walk-blocking props, not
 // ghost scenery, while preserving the actual central visitor route.
 t('W12D.2 generic interior storage forms are bounded and independently colliding',

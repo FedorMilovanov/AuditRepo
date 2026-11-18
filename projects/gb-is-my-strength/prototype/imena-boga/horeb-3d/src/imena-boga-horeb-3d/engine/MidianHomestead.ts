@@ -67,6 +67,27 @@ export const HOMESTEAD_BASKET_DETAIL=Object.freeze({
   strandsPerBasket:8,pathSamples:15,segments:48,tube:.011,
   skinOffset:.012,
 });
+/** One radius source for the lathed body and the ascending fibre detail. */
+export const HOMESTEAD_BASKET_PROFILE=Object.freeze([
+  {radius:.46,height:0},{radius:.75,height:.045},
+  {radius:.96,height:.12},{radius:1,height:.30},
+  {radius:.96,height:.78},{radius:.91,height:.97},
+].map(p=>Object.freeze(p)));
+/** Ascending path, not the horizontal hoop geometry rejected in W12D.5. */
+export function homesteadBasketFibrePoint(t:number):{x:number;y:number;z:number}{
+  const points=HOMESTEAD_BASKET_PROFILE;
+  let radius=points[points.length-1].radius;
+  for(let i=1;i<points.length;i++){
+    const lo=points[i-1],hi=points[i];
+    if(t<=hi.height){
+      const f=Math.min(1,Math.max(0,(t-lo.height)/(hi.height-lo.height)));
+      radius=lo.radius+(hi.radius-lo.radius)*f;break;
+    }
+  }
+  const angle=-.17+.34*t+.025*Math.sin(t*8);
+  const r=radius+HOMESTEAD_BASKET_DETAIL.skinOffset;
+  return {x:r*Math.cos(angle),y:t,z:r*Math.sin(angle)};
+}
 export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
   Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),
   Object.freeze({x:2.08,z:-1.42,radius:.33,height:.36}),
@@ -453,11 +474,8 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   // Small domestic forms give human scale to the otherwise blank interior.
   // This is generic hypothetical craft material, not an enacted biblical
   // interaction and not reconstructed archaeological household equipment.
-  const storageProfile=[
-    new THREE.Vector2(.46,0),new THREE.Vector2(.75,.045),
-    new THREE.Vector2(.96,.12),new THREE.Vector2(1,.30),
-    new THREE.Vector2(.96,.78),new THREE.Vector2(.91,.97),
-  ];
+  const storageProfile=HOMESTEAD_BASKET_PROFILE.map(
+    p=>new THREE.Vector2(p.radius,p.height));
   const storageGeo=new THREE.LatheGeometry(storageProfile,28);
   const storagePos=storageGeo.getAttribute('position'),storageColors:number[]=[];
   for(let i=0;i<storagePos.count;i++){
@@ -494,23 +512,11 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   // Subtle freehand ascending fibres follow each true lathe body's profile.
   // Unlike the rejected W12D.5 horizontal hoops, this is sparse, fine and
   // does not form evenly stacked rings. One shared instanced draw call.
-  const profileRadius=(t:number):number=>{
-    for(let i=1;i<storageProfile.length;i++){
-      const lo=storageProfile[i-1],hi=storageProfile[i];
-      if(t<=hi.y){
-        const f=THREE.MathUtils.clamp((t-lo.y)/(hi.y-lo.y),0,1);
-        return THREE.MathUtils.lerp(lo.x,hi.x,f);
-      }
-    }
-    return storageProfile[storageProfile.length-1].x;
-  };
   const strandPoints:THREE.Vector3[]=[];
   for(let i=0;i<HOMESTEAD_BASKET_DETAIL.pathSamples;i++){
     const t=.12+.79*i/(HOMESTEAD_BASKET_DETAIL.pathSamples-1);
-    const angle=-.17+.34*t+.025*Math.sin(t*8);
-    const radius=profileRadius(t)+HOMESTEAD_BASKET_DETAIL.skinOffset;
-    strandPoints.push(new THREE.Vector3(
-      radius*Math.cos(angle),t,radius*Math.sin(angle)));
+    const p=homesteadBasketFibrePoint(t);
+    strandPoints.push(new THREE.Vector3(p.x,p.y,p.z));
   }
   const strandCurve=new THREE.CatmullRomCurve3(strandPoints,false,'centripetal');
   const strandGeo=new THREE.TubeGeometry(strandCurve,
@@ -757,6 +763,8 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   canvas.dataset.homesteadStorageStrands=String(strands.count);
   canvas.dataset.homesteadStorageStrandDrawCalls=String(
     countMesh('homestead-inner-storage-ascending-fibres'));
+  canvas.dataset.homesteadStorageRejectedHoops=String(
+    countMesh('homestead-inner-storage-woven-bands'));
   canvas.dataset.homesteadWovenTexturePixels=String(size*size);
   canvas.dataset.homesteadWovenBumpScale=String(HOMESTEAD_WEAVE_DETAIL.bumpScale);
   // These are actual mesh/material map bindings, not declared feature flags.

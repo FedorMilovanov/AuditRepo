@@ -55,6 +55,7 @@ try{
     rims:Number(e.dataset.homesteadStorageRims),
     basketStrands:Number(e.dataset.homesteadStorageStrands),
     basketStrandDrawCalls:Number(e.dataset.homesteadStorageStrandDrawCalls),
+    rejectedHoops:Number(e.dataset.homesteadStorageRejectedHoops),
     pebbleDrawCalls:Number(e.dataset.homesteadPebbleDrawCalls),
     hillsCount:Number(e.dataset.homesteadRidgeSectors),
     skydome:Number(e.dataset.homesteadSky),
@@ -72,6 +73,7 @@ try{
      witness.pebbles!==720||witness.pebbleDrawCalls!==1||
      witness.baskets!==2||witness.rims!==2||
      witness.basketStrands!==16||witness.basketStrandDrawCalls!==1||
+     witness.rejectedHoops!==0||
      witness.weavePixels!==16384||witness.weaveBindings!==9||
      !(witness.weaveBump>.005&&witness.weaveBump<.03)||
      witness.rearClothFaces!==784||witness.wovenMatFaces!==1120)
