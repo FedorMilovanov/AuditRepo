@@ -34,6 +34,12 @@ export const HOMESTEAD_RIDGE_SECTORS=Object.freeze([
 export const HOMESTEAD_GROUND_DETAIL=Object.freeze({
   washDepth:.135,washHalfWidth:1.85,pebbleCount:720,
 });
+/** W12D.2 authored generic household storage forms; NOT a claim about
+ * Exodus 2 family possessions or any excavated Midianite dwelling. */
+export const HOMESTEAD_INTERIOR_STORAGE=Object.freeze([
+  Object.freeze({x:-2.06,z:-1.60,radius:.39,height:.44}),
+  Object.freeze({x:2.08,z:-1.42,radius:.33,height:.36}),
+]);
 export function homesteadWashCenter(z:number):number{
   return 9.4+.9*Math.sin(z*.15+.9);
 }
@@ -95,6 +101,10 @@ export function homesteadWalkable(x:number,z:number):boolean{
     Math.abs(x)>h.doorHalfWidth)return false;
   if(Math.hypot(x-h.hearthX,z-h.hearthZ)<h.hearthRadius)return false;
   if(Math.hypot(x-4.4,z+.85)<.67)return false;
+  // A visitor cannot pass through the new physical basket bodies; the
+  // collision derives from the same storage locations and radii as render.
+  for(const prop of HOMESTEAD_INTERIOR_STORAGE)
+    if(Math.hypot(x-prop.x,z-prop.z)<prop.radius+.15)return false;
   for(const rock of HOMESTEAD_ROCK_COLLIDERS){
     // Inverse of the same Y rotation applied to the rendered rock instance.
     const dx=x-rock.x,dz=z-rock.z,c=Math.cos(rock.a),sn=Math.sin(rock.a);
@@ -380,6 +390,49 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   matFloor.name='shelter-3d-floor-mat';matFloor.receiveShadow=true;
   pivot.add(matFloor);
 
+  // Small domestic forms give human scale to the otherwise blank interior.
+  // This is generic hypothetical craft material, not an enacted biblical
+  // interaction and not reconstructed archaeological household equipment.
+  const storageProfile=[
+    new THREE.Vector2(.46,0),new THREE.Vector2(.75,.045),
+    new THREE.Vector2(.96,.12),new THREE.Vector2(1,.30),
+    new THREE.Vector2(.96,.78),new THREE.Vector2(.91,.97),
+  ];
+  const storageGeo=new THREE.LatheGeometry(storageProfile,28);
+  const storagePos=storageGeo.getAttribute('position'),storageColors:number[]=[];
+  for(let i=0;i<storagePos.count;i++){
+    const theta=Math.atan2(storagePos.getZ(i),storagePos.getX(i));
+    const y=storagePos.getY(i);
+    const weave=.89+.058*Math.cos(theta*9+y*21)+
+      .035*Math.sin(theta*13-y*41);
+    storageColors.push(weave,weave*.93,weave*.82);
+  }
+  storageGeo.setAttribute('color',new THREE.Float32BufferAttribute(storageColors,3));
+  const storageMaterial=new THREE.MeshStandardMaterial({
+    color:0x9d825f,vertexColors:true,roughness:1,side:THREE.DoubleSide,
+  });
+  const rimGeo=new THREE.TorusGeometry(.94,.055,6,28);
+  const rimMaterial=mat(0x6f5338),insideMaterial=mat(0x503b2c);
+  const storageBottomGeo=new THREE.CircleGeometry(.80,28);
+  for(const prop of HOMESTEAD_INTERIOR_STORAGE){
+    const ground=homesteadGround(prop.x,prop.z);
+    const body=new THREE.Mesh(storageGeo,storageMaterial);
+    body.position.set(prop.x,ground,prop.z);
+    body.scale.set(prop.radius,prop.height,prop.radius);
+    body.castShadow=true;body.receiveShadow=true;
+    body.name='homestead-inner-storage-basket';pivot.add(body);
+    const rim=new THREE.Mesh(rimGeo,rimMaterial);
+    rim.rotation.x=-Math.PI/2;
+    rim.scale.setScalar(prop.radius);
+    rim.position.set(prop.x,ground+prop.height*.97,prop.z);
+    rim.name='homestead-inner-storage-rim';rim.castShadow=true;pivot.add(rim);
+    const inset=new THREE.Mesh(storageBottomGeo,insideMaterial);
+    inset.rotation.x=-Math.PI/2;
+    inset.scale.setScalar(prop.radius);
+    inset.position.set(prop.x,ground+prop.height*.73,prop.z);
+    inset.name='homestead-inner-storage-opening';pivot.add(inset);
+  }
+
   // Hearth and storing vessels: actual 3D but not a staged invented meal.
   const hearthMat=[mat(0x7a6a59),mat(0x9e8970),mat(0x8b7964)];
   const rockGeo=new THREE.DodecahedronGeometry(1,1);
@@ -580,6 +633,10 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   // Count actual render triangles, not merely declared subdivision labels.
   canvas.dataset.homesteadRearDrapeFaces=String((rearGeo.index?.count||0)/3);
   canvas.dataset.homesteadWovenMatFaces=String((matGeo.index?.count||0)/3);
+  canvas.dataset.homesteadStorageBaskets=String(
+    countMesh('homestead-inner-storage-basket'));
+  canvas.dataset.homesteadStorageRims=String(
+    countMesh('homestead-inner-storage-rim'));
   frame=requestAnimationFrame(render);
   function dispose(){
     if(disposed)return;disposed=true;cancelAnimationFrame(frame);observer.disconnect();reset();

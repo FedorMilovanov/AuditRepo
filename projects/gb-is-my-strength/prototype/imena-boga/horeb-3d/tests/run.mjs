@@ -8,7 +8,7 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
-import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
@@ -50,6 +50,20 @@ t('W12D.0 rear gable closes canopy behind all drape folds',
   HOMESTEAD_REAR_GABLE_Z< -3.045&&
   [-2.96,-2.5,0,2.5,2.96].every(x=>
     homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.2: small household forms must remain walk-blocking props, not
+// ghost scenery, while preserving the actual central visitor route.
+t('W12D.2 generic interior storage forms are bounded and independently colliding',
+  HOMESTEAD_INTERIOR_STORAGE.length===2&&
+  HOMESTEAD_INTERIOR_STORAGE.every(p=>
+    Number.isFinite(p.x)&&Number.isFinite(p.z)&&
+    Math.abs(p.x)+p.radius<2.95&&p.z<0&&p.z>-2.75&&
+    p.height>=.32&&p.height<.50&&
+    !homesteadWalkable(p.x,p.z))&&
+  homesteadWalkable(0,-1.60)&&homesteadWalkable(0,0)&&
+  homesteadWalkable(0,1.8));
+t('W12D.2 inner storage has a clear physical central entry corridor',
+  Array.from({length:46},(_,i)=>2.1-i*.1)
+    .every(z=>homesteadWalkable(0,z)));
 // W12D.1: weathered dry-ground contours use ONE shared physical height
 // source for camera, mesh vertices, props and their actual walk path.
 t('W12D.1 wadi-like dry wash is an explicit non-historical terrain variation',
