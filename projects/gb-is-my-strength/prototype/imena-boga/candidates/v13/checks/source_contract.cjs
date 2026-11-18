@@ -533,8 +533,8 @@ console.log('V13_LXX_LOCUS_QUOTATION_AND_NAMING_SCOPE_PASS');
 const flagshipReaderNov11=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
 const flagshipAtlasNov11=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
 const flagshipRequired=[
-  [flagshipReaderNov11, 'В Дан. 4:29 слова о власти Всевышнего над царствами произносит небесный голос'],
-  [flagshipReaderNov11, 'сам царь благословляет Всевышнего после своего смирения (Дан. 4:31–32)'],
+  [flagshipReaderNov11, 'В Дан. 4:29 о власти Всевышнего говорит небесный голос'],
+  [flagshipReaderNov11, 'исповедание царя появляется позднее (4:31–32)'],
   [flagshipReaderNov11, 'именно это обозначение Бога встречается в начале книги Бытия'],
   [flagshipAtlasNov11, 'не является актом наречения Бога новым личным именем'],
   [flagshipAtlasNov11, 'не означают, что греческий текст Иоанна буквально называет Иисуса еврейским словом'],
