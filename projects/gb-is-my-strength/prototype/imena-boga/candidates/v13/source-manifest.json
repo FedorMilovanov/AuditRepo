@@ -116,8 +116,8 @@
       "bytes_normalized": 17460
     },
     "atlas/src/data/divineNames.ts": {
-      "sha256": "e6e7add1431f3e4c12d1475d858952888e9711cf9e2750ee2b5e4734bd009fef",
-      "bytes_normalized": 152795
+      "sha256": "b66cc81e19ed5ade6e1f5aa4c8d806110cb43321b3e481281072f0c15c691a0b",
+      "bytes_normalized": 153541
     },
     "atlas/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "3388577d3614c8477cd8bf8244038c32362f54b49d7d772969a90927b32414be",
-      "bytes_normalized": 73926
+      "sha256": "2a775ac5a807862f48049dfd70667cdb24a8f32b9af063b9799d18b4aef24132",
+      "bytes_normalized": 75508
     },
     "checks/visual_review.cjs": {
       "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",

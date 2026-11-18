@@ -1006,3 +1006,23 @@ for(const required of [
  'hasOmissionNote,disclosure'
 ])if(!w102Visual.includes(required))throw Error('W102 browser 4-case coverage missing: '+required);
 console.log('W102_ELLIPSIS_COPY_DISCLOSURE_PASS');
+
+
+// W103: Deut. 32 uses tsur for different poetic referents (not six direct
+// divine names). Distinguish Paul's Christological reading from Hebrew lexeme.
+const w103Atlas=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w103Start=w103Atlas.indexOf("id: 'ha-tsur'"),w103End=w103Atlas.indexOf("id: 'goel'",w103Start+1);
+if(w103Start<0||w103End<=w103Start)throw Error('W103 ha-tsur boundaries unavailable');
+const w103Tsur=w103Atlas.slice(w103Start,w103End);
+for(const required of [
+ 'слово צוּר («скала», «твердыня») используется с разными референтами',
+ 'ст. 31 противопоставляет «нашу Скалу» и «их скалу»',
+ 'В ст. 37–38 Бог иронически обличает бесполезность ложного прибежища',
+ 'а не доказательство, что каждое употребление צוּר во Втор. 32',
+ 'референт «камня» в котором по-разному истолковывают христианские традиции'
+])if(!w103Tsur.includes(required))throw Error('W103 scoped referent guard missing: '+required);
+for(const forbidden of [
+ 'Моисей шесть раз называет Бога «Твердыней»',
+ 'Сам Господь называет Своё слово и исповедание о Себе тем Камнем'
+])if(w103Tsur.includes(forbidden))throw Error('W103 overclaim restored: '+forbidden);
+console.log('W103_TSUR_REFERENT_SCOPE_PASS');
