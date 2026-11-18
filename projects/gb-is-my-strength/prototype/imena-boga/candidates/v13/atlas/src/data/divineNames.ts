@@ -81,7 +81,7 @@ export const ARTICLE_SECTIONS: ArticleSectionMeta[] = [
     roman: 'IV',
     title: 'Выражения с ЯХВЕ: завет, исповедания и названия',
     subtitle: 'Жертвенники и псалмы, в которых Имя Сущего раскрывается как спасение, суд и мир для грешников',
-    epigraph: '«И нарекли имя Его: Господь — оправдание наше»',
+    epigraph: '«Господь — оправдание наше!»',
     epigraphRef: 'Иеремия 23:6',
   },
   {
@@ -100,7 +100,7 @@ export const SOUL_NEED_LABELS: Record<SoulNeed | 'all', { label: string; descrip
   covenant: { label: 'Верность Завету', description: 'Когда сердце ищет неизменного основания в обетованиях' },
   refuge: { label: 'Прибежище и милость', description: 'Когда страшно, одиноко или нужна защита Пастыря и Скалы' },
   holiness: { label: 'Святость и суд', description: 'Когда совесть обличает грех и ищет оправдания' },
-  christ: { label: 'Христос и полнота Троицы', description: 'Как все ветхозаветные имена сходятся в Отце, Сыне и Духе' },
+  christ: { label: 'Христос и полнота Троицы', description: 'Как ветхозаветные свидетельства осмысляются в свете откровения об Отце, Сыне и Духе' },
 };
 
 export const COVENANT_ALTARS: CovenantAltarLocation[] = [

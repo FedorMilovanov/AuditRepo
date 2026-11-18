@@ -830,3 +830,17 @@ if(!w92AtlasCard.includes('Смысл в контексте: <span') ||
     w92AtlasCard.includes('Буквально: <span'))
  throw Error('W92 Atlas preview conflates contextual theology with literal lexeme meaning');
 console.log('W92_ATLAS_PROVERBS_GILL_LEXICAL_SCOPE_PASS');
+
+// W93: Jeremiah 23:6 and 33:16 have different grammatical referents.
+// Quote the exact title fragment in the Atlas IV epigraph, not a hybrid
+// of their two clauses. Christian application must remain interpretive.
+const w93AtlasData=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+for(const token of [
+ "epigraph: '«Господь — оправдание наше!»'",
+ 'Как ветхозаветные свидетельства осмысляются в свете откровения об Отце, Сыне и Духе'
+])if(!w93AtlasData.includes(token))throw Error('W93 research-aware epigraph/pastoral scope missing: '+token);
+for(const token of [
+ "epigraph: '«И нарекли имя Его: Господь — оправдание наше»'",
+ 'Как все ветхозаветные имена сходятся'
+])if(w93AtlasData.includes(token))throw Error('W93 mixed referent or overclaim reappeared: '+token);
+console.log('W93_JEREMIAH_23_6_REF_SCOPE_PASS');
