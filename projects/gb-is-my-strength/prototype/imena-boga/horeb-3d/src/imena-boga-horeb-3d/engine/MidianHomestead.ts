@@ -20,6 +20,13 @@ export const HOMESTEAD_TEXTILE_DETAIL=Object.freeze({
   roofU:36,roofV:22,sideU:24,sideV:14,
   rearU:28,rearV:14,matU:28,matV:20,
 });
+/** W12D.7: gently draped rear wall inside existing physical rear-wall band.
+ * Original artistic scene variation, NOT a reconstructed historic textile. */
+export function homesteadRearDrapeOffset(x:number,v:number):number{
+  const t=x+2.96;
+  return .045+.061*Math.sin(t*2.8+v*.63)+
+    .023*Math.sin(t*6.7-v*1.25)+.009*Math.cos(t*10.5+v*1.6);
+}
 const hash=(n:number)=>{const v=Math.sin(n*137.19+17.2)*47358.34;return v-Math.floor(v);};
 /** The very same deterministic rock instances drive visible geometry and
  * walkable-space collision, so a displayed large stone cannot be ghosted. */
@@ -404,13 +411,13 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   const rearPos=rearGeo.getAttribute('position'),rearColors:number[]=[];
   for(let i=0;i<rearPos.count;i++){
     const x=rearPos.getX(i),v=(rearPos.getY(i)+.73)/1.46;
-    const folds=.050*Math.sin((x+2.96)*3.6+v*.8)+
-      .020*Math.sin((x+2.96)*8.7-v*1.3);
-    const z=-2.97+folds;
+    // A few wider, deliberately uneven 3D folds rather than another
+    // high-frequency pixel detail; retain rear collision safety envelope.
+    const z=-2.97+homesteadRearDrapeOffset(x,v);
     const y=homesteadGround(x,z)+.73+rearPos.getY(i);
     rearPos.setXYZ(i,x,y,z);
-    const shade=.92+.062*Math.cos((x+2.96)*4.0+v*.6)+
-      .025*Math.sin((x+2.96)*10.9+v*6.1);
+    const shade=.937+.055*Math.cos((x+2.96)*2.8+v*.63)+
+      .024*Math.sin((x+2.96)*6.7-v*1.25);
     rearColors.push(shade,shade*.985,shade*.963);
   }
   rearGeo.setAttribute('color',new THREE.Float32BufferAttribute(rearColors,3));
