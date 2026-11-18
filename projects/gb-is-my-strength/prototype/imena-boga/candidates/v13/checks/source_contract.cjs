@@ -798,3 +798,15 @@ for(const token of ['Это рабочая исследовательская р
  if(!w91Intro.includes(token))throw Error('Panorama research methodology boundary vanished: '+token);
 }
 console.log('W91_PANORAMA_METHOD_SCOPE_PASS');
+
+// W91 visual hierarchy: long multi-lexeme Strong identifiers belong to the
+// full dossier (and index), not the narrow preview card header.
+const w91PreviewCard=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
+const w91FullDossier=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameModal.tsx'),'utf8');
+const w91Index=fs.readFileSync(path.join(root,'atlas','src','components','NamesIndexTable.tsx'),'utf8');
+if(!w91PreviewCard.includes("entry.strongs.length > 22 ? 'Индексы Стронга · в досье' : entry.strongs") ||
+   !w91PreviewCard.includes('title={entry.strongs.length > 22 ?') ||
+   !w91FullDossier.includes('{entry.strongs}') ||
+   !w91Index.includes('{item.strongs}'))
+ throw Error('W91 long Hebrew lexical codes must be condensed in preview and preserved in dossier/index');
+console.log('W91_LEXICAL_CODES_PREMIUM_PREVIEW_PASS');

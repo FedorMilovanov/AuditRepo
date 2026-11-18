@@ -161,8 +161,9 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             <span
               className="rounded border px-2 py-0.5 font-mono"
               style={{ borderColor: 'var(--gb-border)', backgroundColor: 'var(--gb-bg)' }}
+              title={entry.strongs.length > 22 ? `Полные индексы Стронга: ${entry.strongs}. Откройте досье для разбора.` : undefined}
             >
-              {entry.strongs}
+              {entry.strongs.length > 22 ? 'Индексы Стронга · в досье' : entry.strongs}
             </span>
             <span className="hidden sm:inline">{entry.occurrences}</span>
           </div>
