@@ -32,5 +32,7 @@
 | [evidence/print-run-tokmak-evidence.md](evidence/print-run-tokmak-evidence.md) | Колляция текстовых извлечений, локаторы экземпляров, остаточные проверки и непосланные запросы. |
 | [TOKMAK-ARCHIVE-AND-EDITIONS.md](TOKMAK-ARCHIVE-AND-EDITIONS.md) | Десятый проход: ноябрьские приговоры по «Вестям», дела уполномоченного в ГА РФ и новые адреса для сверки тиража. |
 | [evidence/tokmak-archive-and-edition-evidence.md](evidence/tokmak-archive-and-edition-evidence.md) | Сверка 1-1/16-1, точные шифры ГА РФ, ориентиры ЦГА КР и Чуйского РУ, реквизиты изданий и черновики запросов. |
+| [KESTON-AND-TOKMAK-HOLDINGS.md](KESTON-AND-TOKMAK-HOLDINGS.md) | Одиннадцатый проход: «Бюллетень» №106 называет Токмак местом июньского осуждения Кинаса; точные папки Keston и шифр «Вестей» в Париже. |
+| [evidence/keston-and-tokmak-holdings-evidence.md](evidence/keston-and-tokmak-holdings-evidence.md) | Колляция №102/106 с «Вестями», архивные описи, границы OCR и обновлённые черновики запросов. |
 
 Это [intake](../../README.md) по [операционной модели AuditRepo](../../../../../AUDITREPO_OPERATING_MODEL.md), не MASTER-решение, не разрешение на правку и не аудит всех внешних ссылок, прав и источников. Product, файлы Research, активная матрица и состояния PR не менялись. Передача находок в обсуждение Research не заменяет приёмку.
