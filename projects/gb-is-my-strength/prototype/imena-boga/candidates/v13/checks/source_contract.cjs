@@ -766,3 +766,28 @@ if(!atlasDossier.includes('atlasToReader.get(entry.id)')||
    !w73ReaderSection.includes('href={`/imena-boga/atlas/#name-${encodeURIComponent(counterpartId)}`}'))
   throw Error('Crosswalk no longer drives the reciprocal user links');
 console.log('W73_TOPIC_CROSSWALK_24_PASS',JSON.stringify({pairs:pairs.length,atlas:atlasIds.length,panorama:readerIds.length}));
+
+// W91 research-to-visual semantic safeguard: preserve speakers, manuscript
+// status and edition distinctions in the two *publicly blocked* prototypes.
+// These are source-text regressions, not independent scholarly sign-off.
+const researchEntry=(source,id,quote)=>{
+ const tag='id: '+quote+id+quote;
+ const pos=source.indexOf(tag);
+ if(pos<0)throw Error('Missing research UI entry '+id);
+ const next=source.indexOf('\n  {\n    id:',pos+tag.length);
+ return source.slice(pos,next<0?source.length:next);
+};
+for(const [source,id,quote,required,forbidden] of [
+ [researchReaderData,'el-shaddai','"', ['Божья речь', 'Аврааму и Иакову','В Быт. 28:3 Эль-Шаддай упоминает Исаак','Руфь 1:20–21','Иов 5:17','Иов 42:7–9'],['Аврааму, Исааку, Иакову']],
+ [researchReaderData,'el-elyon','"', ['Быт. 14:18 называет Мелхиседека','14:19–20','Быт. 14:22','Κύριος'],['Мелхиседек, Быт 14:18']],
+ [researchReaderData,'el-roi','"', ['Говорящая', 'Это исповедание Агари'],['Кто открыл']],
+ [researchReaderData,'nissi','"', ['Исх. 17:16','כֵּס יָהּ','כסיה','BHS и Göttingen Exodus'],[]],
+ [researchAtlasData,'el-shaddai',"'",['Быт. 28:3 Исаак сам благословляет Иакова','Руфь 1:20–21','Иов 5:17','Иов 42:7–9'],['Исааку при благословении Иакова']],
+ [researchAtlasData,'el-elyon',"'",['масоретском тексте Быт. 14:22','Κύριος','критический аппарат'],[]],
+ [researchAtlasData,'yhwh-nissi',"'",['17:16','כֵּס יָהּ','כסיה','Göttingen Exodus'],[]],
+]){
+ const entry=researchEntry(source,id,quote);
+ for(const token of required)if(!entry.includes(token))throw Error('W91 Research UI evidence missing: '+id+' / '+token);
+ for(const token of forbidden)if(entry.includes(token))throw Error('W91 Research UI overclaim returned: '+id+' / '+token);
+}
+console.log('W91_RESEARCH_UI_SPEAKER_VARIANT_PASS',JSON.stringify({cards:7,release:'BLOCKED',externalScholarReviews:0}));
