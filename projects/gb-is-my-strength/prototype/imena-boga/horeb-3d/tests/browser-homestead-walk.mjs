@@ -123,6 +123,37 @@ try{
   const phoneForward=await read();
   if(phoneStart.z-phoneForward.z<.12)
     throw Error('HOMESTEAD portrait player cannot reach shelter '+JSON.stringify({phoneStart,phoneForward}));
+  // Actual Chrome touch injection, not just a DOM button-exists assertion
+  // or a desktop keyboard standing in for mobile input.
+  const touchButton=await page.$('[data-testid="midian-move-forward"]');
+  const touchBox=await touchButton?.boundingBox();
+  if(!touchBox)throw Error('HOMESTEAD portrait forward touch target absent');
+  const tx=touchBox.x+touchBox.width/2,ty=touchBox.y+touchBox.height/2;
+  const touchSession=await page.createCDPSession();
+  const beforeTouch=await read();
+  await touchSession.send('Input.dispatchTouchEvent',{
+    type:'touchStart',touchPoints:[{x:tx,y:ty}],
+  });
+  let afterTouch;
+  try{
+    await sleep(1150);
+    afterTouch=await read();
+  }finally{
+    await touchSession.send('Input.dispatchTouchEvent',{
+      type:'touchEnd',touchPoints:[],
+    });
+    await touchSession.detach();
+  }
+  if(beforeTouch.z-afterTouch.z<.12)
+    throw Error('HOMESTEAD actual touch forward did not move '+JSON.stringify({beforeTouch,afterTouch}));
+  // Pointer-up must release movement; otherwise the person can continue
+  // walking without their finger on the button.
+  await sleep(160);
+  const settled=await read();
+  await sleep(470);
+  const released=await read();
+  if(Math.hypot(released.x-settled.x,released.z-settled.z)>.065)
+    throw Error('HOMESTEAD touch release leaves stuck movement '+JSON.stringify({settled,released}));
   await page.keyboard.press('Escape');
   await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='shot');
   const focus=await page.evaluate(()=>document.activeElement?.getAttribute('data-testid'));
