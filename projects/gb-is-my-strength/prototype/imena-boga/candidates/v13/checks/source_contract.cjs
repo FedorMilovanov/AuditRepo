@@ -971,3 +971,20 @@ for(const required of [
 if(w100Modal.includes('await navigator.clipboard.writeText(`${synodal} (${ref})`);'))
  throw Error('W100 bare annotated verse copy returned without source clarification');
 console.log('W100_EDITED_SCRIPTURE_GLOSS_COPY_PASS');
+
+
+// W101: static checks alone cannot certify actual per-verse clipboard behavior.
+// The pinned Chromium/WebKit visual QA must click the real copied-text control,
+// compare annotated + clean cases, and record failures.
+const w101Qa=fs.readFileSync(path.join(root,'checks','visual_review.cjs'),'utf8');
+for(const required of [
+ 'async function auditAtlasClipboard(browser,engine,base)',
+ 'await auditAtlasClipboard(browser,engine,base);',
+ "id:'elohim',text:'В начале сотворил Бог [אֱלֹהִים]'",
+ "id:'yah',text:'Господь крепость моя и слава моя, Он был мне спасением'",
+ "Object.defineProperty(navigator,'clipboard'",
+ "getByRole('button',{name:'Копировать стих'})",
+ "record('atlas-clipboard-browser'",
+ "problem('BLOCKER','atlas-clipboard-browser-mismatch'"
+])if(!w101Qa.includes(required))throw Error('W101 real browser clipboard witness missing: '+required);
+console.log('W101_ATLAS_COPY_BROWSER_COVERAGE_PASS');

@@ -1455,6 +1455,43 @@ async function visit(browser,engine,app,width,base){
   try{await shot(page,engine+'-'+app+'-'+width+'-ERROR')}catch{}
  }finally{await ctx.close()}
 }
+
+// W101: use real click handlers in two browser engines, with only the OS
+// clipboard write intercepted for deterministic, isolated QA evidence.
+async function auditAtlasClipboard(browser,engine,base){
+ const ctx=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,locale:'ru-RU',reducedMotion:'reduce'});
+ const page=await ctx.newPage();
+ const cases=[
+  {id:'elohim',text:'В начале сотворил Бог [אֱלֹהִים]',ref:'Бытие 1:1',gloss:true},
+  {id:'yah',text:'Господь крепость моя и слава моя, Он был мне спасением',ref:'Исход 15:2',gloss:false}
+ ];
+ try{
+  for(const x of cases){
+   await safeAction(page,engine+'-atlas-390-clipboard-'+x.id,async()=>{
+    await page.goto(base+'/atlas/#name-'+x.id,{waitUntil:'domcontentloaded',timeout:30000});
+    await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+    const modal=page.getByRole('dialog').first();
+    await modal.waitFor({state:'visible',timeout:20000});
+    await page.evaluate(()=>{
+     window.__copiedVerse=[];
+     Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
+      writeText:async s=>{window.__copiedVerse.push(String(s))}
+     }});
+    });
+    await modal.getByRole('button',{name:'Копировать стих'}).first().click();
+    await page.waitForFunction(()=>Array.isArray(window.__copiedVerse)&&window.__copiedVerse.length===1,null,{timeout:5000});
+    const text=await page.evaluate(()=>window.__copiedVerse[0]);
+    const hasNote=text.includes('Редакторские пояснения: слова оригинала в квадратных скобках добавлены к русской цитате');
+    const hasHebrew=text.includes('[אֱלֹהִים]');
+    const disclosure=await modal.locator('p',{hasText:'Слова оригинала в квадратных скобках'}).first().isVisible();
+    const passes=text.includes(x.text)&&text.includes('('+x.ref+')')&&hasNote===x.gloss&&hasHebrew===x.gloss&&disclosure;
+    record('atlas-clipboard-browser',{engine,width:390,id:x.id,passes,hasNote,hasHebrew,disclosure,chars:text.length});
+    if(!passes)problem('BLOCKER','atlas-clipboard-browser-mismatch',{engine,id:x.id,hasNote,hasHebrew,disclosure,preview:text.slice(0,200)});
+    await shot(page,engine+'-atlas-390-clipboard-'+x.id);
+   });
+  }
+ }finally{await ctx.close()}
+}
 (async()=>{
  await new Promise((resolve,reject)=>server.listen(0,'127.0.0.1',resolve).on('error',reject));
  const base='http://127.0.0.1:'+server.address().port;
@@ -1466,6 +1503,7 @@ async function visit(browser,engine,app,width,base){
    try{
     for(const app of ['atlas','sozvezdie'])for(const width of widths)
      await visit(browser,engine,app,width,base);
+    await auditAtlasClipboard(browser,engine,base);
     // Separate low-height acceptance; does not bloat 48 standard sessions.
     for(const [width,height] of [[568,320],[844,390]])
      await visitShortLandscape(browser,engine,width,height,base);
