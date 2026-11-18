@@ -330,3 +330,82 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 [koombaev-xii]: https://www.dissercat.com/content/polozhenie-lichnosti-v-ugolovnom-sudoproizvodstve-po-materialam-kyrgyzskoi-respubliki-i-ross
 [rehab-law-xii]: https://cbd.minjust.gov.kg/751/edition/1234978/ru
 [rehab-amend-xii]: https://cbd.minjust.gov.kg/4-5454/edition/24561/ru
+
+## Дополнение XIII — 18.11.2026 UTC
+
+### XIII: Иссык и цепочка заметки
+
+Сопоставлены текстовые извлечения, а не изображения полос. `cN` ниже — номер фрагмента извлечения. Для пяти выпусков «Бюллетеня» использован раздел «1980–1987 Оффсет» [Propovednik][b-off-xiii]. Годы в именах PDF №124 и №125 — **1984**, не 1985. [TARO][taro] c14–15 описывает параллельные экземпляры в KC.29, а не листы этой републикации.
+
+| Локус | Что сообщает источник | Что проверять по экземпляру / акту |
+| --- | --- | --- |
+| [«Вести», 15.12.1984, №23, п. 23-6][v84-23], c0 | Иссык, 24.11: у **Егора Вольфа** изъято 30 000 Библий и 3 т бумаги; 25.11: у **Андрея Вольфа** — ещё 3 т. Сообщены изъятие станка и аресты братьев. | Две части веса в одном сообщении, не две независимые оценки. Редакционное «четвёртый» при четырёх перечисленных предыдущих местах не годится как реестр типографий. |
+| [Бюл. №124, октябрь–ноябрь 1984][b124-xiii], «Арестованы», пп. 10–11, c0; [№126, январь 1985][b126-xiii], «Ходатайства», c0 | П. 10: **24.11 Егор**; п. 11: **25.11 Андрей**. В №126, в перечне ходатайственных телеграмм после записи о Панфиловой, — аресты Вольфов 24–25.11 и обыски в **14 домах** христиан **Иссыка** с целью изъятия литературы. | KC.29 **28/8**, **28/10**. В OCR №124 есть вариант `КОНЕЕВИЧ`; «Корнеевич» по №130 и №139/140. Сводка телеграмм не даёт входящего номера, описи вещей или результатов по всем домам. «450 Евангелий» в той же рубрике — Семипалатинск; 14 домов — не число арестованных и не Тамбов. |
+| [*Australian Church Record*, №1821, 25.03.1985][acr-xii], c1 (выходные), c6 («Underground printing works discovered») | Near Alma-Ata; **`Grigori`** и **`Andrei` Wolf**, предположительно арестованы, **30 000** напечатанных Библий и **6 т** бумаги. Первый абзац ссылается на Friedensstimme; под всей заметкой стоит **Keston College**. | Совпадают редкое сочетание чисел, братья и район; имя `Grigori` расходится с русскими сообщениями, не исправлять внутри цитаты. Не установлено, откуда взят отдельный абзац «about half a million … in seven languages» к 1982 г.; кредит заметки не равен ссылке на конкретный выпуск KNS. |
+| [Бюл. №129, май 1985][b129-xiii], «Арестованы», п. 4, c0; [«Вести» 1985, 13-4][v85-13], «Аресты», c0 | **Иван Петрович Штеффен**: **14.05.1985** по №129; «во второй половине мая» по «Вестям». В OCR январского списка [CMU №20][cmu-pdf], c3, также 14 мая. | KC.29 **28/13**. Точная дата в текстовых извлечениях не отменяет разночтение; независимость списка CMU от бюллетеня не установлена. |
+| [Бюл. №130, июнь 1985][b130-xiii], «Осуждены», пп. 1–3, c0; [«Вести» 1985, 15/16-4][v85-1516], c0, абзац после Герцен | **21.06.1985**; №130 указывает **Иссык Алма-Атинской обл.** и у всех трёх **ст. 170-1, 202 ч. 1 УК КазССР**. Андрей и Егор Вольфы — по **5 лет общего режима**, Иван Штеффен — **5 лет строгого**. «Вести» дают ту же дату и сроки, но в этом абзаце не приводят статей. | KC.29 **28/14**. Это не приговор, не название состава суда и не источник статьи Кинаса. Не использовать статью 148 УК ЭССР из соседнего сообщения «Вестей». |
+| [Бюл. №139, январь–февраль 1987][b139pdf], «Освобождены досрочно по указу ПВС СССР», п. 3, c0; [№140, март–апрель][b140-xiii], «по указу ПВС о помиловании», пп. 3–4, c0 | **Андрей Вольф — 14.02.1987**, **Иван Штеффен — 18.03.1987**, **Егор Вольф — 19.03.1987**. [«Вести» 1987, 5/6-1][v87-56] c0–1 сообщают об их досрочных освобождениях без этих именных дат. | KC.29 **28/23–24**. Номера указов и документы об исполнении не получены. Пункт о Кинасе в №139 — под другой рубрикой. Мухин из Ферганы в №140 — не один из двух задержанных в Токмаке. |
+
+В [«Вестях» 1985, 22-1][v85-22] Иссык снова назван среди мест обнаружения типографий; это ретроспектива той же редакции. Ни «Вести», ни сходные сведения в ACR не устанавливают путь передачи именно этого текста или независимость чисел. **Изъятие в Иссыке** не добавлять к оценкам **выпуска издательства**, не переносить на Токмак и не выдавать за опись. Разграничение ранних оценок, Алексеевой и ACR — в [XII](#xii-газета-и-тираж).
+
+### XIII: Запросы на образ и исходную сводку
+
+- **ACR — текст прочитан, полоса не сверена.** У [объекта Moore 58913][acr-moore] [манифест][acr-iiif] даёт восемь кадров. Для `_4` открыт [Image API `info.json`, 2384 × 1936][acr-four-xiii]; запрос JPEG не дал читаемого кадра. `_4` — кандидат для проверки, не установленная полоса. `#page=4` у PDF вернул начальное извлечение с предыдущим выпуском; колонтитулы в OCR не позволяют надёжно установить колонку. Резерв — [NLA NX 468][acr-nla]. Попросить Moore сверить «Underground printing works discovered» и кредит Keston по номеру **1821**, сообщить полосу/колонку и отпечатанный номер страницы, дать репродукцию с заголовком и колонтитулом. Условия чтения и разрешение на воспроизведение выяснить отдельно.
+- **Friedensstimme — сначала *Article 227*.** Л. Клиппенстайн, [RCL 14/1][rcl-fs], c0 различает немецкие *Nachrichten von den Feldern der Verfolgung* и англоязычные *Prisoners’ Bulletin* (США) и *Article 227* (Великобритания). В c4 есть Иссык; прим. 30 — `Ibid.` к группе в прим. 29: **№1 (январь 1985), с. 14; №3 (август), с. 26, 28; №4 (октябрь), с. 28**. Из этого нельзя выбрать конкретную страницу сообщения. №3/4 позже ACR: только для обратной сверки. Прочтение выпуска №1 и немецкой сводки за конец 1984 — начало 1985 не состоялось. [Записи DNB][fs-dnb-xiii] / [ZDB][fs-zdb-xiii] о более поздних заглавиях и [папки AR915][wardin] (31.1, 44.28, 52.9) не подтверждают наличие нужного номера.
+
+| *Article 227* — кандидат | Основание запроса, не подтверждение №1 | Публичный контакт |
+| --- | --- | --- |
+| Cambridge Centre for Christianity Worldwide (HMC) | В [собственном перечне][cccw-j-xiii] есть название без номеров; ABTAPL: 1985–89. Первый адрес для проверки экземпляра. | `library@cccw.cam.ac.uk` ([библиотека][cccw-xiii]) |
+| All Nations Christian College (ANC) | ABTAPL: 1985–89; диапазон ждёт подтверждения, как и HMC/WSC. | `library@allnations.ac.uk` ([библиотека][anc-xiii]) |
+| Westcott House (WSC) | ABTAPL: 1985–89. | `info@westcott.cam.ac.uk` ([канцелярия][wsc-xiii], переслать библиотекарю) |
+| Gamble Library, Union Theological College Belfast (UTC) | ABTAPL: 1985–89 с `*`; состав выпуска не вычитать из диапазона. | `librarian@union.ac.uk` ([справка Gamble, последний фрагмент][utc-xiii]) |
+
+[Строка ABTAPL, c3][abt-a-xiii] и [ключ держателей][abt-key-xiii]; Commonweal [A52][commonweal-xiii] перечисляет только 1988–89, *Partners* — преемник, не замена. Черновик (не отправлен):
+
+> Could you check *Article 227* (Friedensstimme UK), no. 1, January 1985, p. 14? I am looking for an item on Issyk/Esik near Alma-Ata, Egor (Grigori) and Andrei Wolf, 30,000 Bibles and paper seized in November 1984. Please confirm the issue, article title and page range, and whether the cover, imprint, p. 14 and adjacent pages can be supplied for research. If the item is elsewhere, a reference or the relevant contents page would help. Please distinguish copying for research from permission to reproduce an image.
+
+- **KNS и редакционная переписка — отдельный запрос к Keston/Baylor.** [Публичный индекс KNS][kns-index-xiii] даёт, в частности, материалы позднего возобновлённого ряда, [CMnexus 1985][kns-cm-xiii] — выборку с №222 (04.04.1985), [Brill][kns-brill-xiii] — выборку (в т. ч. №212 и №226). [Библиографическая ссылка][kns-21-xiii] на 21.02.1985, с. 22, подтверждает ориентир по дате, не статью об Иссыке; номера за 07/21.03 и заголовки не сверены. У Baylor [№224][kns224] читается метадата и оглавление, а не предшествующие выпуски. [Keston Institute][keston-office-xiii] направляет архивные запросы к `Larisa_Seago@baylor.edu`. В [KC.24][kc24-xiii] c0–2 посмотреть описи исходящей переписки **3/1–3** (ноябрь, декабрь 1984 и б/д) и **4/16** (*Various Publishers*); **5/2**, *Keston College (Vic.)*, за **1982**, не связь с заметкой 1985 г. В просмотренной разбивке General нет отдельной папки 1985; это не свидетельство утраты. **KC.68, 1/2** — религиозная жизнь на Афоне, не редакционный файл. Через [описание работы А. Кожевниковой][kojevnikov-xiii] запросить номерную и редакционную цепочки раздельно.
+
+> Please check the January–March 1985 Keston News Service run and any separate releases for “Underground printing works discovered”, credited to Keston College in *Australian Church Record* no. 1821 (25 March 1985). Could you identify the earliest surviving text, its date/issue/pages and any incoming Friedensstimme report it cites? I am also trying to source the separate estimate “about half a million items … in seven languages” by 1982. Please check whether the editorial file or correspondence identifies its origin, and advise on access and image rights. Separately, in KC.29, please confirm the relevant leaves of nos. 124, 126, 129, 130, 139 and 140 (28/8, 10, 13, 14, 23, 24), including title leaves and any contemporary translations or notes in those folders.
+
+### XIII: Токмак, газета и именные записи
+
+- **Не найденная публикация о группе, а контроль одноимённого сюжета.** [Reagan Library, DeGraffenreid Files, RAC Box 26, папка Soviet “Active Measures” 05/01–05/14/1982][reagan-xiii], c15, Appendix 6: английский отрывок со ссылкой **Sovetskaya Kirgiziya, February 7, 1982** называет **Владимира Павловича Хайло** и *Khristianin*, не Кинаса. Газетная дата раньше обыска 13.02; там же выпуск 02.08.1978 о процессе в Канте — другой эпизод. В №140 Хайло также назван отдельно от иссыкцев. По выписке не известны заголовок, автор и полоса советской газеты. Ссылка [UNC][unc-kg-xiii], c1, покрытие **1925–2020** со сменой названия, ведёт к [Infoteka 3970][infoteka-xiii] за входом; Duke-микрофильм в том же справочнике не включает 1982. Это адрес держателя доступа, не прочитанная подшивка. Партийный фонд редакции **ЦГА ОПД ф. 484, §167** — не каталог выпусков.
+- **Запрос на поиск (не отправлен).** Попросить UNC / держателя подшивки сверить № от **07.02.1982** по Хайло, вернуть заглавие, автора, полосу и шифр. *Отдельно* проверить следующие после **13.02, 08.06 и 03.11.1982** номера «Советской Киргизии» и доступный местный «Ленинский путь» по Токмаку, Фрунзе и именам Кинаса, Клауса, Сухорукова, Шевченко. Не заказывать репродукцию неидентифицированной статьи. По суду и исполнению — [раздельные запросы XII](#новые-черновики-запросов), а не вывод из реплики газеты.
+- **Именные листы всё ещё не получены.** [№139][b139pdf] c0, «Освобождены по окончании срока», п. 4: **13.02.1987, Иван Эрвинович Кинас (Фрунзенская область)**; карточка в [TARO][taro] **28/23**, без листа. [CMU №20][cmu-list], Heinz **277/9**, canvas 4 — январская запись об ожидаемой дате, OCR `Second term` / `Exile address` остаётся ориентиром. [№19][cmu-letter] — позднее сопроводительное письмо, не исполнение приговора; InC-NC у CMU не равнозначно разрешению на публикацию в Product. Нужны образ с колонтитулом, строка целиком, идентификатор листа и указание издателя списка; для первого срока/ссылки и судьбы ферганцев — [запросы на именные страницы](#черновики-запросов). Нет нового приговора, акта освобождения, описи или решения о реабилитации.
+- **Drive, без переиспользования старой отправки.** Поисковые совпадения `photo_1821…` — по имени файла, не выпуск №1821. README и журнал запросов из папки с пакетом за 1918 г. прочитаны как сопроводительные записи: это другие запросы, не рассылка XIII. ZIP не скачан и содержимое не проверено. Новых снимков или файлов прав в досье не добавлено; запросы не отправлены.
+
+**Срез владения путями, 21:49 UTC.** До коммита: `main` AuditRepo `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`, локальный и удалённый HEAD рабочей ветки `24082796d0fe3645d70c39b69c67cc45852d6753`. **27** накопленных путей (включая область рабочих правок) сверены с **758** записями по **10** открытым PR, **0** пересечений по `filename` или `previous_filename`. Оба списка пагинированы; объёмы `/files` совпали с `changed_files`, head/base и удалённые refs до/после сверки не изменились. Это проверка пересечений, не приёмка чужих изменений.
+
+[b-off-xiii]: https://propovednik.com/library?album=14580
+[b124-xiii]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/124-1984.pdf
+[b126-xiii]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/126-1985.pdf
+[b129-xiii]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/129-1985.pdf
+[b130-xiii]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/130-1985.pdf
+[b140-xiii]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/140-1987.pdf
+[v84-23]: https://vesti-iz-sssr.com/2016/11/17/15-dekabrya-1984-n-23/
+[v85-13]: https://vesti-iz-sssr.com/2016/12/08/presledovaniya-baptistov-1985-13-4/
+[v85-1516]: https://vesti-iz-sssr.com/2016/12/08/presledovaniya-baptistov-1985-15-16-4/
+[v85-22]: https://vesti-iz-sssr.com/2016/12/09/presledovaniya-1985-22-1/
+[v87-56]: https://vesti-iz-sssr.com/2016/11/25/osvobozhdenie-politzekov-prodolzhaetsya-1987-5-6-1/
+[acr-four-xiii]: https://iiif.quartexcollections.com/moore/iiif/ab7b8993-7050-4b53-ad54-90c50b73c0fe/info.json
+[abt-a-xiii]: https://abtapljournals.wordpress.com/a/
+[abt-key-xiii]: https://abtapljournals.wordpress.com/libraries-in-the-union-list/
+[cccw-j-xiii]: https://www.cccw.cam.ac.uk/library/periodicals/
+[cccw-xiii]: https://www.cccw.cam.ac.uk/library/
+[anc-xiii]: https://www.allnations.ac.uk/about-us/facilities/library
+[wsc-xiii]: https://www.westcott.cam.ac.uk/contact/
+[utc-xiii]: https://www.union.ac.uk/assets/files/downloads/gamble-guides/Searching-for-journal-articles-on-ATLA-databases.pdf
+[commonweal-xiii]: https://www.commonwealnonviolence.org/commonweal-periodicals
+[fs-dnb-xiii]: https://d-nb.info/020644671
+[fs-zdb-xiii]: https://zdb-katalog.de/title.xhtml?idn=020644647
+[kns-index-xiii]: https://www.keston.org.uk/archive-library-kns
+[kns-cm-xiii]: http://cmnexus.org/magazines/Keston_News_Service/1985/page1
+[kns-brill-xiii]: https://primarysources.brillonline.com/browse/technology-democracy-and-society?tocStart=6000
+[kns-21-xiii]: https://link.springer.com/chapter/10.1007/978-1-349-18838-3_5
+[keston-office-xiii]: https://www.keston.org.uk/archive-library
+[kc24-xiii]: https://libraryarchives.baylor.edu/repositories/4/resources/472/collection_organization
+[kojevnikov-xiii]: https://library.web.baylor.edu/womenscollections
+[reagan-xiii]: https://www.reaganlibrary.gov/public/digitallibrary/smof/nscintelligence/degraffenreid/r26/40-139-39149351-R26-058-2018.pdf
+[unc-kg-xiii]: https://guides.lib.unc.edu/sovietnewspapers
+[infoteka-xiii]: https://online.infoteka.com/browse/udb/3970
