@@ -17,17 +17,38 @@ export function midianScrubPoint(index:number):{x:number;z:number;size:number}|n
   if(Math.hypot(x,z)<4.2||midianApproachClearance(x,z)<2.55)return null;
   return {x,z,size:.42+hash(index*9.9+4)*.92};
 }
-/** W12E.1: broad eroded-ridge silhouettes, not repeating triangular teeth.
- * Integer angular modes maintain a seamless full-circle skyline. This is
- * artistic non-geolocated landscape, not a claim about Midian geography. */
+/** W12E.2: a few broad, geographically *unclaimed* arid massifs,
+ * not a continuous 360-degree mountain wall or a row of periodic peaks.
+ * Wrapped angular distance guarantees identical first and last ring columns.
+ * Near and far terrain must remain separated by genuine low valleys, while
+ * full-circle geometry prevents an empty horizon as the visitor turns. */
+const MIDIAN_RIDGE_MASSIFS=Object.freeze({
+  near:Object.freeze([
+    Object.freeze({angle:.25,amplitude:4.1,width:.40}),
+    Object.freeze({angle:1.47,amplitude:2.8,width:.304}),
+    Object.freeze({angle:2.78,amplitude:5.5,width:.416}),
+    Object.freeze({angle:3.47,amplitude:3.8,width:.336}),
+    Object.freeze({angle:5.20,amplitude:5.3,width:.44}),
+  ]),
+  far:Object.freeze([
+    Object.freeze({angle:.65,amplitude:3.0,width:.44}),
+    Object.freeze({angle:2.00,amplitude:4.2,width:.54}),
+    Object.freeze({angle:3.93,amplitude:7.6,width:.54}),
+    Object.freeze({angle:5.55,amplitude:4.9,width:.52}),
+  ]),
+});
 export function midianRidgeProfile(angle:number,depth:number):{height:number;radius:number}{
-  const phase=depth>50?1.37:.43;
-  const broad=1.22*Math.sin(2*angle+phase)+1.12*Math.sin(5*angle-.6*phase);
-  const shoulder=.48*Math.cos(9*angle+1.2*phase)+
-    .17*Math.sin(15*angle-phase);
-  const height=Math.min(7.6,Math.max(2.5,4.9+broad+shoulder));
-  const radius=depth+1.5*Math.sin(3*angle+phase)+
-    .65*Math.cos(7*angle-.2*phase);
+  const distant=depth>50;
+  const peaks=distant?MIDIAN_RIDGE_MASSIFS.far:MIDIAN_RIDGE_MASSIFS.near;
+  let height=distant?1.25:.45;
+  for(const peak of peaks){
+    const delta=Math.atan2(Math.sin(angle-peak.angle),
+      Math.cos(angle-peak.angle));
+    height+=peak.amplitude*Math.exp(-.5*(delta/peak.width)**2);
+  }
+  const phase=distant?1.37:.43;
+  const radius=depth+1.35*Math.sin(3*angle+phase)+
+    .55*Math.cos(7*angle-.2*phase);
   return {height,radius};
 }
 export function midianRockTone(index:number):number{
@@ -70,7 +91,7 @@ export function midianRockPoint(index:number):MidianRockInstance|null{
   if(Math.abs(x)>27||Math.abs(z)>31||midianApproachClearance(x,z)<3)return null;
   const k=.34+hash(index*1.97+7)*1.35;
   const sx=k*(.9+hash(index*1.31)*.6);
-  const sy=k*(.35+hash(index*3.17)*.28);
+  const sy=k*(.46+hash(index*3.17)*.23);
   const sz=k*(.8+hash(index*.83)*.51);
   return {index,x,z,k,sx,sy,sz,ry:hash(index*.77)*Math.PI*2,
     // Ellipse approximates the real rotated rock; conservative for walking.
@@ -86,8 +107,9 @@ export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
   {ridges:number;rocks:number;scrubs:number;twigs:number}{
   // Two complete rings prevent scenery vanishing when the player turns.
-  ridgeRing(scene,42,0xa18d7b);ridgeRing(scene,61,0xb2a395);
-  const rockGeom=new THREE.DodecahedronGeometry(1,1);
+  ridgeRing(scene,42,0x99816d);ridgeRing(scene,61,0xbcae9f);
+  // W12E.2: un-subdivided facets avoid polished oval potato silhouettes.
+  const rockGeom=new THREE.DodecahedronGeometry(1,0);
   const rockMat=new THREE.MeshStandardMaterial({color:0x9d8b75,roughness:1});
   const rocks=new THREE.InstancedMesh(rockGeom,rockMat,145);
   rocks.name='midian-detrital-rock-instances';

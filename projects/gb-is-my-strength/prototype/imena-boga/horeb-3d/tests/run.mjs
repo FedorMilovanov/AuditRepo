@@ -269,26 +269,32 @@ t('W11C irregular well stone has correct flat-shaded triangular volume',(()=>{
       .flat().every(Number.isFinite);
   geo.dispose();return valid;
 })());
-// W12E.1: angular harmonics must close the actual full 360-degree
-// skyline, remain smoothly sampled and have two genuinely different layers.
-t('W12E.1 Midian mountain silhouette is smooth, closed and layered',
+// W12E.2: near/far massif groups must create visible depth separation,
+// broad valleys and full 360-degree continuity without sharp triangular teeth.
+t('W12E.2 massifs are wrapped, distinct, smooth and reveal broad valleys',
   [42,61].every(depth=>{
-    const first=midianRidgeProfile(0,depth);
-    const last=midianRidgeProfile(2*Math.PI,depth);
+    const f=(a)=>midianRidgeProfile(a,depth);
+    const first=f(0),last=f(2*Math.PI);
     const heights=Array.from({length:151},(_,i)=>
-      midianRidgeProfile(2*Math.PI*i/150,depth).height);
-    const spread=Math.max(...heights)-Math.min(...heights);
+      f(2*Math.PI*i/150).height);
+    const lo=Math.min(...heights),hi=Math.max(...heights);
+    const near=depth===42;
     return Math.abs(first.height-last.height)<1e-9&&
       Math.abs(first.radius-last.radius)<1e-9&&
-      heights.every(v=>v>=2.5&&v<=7.6)&&
-      spread>3&&spread<5.5&&
-      heights.every((v,i)=>i===0||Math.abs(v-heights[i-1])<.6);
+      heights.every(Number.isFinite)&&
+      (near?lo>.9&&hi<8:lo>3.1&&hi<10)&&
+      hi-lo>4.6&&hi-lo<6.7&&
+      heights.every((v,i)=>i===0||Math.abs(v-heights[i-1])<.55);
   })&&
-  Math.abs(midianRidgeProfile(.85,42).height-
-    midianRidgeProfile(.85,61).height)>.5);
-t('W12E.1 rocks vary in height and hue without moving their colliders',
+  midianRidgeProfile(3.9,61).height-
+    midianRidgeProfile(3.9,42).height>5.5&&
+  midianRidgeProfile(4.2,42).height<1.6);
+t('W12E.2 rocks become angular and remain within original collider footprints',
   Array.from({length:145},(_,i)=>midianRockPoint(i))
-    .filter(Boolean).every(p=>p.sy/p.sx>.18&&p.sy/p.sx<.78)&&
+    .filter(Boolean).every(p=>
+      p.sy/p.sx>.22&&p.sy/p.sx<.82&&
+      Math.abs(p.rx-p.sx*.68)<1e-12&&
+      Math.abs(p.rz-p.sz*.68)<1e-12)&&
   Array.from({length:145},(_,i)=>midianRockTone(i))
     .every(v=>v>=.24&&v<=.88));
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
