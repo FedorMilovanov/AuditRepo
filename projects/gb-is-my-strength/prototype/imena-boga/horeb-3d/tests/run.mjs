@@ -9,7 +9,7 @@ import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileC
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
-import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -269,6 +269,28 @@ t('W11C irregular well stone has correct flat-shaded triangular volume',(()=>{
       .flat().every(Number.isFinite);
   geo.dispose();return valid;
 })());
+// W12E.1: angular harmonics must close the actual full 360-degree
+// skyline, remain smoothly sampled and have two genuinely different layers.
+t('W12E.1 Midian mountain silhouette is smooth, closed and layered',
+  [42,61].every(depth=>{
+    const first=midianRidgeProfile(0,depth);
+    const last=midianRidgeProfile(2*Math.PI,depth);
+    const heights=Array.from({length:151},(_,i)=>
+      midianRidgeProfile(2*Math.PI*i/150,depth).height);
+    const spread=Math.max(...heights)-Math.min(...heights);
+    return Math.abs(first.height-last.height)<1e-9&&
+      Math.abs(first.radius-last.radius)<1e-9&&
+      heights.every(v=>v>=2.5&&v<=7.6)&&
+      spread>3&&spread<5.5&&
+      heights.every((v,i)=>i===0||Math.abs(v-heights[i-1])<.6);
+  })&&
+  Math.abs(midianRidgeProfile(.85,42).height-
+    midianRidgeProfile(.85,61).height)>.5);
+t('W12E.1 rocks vary in height and hue without moving their colliders',
+  Array.from({length:145},(_,i)=>midianRockPoint(i))
+    .filter(Boolean).every(p=>p.sy/p.sx>.18&&p.sy/p.sx<.78)&&
+  Array.from({length:145},(_,i)=>midianRockTone(i))
+    .every(v=>v>=.24&&v<=.88));
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
   Array.from({length:76},(_,i)=>midianScrubPoint(i))

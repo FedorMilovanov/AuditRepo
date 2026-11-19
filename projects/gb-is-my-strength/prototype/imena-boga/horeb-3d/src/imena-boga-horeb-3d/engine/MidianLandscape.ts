@@ -17,21 +17,35 @@ export function midianScrubPoint(index:number):{x:number;z:number;size:number}|n
   if(Math.hypot(x,z)<4.2||midianApproachClearance(x,z)<2.55)return null;
   return {x,z,size:.42+hash(index*9.9+4)*.92};
 }
+/** W12E.1: broad eroded-ridge silhouettes, not repeating triangular teeth.
+ * Integer angular modes maintain a seamless full-circle skyline. This is
+ * artistic non-geolocated landscape, not a claim about Midian geography. */
+export function midianRidgeProfile(angle:number,depth:number):{height:number;radius:number}{
+  const phase=depth>50?1.37:.43;
+  const broad=1.22*Math.sin(2*angle+phase)+1.12*Math.sin(5*angle-.6*phase);
+  const shoulder=.48*Math.cos(9*angle+1.2*phase)+
+    .17*Math.sin(15*angle-phase);
+  const height=Math.min(7.6,Math.max(2.5,4.9+broad+shoulder));
+  const radius=depth+1.5*Math.sin(3*angle+phase)+
+    .65*Math.cos(7*angle-.2*phase);
+  return {height,radius};
+}
+export function midianRockTone(index:number):number{
+  return .24+.64*hash(index*2.93+19.1);
+}
 function ridgeRing(scene:THREE.Scene,depth:number,tint:number):void{
   const count=150,vertices:number[]=[],colors:number[]=[],indices:number[]=[];
-  const low=new THREE.Color(tint),crest=low.clone().lerp(new THREE.Color(0xc0b6a2),.26);
+  const low=new THREE.Color(tint),crest=low.clone().lerp(new THREE.Color(0xd0bea3),.23);
   for(let i=0;i<=count;i++){
     const a=2*Math.PI*i/count;
-    const height=3.1+2.6*Math.sin(a*3.2+depth*.07)**2+
-      3.3*Math.sin(a*6.7+depth*.03)**2+
-      1.2*Math.sin(a*16.7+depth*.11)**2;
-    const radius=depth+1.9*Math.sin(a*4.8+depth*.12);
+    const profile=midianRidgeProfile(a,depth);
     for(let row=0;row<4;row++){
-      const t=row/3,r=radius-4.4*t;
-      const y=row===0?-4:row===1?.3:row===2?height*.51:height;
+      const t=row/3,r=profile.radius-(4.9+.55*Math.cos(3*a+.7))*t;
+      const y=row===0?-4:row===1?.17:row===2?profile.height*.57:profile.height;
       vertices.push(Math.cos(a)*r,y,Math.sin(a)*r);
-      const c=low.clone().lerp(crest,t*.75);
-      c.multiplyScalar(.88+.10*Math.sin(a*11.3+row*1.7));
+      const c=low.clone().lerp(crest,t*.81);
+      c.multiplyScalar(.94+.055*Math.sin(a*7+row*.4)+
+        .02*Math.cos(a*13+.3*row));
       colors.push(c.r,c.g,c.b);
     }
     if(i>0)for(let row=0;row<3;row++){
@@ -56,7 +70,7 @@ export function midianRockPoint(index:number):MidianRockInstance|null{
   if(Math.abs(x)>27||Math.abs(z)>31||midianApproachClearance(x,z)<3)return null;
   const k=.34+hash(index*1.97+7)*1.35;
   const sx=k*(.9+hash(index*1.31)*.6);
-  const sy=k*(.24+hash(index*3.17)*.21);
+  const sy=k*(.35+hash(index*3.17)*.28);
   const sz=k*(.8+hash(index*.83)*.51);
   return {index,x,z,k,sx,sy,sz,ry:hash(index*.77)*Math.PI*2,
     // Ellipse approximates the real rotated rock; conservative for walking.
@@ -72,11 +86,13 @@ export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
   {ridges:number;rocks:number;scrubs:number;twigs:number}{
   // Two complete rings prevent scenery vanishing when the player turns.
-  ridgeRing(scene,42,0x8e8176);ridgeRing(scene,61,0x9c9287);
+  ridgeRing(scene,42,0xa18d7b);ridgeRing(scene,61,0xb2a395);
   const rockGeom=new THREE.DodecahedronGeometry(1,1);
   const rockMat=new THREE.MeshStandardMaterial({color:0x9d8b75,roughness:1});
   const rocks=new THREE.InstancedMesh(rockGeom,rockMat,145);
   rocks.name='midian-detrital-rock-instances';
+  const rockDark=new THREE.Color(0x98836d),rockLight=new THREE.Color(0xc5b19a);
+  const instanceTone=new THREE.Color();
   const dummy=new THREE.Object3D();
   let rockCount=0;
   for(let i=0;i<145;i++){
@@ -85,9 +101,13 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
     dummy.position.set(rock.x,ground(rock.x,rock.z)+rock.k*.18,rock.z);
     dummy.rotation.set(.08*hash(i*2.6),rock.ry,.12*hash(i*1.9));
     dummy.scale.set(rock.sx,rock.sy,rock.sz);
-    dummy.updateMatrix();rocks.setMatrixAt(rockCount++,dummy.matrix);
+    dummy.updateMatrix();rocks.setMatrixAt(rockCount,dummy.matrix);
+    instanceTone.copy(rockDark).lerp(rockLight,midianRockTone(i));
+    rocks.setColorAt(rockCount,instanceTone);
+    rockCount++;
   }
   rocks.count=rockCount;rocks.instanceMatrix.needsUpdate=true;
+  if(rocks.instanceColor)rocks.instanceColor.needsUpdate=true;
   rocks.receiveShadow=true;scene.add(rocks);
   // Thin woody shrubs, not trees with identical solid spherical crowns.
   const points=Array.from({length:76},(_,i)=>midianScrubPoint(i))
