@@ -1075,3 +1075,30 @@ for(const forbidden of [
  'Таким образом, «Я есмь Сущий» означает: Я определяю Себя Сам'
 ])if(w105.includes(forbidden))throw Error('W105 earlier assertion restored: '+forbidden);
 console.log('W105_EHYEH_CONTEXT_THEOLOGY_SCOPE_PASS');
+
+
+// W106: Exod. 34:6 exact divine-attribute phrase is not identical to
+// Deut. 4:31 / Ps. 103:8 / Jonah 4:2 / Joel 2:13 allusions.
+// Keep Sinai's judgment-and-mercy context, and do not present an
+// intertextual Christian reading as direct Hebrew lexical equivalence.
+const w106Src=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w106Start=w106Src.indexOf("id: 'el-rachum-ve-channun'");
+const w106End=w106Src.indexOf("id: 'yhwh-sabaoth'",w106Start+1);
+if(w106Start<0||w106End<=w106Start)throw Error('W106 mercy-attributes card unavailable');
+const w106=w106Src.slice(w106Start,w106End);
+for(const required of [
+ 'Исход 34:6 — точная формула אֵל רַחוּם וְחַנּוּן',
+ 'Второзаконие 4:31 — אֵל רַחוּם',
+ 'Псалом 102:8 — רַחוּם וְחַנּוּן יְהוָה',
+ 'Иона 4:2 — אֵל־חַנּוּן וְרַחוּם',
+ 'Иоиль 2:13 — חַנּוּן וְרַחוּם הוּא',
+ 'но не повторяют одно и то же еврейское словосочетание',
+ 'не остаётся без наказания',
+ 'Это содержательное сопоставление, а не буквальное повторение'
+])if(!w106.includes(required))throw Error('W106 lexical/context guard absent: '+required);
+for(const forbidden of [
+ 'occurrences: \'Исход 34:6; Второзаконие 4:31; Псалом 102:8; Иона 4:2; Иоиль 2:13\'',
+ 'Первые два слова после Тетраграмматона',
+ 'Евангелист Иоанн прямо перекликается с Исх. 34:6'
+])if(w106.includes(forbidden))throw Error('W106 previous overstatement restored: '+forbidden);
+console.log('W106_RAHUM_FORMS_AND_CONTEXT_PASS');
