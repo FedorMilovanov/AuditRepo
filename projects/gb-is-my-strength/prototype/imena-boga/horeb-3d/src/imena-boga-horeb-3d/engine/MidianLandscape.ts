@@ -54,23 +54,48 @@ export function midianRidgeProfile(angle:number,depth:number):{height:number;rad
 export function midianRockTone(index:number):number{
   return .24+.64*hash(index*2.93+19.1);
 }
-function ridgeRing(scene:THREE.Scene,depth:number,tint:number):void{
-  const count=150,vertices:number[]=[],colors:number[]=[],indices:number[]=[];
-  const low=new THREE.Color(tint),crest=low.clone().lerp(new THREE.Color(0xd0bea3),.23);
-  for(let i=0;i<=count;i++){
-    const a=2*Math.PI*i/count;
-    const profile=midianRidgeProfile(a,depth);
-    for(let row=0;row<4;row++){
-      const t=row/3,r=profile.radius-(4.9+.55*Math.cos(3*a+.7))*t;
-      const y=row===0?-4:row===1?.17:row===2?profile.height*.57:profile.height;
-      vertices.push(Math.cos(a)*r,y,Math.sin(a)*r);
-      const c=low.clone().lerp(crest,t*.81);
-      c.multiplyScalar(.94+.055*Math.sin(a*7+row*.4)+
-        .02*Math.cos(a*13+.3*row));
+/** W12E.3: reproject the theatrical vertical ridge rings onto actual
+ * multi-band radial terrain. The first row is grounded within the shared
+ * 60x66 floor footprint and safely beyond the entire playable rectangle.
+ * The near ridge's outside edge overlaps the far ridge's inner ground row.
+ * No geolocation or reconstruction is claimed for these artistic masses. */
+export const MIDIAN_RIDGE_TERRAIN=Object.freeze({
+  rows:8,segments:150,innerOffset:13,radialSpan:21,
+  profile:Object.freeze([0,.05,.16,.32,.53,.76,1,.82]),
+});
+export function midianRidgeTerrainPoint(
+  angle:number,depth:number,row:number,
+  ground:(x:number,z:number)=>number,
+):{x:number;y:number;z:number;radius:number}{
+  const {rows,innerOffset,radialSpan,profile}=MIDIAN_RIDGE_TERRAIN;
+  const t=Math.max(0,Math.min(1,row/(rows-1)));
+  const ridge=midianRidgeProfile(angle,depth);
+  // The offset vanishes at the ground edge: no sawtooth or floor gap.
+  const radius=depth-innerOffset+radialSpan*t+
+    (ridge.radius-depth)*t;
+  const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
+  const i=Math.max(0,Math.min(rows-1,Math.round(row)));
+  const y=ground(x,z)+ridge.height*profile[i];
+  return {x,y,z,radius};
+}
+function ridgeRing(scene:THREE.Scene,depth:number,tint:number,
+  ground:(x:number,z:number)=>number):void{
+  const {rows,segments}=MIDIAN_RIDGE_TERRAIN;
+  const vertices:number[]=[],colors:number[]=[],indices:number[]=[];
+  const low=new THREE.Color(tint),crest=low.clone().lerp(new THREE.Color(0xcdbcaa),.22);
+  for(let i=0;i<=segments;i++){
+    const angle=2*Math.PI*i/segments;
+    for(let row=0;row<rows;row++){
+      const p=midianRidgeTerrainPoint(angle,depth,row,ground);
+      vertices.push(p.x,p.y,p.z);
+      const t=row/(rows-1);
+      const c=low.clone().lerp(crest,t*.78);
+      c.multiplyScalar(.935+.049*Math.sin(angle*4+row*.27)+
+        .015*Math.cos(angle*10-row*.42));
       colors.push(c.r,c.g,c.b);
     }
-    if(i>0)for(let row=0;row<3;row++){
-      const a0=(i-1)*4+row,b0=i*4+row;
+    if(i>0)for(let row=0;row<rows-1;row++){
+      const a0=(i-1)*rows+row,b0=i*rows+row;
       indices.push(a0,b0,a0+1,a0+1,b0,b0+1);
     }
   }
@@ -78,6 +103,19 @@ function ridgeRing(scene:THREE.Scene,depth:number,tint:number):void{
   geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
   geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
   geo.setIndex(indices);geo.computeVertexNormals();
+  // Both ends of the ring represent the same 2π location. Average each
+  // duplicated row normal so the radial slope has no vertical seam.
+  const normals=geo.getAttribute('normal');
+  const n=new THREE.Vector3();
+  for(let row=0;row<rows;row++){
+    const a=row,b=segments*rows+row;
+    n.set(normals.getX(a)+normals.getX(b),
+      normals.getY(a)+normals.getY(b),
+      normals.getZ(a)+normals.getZ(b)).normalize();
+    normals.setXYZ(a,n.x,n.y,n.z);
+    normals.setXYZ(b,n.x,n.y,n.z);
+  }
+  normals.needsUpdate=true;
   const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({
     vertexColors:true,roughness:1,side:THREE.DoubleSide,
   }));
@@ -107,7 +145,7 @@ export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
   {ridges:number;rocks:number;scrubs:number;twigs:number}{
   // Two complete rings prevent scenery vanishing when the player turns.
-  ridgeRing(scene,42,0x99816d);ridgeRing(scene,61,0xbcae9f);
+  ridgeRing(scene,42,0x99816d,ground);ridgeRing(scene,61,0xbcae9f,ground);
   // W12E.2: un-subdivided facets avoid polished oval potato silhouettes.
   const rockGeom=new THREE.DodecahedronGeometry(1,0);
   const rockMat=new THREE.MeshStandardMaterial({color:0x9d8b75,roughness:1});

@@ -7,9 +7,9 @@ import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
-import { MIDIAN_BOUNDS, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
+import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
-import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -297,6 +297,46 @@ t('W12E.2 rocks become angular and remain within original collider footprints',
       Math.abs(p.rz-p.sz*.68)<1e-12)&&
   Array.from({length:145},(_,i)=>midianRockTone(i))
     .every(v=>v>=.24&&v<=.88));
+// W12E.3: the radial ridge is genuine topography, not the original
+// 4-row near-vertical curtain. Its base overlaps the real ground and
+// begins outside the playable rectangle; both mountain layers overlap.
+t('W12E.3 radially grounded ridge has gradual grade and seamless full ring',
+  (()=>{const m=MIDIAN_RIDGE_TERRAIN;
+    if(m.rows!==8||m.segments!==150||m.profile.length!==8||
+       MIDIAN_FLOOR_SIZE.width<60||MIDIAN_FLOOR_SIZE.length<66)return false;
+    let maxGrade=0;
+    for(const depth of [42,61]){
+      for(let i=0;i<=150;i++){
+        const angle=2*Math.PI*i/150;
+        const points=Array.from({length:m.rows},(_,row)=>
+          midianRidgeTerrainPoint(angle,depth,row,midianGround));
+        if(Math.abs(points[0].y-midianGround(points[0].x,points[0].z))>1e-9||
+           points[0].radius<depth-13-1e-8)return false;
+        if(depth===42&&points[0].radius<=Math.hypot(MIDIAN_BOUNDS.x,MIDIAN_BOUNDS.z))return false;
+        for(let j=1;j<points.length;j++){
+          const prev=points[j-1],p=points[j];
+          const dr=Math.hypot(p.x-prev.x,p.z-prev.z);
+          if(dr<1||p.radius<=prev.radius)return false;
+          const grade=Math.abs(p.y-prev.y)/dr;
+          if(!Number.isFinite(grade))return false;
+          maxGrade=Math.max(maxGrade,grade);
+        }
+        if(i===0||i===150){
+          const counterpart=midianRidgeTerrainPoint(i===0?2*Math.PI:0,depth,6,midianGround);
+          if(Math.hypot(points[6].x-counterpart.x,
+            points[6].z-counterpart.z)>1e-9||
+            Math.abs(points[6].y-counterpart.y)>1e-9)return false;
+        }
+      }
+    }
+    // Near outer band overlaps far inner band, no empty sky gap.
+    return maxGrade<.8 &&
+      Array.from({length:151},(_,i)=>{
+        const a=2*Math.PI*i/150;
+        return midianRidgeTerrainPoint(a,42,7,midianGround).radius>
+          midianRidgeTerrainPoint(a,61,0,midianGround).radius;
+      }).every(Boolean);
+  })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
   Array.from({length:76},(_,i)=>midianScrubPoint(i))

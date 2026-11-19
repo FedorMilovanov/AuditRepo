@@ -14,6 +14,7 @@ export type MidianControl = {
   dispose:()=>void;
 };
 export const MIDIAN_BOUNDS={x:18,z:22,eye:1.68,speed:3.0} as const;
+export const MIDIAN_FLOOR_SIZE={width:60,length:66} as const;
 const hash=(n:number)=>{const v=Math.sin(n*127.19+23.72)*43758.5;return v-Math.floor(v);};
 export function midianGround(x:number,z:number):number{
   const ridge=.37*Math.min(1,Math.max(0,(Math.abs(x)-8)/10))**2+
@@ -59,7 +60,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   scene.add(sun);
   const mat=(color:number,roughness=.96)=>new THREE.MeshStandardMaterial({color,roughness});
   const clay=[mat(0xa66e52),mat(0xc28e66),mat(0x99654c)];
-  const groundGeo=new THREE.PlaneGeometry(56,66,92,100);
+  const groundGeo=new THREE.PlaneGeometry(MIDIAN_FLOOR_SIZE.width,MIDIAN_FLOOR_SIZE.length,92,100);
   groundGeo.rotateX(-Math.PI/2);
   const attr=groundGeo.getAttribute('position');
   const palette:number[]=[];
