@@ -1,0 +1,61 @@
+# Intake slot 2026-11-18 UTC — stage 20: homepage sequential focus and dismissal.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo branch arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0; only existing Draft #570.
+
+[Coordination and scope]
+git status --short --branch
+git rev-parse HEAD
+for repo in AuditRepo gb-is-my-strength; do
+  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+# Before: same open Draft, exact 134 paths, 48dd99fc318857922a80e3102992505092c66ec9. Base fcf2e69b. No reviews or merge.
+# AuditRepo main fe692393; compare base→main: 1 docs-only path. Product main 9edef94e matches the dist anchor.
+# Read-only compare Audit #538 and #543, and sources-1971 / Keston deltas against stage 19. Source/terrain work, no intake overlap.
+# Product #2348 7d9c3d10→eb07098f: +1 commit/1 review doc, exact main→tip +3/2 docs. No home/tooltip/state/quiz overlap; other Product tips unchanged.
+# Explicit dedup: October 28 tooltip owner cluster §3; HOME-RESUME-DEAD-01; stages 18 (position) and 19 (contrast).
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# QPDF exact Anchor / 48 pins / PDF.js 5.4.624 / native witness pending; fixture not used or changed by these runs.
+
+[Unmodified dist and source controls]
+# Use the pinned production-like distribution from stage 12 bootstrap (arena-quiz-native-print commands.log).
+# PRODUCT/TOOLS are absolute, OUT has fresh run dirs; CHROMIUM is the extracted Chromium Headless Shell.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && npm run overlay:runtime:test && node scripts/homepage-resume-owner-contract-test.js)
+# Runtime integrity, overlay owner API and homepage resume owner contracts PASS. No claim that they cover sequential focus.
+for f in js/site.js js/site-utils.js js/glossary.js data/glossary.json data/glossary-policy.json; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# Source-to-dist byte matches. Legacy tooltip controller is closure-private on Home; read DOM state and the shared scroll diagnostics, not a fabricated exposed controller.
+# Pilots: (1) immediate CTA assumption fails on ordinary Gill because its saved chapter yields another gterm.
+# (2) mobile probes led to legacy home owner, not the article module; wait for legacy glossary upgrade, not data-gb-tooltip-ready.
+# (3) first post-Enter sample may still have the now-hidden button; assert durable body focus at 250/600/1200ms, not synchronous fixup.
+
+[Replays]
+P="$PWD/projects/gb-is-my-strength/incoming"
+W="$P/arena-quiz-resume-focus/2026-11-18"
+V="$P/arena-quiz-resume-label/2026-11-18"
+node --check "$W/harness/resume-focus.mjs"
+for run in a b; do
+  node "$W/harness/resume-focus.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/resume-label-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# 15/15 ×2; 67 current dist pins including glossary data/policy, all 61 stage 19 pins rechecked. Two 390x844 screenshots retained from A.
+# Quick/dwell/Escape use real Tab order from a fresh page; only ordinary wheel for article controls and authored quiz interaction for Learning.
+# No synthetic focus/scroll/lock calls, CSS changes, state seeding or forced clicks. Observer reads diagnostics and tracks focus events without changing default behavior.
+# 5 narrow quick cases / run below viewport through 1.2s; 5 early-release controls visible / run. The one explicit late recovery check does not scroll the focused CTA.
+# One and two saved records on both widths. Enter/next Tab/reverse Shift+Tab/reload all on the real bundle; 11 declared-href Enter destinations / run.
+
+[Admission]
+# CHANGED = exact cumulative paths vs fcf2e69b. Force-add only this ignored commands.log.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# Repeat the ref/PR/owner guard before publication, preserve the old PR body/title, update only the existing Draft, and check exact-head CI.
+# No Product, MASTER/ledger, other branch, review, merge, deploy or Drive mutation.
