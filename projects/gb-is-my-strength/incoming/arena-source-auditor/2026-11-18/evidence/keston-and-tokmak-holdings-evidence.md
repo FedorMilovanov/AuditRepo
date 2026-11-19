@@ -844,3 +844,84 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 ### Срез доставки XIX
 
 **AuditRepo, 20:33:33–41 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`; local/remote `b5babdc2819bf7c2cd4901727b14999bc034f39e`; merge-base `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`. ACD **1.5.0**. Проверены **27 накопленных путей / 9 открытых PR / 820 записей `/files`**: нет пересечений ни с PR, ни с `main`. Это состояние AuditRepo, не [разбор нового HEAD Research #584](../PEER-REVIEWS.md#дополнение-xix--19112026-utc). Только append-only intake; ни библиотечные запросы, ни заявки на копирование не отправлялись.
+
+## Дополнение XX — 19.11.2026 UTC
+
+### XX: Именные списки Keston
+
+У [точного заглавия в Jisc][sov-xx] два разных издания. Это локаторы экземпляров, не подтверждение записи о человеке. Выпуск, страницу и дату отсечения следует переписывать с самого экземпляра, не из года в карточке.
+
+| Выпуск | Экземпляр или запись | Приоритет сверки |
+| --- | --- | --- |
+| *Soviet Christian Prisoner List 1981*, 59 с., SSRC/Keston | [BL **X.200/38919**][sov81-bl-xx] | Кинас до ареста 1982 г.: вариант имени, предыдущее дело, начало и вид наказания. Отсутствие записи в одном списке не опровергает первый срок. |
+| *Soviet Christian Prisoner List: 1982 update*, Keston, [1982], 27 с. | [BL **X.200/38918**][sov82-bl-xx], [Cambridge UL **Uc.2.7782**][sov82-cam-xx], [NLS **QP2.83.1265**, offsite][sov82-nls-xx], [TCD **PL- 70-692**, Santry][sov82-tcd-xx] | Сначала предисловие и дата отсечения, затем рубрики/индекс на Кинаса, Сухорукова, Шевченко и смежные записи. Год выпуска не доказывает охвата 13.02 или 08.06.1982. |
+| *Christian Prisoners in the USSR 1983/4*, 4-е, 72 с., Keston book 11 | [CCCW **Pamphlet no. 261**, складная карта][chr83-cam-xx]; в Cambridge UL также Storage; [Northwestern, Hathi 010633526][chr83-hathi-xx], OCLC 11828548, Limited | Именные страницы, титул и источниковые пометы. Не считать сводку независимой от Совета родственников, «Вестей» или более раннего Keston без сверки текста. |
+| *Christian Prisoners in the USSR*, 5-е, c1985, 84 с., заглавие с обложки | [Cambridge Criminology **QPKRna**][chr85-cam-xx], [UCL **STORE 17-0301**][chr85-ucl-xx] | Сопоставить обложку, внутренний титул, индекс, именные страницы и выходные данные с *Religious Prisoners*; один номер серии и 84 с. не доказывают тождества. |
+| *Religious Prisoners in the USSR*, 1985/86, 84 с. | [TCD **PL-152-627**][rel85-tcd-xx], [NLS **QP2.87.534**][rel85-nls-xx] (индекс); [Bodleian **1202 e.509**][rel85-oxf-xx]; [Google Books 84 с., OCLC 14878906][rel85-gb-xx] | Запись TCD отсылает к прежнему заглавию (1983). Индекс/фолио ещё не получены. |
+| *Religious Prisoners*, **autumn 1986 update** | [Cambridge UL Storage, два тома **84 + 10 с.**, без шифра в Jisc][rel86-cam-xx]; [однотомная карточка Cambridge][rel85-cam-xx] описана отдельно | Запросить точный шифр и титул/дату **10-страничного дополнения**. У Oxford в той же агрегированной записи описаны **84 с.**; Google Books отдельно показывает [10 с., OCLC 263689102, ярлык 1985][rel10-gb-xx], не подтверждая, что это осеннее дополнение. |
+| *Religious Prisoners in the USSR: A Study*, Greenfire, 1987, 160 с. | [LC **BR1608.S65 R47 1987**][rel87-loc-xx], OCLC 15589738, ISBN 0947697772 / 0867600527; [Michigan, Hathi 000904895][rel87-hathi-xx], Limited | Сверить индекс и полные записи. Не подменять этим изданием Keston 1985/86 или списком к слушаниям 30.07.1986. |
+
+**Черновик NLS, условия копирования отдельно — не отправлен.** [Copying Services][nls-copy-xx] предусматривает предварительную проверку состояния и авторских прав; запрос информации не означает одобрения, тарифа или заказа. TCD — [справочная `library@tcd.ie`][tcd-contact-xx]; [Click & Collect][tcd-storage-xx] описывает выдачу из хранилища в библиотеке, не удалённое сканирование.
+
+> Could you check Keston College, *Soviet Christian Prisoner List: 1982 Update*, 27 pp., shelfmark QP2.83.1265? Please identify the title/imprint and the date up to which the list was compiled. If there is an index, I am looking for Ivan Ervinovich Kinas (Tokmak, arrested 13 February 1982; sentence reported on 8 June), and Pavel Ivanovich Sukhorukov and Daniil Prokopyevich Shevchenko (from Fergana; variants Soukhoroukov and Shevchenko/Schewtschenko). If entries exist, could you give their page numbers and advise whether a research copy of the title/date and named pages is possible? If the index does not identify them, please say what was checked. This is an enquiry, not an order or a reproduction request for publication.
+
+**Черновики BL / Cambridge — не отправлены.** Для BL использовать [Reference Enquiries][bl-contact-xx]: в одном письме сравнить **X.200/38919** (1981) и **X.200/38918** (1982), явно попросив проверить запись до 1982 г. и указать, какая версия/страница её содержит. Для [CCCW][cccw-xx] (`library@cccw.cam.ac.uk`) — отдельный запрос **Pamphlet no. 261** на титул, редакционную отсечку и именные страницы; [запрос о *Article 227*](#xiii-запросы-на-образ-и-исходную-сводку) не смешивать с запросом списка. В Cambridge UL по [двухтомной записи][rel86-cam-xx] спросить шифр именно дополнения, отдельную нумерацию и отметки об изменениях к основному тексту; просить даты, статьи, статус и источниковые пометы только там, где они напечатаны. Уточнять, что разрешено для исследования и что — для публикации, раздельно.
+
+### XX: Бюллетень ACER
+
+- **Французский:** *Bulletin : Aide aux croyants de l’URSS*, ISSN **1142-2300**, [BnF **8-JO-26883**, Tolbiac][acer-fr-bnf-xx]. Карточка составлена по №50 (весна 1986), не по №48. В [SUDOC holdings для PPN **038485354**][acer-fr-sudoc-xx] **Paris–Centre Istina, RCR 751135404**, прямо указывает **№48 (1985) – №49 (1985)**; французский комплект La contemporaine указан с №65, не подходит. Istina и Saulchoir находятся по одному адресу, но это разные holdings; №48 приписан не Saulchoir.
+- **Русский:** «Помощь верующим в России», ISSN **1156-4970**, [BnF **4-JO-63246**][acer-ru-bnf-xx]. [SUDOC PPN **038612798**][acer-ru-sudoc-xx] — La contemporaine, №40 (1982) – №52 (1989) **с лакунами**. Конкретный №48 в этом русском комплекте не подтверждён; нумерацию и соответствие перевода нужно проверить по экземплярам.
+- **Зачем проверять.** Barbara Martin, [*The Russian Student Christian Movement’s Religious Literature Smuggling Program*][martin-xx], с. 18, указывает общий канал информации от Keston к РСХД; с. 20, прим. **102–103**, ссылается на №48, **с. 2–3** при описании финансирования и работы отдела. Это локатор для сверки, не сообщение о Токмаке или Иссыке и не доказательство происхождения тиражной оценки Keston. Данные об отправке книг РСХД не складывать с выпуском «Христианина».
+
+**Черновик Istina — не отправлен.** [Читальный зал][istina-xx] — 45 rue de la Glacière, Paris, адрес `centre@istina.eu`; в [CCFr][istina-ccfr-xx] справочный `contact@istina.eu`. Наличие по каталогу, доступ к подшивке и возможность получить копию — разные вещи.
+
+> Pourriez-vous vérifier le *Bulletin : Aide aux croyants de l’URSS* (ISSN 1142-2300, PPN 038485354), nº 48 (1985), indiqué dans vos collections ? Je cherche la date, le sommaire et les pages 2–3 citées par Barbara Martin (notes 102–103). Merci d’indiquer si la couverture, les mentions d’édition et ces pages peuvent être consultées ou copiées pour la recherche, et à quelles conditions. Il s’agit d’une demande d’information, pas d’une commande ni d’une demande de publication.
+
+### XX: Контроли и пределы
+
+- **Поиск по Greenfire, только индекс.** В одном томе Google Books `ybvYAAAAMAAJ`: [`Kinas` 0][rel87-kinas-xx], [`Sukhorukov` 0][rel87-sukh-xx], [`Shevchenko` 4 страницы][rel87-shev-xx], [точное `"Daniil Shevchenko"` 0][rel87-dan-xx], [контроль `Khodorovich` 2][rel87-khod-xx]. Ни строк, ни фолио для идентификации. Счётчики зависят от OCR/варианта имени и доступности; оба Hathi-тома Limited. [Обзор RCL 10/1][rcl82-xx] даёт агрегаты до конца 1981 г., не заменяет *1982 update* и не даёт статьи Кинаса.
+- **Контроль по Фергане.** [«Вести» 1986, 17‑3][vesti86-xx] называют обыски 02.07.1986 в 12 домах и аресты Мухина, Плетта и Богданова. Это другой эпизод, не исход по Сухорукову и Шевченко из «Вестей» 1982, 7‑3. На первом сроке Кинаса, статье, описи и исходах ничего не закрывается.
+- **Открыты:** *Article 227* №1, с. 14, KNS/редакционная сводка до 25.03.1985, образ полосы *Weekly* 06.04.1980 и с. 171/175 GPO II, MLA 25813/25814, CMBS 1092/1/7–8 и *Nachrichten* №47–49. Держатель судебного дела Есика не установлен, 30 000 Библий и 6 т бумаги по-прежнему сообщение о рейде, не опись. `P20` остаётся `ATTRIBUTED ESTIMATE`; открытые вопросы не снимаются по holdings или счётчикам индекса.
+
+[sov-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list
+[sov81-bl-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list&rn=1&for=bli
+[sov82-bl-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list&rn=2&for=bli
+[sov82-cam-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list&rn=2&for=cam
+[sov82-nls-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list&rn=2&for=nls
+[sov82-tcd-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Soviet+Christian+prisoner+list&rn=2&for=tcd
+[chr83-cam-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Christian+prisoners+in+the+USSR&rn=5&for=cam
+[chr83-hathi-xx]: https://catalog.hathitrust.org/Record/010633526
+[chr85-cam-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Christian+prisoners+in+the+USSR&rn=8&for=cam
+[chr85-ucl-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Christian+prisoners+in+the+USSR&rn=3&for=ucl
+[rel85-tcd-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Religious+prisoners+in+the+USSR&rn=2&for=tcd
+[rel85-nls-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Religious+prisoners+in+the+USSR&rn=5&for=nls
+[rel85-oxf-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Religious+prisoners+in+the+USSR&rn=4&for=oxf
+[rel85-gb-xx]: https://books.google.com/books?id=MX6CswEACAAJ
+[rel86-cam-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Religious+prisoners+in+the+USSR&rn=4&for=cam
+[rel85-cam-xx]: https://discover.libraryhub.jisc.ac.uk/search?ti=Religious+prisoners+in+the+USSR&rn=1&for=cam
+[rel10-gb-xx]: https://books.google.com/books?id=STq0MgEACAAJ
+[rel87-loc-xx]: https://lccn.loc.gov/87180233
+[rel87-hathi-xx]: https://catalog.hathitrust.org/Record/000904895
+[nls-copy-xx]: https://www.nls.uk/tools-for-research/copying-services/
+[tcd-contact-xx]: https://www.tcd.ie/library/contact/
+[tcd-storage-xx]: https://www.tcd.ie/library/using-library/click-collect.php
+[bl-contact-xx]: https://bl.libguides.com/currently-available/introduction
+[cccw-xx]: https://www.cccw.cam.ac.uk/library/
+[acer-fr-bnf-xx]: https://catalogue.bnf.fr/ark:/12148/cb34427973d.public
+[acer-fr-sudoc-xx]: https://www.sudoc.abes.fr/cbs/xslt/DB=2.1/PRS=HOL/PPN?PPN=038485354
+[acer-ru-bnf-xx]: https://catalogue.bnf.fr/ark:/12148/cb344438878
+[acer-ru-sudoc-xx]: https://www.sudoc.abes.fr/cbs/xslt/DB=2.1/PRS=HOL/PPN?PPN=038612798
+[martin-xx]: https://www.academia.edu/128454470/The_Russian_Student_Christian_Movements_Religious_Literature_Smuggling_Program_1960s_1980s
+[istina-xx]: https://istina.eu/salle-lecture/
+[istina-ccfr-xx]: https://ccfr.bnf.fr/portailccfr/jsp/index_view_direct_anonymous.jsp?record=rnbcd:INSTITUTION:12693
+[rel87-kinas-xx]: https://books.google.com/books?id=ybvYAAAAMAAJ&jscmd=SearchWithinVolume2&q=Kinas
+[rel87-sukh-xx]: https://books.google.com/books?id=ybvYAAAAMAAJ&jscmd=SearchWithinVolume2&q=Sukhorukov
+[rel87-shev-xx]: https://books.google.com/books?id=ybvYAAAAMAAJ&jscmd=SearchWithinVolume2&q=Shevchenko
+[rel87-dan-xx]: https://books.google.com/books?id=ybvYAAAAMAAJ&jscmd=SearchWithinVolume2&q=%22Daniil%20Shevchenko%22
+[rel87-khod-xx]: https://books.google.com/books?id=ybvYAAAAMAAJ&jscmd=SearchWithinVolume2&q=Khodorovich
+[rcl82-xx]: https://biblicalstudies.org.uk/pdf/rcl/10-1_081.pdf
+[vesti86-xx]: https://vesti-iz-sssr.com/2016/12/09/presledovaniya-baptistov-1986-17-3/
+
+### Срез доставки XX
+
+**AuditRepo, 20:54:28–36 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`, HEAD/remote `3e5182d7a6db76b89dbae159dcda93db6f721ffd`, merge-base `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`, ACD **1.5.0**. Сверены **27 накопленных путей / 9 открытых PR / 830 записей `/files`**: ни одного пересечения с `main` или PR; своего PR нет. Только добавления в три intake-файла. [Ревью Research #584](../PEER-REVIEWS.md#дополнение-xx--19112026-utc) — отдельный срез, не приёмка. Ни письма, ни заявки не отправлялись.
