@@ -697,3 +697,65 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 **AuditRepo, 19:32:39–19:32:47 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`, рабочий и удалённый HEAD `c9343914917290dc997d60448be19e07e0f0c8b2`, общий предок по API compare `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`. Первый замер отброшен: список открытых PR сдвинулся внутри чтения. Устойчивый замер: **27** накопленных путей, **9** открытых PR, **810** записей `/files`, **0** пересечений с `main` и **0** с PR, включая `previous_filename`. PR #514/538/542/543/544/545/557/562/570: **3/180/1/140/74/276/1/1/134**. Пагинация, `changed_files` и повторное чтение refs сверены; собственного PR нет.
 
 **Локальные гейты:** структура, допуск артефактов, workflow syntax/preflight и регрессии, валидатор, `matrix coverage` и `contexts` для `gb-is-my-strength` — PASS. **44 OPEN / 0 closed**, **1825** нерешённых идентификаторов в `contexts`. Добавлены только три принадлежащих этому проходу Markdown; без правок MASTER, Product, Research и HOLD. Семейные адреса, сканы и логи в diff не внесены; запросы и заказы не отправлены. Отдельная проверка изменившихся refs перед push и readback относятся к доставке, не к сетевому CI или merge.
+
+## Дополнение XVIII — 19.11.2026 UTC
+
+### XVIII: Винс и оценка тиража
+
+| Источник и локатор | Что именно прочитано | Ограничение |
+| --- | --- | --- |
+| *Basket Three: Implementation of the Helsinki Accords*, XI, [титул Purdue][basket-title-xviii], OCR | **96th Congress, First Session**, слушания **07.06 и 19.07.1979**, Вашингтон: GPO, 1979, **55-439 O**. Штамп Purdue 04.02.1980 — не дата показаний. | В каталожной шапке `Ninety-fifth` относится к серии, а не к данному тому. Чтение с OCR, не проверка образа титула. |
+| 07.06.1979, [устное введение, с. 4][basket4-xviii]; [стенограмма, с. 6][basket6-xviii]; [начало письменного текста, с. 11][basket11-xviii] и [его с. 22][basket22-xviii], OCR | Введение говорит о Библиях и Евангелии `in various languages`. На с. 6 и 22: за **10 лет** — `hundreds and thousands of religious books and pamphlets`, включая НЗ и Библии. С. 11 называет автора письменного текста: **Georgi Petrovich Vins**. | Фразу не переводить как «сотни тысяч» и не округлять до 500 000. Стенограмма и приложенный текст — версии одного показания. Ни на этих страницах, ни в описании немецкого издания нет основания для формулы «семь языков к 1982 г.». |
+| [CMBS 1092/1/4][vins-xiv], опись | Показания 07.06.1979 изданы **Köln: Missionswerk Friedensstimme, 1979**. Папка **1092/2/1** из поступления Unruh описана отдельно. | Установлено издательское звено **для показания 1979 г.**, не для февральского обращения 1980 г. или числа в ACR. Листы немецкого издания не прочитаны. |
+| [*The Ukrainian Weekly* 06.04.1980, Vol. LXXXVII/No. 80][weekly-xvii], PDF2 / [тот же выпуск на Scribd][weekly-scribd-xvii], извлечение | Редакция относит обращение к февралю и приписывает его Винсу. «Arrests of Christians in USSR continues»: **около 500 000 религиозных книг за предыдущие десять лет на многих языках народов СССР**, после абзаца об аресте работников. | Вновь прочитан текст; визуальный контроль XVII относится только к [обложке][weekly-cover-xvii]. Повтор того же выпуска не второй источник. Оригинал обращения и образ PDF2 не получены. |
+| [*Weekly*, файл `1980-39`][weekly-sept-xviii], c1, «Crackdown on Evangelical Baptists continues» | Со ссылкой на International Representation из Элкхарта сообщено о процессах в Днепропетровске в августе: **по три года** Сергею Бублику, Тамаре Быстровой, Любови Косачевич и Галине Юдинцевой за печать. | Независимость данных редакции от сообщения представительства не показана; это продолжение по людям, не учёт тиража и не судебный оригинал. |
+| [*Australian Church Record* №1821 от 25.03.1985][acr-xii], c6, «Underground printing works discovered» | Первый абзац атрибутирует рейд миссии Friedensstimme. Следующий даёт **к 1982 г. около полумиллиона единиц религиозной литературы на семи языках**; в конце кредит `Keston College`. | Не сказано, что цифра получена от миссии или из обращения Винса. Ни десятилетний период, ни формулировку 1980 г. нельзя автоматически перенести сюда. Число изъятого при рейде — отдельное утверждение. |
+
+**Ложные совпадения и предел вывода.** В [*TIME* 21.05.1979][time-xviii] речь о `thousands of Bibles and pamphlets`, а [ACR 18.06.1979][acr-june-xviii], c10 / с. 7, указывает **500 000 подписей**, не книг. [Интервью Винса в ACR 21.05.1979][acr-may-xviii], c4–5, — отдельный материал, не мартовская заметка. В [*Christianity Today* 08.10.1982][ct-xviii] собственную печать и поступление литературы извне различают; объёмы поставок не суммировать с выпуском. Сопоставление с «Вестником истины», «Братским листком» и Л. М. Алексеевой — [XVII](#xvii-винс-и-оценка-тиража), не новые независимые замеры. `P20`: **`ATTRIBUTED ESTIMATE`**, не число напечатанных Библий.
+
+### XVIII: Источник заметки Keston
+
+- **Приоритет — январь–март 1985 г.** В [выборке CMnexus][kns-cm-xiii] виден №222 от **04.04**, позже даты ACR. Из [оглавления №224][kns224] от **02.05** читаются Чугуевка и съезд, но не получается мартовская заметка. Библиографическая выдача указывает **№217 от 24.01.1985**, в связи с поправкой об адресе о. Глеба, не типографией [1](https://cornellpress.manifoldapp.org/read/freedom-and-the-captive-mind/section/2daaef25-c011-4ad1-9ac5-b05a5b67c57f). Мартовские даты или № отдельных выпусков, рассчитанные из периодичности, — ключи, не прочитанные экземпляры.
+- **Цифровая выдача не равна подшивке.** [Baylor Keston Collection][baylor-keston-xviii] показывает выборку; проверенные варианты параметров вернули общую выдачу, не подтверждённое отсутствие выпуска. У [Keston online][kns-index-xiii] просмотренные края ряда 1996–2003 не покрывают искомый период. В [серии IA][kns-ia-xviii] доступных для просмотра выпусков не показано. Поиск заголовка и фразы не дал более раннего текста с формулой ACR, а совпадение имени `photo_1821` в Drive не идентифицирует номер газеты.
+- **Не смешивать два запроса.** Номерной ряд и редакционная папка KNS могут подтвердить, какая версия пошла в ACR; входящий отчёт Friedensstimme должен показать, какие абзацы миссия действительно передала. Сопоставить титул, дату, подпись и соседний контекст, а не только число. Оригинал заметки и источник оценки не обнаружены. [Черновики XIII](#xiii-запросы-на-образ-и-исходную-сводку) остаются неотправленными. *Article 227* №1, с. 14, CMBS *Nachrichten* №47–49 и 1092/1/7–8 — запросы отдельных экземпляров, не заменители цепочки.
+
+### XVIII: Образы и держатели
+
+| Цель | Получено в XVIII | Следующий воспроизводимый шаг |
+| --- | --- | --- |
+| *Weekly*, №80, 06.04.1980, **именно PDF2** с обращением | Не получен новый образ. В [карточке LoC `sc82006109`][weekly-loc-xviii] самостоятельная серия начинается **01.06.1980**; [микрофильм CRL по этой записи][weekly-hold-xviii] указан с **06.1980**, поэтому он не подтверждает апрельскую полосу. | Проверять апрельский выпуск у издателя или как воскресный **English-Language Weekly Edition** в [микрофильме *Svoboda* `sn80012518`][svoboda-hold-xviii]. Диапазоны LoC и CRL включают 1980 г., но не удостоверяют комплектность нужной даты. Запросить шапку и полосу целиком, с фолио и колонкой; не подставлять печатный номер страницы до сверки. Для подлинника письма — [черновик CMBS/AR 915](#xvii-винс-и-оценка-тиража), не газетный микрофильм. |
+| GPO, **Part II / 30.07.1986**, с. **171** и **175** | В Purdue `pur1.32754076922784` — [seq 175][gpo-pur171-xviii] / [179][gpo-pur175-xviii]; в сшитом экземпляре Minnesota `umn.31951p00757501f` — [титул II `seq 149`][gpo-umn-title-xviii], [323][gpo-umn171-xviii] / [327][gpo-umn175-xviii]. Два OCR одного издания. Заголовок на 171: *Prisoner List 1986*, `submitted by Ms. Vins`; на 175: `KINAS Ivan Ervinovich`, `5 years str + conf`, `Second term`, ожидаемое `Release: Feb 13, 1987`. | В просмотрщике Minnesota образ не извлечён, прямой запрос картинки с. 175 вернул 500. Различная последовательность адресов в OCR не решает колоночную привязку. Сверить две страницы и титул на печатном экземпляре `KF27 .F64214 1985h v. 2` или CIS **87 H381-13**; [черновик LoC/CIS в XVI](#xvi-слушания-экземпляр-и-полосы) не отправлен. |
+
+**Дополнительный маршрут GPO:** [Government Publications, University of Minnesota Libraries][umn-gov-xviii], `govref@umn.edu`, с уточнением наличия бумажной части II (`Y 4.F 76/1:R 27/7/pt.2`) и двух указанных фолио. [ILL][umn-ill-xviii] имеет ограничения для внешних читателей; [DLS][umn-dls-xviii] прямо говорит, что университет не хранит копии оцифровок Google Books/HathiTrust. Это путь к печатному экземпляру или подходящему держателю, не обещанный бесплатный цифровой образ. Не отправлялись ни запрос, ни заказ. `Submitted by` не устанавливает авторство, `Exile address` не входит в `Sentence`, январский список CMU и OCR 1986 г. не заменяют приговор, а №139 — сообщение об освобождении, не акт.
+
+**Без пересмотра:** статья и первый приговор Кинаса, опись и станок, ферганские исходы, MLA 25813/25814, точный держатель иссыкского дела. [Маршрут в Есик](#xvii-есик-регистрация-и-передача) прежний. Семейные адреса и воспроизведения в intake не добавлены.
+
+[basket-title-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754077265761;seq=1
+[basket4-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754077265761;seq=8
+[basket6-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754077265761;seq=10
+[basket11-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754077265761;seq=15
+[basket22-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754077265761;seq=26
+[weekly-sept-xviii]: https://archive.ukrweekly.com/wp-content/uploads/The_Ukrainian_Weekly_1980-39.pdf
+[time-xviii]: https://time.com/archive/6854347/religion-submission-to-god-alone/
+[acr-june-xviii]: https://www.australianchurchrecord.net/wp-content/uploads/2018/11/18th-June-1979.pdf
+[acr-may-xviii]: https://www.australianchurchrecord.net/wp-content/uploads/2018/11/21st-May-1979.pdf
+[ct-xviii]: https://www.christianitytoday.com/1982/10/religion-in-ussr-how-much-freedom-is-enough/
+[baylor-keston-xviii]: https://digitalcollections-baylor.quartexcollections.com/explore-the-collections/list/collections/15
+[kns-ia-xviii]: https://archive.org/details/pub_keston-news-service
+[weekly-loc-xviii]: https://www.loc.gov/item/sc82006109/
+[weekly-hold-xviii]: https://www.loc.gov/item/sc82006109/?st=holdings
+[svoboda-hold-xviii]: https://www.loc.gov/item/sn80012518/?st=holdings
+[gpo-pur171-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754076922784;seq=175
+[gpo-pur175-xviii]: https://babel.hathitrust.org/cgi/ssd?id=pur1.32754076922784;seq=179
+[gpo-umn-title-xviii]: https://babel.hathitrust.org/cgi/ssd?id=umn.31951p00757501f;seq=149
+[gpo-umn171-xviii]: https://babel.hathitrust.org/cgi/ssd?id=umn.31951p00757501f;seq=323
+[gpo-umn175-xviii]: https://babel.hathitrust.org/cgi/ssd?id=umn.31951p00757501f;seq=327
+[umn-gov-xviii]: https://www.lib.umn.edu/collections/govpubs
+[umn-ill-xviii]: https://www.lib.umn.edu/services/interlibrary-loan
+[umn-dls-xviii]: https://www.lib.umn.edu/services/scanning
+
+### Срез доставки XVIII
+
+**AuditRepo, 19:52:38–46 и 20:04:38–46 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`, рабочий и удалённый HEAD `09b413e0f86074646d32685f3543a4589b1289e2`, общий предок `fcf2e69b2c1531fe606d9838c811b7d1b1071db0` по API compare. Актуальная инструкция ACD — **1.5.0**. В первом срезе **27 путей / 9 открытых PR / 811 записей `/files` / 0 пересечений с PR / 0 с `main`**. Во втором — те же 27 путей и 9 PR, **820** записей, оба пересечения пусты. PR #514/538/542/543/544/545/557/562/570: **3/180/1/141/74/276/1/1/143**. Проверены пагинация, `filename` и `previous_filename`, `changed_files`, refs и HEAD/base всех PR на концах измерения. Собственного PR нет. Только три append-only Markdown в intake; без прямых правок MASTER, HOLD, Product, Research или Drive.
+
+**Локальные проверки:** append-only, разрешение локальных ссылок, структура, допуск трёх изменённых и 27 накопленных путей, workflow preflight, валидатор, регрессии, `matrix coverage` и `contexts` — PASS. Для `gb-is-my-strength`: **44 OPEN / 0 closed / 0 проблем покрытия**, **1825** нерешённых идентификаторов в `contexts`. Это проверки intake, не GitHub CI, не приёмка чужих PR и не разрешение на публикацию материалов.

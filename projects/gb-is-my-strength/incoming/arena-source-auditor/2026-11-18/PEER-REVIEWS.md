@@ -171,3 +171,33 @@
 | [Product #2338](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2338) | `b2ae614730b0c2e164d3b07453797074253d9698`, open/draft, `clean`, 17 путей, **28 success / 4 skipped** | HEAD не менялся; не утверждение релиза. |
 
 `main` на срезе: Research `73b2431d69a143d44f21f547806078e02e1364f9`, AuditRepo `fe69239320bed47362f049906d5af25342f3c104`, Product `9edef94ece08012223c1364bec7ddcd561cf5713`. [Срез пересечений собственного intake](evidence/keston-and-tokmak-holdings-evidence.md#срез-доставки-xvii) — отдельный контроль. Комментарии в PR не отправлены, чужие файлы и ветки не изменены.
+
+## Дополнение XVIII — 19.11.2026 UTC
+
+### Research #584: устранены четыре сверки только по размеру
+
+**PASS в границах снимка и четырёх живых метаданных.** [Дельта `618a664…4198b50`](https://github.com/FedorMilovanov/Research/compare/618a664ee54efa0997a237415088c4683fe90aff...4198b502762d151bbade5ac01a5963fab61cdf99): 1 коммит / 6 путей. На [точном HEAD `4198b50`](https://github.com/FedorMilovanov/Research/commit/4198b502762d151bbade5ac01a5963fab61cdf99) сверены **13** Git blobs поднабора (6 новых версий и 7 повторно сверенных, включая леджер `93a0c34034d410d1517dc0a8a2a1afea46417d4d`). `python3 -B -m unittest discover -s scripts -p 'test_*.py'` — **52 теста OK**; `render_closures_summary.py --check` — exit 0. Повтор `audit(root, snapshot)` совпал с проекцией всех **92** строк [commit-отчёта](https://github.com/FedorMilovanov/Research/blob/4198b502762d151bbade5ac01a5963fab61cdf99/data/drive-ledger-audit-2026-11-18.json) по ID, результату, размерам и MD5/SHA-256. В [сохранённом снимке](https://github.com/FedorMilovanov/Research/blob/4198b502762d151bbade5ac01a5963fab61cdf99/data/drive-ledger-snapshot-2026-11-18.json) — **88 `md5 + size` / 4 `sha256 + size` / 0 расхождений**, не прежние 88/4 только по размеру. Локальная ось 13/4/75 не переаттестована.
+
+**Отдельный read-only контроль Drive.** По четырём точным именам wave40 получены `id,name,size,sha256Checksum,modifiedTime`: по одному результату, без следующей страницы. Во всех четырёх ID, размеры и полные SHA-256 совпали с леджером и снимком. Здесь сокращения только для чтения; значения целиком — в связанных JSON.
+
+| Объект | Байт | SHA-256 в метаданных и леджере |
+| --- | ---: | --- |
+| `CHARNOCK_FULL_BOUNDED_RESEARCH_wave40_2026-10-26.zip` | 5 866 202 | `3bda1d76…c9bc41` |
+| `00_README_AND_NAVIGATION_wave40_2026-10-26.md` | 104 472 | `21a2e1af…c2a863` |
+| `16_SERIES_ARCHITECTURE_AND_PERSONS_CHAIN_wave40_2026-10-26.md` | 188 283 | `41d98132…16f313` |
+| `charnock-biographical-anchors-v1_wave40_2026-10-26.json` | 262 179 | `f35b1fd7…28775784` |
+
+**Два ограничения для владельца, не отправлены в PR.** (1) [§19](https://github.com/FedorMilovanov/Research/blob/4198b502762d151bbade5ac01a5963fab61cdf99/docs/research/HOLDS_REGISTER_2026-11-18.md#L787-L833): live `modifiedTime` четырёх объектов лежат в интервале **0,736 с около 22:07:36 UTC 25.10.2026**, но в снимке этого поля нет; даже live-поле не доказывает «не перезаписаны позже». Убрать вывод об истории ревизий или обосновать её отдельным источником. Байты четырёх объектов не скачивались; 88 других строк в XVIII с live Drive не сверялись. (2) [§18](https://github.com/FedorMilovanov/Research/blob/4198b502762d151bbade5ac01a5963fab61cdf99/docs/research/HOLDS_REGISTER_2026-11-18.md#L759-L782) / HCR-14 остаётся замечание XVI: **11 строк / 7 значений с `external` / 0 `match`**; четыре повтора внутри того же файла. Из классификации 514 строк (419 SHA-256, 52 MD5, 43 SHA-1) не следует ни «11 подтверждены», ни «503 вне дерева». Правка SHA-256 в §19 не меняет документацию прав, доказательность этих строк или HOLD.
+
+**CI отдельно от локальной сверки.** На 19:53 UTC #584 был open/non-draft, 61 путь, **1 success / 1 in progress / 5 queued**. Позднее на том же SHA — **7/7 success**, в 20:04 UTC `clean`. HEAD tree `96d3caed6447491a06e88bdabe4b93587c11665d` совпал с tree preview `b65639983bb587c4d53ecfe84f9f3af10bd997a8`, родители preview — `73b2431…` и `4198b50…`. Check-runs относятся к HEAD, а не к preview; это не зачёт merge и не принятие всей ветки.
+
+### Связанные refs на 20:04 UTC
+
+| PR | HEAD, состояние и checks | Предел сверки |
+| --- | --- | --- |
+| [Research #585](https://github.com/FedorMilovanov/Research/pull/585) | `ec03a027755907b480322ac315e8f0b85c95f080`, open/draft, `dirty`, без preview, 48 путей, checks `[]` | От `4e927d0…` сначала 1 коммит / 2 пути на `421b7ba…`, затем 1 / 10 на новом HEAD. Обе дельты только `SUNO_HYMNS/`; конфликт 1/21 из XV не пересчитан. |
+| [AuditRepo #562](https://github.com/FedorMilovanov/AuditRepo/pull/562) | `0238de9371ee85a09cf177658d8f08af818e458b`, open/non-draft, `behind`, 1 путь, **2/2 success** | Матрица и root не закрыты; позиции по `P18` и `P20` не меняются. |
+| [AuditRepo #570](https://github.com/FedorMilovanov/AuditRepo/pull/570) | `829ac6bc2b9979bb146fb331104021ed53d2317c`, open/draft, `behind`, 143 пути, **2/2 success** | От `48dd99f…` 1 коммит / +9 путей `arena-quiz-resume-focus`. Перечень учтён при проверке пересечений; повтор браузерных действий не проводился. |
+| [Product #2338](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2338) | `b2ae614730b0c2e164d3b07453797074253d9698`, open/draft, `clean`, 17 путей, **28 success / 4 skipped** | Тот же HEAD, не проверка нового деплоя. |
+
+Отдельно от REST `.base.sha` прочитаны `main`: Research `73b2431d69a143d44f21f547806078e02e1364f9`, AuditRepo `fe69239320bed47362f049906d5af25342f3c104`, Product `9edef94ece08012223c1364bec7ddcd561cf5713`. [Собственный срез пересечений](evidence/keston-and-tokmak-holdings-evidence.md#срез-доставки-xviii) не заменяет это ревью. Записей в чужих PR, ветках или Drive не было.
