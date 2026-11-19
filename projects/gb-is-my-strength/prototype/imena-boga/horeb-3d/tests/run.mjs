@@ -9,7 +9,7 @@ import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileC
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
-import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -336,6 +336,29 @@ t('W12E.3 radially grounded ridge has gradual grade and seamless full ring',
         return midianRidgeTerrainPoint(a,42,7,midianGround).radius>
           midianRidgeTerrainPoint(a,61,0,midianGround).radius;
       }).every(Boolean);
+  })());
+// W12E.4: a few separated deterministic detrital groups, not an
+// even-height circular rock fence. The same exact points drive colliders
+// and instances, while the well/approach and playable controls stay open.
+t('W12E.4 rock placements form separated fields, not a full annular fence',
+  (()=>{const points=Array.from({length:145},(_,i)=>midianRockPoint(i))
+    .filter(Boolean);
+    if(MIDIAN_ROCK_FIELDS.length!==5||points.length<115||
+      points.length>140)return false;
+    const bins=Array(12).fill(0);
+    for(const p of points){
+      if(Math.hypot(p.x,p.z)<=8||
+        midianApproachClearance(p.x,p.z)<3||
+        Math.abs(p.x)>27||Math.abs(p.z)>31)return false;
+      const a=(Math.atan2(p.z,p.x)+2*Math.PI)%(2*Math.PI);
+      bins[Math.min(11,Math.floor(a/(2*Math.PI)*12))]++;
+      const again=midianRockPoint(p.index);
+      if(!again||Math.abs(again.x-p.x)>1e-12||
+        Math.abs(again.z-p.z)>1e-12)return false;
+    }
+    return bins.filter(n=>n===0).length>=2&&
+      midianWalkable(5.2,7.6)&&
+      MIDIAN_ROCK_COLLIDERS.length>45;
   })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',

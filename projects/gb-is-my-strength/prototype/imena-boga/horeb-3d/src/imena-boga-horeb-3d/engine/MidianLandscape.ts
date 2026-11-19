@@ -123,10 +123,28 @@ function ridgeRing(scene:THREE.Scene,depth:number,tint:number,
   mesh.receiveShadow=true;scene.add(mesh);
 }
 export type MidianRockInstance={index:number;x:number;z:number;k:number;sx:number;sy:number;sz:number;ry:number;rx:number;rz:number};
+/** W12E.4: grouped, discontinuous surface detritus rather than an
+ * evenly populated annular "fence" around the well. These are visual
+ * placement regions, NOT a researched location of stones in ancient Midian.
+ * Same deterministic locations drive the visible InstancedMesh and collision.
+ */
+export const MIDIAN_ROCK_FIELDS=Object.freeze([
+  Object.freeze({x:-19,z:9,spanX:9,spanZ:7}),
+  Object.freeze({x:-16,z:-19,spanX:9,spanZ:8}),
+  Object.freeze({x:14,z:-18,spanX:11,spanZ:8}),
+  Object.freeze({x:23,z:14,spanX:9,spanZ:9}),
+  Object.freeze({x:-1,z:27,spanX:10,spanZ:7}),
+]);
 export function midianRockPoint(index:number):MidianRockInstance|null{
-  const angle=hash(index*5.7)*Math.PI*2,r=16+hash(index*4.3+18)*13;
-  const x=Math.cos(angle)*r,z=Math.sin(angle)*r*1.07;
-  if(Math.abs(x)>27||Math.abs(z)>31||midianApproachClearance(x,z)<3)return null;
+  if(!Number.isInteger(index)||index<0||index>=145)return null;
+  const field=MIDIAN_ROCK_FIELDS[index%MIDIAN_ROCK_FIELDS.length];
+  const angle=hash(index*5.7+9.3)*Math.PI*2;
+  const spread=Math.sqrt(.18+.82*hash(index*4.3+18));
+  const x=field.x+Math.cos(angle)*field.spanX*spread;
+  const z=field.z+Math.sin(angle)*field.spanZ*spread;
+  // Protect the entire well, the physical approach, and scene bounds.
+  if(Math.abs(x)>27||Math.abs(z)>31||
+     midianApproachClearance(x,z)<3||Math.hypot(x,z)<5.4)return null;
   const k=.34+hash(index*1.97+7)*1.35;
   const sx=k*(.9+hash(index*1.31)*.6);
   const sy=k*(.46+hash(index*3.17)*.23);
