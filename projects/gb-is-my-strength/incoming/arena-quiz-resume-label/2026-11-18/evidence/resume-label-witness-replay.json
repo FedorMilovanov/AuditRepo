@@ -1,0 +1,2939 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "chromium": "153.0.8010.0",
+  "playwright": "1.62.1",
+  "node": "22.23.4",
+  "method": "Fresh native UI writes. Rest, real hover, Tab/Enter or touch tap; CSS CDP read only. Inline foreground-only diagnostic reverted.",
+  "distSha256": {
+    "_astro/Favorites.astro_astro_type_script_index_0_lang.CXC1WxC1.js": "94f357d9b6c64bd7213913da42d916167e432307030a5987e93981fc2ee10b97",
+    "_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js": "24dfad4cff4bccfc268256061a7d20a7fd9e451259fae77d29405e3a8e0a92c8",
+    "_astro/ReaderActionsRuntime.BWQE1cBa.css": "e5f4cca04d0966fdf1db54d030b522ea948a4788453f9f712bb5496c102c5bd3",
+    "_astro/ReaderActionsRuntime.DUDpvCW2.css": "d2dc416d7c868f1aefaac451085eff8652b20a07cb2c84400db31102233b39e3",
+    "_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js": "c052e1289a2350ac9d3e2958210d7b03a82c0bbd715ee980aff7433b5d5c906d",
+    "_astro/ReaderIntegratedRailToggle.CqgwtCkl.css": "6147246bd55c83a11cc34076453deca8b28f73898a944c58510bdf50821f6007",
+    "_astro/ReaderMobilePlayGroup.Bt8U2-k1.css": "e315864deed541f782a5f7dc6a22a236aa7767b2cfc45d84d48976d938de3888",
+    "_astro/ReaderSpeedOptions.astro_astro_type_script_index_0_lang.Dp0VRxm9.js": "40eec6d5486f03851740c040cea0207437c8cf3fee7ee2401e19c83f0ddc7883",
+    "_astro/ResumeMobile.astro_astro_type_script_index_0_lang.CoH9rfWV.js": "ce860f94d64043e11892f604b58bdbb8f06dded7732f256d3667812ff93b6f08",
+    "_astro/SeriesReaderChrome.CiFdTxIG.css": "84ae70f075dc565fedbc4072235d50d22397ab1d66902eb1ae3a4642d0ff4aba",
+    "_astro/SiteSectionsMenu.7-azJ7Ap.css": "1a0caf9874a1dd4dfc91d8886a429ec664374ec46f8e6a0236fb06e6bc30bb3a",
+    "_astro/favorite-store.10q-YCE0.js": "c60be7c19cf41ed2f30024e615c2c87759d98da422af4122478a7b179c9a188d",
+    "_astro/index.BLE-S7HK.css": "3eefd92708bb7ce58c67d8b1fd5c06986cfb4210ea2ab029000881006dc6e745",
+    "_astro/reader-paper-and-rail.CbtCfSJl.css": "a1e3a4d9a0bba52e8ca236268801bf40796a68cd9fa19bf2c8cf2aac87e63bf5",
+    "articles/dzhon-gill-chast-2-uchenyi/index.html": "221bd7267b659d2886a0dfe103798bf02951bc0431fb36ca70d449d472e08633",
+    "css/command-palette.css": "6daf1357d181d8bd77136990cdee498eaa9d8818575d3c15c0d59eb207471ff7",
+    "css/enhancements-runtime.css": "8cf9a33c4dfd31ba5180acda1e016864e5c4bfacfd5cae1589236dbd72660b8e",
+    "css/floating-cluster.css": "88e6300e0326fb7c80f03b034f4c4a589fc70ab781195a65d0fb10f2620ccc09",
+    "css/highlights-runtime.css": "f6f6ad4778932f3930d785dfbe96087a98f6ebb6cae0f8263f26c2484cbcf7ad",
+    "css/home.css": "8fe022b3bf3e4333a066cf3d178a5124307f70fc280cafcca9781e92871097b3",
+    "css/mobile-hotfix.css": "0e35692bb6e2c549c400ba8960b61dfede28f20077db788146be90e0200a52c8",
+    "css/note-registry.css": "184e18b4459883e3e2bdd4dd286b7402b9b69120c7d4e4febbc2e54dde686b25",
+    "css/reader-preferences.css": "26db17a3d655b755626ab99e5b5f324de19c2d50bbc09aa78151fa1e48483127",
+    "css/relationship-panel.css": "b28d38e7ba05e296b156a4826a6a145888f8b7551934acfdfc45971f8ebd3a2b",
+    "css/site.css": "732da3886d49bad4ae266796e7a58bd884ce0d7ec0e167a1cfad151a389ecc61",
+    "css/sw-toast.css": "9a732f37f2abbb11cfc0390ad5e10fe7b54488e5f52aaa2223ec0bf3f5a1d68e",
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-400.woff2": "0d23162e67528fdc5fe1b12bedc525a69bbdc86d5d9f3c2ee9e9ee459934ecd4",
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-400i.woff2": "109ce34012f204b9794f2fa2e8e6fdff52b156636cd5da86d86ae7142b48aa03",
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-500.woff2": "30aec8d9cdb4ea84534ffcd7c58b0f06069f63dc177b5aafd7438627dfe10fb8",
+    "fonts/Inter/inter-cyrillic-400.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "fonts/Inter/inter-cyrillic-500.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "fonts/Inter/inter-cyrillic-600.woff2": "6c2a37f82a676bcd441b735e4e2cda4edb8873a059ab9c362a84f0711f257041",
+    "fonts/Lora/lora-cyrillic-400.woff2": "d1f41090bba5100d2857cf974e2ae542d4be61556febbb2b5afd072c2e42fdea",
+    "fonts/Lora/lora-cyrillic-400i.woff2": "aaeb039ba0ecdbc75108a6f66ee9f6745315412de78a4061cc90365b513fc4a3",
+    "fonts/Lora/lora-cyrillic-600.woff2": "b3ba5dad180e78000d8c3f3aec5f589fb05e3a83d8486caea70449179d522cd2",
+    "fonts/Lora/lora-latin-400.woff2": "ac079950fd9885261c0f73d9e87233f31b5427333ce0eb20e26c119458493c40",
+    "fonts/Lora/lora-latin-400i.woff2": "723cc14fe86bc9fadb2f5f34efb421d246edb240a18d2a7828d2edc041d79996",
+    "fonts/Lora/lora-latin-600.woff2": "7bbfe9f3c9e9d6d07e17da4d5229a42b042cc2e16024993cb687dc08cc762557",
+    "fonts/NotoSerifHebrew/notoserifhebrew-500.woff2": "b5535c575a15a5cccb8ac562dd2c606e39696236d86abc86d65946baf1dfacfe",
+    "fonts/PlayfairDisplay/playfairdisplay-cyrillic-400i.woff2": "2b016e18145f89b6b998a13152ff85a5815e94751210d85d9808549f712c62e1",
+    "fonts/PlayfairDisplay/playfairdisplay-cyrillic-700.woff2": "cfbfb0e36791f82470367d25c5a8d498dc1561a7a66a4172b7c6df749fdf9894",
+    "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2": "b0324c3af47c138a2b5457466037637b8279576197024ed6968041836ffc0546",
+    "fonts/SourceSans3/sourcesans3-cyrillic-500.woff2": "a8b6600fa85eaf7d5677c92ec0f2d1775c1bc43c5dbe9c1bf523c75dd8d20786",
+    "fonts/SourceSans3/sourcesans3-cyrillic-600.woff2": "31fe183d248fa315a872f0956e0e43bc5d1d6c9c7fea2fa434deb91ab2a686ff",
+    "fonts/SourceSans3/sourcesans3-latin-400.woff2": "0f73f35e08cde0a2f10c109c6e01d71459d97e4099ecd9a50f1b6c0209e4de2b",
+    "fonts/fonts.css": "acffa8f6fee8cb825395c40dedbff3ddb49766ae50cb79089ccf589530763324",
+    "index.html": "91f60925313ccaf35aff00ecafae439dee8055d92a0c17686fa4bdb097f11d3f",
+    "js/bookmark-engine.js": "363afc68443cd1c35197696ef41021392e0de57e03cef980f6c88f5400526853",
+    "js/enhancements.js": "8f276ad5f4c1bdd2c3b03d80765cd161702539b19eda3ab5aae8b2c3ec0ece31",
+    "js/floating-cluster-controller.js": "bd2d040cab7c4298a28db36eef9899bd6fdfda1d7e62f6b69c209e914173fc7a",
+    "js/glossary.js": "0ac69d280f380445c66276475ee5f7fd93ec5624ae1bf092fcdcdd7f860a7e62",
+    "js/highlights.js": "fa19053e089d131528f94eb5cb999459c276095ab34019cda4d64d6fc243ac02",
+    "js/reader-library-dock.js": "bd7f9d748f11ad62f34a6f235918ce4741534d68679ebcffb3b6a4fbb9973e9d",
+    "js/reader-preferences-head.js": "5c417d671862f04e4444bd034baab021ec75e9608de73c21b1dbefe6b492891a",
+    "js/reader-preferences.js": "b8edae4ef5c471f1eb9b7bb48c5c8a2a0c10dfffc0c2dc6486de244afa93cbcc",
+    "js/reader-state.js": "6e8a9e9c91dd14225f657a3daed321bd17234d8c08ab1f57088704c29d0d1141",
+    "js/scroll-perf.js": "10cbcf52478254520f94d0a8453a771ed2d8da43abfe73559681ebf59f01fbb8",
+    "js/site-utils.js": "e70f34a3f2b80a7933694ee5b95db71e92331fe0f979df8594646634458695f3",
+    "js/site.js": "b9fdd79fb95b5d93d74bdfc0c12682bcedb977110c77a6059fd97bbbaddf39a0",
+    "js/sw-register.js": "55bf878c03307ca9203b9a1e992f95d1b861a9a91742ccd1a5506888120224b4",
+    "js/vosk-tts-engine.js": "d94ada1765884c66dfee92c3deaa15addab3474ac1ea9c4430a6c361c59bb005"
+  },
+  "results": [
+    {
+      "id": "learning-390-light-pointer",
+      "pathway": "learning",
+      "theme": "light",
+      "touch": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 400,
+        "hit": true,
+        "y": 8004,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 8004,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "textFill": "rgb(122, 46, 46)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          432.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 9.3012
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#fff",
+        "important": true,
+        "after": {
+          "color": "rgb(255, 255, 255)",
+          "textFill": "rgb(255, 255, 255)",
+          "background": "rgb(122, 46, 46)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#7a2e2e",
+          "dark": false,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            432.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.3012,
+          "whiteOnFill": 9.3012
+        },
+        "reverted": true
+      },
+      "tabSteps": 17,
+      "keyboard": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": false,
+        "hit": false,
+        "hitReceiver": null,
+        "box": [
+          36.5,
+          998.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "reading-390-light-pointer",
+      "pathway": "reading",
+      "theme": "light",
+      "touch": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "source": {
+        "top": 175,
+        "hit": true,
+        "y": 8229,
+        "active": false
+      },
+      "saved": {
+        "sectionId": "sec-canticles",
+        "scrollY": 8229,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "rest": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "textFill": "rgb(122, 46, 46)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          432.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 9.3012
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#fff",
+        "important": true,
+        "after": {
+          "color": "rgb(255, 255, 255)",
+          "textFill": "rgb(255, 255, 255)",
+          "background": "rgb(122, 46, 46)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#7a2e2e",
+          "dark": false,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            432.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.3012,
+          "whiteOnFill": 9.3012
+        },
+        "reverted": true
+      },
+      "tabSteps": 18,
+      "keyboard": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": false,
+        "hit": false,
+        "hitReceiver": null,
+        "box": [
+          36.5,
+          998.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "target": "sec-canticles",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "learning-390-dark-pointer",
+      "pathway": "learning",
+      "theme": "dark",
+      "touch": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 400,
+        "hit": true,
+        "y": 8004,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 8004,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "restProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": false,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            435.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          432.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            432.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "tabSteps": 17,
+      "keyboard": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": false,
+        "hit": false,
+        "hitReceiver": null,
+        "box": [
+          36.5,
+          998.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "reading-390-dark-pointer",
+      "pathway": "reading",
+      "theme": "dark",
+      "touch": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "source": {
+        "top": 175,
+        "hit": true,
+        "y": 8229,
+        "active": false
+      },
+      "saved": {
+        "sectionId": "sec-canticles",
+        "scrollY": 8229,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "rest": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "restProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": false,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            435.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          432.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            432.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "tabSteps": 14,
+      "keyboard": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": false,
+        "hit": false,
+        "hitReceiver": null,
+        "box": [
+          36.5,
+          998.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "target": "sec-canticles",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "learning-1440-light-pointer",
+      "pathway": "learning",
+      "theme": "light",
+      "touch": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 483,
+        "hit": true,
+        "y": 5446,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 5446,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "textFill": "rgb(122, 46, 46)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          460.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 9.3012
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#fff",
+        "important": true,
+        "after": {
+          "color": "rgb(255, 255, 255)",
+          "textFill": "rgb(255, 255, 255)",
+          "background": "rgb(122, 46, 46)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#7a2e2e",
+          "dark": false,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            460.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.3012,
+          "whiteOnFill": 9.3012
+        },
+        "reverted": true
+      },
+      "tabSteps": 23,
+      "keyboard": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "reading-1440-light-pointer",
+      "pathway": "reading",
+      "theme": "light",
+      "touch": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "source": {
+        "top": 175,
+        "hit": true,
+        "y": 5754,
+        "active": false
+      },
+      "saved": {
+        "sectionId": "sec-canticles",
+        "scrollY": 5754,
+        "progress": 15,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "rest": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "textFill": "rgb(122, 46, 46)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          460.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 9.3012
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#fff",
+        "important": true,
+        "after": {
+          "color": "rgb(255, 255, 255)",
+          "textFill": "rgb(255, 255, 255)",
+          "background": "rgb(122, 46, 46)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#7a2e2e",
+          "dark": false,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            460.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.3012,
+          "whiteOnFill": 9.3012
+        },
+        "reverted": true
+      },
+      "tabSteps": 24,
+      "keyboard": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          500.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "target": "sec-canticles",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "learning-1440-dark-pointer",
+      "pathway": "learning",
+      "theme": "dark",
+      "touch": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 483,
+        "hit": true,
+        "y": 5446,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 5446,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "restProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": false,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            463.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          460.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            460.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "tabSteps": 23,
+      "keyboard": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "reading-1440-dark-pointer",
+      "pathway": "reading",
+      "theme": "dark",
+      "touch": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "source": {
+        "top": 175,
+        "hit": true,
+        "y": 5754,
+        "active": false
+      },
+      "saved": {
+        "sectionId": "sec-canticles",
+        "scrollY": 5754,
+        "progress": 15,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "rest": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          463.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "restProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": false,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            463.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": true,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          460.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "hoverCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a:hover"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-accent)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "hoverProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": true,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            163,
+            460.73,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "tabSteps": 14,
+      "keyboard": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": true,
+        "focused": true,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          163,
+          500.73,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "action": "Enter",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+        "target": "sec-canticles",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "learning-390-light-touch",
+      "pathway": "learning",
+      "theme": "light",
+      "touch": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 400,
+        "hit": true,
+        "y": 8004,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 8004,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(255, 255, 255)",
+        "textFill": "rgb(255, 255, 255)",
+        "background": "rgb(122, 46, 46)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#7a2e2e",
+        "dark": false,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 9.3012,
+        "whiteOnFill": 9.3012
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "action": "tap",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    },
+    {
+      "id": "learning-390-dark-touch",
+      "pathway": "learning",
+      "theme": "dark",
+      "touch": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responses": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/articles/dzhon-gill-chast-2-uchenyi",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "freshCardHidden": true,
+      "quiz": {
+        "prompt": "Какой труд Гилла считается его самым личным сочинением?",
+        "href": "../../articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+        "retained": true
+      },
+      "source": {
+        "top": 400,
+        "hit": true,
+        "y": 8004,
+        "active": true
+      },
+      "saved": {
+        "sectionId": "sec-hebrew",
+        "scrollY": 8004,
+        "progress": 14,
+        "source": "reader-state-v1"
+      },
+      "ax": "- link \"Продолжить\":\n  - /url: /articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+      "rest": {
+        "color": "rgb(212, 165, 116)",
+        "textFill": "rgb(212, 165, 116)",
+        "background": "rgb(212, 165, 116)",
+        "backgroundImage": "none",
+        "textShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "visibility": "visible",
+        "compositing": [],
+        "accent": "#d4a574",
+        "dark": true,
+        "hovered": false,
+        "focusVisible": false,
+        "focused": false,
+        "full": true,
+        "hit": true,
+        "hitReceiver": "resumeReadingLink",
+        "box": [
+          36.5,
+          435.42,
+          125,
+          44.5
+        ],
+        "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "label": "Продолжить",
+        "ratio": 1,
+        "whiteOnFill": 2.2261
+      },
+      "restCascade": [
+        {
+          "file": "/css/site.css",
+          "line": 7,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#1f4ea3",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 18,
+          "selectors": [
+            "a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "var(--color-link)",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 30,
+          "selectors": [
+            ".resume-reading-btn"
+          ],
+          "properties": [
+            {
+              "name": "background",
+              "value": "var(--color-accent)",
+              "important": false
+            },
+            {
+              "name": "color",
+              "value": "#fff",
+              "important": false
+            }
+          ]
+        },
+        {
+          "file": "/css/site.css",
+          "line": 16,
+          "selectors": [
+            "html.dark a"
+          ],
+          "properties": [
+            {
+              "name": "color",
+              "value": "#d4a574",
+              "important": false
+            }
+          ]
+        }
+      ],
+      "restProbe": {
+        "property": "color",
+        "value": "#000",
+        "important": true,
+        "after": {
+          "color": "rgb(0, 0, 0)",
+          "textFill": "rgb(0, 0, 0)",
+          "background": "rgb(212, 165, 116)",
+          "backgroundImage": "none",
+          "textShadow": "none",
+          "fontSize": "14px",
+          "fontWeight": "700",
+          "visibility": "visible",
+          "compositing": [],
+          "accent": "#d4a574",
+          "dark": true,
+          "hovered": false,
+          "focusVisible": false,
+          "focused": false,
+          "full": true,
+          "hit": true,
+          "hitReceiver": "resumeReadingLink",
+          "box": [
+            36.5,
+            435.42,
+            125,
+            44.5
+          ],
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "label": "Продолжить",
+          "ratio": 9.4337,
+          "whiteOnFill": 2.2261
+        },
+        "reverted": true
+      },
+      "action": "tap",
+      "returned": {
+        "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+        "target": "sec-hebrew",
+        "nav": "navigate"
+      },
+      "ok": true
+    }
+  ]
+}
