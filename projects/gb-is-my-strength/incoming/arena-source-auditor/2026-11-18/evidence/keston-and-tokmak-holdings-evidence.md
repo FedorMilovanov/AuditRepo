@@ -759,3 +759,88 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 **AuditRepo, 19:52:38–46 и 20:04:38–46 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`, рабочий и удалённый HEAD `09b413e0f86074646d32685f3543a4589b1289e2`, общий предок `fcf2e69b2c1531fe606d9838c811b7d1b1071db0` по API compare. Актуальная инструкция ACD — **1.5.0**. В первом срезе **27 путей / 9 открытых PR / 811 записей `/files` / 0 пересечений с PR / 0 с `main`**. Во втором — те же 27 путей и 9 PR, **820** записей, оба пересечения пусты. PR #514/538/542/543/544/545/557/562/570: **3/180/1/141/74/276/1/1/143**. Проверены пагинация, `filename` и `previous_filename`, `changed_files`, refs и HEAD/base всех PR на концах измерения. Собственного PR нет. Только три append-only Markdown в intake; без прямых правок MASTER, HOLD, Product, Research или Drive.
 
 **Локальные проверки:** append-only, разрешение локальных ссылок, структура, допуск трёх изменённых и 27 накопленных путей, workflow preflight, валидатор, регрессии, `matrix coverage` и `contexts` — PASS. Для `gb-is-my-strength`: **44 OPEN / 0 closed / 0 проблем покрытия**, **1825** нерешённых идентификаторов в `contexts`. Это проверки intake, не GitHub CI, не приёмка чужих PR и не разрешение на публикацию материалов.
+
+## Дополнение XIX — 19.11.2026 UTC
+
+### XIX: Печатные подшивки Keston
+
+Поиск в [Jisc Library Hub по ISSN 0278-3169][jisc-kns-xix] дал один серийный результат и пять держателей. Приоритет отдаётся **составу экземпляра**, а не общим датам издания в карточке Jisc. Заявленный диапазон — основание запроса, не просмотр всего комплекта.
+
+| Комплект KNS | Шифр и покрытие | Как использовать |
+| --- | --- | --- |
+| [Leeds, архивная карточка 403428][leeds-kns-xix] и [основной каталог][leeds-cat-xix] | Brotherton, **Large Leeds Russian Archive 1722** / `alma991007437459705181`. Переплетено №1 (1974) – №379 (1991); указаны только лакуны №51 (1978) и №72 (1979). | Первый адрес проверки. Архивная карточка даёт `Order Copy` и `Request Reuse` раздельно; экземпляр не выдаётся на дом. [Cultural Collections][leeds-help-xix] указывает `culturalcollections@leeds.ac.uk`. |
+| [Cambridge University Library, iDiscover][cam-kns-xix] | **L232.b.358**, `alma9929869233403606`, №140–379 (1982–91). | Заказ в Main Reading Room, не на дом; карточка не показывает доступность отдельных выпусков. Это не CCCW. |
+| [Oxford, Bodleian][oxf-kns-xix] | Offsite **Per. 120 c.3**, №140–315; **P.C02913** — только №316–379. | Запросить доставку первого комплекта, не поздний шифр. |
+| [British Library][bl-kns-xix] и [UCL][ucl-kns-xix] | **ZK.9.b.121**: №240 (12.12.1985) – №379 с лакунами; **STORE Periodicals S-4291**: №266–379 (1987–1991). | Эти комплекты не покрывают март 1985 г. |
+
+[Library of Congress][loc-kns-xix] показывает две доступные на месте единицы *Keston news service. Orange, Calif.*, **LCCN `sv86007663`**, без номеров и дат. Не отождествлять их автоматически с британской подшивкой. У [ISSN Portal][issn-kns-xix] — печатный сериальный ID, `Preserved, 1982–1988`; [IA MARC][ia-marc-kns-xix] указывает OCLC **3598555** и диапазон №138–315, январь 1982 – декабрь 1988. В [metadata][ia-meta-kns-xix] карточки `pub_keston-news-service` — 11 служебных файлов, не полосы, а [поиск дочерних записей][ia-find-kns-xix] вернул `numFound: 0`. Это не утверждение, что экземпляров нет или что весь указанный диапазон оцифрован для чтения.
+
+**Черновик для Leeds, при необходимости Cambridge/Oxford (не отправлен).** Для дат держать рядом библиографическую ссылку на [21.02.1985, с. 22][kns-21-xiii] и [майский №224][kns224] как соседний по серии, не как источник ACR. 7/21 марта — ориентиры, не установленные номера или заголовки.
+
+> Could you check *Keston News Service* (ISSN 0278-3169), Large Leeds Russian Archive 1722, for January through 25 March 1985, especially the March issues? I seek a report about a November 1984 printing raid in Issyk/Esik near Alma-Ata, Egor/Grigori and Andrei Wolf, 30,000 Bibles and six tonnes of paper. *Australian Church Record* no. 1821 (25 March 1985) printed it as “Underground printing works discovered” with a Keston College credit. Please confirm the issue dates/numbers actually present and, if located, the title, page(s) and source credit. Is a copy of the relevant item and its issue identification available for research, and under what terms? This is an enquiry, not a paid order.
+
+Подшивка позволяет проверить **печатный** ряд. Запрос о ненумерованном релизе, редакционной карточке и входящем сообщении остаётся отдельно у [Keston/Baylor](#xiii-запросы-на-образ-и-исходную-сводку). Проверка имён в Drive (пять названий через `name contains`) в этом проходе не дала новых кандидатов; это не поиск по содержимому документов и не показатель полноты фонда.
+
+### XIX: Article 227 и Friedensstimme
+
+*Article 227* (Friedensstimme UK) имеет [ISSN **0954-5344**][a227-issn-xix]. Для раннего выпуска смотреть локальное поле **Holdings**, а не год создания агрегированной карточки:
+
+| Экземпляр | Что подтверждает каталог |
+| --- | --- |
+| [British Library, St Pancras][a227-bl-xix] | **ZC.9.a.1494**, `alma990118191700109251`, BNB **GB8851710**. В Physical Collections: `No.1 (Jan. 1985)-`, `Item on shelf`; заказ для читателя после входа. Это комплект, а не показанная с. 14. |
+| [Cambridge Centre for Christianity Worldwide][a227-cam-xix] | iDiscover `alma991497464203606`: **Nos 1–29 (1985–89)** в Main Library. В той же записи у **Westcott House** — №4 (октябрь 1985) – №28, не №1. У [Cambridge University Library по Jisc][a227-cam-jisc-xix] **L115.c.98**, №17–29. Для №1 обращаться в [CCCW][cccw-xiii] (`library@cccw.cam.ac.uk`), не в UL или Westcott. |
+| [National Library of Scotland][a227-nls-xix] | **HJ3.1084 PER**, Edinburgh, библиографический диапазон №1–29; поэкземплярной проверки нет. [Условия копирования][a227-nls-copy-xix] отделяют справочный запрос, платное изготовление и права на использование. |
+| [Birmingham, OLRC][a227-bir-xix] | **S.266.00947 PAR**, местный диапазон 1985–1989 без разбивки по номерам. Резерв после CCCW/BL. [Oxford][a227-oxf-xix] хранит №17–29, [Dublin][a227-tcd-xix] и [Bradford/Commonweal][a227-bra-xix] — 1988–1989; эти записи не основание для запроса №1. |
+
+**Следующий лист:** к [черновику XIII](#xiii-запросы-на-образ-и-исходную-сводку) добавить идентификатор CCCW или шифр BL; сначала подтвердить, что в №1 есть с. 14 и где начинается заметка. Затем — титул, выходные данные и весь относящийся к вопросу текст в пределах условий копирования. [Клиппенстайн, прим. 29–30][rcl-fs] связывает несколько выпусков через `Ibid.`; сама ссылка не устанавливает, на какой именно полосе Иссык или цифра тиража. №1 не просмотрен.
+
+**Немецкая ветвь — два разных источника.** А.-К. Райхардт, [*Schmuggler, Spitzel und Tschekisten*][reichardt-xix], §1.2.2, прим. 32 (c5), цитирует *Missionswerk Friedensstimme (Hg.), Die Geheimdruckerei*, Gummersbach, 1989 — позднее издание, не релиз 1985 г. В прим. 33 (c6) — недатированный материал о миссии, **BStU, MfS, AOP 16656/89, Bd. 9, Bl. 1–8, bes. 2**. По [правилам Bundesarchiv][barch-cite-xix] старый шифр принимается; нынешний префикс — `BArch, MfS`. Это досье наблюдавшей стороны, а не исходящая сводка Friedensstimme или акт обыска; листы не читались. [Исследовательская заявка][barch-research-xix] по §§32–34 StUG требует описания темы, возможны ограничения и сборы; заявку не оформляли.
+
+[Архив в Аугустдорфе о Германе Корте][kort-xix] сообщает о его работе по связи Восток–Запад и передаче архиву материалов и интервью; [музей][aug-museum-xix] заявляет экспозицию о «Христианине». Это основание для [уточнения через архив][aug-contact-xix], но не опись его корреспонденции. При обращении сначала спросить, есть ли датированные исходящие сообщения или журналы отправки за ноябрь 1984 – март 1985 с Иссыком/Вольфами, адресатом Keston и идентифицируемой страницей; отдельно — экземпляр *Die Geheimdruckerei* 1989 г. и его источники. [ACR][acr-xii] ссылается на Friedensstimme при рейде, но не раскрывает источник отдельной оценки «около полумиллиона / семь языков к 1982 г.».
+
+### XIX: Токмак и ложные совпадения
+
+В Research `main` на срезе `467e16556f8b61ab902f61a6ee57e08dc9d09b4c` проверены две версии PDF: Contents API на SHA → `git/blobs` → размер, PDF magic и `git hash-object`. Обе вёрстки созданы InDesign в 2015 г. Это **изображения страниц воспроизведения**, не сканы оригинального самиздата. На просмотренных страницах различимы:
+
+| Воспроизведение | Контрольное чтение | Граница |
+| --- | --- | --- |
+| [№84, PDF 3 и 14 / с. 12][b84-xix]; 863 296 Б, blob `d7f4c8624c60db8b35d02cb1faac546528a3ac77` | Титул: «Москва, 1980 г.». «Обыски, слежки, угрозы арестов, аресты, вновь — психбольница»: после перечисления мест в **Краснодарском крае** прямо сказано: «В одном из домов арестована печатная точка, изъято все оборудование». **Надежда Ивановна Брыкова из г. Ферганы** — среди семи арестованных; сообщение атрибутировано Совету, получившему материалы из Краснодарского края. | Не обыск в Фергане или Токмаке; ни протоколы, на которые ссылается №84, ни опись не прочитаны. В [сообщении №106][b106] об изъятии в Токмаке фигурируют Библии и переплёт, но не такая формула об оборудовании. |
+| [№88, PDF 1 и 6 / с. 4][b88-xix]; 934 092 Б, blob `d8e3602a055666b4edd0959761c8f7eb0741d3a1` | Под `ОСВОБОЖДЕН ПО СРОКУ`: **«Кинаш Николай Ильич (Донецкая обл., г. Горловка)»**. | Другая фамилия, имя, отчество и город; эта строка не первый срок или освобождение Ивана Эрвиновича Кинаса. |
+
+Не получены первый приговор и статья Кинаса, опись и именные исходы для двух ферганцев. Без новых листов оценки тиража не объединять, Токмак не переносить в список подтверждённых обнаружений типографий. По GPO II, *The Ukrainian Weekly*, MLA и делу Есика — прежние [маршруты к образам](#xviii-образы-и-держатели), не новые сверки.
+
+[jisc-kns-xix]: https://discover.libraryhub.jisc.ac.uk/search?isn=0278-3169
+[leeds-kns-xix]: https://explore.library.leeds.ac.uk/special-collections-explore/403428
+[leeds-cat-xix]: https://leeds.primo.exlibrisgroup.com/nde/fulldisplay?vid=44LEE_INST:NDE1&lang=en&docid=alma991007437459705181&context=L
+[leeds-help-xix]: https://library.leeds.ac.uk/info/1500/special-collections/266/about-cultural-collections
+[cam-kns-xix]: https://idiscover.lib.cam.ac.uk/discovery/fulldisplay?docid=alma9929869233403606&context=L&vid=44CAM_INST:44CAM_PROD&lang=en
+[oxf-kns-xix]: https://discover.libraryhub.jisc.ac.uk/search?isn=0278-3169&rn=1&for=oxf
+[bl-kns-xix]: https://discover.libraryhub.jisc.ac.uk/search?isn=0278-3169&rn=1&for=bli
+[ucl-kns-xix]: https://discover.libraryhub.jisc.ac.uk/search?isn=0278-3169&rn=1&for=ucl
+[loc-kns-xix]: https://search.catalog.loc.gov/instances/fe0503b5-c92b-5eda-8a71-d8d3d2e9ac6c
+[issn-kns-xix]: https://portal.issn.org/resource/ISSN/0278-3169
+[ia-marc-kns-xix]: https://archive.org/download/pub_keston-news-service/pub_keston-news-service_pub_marc.xml
+[ia-meta-kns-xix]: https://archive.org/metadata/pub_keston-news-service
+[ia-find-kns-xix]: https://archive.org/advancedsearch.php?q=collection%3Apub_keston-news-service&fl%5B%5D=identifier&fl%5B%5D=date&rows=20&output=json
+[a227-issn-xix]: https://portal.issn.org/resource/ISSN/0954-5344
+[a227-bl-xix]: https://catalogue.bl.uk/nde/fulldisplay?docid=alma990118191700109251&context=L&vid=44BL_MAIN:BLL01_NDE&lang=en
+[a227-cam-xix]: https://idiscover.lib.cam.ac.uk/discovery/fulldisplay?docid=alma991497464203606&context=L&vid=44CAM_INST:44CAM_PROD&lang=en
+[a227-cam-jisc-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=1&for=cam
+[a227-nls-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=1&for=nls
+[a227-nls-copy-xix]: https://www.nls.uk/tools-for-research/copying-services/
+[a227-bir-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=2&for=bir
+[a227-oxf-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=1&for=oxf
+[a227-tcd-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=1&for=tcd
+[a227-bra-xix]: https://discover.libraryhub.jisc.ac.uk/search?ti=Article%20227&rn=1&for=bra
+[reichardt-xix]: https://www.bundesarchiv.de/assets/bundesarchiv/de/Publikationen/BFi_43_Reichardt_Bibelschmuggel_barrierefrei.pdf
+[barch-cite-xix]: https://www.bundesarchiv.de/im-archiv-recherchieren/stasi-unterlagen-einsehen/hinweise-zum-mfs/zitierweisen-der-unterlagen-des-mfs/
+[barch-research-xix]: https://www.bundesarchiv.de/assets/bundesarchiv/de/Downloads/antragsformular_forschung-und-medien.pdf
+[kort-xix]: https://christliches-archiv-augustdorf.de/hermann-kort-1941-2014/
+[aug-museum-xix]: https://christliches-archiv-augustdorf.de/museum/
+[aug-contact-xix]: https://christliches-archiv-augustdorf.de/kontakt/
+[b84-xix]: https://github.com/FedorMilovanov/Research/blob/467e16556f8b61ab902f61a6ee57e08dc9d09b4c/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/raw-sources/bulletin-council-relatives-084-1980.pdf
+[b88-xix]: https://github.com/FedorMilovanov/Research/blob/467e16556f8b61ab902f61a6ee57e08dc9d09b4c/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/raw-sources/bulletin-council-relatives-088-1980.pdf
+
+### Срез доставки XIX
+
+**AuditRepo, 20:33:33–41 UTC, до правок.** `main` `fe69239320bed47362f049906d5af25342f3c104`; local/remote `b5babdc2819bf7c2cd4901727b14999bc034f39e`; merge-base `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`. ACD **1.5.0**. Проверены **27 накопленных путей / 9 открытых PR / 820 записей `/files`**: нет пересечений ни с PR, ни с `main`. Это состояние AuditRepo, не [разбор нового HEAD Research #584](../PEER-REVIEWS.md#дополнение-xix--19112026-utc). Только append-only intake; ни библиотечные запросы, ни заявки на копирование не отправлялись.
