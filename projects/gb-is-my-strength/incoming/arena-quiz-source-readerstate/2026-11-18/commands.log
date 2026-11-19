@@ -1,0 +1,56 @@
+# 2026-11-18 UTC intake slot — stage 18, homepage / article / library Continue.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0; existing Draft #570.
+
+[Coordination]
+git status --short --branch
+git rev-parse HEAD
+for repo in AuditRepo gb-is-my-strength; do
+  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# Beginning: same refs/open PR set as stage 17 final snapshot. OPEN Draft, 115 files, exact head 4a7718dd316236804f21f5a76372cea363517bb9.
+# Main anchors: AuditRepo fe69239320bed47362f049906d5af25342f3c104 (ACD 1.5 docs only from branch base), Product 9edef94ece08012223c1364bec7ddcd561cf5713.
+# Stage 17 exact Product #2346 check at 5a5b0282 and its source boundaries still apply; no new Product build at that PR tip.
+# Pre-publication: two new Product review lanes. Compare exact tips, not PR titles alone.
+gh api repos/FedorMilovanov/gb-is-my-strength/compare/9edef94ece08012223c1364bec7ddcd561cf5713...67c89307ed988677cfcd2fa5fa0ef4eeab91d82f
+gh api repos/FedorMilovanov/gb-is-my-strength/compare/9edef94ece08012223c1364bec7ddcd561cf5713...7d9c3d10b6aa4187fbe3d3bcdc7193abfab8325f
+# #2347 +2/24, #2348 +2/1; all additions under docs/reviews/, no runtime owner overlap. Main refs and Audit Draft unchanged.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# Same anchor, dist pins 48, PDF.js 5.4.624, nativePrintWitness pending. No native receipt or release action.
+
+[Browser controls and replay]
+# Reuse stage 12 exact dist; bootstrap, local build timestamp, and package pins in arena-quiz-native-print commands.log.
+# PRODUCT, TOOLS, CHROMIUM are local paths; OUT contains two fresh output directories. Product tarball and tools stay outside Git.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && node scripts/homepage-resume-owner-contract-test.js)
+# PASS. homepage-resume-browser-contract.mjs uses seeded saved state; it is not this witness.
+# Compare all stage 17 dist SHA-256 values first (40/40); same-byte stage 17 reader/library and ordinary handoff controls remain applicable.
+W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18"
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-resume/2026-11-18"
+node --check "$W/harness/source-readerstate.mjs"
+# Pilot 14/14. Final wheel deliberately lands at top=300 instead of top=145; add library-bridge in same profile on both widths.
+for run in a b; do
+  node "$W/harness/source-readerstate.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a/source-readerstate-witness.json" "$OUT/run-b/source-readerstate-witness.json" "$Q/evidence/source-resume-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# Result: 16/16 measured ×2, 46 exact dist pins (all 40 from stage 17). Each: 4 prior-section returns via home/toast, 8 correct via those controls,
+# 2 successful explicit-fragment controls, 2 ReaderState/library disagreements with true library button landing. Measured != correct.
+# The checker distinguishes native :target from Learning's pushState URL and matches the rendered toast text case-insensitively.
+cmp "$OUT/run-a/home-resumed-390.png" "$Q/evidence/gill-resumed-previous-heading.png"
+sha256sum "$OUT/run-a/home-resume-390.png"
+# Identical landing PNG retained only in stage 17. Home card frame (390×844) SHA-256 69605be85899f377fa8c653e09ce4c7ffba21ff3645af4d8fdf5f62141511776.
+
+[Admission and publication guards]
+# Compare staged paths against this intake only, cumulative changed paths against the branch anchor,
+# and changed upstream AuditRepo paths (ACD 1.5) for overlap. Repeat refs/draft check before push.
+# CHANGED = cumulative paths against branch anchor; include newly staged commands.log (force-add only this ignored log).
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# Same Draft only. Guard head/base/body before updating metadata; check workflows for published head, no merge/review/deploy/Drive write.
