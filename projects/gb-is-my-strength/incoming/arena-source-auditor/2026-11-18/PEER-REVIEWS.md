@@ -148,3 +148,26 @@
 [Live XVI](https://gospod-bog.ru/baptisty-rossii/podpolnaya-pechat/?editorial=source-pass-xvi-20261119T1832Z), c2, по [указателю](https://gospod-bog.ru/deployments/current.json) — **44313404255/1**, SHA `9edef94e…`. Две строки об Алексеевой и Токмаке прежние. Обновлять опубликованный `Body.astro`, а не одноимённый MDX; `P18` сузить только для Токмака, `P20` оставить `ATTRIBUTED ESTIMATE`. Срез относится к тексту этих мест, не к новому build. Никаких правок чужих веток, новых комментариев, принятия или публикации не было.
 
 **Контроль 19:03 UTC:** на том же HEAD #570 `4a724b35…` — **2/2 success**; #584 и #585 на записанных выше HEAD остаются `dirty`, check-runs `[]`. Ни эта динамика, ни [нулевое пересечение путей](evidence/keston-and-tokmak-holdings-evidence.md#срез-доставки-xvi) не являются одобрением merge.
+
+## Дополнение XVII — 19.11.2026 UTC
+
+### Research #584: 92 записи сверены с сохранёнными метаданными, не с байтами Drive
+
+**PASS для воспроизведения Drive-части по снимку.** В [дельте `df2998c…618a664`](https://github.com/FedorMilovanov/Research/compare/df2998cd91f6438dcc1f8cf792d1fb5b00dd8c56...618a664ee54efa0997a237415088c4683fe90aff) один коммит / семь путей. По дереву `618a664…` сверены **12** blobs тестового поднабора и отдельно исходный леджер (blob `93a0c34034d410d1517dc0a8a2a1afea46417d4d`). 92 строки вновь извлечены из леджера и сопоставлены по ID со [снимком](https://github.com/FedorMilovanov/Research/blob/618a664ee54efa0997a237415088c4683fe90aff/data/drive-ledger-snapshot-2026-11-18.json) и [отчётом](https://github.com/FedorMilovanov/Research/blob/618a664ee54efa0997a237415088c4683fe90aff/data/drive-ledger-audit-2026-11-18.json). Итог: **88** совпадений `size + md5Checksum`, **4** совпадения только размера (в строке SHA-256), **0** расхождений в прочитанных полях. Исправление парсера не превращает первые 32 знака SHA-256 в MD5. Локальная ось 13/4/75 в отчёте не переаттестована; новой сверки Drive и скачивания 92 объектов не было.
+
+**Требуется уточнение §19.** В сохранённых четырёх записях `drive-size-only` поля `modifiedTime` нет. Из них нельзя воспроизвести время `22:07:36–37Z` или вывод «не перезаписаны позже» в [§19, строки 803–811](https://github.com/FedorMilovanov/Research/blob/618a664ee54efa0997a237415088c4683fe90aff/docs/research/HOLDS_REGISTER_2026-11-18.md#L803-L811). Даже близкие времена модификации не заменяют историю ревизий. Для публикации оставить **«размер совпал, SHA-256 не проверялся»**; если время существенно, приложить минимальную датированную квитанцию и не подменять историю одним полем.
+
+**Замечание XVI не закрыто.** В [§18](https://github.com/FedorMilovanov/Research/blob/618a664ee54efa0997a237415088c4683fe90aff/docs/research/HOLDS_REGISTER_2026-11-18.md#L772-L784) и HCR-14 ещё стоит формулировка о «подтверждении». Digest JSON не изменён (blob `33e32959a0841c48f47d3c3a6978eace9ada070c`): **11 повторов / 7 значений / 0 `match`**, четыре повтора в том же файле. Это не байтовая верификация, как и результат Drive не устанавливает права или сохранность отсутствующего оригинала.
+
+**Гейты на точных объектах:** на `df2998c…` совпали восемь ранее проверенных HOLD-blobs, **36** тестов и `render_closures_summary.py --check` — PASS. На `618a664…` **49** тестов трёх поднаборов и тот же `--check` — PASS. Это локальные прогоны поднабора. На срезе **19:36 UTC** `618a664…` имел **7/7** GitHub checks, open/non-draft, `clean`, **61** путь. Tree `205d9c1c4bf410d69978b5ed06d020d9a2aadcac` совпал с tree preview `aa76b6cbdc4e27a8fb47827e8cbd1cee6d3e865c`, родители preview — `73b2431…` / проверенный HEAD. Это не merge и не снятие HOLD.
+
+### Связанные refs и пределы XVII
+
+| PR на срезе 19:36 UTC | HEAD / checks | Что проверено в XVII |
+| --- | --- | --- |
+| [Research #585](https://github.com/FedorMilovanov/Research/pull/585) | `4e927d064b197cbf4bce21763b479f054b16b8df`, open/draft, `dirty`, preview `null`, 47 путей, check-runs `[]` | После `66f52cd…` две отдельные дельты: `95d458e…` — 1 коммит / 8 путей; `4e927d0…` — 1 / 12, обе только `SUNO_HYMNS/`. Предыдущий конфликт 1/21 не пересчитан. [№44](evidence/keston-and-tokmak-holdings-evidence.md#xvii-иссык-19761978) повторно прочитан на байтах `main`, не принят весь PR. |
+| [AuditRepo #562](https://github.com/FedorMilovanov/AuditRepo/pull/562) | `0238de9371ee85a09cf177658d8f08af818e458b`, `behind`, 1 путь, **2/2** success | Root остаётся OPEN; замечания к `P18` / `P20` прежние. |
+| [AuditRepo #570](https://github.com/FedorMilovanov/AuditRepo/pull/570) | `48dd99fc318857922a80e3102992505092c66ec9`, open/draft, `behind`, 134 пути, **2/2** success | От `4a724b3…` один коммит, +11 путей `arena-quiz-resume-label`; учтён перечень путей, не браузерная переаттестация. |
+| [Product #2338](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2338) | `b2ae614730b0c2e164d3b07453797074253d9698`, open/draft, `clean`, 17 путей, **28 success / 4 skipped** | HEAD не менялся; не утверждение релиза. |
+
+`main` на срезе: Research `73b2431d69a143d44f21f547806078e02e1364f9`, AuditRepo `fe69239320bed47362f049906d5af25342f3c104`, Product `9edef94ece08012223c1364bec7ddcd561cf5713`. [Срез пересечений собственного intake](evidence/keston-and-tokmak-holdings-evidence.md#срез-доставки-xvii) — отдельный контроль. Комментарии в PR не отправлены, чужие файлы и ветки не изменены.
