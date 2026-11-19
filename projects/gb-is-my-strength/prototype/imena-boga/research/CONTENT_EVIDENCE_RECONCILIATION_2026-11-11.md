@@ -417,3 +417,8 @@ Research на \`33cee89b\` исправил исторический источ�
 - Atlas и Panorama `immanuel`: MT Ис. 7:14 и 8:8 `עִמָּנוּ אֵל` (два слова), Мф. 1:23 `Ἐμμανουήλ` (греческая форма). Богословское чтение сохранено, но отделено от точной орфографии. Источники: https://mechon-mamre.org/p/pt/pt1007.htm ; https://mechon-mamre.org/p/pt/pt1008.htm .
 - Atlas `occurrencesShort?` показано на компактных карточках для W106 №10, `el-olam`, `yhwh-mekaddishkem`, `immanuel`, при сохранении полного `occurrences` в досье и доступной метке; 32 остальных элемента используют fallback. Число 36 Atlas / 29 Panorama не изменено.
 - Добавлен защитный `W107_HEBREW_FORM_SCOPE_AND_CARD_LABEL_PASS`, обновлены нормализованные SHA256-пины четырёх исходных файлов. Research #379, Product/main/Production, архивные originals не менялись. **Exact-head W107 CI и визуальный ZIP ожидаются**. Scholarly / critical-edition / rights / devices / owner approval = HOLD.
+
+
+### W107b — техническая совместимость редакционной защиты
+
+После W107 браузерный workflow на шаге `qa:source` сообщил `Flagship Research guard missing required scoped formulation: эту этимологическую реконструкцию нельзя выдавать за бесспорную`. В Atlas `el-olam` восстановлена **точная редакционная оговорка**, сохранив новое разграничение Быт.21:33 / Ис.40:28 и некатегоричную этимологию; защитные тесты не отключались. W107b должна получить собственную exact-head CI и визуальный оригинал; все релизные HOLD сохраняются.
