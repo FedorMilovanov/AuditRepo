@@ -123,6 +123,10 @@
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
       "bytes_normalized": 1238
     },
+    "atlas/src/data/verseAttestations.json": {
+      "sha256": "433f8d060fd3f9164ac0a8d16c140ea48b82743e287de71c9fa62c19c2daf3b8",
+      "bytes_normalized": 4767
+    },
     "atlas/src/index.css": {
       "sha256": "dab734602d944bf9fdb6c02da3ecfa1d4bb9d88a34aad5ecb34ec3cb2464bde4",
       "bytes_normalized": 10524
@@ -180,8 +184,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "c39b04bdc5dbe1bc73ee7dbfe38b046342b436f529149b64ce1b46a66429eb7a",
-      "bytes_normalized": 84087
+      "sha256": "0ebdd52ca65139c0126d59db5c3e72d46cc3210b1938a2807cdaa2d558af19b3",
+      "bytes_normalized": 86907
     },
     "checks/visual_review.cjs": {
       "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",

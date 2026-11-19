@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "scope": "Four audited Atlas entries only, not the full 65-name corpus",
+  "researchState": "HOLD",
+  "publicationState": "BLOCKED",
+  "criticalEditionStatus": "NOT_COLLATED",
+  "sourceClass": "DIGITAL_VERSE_SURFACE_ONLY",
+  "relations": [
+    "exact_surface",
+    "related_formula",
+    "greek_reception"
+  ],
+  "attestations": [
+    {
+      "cardId": "el-rachum-ve-channun",
+      "verse": "Exodus 34:6",
+      "locator": "Исход 34:6",
+      "form": "אֵל רַחוּם וְחַנּוּן",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt0234.htm"
+    },
+    {
+      "cardId": "el-rachum-ve-channun",
+      "verse": "Deuteronomy 4:31",
+      "locator": "Второзаконие 4:31",
+      "form": "אֵל רַחוּם",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt0504.htm"
+    },
+    {
+      "cardId": "el-rachum-ve-channun",
+      "verse": "Psalm 103:8 / Russian 102:8",
+      "locator": "Псалом 102:8",
+      "form": "רַחוּם וְחַנּוּן יְהוָה",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://biblehub.com/text/psalms/103-8.htm"
+    },
+    {
+      "cardId": "el-rachum-ve-channun",
+      "verse": "Jonah 4:2",
+      "locator": "Иона 4:2",
+      "form": "אֵל־חַנּוּן וְרַחוּם",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://biblehub.com/text/jonah/4-2.htm"
+    },
+    {
+      "cardId": "el-rachum-ve-channun",
+      "verse": "Joel 2:13",
+      "locator": "Иоиль 2:13",
+      "form": "חַנּוּן וְרַחוּם הוּא",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://biblehub.com/text/joel/2-13.htm"
+    },
+    {
+      "cardId": "el-olam",
+      "verse": "Genesis 21:33",
+      "locator": "Бытие 21:33",
+      "form": "אֵל עוֹלָם",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt0121.htm"
+    },
+    {
+      "cardId": "el-olam",
+      "verse": "Isaiah 40:28",
+      "locator": "Исаия 40:28",
+      "form": "אֱלֹהֵי עוֹלָם יְהוָה",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt1040.htm"
+    },
+    {
+      "cardId": "yhwh-mekaddishkem",
+      "verse": "Exodus 31:13",
+      "locator": "Исход 31:13",
+      "form": "יְהוָה מְקַדִּשְׁכֶם",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt0231.htm"
+    },
+    {
+      "cardId": "yhwh-mekaddishkem",
+      "verse": "Leviticus 20:8",
+      "locator": "Левит 20:8",
+      "form": "יְהוָה מְקַדִּשְׁכֶם",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://biblehub.com/text/leviticus/20-8.htm"
+    },
+    {
+      "cardId": "yhwh-mekaddishkem",
+      "verse": "Leviticus 21:8",
+      "locator": "21:8",
+      "form": "יְהוָה מְקַדִּשְׁכֶם",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://biblehub.com/text/leviticus/21-8.htm"
+    },
+    {
+      "cardId": "yhwh-mekaddishkem",
+      "verse": "Leviticus 22:32",
+      "locator": "22:32",
+      "form": "יְהוָה מְקַדִּשְׁכֶם",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://biblehub.com/text/leviticus/22-32.htm"
+    },
+    {
+      "cardId": "yhwh-mekaddishkem",
+      "verse": "Ezekiel 20:12",
+      "locator": "Иезекииль 20:12",
+      "form": "יְהוָה מְקַדְּשָׁם",
+      "language": "hebrew",
+      "relation": "related_formula",
+      "sourceUrl": "https://biblehub.com/text/ezekiel/20-12.htm"
+    },
+    {
+      "cardId": "immanuel",
+      "verse": "Isaiah 7:14",
+      "locator": "Исаия 7:14",
+      "form": "עִמָּנוּ אֵל",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://mechon-mamre.org/p/pt/pt1007.htm"
+    },
+    {
+      "cardId": "immanuel",
+      "verse": "Isaiah 8:8",
+      "locator": "8:8",
+      "form": "עִמָּנוּ אֵל",
+      "language": "hebrew",
+      "relation": "exact_surface",
+      "sourceUrl": "https://biblehub.com/text/isaiah/8-8.htm"
+    },
+    {
+      "cardId": "immanuel",
+      "verse": "Matthew 1:23",
+      "locator": "Матфея 1:23",
+      "form": "Ἐμμανουήλ",
+      "language": "greek",
+      "relation": "greek_reception",
+      "sourceUrl": "https://biblehub.com/text/matthew/1-23.htm"
+    }
+  ]
+}

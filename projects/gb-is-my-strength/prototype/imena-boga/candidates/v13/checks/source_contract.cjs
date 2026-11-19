@@ -1144,3 +1144,52 @@ for(const [block,forbidden] of [
  [w107PanImm,'עִמָּנוּאֵל']
 ])if(block.includes(forbidden))throw Error('W107 old form restored '+forbidden);
 console.log('W107_HEBREW_FORM_SCOPE_AND_CARD_LABEL_PASS');
+
+
+// W108: machine-checkable digital attestation ledger for four audited names.
+// This does NOT imply independent scholarship, rights clearance, or critical edition review.
+const w108Ledger=JSON.parse(fs.readFileSync(path.join(root,'atlas','src','data','verseAttestations.json'),'utf8'));
+if(w108Ledger.version!=='1.0' || w108Ledger.researchState!=='HOLD' ||
+   w108Ledger.publicationState!=='BLOCKED' || w108Ledger.criticalEditionStatus!=='NOT_COLLATED' ||
+   w108Ledger.sourceClass!=='DIGITAL_VERSE_SURFACE_ONLY')
+  throw Error('W108 scope/rights gates unexpectedly relaxed');
+const w108Src=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w108Expected={
+  'el-rachum-ve-channun': {exact_surface:1,related_formula:4},
+  'el-olam': {exact_surface:1,related_formula:1},
+  'yhwh-mekaddishkem': {exact_surface:4,related_formula:1},
+  'immanuel': {exact_surface:2,greek_reception:1}
+};
+const w108Counts={},w108Seen=new Set();
+if(!Array.isArray(w108Ledger.attestations)||w108Ledger.attestations.length!==15)
+  throw Error('W108 expected 15 verse attestations');
+for(const a of w108Ledger.attestations){
+  const id=a.cardId+':'+a.verse;
+  if(w108Seen.has(id))throw Error('W108 duplicate verse '+id);
+  w108Seen.add(id);
+  if(!Object.prototype.hasOwnProperty.call(w108Expected,a.cardId))
+    throw Error('W108 unaudited card unexpectedly included '+a.cardId);
+  const begin=w108Src.indexOf("id: '"+a.cardId+"'");
+  const end=w108Src.indexOf('\n  },',begin);
+  if(begin<0||end<=begin)throw Error('W108 card not found '+a.cardId);
+  const card=w108Src.slice(begin,end);
+  const original=card.match(/\boriginal: '([^']+)'/)?.[1];
+  const language=card.match(/\blanguage: '([^']+)'/)?.[1];
+  const occurrences=card.match(/\boccurrences: '([^']+)'/)?.[1];
+  if(!original||!occurrences||!occurrences.includes(a.locator)||!occurrences.includes(a.form))
+    throw Error('W108 source-to-card mismatch '+id);
+  if(!w108Ledger.relations.includes(a.relation)||
+     (a.relation==='exact_surface')!==(a.form===original))
+    throw Error('W108 exact-form collision '+id);
+  if(a.relation==='greek_reception'){
+    if(a.language!=='greek'||language!=='hebrew')throw Error('W108 Greek reception mismatch '+id);
+  }else if(a.language!==language)throw Error('W108 original language mismatch '+id);
+  if(typeof a.sourceUrl!=='string'||
+     !/^https:\/\/(mechon-mamre\.org|biblehub\.com)\//.test(a.sourceUrl))
+    throw Error('W108 source URL missing '+id);
+  if(!w108Counts[a.cardId])w108Counts[a.cardId]={};
+  w108Counts[a.cardId][a.relation]=(w108Counts[a.cardId][a.relation]||0)+1;
+}
+if(JSON.stringify(w108Counts)!==JSON.stringify(w108Expected))
+  throw Error('W108 relation matrix changed '+JSON.stringify(w108Counts));
+console.log('W108_ATTESTATION_RELATION_SSOT_PASS',w108Ledger.attestations.length);
