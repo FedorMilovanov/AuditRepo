@@ -1,0 +1,17 @@
+{
+  "name": "arena-study-panel-lab",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node server.mjs",
+    "test": "node test-browser.mjs",
+    "audit": "node audit.mjs",
+    "capture": "node capture.mjs"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "puppeteer-core": "^24.43.1"
+  }
+}

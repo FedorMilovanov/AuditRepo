@@ -93,6 +93,10 @@ AuditRepo also should not create a control-plane transaction larger than the pro
 
 See [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md). For `gb-is-my-strength`, start at [`projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`](projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md) and [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).
 
-## Prototype Lab
+## Отдел разработок / Prototype Lab
 
-Для сохраняемых экспериментальных макетов, сравнений Arena, независимых UI-эталонов и передачи проверенных решений в Product существует [Prototype Lab](references/PROTOTYPE_LAB.md). Прототипы не заменяют Product source/CI/deploy и не ведут вторую активную матрицу.
+**Это отдельное направление для настоящих создаваемых образцов**, а не отдел текстовых предложений или поиска багов. Здесь лежат исходники HTML/React/Canvas/Three.js/WebGL-прототипов, проверяемые версии, QA, preview/evidence и передача работы между агентами. Содержательные идеи до создания образца относятся к `WORK_QUEUE.md` / исследованиям, а подтверждённые дефекты — в соответствующий MASTER.
+
+**[Открыть Отдел разработок](references/PROTOTYPE_LAB.md)** · [Каталог проектов](references/prototype-lab/CATALOG.md) · [Правила продолжения и передачи агентам](references/prototype-lab/DEVELOPMENT_DEPARTMENT.md).
+
+Реальный исходный код хранится в `projects/<product>/prototype/<experiment>/` (или в указанной ветке Draft PR), **не** дублируется в `references/`. Prototype Lab не заменяет Product source/CI/deploy и не ведёт вторую активную матрицу.

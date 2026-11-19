@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru" data-lab-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Оценка христоцентричной герменевтики · На полях — исследовательский прототип</title>
+<meta name="description" content="Изолированный исследовательский прототип правой панели для статьи «Оценка христоцентричной герменевтики».">
+<link rel="icon" href="/vendor/images/hermenevtika-preview.webp">
+<script>
+  // Theme bootstrap — local lab only, never writes to the parent project's storage keys.
+  try {
+    var t = localStorage.getItem('arena-study-lab:theme');
+    if (t === 'dark' || t === 'sepia' || t === 'light') {
+      document.documentElement.setAttribute('data-lab-theme', t);
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    }
+  } catch (e) {}
+</script>
+<link rel="stylesheet" href="/vendor/fonts/fonts.css">
+<link rel="stylesheet" href="/vendor/css/site.css">
+<link rel="stylesheet" href="/vendor/css/reader-preferences.css">
+<link rel="stylesheet" href="/vendor/css/floating-cluster.css">
+<link rel="stylesheet" href="/vendor/css/reader-rail.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body class="gbs-paper lab-body">
+<a class="skip-link" href="#content">Перейти к содержанию</a>
+
+<div class="lab-shell" id="labShell" data-left="open" data-right="open" data-follow="on">
+
+  <!-- ============================================================ LEFT: original ReaderRail SVG language
+       Every path below is copied verbatim from src/components/article-pilots/_shared/ReaderRail.astro,
+       src/components/ui/floating-cluster/SingleArticleCluster.astro and
+       src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro.
+       The site's own .hrail / .gb-icon / .gb-theme-toggle / .gb-ember CSS is loaded verbatim. -->
+  <aside class="hrail lab-left" id="labLeft" aria-label="Оглавление и управление чтением" data-fc-root data-fc-variant="single" data-fc-mode="single">
+    <div class="hrail-top">
+      <button class="hrail-back" id="labBack" type="button" aria-label="Назад" data-home-href="../../">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+      </button>
+      <span class="lab-top-title" aria-hidden="true">Герменевтика</span>
+      <button class="lab-icon-btn lab-left-quiet" id="labLeftQuiet" type="button" aria-label="Свернуть оглавление до строк" aria-pressed="false" data-tip="Свернуть оглавление" title="Свернуть оглавление до строк">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
+      <button class="lab-icon-btn lab-left-collapse" id="labLeftCollapse" type="button" aria-label="Свернуть оглавление" aria-expanded="true" aria-controls="labLeft">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6" /></svg>
+      </button>
+    </div>
+    <div class="hrail-meta">
+      <div class="hrail-meta__eyebrow" id="labSeriesEyebrow">Отдельная статья · Герменевтика</div>
+      <p class="hrail-meta__title">Оценка христоцентричной герменевтики</p>
+      <button class="lab-series-chip" id="labSeriesChip" type="button" data-mode="edition" aria-label="Об издании: статья, серия или книга">
+        <span class="lab-series-chip__dot" aria-hidden="true"></span>
+        <span class="lab-series-chip__text" id="labSeriesChipText">Статья вне серии</span>
+        <span class="lab-series-chip__chev" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+        </span>
+      </button>
+      <div class="lab-series-switch" id="labSeriesSwitch" hidden aria-label="Проверить поля на других формах издания">
+        <span class="lab-series-switch__label">Посмотреть на реальных формах:</span>
+        <div class="lab-series-switch__row" role="group" aria-label="Форма издания">
+          <button type="button" data-lab-series="article" aria-pressed="true"><b>Статья</b><small>вне серии</small></button>
+          <button type="button" data-lab-series="gill" aria-pressed="false"><b>Серия</b><small>Джон Гилл · 6 частей</small></button>
+          <button type="button" data-lab-series="baptisty" aria-pressed="false"><b>Серия</b><small>Баптисты России · самиздат</small></button>
+          <button type="button" data-lab-series="heart" aria-pressed="false"><b>Книга</b><small>Сердце · 4 главы, 22 статьи</small></button>
+        </div>
+      </div>
+    </div>
+    <div class="hrail-toch">
+      Оглавление статьи
+      <b id="labTocCount">1 / 10</b>
+    </div>
+    <label class="lab-toc-search" for="labTocSearch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
+      <input id="labTocSearch" type="search" placeholder="Поиск по разделам…" aria-label="Поиск по оглавлению статьи" autocomplete="off">
+    </label>
+    <div class="lab-toc-progress" aria-label="Прогресс чтения статьи"><span class="lab-toc-progress__fill" id="labTocProgressFill"></span></div>
+    <div class="hrail-scroll" id="labTocScroll">
+      <ul class="hrail-toc" id="labToc"></ul>
+      <p class="lab-toc-empty" id="labTocEmpty" hidden>Ничего не найдено.<small>Оглавление ищет только по реальным заголовкам статьи.</small></p>
+    </div>
+
+    <div class="lab-audio" id="labAudio">
+      <div class="lab-audio__copy">
+        <span class="lab-audio__title">Озвучка</span>
+        <span class="lab-audio__status" id="labAudioStatus">демо · синтезатор браузера</span>
+      </div>
+      <button class="lab-rate" id="labRate" type="button" aria-label="Скорость озвучки, 1×" aria-expanded="false" aria-controls="labRatePop">1×</button>
+      <span class="gb-ember-wrap lab-ember-wrap" id="labEmberWrap">
+        <div class="gb-ember-expand" id="labRatePop" role="radiogroup" aria-label="Скорость озвучки">
+          <button class="gb-ember-expand__btn is-active" type="button" role="radio" data-rate="1" aria-label="Скорость 1×" aria-checked="true">1×</button>
+          <button class="gb-ember-expand__btn" type="button" role="radio" data-rate="1.25" aria-label="Скорость 1,25×" aria-checked="false">1.25×</button>
+          <button class="gb-ember-expand__btn" type="button" role="radio" data-rate="1.5" aria-label="Скорость 1,5×" aria-checked="false">1.5×</button>
+          <button class="gb-ember-expand__btn" type="button" role="radio" data-rate="1.75" aria-label="Скорость 1,75×" aria-checked="false">1.75×</button>
+          <button class="gb-ember-expand__btn" type="button" role="radio" data-rate="2" aria-label="Скорость 2×" aria-checked="false">2×</button>
+        </div>
+        <!-- PlayEmber.astro, verbatim: ring / glyph / pause / check -->
+        <button type="button" class="gb-ember" id="labPlay" data-state="idle" data-fc-action="play" style="--p:0;--ember-size:36px" aria-label="Озвучка" aria-pressed="false" aria-haspopup="true" aria-expanded="false" data-tip="Озвучка">
+          <svg class="gb-ember__ring-svg" viewBox="0 0 100 100" aria-hidden="true"><circle class="gb-ember__ring-track" cx="50" cy="50" r="45"></circle><circle class="gb-ember__ring-progress" cx="50" cy="50" r="45"></circle></svg>
+          <svg class="gb-ember__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"></path></svg>
+          <svg class="gb-ember__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"></path></svg>
+          <svg class="gb-ember__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"></path></svg>
+        </button>
+      </span>
+    </div>
+
+    <div class="hrail-bottom">
+      <button class="hrail-bottom-btn" id="labIndexBtn" type="button" aria-label="Указатель статьи" data-tip="Указатель">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
+      </button>
+      <button class="hrail-bottom-btn" id="labSettingsBtn" type="button" aria-label="Настройки чтения" aria-haspopup="dialog" aria-expanded="false" aria-controls="labSettings" data-tip="Настройки">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10" /><circle cx="16" cy="7" r="2" /><circle cx="8" cy="17" r="2" /></svg>
+      </button>
+      <button class="hrail-bottom-btn gb-theme-toggle" id="labThemeLeft" type="button" aria-label="Тема" data-tip="Тема">
+        <span class="theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg></span>
+        <span class="theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></span>
+      </button>
+      <button class="hrail-bottom-btn" id="labShareBtn" type="button" aria-label="Поделиться" data-tip="Поделиться">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6" /><circle cx="6" cy="12" r="2.6" /><circle cx="18" cy="19" r="2.6" /><path d="M8.3 10.7l7.4-4.2M8.3 13.3l7.4 4.2" /></svg>
+      </button>
+      <button class="hrail-bottom-btn" id="labPrintBtn" type="button" aria-label="Скачать PDF" data-tip="PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12" /><polyline points="7 10 12 15 17 10" /><path d="M5 21h14" /></svg>
+      </button>
+    </div>
+
+    <div class="lab-settings" id="labSettings" role="dialog" aria-label="Настройки чтения" hidden>
+      <div class="lab-settings__row"><span>Тема</span>
+        <div class="lab-seg" role="group" aria-label="Тема">
+          <button type="button" data-theme="light" aria-pressed="true">День</button>
+          <button type="button" data-theme="sepia" aria-pressed="false">Сепия</button>
+          <button type="button" data-theme="dark" aria-pressed="false">Ночь</button>
+        </div>
+      </div>
+      <div class="lab-settings__row"><span>Размер текста</span>
+        <div class="lab-stepper">
+          <button type="button" id="labFontDown" aria-label="Уменьшить шрифт">A−</button>
+          <output id="labFontValue">100%</output>
+          <button type="button" id="labFontUp" aria-label="Увеличить шрифт">A+</button>
+        </div>
+      </div>
+      <div class="lab-settings__row"><span>Интерлиньяж</span>
+        <div class="lab-seg" role="group" aria-label="Интерлиньяж">
+          <button type="button" data-leading="compact" aria-pressed="false">Плотно</button>
+          <button type="button" data-leading="normal" aria-pressed="true">Обычно</button>
+          <button type="button" data-leading="relaxed" aria-pressed="false">Свободно</button>
+        </div>
+      </div>
+      <p class="lab-settings__note">Настройки действуют только внутри этой лаборатории.</p>
+    </div>
+  </aside>
+
+  <button class="lab-restore lab-restore--left" id="labLeftRestore" type="button" aria-label="Развернуть оглавление" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <span>Оглавление</span>
+  </button>
+
+  <!-- ============================================================ CENTER: real article -->
+  <div class="lab-center" id="labCenter">
+    <div class="lab-prose">
+      <!-- __REAL_MAIN__ -->
+      <footer class="lab-prose-foot">
+        <span>Господь Бог — сила моя</span>
+        <span>Изолированный прототип · исходный текст статьи не изменён</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============================================================ RIGHT: new study space -->
+  <aside class="lab-right" id="labRight" aria-label="Исследовательские поля статьи">
+    <div class="lab-sheet-handle" id="labSheetHandle" aria-hidden="true"></div>
+    <button class="lab-lyasse" id="labLyasse" type="button" aria-label="Закреплённые материалы: 0. Перейти к списку" title="Закреплено">
+      <span class="lab-lyasse__line" aria-hidden="true"></span>
+    </button>
+
+    <header class="lab-head">
+      <div class="lab-head__copy">
+        <span class="lab-head__eyebrow">На полях</span>
+        <!-- Series position: the chapter and «6 / 22» belong above the headline,
+             not inside it — the headline stays one readable phrase. -->
+        <span class="lab-head__pos" id="labHeadPos" hidden></span>
+        <span class="lab-head__section" id="labCurrentSection">Вступление</span>
+        <!-- One line of live margin status, also the way back into the folded
+             context band. Filled by renderHeadStrip(). -->
+        <button class="lab-head__strip" id="labHeadStrip" type="button" hidden></button>
+        <div class="lab-head__progress" role="group" aria-label="Прогресс чтения">
+          <span class="lab-head__progress-track"><span class="lab-head__progress-fill" id="labReadFill"></span></span>
+          <span class="lab-head__progress-text" id="labReadPct">0%</span>
+        </div>
+      </div>
+      <div class="lab-head__actions">
+        <button class="lab-head__edition" id="labEditionBtn" type="button" data-mode="edition" aria-label="Издание: статья, серия или книга" title="Издание">
+          <span class="lab-head__edition-mark" id="labEditionMark" aria-hidden="true">СТ</span>
+          <span class="lab-head__edition-text" id="labEditionText">Статья</span>
+        </button>
+        <button class="lab-icon-btn lab-quiet-btn" id="labQuiet" type="button" aria-label="Свернуть все ленты до строк" aria-pressed="false" data-tip="Свернуть все ленты" title="Свернуть все ленты до строк">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <button class="lab-icon-btn lab-help-btn" id="labHelpBtn" type="button" aria-label="Как пользоваться полями" title="Подсказки и клавиши">?</button>
+        <button class="gb-icon gb-theme-toggle lab-theme-btn" id="labThemeRight" type="button" aria-label="Тема" data-tip="Тема">
+          <span class="theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg></span>
+          <span class="theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></span>
+        </button>
+        <button class="lab-icon-btn" id="labRightClose" type="button" aria-label="Свернуть поля" aria-expanded="true" aria-controls="labRight" title="Свернуть поля">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="lab-right-scroll" id="labRightScroll">
+
+      <!-- First visit only: three sentences that make the margin self-explaining.
+           It lives above the bands, is dismissed once and never returns. -->
+      <section class="lab-coach" id="labCoach" hidden aria-label="С чего начать">
+        <p class="lab-coach__lead">Поля следуют за текстом, но ничего не делают без вас.</p>
+        <ul class="lab-coach__list">
+          <li><b>Читайте</b> — лента «У этого абзаца» меняется сама.</li>
+          <li><b>Сверните</b> — заголовок любой ленты складывает её до одной строки.</li>
+          <li><b>Откройте</b> — нижний ряд значков: у каждого есть название при наведении.</li>
+        </ul>
+        <div class="lab-coach__actions">
+          <button type="button" class="lab-coach__ok" id="labCoachOk">Понятно</button>
+          <button type="button" class="lab-coach__more" id="labCoachMore">Что здесь есть</button>
+        </div>
+      </section>
+
+      <!-- BAND 1 — quietly follows the paragraph being read -->
+      <section class="lab-band" data-band="context">
+        <div class="lab-band__head">
+          <button class="lab-band__toggle" type="button" aria-expanded="true" aria-controls="labContextBody">
+            <svg class="lab-band__glyph lab-band__glyph--ctx" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.2h10M3 8h10M3 11.8h6.5"/></svg>
+            <span class="lab-band__label">У этого абзаца</span>
+            <span class="lab-band__meta" id="labContextMeta"></span>
+            <svg class="lab-chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5"/></svg>
+          </button>
+          <button class="lab-follow" id="labFollow" type="button" aria-pressed="true" aria-label="Автоматически следовать за текстом включено" title="Автоследование меняет только этот блок">следить</button>
+        </div>
+        <div class="lab-band__body" id="labContextBody"><div class="lab-context" id="labContext" aria-live="off"></div></div>
+      </section>
+
+      <!-- BAND 1b — a compact, real-text digest of the section being read -->
+      <section class="lab-band lab-band--brief" data-band="brief">
+        <div class="lab-band__head">
+          <button class="lab-band__toggle" type="button" aria-expanded="true" aria-controls="labBriefBody">
+            <svg class="lab-band__glyph lab-band__glyph--brief" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 3.4h9.6v9.2H3.2z"/><path d="M5.4 6.2h5.2M5.4 8.4h5.2M5.4 10.6h3.2"/></svg>
+            <span class="lab-band__label">В этом разделе</span>
+            <span class="lab-band__meta" id="labBriefMeta"></span>
+            <svg class="lab-chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5"/></svg>
+          </button>
+        </div>
+        <div class="lab-band__body" id="labBriefBody"><div class="lab-brief" id="labBrief"></div></div>
+      </section>
+
+      <!-- BAND 2 — the main, quiet reading surface of the margin -->
+      <section class="lab-band lab-band--desk" data-band="desk">
+        <div class="lab-band__head">
+          <button class="lab-band__toggle" type="button" aria-expanded="true" aria-controls="labDeskBody">
+            <svg class="lab-band__glyph lab-band__glyph--desk" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 12.4h10.8M4.4 12.4V7.6M8 12.4V4.2M11.6 12.4V9"/></svg>
+            <span class="lab-band__label" id="labDeskLabel">Разбор</span>
+            <span class="lab-band__meta" id="labDeskMeta"></span>
+            <svg class="lab-chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5"/></svg>
+          </button>
+          <span class="lab-desk-origin" id="labDeskOrigin"></span>
+        </div>
+        <div class="lab-band__body" id="labDeskBody"><div class="lab-desk" id="labDesk" aria-live="polite"></div></div>
+      </section>
+
+      <!-- Reading instruments live as text links, not as more windows -->
+      <section class="lab-apparatus" aria-label="Аппарат статьи">
+        <div class="lab-apparatus__rule"><span>Аппарат статьи</span></div>
+        <p class="lab-apparatus__note" id="labApparatusNote"></p>
+        <div class="lab-apparatus__links">
+          <button type="button" data-mode="notes" id="labApparatusNotes">Сноски и источники</button>
+          <button type="button" data-mode="section" id="labApparatusSection">Обзор раздела</button>
+          <button type="button" data-mode="edition" id="labApparatusEdition">Издание</button>
+          <button type="button" data-mode="help" id="labApparatusHelp">Как это устроено</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- BAND 3 — persistent shelf, always visible, never touched by auto-follow -->
+    <section class="lab-band lab-band--pinned" data-band="pinned">
+      <div class="lab-band__head">
+        <button class="lab-band__toggle" type="button" aria-expanded="true" aria-controls="labPinnedBody">
+          <svg class="lab-band__glyph lab-band__glyph--pin" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.2 1.8 14.2 3.8l-2.6 1.1-2.4 4.3-1.1-1.1-3.6 3.9-1-1 3.9-3.6-1.1-1.1z"/></svg>
+          <span class="lab-band__label">Закреплено</span>
+          <span class="lab-band__meta" id="labPinnedCount">0</span>
+          <svg class="lab-chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5"/></svg>
+        </button>
+      </div>
+      <div class="lab-band__body" id="labPinnedBody"><div class="lab-pinned" id="labPinned"></div></div>
+    </section>
+
+    <div class="lab-rail-tip" id="labRailTip" role="tooltip" hidden></div>
+    <footer class="lab-instruments" id="labInstruments" role="toolbar" aria-label="Инструменты исследования" aria-orientation="horizontal"></footer>
+  </aside>
+
+  <button class="lab-restore lab-restore--right" id="labRightRestore" type="button" aria-label="Развернуть поля" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+    <span>На полях</span>
+  </button>
+
+  <div class="lab-backdrop" id="labBackdrop" hidden></div>
+
+  <nav class="lab-mobile-bar" aria-label="Панели чтения">
+    <button type="button" data-action="toc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Оглавление</span></button>
+    <button type="button" data-action="audio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg><span>Озвучка</span></button>
+    <button type="button" data-action="study" aria-label="На полях: сноски, понятия, закреплённое"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg><span>На полях</span></button>
+    <button type="button" data-action="theme" class="gb-theme-toggle"><span class="theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg></span><span class="theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></span><span>Тема</span></button>
+  </nav>
+
+  <div class="lab-tip" id="labTip" role="tooltip" hidden></div>
+  <div class="lab-toast" id="labToast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
