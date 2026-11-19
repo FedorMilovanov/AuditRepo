@@ -1,0 +1,141 @@
+{
+  "schema": "gb-library-v514-vault-rib-instance-evidence-v1",
+  "date": "2026-11-09",
+  "baseCommit": "431d8c5969428a9fef6da2b1cf64c837c5b40f91",
+  "environment": "Headless Chrome and Playwright WebKit, Windows desktop, DPR 1, reduced motion, 1440x900 + emulated 390x844",
+  "method": "Real public fixed-station browser navigation, 3.5-second rAF + WebGL draw API counter after load. Before and after same viewport, one sample per case.",
+  "limitations": [
+    "Draw calls per frame and rAF cadence are not GPU frame timings",
+    "WebKit Windows reported Apple GPU; not a physical Safari or iPhone benchmark",
+    "One benchmark sample per engine/viewport; agents running concurrently can affect frame times",
+    "The reduction counts only actually rendered ribs, some are culled by viewpoint",
+    "Before/after images may include minor animation and texture timing variation",
+    "Architectural finish and Product integration remain independent release gates"
+  ],
+  "measurements": [
+    {
+      "engine": "chromium",
+      "viewport": "1440x900",
+      "beforeRafPerSecond": 60,
+      "afterRafPerSecond": 60,
+      "beforeDrawsPerFrame": 252.2,
+      "afterDrawsPerFrame": 239.1,
+      "drawCallReductionPerFrame": 13.1,
+      "beforeP95RafIntervalMs": 16.8,
+      "afterP95RafIntervalMs": 16.8,
+      "beforeTransferBytes": 2887809,
+      "afterTransferBytes": 2888118
+    },
+    {
+      "engine": "chromium",
+      "viewport": "390x844",
+      "beforeRafPerSecond": 60,
+      "afterRafPerSecond": 60,
+      "beforeDrawsPerFrame": 123.6,
+      "afterDrawsPerFrame": 116.6,
+      "drawCallReductionPerFrame": 7.0,
+      "beforeP95RafIntervalMs": 16.8,
+      "afterP95RafIntervalMs": 16.8,
+      "beforeTransferBytes": 2887809,
+      "afterTransferBytes": 2888118
+    },
+    {
+      "engine": "webkit",
+      "viewport": "1440x900",
+      "beforeRafPerSecond": 30,
+      "afterRafPerSecond": 27.8,
+      "beforeDrawsPerFrame": 253.4,
+      "afterDrawsPerFrame": 240.5,
+      "drawCallReductionPerFrame": 12.9,
+      "beforeP95RafIntervalMs": 39,
+      "afterP95RafIntervalMs": 44,
+      "beforeTransferBytes": 2874156,
+      "afterTransferBytes": 2874465
+    },
+    {
+      "engine": "webkit",
+      "viewport": "390x844",
+      "beforeRafPerSecond": 58.8,
+      "afterRafPerSecond": 62.6,
+      "beforeDrawsPerFrame": 123.6,
+      "afterDrawsPerFrame": 116.5,
+      "drawCallReductionPerFrame": 7.1,
+      "beforeP95RafIntervalMs": 29,
+      "afterP95RafIntervalMs": 17,
+      "beforeTransferBytes": 2874156,
+      "afterTransferBytes": 2874465
+    }
+  ],
+  "images": [
+    {
+      "path": "vault-v514-chrome-creeds-desktop-before.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 526242,
+      "sha256": "db1b05e7be6304bf295bc3c8c7c0b46d17366c6767970d67aaf2797279ab9271",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-chrome-creeds-desktop-after.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 526450,
+      "sha256": "e156db7e2279db96673e6fea15841a9ea2d701d2687a69090d8cdc555ebba5bb",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-chrome-article-desktop-before.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 513988,
+      "sha256": "3f3d2405776a6eda7e45b435baa16f3bfb80f6b2878d1571a106b46b065e2874",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-chrome-article-desktop-after.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 512696,
+      "sha256": "53873ba946238ed226b49d1dee657ba674e59c207388d41107ba2aa778a8951b",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-webkit-creeds-mobile-before.webp",
+      "size": [
+        390,
+        844
+      ],
+      "bytes": 144636,
+      "sha256": "e4476b0265d65b3e029af2255ec1bb62eb6e8fc686d368a9b0d6ae34c948db0d",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-webkit-creeds-mobile-after.webp",
+      "size": [
+        390,
+        844
+      ],
+      "bytes": 143904,
+      "sha256": "030011c666f9900cf7176f38a14800a65d301f3923245e4f1901b5fa2ddb1a2e",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "vault-v514-ceiling-comparison.jpg",
+      "size": [
+        2898,
+        458
+      ],
+      "bytes": 231662,
+      "sha256": "5f949e97c4eece68f2768f4118a4804312fa5e00ca0f1cf77911f297d4cc5375",
+      "note": "Cropped visual aid from real browser views; originals above are full-resolution and lossless"
+    }
+  ]
+}

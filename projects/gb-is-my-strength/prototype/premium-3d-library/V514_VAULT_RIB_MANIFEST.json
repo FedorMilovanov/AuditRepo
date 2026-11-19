@@ -1,0 +1,88 @@
+{
+  "schema": "gb-library-v514-vault-rib-source-manifest-v1",
+  "baseCommit": "431d8c5969428a9fef6da2b1cf64c837c5b40f91",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "scope": "Twenty identical roof ribs instanced into one TubeGeometry, manual geometry cleanup, strict shape equivalence and browser evidence",
+  "geometry": {
+    "status": "PASS",
+    "ribs": 20,
+    "sharedTubeGeometries": 1,
+    "largestCentrelineDeviationM": 1.3873790429220374e-14,
+    "instancedBoundingSphereRadiusM": 19.14431361873382
+  },
+  "qualityGates": {
+    "labCommands": 5,
+    "typescript": true,
+    "viteBuild": true,
+    "ribGeometry": "PASS",
+    "referenceBay": "5/5",
+    "architecturalBrowser": "4/4",
+    "centralBook": "4/4",
+    "mobileHUD": "6/6",
+    "interaction": "12/12",
+    "browserTotal": "31/31",
+    "performance": "4 observational browser profiles (single sample each)"
+  },
+  "limitations": [
+    "No physical Safari/Android/VR or GPU-time certification",
+    "No proven frame-rate gain; draw-call reductions are the grounded metric",
+    "Art/design and Product content integration remain open"
+  ],
+  "files": [
+    {
+      "path": "src/scene/Vault.tsx",
+      "bytes": 3834,
+      "sha256": "f41e761301f63905c80a7c1b7187aa0fb39240e741f2691907965f46434a2b45"
+    },
+    {
+      "path": "tests/vault-rib-equivalence.mjs",
+      "bytes": 2544,
+      "sha256": "51cd4a3ed7febada87f6e6a5417efea28bca9e490a977cb2541caf840dae7d35"
+    },
+    {
+      "path": "V514_VAULT_RIB_ENGINEERING.md",
+      "bytes": 6356,
+      "sha256": "e7550994275aa37db5865ac69deb9c4d5a0642cdbbf88725ed3a8be3fe870454"
+    },
+    {
+      "path": "evidence/vault-v514-evidence.json",
+      "bytes": 4544,
+      "sha256": "7b9ab8b1b6b7948f2162e31ba829cd4902e3c90951de082478c013f5dc9ef879"
+    },
+    {
+      "path": "evidence/vault-v514-ceiling-comparison.jpg",
+      "bytes": 231662,
+      "sha256": "5f949e97c4eece68f2768f4118a4804312fa5e00ca0f1cf77911f297d4cc5375"
+    },
+    {
+      "path": "evidence/vault-v514-chrome-creeds-desktop-before.webp",
+      "bytes": 526242,
+      "sha256": "db1b05e7be6304bf295bc3c8c7c0b46d17366c6767970d67aaf2797279ab9271"
+    },
+    {
+      "path": "evidence/vault-v514-chrome-creeds-desktop-after.webp",
+      "bytes": 526450,
+      "sha256": "e156db7e2279db96673e6fea15841a9ea2d701d2687a69090d8cdc555ebba5bb"
+    },
+    {
+      "path": "evidence/vault-v514-chrome-article-desktop-before.webp",
+      "bytes": 513988,
+      "sha256": "3f3d2405776a6eda7e45b435baa16f3bfb80f6b2878d1571a106b46b065e2874"
+    },
+    {
+      "path": "evidence/vault-v514-chrome-article-desktop-after.webp",
+      "bytes": 512696,
+      "sha256": "53873ba946238ed226b49d1dee657ba674e59c207388d41107ba2aa778a8951b"
+    },
+    {
+      "path": "evidence/vault-v514-webkit-creeds-mobile-before.webp",
+      "bytes": 144636,
+      "sha256": "e4476b0265d65b3e029af2255ec1bb62eb6e8fc686d368a9b0d6ae34c948db0d"
+    },
+    {
+      "path": "evidence/vault-v514-webkit-creeds-mobile-after.webp",
+      "bytes": 143904,
+      "sha256": "030011c666f9900cf7176f38a14800a65d301f3923245e4f1901b5fa2ddb1a2e"
+    }
+  ]
+}

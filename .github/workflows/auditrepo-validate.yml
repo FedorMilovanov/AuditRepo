@@ -52,6 +52,15 @@ jobs:
             echo "RUN_REF_FORENSIC=0" >> "${GITHUB_ENV}"
           fi
 
+          # Workflow-only repair must also prove the real lab's build and
+          # Chromium/WebKit tests rather than reporting a false green gate.
+          # Other projects do not pay for the experimental lab.
+          if grep -Eq '^projects/gb-is-my-strength/prototype/premium-3d-library/|^\.github/workflows/auditrepo-validate\.yml$' "${changed_file}"; then
+            echo "RUN_GB_LIBRARY=1" >> "${GITHUB_ENV}"
+          else
+            echo "RUN_GB_LIBRARY=0" >> "${GITHUB_ENV}"
+          fi
+
       - name: Compile core Python tools
         run: |
           python3 -m py_compile \
@@ -202,6 +211,70 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Set up Node for the changed Premium 3D Library
+        if: env.RUN_GB_LIBRARY == '1'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: projects/gb-is-my-strength/prototype/premium-3d-library/package-lock.json
+
+      - name: Typecheck, build and test changed Premium 3D Library
+        if: env.RUN_GB_LIBRARY == '1'
+        shell: bash
+        working-directory: projects/gb-is-my-strength/prototype/premium-3d-library
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run lab:check
+          npm run lab:catalog:test
+          npm run lab:cabinet:test
+          npm run lab:progression:test
+          npm run lab:cabinet:types
+          node tests/vault-rib-equivalence.mjs
+          npx tsc --noEmit
+          npm run build
+          python3 tests/browser-runner-contract.py
+
+      - name: Install Premium 3D Library test browsers
+        if: env.RUN_GB_LIBRARY == '1'
+        timeout-minutes: 20
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          # Hosted Ubuntu's APT mirror list can contain an Azure endpoint
+          # that failed to resolve and fetch WebKit libsoup3 on 2026-11-11.
+          # Canonical's official archive served packages in the same job.
+          # Replace only the failing mirror URL: preserve signed sources,
+          # actual OS dependencies and BOTH real browser engines.
+          for apt_source in /etc/apt/apt-mirrors.txt /etc/apt/sources.list.d/ubuntu.sources; do
+            if [ -f "${apt_source}" ] && grep -q 'azure.archive.ubuntu.com' "${apt_source}"; then
+              sudo sed -i -E 's#https?://azure[.]archive[.]ubuntu[.]com/ubuntu/?#https://archive.ubuntu.com/ubuntu/#g' "${apt_source}"
+              echo "Using official Ubuntu archive in ${apt_source}"
+            fi
+          done
+          python3 -m playwright install --with-deps chromium webkit
+
+      - name: Premium 3D Library public browser regression (65 cases)
+        if: env.RUN_GB_LIBRARY == '1'
+        timeout-minutes: 45
+        shell: bash
+        working-directory: projects/gb-is-my-strength/prototype/premium-3d-library
+        env:
+          GB_LIBRARY_CI_SOFTWARE_GPU: '1'
+          GB_LIBRARY_CI_EVIDENCE_DIR: ${{ runner.temp }}/premium3d-browser-evidence
+        run: python3 scripts/run-browser-regression.py
+
+      - name: Upload Premium 3D Library browser evidence
+        if: always() && env.RUN_GB_LIBRARY == '1'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: gb-premium3d-browser-${{ github.run_id }}
+          path: ${{ runner.temp }}/premium3d-browser-evidence/**
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Verify clean tracked tree
         run: git diff --exit-code

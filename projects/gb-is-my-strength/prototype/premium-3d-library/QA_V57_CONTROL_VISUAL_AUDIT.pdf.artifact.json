@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "path": "projects/gb-is-my-strength/prototype/premium-3d-library/QA_V57_CONTROL_VISUAL_AUDIT.pdf",
+  "sha256": "1a2c291993ff810e2a76da2ac68e2e802ef081f0930066091466a9959767790b",
+  "sizeBytes": 3285736,
+  "purpose": "Проверяемый десятистраничный PDF с контрольным аудитом Premium 3D Library и реальными снимками браузеров.",
+  "provenance": "Изолированная QA-копия AuditRepo PR #545, базовый HEAD c611a49c8764ead62652bdd58ba5f27f713eb503; браузер Chrome/Playwright WebKit на DESKTOP-O3FDOA4, изображения из evidence/audit-v57, печать Chromium PDF; не AI-рендер.",
+  "retention": "Хранить как версионированное доказательство V5.7 в исследовательском PR; пересматривать при новых изменениях, не переносить автоматически в Product или на публичный сайт."
+}

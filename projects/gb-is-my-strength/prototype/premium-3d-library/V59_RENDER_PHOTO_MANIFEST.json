@@ -1,0 +1,53 @@
+{
+  "schema": "gb-library-v59-scoped-photo-render-evidence-v1",
+  "baseCommit": "6756263e066ed4c995d3e25af1a2951a79cd170b",
+  "status": "LAB_ART_HOLD",
+  "change": "Scoped photo veil trigger, browser checks, graphics path diagnostic and real screenshots",
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "bytes": 6357,
+      "sha256": "2278e6a3904bec0783bc74aa22b9edce7495f36ae7e77f96c6a91ded25f609ec"
+    },
+    {
+      "path": "tests/photo-transition-browser.py",
+      "bytes": 4973,
+      "sha256": "0b0a563c8d5615831c94ec3c5cf4799a562223eaa2081a69c8f312a64814a177"
+    },
+    {
+      "path": "tests/graphics-backend-profile.py",
+      "bytes": 4429,
+      "sha256": "00f5caea57a146066fcce4160126c7bed053fcc9610d70a83f38e997977f5d75"
+    },
+    {
+      "path": "V59_RENDER_PHOTO_ENGINEERING.md",
+      "bytes": 5837,
+      "sha256": "c6db5e48e805ded8c7c4d3d91fd572afcbc9392483c766ad2e52e1f83d53c30e"
+    },
+    {
+      "path": "evidence/graphics-v59-profile.json",
+      "bytes": 6852,
+      "sha256": "bc237579a4d7d0b141088864ab7cf96ef59d8756b44b994e9dd40f37b182b5d2"
+    },
+    {
+      "path": "evidence/photo-v59-chrome-desktop-110ms.webp",
+      "bytes": 355892,
+      "sha256": "4d3223ccfcf12ce310fded72c2139c42d4bc910bd940eea76716e2910bd1a46b"
+    },
+    {
+      "path": "evidence/photo-v59-chrome-mobile-110ms.webp",
+      "bytes": 92286,
+      "sha256": "26d9168d8ca71e52d661b0fd3fcd56492a755c9d5120fbd2fb853ebe718b4311"
+    },
+    {
+      "path": "evidence/photo-v59-webkit-desktop-110ms.webp",
+      "bytes": 352688,
+      "sha256": "44dfaa78a14e77364612a08d73d72f9f656b361a875d0441c7ac3ec7ec41473b"
+    },
+    {
+      "path": "evidence/photo-v59-webkit-mobile-110ms.webp",
+      "bytes": 88874,
+      "sha256": "2cf800959666c430802e1f9e0c1dc9b3a1bf82fca92d5022044f6912939f59b6"
+    }
+  ]
+}

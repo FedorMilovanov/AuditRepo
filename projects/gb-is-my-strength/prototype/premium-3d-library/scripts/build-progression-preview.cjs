@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const ts = require('typescript');
+const base = path.resolve(__dirname, '..');
+const src = fs.readFileSync(path.join(base,'src/progression/engine.ts'),'utf8');
+const result = ts.transpileModule(src,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022},reportDiagnostics:true});
+if(result.diagnostics?.length)throw new Error(ts.formatDiagnosticsWithColorAndContext(result.diagnostics,{getCanonicalFileName:p=>p,getCurrentDirectory:()=>base,getNewLine:()=>"\n"}));
+const template = fs.readFileSync(path.join(base,'preview/template.html'),'utf8');
+const background = fs.readFileSync(path.join(base, 'preview/library-backdrop.jpg')).toString('base64');
+const embedded = template.replace("url('../reference/library-design-target.png')", `url('data:image/jpeg;base64,${background}')`);
+fs.writeFileSync(path.join(base,'preview/progression.html'),embedded.replace('/*__ENGINE__*/', result.outputText));
+console.log('PASS: generated standalone progression.html from canonical TS engine');

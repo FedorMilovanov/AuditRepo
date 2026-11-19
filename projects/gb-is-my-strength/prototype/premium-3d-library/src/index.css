@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: Inter, system-ui, sans-serif;
+  --color-gold: #d8b88d;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #c4c1b7;
+  color: #f5f1e7;
+  font-family: var(--font-body);
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+  outline: none;
+}
+
+.glass {
+  background: linear-gradient(160deg, rgba(24, 29, 26, 0.88), rgba(25, 29, 26, 0.92));
+  border: 1px solid rgba(216, 184, 141, 0.28);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 16px 45px rgba(10, 13, 10, 0.23), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.gold-text {
+  background: linear-gradient(180deg, #f5eddc 0%, #d5b58c 55%, #a78d6b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Modal surface is opaque for the entire entrance, including its first frame.
+   Unlike the shared fade-up animation, motion never blends the background
+   3D scene or intro typography into map text. */
+@keyframes mapEnter {
+  from { transform: translateX(14px); }
+  to { transform: translateX(0); }
+}
+.map-enter { animation: mapEnter 240ms cubic-bezier(.2, .7, .2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .map-enter,
+  .fade-up { animation: none; }
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: rgba(216, 184, 141, 0.3);
+  border-radius: 6px;
+}
+
+/* Center the default hint with intrinsic margins, not a persistent
+   translation that can shift a portrait phone chip back onto the joystick. */
+[data-gb-help] { left: 0; right: 0; margin-inline: auto; }
+
+/* A 375px-high touch landscape is a navigation surface, not a poster.
+   Keep the 128px joystick and the accessible toolbar map, but do not place
+   another 150px minimap in the opposite corner or a full-width help bubble
+   over the reading exhibit. Portrait and real desktop layouts are unchanged. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 430px) {
+  [data-gb-minimap] {
+    display: none !important;
+  }
+  /* Cardboard must retain its independent headset safety instructions. */
+  [data-gb-help][data-gb-hint-mode="desktop"] {
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)) !important;
+    width: min(16.75rem, calc(100vw - 19rem));
+    max-width: none;
+    padding-inline: 0;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] > .glass {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.625rem;
+    line-height: 1.15;
+    box-shadow: none;
+    backdrop-filter: blur(10px);
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-full] {
+    display: none;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-compact] {
+    display: inline;
+  }
+}
+
+/* Below 600px wide the landscape hint would collapse to a narrow,
+   unreadable sliver between fixed navigation controls. Suppress only the
+   optional introductory hint; joystick and accessible toolbar remain. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 430px) and (max-width: 600px) {
+  [data-gb-help][data-gb-hint-mode="desktop"] {
+    display: none !important;
+  }
+}
+
+/* Phone portrait reading station: move the short instructional text
+   beside (never above) the 128px joystick. Otherwise the long hint
+   covers the real lectern's page from the standard public camera. */
+@media (pointer: coarse) and (orientation: portrait) and (max-width: 480px) {
+  [data-gb-help][data-gb-hint-mode="desktop"] {
+    left: 10rem !important;
+    right: 0.75rem;
+    width: auto;
+    max-width: none;
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] > .glass {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.625rem;
+    line-height: 1.2;
+    box-shadow: none;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-full] {
+    display: none;
+  }
+  [data-gb-help][data-gb-hint-mode="desktop"] [data-gb-help-compact] {
+    display: inline;
+  }
+}

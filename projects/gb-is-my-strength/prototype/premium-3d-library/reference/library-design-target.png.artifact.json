@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "path": "projects/gb-is-my-strength/prototype/premium-3d-library/reference/library-design-target.png",
+  "sha256": "3391f518c93e2d476071d97ecea4b41c4260c7ed4477b0829f615a1b745147ef",
+  "sizeBytes": 2876940,
+  "purpose": "Owner-visible GPT Image architectural-art reference; illustrative concept, not a running-application screenshot",
+  "provenance": "Generated architectural reference image in the ChatGPT creative workflow on 2026-11-08, preserved as design direction only",
+  "retention": "Retain in AuditRepo Prototype Lab for auditable source comparison; retirement requires explicit owner-reviewed archival decision and SHA/provenance reconciliation"
+}

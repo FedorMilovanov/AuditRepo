@@ -1,0 +1,189 @@
+{
+  "schema": "gb-premium-library-v513-arcade-comparison-v1",
+  "baseCommit": "e6fbb870293e5551f7fbb5673a49588f4f1ff82f",
+  "source": "Real browser capture, same public station tour and viewport; local Windows Chrome/WebKit",
+  "date": "2026-11-09",
+  "limitations": [
+    "Only one performance recording per engine/viewport/variant, affected by device/agent workloads",
+    "rAF cadence is not GPU frame time and WebKit Windows does not imply iPhone Safari performance",
+    "Visual crops are editorial comparison, not photorealism certification",
+    "The non-instanced four-arch trial was rejected; only the final instanced variant may be committed",
+    "No changes to Product, routes, data, collision or physical hardware validation"
+  ],
+  "drawCalls": {
+    "before": [
+      {
+        "engine": "chromium",
+        "viewport": "1440x900",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 251.2,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887365
+      },
+      {
+        "engine": "chromium",
+        "viewport": "390x844",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 120.6,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887365
+      },
+      {
+        "engine": "webkit",
+        "viewport": "1440x900",
+        "rafPerSecond": 28.7,
+        "drawCallsPerFrame": 252.5,
+        "p95RafIntervalMs": 42,
+        "transferBytes": 2873712
+      },
+      {
+        "engine": "webkit",
+        "viewport": "390x844",
+        "rafPerSecond": 57.5,
+        "drawCallsPerFrame": 120.6,
+        "p95RafIntervalMs": 30,
+        "transferBytes": 2873712
+      }
+    ],
+    "after": [
+      {
+        "engine": "chromium",
+        "viewport": "1440x900",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 255.2,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887536
+      },
+      {
+        "engine": "chromium",
+        "viewport": "390x844",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 123.6,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887536
+      },
+      {
+        "engine": "webkit",
+        "viewport": "1440x900",
+        "rafPerSecond": 25.4,
+        "drawCallsPerFrame": 256.9,
+        "p95RafIntervalMs": 44,
+        "transferBytes": 2873883
+      },
+      {
+        "engine": "webkit",
+        "viewport": "390x844",
+        "rafPerSecond": 51,
+        "drawCallsPerFrame": 123.7,
+        "p95RafIntervalMs": 30,
+        "transferBytes": 2873883
+      }
+    ],
+    "instanced": [
+      {
+        "engine": "chromium",
+        "viewport": "1440x900",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 252.2,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887809
+      },
+      {
+        "engine": "chromium",
+        "viewport": "390x844",
+        "rafPerSecond": 60,
+        "drawCallsPerFrame": 123.6,
+        "p95RafIntervalMs": 16.8,
+        "transferBytes": 2887809
+      },
+      {
+        "engine": "webkit",
+        "viewport": "1440x900",
+        "rafPerSecond": 26.3,
+        "drawCallsPerFrame": 253.7,
+        "p95RafIntervalMs": 45,
+        "transferBytes": 2874156
+      },
+      {
+        "engine": "webkit",
+        "viewport": "390x844",
+        "rafPerSecond": 57.5,
+        "drawCallsPerFrame": 123.6,
+        "p95RafIntervalMs": 30,
+        "transferBytes": 2874156
+      }
+    ]
+  },
+  "images": [
+    {
+      "path": "crafted-arcade-v513-chrome-creeds-desktop-before.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 519472,
+      "sha256": "1b7f3f37cc0dcde64ce699adedde21ff2713887d8aad24c8c902793a1a197cdd",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-chrome-creeds-desktop-after.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 527832,
+      "sha256": "ea4b04049f51f80e2d8210cf9561bbbe14801f48f72ee5fa9ef2a0691bbbef88",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-chrome-article-desktop-before.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 513166,
+      "sha256": "c15e2944412f28995339ab6e7637761e8a3c29758eabb62f6aec337669a261cf",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-chrome-article-desktop-after.webp",
+      "size": [
+        1440,
+        900
+      ],
+      "bytes": 513088,
+      "sha256": "382aa3b58a6cd418ec34e1ddaa872d74357faaa5d13b782377715e390d45d905",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-webkit-creeds-mobile-before.webp",
+      "size": [
+        390,
+        844
+      ],
+      "bytes": 141746,
+      "sha256": "0f45dca643935437eabb9b26074e988e0fac211c1a98703604f2b62ed41d3e3f",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-webkit-creeds-mobile-after.webp",
+      "size": [
+        390,
+        844
+      ],
+      "bytes": 144202,
+      "sha256": "70c09afcc4b56de34354464ca328c91de1936edfc679e0702b879ed4cca4e8af",
+      "pixelIdenticalDecodedRGB": true
+    },
+    {
+      "path": "crafted-arcade-v513-detail-comparison.jpg",
+      "size": [
+        998,
+        791
+      ],
+      "bytes": 125441,
+      "sha256": "5c48a1b722eed15af4dbca5dddad77414be6b8a24916a78b0bbe4a4b3caf2b66",
+      "note": "Human-view contact sheet cropped from original browser pixels; original lossless full-frame screenshots above"
+    }
+  ]
+}
