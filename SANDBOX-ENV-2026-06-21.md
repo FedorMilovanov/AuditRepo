@@ -1,3 +1,19 @@
+> **Внимание (15.11.2026): исторический снимок, не универсальная инструкция для текущей Arena.** Ниже сохранены факты среды июля 2026 года (Debian 13, открытый egress, сохранение /tmp, apt). Эти возможности необходимо заново проверять в каждой сессии. Для ограниченной Arena Sandbox подтверждён другой вариант восстановления браузера:
+
+### Arena Sandbox: актуальный проверенный запасной путь для Chromium
+
+На Debian 12/x86_64 успешно запускался Chromium 153.0.8010.0 с `@sparticuz/chromium@153.0.0` и Playwright 1.64.1. Инструменты устанавливались **вне репозитория**, без изменения зависимостей:
+
+```bash
+npm install --prefix /tmp/arena-browser --no-audit --no-fund @sparticuz/chromium@153.0.0 playwright@1.64.1
+```
+
+Вызвать `Chromium.executablePath()`; при отсутствии библиотек NSS распаковать `@sparticuz/chromium/bin/al2023.tar.br` (Brotli → tar) в `/tmp/arena-browser/libs`, добавить `/tmp/arena-browser/libs/lib` в `LD_LIBRARY_PATH` с сохранением прежнего значения. Для Playwright задать полученный `executablePath`, `headless: true`, `args: ['--no-sandbox', '--disable-dev-shm-usage']`. Не копировать весь `Chromium.args`: содержит `--disable-web-security`; патчи NSS и `LD_PRELOAD` в подтверждённой конфигурации не требовались.
+
+Не полагаться на сохранность `/tmp`, проверять запуск smoke-test. При блокировке CDN не повторять безрезультатно `playwright install`; внешние запросы подменять только адресно с явной отчётностью. Chromium не заменяет WebKit/Firefox и реальные устройства. Это **проверенный альтернативный способ**, а не требование ко всем средам, особенно не к GitHub Actions.
+
+---
+
 ## 🛠 ТЕХНИЧЕСКИЙ ПАСПОРТ СРЕДЫ (Verified 2026-07-04)
 
 **Архитектура:** E2B / Firecracker microVM  
