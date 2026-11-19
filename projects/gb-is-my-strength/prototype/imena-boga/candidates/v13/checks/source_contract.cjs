@@ -1102,3 +1102,45 @@ for(const forbidden of [
  'Евангелист Иоанн прямо перекликается с Исх. 34:6'
 ])if(w106.includes(forbidden))throw Error('W106 previous overstatement restored: '+forbidden);
 console.log('W106_RAHUM_FORMS_AND_CONTEXT_PASS');
+
+
+// W107: precise verse surfaces, person suffix, inter-language distinctions,
+// and compact cards retaining full source details in the open dossier.
+const w107Names=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
+const w107Pano=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const w107Card=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
+const w107Slice=(s,from,to)=>{const a=s.indexOf(from),b=s.indexOf(to,a+1);if(a<0||b<=a)throw Error('W107 boundary failure '+from);return s.slice(a,b);};
+const w107Olam=w107Slice(w107Names,"id: 'el-olam'","id: 'el-chai'");
+const w107Sanct=w107Slice(w107Names,"id: 'yhwh-mekaddishkem'","id: 'yhwh-shalom'");
+const w107Imm=w107Slice(w107Names,"id: 'immanuel'","id: 'pele-yoetz-el-gibbor'");
+const w107PanImm=w107Slice(w107Pano,'id: "immanuel"','\n  },\n];');
+const w107Mercy=w107Slice(w107Names,"id: 'el-rachum-ve-channun'","id: 'yhwh-sabaoth'");
+for(const [block,frag] of [
+ [w107Olam,"literalMeaning: 'Бог вечный'"],
+ [w107Olam,'Бытие 21:33 — אֵל עוֹלָם (точная форма)'],
+ [w107Olam,'Исаия 40:28 — אֱלֹהֵי עוֹלָם יְהוָה (родственное, но иное выражение)'],
+ [w107Olam,'не доказывает, что буквальное значение титула'],
+ [w107Sanct,'Левит 20:8, 21:8, 22:32 — יְהוָה מְקַדִּשְׁכֶם («вас»)'],
+ [w107Sanct,'Иезекииль 20:12 — יְהוָה מְקַדְּשָׁם («их», иная форма)'],
+ [w107Sanct,'с суффиксом «их»: это не точное повторение'],
+ [w107Imm,"original: 'עִמָּנוּ אֵל'"],
+ [w107Imm,'Еммануил [עִמָּנוּ אֵל]'],
+ [w107Imm,'Матфея 1:23 — Ἐμμανουήλ (греческая форма)'],
+ [w107PanImm,'hebrew: "עִמָּנוּ אֵל"'],
+ [w107PanImm,'meaning: "«С нами Бог»"'],
+ [w107PanImm,'Масоретский текст Ис. 7:14 передаёт имя как עִמָּנוּ אֵל'],
+ [w107Mercy,"occurrencesShort: 'Исх. 34:6 · ещё 4 родственные формулы'"],
+ [w107Olam,"occurrencesShort: 'Быт. 21:33 · ср. Ис. 40:28'"],
+ [w107Sanct,"occurrencesShort: 'Исх. 31:13 · Лев. 20:8, 21:8, 22:32'"],
+ [w107Imm,"occurrencesShort: 'Ис. 7:14 · 8:8 · Мф. 1:23'"],
+ [w107Card,'entry.occurrencesShort ?? entry.occurrences'],
+ [w107Card,'title={entry.occurrencesShort ? entry.occurrences : undefined}'],
+ [w107Card,'aria-label={entry.occurrencesShort ? entry.occurrences : undefined}']
+])if(!block.includes(frag))throw Error('W107 guard missing '+frag);
+for(const [block,forbidden] of [
+ [w107Olam,"literalMeaning: 'Бог сокрытых веков"],
+ [w107Sanct,"occurrences: 'Исход 31:13; Левит 20:8; 21:8; 22:32; Иезекииль 20:12'"],
+ [w107Imm,'עִמָּנוּאֵל'],
+ [w107PanImm,'עִמָּנוּאֵל']
+])if(block.includes(forbidden))throw Error('W107 old form restored '+forbidden);
+console.log('W107_HEBREW_FORM_SCOPE_AND_CARD_LABEL_PASS');

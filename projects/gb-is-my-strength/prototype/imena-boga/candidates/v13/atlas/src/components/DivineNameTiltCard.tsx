@@ -165,7 +165,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             >
               {entry.strongs.length > 22 ? 'Индексы Стронга · в досье' : entry.strongs}
             </span>
-            <span className="hidden sm:inline">{entry.occurrences}</span>
+            <span className="hidden min-w-0 break-words sm:inline" title={entry.occurrencesShort ? entry.occurrences : undefined} aria-label={entry.occurrencesShort ? entry.occurrences : undefined}>{entry.occurrencesShort ?? entry.occurrences}</span>
           </div>
         </div>
 

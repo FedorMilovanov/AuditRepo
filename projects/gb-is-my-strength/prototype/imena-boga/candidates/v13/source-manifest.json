@@ -68,8 +68,8 @@
       "bytes_normalized": 33427
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
-      "sha256": "24506fd5e70c3050f8b11702bb2ce9d6c18f1674fac1e6ee32f9130eecc87c6b",
-      "bytes_normalized": 16846
+      "sha256": "4021bbee5b3afdbd8204c8b8c6eebc8f02c930df3a146deaaf358d480fdd8ce9",
+      "bytes_normalized": 17023
     },
     "atlas/src/components/FeatureLoadBoundary.tsx": {
       "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
@@ -116,8 +116,8 @@
       "bytes_normalized": 17460
     },
     "atlas/src/data/divineNames.ts": {
-      "sha256": "c625f5c49f178d234d61e7c755caa9227e57f7d4f00b877b42366a9c5bc6a11d",
-      "bytes_normalized": 156293
+      "sha256": "486d819283deb261ce2cea04c61894ee5b1faf444e38ec7659571230ead09d19",
+      "bytes_normalized": 157614
     },
     "atlas/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
@@ -180,8 +180,8 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "03fcc24a1b54c8b92e6ee601925d673a9ee4a11c06b4e73d1ff3f534f849229d",
-      "bytes_normalized": 80954
+      "sha256": "c39b04bdc5dbe1bc73ee7dbfe38b046342b436f529149b64ce1b46a66429eb7a",
+      "bytes_normalized": 84087
     },
     "checks/visual_review.cjs": {
       "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",
@@ -308,8 +308,8 @@
       "bytes_normalized": 13928
     },
     "sozvezdie/src/data/names.ts": {
-      "sha256": "17086fe8c41bbbb3ad678de5bfdcd2b1ebfc5efb19041d7c09a2e7a965fcf4c4",
-      "bytes_normalized": 74658
+      "sha256": "18d4bd1922ae2a7f433590e44e502b1d609ca7d79c1750d31a2c0622c7473fce",
+      "bytes_normalized": 74884
     },
     "sozvezdie/src/data/topicCrosswalk.ts": {
       "sha256": "caacb0ea899305ec459a471999ee975b8abdf07681d7a1018b9f05f1b62df6bf",
