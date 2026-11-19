@@ -465,3 +465,77 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 ### Срез доставки XIV
 
 **Срез владения путями, 22:37:07–22:37:17 UTC.** AuditRepo `main` `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`, рабочая ветка перед коммитом `98343a3a0559ab8526df32dee7df507bf8c6d62d`. Проверены **27** накопленных путей intake против **774** записей файлов **10** открытых PR: **0** пересечений по `filename` / `previous_filename`. Списки PR и файлов пагинированы, объёмы сверены с `changed_files`; состав открытых PR, их head/base и удалённые refs совпали на концах среза. Тесты структуры, допуска артефактов, синтаксиса workflow, валидации и покрытия матрицы прошли локально; это не CI чужих веток и не публикация материалов.
+
+## Дополнение XV — 19.11.2026 UTC
+
+### XV: Список в приложении к слушаниям
+
+**Библиографический якорь.** U.S. House, *Religious Persecution in the Soviet Union (Part II)*, 99th Congress, **Second Session, 30 July 1986**, Washington: U.S. GPO, 1986; **Y 4.F 76/1:R 27/7/pt.2**, экземпляр UCR `uc1.31210016723312`. [Каталог HathiTrust][hathi-xv] охватывает обе части; дату и сессию ч. II берём из [титула][house-title-xv], а не из объединённой карточки Google Books с 1985 г. На [с. 129 / seq 133][house129-xv] Винс представляет список; председатель отвечает, что его внесут в материалы. [С. 171 / seq 175][house171-xv]: `Appendix 1 — The Persecuted Church in the Soviet Union, Prisoner List 1986`, submitted by Ms. Vins. [С. 182 / seq 186][house182-xv] уже начало Appendix 2. Проверен **текстовый слой отдельных страниц**, не весь том и не образ. Google Books `WtBEAQAAMAAJ` и `iOIjAAAAMAAJ` находят с. 175 того же печатного приложения, не другие свидетельства.
+
+| Свидетель | Что даёт текст | Чего он не устанавливает |
+| --- | --- | --- |
+| [Бюл. №106][b106-xv], «Осуждены», п. 1; «Ходатайства», c0 | Токмак, **08.06.1982**, пять лет строгого с конфискацией; в пересказе телеграммы об аресте **13.02.1982** — трое малолетних детей, 600 Библий, Сухоруков П. И. и Шевченко Д. П. из Ферганы. | Дату отправки/входящий номер телеграммы, статью УК, изъятие станка, дальнейшую судьбу ферганцев. |
+| [Часть II, с. 175 / seq 179][house175-xv], `Prisoner List 5` | `KINAS Ivan Ervinovich`, 05.07.1951, `4 children`, `Arrested: Feb 13, 1982`, `Sentence: 5 years str + conf`, `Release: Feb 13, 1987`, `Second term`. Отдельно выведены блок `Exile address` (с. Беловодское, Московский р-н КиргССР) и семейная помета `family with husband in exile`. | Статью, дату приговора, первый срок, начало/длительность или юридический вид ссылки. OCR распрямляет колонки; адресный блок сверить по образу. Не добавлять ссылку к формуле `Sentence` по соседству строк. |
+| [CMU, Heinz box 277 / folder 9, №20][cmu-pdf], январь 1987, c0–1; [именной IIIF-локатор][cmu-kinas], canvas 4 | Те же дата рождения, `4 children`, арест, срок, `Second term`, дата в поле `Release` и семейная помета. Прямая PDF-выдача c1 открыла именную строку; это не кадр страницы. | Совпадения указывают на общий канал передачи, не на независимый приговор. Списки разных выпусков не тождественны целиком: например, в строке Хайло июльский текст без номера срока, январский даёт `First term`. |
+| [Бюл. №139][b139pdf], «Освобождены по окончании срока», п. 4, c0 | Сообщение об освобождении **13.02.1987**, позднее обоих списков, где та же дата была ещё будущей. | Это уведомление Совета, не справка об исполнении наказания и не подтверждение судьбы после освобождения. |
+
+Показание о **трёх** детях в пересказе 1982 г. и `4 children` в 1986/1987 гг. не сводить в одну цифру и не объяснять изменением семьи без источника. `str + conf` согласуется со строгим режимом и конфискацией в №106, а не добавляет оснований для определения статьи УК. В том же [приложении, с. 171][house171-xv] у Ивана Антонова ссылка прямо включена в `Sentence` — пример отличия от адресной рубрики. Домашние адреса не переносить в главу.
+
+**Два выступления Винс — не один документ.** [*Congressional Record*, 29.04.1986, *Extensions of Remarks*][crec-xv], c15–17: Джон Эдвард Портер внёс выступления с мероприятия *National Interreligious Task Force on Soviet Jewry*, **04.10.1985, Чикаго**. Прочитан раздел Натальи Винс до начала текста Ричарда Райса: о конфискациях и связи Совета через ходатайства/телеграммы, без именных записей Кинаса и двух ферганцев. Это не июльские слушания и не каталог их приложения. В ч. II отдельно различимы [устное выступление, с. 129][house129-xv], [письменный текст Винс, с. 133][house133-xv], [годовой отчёт Совета за 1985 г., с. 137][house137-xv] и приложение 1. На [с. 144][house144-xv] отчёт описывает **другую** печатную группу: Старая Обрежа, Молдавия, **17.10.1985**, изъяты Евангелия на молдавском и бумага, число не дано. `N. T. Shevchenko` там и [Natalia Timofeevna Shevchenko, с. 179][house179-xv] в списке — не Даниил Прокопьевич из Ферганы. Google Books по `Sukhorukov` и `Klaus` не дал совпадений; это выборка OCR, не исключение из реестра и не вывод об исходе дел.
+
+### XV: Иссык и имена
+
+- [С. 180 / seq 184][house180-xv], `Prisoner List 10`: `SHTEFFEN Ivan Petrovich`, арест **14.05.1985**, `5 years str`, `Third term`, в поле `Release` **14.05.1990**. [С. 181 / seq 185][house181-xv], `Prisoner List 11`: `WOLF Andrei Korneevich` и `WOLF Egor Korneevich`, **25 и 24.11.1984**, `5 years`, `First term`, в `Release` **25 и 24.11.1989**. Это заявленные сроки и прогнозы, не акты; для позднейших сообщений об освобождениях см. [проход XIII](#xiii-иссык-и-цепочка-заметки).
+- Сверен [№130][b130-xiii], «Осуждены», пп. 1–3, c0: `КОРНЕЕВИЧ` у обоих Вольфов, `ШТЕФФЕН ИВАН ПЕТРОВИЧ`. Это основание предпочесть **Корнеевич** шумному чтению OCR №124. `Egor` согласуется с русским №130, а не с `Grigori` из ACR. Список не приводит дату суда и статьи; даты ареста Штеффена и Вольфов относятся к разным событиям. Ни в какой из записей не установлены 30 000 Библий, масса бумаги или принадлежность станка. *Article 227* №1, с. 14, *Nachrichten* №47–49 и ранняя KNS всё ещё запросы, не прочитанные полосы.
+
+### XV: Экземпляры и вложения
+
+- **Bethel College, Mennonite Library and Archives.** [Серийная запись *Gefangenenliste*][bethel-series-xv], **274.7082 G272**, OCLC **15245644**, [MARC 500/590][bethel-marc-xv]: описание по выпуску 1982; локальные номера **25813 (1982), 25814 (1983), 26727 (1985), 28932 (1986), 29683 (1987)**. В [библиографии С. Хиберт][hiebert-xv], *Mennonite Life* 40(2), июнь 1985, c0/c5 — `Stand November 1982` (51 с.) и `Stand November 1983` (59 с.), оба с пометой `MLA`. Для второго отдельная [книжная запись][bethel-book-xv] **274.7082 G272 1983**, OCLC **10817797**, [MARC][bethel-book-marc-xv] даёт **[1984]** как год издания против 1983 у Хиберт и одновременно неоднозначные поля 092/590. Различать дату состояния, год печати и номера экземпляров; проверить по обложке. Это локаторы экземпляров; их именные листы не прочитаны. Отдельная [CMBS-запись серии][cmbs-list-xv] перечисляет 1985–1988; прежние items 1092/1/7–8 остаются отдельными запросами.
+- **Kew.** [FCO 28/5148, ENS 245/5 PART A][kew-a-xv] и [FCO 28/5149, PART B][kew-b-xv] — открытые дела за 1982 г. на месте, записи Discovery дают `Request a copy`. [Описание цифровой версии A][hc-a-xv], COI `20.500.12592/fk16sh`, пометка Premium, 130 с., называет письма **Georgi Vins** британским политикам и отмечает материалы **Keston News Service** и ХТС. Примечание отдельно указывает удержание по §40(2) FOIA и изъятия по copyright, среди них материал `International Representation for the C.E.B.C of the S.U., Inc., 1982`. DOI из карточки не разрешился. [FCO 28/5148/1][kew-closed-xv] — `Closed extracts: Folio 2 attachments`, закрыто до **01.01.2060**, есть форма запроса на пересмотр. **Не отождествлять** ни закрытые приложения, ни удалённый из цифровой версии материал с телеграммой №106; адресаты, даты и фолио писем Винса не установлены. [FCO 28/5093][hc-5093-xv] — резерв (хроника май–август и 40 биозаписей по аннотации); для Иссыка возможны [FCO 28/6515 (1984)][kew-1984-xv] и [FCO 28/7083 (1985)][kew-1985-xv], но имен и заметки их карточки не дают.
+
+**Экземпляр слушаний — черновик, не отправлен.** В просмотрщике [Purdue][house-purdue-xv] совпадает нумерация `seq 179 = p. 175`, но сервис не отдал читаемый образ (Base64-изображения удалены из выдачи).
+
+> Could your federal documents collection supply a study scan of the title page and printed pp. 171 and 175 of *Religious Persecution in the Soviet Union*, Part II, 30 July 1986 (Y 4.F 76/1:R 27/7/pt.2)? I am checking the row and column alignment of Ivan Ervinovich Kinas, including whether the “Exile address” field belongs to that entry. The private street addresses may be redacted.
+
+**MLA — черновик, не отправлен** ([контакт][mla-xv], [правила копирования][mla-policy-xv]).
+
+> Could you check the November 1982 and November 1983 *Gefangenenliste der Evangeliumschristen-Baptisten in der UdSSR* under 274.7082 G272 (serial MARC nos. 25813 and 25814)? Please confirm each cover date and imprint, and let me know the page numbers, if any, for Ivan Ervinovich Kinas (Tokmak, arrested 13 February 1982), Pavel Ivanovich Sukhorukov and Daniil Prokopyevich Shevchenko (Fergana). A study copy of the relevant entries only, if permitted, would suffice.
+
+**Kew — черновик, не отправлен.** Начать с открытой части A/B; не заказывать закрытые листы обычной заявкой.
+
+> For FCO 28/5148 and FCO 28/5149 (ENS 245/5 Parts A/B, 1982), could you identify the dates, correspondents, folio references and enclosure titles of Georgi Vins's letters, including any open attachment by the International Representation for the C.E.B.C. of the Soviet Union? Please distinguish what is inspectable at Kew from the digital copyright omissions and the separately closed FCO 28/5148/1. I am seeking any explicit reference to Ivan Ervinovich Kinas, Tokmak on 13 February or 8 June 1982, or Pavel Sukhorukov and Daniil Shevchenko of Fergana; the catalogue does not establish that any of them appear.
+
+[hathi-xv]: https://catalog.hathitrust.org/Record/007609233
+[house-title-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=1
+[house129-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=133
+[house133-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=137
+[house137-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=141
+[house144-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=148
+[house171-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=175
+[house175-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=179
+[house-purdue-xv]: https://babel.hathitrust.org/cgi/pt?id=pur1.32754076922784;seq=179
+[house179-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=183
+[house180-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=184
+[house181-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=185
+[house182-xv]: https://babel.hathitrust.org/cgi/ssd?id=uc1.31210016723312;seq=186
+[crec-xv]: https://www.congress.gov/99/crecb/1986/04/29/GPO-CRECB-1986-pt7-1-3.pdf
+[b106-xv]: https://propovednik.com/media/mp3/Литература/Бюллетени%20совета%20родственников%20и%20узников%201970-1987/1980-1987%20Оффсет/106-1982.pdf
+[bethel-series-xv]: https://bethelks.primo.exlibrisgroup.com/discovery/fulldisplay?docid=alma99542343408171&context=L&vid=01BETHEL_INST:BETHEL&lang=en
+[bethel-marc-xv]: https://bethelks.primo.exlibrisgroup.com/discovery/sourceRecord?vid=01BETHEL_INST:BETHEL&docId=alma99542343408171&recordOwner=01BETHEL_INST
+[bethel-book-xv]: https://bethelks.primo.exlibrisgroup.com/discovery/fulldisplay?docid=alma99420593408171&context=L&vid=01BETHEL_INST:BETHEL&lang=en
+[bethel-book-marc-xv]: https://bethelks.primo.exlibrisgroup.com/discovery/sourceRecord?vid=01BETHEL_INST:BETHEL&docId=alma99420593408171&recordOwner=01BETHEL_INST
+[hiebert-xv]: https://mla.bethelks.edu/ml-archive/bibliographies/1984.php
+[mla-xv]: https://mla.bethelks.edu/information/
+[mla-policy-xv]: https://mla.bethelks.edu/information/policy.php
+[cmbs-list-xv]: https://cmbs.mennonitebrethren.ca/publications/gefangenenlist-baptisten-in-ussr/
+[kew-a-xv]: https://discovery.nationalarchives.gov.uk/details/r/C14746554
+[kew-b-xv]: https://discovery.nationalarchives.gov.uk/details/r/C14746555
+[kew-closed-xv]: https://discovery.nationalarchives.gov.uk/details/r/C14746951
+[hc-a-xv]: https://history-commons.net/artifacts/2375129/soviet-union/3396006/
+[hc-5093-xv]: https://history-commons.net/artifacts/2375078/soviet-union/3396019/
+[kew-1984-xv]: https://discovery.nationalarchives.gov.uk/details/r/C16219568
+[kew-1985-xv]: https://discovery.nationalarchives.gov.uk/details/r/C16517610
+
+### Срез доставки XV
+
+**08:45:26–08:45:31 UTC.** AuditRepo `main` `fcf2e69b2c1531fe606d9838c811b7d1b1071db0`, ветка перед коммитом `a6838502bdc80bd521096832add3eafc5d5e629b`. **27** накопленных путей intake проверены против **783** записей файлов **10** открытых PR. **0** пересечений по `filename` и `previous_filename`, нет пересечения с изменениями `main` от merge base. Проверены полнота пагинации, `changed_files` и стабильность PR/head/base/refs на концах среза. Три Markdown дополнены без перезаписи старых байтов. Локальные проверки структуры, допуска артефактов, синтаксиса workflow, валидации, регрессий и покрытия матрицы выполнены; по матрице **44 OPEN, 0 closed**. Это не приёмка чужих веток, не публикация и не подтверждение каких-либо прав.
