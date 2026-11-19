@@ -1,0 +1,67 @@
+# Stage 25 — intake slot 2026-11-18 (UTC). Native replay of real recent search entries.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713. AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only coordination / inputs]
+git status --short --branch
+git rev-parse HEAD
+for repo in AuditRepo gb-is-my-strength; do
+  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/reviews?per_page=100' | jq -cs add
+# Exact prior 187 paths, fbdd333b10252e66b7eea35949a64f15115d5839, prior title/body/base, draft/open, no reviews or merge.
+# Exact-head Validate 44631773038 and Preflight 44631773014 previously green.
+# Audit d608fa54 3ec00f6c..2a2c7e58 +1/6 (Baptists); Product #2340 e28ac707..e0cf313d +2/1 review docs; both read-only.
+# #2340 anchor-to-tip +39/46 includes historical index delta. Checked full records for both queried labels via raw contents
+# (no mismatches against exact main); no overlap with audited Search/Gill runtime owners. Do not claim whole index bytes equal.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# QPDF-01 pending / 48 pins / PDF.js 5.4.624, status byte-identical to stage 24 and unchanged through this intake.
+
+[Verify Product source, rebuild only outside dist if needed]
+# PRODUCT, TOOLS, CHROMIUM, OUT are absolute; OUT is scratch. Reuse the stage 24 exact dist or reconstruct it at the same source anchor.
+# npm ci --no-audit --no-fund; GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like
+# npm run page-ownership:dist:production-like
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+for f in js/search.js js/site-utils.js css/command-palette.css; do cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"; done
+# read: search.js z/U/we/Le, preview listener and exact query dispatch; actual fragments in GillPart2ArticleBody.astro:516/599.
+# Dist Scripture index is the public build projection, both exact fixtures singleton and independently compared with DOM ids.
+# Set INDEX_A/INDEX_B to the two independent stage 24 output trees; recreate missing directories via the stock builder:
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_A" --version 1.5.2
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_B" --version 1.5.2
+test ! -e "$PRODUCT/dist/pagefind"
+# Index mount local only, all Product files unchanged; no insertion into print preview. External requests aborted, SW blocked.
+
+[Browser: two complete replays]
+# Initial pilot was not admission: visual replay loaded a real 404 preview in wide cases, so the overly broad all-HTTP-ok guard failed.
+# Confirmed observed src ../images/og-biografii.jpg resolves against article path, while /images/og-biografii.jpg exists.
+# Final harness records that exact image/method/status separately; no broad allowlist. Added second Enter, option sweep, ordinary
+# article-label control and native requery/activation. Neither Product nor the index was modified after pilot.
+I="$PWD/projects/gb-is-my-strength/incoming"
+S="$I/arena-quiz-search-recent-return/2026-11-18"
+V="$I/arena-quiz-library-search-navigation/2026-11-18"
+node --check "$S/harness/search-recent-return.mjs"
+node "$S/harness/search-recent-return.mjs" "$PRODUCT" "$INDEX_A" "$OUT/run-a" "$CHROMIUM"
+node "$S/harness/search-recent-return.mjs" "$PRODUCT" "$INDEX_B" "$OUT/run-b" "$CHROMIUM"
+python3 "$S/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/library-search-navigation-witness.json" \
+    "$PRODUCT/dist" "$INDEX_A" "$INDEX_B" "$OUT/replay-receipt.json"
+# Separate browser processes + fresh contexts per case; complete A/B were run in parallel.
+# PASS 6+6, 67 dist, 56 prior pins rechecked (54 shared); both Pagefind trees of 147 files match and 32 files observed; 7/7 PNGs equal.
+# 8/8 pairs of same-title exact hits collapse to 1 history row; 4/4 mixed-document controls retain 2.
+# 12/12 history activation fills title and reruns All, four cards with Biografii first. 4/4 all hrefs checked in reverse-order arm.
+# 4/4 second Enter opens actual /biografii/, and manual exact query + Enter goes back to visible original section in a new document.
+# Ordinary Anatomy title replay targets Anatomy 4/4; no inferred navigation from URL alone. Wide first-result preview explicit 404 in 6/6.
+# Retain only A/B JSON, receipt, single copy of selected frames; raw scratch builds and transient logs stay outside Git.
+
+[Admission]
+# CHANGED: sorted full cumulative path set against fcf2e69b. Only stage this intake, including commands.log.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# FF this branch only, verify remote file list catches up, then append to existing Draft #570 body; observe exact-head CI.
+# No Product writes, registry changes, reviews, merge, other branch, deployment or Drive changes.

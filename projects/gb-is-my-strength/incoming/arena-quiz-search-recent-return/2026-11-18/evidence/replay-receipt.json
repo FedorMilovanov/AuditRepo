@@ -1,0 +1,376 @@
+{
+  "verdict": "PASS",
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "chromium": "153.0.8010.0",
+  "playwright": "1.62.1",
+  "node": "22.23.4",
+  "counts": {
+    "a": 6,
+    "b": 6,
+    "distPins": 67,
+    "priorPinsRechecked": 56,
+    "sharedPins": 54,
+    "pagefindFiles": 147,
+    "pagefindRequested": 32,
+    "pngIdentical": 7,
+    "pngCompared": 7
+  },
+  "pagefindTreeSha256": "21052438a939d7b666f9bb0c3c8c6a49b5b083d30c17b408d0fe5cdc95514697",
+  "priorWitnessSha256": "c2ac4611b9e3d9c236aa9ba23abc438c603dfcaf60304f65e86cfc0457fff823",
+  "witnessSha256": {
+    "a": "7cd2b51b80b82ac3b4ed226adf035f1510140bc3d2970a27b7e53fa30174410d",
+    "b": "47db7507a39383e467164144c0a8cf1786ca92ee1aa6be1b621f8fa9232fc573"
+  },
+  "cases": [
+    {
+      "id": "ab-390",
+      "inputs": [
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "Enter",
+          "targetHit": false,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Евреям 10:7",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum",
+          "activation": "Enter",
+          "targetHit": false,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [],
+      "secondEnter": [
+        "/biografii/",
+        "Биографии служителей",
+        0
+      ],
+      "manualRecovery": [
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+        true
+      ],
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/biografii/",
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "manualRequery": [
+        "Второзаконие 33:8",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic"
+      ]
+    },
+    {
+      "id": "ba-390",
+      "inputs": [
+        {
+          "typed": "Евреям 10:7",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum",
+          "activation": "Enter",
+          "targetHit": false,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "Enter",
+          "targetHit": false,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [],
+      "enumeratedDestinations": [
+        "/biografii/",
+        "/articles/dzhon-gill-chast-3-nasledie/",
+        "/articles/dzhon-gill-chast-1-chelovek/",
+        "/articles/dzhon-gill-spravochnik/"
+      ],
+      "retainedReview": true,
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "manualRequery": [
+        "Евреям 10:7",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum"
+      ]
+    },
+    {
+      "id": "mixed-390",
+      "inputs": [
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "Enter",
+          "targetHit": false,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Анатомия падения",
+          "target": "/articles/anatomiya-padeniya-pyat-stadiy/",
+          "activation": "Enter",
+          "targetHit": null,
+          "historyLabels": [
+            "Анатомия падения: пять стадий институционального разложения",
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [],
+      "articleHistoryControl": [
+        "Анатомия падения: пять стадий институционального разложения",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/"
+      ],
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/"
+      ],
+      "manualRequery": [
+        "Второзаконие 33:8",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic"
+      ]
+    },
+    {
+      "id": "ab-1440",
+      "inputs": [
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "preview",
+          "targetHit": true,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Евреям 10:7",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum",
+          "activation": "preview",
+          "targetHit": true,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [
+        [
+          "GET",
+          "/articles/images/og-biografii.jpg",
+          404
+        ]
+      ],
+      "secondEnter": [
+        "/biografii/",
+        "Биографии служителей",
+        0
+      ],
+      "manualRecovery": [
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+        true
+      ],
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/biografii/",
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "manualRequery": [
+        "Второзаконие 33:8",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic"
+      ]
+    },
+    {
+      "id": "ba-1440",
+      "inputs": [
+        {
+          "typed": "Евреям 10:7",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum",
+          "activation": "preview",
+          "targetHit": true,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "preview",
+          "targetHit": true,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [
+        [
+          "GET",
+          "/articles/images/og-biografii.jpg",
+          404
+        ]
+      ],
+      "enumeratedDestinations": [
+        "/biografii/",
+        "/articles/dzhon-gill-chast-3-nasledie/",
+        "/articles/dzhon-gill-chast-1-chelovek/",
+        "/articles/dzhon-gill-spravochnik/"
+      ],
+      "retainedReview": true,
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "manualRequery": [
+        "Евреям 10:7",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-pactum"
+      ]
+    },
+    {
+      "id": "mixed-1440",
+      "inputs": [
+        {
+          "typed": "Второзаконие 33:8",
+          "target": "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic",
+          "activation": "preview",
+          "targetHit": true,
+          "historyLabels": [
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        },
+        {
+          "typed": "Анатомия падения",
+          "target": "/articles/anatomiya-padeniya-pyat-stadiy/",
+          "activation": "Enter",
+          "targetHit": null,
+          "historyLabels": [
+            "Анатомия падения: пять стадий институционального разложения",
+            "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит"
+          ]
+        }
+      ],
+      "recentChoice": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltInput": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "rebuiltScope": "all",
+      "autoSelected": "/biografii/",
+      "rebuiltOptions": [
+        "Биографии служителей",
+        "Джон Гилл (1697–1771). Часть IV: Наследие",
+        "Джон Гилл (1697–1771). Часть I: Человек",
+        "Джон Гилл: справочник"
+      ],
+      "firstEnterChangesDocument": false,
+      "preview404": [
+        [
+          "GET",
+          "/articles/images/og-biografii.jpg",
+          404
+        ]
+      ],
+      "articleHistoryControl": [
+        "Анатомия падения: пять стадий институционального разложения",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/"
+      ],
+      "ordinaryHTML": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/"
+      ],
+      "manualRequery": [
+        "Второзаконие 33:8",
+        "/articles/dzhon-gill-chast-2-uchenyi/#sec-deism-polemic"
+      ]
+    }
+  ],
+  "images": {
+    "ab-390-landed.png": {
+      "a": "cdb4742d1a7f1ca6f372229aa19a4e10a04a141d605bac4a989a26440b3eae64",
+      "b": "cdb4742d1a7f1ca6f372229aa19a4e10a04a141d605bac4a989a26440b3eae64"
+    },
+    "ab-390-manual.png": {
+      "a": "61a1a7c554f3aa70baa3921eb7960a982c65afed5440491b7cc4b9ee850b2c89",
+      "b": "61a1a7c554f3aa70baa3921eb7960a982c65afed5440491b7cc4b9ee850b2c89"
+    },
+    "ab-390-recent.png": {
+      "a": "1dab3b8f326c794590b763ac18a9231b9db90e8f65b787385b9c33e66e241214",
+      "b": "1dab3b8f326c794590b763ac18a9231b9db90e8f65b787385b9c33e66e241214"
+    },
+    "ab-390-recovered.png": {
+      "a": "eb1ca307139c0b1ae10a45061ffb4873bc15b88a98ceba09f6c1eaa23b7aa884",
+      "b": "eb1ca307139c0b1ae10a45061ffb4873bc15b88a98ceba09f6c1eaa23b7aa884"
+    },
+    "ab-390-replayed.png": {
+      "a": "7bd2088e9481d40c9ebcc710ba295f659b79a840271079c7b4ab3639d2ac688d",
+      "b": "7bd2088e9481d40c9ebcc710ba295f659b79a840271079c7b4ab3639d2ac688d"
+    },
+    "ba-1440-replayed.png": {
+      "a": "201c0aa2303167e969fb3090ed8077701f108a1530e4fba111d0412b7aacc272",
+      "b": "201c0aa2303167e969fb3090ed8077701f108a1530e4fba111d0412b7aacc272"
+    },
+    "mixed-1440-recent.png": {
+      "a": "8d521442f9393dc7170165d057cf84f6e113df03d54029fae7ec2bd64cde903a",
+      "b": "8d521442f9393dc7170165d057cf84f6e113df03d54029fae7ec2bd64cde903a"
+    }
+  }
+}
