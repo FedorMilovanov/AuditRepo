@@ -140,28 +140,49 @@ export function midianRockOrientation(index:number):{x:number;y:number;z:number}
   return {x:.08*hash(index*2.6),y:hash(index*.77)*Math.PI*2,
     z:.12*hash(index*1.9)};
 }
-export function midianRockPoint(index:number):MidianRockInstance|null{
+/** Candidate stone drawn before enforcing screen-space-oriented distribution.
+ * No geology provenance claimed. Lower-tail sizes leave fewer toy boulders. */
+function midianRockProposal(index:number):MidianRockInstance|null{
   if(!Number.isInteger(index)||index<0||index>=145)return null;
   const field=MIDIAN_ROCK_FIELDS[index%MIDIAN_ROCK_FIELDS.length];
   const angle=hash(index*5.7+9.3)*Math.PI*2;
   const spread=Math.sqrt(.18+.82*hash(index*4.3+18));
   const x=field.x+Math.cos(angle)*field.spanX*spread;
   const z=field.z+Math.sin(angle)*field.spanZ*spread;
-  // Protect the entire well, the physical approach, and scene bounds.
   if(Math.abs(x)>27||Math.abs(z)>31||
      midianApproachClearance(x,z)<3||Math.hypot(x,z)<5.4)return null;
-  const k=.34+hash(index*1.97+7)*1.35;
+  const k=.30+1.42*Math.pow(hash(index*1.97+7),2.15);
   const sx=k*(.9+hash(index*1.31)*.6);
   const sy=k*(.46+hash(index*3.17)*.23);
   const sz=k*(.8+hash(index*.83)*.51);
-  // A scaled unit-radius dodecahedron stays inside this *world-space*
-  // circumscribing circle under any yaw/pitch/roll. The old axis-aligned
-  // .68*sx/.68*sz ellipse did NOT enclose visible facets after rotation.
-  // This is intentionally conservative: physics must never permit a camera
-  // to pass through a protruding stone corner.
+  // W12E.4.1: the rotated unit-radius dodecahedron must be fully blocked.
   const radius=Math.max(sx,sy,sz);
   return {index,x,z,k,sx,sy,sz,ry:midianRockOrientation(index).y,
     rx:radius,rz:radius};
+}
+/** W12E.5: deterministically suppress rocks whose full-size silhouettes
+ * would form obvious impenetrable overlapping toy piles. The same immutable
+ * accepted list is used by InstancedMesh and all camera collision tests.
+ * No hidden layout randomness or GPU-dependent choices.
+ */
+export const MIDIAN_ROCK_MIN_SEPARATION=.75;
+const midianRockPlacements:(MidianRockInstance|null)[]=[];
+const midianAcceptedRocks:MidianRockInstance[]=[];
+for(let index=0;index<145;index++){
+  const candidate=midianRockProposal(index);
+  const fits=candidate&&midianAcceptedRocks.every(r=>
+    Math.hypot(candidate.x-r.x,candidate.z-r.z)>=
+      MIDIAN_ROCK_MIN_SEPARATION*(candidate.rx+r.rx));
+  if(fits){
+    const accepted=Object.freeze(candidate);
+    midianRockPlacements.push(accepted);
+    midianAcceptedRocks.push(accepted);
+  }else midianRockPlacements.push(null);
+}
+Object.freeze(midianRockPlacements);
+export function midianRockPoint(index:number):MidianRockInstance|null{
+  if(!Number.isInteger(index)||index<0||index>=145)return null;
+  return midianRockPlacements[index];
 }
 /** Only stones whose complete circumscribed footprint can intersect the
  * playable rectangle (MIDIAN_BOUNDS.x=18,z=22) need physics. No fixed
