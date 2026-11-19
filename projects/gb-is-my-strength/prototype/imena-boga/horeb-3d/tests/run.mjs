@@ -1,5 +1,6 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
+import * as THREE from 'three';
 import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
   worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START, MOSES_ORIGIN_BEATS, MOSES_PREHOREB_BEATS,
   sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
@@ -9,7 +10,7 @@ import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileC
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
-import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRockOrientation,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -289,12 +290,12 @@ t('W12E.2 massifs are wrapped, distinct, smooth and reveal broad valleys',
   midianRidgeProfile(3.9,61).height-
     midianRidgeProfile(3.9,42).height>5.5&&
   midianRidgeProfile(4.2,42).height<1.6);
-t('W12E.2 rocks become angular and remain within original collider footprints',
+t('W12E.4.1 angular rocks retain shape and gain guaranteed enclosed physics',
   Array.from({length:145},(_,i)=>midianRockPoint(i))
     .filter(Boolean).every(p=>
       p.sy/p.sx>.22&&p.sy/p.sx<.82&&
-      Math.abs(p.rx-p.sx*.68)<1e-12&&
-      Math.abs(p.rz-p.sz*.68)<1e-12)&&
+      Math.abs(p.rx-Math.max(p.sx,p.sy,p.sz))<1e-12&&
+      Math.abs(p.rz-p.rx)<1e-12)&&
   Array.from({length:145},(_,i)=>midianRockTone(i))
     .every(v=>v>=.24&&v<=.88));
 // W12E.3: the radial ridge is genuine topography, not the original
@@ -359,6 +360,40 @@ t('W12E.4 rock placements form separated fields, not a full annular fence',
     return bins.filter(n=>n===0).length>=2&&
       midianWalkable(5.2,7.6)&&
       MIDIAN_ROCK_COLLIDERS.length>45;
+  })());
+// W12E.4.1: test the ACTUAL same Three.js DodecahedronGeometry(1,0)
+// as the rendered instanced rock, not only its centre or an assumed ellipse.
+// Every visible vertex must be inside the physics footprint after the
+// exact Euler yaw/pitch/roll used in MidianLandscape's instancing.
+t('W12E.4.1 every rendered rock facet fits its physical collision footprint',
+  (()=>{const g=new THREE.DodecahedronGeometry(1,0);
+    const positions=g.getAttribute('position');
+    const vertex=new THREE.Vector3(),scale=new THREE.Vector3();
+    const euler=new THREE.Euler();
+    const rocks=Array.from({length:145},(_,i)=>midianRockPoint(i))
+      .filter(Boolean);
+    const ok=rocks.every(p=>{
+      scale.set(p.sx,p.sy,p.sz);
+      const rotation=midianRockOrientation(p.index);
+      // Use the exact orientation fed to the renderer, not a substitute.
+      if(Math.abs(rotation.y-p.ry)>1e-12)return false;
+      euler.set(rotation.x,rotation.y,rotation.z);
+      for(let i=0;i<positions.count;i++){
+        vertex.fromBufferAttribute(positions,i).multiply(scale).applyEuler(euler);
+        if(Math.hypot(vertex.x,vertex.z)>p.rx+1e-6)return false;
+      }
+      return true;
+    });
+    g.dispose();
+    const expected=rocks.filter(p=>
+      Math.abs(p.x)-p.rx<MIDIAN_BOUNDS.x&&
+      Math.abs(p.z)-p.rz<MIDIAN_BOUNDS.z);
+    const exact=expected.length===MIDIAN_ROCK_COLLIDERS.length&&
+      expected.every(p=>MIDIAN_ROCK_COLLIDERS.some(r=>r.index===p.index));
+    const approach=Array.from({length:17},(_,i)=>i*.8/16)
+      .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)));
+    return ok&&exact&&approach&&MIDIAN_BOUNDS.x===18&&
+      MIDIAN_BOUNDS.z===22;
   })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',

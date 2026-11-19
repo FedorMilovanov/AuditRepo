@@ -135,6 +135,11 @@ export const MIDIAN_ROCK_FIELDS=Object.freeze([
   Object.freeze({x:23,z:14,spanX:9,spanZ:9}),
   Object.freeze({x:-1,z:27,spanX:10,spanZ:7}),
 ]);
+/** Shared exact Euler rotation for visible instancing and collider tests. */
+export function midianRockOrientation(index:number):{x:number;y:number;z:number}{
+  return {x:.08*hash(index*2.6),y:hash(index*.77)*Math.PI*2,
+    z:.12*hash(index*1.9)};
+}
 export function midianRockPoint(index:number):MidianRockInstance|null{
   if(!Number.isInteger(index)||index<0||index>=145)return null;
   const field=MIDIAN_ROCK_FIELDS[index%MIDIAN_ROCK_FIELDS.length];
@@ -149,15 +154,22 @@ export function midianRockPoint(index:number):MidianRockInstance|null{
   const sx=k*(.9+hash(index*1.31)*.6);
   const sy=k*(.46+hash(index*3.17)*.23);
   const sz=k*(.8+hash(index*.83)*.51);
-  return {index,x,z,k,sx,sy,sz,ry:hash(index*.77)*Math.PI*2,
-    // Ellipse approximates the real rotated rock; conservative for walking.
-    rx:sx*.68,rz:sz*.68};
+  // A scaled unit-radius dodecahedron stays inside this *world-space*
+  // circumscribing circle under any yaw/pitch/roll. The old axis-aligned
+  // .68*sx/.68*sz ellipse did NOT enclose visible facets after rotation.
+  // This is intentionally conservative: physics must never permit a camera
+  // to pass through a protruding stone corner.
+  const radius=Math.max(sx,sy,sz);
+  return {index,x,z,k,sx,sy,sz,ry:midianRockOrientation(index).y,
+    rx:radius,rz:radius};
 }
-/** Only instances near the physical walking region matter to collision. */
+/** Only stones whose complete circumscribed footprint can intersect the
+ * playable rectangle (MIDIAN_BOUNDS.x=18,z=22) need physics. No fixed
+ * 1.7m lookahead may silently omit the large rocks now safely bounded. */
 export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
   Array.from({length:145},(_,i)=>midianRockPoint(i)).filter(
     (r):r is MidianRockInstance=>r!==null&&
-      Math.abs(r.x)<19.7&&Math.abs(r.z)<23.7),
+      Math.abs(r.x)-r.rx<18&&Math.abs(r.z)-r.rz<22),
 );
 
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
@@ -177,7 +189,8 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
     const rock=midianRockPoint(i);
     if(!rock)continue;
     dummy.position.set(rock.x,ground(rock.x,rock.z)+rock.k*.18,rock.z);
-    dummy.rotation.set(.08*hash(i*2.6),rock.ry,.12*hash(i*1.9));
+    const euler=midianRockOrientation(i);
+    dummy.rotation.set(euler.x,euler.y,euler.z);
     dummy.scale.set(rock.sx,rock.sy,rock.sz);
     dummy.updateMatrix();rocks.setMatrixAt(rockCount,dummy.matrix);
     instanceTone.copy(rockDark).lerp(rockLight,midianRockTone(i));
