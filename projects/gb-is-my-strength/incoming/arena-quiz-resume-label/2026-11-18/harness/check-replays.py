@@ -7,6 +7,9 @@ import re
 import struct
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -54,6 +57,7 @@ if len(sys.argv) != 6:
 a, b, prevfile, dist, receipt = map(Path, sys.argv[1:])
 wa, wb = (d / 'resume-label-witness.json' for d in (a, b))
 data_a, data_b, prev = map(load, (wa, wb, prevfile))
+assert data_a != data_b, 'A and B contain the same capture'
 anchor = '9edef94ece08012223c1364bec7ddcd561cf5713'
 assert data_a['anchor'] == data_b['anchor'] == prev['anchor'] == anchor
 for k in ('chromium', 'playwright', 'node', 'method'):

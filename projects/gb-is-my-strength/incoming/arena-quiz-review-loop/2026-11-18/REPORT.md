@@ -69,9 +69,11 @@
 
 **Пределы.** 13/13 означает воспроизведённые наблюдения, включая дефекты, а не оценку качества в 100%. В этих сценариях нет `pageerror` или локальных HTTP ≥400. Статический охват не равен 23 новым полным браузерным проверкам: использован census первого этапа, нынешний запуск целевой. Нет прямого запроса к `gospod-bog.ru`, Telegram, ручного телефона и успешного BFCache-восстановления. Ни Product, ни MASTER/ledger не менялись; выводы предлагаются verifier, не закрывают и не переоткрывают записи.
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [stage1]: ../../arena-quiz-learning/2026-11-18/REPORT.md
 [stage2]: ../../arena-quiz-editorial/2026-11-18/REPORT.md
-[witness]: evidence/browser-witness.json
+[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-review-loop/2026-11-18/evidence/browser-witness.json
 [screenshot]: evidence/krajne-empty-review.png
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [native-tier]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/runtime/article-quiz.js#L3-L19

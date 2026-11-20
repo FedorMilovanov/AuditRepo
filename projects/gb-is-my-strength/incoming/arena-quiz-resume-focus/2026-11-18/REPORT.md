@@ -46,6 +46,8 @@
 
 [Witness A][a] · [Witness B][b] · [квитанция A/B][receipt] · [harness][harness] · [команды][commands].
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [label]: ../../arena-quiz-resume-label/2026-11-18/REPORT.md
@@ -62,8 +64,8 @@
 [dismiss]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/home/HomeResumeClient.js#L220-L244
 [quick]: evidence/resume-focus-quick-390.png
 [dwell]: evidence/resume-focus-dwell-390.png
-[a]: evidence/resume-focus-witness.json
-[b]: evidence/resume-focus-witness-replay.json
+[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-focus/2026-11-18/evidence/resume-focus-witness.json
+[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-focus/2026-11-18/evidence/resume-focus-witness-replay.json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/resume-focus.mjs
 [commands]: commands.log

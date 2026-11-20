@@ -5,6 +5,9 @@ from pathlib import Path
 import json
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 SRC = '/articles/dzhon-gill-chast-2-uchenyi/'
 OTHER = '/articles/anatomiya-padeniya-pyat-stadiy/'
 FROM, TO = 'sec-canticles', 'sec-deism-polemic'
@@ -183,6 +186,7 @@ def main():
     a, b, previous, dist, ia, ib, receipt = map(Path, sys.argv[1:])
     assert a.resolve() != b.resolve() and ia.resolve() != ib.resolve()
     wa, wb = load(a / WITNESS), load(b / WITNESS)
+    assert wa != wb, 'A and B contain the same capture'
     for key in ('product', 'chromium', 'playwright', 'node', 'server', 'pagefind', 'distSha256'):
         assert wa[key] == wb[key], key
     assert wa['product'] == ANCHOR and wa['pagefind']['entry']['version'] == '1.5.2'

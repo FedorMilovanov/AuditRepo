@@ -6,6 +6,9 @@ from urllib.parse import urljoin
 import json
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 WITNESS = 'resume-after-fragment-witness.json'
 TO = '/articles/dzhon-gill-chast-2-uchenyi/'
@@ -166,6 +169,7 @@ def main():
     ra, rb, prev, dist, pa, pb, output = map(Path, sys.argv[1:])
     assert ra.resolve() != rb.resolve() and pa.resolve() != pb.resolve()
     wa, wb = load(ra / WITNESS), load(rb / WITNESS)
+    assert wa != wb, 'A and B contain the same capture'
     prior = load(prev)
     for k in ('anchor', 'chromium', 'node', 'playwright', 'fixtures', 'method', 'distSha256', 'pagefind'):
         assert wa[k] == wb[k], k

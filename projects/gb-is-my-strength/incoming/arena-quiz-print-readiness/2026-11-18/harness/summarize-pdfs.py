@@ -11,6 +11,9 @@ from pathlib import Path
 import pypdfium2 as pdf
 from pypdfium2 import PDFIUM_INFO, PYPDFIUM_INFO
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 MAIN = '9edef94ece08012223c1364bec7ddcd561cf5713'
 FONT_REF = '0b9576278d2ec5ea89da804934823d460720501a'
 CYR = 'fonts/SourceSans3/sourcesans3-cyrillic-500.woff2'

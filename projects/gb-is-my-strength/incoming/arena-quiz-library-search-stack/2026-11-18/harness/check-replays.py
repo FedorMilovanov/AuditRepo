@@ -6,6 +6,9 @@ import struct
 import sys
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 GILL = '/articles/dzhon-gill-chast-2-uchenyi/'
 APOSTASY = '/articles/otstuplenie-chto-govorit-bibliya/'
@@ -179,6 +182,7 @@ def case(r):
 def verify(a,b,prior,dist,out):
     inputs = (a/NAME,b/NAME)
     wa,wb = map(load,inputs)
+    assert wa != wb, 'A and B contain the same capture'
     for k in ('anchor','chromium','node','playwright','distSha256'):
         assert wa[k] == wb[k], k
     before = load(prior)

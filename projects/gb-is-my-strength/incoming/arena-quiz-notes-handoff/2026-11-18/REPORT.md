@@ -66,6 +66,8 @@
 | **QE‑01 — ключ и разбор Гилла II** | [Банк `gillLearningData.ts`, `gill.scholar.systematics`][qe-bank]. | [Редакционный повтор: 12/12][qe-repeat]. Ключ и объяснение должны передавать квалифицированный тезис статьи, а не первенство среди всех баптистов. Проверить выбор по тексту и переход «Перечитать» в неизменный `#sec-systematics`; статью и TOC из Product #2328 не откатывать. |
 | **QNL‑01/02 — правка заметки в двух вкладках** | [`GBHighlights`, `showEditor()` / `saveNote()` в `js/highlights.js`][note-write]. | [Сценарии и приёмка][qnl-repeat] · [квитанция A/B: 6+6][qnl-receipt]. Если B изменила тот же ID, сохранить текст B и черновик A до выбора читателя; одного `savedAt` недостаточно. При удалении — сохранить черновик без ложного успеха или восстановления записи. Проверить обе вкладки, reload B, тела Markdown/JSON и контроль разных ID. Не менять «Добавить без замены». |
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [routing]: https://github.com/FedorMilovanov/AuditRepo/pull/570#issuecomment-7040523505
 [qe-bank]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/gillLearningData.ts#L169-L183
 [qe-repeat]: ../../arena-quiz-editorial/2026-11-18/QE-01-HANDOFF.md
@@ -75,7 +77,7 @@
 [review]: ../../arena-quiz-review-loop/2026-11-18/REPORT.md
 [search]: ../../arena-quiz-source-search/2026-11-18/REPORT.md
 [keyboard]: ../../arena-quiz-accessibility/2026-11-18/REPORT.md
-[witness]: evidence/notes-witness.json
+[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-notes-handoff/2026-11-18/evidence/notes-witness.json
 [stale-shot]: evidence/deleted-quote-still-listed.png
 [note-shot]: evidence/free-note-in-library.png
 [old-race]: ../../../legacy/MATRIX_CLEANUP_2026-08-07.md#L87

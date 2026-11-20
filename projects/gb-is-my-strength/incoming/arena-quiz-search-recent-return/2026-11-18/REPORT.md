@@ -44,10 +44,12 @@
 
 **Воспроизводимость и пределы.** `67` dist-пинов совпали; заново проверены все `56` пинов этапа 24, `54` общих. Использованы его две отдельно собранные копии Pagefind: `147` файлов, проверен SHA-256 всего дерева и `32` запрошенных файлов. В обоих прогонах Pagefind module/index/fragment и публичный exact JSON отвечают `200`; нет подстановки выдачи, записи storage, скролла или focus из instrumentation. `7/7` кадров совпали побайтно, в Git только A. Это локальный Headless Shell без SW, не физический телефон, другой движок или прод. `:4178` без изменений; нативный A4 `QPDF‑01` всё ещё не подтверждён.
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
-[run-a]: evidence/search-recent-return-witness.json
-[run-b]: evidence/search-recent-return-witness-replay.json
+[run-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness.json
+[run-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness-replay.json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/search-recent-return.mjs
 [check]: harness/check-replays.py

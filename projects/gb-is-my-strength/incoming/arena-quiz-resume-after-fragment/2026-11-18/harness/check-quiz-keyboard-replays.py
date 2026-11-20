@@ -6,6 +6,9 @@ import runpy
 import sys
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 # Keep the published fragment, document, history, timing and scroll checks.
 check_fragment = runpy.run_path(str(Path(__file__).with_name('check-quiz-push-replays.py')))['case']
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'

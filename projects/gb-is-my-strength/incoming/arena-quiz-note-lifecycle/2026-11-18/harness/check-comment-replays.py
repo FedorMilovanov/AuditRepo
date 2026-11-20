@@ -8,6 +8,9 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 A = '/articles/dzhon-gill-chast-2-uchenyi/'
 B = '/articles/otstuplenie-chto-govorit-bibliya/'
@@ -183,6 +186,7 @@ def main(argv):
         raise SystemExit('check-comment-replays.py RUN_A RUN_B DIST OLD_QNL_JSON RECEIPT')
     ra, rb, dist, previous, out = map(Path, argv)
     runs = [load(d / WITNESS) for d in (ra, rb)]
+    assert runs[0] != runs[1], 'A and B contain the same capture'
     results, ids, counts = [], [], []
     for w in runs:
         assert w['anchor'] == ANCHOR and len(w['rows']) == len(CASES) and {r['id'] for r in w['rows']} == CASES

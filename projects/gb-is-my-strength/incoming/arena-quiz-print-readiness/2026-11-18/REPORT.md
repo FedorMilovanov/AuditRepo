@@ -43,11 +43,13 @@
 
 **Пределы.** Chromium Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4 / PDFium 126.0.6462.0. Два последовательных PDF на каждый свежий профиль; 48 dist-пинов основного прогона, 47 неизменённых + 9 подставленных в соседнем контроле; без ошибок страницы и локальных HTTP ≥400. На кнопке перехвачен **только системный вызов** `window.print`; CDP создал реальные PDF и оба события жизненного цикла. Нет доказательства того, что нативный диалог desktop Chrome, телефон, физическая печать или публичный сайт ведут себя так же. Не измеряли текущие проценты PDF-потерь у пользователей. [Сценарий][harness], [верификатор][verifier], [команды][commands].
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [previous]: ../../arena-quiz-projection/2026-11-18/REPORT.md
 [old]: ../../../verified/CLOSURE_LEDGER.md#2026-11-04--wave-59-terminal-print-content-loss-fixed-current-real-a4-pdfs
-[receipt]: evidence/print-tail-witness.json
+[receipt]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-print-readiness/2026-11-18/evidence/print-tail-witness.json
 [raster]: evidence/anatomy-repeat-page-13.png
 [harness]: harness/print-tail.mjs
 [verifier]: harness/summarize-pdfs.py

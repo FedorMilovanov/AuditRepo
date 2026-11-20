@@ -12,10 +12,11 @@ const lib = await realpath(libArg);
 const packageInfo = JSON.parse(await readFile(resolve(lib, 'package.json'), 'utf8'));
 assert.equal(packageInfo.name, 'pdfjs-dist');
 assert.equal(packageInfo.version, '5.4.624');
-const prev = JSON.parse(await readFile(new URL('../../../arena-quiz-print-readiness/2026-11-18/evidence/print-tail-witness.json', import.meta.url)));
+// The archive verifier ties this minimal startup input to the stage 11 witness.
+const pinSet = JSON.parse(await readFile(new URL('../evidence/article-dist-pins.json', import.meta.url)));
 const anchor = '9edef94ece08012223c1364bec7ddcd561cf5713';
-assert.equal(prev.anchor, anchor);
-const pins = prev.assets.main.distSha256;
+assert.equal(pinSet.anchor, anchor);
+const pins = pinSet.distSha256;
 const hash = data => createHash('sha256').update(data).digest('hex');
 assert.equal(Object.keys(pins).length, 48);
 for (const [file, expected] of Object.entries(pins)) {

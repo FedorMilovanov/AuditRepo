@@ -45,6 +45,8 @@
 
 [Witness A][a] · [Witness B][b] · [квитанция A/B][receipt] · [harness][harness] · [команды][commands].
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [focus]: ../../arena-quiz-resume-focus/2026-11-18/REPORT.md
@@ -60,8 +62,8 @@
 [system]: ../../../reverify/2026-10-28-interaction-ownership-cluster-resulting-main.md
 [one]: evidence/empty-quick-escape.png
 [two]: evidence/empty-quick-second-escape.png
-[a]: evidence/home-search-focus-witness.json
-[b]: evidence/home-search-focus-witness-replay.json
+[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-home-search-focus/2026-11-18/evidence/home-search-focus-witness.json
+[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-home-search-focus/2026-11-18/evidence/home-search-focus-witness-replay.json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/home-search-focus.mjs
 [commands]: commands.log

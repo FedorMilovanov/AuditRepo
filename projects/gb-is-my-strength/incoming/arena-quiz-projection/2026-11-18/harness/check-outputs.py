@@ -14,6 +14,9 @@ from pathlib import Path
 import pypdfium2 as pdf
 from pypdfium2.version import PDFIUM_INFO, PYPDFIUM_INFO
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 NOTICE = 'Интерактивный тест доступен в электронной версии статьи.'
 A = '/articles/anatomiya-padeniya-pyat-stadiy/'
 G = '/articles/dzhon-gill-chast-2-uchenyi/'

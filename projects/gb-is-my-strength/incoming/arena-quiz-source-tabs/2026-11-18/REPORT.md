@@ -34,6 +34,8 @@
 - **Соседние агенты.** Сверены точные compare и полные paginated file lists: Product #2339, [#2340 `295a779c`][journal1], [#2341 `537b59f7`][journal7], [#2343 `86f59f52`][journal9] и bare [G3 `6ff1520f`][journal-bare] — Journal/G3, их CSS, документы и тесты. У #2343 и bare G3 есть измерения `page.pdf()` по Journal, не квитанция «Анатомии» из обычного окна. AuditRepo [#538 `17529334`][atlas] — Atlas v13, [#543 `140d6a5e`][horeb] — Horeb. Нет пересечений с owner-путями квиза, «Обучения», `reader-tts` или этим intake.
 - **Отдельно:** [QPDF‑01][native-print] остаётся `PENDING_NATIVE_DIALOG`; подмены квитанции первым headless PDF нет.
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [follow]: ../../arena-quiz-source-follow/2026-11-18/REPORT.md
@@ -51,8 +53,8 @@
 [journal-bare]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/6ff1520f3b7c4100c8de1b7159205d670dd677e5
 [atlas]: https://github.com/FedorMilovanov/AuditRepo/pull/538/files
 [horeb]: https://github.com/FedorMilovanov/AuditRepo/pull/543/files
-[a]: evidence/source-tabs-witness.json
-[b]: evidence/source-tabs-witness-replay.json
+[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness.json
+[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness-replay.json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/source-tabs.mjs
 [commands]: commands.log

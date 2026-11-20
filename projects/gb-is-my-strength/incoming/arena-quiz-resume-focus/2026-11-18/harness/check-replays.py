@@ -6,6 +6,9 @@ import struct
 import sys
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 CTA, DISMISS, SEARCH = 'resumeReadingLink', 'resumeReadingDismiss', 'heroSearchBar'
 GILL = '/articles/dzhon-gill-chast-2-uchenyi'
@@ -191,6 +194,7 @@ def agree(a, b):
 def main():
     a_dir, b_dir, previous_path, dist, receipt_path = map(Path, sys.argv[1:])
     a, b = [read(d / 'resume-focus-witness.json') for d in (a_dir, b_dir)]
+    assert a != b, 'A and B contain the same capture'
     for k in ('anchor', 'chromium', 'playwright', 'node', 'distSha256'):
         assert a[k] == b[k], k
     assert a['anchor'] == ANCHOR

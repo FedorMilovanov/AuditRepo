@@ -6,6 +6,9 @@ from urllib.parse import urljoin
 import json
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 WITNESS = 'search-resume-route-witness.json'
 KEY = '/articles/dzhon-gill-chast-2-uchenyi'
@@ -163,6 +166,7 @@ def main():
     a, b, prev, prev_reader, dist, ia, ib, receipt = map(Path, sys.argv[1:])
     assert a.resolve() != b.resolve() and ia.resolve() != ib.resolve()
     aw, bw = load(a / WITNESS), load(b / WITNESS)
+    assert aw != bw, 'A and B contain the same capture'
     for k in ('anchor', 'chromium', 'playwright', 'node', 'method', 'pagefind', 'distSha256'):
         assert aw[k] == bw[k], k
     assert aw['anchor'] == ANCHOR and not (dist / 'pagefind').exists()

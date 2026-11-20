@@ -6,6 +6,9 @@ import struct
 import sys
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 GILL = '/articles/dzhon-gill-chast-2-uchenyi/'
 SET, LEARN, SEARCH = 'gill-settings', 'gill-learning', 'search:command-palette'
@@ -174,6 +177,7 @@ def check_rows(result):
 def main(a, b, previous, dist, out):
     names = [a / NAME, b / NAME]
     wa, wb = map(read, names)
+    assert wa != wb, 'A and B contain the same capture'
     for key in ('anchor', 'node', 'chromium', 'playwright', 'distSha256'):
         assert wa[key] == wb[key], key
     prev = read(previous)

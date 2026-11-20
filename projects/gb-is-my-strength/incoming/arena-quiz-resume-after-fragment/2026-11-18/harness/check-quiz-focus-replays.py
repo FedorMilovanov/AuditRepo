@@ -5,6 +5,9 @@ import json
 import sys
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 TO = '/articles/dzhon-gill-chast-2-uchenyi/'
 FROM = '/articles/dzhon-gill-chast-1-chelovek/'

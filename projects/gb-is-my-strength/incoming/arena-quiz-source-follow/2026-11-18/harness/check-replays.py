@@ -6,6 +6,9 @@ from pathlib import Path
 import struct
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 
 def digest(file):
     return hashlib.sha256(file.read_bytes()).hexdigest()
@@ -21,6 +24,7 @@ def main():
     a_dir, b_dir, old_path, dist, receipt = map(Path, sys.argv[1:])
     a, b = [d / 'source-follow-witness.json' for d in (a_dir, b_dir)]
     one, two, old = [read(f) for f in (a, b, old_path)]
+    assert one != two, 'A and B contain the same capture'
     assert one['anchor'] == two['anchor'] == old['anchor'] == '9edef94ece08012223c1364bec7ddcd561cf5713'
     pins = one['distSha256']
     assert pins == two['distSha256'] and len(pins) == 35

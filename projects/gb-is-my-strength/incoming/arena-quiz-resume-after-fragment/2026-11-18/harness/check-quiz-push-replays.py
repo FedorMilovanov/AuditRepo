@@ -6,6 +6,9 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 TO = '/articles/dzhon-gill-chast-2-uchenyi/'
 FROM = '/articles/dzhon-gill-chast-1-chelovek/'
@@ -125,6 +128,7 @@ def main(args):
     a,b,dist,old,out=map(Path,args)
     witnesses=[p/WITNESS if p.is_dir() else p for p in (a,b)]
     ws=[load(p) for p in witnesses]; prev=load(old)
+    assert ws[0] != ws[1], 'A and B contain the same capture'
     pins=ws[0]['distSha256']
     for k in ('node','playwright','chromium','method'):
         assert ws[0][k]==ws[1][k]==prev[k],k

@@ -56,9 +56,11 @@
 
 **Метод и границы.** Chromium Headless Shell 153.0.8010.0, Playwright 1.62.1, Node 22.23.4, новая browser context на сценарий, reduced motion, без SW и внешнего разрешения имён. В каждом из двух прогонов 8 сценариев, 12 сочетаний «нативный вердикт × тема × профиль»; ноль локальных HTTP ≥400 и `pageerror`, 14 одинаковых хэшей `dist`. Порядок вопросов настоящий, без seed или записи состояния: в повторе может выпасть другой вопрос. PNG — парное свидетельство одного прогона, не обещание идентичности изображений между прогонами. Не проверялись публичный домен, Telegram, речь скринридера или другие браузерные движки. Ничего не мержили.
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [review]: ../../arena-quiz-review-loop/2026-11-18/REPORT.md
 [keyboard]: ../../arena-quiz-accessibility/2026-11-18/REPORT.md
-[witness]: evidence/adaptation-witness.json
+[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-reader-adaptation/2026-11-18/evidence/adaptation-witness.json
 [compact-shot]: evidence/compact-short-quiz.png
 [wide-shot]: evidence/wide-short-quiz.png
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570

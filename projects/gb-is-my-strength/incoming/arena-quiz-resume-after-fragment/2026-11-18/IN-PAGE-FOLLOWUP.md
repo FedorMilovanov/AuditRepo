@@ -71,20 +71,22 @@ Audited anchor: Product [`main@9edef94ece08012223c1364bec7ddcd561cf5713`][produc
 
 **Критерий F27:** если исчезает элемент в фокусе, следующий `Tab` не должен неожиданно возвращать к началу вместо продолжения от выбранного раздела. Не перехватывать фокус при обычном исчезновении подсказки, если читатель уже находится в тексте. Проверять отдельно экран сразу после команды и дальнейшую клавиатурную навигацию. Это уточнение приёмки, не новый дефект: два процесса, по два чистых контекста, те же **49 пинов**. Кнопку «Продолжить» активировали только мышью; касания, скринридер и другие браузеры не проверяли. Pilot не входит в 2+2. Product, реестры и печать без изменений.
 
-[focus-a]: evidence/quiz-focus-witness.json
-[focus-b]: evidence/quiz-focus-replay.json
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
+[focus-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-focus-witness.json
+[focus-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-focus-replay.json
 [focus-receipt]: evidence/quiz-focus-receipt.json
 [focus-commands]: commands-quiz-focus.log
 
-[keys-a]: evidence/quiz-keyboard-witness.json
-[keys-b]: evidence/quiz-keyboard-replay.json
+[keys-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-keyboard-witness.json
+[keys-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-keyboard-replay.json
 [keys-receipt]: evidence/quiz-keyboard-receipt.json
 [keys-commands]: commands-quiz-keyboard.log
 [keys-qa]: ../../arena-quiz-accessibility/2026-11-18/REPORT.md
 
 [quiz-link]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/GillLearningSheet.astro#L553-L597
-[quiz-a]: evidence/quiz-push-witness.json
-[quiz-b]: evidence/quiz-push-replay.json
+[quiz-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-push-witness.json
+[quiz-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-push-replay.json
 [quiz-receipt]: evidence/quiz-push-receipt.json
 [quiz-commands]: commands-quiz-push.log
 
@@ -101,7 +103,7 @@ Audited anchor: Product [`main@9edef94ece08012223c1364bec7ddcd561cf5713`][produc
 [outline-after]: ../../arena-quiz-search-resume-route/2026-11-18/evidence/other-enter-390-recovered.png
 [harness]: harness/resume-in-page.mjs
 [checker]: harness/check-in-page-replays.py
-[a]: evidence/resume-in-page-witness.json
-[b]: evidence/resume-in-page-replay.json
+[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-in-page-witness.json
+[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-in-page-replay.json
 [receipt]: evidence/resume-in-page-receipt.json
 [commands]: commands-in-page.log

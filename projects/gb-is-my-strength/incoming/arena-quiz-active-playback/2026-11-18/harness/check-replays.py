@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -18,6 +21,8 @@ def main():
     if len(sys.argv) != 6:
         raise SystemExit('check-replays.py RUN_A_JSON RUN_B_JSON STAGE_10_JSON DIST RECEIPT_JSON')
     a, b, prior, dist, receipt = map(Path, sys.argv[1:])
+    if a.samefile(b):
+        raise SystemExit('Use separate run outputs; an identical normalized result alone does not establish independence.')
     first, second, old = (json.loads(f.read_text(encoding='utf-8')) for f in (a, b, prior))
     assert first == second and digest(a) == digest(b), 'replays must agree, including captured phrases and timing order'
     assert first['anchor'] == old['anchor'] == '9edef94ece08012223c1364bec7ddcd561cf5713'

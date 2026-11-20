@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -18,6 +21,7 @@ if len(sys.argv) != 6:
     raise SystemExit('check-replays.py RUN_A_JSON RUN_B_JSON STAGE_17_JSON DIST RECEIPT_JSON')
 a, b, prior, dist, receipt = map(Path, sys.argv[1:])
 data_a, data_b, baseline = map(read, (a, b, prior))
+assert data_a != data_b, 'A and B contain the same capture'
 anchor = data_a['anchor']
 assert anchor == data_b['anchor'] == baseline['anchor'] == '9edef94ece08012223c1364bec7ddcd561cf5713'
 for k in ('chromium', 'playwright', 'node', 'method'):

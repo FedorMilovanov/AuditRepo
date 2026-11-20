@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 import sys
 
+if not __debug__:
+    raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -19,6 +22,7 @@ def main():
         raise SystemExit('check-replays.py RUN_A_JSON RUN_B_JSON STAGE_14_JSON DIST RECEIPT_JSON')
     a, b, older, dist, receipt = map(Path, sys.argv[1:])
     first, second, old = [read(f) for f in (a, b, older)]
+    assert first != second, 'A and B contain the same capture'
     assert first['anchor'] == second['anchor'] == old['anchor'] == '9edef94ece08012223c1364bec7ddcd561cf5713'
     pins_a, pins_b = first['distSha256'], second['distSha256']
     assert all(pins_a[k] == pins_b[k] for k in pins_a.keys() & pins_b.keys())

@@ -49,11 +49,13 @@
 - **Параллельная работа:** [Product #2338][journal] (`b2ae614…`) меняет G3/Journal и два индексных JSON; в фактическом diff каталога — поля G3 и timestamp, в scripture-индексе — счётчик исходников, не `search.js`, SW или проверенный запрос. [AuditRepo #545][prototype] — отдельный Prototype Lab. [Соседний tip по 1971][witnesses1971] добавляет шесть свидетельств/документов, не владельцев этих сценариев или путь intake. Оба main сверены, прежний Draft head `571386f…` с validate/preflight PASS.
 - **Метод:** Chromium Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4; отдельный пустой browser context на сценарий, мышь на обеих ширинах, без BFCache по дефолту Playwright. Штатная регистрация с реального HTML, ждали `controller.state=activated`, кэш только от обычных запросов; никакой записи в storage тестом. `setOffline(true)` плюс запрет отдавать ответы от loopback-origin в офлайн-фазе, `Cache-Control:no-store`. Атрибуция по `fromServiceWorker()`, SHA тела и видимым узлам, а не только URL/200. **0 `pageerror`, 0 успешных origin-запросов в фазе offline**; ожидаемые сетевые отказы HEAD записаны. Никаких выводов о PWA-установке на телефон, квоте/вытеснении, полной работе со всеми запросами, других движках или публичном домене.
 
+Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [search-audit]: ../../arena-quiz-source-search/2026-11-18/REPORT.md
 [notes-audit]: ../../arena-quiz-notes-handoff/2026-11-18/REPORT.md
-[witness]: evidence/offline-witness.json
+[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-offline/2026-11-18/evidence/offline-witness.json
 [search-shot]: evidence/reconnected-search-empty.png
 [404-shot]: evidence/offline-source-404.png
 [search-owner]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/js/search.js#L1
