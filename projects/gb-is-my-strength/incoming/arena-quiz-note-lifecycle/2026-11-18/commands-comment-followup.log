@@ -1,0 +1,76 @@
+# QNL-01/02 acceptance supplement + separate QE-01 editorial handoff.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713; intake lineage 2026-11-18 UTC.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only coordination]
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+for endpoint in issues/570/comments pulls/570/comments pulls/570/reviews; do
+  gh api --paginate "repos/FedorMilovanov/AuditRepo/$endpoint?per_page=100" | jq -cs add
+done
+# Baseline head 2760170f595b613910bed684916dad95dc7c9ef8, open/draft, exact 226 prior paths.
+# Exact-head Validate 44722395057 + Preflight 44722395101 success. No reruns.
+# 2 owner issue comments (6983861606 and 6990232675); no inline comments or reviews.
+# Product #2328 merged c8e70a82f3ef440d46cb358ea554517c6a4b7f0a; 2 release-bot comments; no inline comments/reviews.
+gh api --paginate 'repos/FedorMilovanov/gb-is-my-strength/pulls/2328/files?per_page=100' --jq '.[].filename'
+# 5 files: Gill II body/head, gillSeriesData, TOC reconciliation and Scripture index. No gillLearningData.ts.
+gh api --paginate 'repos/FedorMilovanov/gb-is-my-strength/pulls/2346/files?per_page=100'
+gh api --paginate 'repos/FedorMilovanov/gb-is-my-strength/issues/2346/comments?per_page=100'
+# W57 head c7b46704b6619fa8ced350aa6c18b352b5baac47: highlights.js changes CSS revision only;
+# highlights-runtime.css hides the visible fab count indicator. Six issue comments on shared files,
+# CI, width state and left/right panel design; no same-ID save/backup fix. No W57 build acceptance.
+# Other Product open paths inspected (2338/39, 2340/41/43/45/47/48): no overlap with the bank or save/export owners.
+# 2339/2348 touch Gill II PageHead, not the authored question or checked H3/body paragraph.
+# Keston and Journal AuditRepo deltas read; no changes to these intake families.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# Byte-identical status, PENDING_NATIVE_DIALOG, 48 dist pins, PDF.js 5.4.624. No print was performed.
+
+[Exact anchor and dist]
+# PRODUCT / TOOLS / CHROMIUM / OUT absolute paths. Reuse exact production-like build from earlier stages.
+# To restore from same anchor:
+# npm ci --no-audit --no-fund; GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like
+# npm run page-ownership:dist:production-like
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+A=9edef94ece08012223c1364bec7ddcd561cf5713
+for f in js/highlights.js js/reader-library-v3.js js/reader-library-presenter.js css/highlights-runtime.css \
+  src/components/article-pilots/gill-series/gillLearningData.ts \
+  src/components/article-pilots/gill-series/GillLearningSheet.astro \
+  src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro; do
+  gh api -H 'Accept: application/vnd.github.raw+json' "repos/FedorMilovanov/gb-is-my-strength/contents/$f?ref=$A" > "$OUT/source-$(basename "$f")"
+  cmp "$OUT/source-$(basename "$f")" "$PRODUCT/$f"
+done
+for f in js/highlights.js js/reader-library-v3.js js/reader-library-presenter.js js/site-utils.js css/highlights-runtime.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+(cd "$PRODUCT" && node scripts/highlights-runtime-regression-test.js && node scripts/reader-library-dist-coverage.cjs)
+# Both stock checks PASS; helpers/coverage are not a two-tab conflict witness.
+
+[Two local browser runs]
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18"
+node --check "$Q/harness/comment-followup.mjs"
+node "$Q/harness/comment-followup.mjs" "$PRODUCT" "$OUT/observed-a" "$CHROMIUM"
+node "$Q/harness/comment-followup.mjs" "$PRODUCT" "$OUT/observed-b" "$CHROMIUM"
+python3 "$Q/harness/check-comment-replays.py" "$OUT/observed-a" "$OUT/observed-b" "$PRODUCT/dist" \
+  "$Q/evidence/note-lifecycle-witness.json" "$OUT/comment-followup-receipt.json"
+# Pilot 3/3 used reload of both tabs and is not included. Formal matrix reloads B only and checks the answered A.
+# 6+6 exact cases, 50 new manifest entries, 15 earlier entries rehashed (13 shared). No local HTTP >=400/pageerror.
+# Real trusted control inputs, genuine cross-tab storage, 20 Markdown and 24 backups per run read from disk.
+# 10 empty Markdown clicks per run: observed 650ms/no file; JSON data.notes remains [].
+# Same-ID: B's saved text exported before A submits; only A after and after reload B; exact same savedAt throughout.
+# Distinct IDs: both survive. A scrolling list can clip part of one of two cards; checker compares both payloads
+# and requires a hittable card in an exposed nonempty list, not simultaneous hit at both centers.
+# QE-01: actual answer via label, real source click, heading hit, then physical wheel to the paragraph.
+# A/B differ in shuffled question/option order and progress; 6/7 selected PNGs byte-identical. Keep run A images only.
+# Store A witness and B witness (-replay.json). For reproduction checker reads fresh output dirs (both have original filename).
+
+[Admission / publish]
+# Only these two local intake families; add a pointer to each older REPORT.md, not a new matrix disposition.
+# Force-add this small command receipt (ignored *.log); no browser downloads, scratch pilot traces or builds.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# Refresh comments, remote base/head/files and QPDF status before a fast-forward of this branch only.
+# Append one cross-linked follow-up to existing Draft #570. No Product, registry, Drive, review/merge/close or deploy writes.

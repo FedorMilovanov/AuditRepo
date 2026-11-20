@@ -51,6 +51,8 @@ A редактирует свободную заметку. B на [Бытии 6
 
 **Параллельная работа.** [Product #2338][journal] (`b2ae614…`) и его стеки относятся к Journal/G3 и метаданным. При повторной сверке [#2339][journal-chrome] продвинулся с `9e0f527…` на `01a13c3…`, появился [#2340][journal-proposal] (`e3fb42e…`). В их diff нет владельцев редактора, хранилища или экспорта. Новые AuditRepo tips [231a2ea][baptists] и [223fe98][sources] меняют источниковые/редакционные свидетельства, не этот intake. Прежний head Draft `f999527…` — оба checks SUCCESS; CI после новой публикации проверяет новый head, а не исправление Product.
 
+**Дополнение после комментария к #570:** [приёмка QNL‑01/02](ACCEPTANCE-FOLLOWUP.md) — повтор с reload B, реальными Markdown и JSON до/после и контролем разных ID. Исходные сценарии выше не заменены.
+
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [handoff]: ../../arena-quiz-notes-handoff/2026-11-18/REPORT.md
