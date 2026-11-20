@@ -6,6 +6,7 @@ npx tsc --outDir .test-build --module es2022 --target es2022 --moduleResolution 
   src/imena-boga-horeb-3d/data/storyWorlds.ts \
   src/imena-boga-horeb-3d/data/validate.ts \
   src/imena-boga-horeb-3d/data/learningJourney.ts \
+  src/imena-boga-horeb-3d/data/WorldFieldLearning.ts \
   src/imena-boga-horeb-3d/data/siteClues.ts \
   src/imena-boga-horeb-3d/data/expedition.ts \
   src/imena-boga-horeb-3d/data/fieldStudies.ts \
