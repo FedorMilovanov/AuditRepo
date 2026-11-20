@@ -516,7 +516,16 @@ t('W13A grounded micro-scree is small, bounded, varied and safe to walk past',
 t('W13B nearby Exodus field notes are tied to a physical landmark',
   FIELD_NOTES.well.source==='Исх. 2:16–17'&&
   FIELD_NOTES.homestead.source==='Исх. 2:18–21'&&
-  nearField(FIELD_NOTES.well,5.2,7.6)&&
+  !nearField(FIELD_NOTES.well,5.2,7.6)&&
+  !nearField(FIELD_NOTES.homestead,0,HOMESTEAD_WALK.startZ)&&
+  !nearField(FIELD_NOTES.homestead,0,HOMESTEAD_WALK.phoneStartZ)&&
+  midianWalkable(FIELD_NOTES.well.x,FIELD_NOTES.well.z)&&
+  homesteadWalkable(FIELD_NOTES.homestead.x,FIELD_NOTES.homestead.z)&&
+  nearField(FIELD_NOTES.well,0,2.5)&&
+  nearField(FIELD_NOTES.homestead,0,4.8)&&
+  Array.from({length:17},(_,i)=>i/16).every(t=>
+    midianWalkable(5.2*(1-t),7.6*(1-t)+2.5*t))&&
+  Array.from({length:12},(_,i)=>10-(i*0.48)).every(z=>homesteadWalkable(0,z))&&
   !nearField(FIELD_NOTES.well,17,17)&&
   FIELD_NOTES.well.answer==='a');
 t('W13B mastery needs visit, correction and evidence-based answer',

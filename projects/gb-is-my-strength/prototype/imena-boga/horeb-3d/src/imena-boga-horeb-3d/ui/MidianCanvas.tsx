@@ -21,6 +21,7 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
   const [nearNote,setNearNote]=useState(false);
   const [noteOpen,setNoteOpen]=useState(false);
   const [choice,setChoice]=useState<Choice|null>(null);
+  const [readingChoice,setReadingChoice]=useState<Choice|null>(null);
   const note=FIELD_NOTES[world];
   const [journal,setJournal]=useState(()=>{
     try{return normalizeFieldJournal(JSON.parse(localStorage.getItem(FIELD_STORAGE_KEY)||'null'));}
@@ -61,6 +62,7 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
       exploringRef.current=false;
       noteOpenRef.current=false;
       setNoteOpen(false);
+      setReadingChoice(null);
       setExploring(false);
     }
     const reduced=reducedMotion||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
@@ -101,6 +103,9 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
   };
   const openNote=()=>{
     if(!controller.current||!exploring||!nearNote||noteOpen)return;
+    const c=canvas.current;
+    if(c?.dataset.midianMode!=='walk'||
+       !nearField(note,Number(c?.dataset.midianX),Number(c?.dataset.midianZ)))return;
     controller.current.setPaused(true);
     noteOpenRef.current=true;
     setJournal(j=>observeField(j,note.id));
@@ -138,9 +143,28 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
     <canvas ref={canvas} role="img" data-testid={homestead?'moses-midian-homestead-3d':'moses-midian-well-3d'}
       aria-label={homestead?'Трёхмерный навес, настоящий деревянный каркас, каменистый склон и очаг':'Трёхмерный колодец, водопой, каменистые склоны и скудная растительность'}
       className={'block w-full h-full '+(exploring?'touch-none cursor-grab active:cursor-grabbing':'')}/>
-    {failed&&<p role="status" className="absolute inset-0 grid place-items-center bg-[#382d25] px-5 text-parch text-center">
-      На этом устройстве не удалось запустить WebGL. Описание библейского эпизода доступно ниже.
-    </p>}
+    {failed&&<div role="region" aria-label="Исследование без 3D"
+      data-testid="midian-field-reading"
+      className="absolute inset-0 z-20 overflow-y-auto bg-[#382d25] px-4 py-3 text-parch text-sm">
+      <p role="status" className="font-semibold">3D сейчас недоступно. Можно изучить текст без прогулки.</p>
+      <p className="mt-2 text-parch/90">{note.title} · {note.source}</p>
+      <p className="mt-2">{note.question}</p>
+      <div className="mt-2 flex flex-col gap-2">
+        {note.options.map(item=><button type="button" key={item.id}
+          data-testid={'midian-field-reading-'+item.id}
+          aria-pressed={readingChoice===item.id}
+          onClick={()=>setReadingChoice(item.id)}
+          className="rounded border border-parch/50 bg-black/35 px-2 py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
+          {item.text}
+        </button>)}
+      </div>
+      {readingChoice&&<p role="status" data-testid="midian-field-reading-feedback" className="mt-3">
+        {readingChoice===note.answer?'Верно. '+note.explanation:'Проверьте текст: '+note.hint}
+      </p>}
+      <p className="mt-2 text-parch/80">
+        Режим чтения не отмечает физическое посещение или находку в 3D.
+      </p>
+    </div>
     {!failed&&!exploring&&<button ref={start} type="button" disabled={!ready}
       data-testid={homestead?'midian-homestead-explore-start':'midian-explore-start'} onClick={()=>toggle(true)}
       className="absolute bottom-3 left-3 z-10 rounded-sm border border-parch/70 bg-black/80 px-4 py-2.5 text-sm font-semibold text-parch shadow-lg hover:bg-black/95 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
@@ -171,7 +195,7 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
         <button ref={observeButtonRef} type="button" data-testid="midian-field-observe"
           disabled={!nearNote||noteOpen} onClick={openNote}
           className="rounded-lg border border-parch/60 bg-black/85 px-3 py-2 text-xs sm:text-sm text-parch shadow-lg disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
-          {nearNote?'Осмотреть место':'Подойдите к месту наблюдения'}
+          {nearNote?'Осмотреть место':(homestead?'Подойдите ко входу в стоянку':'Подойдите к колодцу')}
         </button>
         <span data-testid="midian-field-progress"
           className="rounded bg-black/75 px-2 py-1 text-[11px] text-parch/90">

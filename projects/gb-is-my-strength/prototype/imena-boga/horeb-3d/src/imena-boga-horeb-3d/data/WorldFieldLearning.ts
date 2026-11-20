@@ -8,10 +8,13 @@ export interface FieldNote{
   options:readonly {id:Choice;text:string}[];
   answer:Choice;hint:string;explanation:string;
 }
+/** Approach anchors are walkable viewpoints OUTSIDE the objects, not the
+ * solid well centre or the household centre. Neither world may start inside
+ * an observation radius; a visit requires real movement through the world. */
 export const FIELD_NOTES:Readonly<Record<FieldWorld,FieldNote>>={
   well:{
     id:'midian-well',world:'well',title:'Колодец и водопой',
-    source:'Исх. 2:16–17',x:0,z:0,reach:9.4,
+    source:'Исх. 2:16–17',x:0,z:2.5,reach:2.8,
     question:'Что можно подтвердить библейским текстом, а не только 3D-картиной?',
     options:[
       {id:'a',text:'Дочери пришли за водой для стада, а Моисей помог им.'},
@@ -23,7 +26,7 @@ export const FIELD_NOTES:Readonly<Record<FieldWorld,FieldNote>>={
   },
   homestead:{
     id:'midian-homestead',world:'homestead',title:'Семья в Мадиаме',
-    source:'Исх. 2:18–21',x:0,z:0,reach:10.2,
+    source:'Исх. 2:18–21',x:0,z:4.8,reach:1.9,
     question:'Какую деталь мы не можем выдавать за исторически установленную?',
     options:[
       {id:'a',text:'Точный вид навеса и устройство семейной стоянки.'},

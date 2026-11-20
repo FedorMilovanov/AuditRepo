@@ -86,6 +86,8 @@ try{
   await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='walk');
   await sleep(130);
   const a=await read();
+  if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
+    throw Error('W13B household lesson wrongly available at entry');
   const dims=await page.$eval('[data-testid="midian-viewport"]',e=>{
     const r=e.getBoundingClientRect();
     return {w:r.width,h:r.height,vw:innerWidth,vh:innerHeight};
@@ -93,10 +95,33 @@ try{
   if(dims.w<dims.vw-2||dims.h<dims.vh-2)throw Error('HOMESTEAD not fullscreen');
   await page.keyboard.down('w');await sleep(900);await page.keyboard.up('w');await sleep(90);
   const b=await read();
+  if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
+    throw Error('W13B household lesson activated before visiting entrance');
   const distance=Math.hypot(b.x-a.x,b.z-a.z);
   if(distance<.19||a.z-b.z<.17||Math.abs(b.y-b.ground-1.68)>.01)
     throw Error('HOMESTEAD GROUNDED WALK '+JSON.stringify({a,b,distance}));
   await page.screenshot({path:join(out,'homestead-walk-desktop.png')});
+  // Physically approach the exterior shelter observation marker, then study.
+  await page.keyboard.down('w');
+  try{
+    await page.waitForFunction(()=>{const b=document.querySelector('[data-testid="midian-field-observe"]');return b&&!b.disabled;},{timeout:20000});
+  }finally{await page.keyboard.up('w');}
+  const studyStart=await read();
+  if(Math.hypot(studyStart.x,studyStart.z-4.8)>2)
+    throw Error('W13B household study triggered out of range '+JSON.stringify(studyStart));
+  await page.click('[data-testid="midian-field-observe"]');
+  await page.waitForSelector('[data-testid="midian-field-dialog"]');
+  await page.keyboard.down('w');await sleep(240);await page.keyboard.up('w');
+  const studyPaused=await read();
+  if(Math.hypot(studyPaused.x-studyStart.x,studyPaused.z-studyStart.z)>.06)
+    throw Error('W13B reading allowed walking through household '+JSON.stringify(studyPaused));
+  await page.click('[data-testid="midian-field-choice-b"]');
+  await page.waitForFunction(()=>document.querySelector('[data-testid="midian-field-feedback"]')?.textContent?.includes('Сверьте'));
+  await page.click('[data-testid="midian-field-choice-a"]');
+  await page.waitForFunction(()=>document.querySelector('[data-testid="midian-field-feedback"]')?.textContent?.includes('Верно'));
+  await page.click('[data-testid="midian-field-close"]');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="midian-field-dialog"]'));
+  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('imena-horeb.field-observations.v1')||'null')?.understood?.includes('midian-homestead'));
   const canvas=await page.$('[data-testid="moses-midian-homestead-3d"]');
   const rect=await canvas.boundingBox();
   if(!rect)throw Error('HOMESTEAD canvas not visible');
@@ -140,6 +165,8 @@ try{
       Number(d.homesteadCameraVerticalFov)===72;
   },{timeout:20000});
   const phoneStart=await read();
+  if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
+    throw Error('W13B household mobile study available before approach');
   const phoneFov=await page.$eval('[data-testid="moses-midian-homestead-3d"]',
     e=>Number(e.dataset.homesteadCameraVerticalFov));
   if(Math.abs(phoneStart.z-14.5)>.1||Math.abs(phoneStart.x)>.1||phoneFov!==72)

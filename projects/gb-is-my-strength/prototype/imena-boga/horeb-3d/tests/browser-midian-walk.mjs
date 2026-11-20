@@ -47,6 +47,8 @@ try{
  await page.waitForFunction(()=>Number.isFinite(Number(document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianY)));
  await sleep(100);
  const first=await read();
+ if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
+   throw Error('W13B FIELD wrongly available at initial well position');
  const box=await page.$eval('[data-testid="midian-viewport"]',e=>{
    const r=e.getBoundingClientRect();
    return {w:r.width,h:r.height,vw:innerWidth,vh:innerHeight,x:r.x,y:r.y};
@@ -56,14 +58,23 @@ try{
  await page.keyboard.down('w');await sleep(1100);await page.keyboard.up('w');
  await sleep(90);
  const after=await read();
+ if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
+   throw Error('W13B FIELD opened too far from well after short step');
  const dist=Math.hypot(after.x-first.x,after.z-first.z);
  const along=-(after.x-first.x)*Math.sin(.62)-(after.z-first.z)*Math.cos(.62);
  if(after.mode!=='walk'||dist<.19||along<.17||Math.abs(after.y-after.ground-1.68)>.009)
    throw Error('MIDIAN CAMERA DOES NOT WALK ON GROUND '+JSON.stringify({first,after,dist,along}));
  await page.screenshot({path:join(out,'midian-walk-desktop.png')});
- // W13B: real positional context, wrong answer then mastery; no drift behind
- // a reading panel, and persistence across a 3D scene remount.
- await page.waitForFunction(()=>{const b=document.querySelector('[data-testid="midian-field-observe"]');return b&&!b.disabled;},{timeout:20000});
+ // W13B: must physically approach the safe outer well viewpoint first.
+ // Do not weaken collider: the well centre remains solid.
+ await page.keyboard.down('w');
+ try{
+   await page.waitForFunction(()=>{const b=document.querySelector('[data-testid="midian-field-observe"]');return b&&!b.disabled;},{timeout:20000});
+ }finally{await page.keyboard.up('w');}
+ const reached=await read();
+ if(Math.hypot(reached.x,reached.z-2.5)>2.9)
+   throw Error('W13B observation available away from well '+JSON.stringify(reached));
+ // W13B: correct/wrong context, no drift during reading and persistence.
  const beforeStudy=await read();
  await page.click('[data-testid="midian-field-observe"]');
  await page.waitForSelector('[data-testid="midian-field-dialog"]');
