@@ -479,3 +479,30 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 
 [r584-s30-xxxi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7047321537
 [r585-ch19-xxxi]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7047238629
+
+## XXXII: Research #584 — §31 (удаление самосчётов) и main ac3825b6
+
+[§31][r584-s31-xxxii] (20:26:28 UTC), новый HEAD `643c3325` (parent `b2b95e43`), 6 файлов (+179/−70). Владелец ответил на свой же вопрос из §30 в части метаданных о самом реестре: из `objects` записей `data/hold-closure-registry-v1.json` удалены пять самосчётов (`claims`, `triggerPaths`, `openItems`, `confirmations`, `closures`), два из которых уже разошлись (`claims`: 46 при 52; `triggerPaths`: 49 при 50), а из прозы `HOLDS_REGISTER_2026-11-18.md` (§21.2, §24 и запись 17) убраны ручные счётчики утверждений. В реестр добавлена запись №27 (идентификатор здесь не привожу, чтобы не сдвигать сканер покрытия).
+
+**Проверено в локальном клоне на `643c3325` (`--depth=5`):**
+- `data/hold-closure-registry-v1.json` содержит **27** записей, блок `closures-detail` в `HOLDS_REGISTER_2026-11-18.md` — **27** строк; ни в одном `objects` записей не осталось ключей `closures`, `confirmations`, `openItems`, `claims`, `triggerPaths` (проверено скриптом и diff);
+- `render_closures_summary.py --check`, `audit_register_claims.py --summary` (52 утверждения: 51 `match`, 1 `superseded`, все 6 таблиц `match`), `audit_ci_triggers.py --check` (50 путей, 14 скриптов), `publication_gate_status.py --check` (`PROMOTE 0`) и `validate_repository_authority_integrity.py` — все exit 0;
+- `audit_relative_links.py --strict` — exit 0 (`resolves=2885`, `external=5966`, `missing=58` объяснены, `unexplained=0`), а `-o` пересобирает `data/relative-links-audit-2026-11-18.json` **побайтно** (`cmp` 0);
+- целевые тесты `test_hold_closure_registry.py` + `test_audit_register_claims.py` — **43 OK**; полный `unittest discover -s scripts` на `--depth=5` прошёл **1163** теста из 1175 с 12 ожидаемыми падениями в `test_atonement_sync.py` (требует более глубокой истории Git, чем 5 коммитов).
+
+**Остаток, названный самим владельцем:** исторические измерения внешних объектов в текстах закрытий (2 407 файлов у №07, 541 склейка у №08) сохранены как снимки момента, но формального поля вроде `measuredAt` у записи пока нет.
+
+**Hosted:** `643c3325` — **7/7 success**, `MERGEABLE/BEHIND` (из-за сдвига `main` на `ac3825b6` после #606), 42 комментария, 0 inline, 0 reviews.
+
+## XXXII: Research #585 — получатель материалов о Моисееве и аномалия messages5.html
+
+[7049892580][r585-moiseev-xxxii] (20:29:39 UTC), новый HEAD `5ec61f50` (parent `d4ba9347`), 2 файла (+58/−4) из 3139: рукопись главы 19 и досье 16 (`#moiseev-materials-recipient` и `#selected-image-self-review`).
+
+**Что изменено и проверено.** В главе 19 по повторному визуальному чтению №9 PDF 3–4 исправлена фактическая ошибка пересказа: Совет сообщает о материалах, поступивших **в Совет** (а не переданных родственниками и членами Совета редакции); скорректирована также атрибуция обвинения и намерение обращения к молодёжи, прежние формулы сохранены под `HISTORICAL / SUPERSEDED`. В досье 16 запротоколированы повторные рендеры №44 PDF 1/6/7/8 и №9 PDF 3–4 и разбор `messages5.html`. На `5ec61f50` все четыре профильных валидатора (`validate_research_root_authority.py`, `validate_repository_authority_integrity.py`, `validate_baptist_acquisition_authority.py`, `validate_baptist_derivative_transcriptions.py`) прошли с кодом 0.
+
+**Независимая проверка байтовой аномалии `messages5.html` (`1lq6PUIzUy7OPSYovtkusAmz1tmDTwX-Z`).** При `get_file` в Drive метаданные действительно показывают **2 458 080 байт** (`md5 19ee3a5ef5aeb52097f6d0b267295bdf`, `sha256 540fd2b98e2ca2bc082e0274de6a9666a18eebc006384aa8f6463286f82c59ba`). При `download_file` (копия затем убрана из дерева) получен файл размером **ровно 2 459 962 байт**, как и у #585 (+1 882 байта, 0 CRLF, 0 символов замены UTF-8), **но с другим MD5** — `0fa5fb110a9aeb26858912115e064bef` (`sha256 95e30932...`) против `c9fef43c0671a192a77afbe1328eb43d` (`sha256 8c9d402f...`), указанного в досье 16. Это прямо подтверждает правоту #585: транспорт `download_file` для этого HTML не даёт воспроизводимых побайтных копий, и его нельзя регистрировать как `ACQUIRED_DURABLE`. Внутри 1000 HTML-узлов `message*` проверено: `message4889` и `message5044` — это посты канала «Синичкин рассказывает» 2026 года, единственное `1985` — про 43-й съезд ВСЕХБ, упоминаний Вильчинской, Готман, Бублика и `044-1977` — 0.
+
+**Hosted и overlap.** `5ec61f50` — **0 check-runs / 0 Actions**, draft OPEN, `CONFLICTING/DIRTY`. Overlap на срез: **12 открытых PR**, 318 записей `/files`, 271 уникальный путь; пересечений с intake-каталогом аудитора — **0**. Своего PR нет.
+
+[r584-s31-xxxii]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7049829902
+[r585-moiseev-xxxii]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7049892580
