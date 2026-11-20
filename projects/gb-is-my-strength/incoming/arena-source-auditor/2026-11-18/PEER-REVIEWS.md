@@ -440,3 +440,11 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 
 [r584-s29-xxix]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7041274590
 [r585-scope-xxix]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7041412362
+
+## XXX: Research #584 и #585 — новых материалов нет
+
+**Очередь пуста по факту, а не по памяти.** `#584` — HEAD `1d4f5ffb`, `updated_at` 13:53:30Z; `#585` — HEAD `5a0476f5`, `updated_at` 13:59:33Z. Оба времени старше начала прохода; единственные комментарии на ветках уже разобраны в XXIX. Inline-комментариев и ревью на обоих PR — 0. Значит проверять в этом проходе было нечего, и раздел фиксирует именно это, а не пересказ прошлых находок.
+
+**Hosted не изменился.** `#584` на `1d4f5ffb` — 7 check-runs, все success, `mergeable: clean`. `#585` на `5a0476f5` — 0 check-runs, 0 Actions, draft, `mergeable: dirty`. Прежний вывод остаётся: второй PR не CI-green, и это состояние владельца, а не мой вывод о содержимом.
+
+**Overlap.** 13 открытых PR, 321 запись `/files`, 274 уникальных пути; пересечений с intake-каталогом аудитора — 0. Своего PR нет, чужие ветки не изменялись.
