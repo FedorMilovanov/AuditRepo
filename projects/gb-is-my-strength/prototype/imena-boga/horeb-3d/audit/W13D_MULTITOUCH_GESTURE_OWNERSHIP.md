@@ -7,3 +7,7 @@ Fix is intentionally small and shared by behavior: reject non-primary touch `poi
 Add 390×844 actual Chromium **two-contact CDP** tests for all three existing worlds. Start a first finger and second finger on the 3D canvas; move only the second (expect yaw unchanged); move the original first (expect yaw change); return yaw near original and release all contacts in a `finally` block. This is gesture ownership, **not** a claim of perfect pinch zoom (not implemented).
 
 This SHA is detached and **not approved** while W13C exact-SHA HOREB QA is pending. After acceptance: Vite/TypeScript, all unit/geometry, three real Chromium journeys with native touch, fresh CI 6/6, actual 390px witness and no content changes. Keep one PR only and preserve main/Product/Research/dirty Windows W10D.
+
+## W13D.1 — real Nile mobile movement input
+
+Earlier Nile phone test still simulated `page.mouse.down/up` on a narrow viewport; now replaced by real Chrome DevTools Protocol `Input.dispatchTouchEvent` on the directional control, with an independent >=0.235m physical navigation wait and unconditional touchEnd in `finally`. This closes the pre-existing mouse-vs-touch QA hole for Nile, complementing native two-contact camera ownership. Test on actual Chromium + later separate physical Android/iOS gate. No source/editorial changes in this patch.

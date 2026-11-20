@@ -127,12 +127,14 @@ try{
  const forward=await page.$('[data-testid="nile-move-forward"]');
  const box=await forward.boundingBox();
  if(!box)throw new Error('MOBILE WALK CONTROL HIDDEN');
- await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
- await page.mouse.down();
+ // Real touch input, not desktop mouse standing in for phone movement.
+ const tx=box.x+box.width/2,ty=box.y+box.height/2;
+ const walkTouch=await page.createCDPSession();
+ await walkTouch.send('Input.dispatchTouchEvent',{
+   type:'touchStart',touchPoints:[{id:10,x:tx,y:ty}],
+ });
  try{
    // Slow software WebGL renders variable frame counts per wall-clock second.
-   // Verify the SAME actual >=0.20 m movement, waiting for enough simulated
-   // frames instead of assuming 530 ms always advances the player.
    await page.waitForFunction(start=>{
      const canvas=document.querySelector('[data-testid="moses-nile-3d"]');
      const x=Number(canvas?.dataset.nileCameraX),z=Number(canvas?.dataset.nileCameraZ);
@@ -140,13 +142,15 @@ try{
        Math.hypot(x-start.x,z-start.z)>.235;
    },{timeout:15000},beforeTouch);
  }finally{
-   // Fail closed without allowing the synthetic pointer to remain held.
-   await page.mouse.up();
+   await walkTouch.send('Input.dispatchTouchEvent',{
+     type:'touchEnd',touchPoints:[],
+   });
+   await walkTouch.detach();
  }
  await sleep(95);
  const afterTouch=await read();
  if(Math.hypot(afterTouch.x-beforeTouch.x,afterTouch.z-beforeTouch.z)<.2)
-   throw new Error('W10 MOBILE POINTER MOVEMENT INERT '+JSON.stringify({beforeTouch,afterTouch}));
+   throw new Error('W13D MOBILE REAL TOUCH MOVEMENT INERT '+JSON.stringify({beforeTouch,afterTouch}));
  await page.screenshot({path:join(out,'w10-nile-walking-phone.png')});
  // Nested Escape must leave the chapter open and return keyboard focus to
  // the entry button, not tear down the whole Bible story modal.
