@@ -1,0 +1,72 @@
+# Stage 27 — intake 2026-11-18 UTC. Article resume offer after a successful explicit fragment entry.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713; AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only coordination]
+git status --short --branch
+git rev-parse HEAD
+for repo in AuditRepo gb-is-my-strength; do
+  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/reviews?per_page=100' | jq -cs add
+# Baseline c9ee498ef27f68682ee330f9783de52a6fd8c26f, 214 prior paths, body/title preserved, draft/open/unmerged/reviews [].
+# Exact-head Validate 44713451214 and Preflight 44713451139 green.
+# Compared gh api repos/FedorMilovanov/REPO/compare/FROM...TO on all moved lanes since F26 final snapshot:
+# AuditRepo Baptist 54f3cae0..c10b13be +2/6; Keston 7da2765a..170d69b2 +1/3, unrelated intake prefixes.
+# Product #2348 20bad90d..ca6262f8 +2/2 (Diotrophes workflow + editorial metadata preservation test).
+# Its older cumulative delta includes data/scripture-search-index.json. No full-index byte-parity claim:
+gh api -H 'Accept: application/vnd.github.raw+json' 'repos/FedorMilovanov/gb-is-my-strength/contents/data/scripture-search-index.json?ref=ca6262f88a851a19d30466d57aafd112fc3ed01a' > "$OUT/lane-scripture-2348.json"
+# Compare whole source records selected by label (Евреям 10:7 and Второзаконие 33:8) against anchored Product/data; both equal.
+# Public Product/dist projection checked separately in harness, exact SHA256 30a4cfb32ae670ac4441ade2bcb9ec9c9bd9dd7919616c6b45e4dfe423797d2d.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# Native print endpoint byte-identical to F26; 48 pins, PDF.js 5.4.624. PENDING_NATIVE_DIALOG unchanged.
+
+[Exact source/dist and two independent Pagefind trees]
+# PRODUCT, TOOLS, CHROMIUM, OUT absolute paths. Reuse exact production-like dist from F26. To restore on anchor:
+# npm ci --no-audit --no-fund; GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like
+# npm run page-ownership:dist:production-like
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+for f in js/search.js js/bookmark-engine.js js/reader-state.js js/floating-cluster-controller.js js/site-utils.js css/command-palette.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+(cd "$PRODUCT" && node scripts/reader-state-regression-test.js && node scripts/homepage-resume-owner-contract-test.js)
+# Read maybeOfferResume and click owner, restoreSnapshot(... options), BookmarkEngine.promptEligible,
+# authored Gill I card and part TOC. No runtime instrumentation of restore calls; only passive browser observations.
+# INDEX_A / INDEX_B: independent Pagefind 1.5.2 from F24. If absent, run stock builder outside dist twice:
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_A" --version 1.5.2
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_B" --version 1.5.2
+test ! -e "$PRODUCT/dist/pagefind"
+
+[Browser A/B]
+# Pilot 1 not admitted: reader has no legacy #bookmarkToast markup here; .cp-scope selector did not read the real .cp-scope-chip.
+# Pilot 2 passed 6/6 after observer fixes. Strict A/B 8/9 + 9/9: one saved wide #sec-pactum landed correctly but had
+# no offer at ~2 s. Snapshot of both matching cases in evidence/offer-variation.json; not included in formal counts.
+# Final harness retains optional absence for hash+saved and observes further, with no retries conditioned on a show.
+I="$PWD/projects/gb-is-my-strength/incoming"
+S="$I/arena-quiz-resume-after-fragment/2026-11-18"
+PREV="$I/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness.json"
+node --check "$S/harness/resume-after-fragment.mjs"
+node "$S/harness/resume-after-fragment.mjs" "$PRODUCT" "$INDEX_A" "$OUT/observed-a" "$CHROMIUM"
+node "$S/harness/resume-after-fragment.mjs" "$PRODUCT" "$INDEX_B" "$OUT/observed-b" "$CHROMIUM"
+python3 "$S/harness/check-replays.py" "$OUT/observed-a" "$OUT/observed-b" "$PREV" \
+  "$PRODUCT/dist" "$INDEX_A" "$INDEX_B" "$OUT/replay-receipt.json"
+# Actual A/B executed in parallel with independent browsers and new contexts. PASS 9+9, 52 dist pins, 70 prior / 49 shared.
+# Both exact entries + native TOC open visible real targets from another document. 10/10 shown CTA clicks: no scroll, saved state unchanged.
+# Ordinary no-hash link restores 4/4; cold hash without saved state no offer 4/4. Scoped clicks happened before auto-dismiss.
+# Pagefind 147 files, only pagefind.js requested; exactly one public Scripture JSON request for each exact lane.
+# 7/7 PNG A/B equal. Retain four new PNGs; F26 other-enter-390-{landing,recovered}.png and F17
+# gill-resumed-previous-heading.png already have the other three hashes. Evidence semantics come from current witnesses, not prior workflows.
+
+[Admission / publish]
+# CHANGED sorted cumulative paths against fcf2e69b. Only this intake; force-add commands.log, not any raw pilot files.
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
+# After confirmed fast-forward of this branch only and exact REST file list, append stage 27 to Draft #570 and check exact-head CI.
+# No Product writes, shared registries, review/merge/close, Drive, reference retirement or deployment operations.
