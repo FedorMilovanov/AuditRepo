@@ -448,3 +448,34 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 **Hosted не изменился.** `#584` на `1d4f5ffb` — 7 check-runs, все success, `mergeable: clean`. `#585` на `5a0476f5` — 0 check-runs, 0 Actions, draft, `mergeable: dirty`. Прежний вывод остаётся: второй PR не CI-green, и это состояние владельца, а не мой вывод о содержимом.
 
 **Overlap.** 13 открытых PR, 321 запись `/files`, 274 уникальных пути; пересечений с intake-каталогом аудитора — 0. Своего PR нет, чужие ветки не изменялись.
+
+## XXXI: Research #584 — §30 (генерация §3) и живые числа против исторических
+
+[§30][r584-s30-xxxi] (18:22:37 UTC), новый HEAD `b2b95e43` (parent `1d4f5ffb`), 6 файлов (+207/−82). Владелец устранил пятый случай расхождения ручной копии: таблица §3 «Что закрыто 18.11.2026 (и чем именно)» в `HOLDS_REGISTER_2026-11-18.md` держала 18 строк при 25 записях реестра и не перегенерировалась. Теперь `render_detail()` в `scripts/render_closures_summary.py` собирает блок между маркерами `closures-detail` из `data/hold-closure-registry-v1.json`, а `replace_block` принимает маркеры параметрами вместо чтения глобальных переменных (ошибка первой версии наложила бы блок §3 поверх §0). В реестре добавлена запись №26 (идентификатор здесь не привожу, чтобы не сдвигать сканер покрытия).
+
+**Проверено в локальном клоне на `b2b95e43` (3195 файлов):**
+- `data/hold-closure-registry-v1.json` содержит **26** записей, блок `closures-detail` в `HOLDS_REGISTER_2026-11-18.md` — **26** строк;
+- `render_closures_summary.py --check` — exit 0, а `--write` пересобирает `HOLDS_REGISTER_2026-11-18.md` **побайтно** (`cmp` 0);
+- `audit_register_claims.py --summary` — exit 0, 52 утверждения (51 `match`, 1 `superseded`), все шесть генерируемых таблиц — `match`;
+- `audit_relative_links.py --strict` — exit 0 (2416 Markdown-файлов, `resolves=2883`, `external=5966`, `missing=58` объяснены, `unexplained=0`);
+- `audit_ci_triggers.py --check` (50 путей, 14 скриптов), `publication_gate_status.py --check` (`PROMOTE 0`) и `validate_repository_authority_integrity.py` — все PASS;
+- полный прогон `python3 -m unittest discover -s scripts` — **Ran 1172 tests, OK** (+2 теста к 1170 на `1d4f5ffb`).
+
+**Иллюстрация главного вопроса §30 на живых данных.** Владелец отмечает, что в полях `closedScope` реестра лежат исторические числа прогона на момент закрытия (приведены примеры записей №07 и №08). На `b2b95e43` это проявляется и у записи №18: сгенерированный §3 печатает для неё историческое `resolves 2 861, external 5 984, missing 58`, а §8 и прогон `audit_relative_links.py --strict` на том же HEAD выдают **`resolves=2883, external=5966, missing=58`** (равно как №07 в §3 по-прежнему носит `2 407` файлов против нынешних `2 416`). Отличить историческое измерение от живого действительно пока должен читатель, а не проверка.
+
+**Hosted:** `b2b95e43` — **7/7 success**, `MERGEABLE/CLEAN`, 41 комментарий, 0 inline, 0 reviews.
+
+## XXXI: Research #585 — квалификация главы 19 и проверка Drive
+
+[7047238629][r585-ch19-xxxi] (18:18:39 UTC), новый HEAD `d4ba9347` (parent `5a0476f5`), 2 файла (+39/−7) из 3139: `159-ch19-…` (`a1cf053c2d…`, 62 391 B) и `16-podpolnaya-pechat-…` (`e8054ccb27…`, 15 681 B). Остальные **3137 файлов** побайтно неизменны (включая досье 14, 15, `PROOF_STATUS_LEDGER.csv`, `SOURCE_ANCHORS.csv` и рабочий PDF).
+
+**Что изменено и проверено.** В главе 19 сильные формулы («достоверное свидетельство того, что редакция сообщила летом 1977», «непосредственно подтверждаются экземпляром издания») перенесены в раздел `HISTORICAL / SUPERSEDED` и заменены квалификацией современной рабочей передачи PDF №44 (то же в примечаниях 1/5/9 для №44/9/88; 10 сносок, внешние URL и примечания 2/3/4/6/7/8/10 сохранены). В досье 16 добавлен якорь `historical-copy-request`: зафиксирована остановка поиска по прежним общим ключам и точный запрос к пользователю на титул/обложку №44 и лист с ходатайством за Левена, Коопа, Людмилу и Ларису Зайцевых.
+
+**Сверка Drive и локальных проверок.** Read-only запрос в подключённом Google Drive с теми же условиями (`044-1977` или `1977 + родственников / Biulleten`) дал ровно **12 записей метаданных** (`incomplete_search=false`, без `next_page_token`): 6 библиографических PDF (три издания в двух папках), 2 копии `Beliakova-Topsi-KGB.pdf`, 2 аудитных CSV, 1 архив аудита и `messages5.html`. Исторического №44 среди них нет; остальные архивы, ZIP и HTML не распаковывались. На локальном дереве `d4ba9347` все четыре доступных валидатора (`validate_research_root_authority.py`, `validate_repository_authority_integrity.py`, `validate_baptist_acquisition_authority.py`, `validate_baptist_derivative_transcriptions.py`) прошли с кодом 0; полный `unittest discover -s scripts` исполнил **909 тестов с 12 падениями** в `test_atonement_sync.py` (известный Atonement-overlap ветки с `main`).
+
+**Hosted:** `d4ba9347` — **0 check-runs / 0 Actions**, draft OPEN, `CONFLICTING/DIRTY` — по-прежнему не CI-green.
+
+**Overlap:** 13 открытых PR, 321 запись `/files`, 274 уникальных пути; пересечений с intake-каталогом аудитора — **0**. Своего PR нет.
+
+[r584-s30-xxxi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7047321537
+[r585-ch19-xxxi]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7047238629
