@@ -234,6 +234,39 @@ t('W12B.1 physically accessible boulder centres cannot be walked through',
     Math.abs(r.z)<HOMESTEAD_WALK.maxZ).length>15&&
   HOMESTEAD_ROCK_COLLIDERS.filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX&&
     Math.abs(r.z)<HOMESTEAD_WALK.maxZ).every(r=>!homesteadWalkable(r.x,r.z)));
+// W12F.1: physically bound actual rotated and nonuniformly scaled
+// homestead DodecahedronGeometry(1,1), not merely its geometric centre.
+// Use the same Euler XYZ as the instanced renderer; the projected vertices
+// must all fit within the obstruction circle after yaw/pitch/roll.
+t('W12F.1 homestead boulder projected facets all lie inside actual colliders',
+  (()=>{const geo=new THREE.DodecahedronGeometry(1,1);
+    const vertices=geo.getAttribute('position'),p=new THREE.Vector3();
+    const scale=new THREE.Vector3(),rot=new THREE.Euler();
+    let safe=true;
+    for(let index=0;index<HOMESTEAD_ROCK_COUNT;index++){
+      const rock=homesteadRockPoint(index);
+      if(Math.abs(rock.radius-Math.max(rock.sx,rock.sy,rock.sz))>1e-10){
+        safe=false;break;
+      }
+      scale.set(rock.sx,rock.sy,rock.sz);
+      rot.set(rock.tiltX,rock.a,rock.tiltZ);
+      for(let j=0;j<vertices.count;j++){
+        p.fromBufferAttribute(vertices,j).multiply(scale).applyEuler(rot);
+        if(Math.hypot(p.x,p.z)>rock.radius+1e-5){safe=false;break;}
+      }
+      if(!safe)break;
+    }
+    geo.dispose();
+    const expected=Array.from({length:HOMESTEAD_ROCK_COUNT},
+      (_,i)=>homesteadRockPoint(i)).filter(r=>
+        Math.abs(r.x)-r.radius<HOMESTEAD_WALK.maxX&&
+        Math.abs(r.z)-r.radius<HOMESTEAD_WALK.maxZ);
+    return safe&&expected.length===HOMESTEAD_ROCK_COLLIDERS.length&&
+      expected.every(r=>HOMESTEAD_ROCK_COLLIDERS.some(c=>c.index===r.index))&&
+      Array.from({length:56},(_,i)=>HOMESTEAD_WALK.startZ-i*.22)
+        .every(z=>homesteadWalkable(0,z))&&
+      homesteadWalkable(0,HOMESTEAD_WALK.phoneStartZ);
+  })());
 // W11D: visible rock instances must physically block the grounded player.
 t('W11D large landscape rocks block camera at their actual render centers',
   MIDIAN_ROCK_COLLIDERS.length>0&&

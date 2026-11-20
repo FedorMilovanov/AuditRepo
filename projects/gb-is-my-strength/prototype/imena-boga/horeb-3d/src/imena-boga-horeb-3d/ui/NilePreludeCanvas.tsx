@@ -11,7 +11,10 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
   const viewRef=useRef<NileView>('wide');
   const [view,setView]=useState<NileView>('wide');
   const [failed,setFailed]=useState(false);
+  const [ready,setReady]=useState(false);
   const [exploring,setExploring]=useState(false);
+  const exploringRef=useRef(false);
+  const lastMomentRef=useRef<NileMoment>(moment);
   const launchRef=useRef<HTMLButtonElement>(null);
   const wasExploring=useRef(false);
   useEffect(()=>{
@@ -22,13 +25,34 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
     const canvas=ref.current;
     if(!canvas)return;
     let disposed=false;
+    controller.current=null;
+    setReady(false);
+    setFailed(false);
+    // A new Bible scene is a distinct moment; don't inherit its camera.
+    if(lastMomentRef.current!==moment){
+      lastMomentRef.current=moment;
+      exploringRef.current=false;
+      setExploring(false);
+      viewRef.current='wide';
+      setView('wide');
+    }
     const reduced=reducedMotion||(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false);
     import('../engine/NilePrelude').then(({createNilePrelude})=>{
       if(disposed)return;
       const scene=createNilePrelude(canvas,reduced,moment);
+      if(disposed){scene.dispose();return;}
       controller.current=scene;
       if(viewRef.current!=='wide')scene.setView(viewRef.current);
-    }).catch(()=>{if(!disposed)setFailed(true);});
+      if(exploringRef.current)scene.setExplore(true);
+      setReady(true);
+    }).catch(()=>{
+      if(!disposed){
+        exploringRef.current=false;
+        setExploring(false);
+        setReady(false);
+        setFailed(true);
+      }
+    });
     return ()=>{
       disposed=true;
       controller.current?.dispose();
@@ -43,13 +67,17 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
   },[exploring]);
   const discovery=moment==='discovery';
   const toggleShot=()=>{
+    if(!controller.current||!ready||failed)return;
     const next:NileView=viewRef.current==='wide'?'close':'wide';
     viewRef.current=next;
     controller.current?.setView(next);
     setView(next);
   };
   const toggleExplore=(enabled:boolean)=>{
-    controller.current?.setExplore(enabled);
+    const current=controller.current;
+    if(!current||!ready||failed)return;
+    current.setExplore(enabled);
+    exploringRef.current=enabled;
     setExploring(enabled);
   };
   const movementButton=(direction:NileDirection,label:string)=>(
@@ -77,11 +105,13 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
       Трёхмерная локация недоступна на этом устройстве. Текст источника сохранён в режиме чтения.
     </p>}
     {!failed && !exploring && <div className="absolute left-3 bottom-3 z-10 flex flex-wrap gap-2">
-      <button ref={launchRef} type="button" data-testid="nile-explore-start" onClick={()=>toggleExplore(true)}
+      <button ref={launchRef} type="button" data-testid="nile-explore-start"
+        disabled={!ready} aria-busy={!ready}
+        onClick={()=>toggleExplore(true)}
         className="rounded-sm border border-parch/65 bg-black/80 px-3 py-2 text-sm font-semibold text-parch shadow-md hover:bg-black/95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
-        Исследовать берег в 3D
+        {ready?'Исследовать берег в 3D':'Загрузка берега…'}
       </button>
-      {discovery && <button type="button" data-testid="moses-nile-shot-toggle"
+      {discovery && <button type="button" data-testid="moses-nile-shot-toggle" disabled={!ready}
         aria-pressed={view==='close'} onClick={toggleShot}
         className="rounded-sm border border-parch/40 bg-black/70 px-3 py-2 text-xs font-semibold text-parch shadow-md hover:bg-black/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
         {view==='close'?'Общий план':'Крупный план'}

@@ -10,6 +10,8 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
   const [exploring,setExploring]=useState(false);
   const [ready,setReady]=useState(false);
   const [failed,setFailed]=useState(false);
+  const exploringRef=useRef(false);
+  const lastWorldRef=useRef(world);
   const wasExploring=useRef(false);
   useEffect(()=>{
     if(wasExploring.current&&!exploring)start.current?.focus();
@@ -18,15 +20,33 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
   useEffect(()=>{
     if(!canvas.current)return;
     let disposed=false;
+    controller.current=null;
+    setReady(false);
+    setFailed(false);
+    if(lastWorldRef.current!==world){
+      lastWorldRef.current=world;
+      exploringRef.current=false;
+      setExploring(false);
+    }
     const reduced=reducedMotion||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
     const load=homestead
       ?import('../engine/MidianHomestead').then(mod=>mod.createMidianHomestead)
       :import('../engine/MidianWell').then(mod=>mod.createMidianWell);
     load.then(create=>{
       if(disposed||!canvas.current)return;
-      controller.current=create(canvas.current,reduced);
+      const current=create(canvas.current,reduced);
+      if(disposed){current.dispose();return;}
+      controller.current=current;
+      if(exploringRef.current)current.setExplore(true);
       setReady(true);
-    }).catch(()=>{if(!disposed)setFailed(true);});
+    }).catch(()=>{
+      if(!disposed){
+        exploringRef.current=false;
+        setExploring(false);
+        setReady(false);
+        setFailed(true);
+      }
+    });
     return ()=>{disposed=true;controller.current?.dispose();controller.current=null;};
   },[reducedMotion,world]);
   useEffect(()=>{
@@ -35,8 +55,10 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
     return ()=>{document.body.style.overflow=old;};
   },[exploring]);
   const toggle=(on:boolean)=>{
-    if(!controller.current)return;
-    controller.current.setExplore(on);setExploring(on);
+    if(!controller.current||!ready||failed)return;
+    controller.current.setExplore(on);
+    exploringRef.current=on;
+    setExploring(on);
   };
   const control=(direction:MidianDirection,glyph:string,label:string)=>(
     <button type="button" key={direction} aria-label={label}

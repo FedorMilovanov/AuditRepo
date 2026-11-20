@@ -33,7 +33,11 @@ try{
  const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
  if(response?.status()!==200)throw new Error('Intro HTTP failure');
  await page.click('[data-testid="moses-origin-start"]');
+ // Clicking before the async module is ready must never enter fullscreen
+ // without a controller (W12F.1); the button has a real disabled gate.
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true');
+ if(await page.$eval('[data-testid="nile-explore-start"]',b=>b.disabled))
+   throw Error('Nile loaded engine but Explore button remains disabled');
  await page.click('[data-testid="nile-explore-start"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileCameraPhase==='walk');
  const first=await read();

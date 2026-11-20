@@ -113,18 +113,24 @@ export function homesteadWashRelief(x:number,z:number):number{
 export const HOMESTEAD_ROCK_COUNT=64;
 export type HomesteadRockPoint={
   index:number;x:number;z:number;a:number;size:number;
-  sx:number;sy:number;sz:number;tiltX:number;tiltZ:number;
+  sx:number;sy:number;sz:number;tiltX:number;tiltZ:number;radius:number;
 };
 export function homesteadRockPoint(index:number):HomesteadRockPoint{
   const a=hash(index*7.1)*Math.PI*2,r=12+hash(index*6.2+3)*18;
   const x=Math.sin(a)*r,z=Math.cos(a)*r,size=.44+hash(index*2.14)*1.28;
-  return {index,x,z,a,size,sx:size*1.5,sy:size*.34,sz:size*.78,
-    tiltX:.12*hash(index*2.5),tiltZ:.14*hash(index*.71)};
+  const sx=size*1.5,sy=size*.34,sz=size*.78;
+  // The scaled radius-1 dodecahedron remains inside this sphere through
+  // any of its three rotations; its horizontal projection is enclosed.
+  return {index,x,z,a,size,sx,sy,sz,
+    tiltX:.12*hash(index*2.5),tiltZ:.14*hash(index*.71),
+    radius:Math.max(sx,sy,sz)};
 }
 export const HOMESTEAD_ROCK_COLLIDERS=Object.freeze(
   Array.from({length:HOMESTEAD_ROCK_COUNT},(_,i)=>homesteadRockPoint(i))
-    .filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX+2&&
-      Math.abs(r.z)<HOMESTEAD_WALK.maxZ+2)
+    // Include even edge stones whose visible footprint can reach the
+    // walkable rectangle; a fixed centre-only margin silently missed some.
+    .filter(r=>Math.abs(r.x)-r.radius<HOMESTEAD_WALK.maxX&&
+      Math.abs(r.z)-r.radius<HOMESTEAD_WALK.maxZ)
 );
 
 export function homesteadGround(x:number,z:number):number{
@@ -183,10 +189,11 @@ export function homesteadWalkable(x:number,z:number):boolean{
   for(const prop of HOMESTEAD_INTERIOR_STORAGE)
     if(Math.hypot(x-prop.x,z-prop.z)<prop.radius+.15)return false;
   for(const rock of HOMESTEAD_ROCK_COLLIDERS){
-    // Inverse of the same Y rotation applied to the rendered rock instance.
-    const dx=x-rock.x,dz=z-rock.z,c=Math.cos(rock.a),sn=Math.sin(rock.a);
-    const lx=c*dx-sn*dz,lz=sn*dx+c*dz;
-    if((lx/(rock.sx*.78))**2+(lz/(rock.sz*.78))**2<1)return false;
+    // W12F.1: the old 0.78-scaled ellipse missed visible, above-ground
+    // corners on every tested boulder. This conservative world-space
+    // circle encloses the actual instanced mesh under yaw/pitch/roll.
+    // Small visitor clearance also avoids camera-centre edge grazing.
+    if(Math.hypot(x-rock.x,z-rock.z)<rock.radius+.12)return false;
   }
   return true;
 }
