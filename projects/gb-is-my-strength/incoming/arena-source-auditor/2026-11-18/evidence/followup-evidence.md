@@ -32,6 +32,15 @@
 | `js/vosk-tts-worker.js` | 37632 | `425cf72acf6985b26ffa782e161fcdd615522c382316f2f0b3fab5499fbc0122` |
 | `css/tts-download-notice.css` | 9648 | `a00e2b067e0ff874bd36c8caefca9236274c6ce32e9fb549432869b0ee669256` |
 
+Четыре хеша `htmlSha256` локальных маршрутов из [JSON браузерного прогона](followup-browser.json) (одинаковы на `381f8f96…` и `9edef94e…`):
+
+| Маршрут | SHA-256 локального `index.html` (`htmlSha256`) |
+| --- | --- |
+| `/articles/kod-da-vinchi/` | `fe2e458188c74664533adb8747b702bc151801ec7b7561a08696c3f941d8de89` |
+| `/nagornaya/istochniki/` | `55a52c9d32e8c4b67f1ff2f07efadd22f1504b0483baab6ab41a453d4b865563` |
+| `/baptisty-rossii/spravochnik/` | `516e1a2fd4f11442199343103519be144b41f8adf08e70517157c4725c92a35b` |
+| `/baptisty-rossii/podpolnaya-pechat/` | `f441a32b1888bda81f2560a6a7b13aa0c2f553d3b244b4e75eac48cb0ced41ba` |
+
 ## Воспроизведение
 
 В уже распакованном exact Product, не в AuditRepo, с установленными Node/npm:
