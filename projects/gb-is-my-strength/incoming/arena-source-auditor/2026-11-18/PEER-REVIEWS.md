@@ -325,3 +325,57 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 ## XXV: Research #584 — контроль метаданных
 
 **Срез REST 10:36:13 UTC:** [#584](https://github.com/FedorMilovanov/Research/pull/584) открыт, non-draft, `clean`, 67 путей. HEAD `2eae3eaae986c28f8dc6b663c50e8e9f40ab0a25`, preview `86778887e69459ce12a04a248ab0008518639fb4`, база `682aa37e303a077b570f35ff0ca41320447bbc3f` совпадают со [срезом XXIV](#xxiv-research-584--снимки-и-триггеры-ci). Нового exact-tree ревью не проводилось: 3 побайтные сверки, 141 тест и 7 checks HEAD относятся к XXIV; checks и тесты в XXV заново не проверены. Просмотр имён путей в деревьях Research и Product для архивного поиска не равнозначен чтению файлов или повторному ревью. Записи в чужие ветки, комментария к PR и решения о merge не было. [Архивная дельта XXV](evidence/keston-and-tokmak-holdings-evidence.md#дополнение-xxv) независима от этого среза.
+
+## XXVI: Research #584 — повторная проверка очереди
+
+Прочитаны обсуждение [§26][r584-s26-xxvi], [первый отчёт о самоподтверждении][r584-first-xxvi], два ответа соседней ветки ([о счётчиках][r584-context-xxvi] и [повтор с другим `-o`][r584-custom-xxvi]), [заметка про official core][r584-official-xxvi] и [приёмка стандартного пути][r584-accept-xxvi]. Посторонние счётчики соседней ветки не перепроверялись. В срезе #584: **36 issue comments, 0 reviews, 0 inline**; на своём опубликованном XXV — 0 commit comments, своего PR нет. Ни комментарии, ни чужое заключение о приёмке не заменяют следующие локальные измерения.
+
+**Два закреплённых дерева.** На [20a635e][r584-before-xxvi] и preview `dcae92fc28eedcee402a0b3f81eb138057c07661` одно дерево `c0839cb6a15c246f016ebfe7de5ddd5e841ecda8`; codeload сверен с REST по **3195/3195** Git blobs, размерам и модам. Затем [292510f][r584-after-xxvi] (**1 коммит / 8 изменённых файлов**): изменённые blobs получены через REST, полная сборка повторно сверена **3195/3195**. У него и preview `7f69e5714d596101f10ebb13677efeca31186aee` дерево `3ed8a9556298a58d72ed1ceb115ef7e05d57bbf2`, база `682aa37e303a077b570f35ff0ca41320447bbc3f`. Все пробы — в отдельных временных деревьях, без checkout чужой ветки и без записи в Research.
+
+| Контроль с синтетическим ID | На 20a635e | На 292510f |
+| --- | --- | --- |
+| Два построения с сохранением стандартного снимка между ними, иных упоминаний нет | `false → true`; число незаписанных `1 → 0`; удаление снимка возвращает `false` | `false → false`; отчёты совпадают целиком. Исключены база, current, применённый overlay и стандартный снимок. |
+| Идентификатор только в применённом overlay | `true`; при том же скомпонованном рекорде, но исключённом из текстового обхода файле overlay — `false` | `false → false` на двух построениях; overlay указан в списке исключений. |
+| Упоминание вне файлов очереди, без сохранённого снимка | `true` с первого построения | `true` с первого построения. Это не проверка прав на указанный объект. |
+| Два запуска CLI с `-o` в **другой JSON внутри дерева**, без стандартного снимка | `false → true` | **`false → true`**. Сохраняется, если отчёт остаётся в области текстового обхода. |
+
+**Остаток замечания.** [В новом `augment()`][r584-code-xxvi] нет исключения для фактического нестандартного пути вывода. Подстановка только справочного флага и его счётчика в контрольном стандартном снимке на `292510f` даёт `--check` **0** при несовпадающем полном отчёте: [гейт][r584-check-xxvi] сверяет поля решений, не эту телеметрию. Во всех пробах `BLOCKED`, удержания и `PROMOTE=0` не менялись. На реальном дереве 20a635e все семь ID уже находятся за пределами исключённых файлов; ни одного изменения флагов там контроль не показал. На 292510f реальный пересчёт: **6 BLOCKED / 4 REFERENCE / 0 PROMOTE**, ноль потерянных ID, ноль разрешённых ledger-записей. Для владельца: исключать разрешённые пути `-o`/`--snapshot` при попадании в корень либо индексировать только независимые входы; отдельно указывать, проверяется ли полный снимок или только решение. На чужой ветке ничего не исправляли.
+
+**§26 и CI.** На 20a635e локальные `--check-report` и `--check` прошли; **17 локаторов / 19 вхождений / 7 файлов**, **44 match + 2 superseded** по числам. Сетевой readback через `gh api` в отдельном проходе по тем же закреплённым объектам: **17/17 получены**, 4 с заявками совпали, 13 измерены без заявки, отчёт `cmp 0`. На 292510f повторён **офлайн**-контроль 17/19, отчёт побайтно тот же, повторного скачивания 17 объектов на новом SHA не было. Негатив на временных копиях 20a635e: убрать вторую ссылку с другой строки — выход **1** при тех же 17 локаторах; добавить повтор той же ссылки **на ту же строку** — **0**, хотя вхождений 20 вместо 19. [Сверка мест][r584-sites-xxvi] использует множества `(file, line)`; успешный офлайн-гейт не удостоверяет кратность на строке, хеши или содержимое источника.
+
+На 292510f **14 групп из workflow / 235 тестов PASS**, из них очередь **21**, локаторы **18**. Inventory, links, claims, queue **4/4 `cmp 0`**; closure-map `--check` прошёл. Claims **52 (50 match + 2 superseded)**, включая шесть новых проверок счётчиков §10 по снимку очереди; четыре таблицы `match`. Триггеры **50/50**, 14 распознанных скриптов. [Workflow][r584-wf-xxvi] по-прежнему проверяет детерминизм inventory, а не равенство сохранённой копии; claims читает сохранённые входы, не делает свежую цепочку `inventory → claims` и не сравнивает сохранённый отчёт claims. Отсутствие того отчёта в обоих фильтрах осталось прежним. Локальная побайтная сверка не означает, что этот гейт добавлен.
+
+**GitHub, контроль 12:10:29 UTC:** #584 open/non-draft, 67 PR paths, `blocked`. На новом HEAD **2 success + 5 queued**, preview **0 check-runs**; старые **7/7 success** относятся к 20a635e. Локальные тесты не подставлены за незавершённый hosted CI и не дают разрешения на merge или публикацию.
+
+### XXVI: Комментарии о двух локаторах главы 19 и official core
+
+**Research #585, read-only.** [Входящий комментарий][r585-comment-xxvi] адресован владельцу главы. Получены пять Git blobs: [альтернативная рукопись][r585-alt-xxvi] на `17073e6a`, текущая рукопись и досье 14 на Research `main@682aa37e` и HEAD #585 `9ce5938e`. Сверены байты, размер и Git blob SHA; это не чтение архивных объектов. При продвижении #585 до `dd1f5cf4` повторный readback подтвердил неизменность обоих файлов, дельта только в двух файлах SUNO. #585 draft/open, `dirty` по REST, 26 issue comments / 0 reviews / 0 inline.
+
+| Предложенный локатор | Результат сверки и адрес для владельца |
+| --- | --- |
+| Toronto, прим. 5 альтернативного текста | **Уже есть тот же URL**, не только похожая ссылка: прим. 4 в [main][r585-main-xxvi] и [#585][r585-head-xxvi] (обе строка 162), в обоих досье 14 строка 199. [Каталог][r585-toronto-xxvi] описывает №1–141, даты по переизданиям. [Карточка №44][r585-toronto44-xxvi] даёт 1977 и 88 с.; в текущем аппарате 87 страниц цифрового PDF. Не вывод о пропущенной странице без сверки экземпляров. |
+| Baylor/TARO, прим. 6 альтернативного текста | URL не найден в проверенных файлах главы/досье на main и #585. [Опись KC.29][r585-taro-xxvi] c11: **Series 2, box 24 / folder 18 — №44 (1977); folder 19 — Extra copies**. Достаточно добавить указатель папок в существующий аппарат владельца; опись не добавляет показаний о людях. Рукописи не объединялись. |
+
+**Official core, read-only.** По [комментарию #584][r584-official-xxvi] получен точный blob [квитанции][r584-receipt-xxvi] на `994139e7`. Пути квитанции в `main@682aa37e` нет, но **все три пары commit + полный SHA‑256 уже записаны построчно** в [TOTAL_SOURCE_AUDIT_CLOSEOUT, 60–62][r584-closeout-xxvi]: STEPBible Data, morphhb, SBLGNT. Этот файл одинаков на main и обоих проверенных HEAD #584. Результат — соответствие реестров, не новый замер zip, не решение о месте хранения. Передавать второй набор записей или менять состояние прав по этому совпадению не нужно. [Архивный срез XXVI](evidence/keston-and-tokmak-holdings-evidence.md#срез-работы-xxvi).
+
+[r584-s26-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7037824111
+[r584-first-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7038862220
+[r584-context-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7039003759
+[r584-custom-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7039018156
+[r584-official-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7039045503
+[r584-accept-xxvi]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7039132344
+[r584-before-xxvi]: https://github.com/FedorMilovanov/Research/commit/20a635e96cce6c416d5ff9fe780c204a64773a3b
+[r584-after-xxvi]: https://github.com/FedorMilovanov/Research/commit/292510f6aec80cbb015d842977e6d375d3bbf588
+[r584-code-xxvi]: https://github.com/FedorMilovanov/Research/blob/292510f6aec80cbb015d842977e6d375d3bbf588/scripts/publication_gate_status.py#L150-L184
+[r584-check-xxvi]: https://github.com/FedorMilovanov/Research/blob/292510f6aec80cbb015d842977e6d375d3bbf588/scripts/publication_gate_status.py#L247-L269
+[r584-sites-xxvi]: https://github.com/FedorMilovanov/Research/blob/20a635e96cce6c416d5ff9fe780c204a64773a3b/scripts/verify_pinned_github_locators.py#L167-L186
+[r584-wf-xxvi]: https://github.com/FedorMilovanov/Research/blob/292510f6aec80cbb015d842977e6d375d3bbf588/.github/workflows/holds-inventory.yml#L154-L202
+[r584-receipt-xxvi]: https://github.com/FedorMilovanov/Research/blob/994139e75526e87ebc1da9a3de17fad24c53ea92/data/official-core-datasets-reproducibility-2026-11-18.json
+[r584-closeout-xxvi]: https://github.com/FedorMilovanov/Research/blob/682aa37e303a077b570f35ff0ca41320447bbc3f/SOURCE_LIBRARY/TOTAL_SOURCE_AUDIT_CLOSEOUT_2026-07-30.md#L60-L62
+[r585-comment-xxvi]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7039044872
+[r585-toronto-xxvi]: https://samizdat.library.utoronto.ca/content/biulleten-soveta-rodstvennikov-uznikov-evangelskikh-khristian-baptistov-sssr
+[r585-toronto44-xxvi]: https://samizdat.library.utoronto.ca/content/biulleten-soveta-rodstvennikov-uznikov-evangelskikh-khristian-baptistov-sssr-1977-no-44
+[r585-taro-xxvi]: https://txarchives.org/baykc/finding_aids/40029.xml
+[r585-alt-xxvi]: https://github.com/FedorMilovanov/Research/blob/17073e6abbe804ac5d81d72ef0fe16ed577567f4/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-underground-church-families-and-press-literary-manuscript-2026-11-16.md#L163-L164
+[r585-main-xxvi]: https://github.com/FedorMilovanov/Research/blob/682aa37e303a077b570f35ff0ca41320447bbc3f/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-families-prisoners-underground-press-literary-manuscript-2026-11-16.md#L162
+[r585-head-xxvi]: https://github.com/FedorMilovanov/Research/blob/9ce5938e3df5b3013f7602037c403f95bfd8a2c5/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-families-prisoners-underground-press-literary-manuscript-2026-11-16.md#L162
