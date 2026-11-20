@@ -61,6 +61,26 @@ try{
  if(after.mode!=='walk'||dist<.19||along<.17||Math.abs(after.y-after.ground-1.68)>.009)
    throw Error('MIDIAN CAMERA DOES NOT WALK ON GROUND '+JSON.stringify({first,after,dist,along}));
  await page.screenshot({path:join(out,'midian-walk-desktop.png')});
+ // W13B: real positional context, wrong answer then mastery; no drift behind
+ // a reading panel, and persistence across a 3D scene remount.
+ await page.waitForFunction(()=>{const b=document.querySelector('[data-testid="midian-field-observe"]');return b&&!b.disabled;},{timeout:20000});
+ const beforeStudy=await read();
+ await page.click('[data-testid="midian-field-observe"]');
+ await page.waitForSelector('[data-testid="midian-field-dialog"]');
+ await page.keyboard.down('w');await sleep(200);await page.keyboard.up('w');
+ const duringStudy=await read();
+ if(Math.hypot(duringStudy.x-beforeStudy.x,duringStudy.z-beforeStudy.z)>.055)
+   throw Error('MIDIAN field study failed to pause physical movement');
+ await page.click('[data-testid="midian-field-choice-b"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="midian-field-feedback"]')?.textContent?.includes('Сверьте'));
+ await page.click('[data-testid="midian-field-choice-a"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="midian-field-feedback"]')?.textContent?.includes('Верно'));
+ await page.click('[data-testid="midian-field-close"]');
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="midian-field-dialog"]'));
+ await page.waitForFunction(()=>{
+   const j=JSON.parse(localStorage.getItem('imena-horeb.field-observations.v1')||'null');
+   return j?.understood?.includes('midian-well');
+ });
  const camera=await page.$('[data-testid="moses-midian-well-3d"]');
  const cb=await camera.boundingBox();if(!cb)throw Error('MIDIAN WALK CANVAS INVISIBLE');
  const yaw=after.yaw;

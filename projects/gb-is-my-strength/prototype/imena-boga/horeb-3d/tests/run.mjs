@@ -17,6 +17,7 @@ import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianT
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
+import {FIELD_NOTES,normalizeFieldJournal,observeField,answerField,nearField} from '../.test-build/data/WorldFieldLearning.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
 import { EXPEDITION_EVIDENCE, EXPEDITION_CHRONOLOGY, EXPEDITION_CONTRAST, expeditionReady, normalizeExpeditionCompletion, canCompleteExpedition, completeExpedition } from '../.test-build/data/expedition.js';
@@ -509,6 +510,28 @@ t('W13A grounded micro-scree is small, bounded, varied and safe to walk past',
         Math.hypot(a.x,a.z)>=2.5&&midianApproachClearance(a.x,a.z)>=.95&&
         Number.isFinite(midianGround(a.x,a.z))&&a.size>=.025&&a.size<=.115)&&
       new Set(p.map(a=>a.x.toFixed(2))).size>150;
+  })());
+// W13B: spatial provenance lesson, with sanitized local mastery and
+// differentiated feedback. A visit alone never counts as understanding.
+t('W13B nearby Exodus field notes are tied to a physical landmark',
+  FIELD_NOTES.well.source==='Исх. 2:16–17'&&
+  FIELD_NOTES.homestead.source==='Исх. 2:18–21'&&
+  nearField(FIELD_NOTES.well,5.2,7.6)&&
+  !nearField(FIELD_NOTES.well,17,17)&&
+  FIELD_NOTES.well.answer==='a');
+t('W13B mastery needs visit, correction and evidence-based answer',
+  (()=>{const initial=normalizeFieldJournal({observed:['forged'],
+      understood:['midian-well'],mistakes:{'midian-well':-3}});
+    if(initial.observed.length||initial.understood.length)return false;
+    if(answerField(initial,'midian-well','a').understood.length)return false;
+    const visit=observeField(initial,'midian-well');
+    const miss=answerField(visit,'midian-well','b');
+    const retry=answerField(miss,'midian-well','c');
+    const pass=answerField(retry,'midian-well','a');
+    return retry.mistakes['midian-well']===2&&
+      retry.understood.length===0&&pass.understood.length===1&&
+      normalizeFieldJournal(pass).understood[0]==='midian-well'&&
+      pass.observed.length===1;
   })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
