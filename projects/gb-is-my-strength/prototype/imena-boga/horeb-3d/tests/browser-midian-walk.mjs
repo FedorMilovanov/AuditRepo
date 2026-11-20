@@ -25,6 +25,32 @@ const read=()=>page.$eval('[data-testid="moses-midian-well-3d"]',c=>({
 try{
  await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
  const base=(process.env.HOREB_BASE_URL||'http://127.0.0.1:5173').replace(/\/$/,'');
+ // External review #7051984827: a correct answer in text-only mode must
+ // NEVER manufacture an observed world visit, even across a later WebGL load.
+ // Use a real failure of WebGL context acquisition in a second page of the
+ // SAME browser/storage context, then visit 3D normally on the main page.
+ const reader=await browser.newPage();
+ await reader.evaluateOnNewDocument(()=>{
+   const original=HTMLCanvasElement.prototype.getContext;
+   HTMLCanvasElement.prototype.getContext=function(kind,...rest){
+     if(['webgl','webgl2','experimental-webgl'].includes(kind))return null;
+     return original.call(this,kind,...rest);
+   };
+ });
+ await reader.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
+ await reader.click('[data-testid="moses-origin-start"]');
+ for(let i=0;i<3;i++)await reader.click('[data-testid="moses-origin-next"]');
+ await reader.waitForSelector('[data-testid="midian-field-reading"]',{timeout:30000});
+ await reader.click('[data-testid="midian-field-reading-a"]');
+ await reader.waitForFunction(()=>document.querySelector(
+   '[data-testid="midian-field-reading-feedback"]')?.textContent?.includes('Верно'));
+ const textOnly=await reader.evaluate(()=>{
+   const j=JSON.parse(localStorage.getItem('imena-horeb.field-observations.v1')||'null');
+   return {observed:j?.observed||[],understood:j?.understood||[]};
+ });
+ if(textOnly.observed.length||textOnly.understood.length)
+   throw Error('W13B reading forged a physical visit '+JSON.stringify(textOnly));
+ await reader.close();
  const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
  if(response?.status()!==200)throw Error('MIDIAN HTTP failed');
  await page.click('[data-testid="moses-origin-start"]');
@@ -49,6 +75,12 @@ try{
  const first=await read();
  if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
    throw Error('W13B FIELD wrongly available at initial well position');
+ const afterTextMode=await page.evaluate(()=>{
+   const j=JSON.parse(localStorage.getItem('imena-horeb.field-observations.v1')||'null');
+   return {observed:j?.observed||[],understood:j?.understood||[]};
+ });
+ if(afterTextMode.observed.length||afterTextMode.understood.length)
+   throw Error('W13B text/3D cross-mode journal leak '+JSON.stringify(afterTextMode));
  const box=await page.$eval('[data-testid="midian-viewport"]',e=>{
    const r=e.getBoundingClientRect();
    return {w:r.width,h:r.height,vw:innerWidth,vh:innerHeight,x:r.x,y:r.y};

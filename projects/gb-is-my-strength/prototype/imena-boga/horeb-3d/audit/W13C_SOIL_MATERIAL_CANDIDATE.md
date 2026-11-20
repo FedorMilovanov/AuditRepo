@@ -24,3 +24,7 @@ The W13B browser-midian-walk test used desktop `page.mouse` for a 390px mobile c
 ## W13C.4 — portrait visual framing correction
 
 The first W13C.3 portrait screenshot was real touch, but came immediately after a desktop field approach ending next to the well, so the well wall filled most of the phone image. The test now explicitly leaves 3D, switches to 390px, starts a fresh actual portrait walk at the canonical (5.2, 7.6) viewpoint, then performs the same genuine touch movement and capture. Both close-up physically approached lesson and representative environmental portrait are independently retained. This is a **test camera-stage correction**, not an attempted invisible geometry/physics edit.
+
+## W13C.5 — independent review of text-to-3D mastery isolation
+
+Resolved review comment #7051984827 as a new real Chromium cross-mode regression: in the SAME browser storage context, intercept WebGL context acquisition only in a separate reading page, wait for actual fallback UI, answer the Biblical question correctly, assert neither physical observation nor 3D mastery is recorded, then enter a normally functioning 3D world with the original fresh journal and verify that the landmark is still locked until actual approach. This test does not weaken location gating or auto-complete learning. It must pass at least once in local real Chrome and in exact-SHA Actions before ART or educational approval.
