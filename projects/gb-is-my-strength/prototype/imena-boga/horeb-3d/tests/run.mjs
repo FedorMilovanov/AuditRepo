@@ -9,8 +9,9 @@ import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
+import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
-import {midianApproachClearance,midianScrubPoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRockOrientation,MIDIAN_ROCK_MIN_SEPARATION,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
+import {midianApproachClearance,midianScrubPoint,midianPebblePoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRockOrientation,MIDIAN_ROCK_MIN_SEPARATION,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
 import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
@@ -488,9 +489,30 @@ t('W12E.5.1 walkable approach ends outside solid well and terrain stays connecte
       Array.from({length:17},(_,i)=>i/16)
         .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)+2.5*t));
   })());
+// W13A nature is grounded, continuous and generated with fixed GPU budgets.
+t('W13A Wadi scrub clustering obeys terrain and navigation corridors',
+  (()=>{const points=Array.from({length:MIDIAN_NATURE.scrubSeeds},
+    (_,i)=>midianScrubPoint(i)).filter(Boolean);
+    const wet=points.filter(p=>midianHabitat(p.x,p.z).wash>.35);
+    return MIDIAN_NATURE.scrubSeeds===124&&points.length>=90&&wet.length>=30&&
+      points.every(p=>midianApproachClearance(p.x,p.z)>=2.55&&
+       Math.hypot(p.x,p.z)>=4.2&&Number.isFinite(p.size))&&
+      [-25,-10,0,15,25].every(z=>
+        midianHabitat(midianWadiCenter(z),z).wash>.999&&
+        midianHabitat(midianWadiCenter(z)+.1,z).wash>.99);
+  })());
+t('W13A grounded micro-scree is small, bounded, varied and safe to walk past',
+  (()=>{const p=Array.from({length:MIDIAN_NATURE.pebbleSeeds},
+    (_,i)=>midianPebblePoint(i)).filter(Boolean);
+    return MIDIAN_NATURE.pebbleSeeds===440&&p.length>390&&p.length<440&&
+      p.every(a=>Math.abs(a.x)<=29&&Math.abs(a.z)<=32&&
+        Math.hypot(a.x,a.z)>=2.5&&midianApproachClearance(a.x,a.z)>=.95&&
+        Number.isFinite(midianGround(a.x,a.z))&&a.size>=.025&&a.size<=.115)&&
+      new Set(p.map(a=>a.x.toFixed(2))).size>150;
+  })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
-  Array.from({length:76},(_,i)=>midianScrubPoint(i))
+  Array.from({length:MIDIAN_NATURE.scrubSeeds},(_,i)=>midianScrubPoint(i))
     .filter(Boolean).every(p=>p&&midianApproachClearance(p.x,p.z)>=2.55));
 t('W11A Midian well and trough have genuine grounded collisions',
   !midianWalkable(0,0)&&!midianWalkable(-2.9,-.35)&&

@@ -3,6 +3,7 @@
  * or geolocated reconstruction of Exodus 2.
  */
 import * as THREE from 'three';
+import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from './MidianBiome.js';
 const hash=(n:number)=>{const v=Math.sin(n*127.19+23.72)*43758.5;return v-Math.floor(v);};
 const UP=new THREE.Vector3(0,1,0);
 const START={x:5.2,z:7.6};
@@ -11,11 +12,35 @@ export function midianApproachClearance(x:number,z:number):number{
     (START.x*START.x+START.z*START.z)));
   return Math.hypot(x-START.x*t,z-START.z*t);
 }
+/** W13A: dry-wash and talus clusters, rather than a circular garden. */
 export function midianScrubPoint(index:number):{x:number;z:number;size:number}|null{
-  const a=hash(index*3.19+16)*Math.PI*2,r=5.4+hash(index*4.9+11)*18.5;
-  const x=Math.cos(a)*r,z=Math.sin(a)*r;
-  if(Math.hypot(x,z)<4.2||midianApproachClearance(x,z)<2.55)return null;
-  return {x,z,size:.42+hash(index*9.9+4)*.92};
+  if(!Number.isInteger(index)||index<0||index>=MIDIAN_NATURE.scrubSeeds)return null;
+  const z=-29+58*hash(index*2.23+2.5),mode=index%5;
+  let x:number,localZ=z;
+  if(mode<3)x=midianWadiCenter(z)+(hash(index*3.17+1)-.5)*(mode===0?13:10);
+  else{
+    const a=hash(index*4.11+7)*Math.PI*2,r=9+19*hash(index*5.71+11);
+    x=Math.cos(a)*r;localZ=Math.sin(a)*r;
+  }
+  if(Math.abs(x)>29||Math.abs(localZ)>31||Math.hypot(x,localZ)<4.2||
+     midianApproachClearance(x,localZ)<2.55)return null;
+  return {x,z:localZ,size:.30+.88*hash(index*9.9+4)+
+    .25*midianHabitat(x,localZ).wash};
+}
+/** Real grounded, non-blocking mineral gravel, not airborne particles. */
+export function midianPebblePoint(index:number):{x:number;z:number;size:number}|null{
+  if(!Number.isInteger(index)||index<0||index>=MIDIAN_NATURE.pebbleSeeds)return null;
+  let x:number,z:number;
+  if(index%4<2){
+    z=-32+64*hash(index*4.91+8);
+    x=midianWadiCenter(z)+(hash(index*3.12+3)-.5)*18;
+  }else{
+    const a=hash(index*3.74+5)*2*Math.PI,r=6.2+29*hash(index*6.23+11);
+    x=Math.cos(a)*r;z=Math.sin(a)*r;
+  }
+  if(Math.abs(x)>29||Math.abs(z)>32||Math.hypot(x,z)<2.5||
+    midianApproachClearance(x,z)<.95)return null;
+  return {x,z,size:.025+.09*Math.pow(hash(index*1.93+16),1.75)};
 }
 /** W12E.2: a few broad, geographically *unclaimed* arid massifs,
  * not a continuous 360-degree mountain wall or a row of periodic peaks.
@@ -194,7 +219,7 @@ export const MIDIAN_ROCK_COLLIDERS=Object.freeze(
 );
 
 export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=>number):
-  {ridges:number;rocks:number;scrubs:number;twigs:number}{
+  {ridges:number;rocks:number;scrubs:number;twigs:number;pebbles:number}{
   // Two complete rings prevent scenery vanishing when the player turns.
   ridgeRing(scene,42,0x99816d,ground);ridgeRing(scene,61,0xbcae9f,ground);
   // W12E.2: un-subdivided facets avoid polished oval potato silhouettes.
@@ -222,7 +247,7 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
   if(rocks.instanceColor)rocks.instanceColor.needsUpdate=true;
   rocks.receiveShadow=true;scene.add(rocks);
   // Thin woody shrubs, not trees with identical solid spherical crowns.
-  const points=Array.from({length:76},(_,i)=>midianScrubPoint(i))
+  const points=Array.from({length:MIDIAN_NATURE.scrubSeeds},(_,i)=>midianScrubPoint(i))
     .filter((v):v is NonNullable<typeof v>=>v!==null);
   const branches=6,leaves=5;
   const twig=new THREE.InstancedMesh(new THREE.CylinderGeometry(.006,.017,1,5),
@@ -257,5 +282,27 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
   }
   twig.instanceMatrix.needsUpdate=true;leaf.instanceMatrix.needsUpdate=true;
   scene.add(twig,leaf);
-  return {ridges:2,rocks:rockCount,scrubs:points.length,twigs:points.length*branches};
+  // W13A: one additional instanced draw call (<=440 octahedra x 8 tris).
+  const grit=new THREE.InstancedMesh(new THREE.OctahedronGeometry(1,0),
+    new THREE.MeshStandardMaterial({color:0x9d8b78,roughness:1}),
+    MIDIAN_NATURE.pebbleSeeds);
+  grit.name='midian-grounded-mineral-grit';
+  grit.castShadow=false;grit.receiveShadow=true;
+  const gritDark=new THREE.Color(0x857365),gritLight=new THREE.Color(0xb8a28b);
+  let gritCount=0;
+  for(let i=0;i<MIDIAN_NATURE.pebbleSeeds;i++){
+    const p=midianPebblePoint(i);if(!p)continue;
+    dummy.position.set(p.x,ground(p.x,p.z)+p.size*.07,p.z);
+    dummy.rotation.set(.1*hash(i*1.13),hash(i*2.17)*Math.PI*2,
+      .12*hash(i*3.07));
+    dummy.scale.set(p.size*.91,p.size*.31,p.size*1.17);
+    dummy.updateMatrix();grit.setMatrixAt(gritCount,dummy.matrix);
+    instanceTone.copy(gritDark).lerp(gritLight,hash(i*2.37+.3));
+    grit.setColorAt(gritCount,instanceTone);gritCount++;
+  }
+  grit.count=gritCount;grit.instanceMatrix.needsUpdate=true;
+  if(grit.instanceColor)grit.instanceColor.needsUpdate=true;
+  scene.add(grit);
+  return {ridges:2,rocks:rockCount,scrubs:points.length,
+    twigs:points.length*branches,pebbles:gritCount};
 }

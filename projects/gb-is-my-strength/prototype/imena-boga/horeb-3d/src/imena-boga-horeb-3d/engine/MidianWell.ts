@@ -4,6 +4,7 @@
  */
 import * as THREE from 'three';
 import {addMidianLandscape,MIDIAN_ROCK_COLLIDERS} from './MidianLandscape.js';
+import {midianHabitat} from './MidianBiome.js';
 import {addMidianWellMasonry} from './MidianMasonry.js';
 import {addMidianTrough,MIDIAN_TROUGH} from './MidianTrough.js';
 
@@ -64,12 +65,15 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   groundGeo.rotateX(-Math.PI/2);
   const attr=groundGeo.getAttribute('position');
   const palette:number[]=[];
-  const dry=new THREE.Color(0xb49e82),weathered=new THREE.Color(0x8d7866);
+  const dry=new THREE.Color(0xb49e82),weathered=new THREE.Color(0x8d7866),
+    fineSilt=new THREE.Color(0x8f8575);
   for(let i=0;i<attr.count;i++){
     const x=attr.getX(i),z=attr.getZ(i);
     attr.setY(i,midianGround(x,z));
-    const c=dry.clone().lerp(weathered,Math.min(1,Math.hypot(x,z)/30)*.69);
-    c.multiplyScalar(.96+.06*Math.sin(x*.68-z*.29)*Math.cos(z*.4));
+    const h=midianHabitat(x,z);
+    const c=dry.clone().lerp(weathered,.16+.63*h.scree);
+    c.lerp(fineSilt,.40*h.wash);
+    c.multiplyScalar(.93+.085*h.grain);
     palette.push(c.r,c.g,c.b);
   }
   groundGeo.setAttribute('color',new THREE.Float32BufferAttribute(palette,3));
@@ -200,6 +204,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   canvas.dataset.midianMasonry='annular-irregular-3d';
   canvas.dataset.midianRidges=String(scenery.ridges);
   canvas.dataset.midianScrubTwigs=String(scenery.twigs);
+  canvas.dataset.midianNaturePebbles=String(scenery.pebbles);
   canvas.dataset.midianRockInstances=String(scenery.rocks);
   canvas.dataset.midianObstacle='well,water-trough';
   canvas.dataset.midianTroughStones=String(trough.stones);
