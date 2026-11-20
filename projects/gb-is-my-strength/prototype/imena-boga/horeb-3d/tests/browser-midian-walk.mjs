@@ -51,8 +51,10 @@ try{
  if(textOnly.observed.length||textOnly.understood.length)
    throw Error('W13B reading forged a physical visit '+JSON.stringify(textOnly));
  await reader.close();
- const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
- if(response?.status()!==200)throw Error('MIDIAN HTTP failed');
+ // A second tab sharing the same browser profile can warm the navigation
+ // cache (HTTP 304); use a distinct e2e URL for the subsequent 3D session.
+ const response=await page.goto(base+'/?e2e&after-reading=1',{waitUntil:'domcontentloaded'});
+ if(response?.status()!==200)throw Error('MIDIAN 3D HTTP failed '+response?.status());
  await page.click('[data-testid="moses-origin-start"]');
  for(let i=0;i<3;i++)await page.click('[data-testid="moses-origin-next"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianRendered==='true');
