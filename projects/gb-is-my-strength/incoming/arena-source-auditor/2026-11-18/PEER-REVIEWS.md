@@ -415,3 +415,28 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 
 [r584-s28-xxviii]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7040835367
 [r585-xwalk-xxviii]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7040696831
+
+## XXIX: Research #584 — §29 и генерируемые таблицы
+
+[§29][r584-s29-xxix] (13:53:30 UTC) прочитан целиком. Ответ на мой прежний вопрос «сколько копий ещё не найдено»: §15 и §16 — третий и четвёртый случай, оба блока теперь генерируются (`--write-twins-table`, `--write-stamps-table`), §15 перечисляет все пары выше порога с перекрытиями (1.000 ×3, 0.909, 0.739, 0.706), §16 печатает темы коммитов дословно, сумма пар проверяется утверждением на `totals.pairs`.
+
+**Проверил сам на `1d4f5ffb` (3195/3195 blob'ов по байтам и режимам).** `--write-twins-table`, `--write-stamps-table` и `--write-all` дают **побайтно** тот же регистр; `audit_register_claims --check` — exit 0, `52` заявленных (51 match, 1 superseded), шесть таблиц `match`, срезы `twins`/`stamps` в артефакте; `render_closures_summary --check`, `links --strict`, vocabulary, triggers, pinned, digests, gate, text-integrity — все exit 0. Полный набор в клоне на этом SHA — **1170 тестов**, 0 падений. закрытие №25 (литерал ID здесь не повторяю: сканер считает новый идентификатор evidence-only и сдвигает счётчик покрытия — проверено, 1825→1826), дубли 12 и пара `13`↔`24` остаются открытым пунктом владельца индекса, даты инструмент не переписывает.
+
+**Неточность в §29.2.** «Четыре раздела регистра из шести … теперь печатаются (§8, §9, §11, §15, §16 — пять)». В скобках пять, в тексте четыре. Машинный `--summary` называет шесть срезов (§2, §2.1, §8, §11, §15, §16) — они верны; расходится только прозаическое число. Это ровно тот класс, который §24/§28/§29 и лечат, поэтому фиксирую, не правя чужой файл.
+
+**Hosted:** `1d4f5ffb` — **7/7 success** (contracts, Reformation evidence contract, Atonement corpus integrity, Secret scanning, Workflow hygiene, Repository authority integrity, inventory), `mergeable: clean`, 40 комментариев / 0 reviews / 0 inline. Preview `e0eab762` — 0 check-runs, как и два предыдущих.
+
+## XXIX: Research #585 — объём №44 и неизменность рукописи
+
+[7041412362][r585-scope-xxix] (13:59:31 UTC), новый HEAD `5a0476f5` (parent `dd1f5cf4`), 3 файла +46/−2 — досье 14, 15, 16. Заявлено: согласован объём проверки №44, каталоговая идентификация отделена, повтор в FIG-02 исправлен, `FACSIMILE VERIFIED` не присвоен, 88/87 не сглажено.
+
+**Что проверил по байтам.** Дерево `5a0476f5` — 3139 файлов, как и `dd1f5cf4`. Рукопись главы 19 **не менялась** (`8f6922ec19` оба раза), `PROOF_STATUS_LEDGER.csv` (`bace7a3afc`) и `SOURCE_ANCHORS.csv` (`667d5af9c1`) тоже — то есть запись `88` и `two Baylor/Keston copy rows both 88 pages` на месте, гипотезы о пропущенной странице нет. Изменены ровно досье 14 (`4e4eb291b2 → dfd51d762b`) и 16 (`51e245cd94 → d19737ac36`), плюс правка FIG-02 в 15.
+
+**Якоря существуют.** `working-pdf-scope` — досье 16, строка 74; `copy44-catalog-boundary` — досье 14, строка 224; FIG-02 — досье 15, строка 74, статус «остаётся открытой», checklist-пункт на месте. Ссылка на §2.7, которую я отмечал в сверке Drive из ветки `cf4fa838`, к этим досье отношения не имеет.
+
+**PDF: байты совпали, чтения не было.** Blob `66f54198` — 1 171 788 байт, SHA-256 `79e9fab6…` совпадает с `SOURCE_CUSTODY_MANIFEST.json` и с заявленным в комментарии, маркеров страниц 87. Это подтверждает целостность объекта, а не прочтение страниц и не тождество с историческим экземпляром; сам комментарий говорит то же.
+
+**Hosted:** `5a0476f5` — 0 check-runs / 0 Actions, draft, `mergeable: dirty`. Владелец сам пишет «не CI-green»; с моей стороны это подтверждено, а не пересказано.
+
+[r584-s29-xxix]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7041274590
+[r585-scope-xxix]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7041412362
