@@ -16,3 +16,7 @@ Parent is W13B.1 `c85d3faae6055082956463160ebde0b5a20b5486`. This is **not a bra
 ## W13C.2 — silhouette diversity without object inflation
 
 Existing W13A scrub instances are now separated into three low-cost non-species-claiming forms: horizontal compact cushion, vertical open stems and asymmetrical wind-swept scrub. The existing six branches/five leaf planes per accepted seed, mesh materials, instance counts, walkability and placement seeds are unchanged; only scale/position/color of foliage instances vary. This intentionally addresses repeated V-shaped toy bushes; all original W13A geology and major rock collisions remain unchanged. Requires actual same-camera 390px+desktop visual review; any oversized or implausibly green shapes must be rejected.
+
+## W13C.3 — genuine portrait touch and useful art witness
+
+The W13B browser-midian-walk test used desktop `page.mouse` for a 390px mobile control and captured portrait after an unrelated upward drag that inflated sky coverage. The W13C QA candidate instead restores the canonical look direction before portrait, issues true Chrome DevTools Protocol `touchStart/touchEnd` against the movement control, and checks both forward distance and release to prevent stuck walking. The resulting mobile screenshot is a new intentional camera stage and must **not** be compared as pixel-identical with pre-W13C mobile witness; also retain a same-stage comparison of initial establishing shots.

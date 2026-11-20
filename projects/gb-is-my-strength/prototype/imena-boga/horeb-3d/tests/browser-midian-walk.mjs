@@ -101,6 +101,14 @@ try{
  await page.mouse.up();await sleep(80);
  const rotated=await read();
  if(Math.abs(rotated.yaw-yaw)<.2)throw Error('MIDIAN REAL POINTER LOOK NOT WORKING');
+ // Restore the meaningful establishing direction: do not make the mobile
+ // ART witness mostly sky because an earlier pointer test looked upward.
+ await page.mouse.move(cb.x+cb.width*.34,cb.y+cb.height*.41);
+ await page.mouse.down();
+ await page.mouse.move(cb.x+cb.width*.65,cb.y+cb.height*.58,{steps:8});
+ await page.mouse.up();await sleep(80);
+ if(Math.abs((await read()).yaw-yaw)>.12)
+   throw Error('MIDIAN camera failed to restore reference direction');
  await page.setViewport({width:390,height:844,deviceScaleFactor:1});
  await sleep(180);
  const mobile=await page.$eval('[data-testid="midian-viewport"]',e=>{
@@ -113,12 +121,25 @@ try{
  const prior=await read();
  const control=await page.$('[data-testid="midian-move-forward"]');
  const hit=await control.boundingBox();if(!hit)throw Error('MIDIAN MOBILE CONTROL HIDDEN');
- await page.mouse.move(hit.x+hit.width/2,hit.y+hit.height/2);
- await page.mouse.down();await sleep(750);await page.mouse.up();
+ // Real touch injection, never a mouse event masquerading as mobile.
+ const session=await page.createCDPSession();
+ const tx=hit.x+hit.width/2,ty=hit.y+hit.height/2;
+ await session.send('Input.dispatchTouchEvent',{
+   type:'touchStart',touchPoints:[{x:tx,y:ty}],
+ });
+ try{await sleep(750);}finally{
+   await session.send('Input.dispatchTouchEvent',{
+     type:'touchEnd',touchPoints:[],
+   });
+   await session.detach();
+ }
  await sleep(80);
  const moved=await read();
  if(Math.hypot(moved.x-prior.x,moved.z-prior.z)<.15)
-   throw Error('MIDIAN MOBILE INPUT INERT '+JSON.stringify({prior,moved}));
+   throw Error('MIDIAN MOBILE REAL TOUCH INERT '+JSON.stringify({prior,moved}));
+ const stopA=await read();await sleep(350);const stopB=await read();
+ if(Math.hypot(stopB.x-stopA.x,stopB.z-stopA.z)>.065)
+   throw Error('MIDIAN touch-release still moving '+JSON.stringify({stopA,stopB}));
  await page.screenshot({path:join(out,'midian-walk-mobile390.png')});
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianMode==='shot');
