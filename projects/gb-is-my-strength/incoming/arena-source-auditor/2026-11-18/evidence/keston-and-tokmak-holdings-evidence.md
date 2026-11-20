@@ -1178,3 +1178,67 @@ KC.29: [№18/1974][b18] **22/15**, [доп. экземпляры и перев�
 ### Срез работы XXIV
 
 Вход: AuditRepo `main` `fe69239320bed47362f049906d5af25342f3c104`, свой XXIII `7da2765a009d3dd9fedaa0b52e0d99afddb90f3c`, ACD 1.5.0. Восстановление по удалённой ветке: **27/27** путей совпали байтами. Начальный overlap 20.11, **09:31:16–09:31:26 UTC**: **27 путей / 9 открытых PR / 883 записи `/files`**, 0 пересечений, своего PR нет. Исходный срез AuditRepo: **44 открытых / 0 закрытых / 0 проблем / 1825 контекстов**. [Ревью Research](../PEER-REVIEWS.md#xxiv-research-584--снимки-и-триггеры-ci) не меняет оценку источников.
+
+## Дополнение XXV
+
+### XXV: Границы печатного перечня
+
+**Состав Appendix 1.** В [Penn State, GPO II][hathi-xv] прочитан OCR каждой полосы *The Persecuted Church in the Soviet Union, Prisoner List 1986*, `submitted by Ms. Vins`: [печ. 171 / seq 175][pst171-xxv] — 10 именных заголовков, [печ. 172 / seq 176][pst172-xxv] – [печ. 181 / seq 185][pst181-xxv] — по 12 на страницу. Итого **10 + 10 × 12 = 130** записей, от Abashin до Zinchenko. Считались заголовки записей об узниках, а не имена в адресных полях. [Печ. 182 / seq 186][pst182-xxv] начинает Appendix 2. Это пересчёт OCR одного печатного приложения, не визуальная сверка полос и не перепись всех узников.
+
+**Не отождествлять три объекта.** На [с. 129][pst129-xxv] Винс говорит `more than 150 Baptists are in prison`, различает плакат с изображениями и список имён и адресов, который характеризует как охватывающий заключённых. Сноска стенограммы отсылает к Appendix 1. Число **130** характеризует OCR напечатанных строк, а не исходный входящий экземпляр или плакат. Причина расхождения не установлена. Замечание председателя о смене ленты стенографистом на той же странице относится к **слушанию 30.07**; оно не удостоверяет ни сохранность записи, ни наличие видео, ни ленту заседания **31.07**.
+
+| Сверка | Что читается и чего это не доказывает |
+| --- | --- |
+| **Бондарь и Бублик, печ. 172** | [Penn State seq 176][pst172-xxv] и [Minnesota seq 324][umn172-xxv] согласуются с ранее прочитанными UCR/Purdue. У Бондаря `Arrested: Sep 14, 1984`, `Sentence: 2 years`, `Release: Sep 14, 1986`; режим здесь не назван. У Бублика `Arrested: Feb 22, 1986`, `Sentence` и `Release` пусты. В Minnesota `Second term` относится к Боско, не к Бублику. Это OCR разных экземпляров одной печати, не независимые показания. *Record* 18380 не сверен по образу; пустые поля не разрешают расхождение о мае и режиме и не датируют составление списка. |
+| **Зинаида Вильчинская и Маргарита Готман** | У обеих нет отдельных именных заголовков в просмотренном OCR с. 171–181. На [с. 130][pst130-xxv] они названы в устном показании (`Zinaida Vilchinskaya` и `Margaret Gotman`) как задержанные; там указан июнь, не устранено [разночтение XXIII–XXIV](#xxiii-вести-и-экземпляры-бюллетеня). В записи [с. 174][pst174-xxv] фигурирует **Leongard Genrikhovich Gottman**: 14.11.1985, два года строгого, `Release Nov 14, 1987`, четвёртый срок. Поле `Release` не является справкой о фактическом выходе; отсутствие строк двух женщин не доказывает их освобождения. |
+| **Отчёт Совета за 1985 г., печ. 156** | [Penn State seq 160][pst156-xxv] и [Minnesota seq 308][umn156-xxv] снова дают заметку об экземпляре с оригинальными подписями, переданном представительству Винса, с указанием тогдашнего Elkhart. Это повторная сверка самой заметки одного издания; не получены подписи, входящий экземпляр или квитанция о нынешнем хранении. |
+
+**№137, печ. с. 29, п. 11 — индекс, не прочитанная полоса.** Поисковая выдача [PDF][b137-xxii] привязывает пересказ к письму Любови Павловны Бублик от **02.10.1986** начальнику ИТК‑6: изъятие писем и сообщение об угрозе 11 сентября нового осуждения и отправки «на особый». Слова об угрозе не определяют режим по приговору и не фиксируют его изменение. Извлечение текста PDF не дало полной полосы; два результата поиска изображений оказались другими документами. Цель прежняя: [KC.29, 28/21](#xxiv-экземпляры-и-архивные-запросы), печ. 29 с соседними полосами и идентификацией выпуска, отдельно — приговор и справка об исполнении.
+
+### XXV: Поиск актов и рабочих копий
+
+| Локатор | Что даёт и что запрашивать в первую очередь |
+| --- | --- |
+| **Hoover Institution Library & Archives — [Yuri Yarim-Agaev papers][hoover-xxv], 2007C59** | В [развёрнутой описи][hoover-items-xxv] (порция 8) под *Human rights activities after emigration → Individuals* названо **Box 19 / Folder 6**, «Вильчинская Галина and Зинаида» (в латинице описи `Zinbaida`), **1984–1987**. В *Oversize material → Printed matter* — **Box 77 / Folder 4**, запись `Vil'chtskaia, Galina and Zinaida` (порция 16), **1987**. Это две записи описи, не два проверенных свидетельства. Сначала установить состав листов о **Зинаиде Яковлевне**, затем сверить, не дублирует ли вторая запись первую. Для Маргариты — проверить сопутствующие материалы по нальчикскому делу; **Box 5 / Folders 8 и 11** (*Prosecution of believers*, 1985–90; *News from the USSR*, 1986–89, в том числе полученные Keston сообщения) и **Box 82 / Folder 4** (*Human rights violation: Evangelical Baptists*, 1987) — только тематические маршруты. Коллекция заявлена открытой для исследования по предварительному заказу; [оцифровка отдельно][hoover-copies-xxv], доступа к листам в этом проходе нет. |
+| **Гомель и семейная версия** | [Юбилейная публикация МСЦ ЕХБ][msc-v-xxv], п. 4: сообщает о лагере в Гомеле и об отказе Зинаиды в 1987 г. обещать прекратить работу в Совете ради досрочного освобождения. Это поздний пересказ об условиях предложения, не акт и не свидетельство того, что она в итоге не вышла. В [старой карточке библиотеки «Мемориала»][memo-v3-xxv] указан В. Вильчинский, *Недаром пролитые слезы*, кн. 3, Кременчуг: «Христианская заря», [2011], **251 с.**, 50 экз.; [книжная карточка «Претерпевшие до конца»][v3-200-xxv] даёт **200 с.** за тот же год, поэтому сначала сверить титул и оглавление именно доступного экземпляра. Книга 3 посвящена в том числе Зинаиде; нужных листов не получено. Гомель — географический ориентир для поиска учреждения и материалов исполнения, не его шифр. |
+| **Keston News Service №266, 08.01.1987** | Индекс текста выставки Baylor [1](https://library.web.baylor.edu/womenscollections) ссылается на выпуск о судах 1986 г. над четырьмя женщинами; извлечение страницы вернуло только навигацию. Выставочное резюме **2–2,5 года** само по себе не идентифицирует нальчикскую пару и не отменяет сообщений о **1,5 годах** Готман. [CMnexus][kns-87-xxv] показывает выборочно №267/271, не №266. Запрашивать оглавление и релевантную полосу №266 в [комплектах XIX](#xix-печатные-подшивки-keston) (Leeds или UCL **S-4291**, где начинается именно с №266); имена, подпись и источник сверять по листу. |
+| **Columbia RBML, [Helsinki Watch, CLIO 6062290][columbia-xxv]** | Текущая карточка — **HRW RG 1**, историческая [PDF-опись][columbia-pdf-xxv] — **RG 7 / HR# 0002**. При обращении указывать обе формы и серию: номера коробок повторяются. В [архивной описи III.2, Cathy Fitzpatrick Files][columbia-cf-xxv]: **47/5**, *Religious Persecution: Testimony of Cathy Fitzpatrick…* (1986), **47/2**, *Keston College, General* (1980–88), **45/11**, *Religious Believers: Defense and Briefing* (1987–88), **41/4**, *Prisoner Releases* (1987), **39/5**, *Lists, General* (1987), **40/2**, *List of Political Prisoners in the USSR (publication)* (1986). Фицпатрик участвовала в той же панели, что Винс ([GPO II, с. 56][pst56-xxv], [подготовленный текст с. 59][pst59-xxv]). В [серии X][columbia-ihf-xxv] точная папка **8/11**, *Political prisoners in the USSR: Releases and continued detention* (1987). Для именных исходов приоритет 41/4 и X 8/11; для материалов панели — 47/5. Заголовки папок не доказывают наличие приложения Винс или независимый источник сообщений. [Материал UPI от 27.02.1987][upi-xxv] передаёт различение Helsinki Watch между объявленным помилованием и действительным выходом; именных исходов по целевой паре в нём нет. |
+| **Reagan Library и ГА РФ** | [Executive Clerk, Series I — Bill Reports][executive-xxv], Box 70 (порция 17): `08/06/1986 S.J.R. 371 [Helsinki Human Rights Day]` помечена **open**, без ссылки на образ. Это материалы о прохождении и подписании резолюции, не стенограмма или лента Палаты. [OA 18287, PDF 012][oa-xxv], просмотренные порции 0–7: выступление Терели **22.10.1987** и начало доклада Puebla **1988**, не найденное приложение Винс. [ГА РФ, II.В][garf39-xxv]: **Р‑8131, оп. 39**, прекращённые уголовные дела и надзорные производства, 1972–1991. Это тематический путь (на странице есть сообщение 2015 г. об ограничении выдачи), не найденная именная единица и не доказательство, что такой пересмотр был. |
+
+**Черновик для Hoover, не отправлен.**
+
+> In Yuri Yarim-Agaev papers (2007C59), could you identify the items about Zinaida Yakovlevna Vilchinskaya in Box 19, Folder 6 (1984–1987), and the 1987 entry for Galina and Zinaida in Box 77, Folder 4? I am looking for dated papers on the Nalchik trial of September–October 1986 with Margarita Leonhardovna Gotman and on Zinaida’s reported release on 30 June 1987, especially any reference to the releasing institution or the legal basis. Could you distinguish documents about Zinaida from those about her daughter Galina and indicate whether there is an item list or existing research copy? This is an inquiry about identification and access, not a digitization order.
+
+**Границы.** Назначение судом срока, его исполнение и основание выхода — три разных поля. Для Маргариты не найдено сообщения о состоявшемся освобождении или справки; для Зинаиды по-прежнему не найден именной акт. Приговоры, печатные образы, подписанный отчёт за 1985 г., входящий список, плакат и лента не получены. В Drive — только чтение метаданных и описания: проверенный README относится к пакету «Слово истины» 1918 г., ZIP не скачан; поиск по названию мемуаров и №266 не дал кандидатов. Это не проверка содержимого всего Drive. Семейные адреса не перепечатаны, заказы и запросы не отправлены.
+
+[pst56-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=60
+[pst59-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=63
+[pst129-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=133
+[pst130-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=134
+[pst156-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=160
+[umn156-xxv]: https://babel.hathitrust.org/cgi/ssd?id=umn.31951p00757501f;seq=308
+[pst171-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=175
+[pst172-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=176
+[umn172-xxv]: https://babel.hathitrust.org/cgi/ssd?id=umn.31951p00757501f;seq=324
+[pst174-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=178
+[pst181-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=185
+[pst182-xxv]: https://babel.hathitrust.org/cgi/ssd?id=pst.000011991335;seq=186
+[hoover-xxv]: https://oac.cdlib.org/findaid/ark:/13030/c8ng4x0x
+[hoover-items-xxv]: https://oac.cdlib.org/findaid/static/ark:/13030/c8ng4x0x
+[hoover-copies-xxv]: https://www.hoover.org/library-archives/research-services/digitization-services
+[msc-v-xxv]: https://mscexb.ru/%D0%BA-60-%D0%BB%D0%B5%D1%82%D0%B8%D1%8E-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D0%B0-%D0%B7%D0%B0%D1%81%D1%82%D1%83%D0%BF%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0-%D0%BC%D1%81%D1%86-%D0%B5%D1%85%D0%B1
+[memo-v3-xxv]: https://web.archive.org/web/20170612171138/http://rarebooks.memo.ru/books/vilchinsky3/vilchinsky3.htm
+[v3-200-xxv]: https://book24.ru/product/nedarom-prolitye-slezy-v-3-kh-knigakh-kniga-3-preterpevshie-do-kontsa-6534149/
+[kns-87-xxv]: http://cmnexus.org/magazines/Keston_News_Service/1987/page1
+[columbia-xxv]: https://findingaids.library.columbia.edu/archives/cul-6062290
+[columbia-pdf-xxv]: https://www.columbia.edu/cu/libraries/inside/projects/findingaids/scans/pdfs/HRW_Helsinki.pdf
+[columbia-cf-xxv]: https://web.archive.org/web/20100627001531/http://findingaids.cul.columbia.edu/ead/nnc-rb/ldpd_6062290/dsc/3
+[columbia-ihf-xxv]: https://web.archive.org/web/20100627001558/http://findingaids.cul.columbia.edu/ead/nnc-rb/ldpd_6062290/dsc/10
+[upi-xxv]: https://www.upi.com/Archives/1987/02/27/Soviet-prison-releases-the-record-so-far/5889541400400/
+[executive-xxv]: https://www.reaganlibrary.gov/research/finding-aids/executive-clerk-white-house-office-records-1981-1989
+[oa-xxv]: https://www.reaganlibrary.gov/public/digitallibrary/smof/publicliaison/chumachenko/oa18287/40-092-40031983-oa18287-012-2017.pdf
+[garf39-xxv]: https://statearchive.ru/647
+
+### Срез работы XXV
+
+AuditRepo `main` `fe69239320bed47362f049906d5af25342f3c104`, свой XXIV `170d69b23df4c0ab2a4ce1daddeb219b887fdee8`, ACD 1.5.0. До восстановления checkout сохранён tar; сверено **27/27** путей в ветке. Входной overlap **10:37:46–10:37:56 UTC**: **27 путей / 9 открытых PR / 897 записей `/files`**, 0 пересечений с `main` и PR, 0 своих PR. Исходный срез: **44 открытых / 0 закрытых / 0 проблем / 1825 контекстов**. [Research: только метаданные](../PEER-REVIEWS.md#xxv-research-584--контроль-метаданных), отдельно от источников.
