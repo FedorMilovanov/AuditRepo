@@ -109,7 +109,18 @@ try{
  await page.mouse.up();await sleep(80);
  if(Math.abs((await read()).yaw-yaw)>.12)
    throw Error('MIDIAN camera failed to restore reference direction');
+ // The earlier real well approach is deliberately very close; restart
+ // exploration on the phone so the landscape witness is an establishing
+ // shot, not an accidental photo from inside the masonry.
+ await page.keyboard.press('Escape');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset.midianMode==='shot');
  await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+ await page.click('[data-testid="midian-explore-start"]');
+ await page.waitForFunction(()=>{
+   const d=document.querySelector('[data-testid="moses-midian-well-3d"]')?.dataset;
+   return d?.midianMode==='walk' &&
+     Math.abs(Number(d.midianX)-5.2)<.08&&Math.abs(Number(d.midianZ)-7.6)<.08;
+ },{timeout:20000});
  await sleep(180);
  const mobile=await page.$eval('[data-testid="midian-viewport"]',e=>{
    const r=e.getBoundingClientRect();

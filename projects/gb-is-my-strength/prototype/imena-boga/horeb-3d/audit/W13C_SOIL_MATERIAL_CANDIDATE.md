@@ -20,3 +20,7 @@ Existing W13A scrub instances are now separated into three low-cost non-species-
 ## W13C.3 — genuine portrait touch and useful art witness
 
 The W13B browser-midian-walk test used desktop `page.mouse` for a 390px mobile control and captured portrait after an unrelated upward drag that inflated sky coverage. The W13C QA candidate instead restores the canonical look direction before portrait, issues true Chrome DevTools Protocol `touchStart/touchEnd` against the movement control, and checks both forward distance and release to prevent stuck walking. The resulting mobile screenshot is a new intentional camera stage and must **not** be compared as pixel-identical with pre-W13C mobile witness; also retain a same-stage comparison of initial establishing shots.
+
+## W13C.4 — portrait visual framing correction
+
+The first W13C.3 portrait screenshot was real touch, but came immediately after a desktop field approach ending next to the well, so the well wall filled most of the phone image. The test now explicitly leaves 3D, switches to 390px, starts a fresh actual portrait walk at the canonical (5.2, 7.6) viewpoint, then performs the same genuine touch movement and capture. Both close-up physically approached lesson and representative environmental portrait are independently retained. This is a **test camera-stage correction**, not an attempted invisible geometry/physics edit.
