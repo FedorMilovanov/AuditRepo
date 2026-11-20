@@ -172,6 +172,10 @@ try{
  const px=lookBox.x+lookBox.width*.57,py=lookBox.y+lookBox.height*.43;
  const qx=lookBox.x+lookBox.width*.76,qy=lookBox.y+lookBox.height*.45;
  const getYaw=()=>page.$eval('[data-testid="moses-midian-well-3d"]',c=>Number(c.dataset.midianYaw));
+ // Software WebGL may render <10 FPS: fixed 100ms waits could read stale
+ // canvas.dataset yaw even though real PointerEvents and camera updates ran.
+ const settleLook=()=>page.evaluate(()=>new Promise(resolve=>
+   requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  const yawStart=await getYaw();
  const multi=await page.createCDPSession();
  try{
@@ -181,13 +185,15 @@ try{
      touchPoints:[{id:1,x:px,y:py},{id:2,x:qx,y:qy}]});
    await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
      touchPoints:[{id:1,x:px,y:py},{id:2,x:qx+64,y:qy}]});
-   await sleep(100);
+   // The canvas exposes yaw in requestAnimationFrame, not synchronously
+   // in pointermove. Wait for two painted frames on slow software WebGL.
+   await settleLook();
    const yawAfterSecond=await getYaw();
    if(Math.abs(yawAfterSecond-yawStart)>.035)
      throw Error('MIDIAN second touch stole active camera '+JSON.stringify({yawStart,yawAfterSecond}));
    await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
      touchPoints:[{id:1,x:px+65,y:py},{id:2,x:qx+64,y:qy}]});
-   await sleep(100);
+   await settleLook();
    const yawAfterPrimary=await getYaw();
    if(Math.abs(yawAfterPrimary-yawStart)<.11)
      throw Error('MIDIAN primary touch lost look ownership '+JSON.stringify({yawStart,yawAfterPrimary}));
