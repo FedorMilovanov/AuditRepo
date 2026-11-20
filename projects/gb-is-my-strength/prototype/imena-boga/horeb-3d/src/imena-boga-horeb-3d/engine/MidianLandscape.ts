@@ -256,14 +256,23 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
     new THREE.MeshStandardMaterial({color:0x74755a,roughness:1,side:THREE.DoubleSide}),
     points.length*leaves);
   twig.name='midian-scrub-twigs';leaf.name='midian-scrub-tiny-leaves';
+  const shrubTint=new THREE.Color();
   for(let i=0;i<points.length;i++){
-    const p=points[i],y=ground(p.x,p.z);
+    const p=points[i],y=ground(p.x,p.z),form=i%3;
+    // Three physically modest scrub silhouettes: low cushion, tall open
+    // stems, and wind-swept asymmetric branches. No species identification.
+    const swept=form===2?p.size*.16:0;
     for(let k=0;k<branches;k++){
       const angle=Math.PI*2*k/branches+.4*hash(i*3.1+k);
-      const reach=p.size*(.28+.30*hash(i*7.3+k*1.8));
+      const reach=p.size*(form===0?(.18+.19*hash(i*7.3+k*1.8)):
+        form===1?(.10+.19*hash(i*7.3+k*1.8)):
+        (.30+.33*hash(i*7.3+k*1.8)));
+      const height=p.size*(form===0?(.22+.22*hash(i+k*2.31)):
+        form===1?(.64+.27*hash(i+k*2.31)):
+        (.34+.30*hash(i+k*2.31)));
       const start=new THREE.Vector3(p.x,y+.05,p.z);
-      const end=new THREE.Vector3(p.x+Math.cos(angle)*reach,
-        y+p.size*(.34+.34*hash(i+k*2.31)),p.z+Math.sin(angle)*reach);
+      const end=new THREE.Vector3(p.x+Math.cos(angle)*reach+swept,
+        y+height,p.z+Math.sin(angle)*reach);
       const delta=end.clone().sub(start);
       dummy.position.copy(start).add(end).multiplyScalar(.5);
       dummy.quaternion.setFromUnitVectors(UP,delta.clone().normalize());
@@ -272,15 +281,25 @@ export function addMidianLandscape(scene:THREE.Scene,ground:(x:number,z:number)=
     }
     for(let k=0;k<leaves;k++){
       const angle=Math.PI*2*k/leaves+.3*hash(i+k);
-      const reach=p.size*(.31+.23*hash(i*9.11+k*1.43));
-      dummy.position.set(p.x+Math.cos(angle)*reach,
-        y+p.size*(.37+.21*hash(i*2.7+k)),p.z+Math.sin(angle)*reach);
+      const reach=p.size*(form===0?(.18+.13*hash(i*9.11+k*1.43)):
+        form===1?(.13+.14*hash(i*9.11+k*1.43)):
+        (.29+.22*hash(i*9.11+k*1.43)));
+      const crownHeight=p.size*(form===0?(.21+.21*hash(i*2.7+k)):
+        form===1?(.57+.21*hash(i*2.7+k)):
+        (.32+.18*hash(i*2.7+k)));
+      dummy.position.set(p.x+Math.cos(angle)*reach+swept,
+        y+crownHeight,p.z+Math.sin(angle)*reach);
       dummy.rotation.set(hash(i+k*3)*.5,angle,hash(i*4+k)*.5);
-      dummy.scale.set(.09*p.size,.05*p.size,.15*p.size);dummy.updateMatrix();
-      leaf.setMatrixAt(i*leaves+k,dummy.matrix);
+      const leafSize=form===1?.7:form===0?1.15:.92;
+      dummy.scale.set(.09*p.size*leafSize,.05*p.size,.15*p.size*leafSize);
+      dummy.updateMatrix();leaf.setMatrixAt(i*leaves+k,dummy.matrix);
+      shrubTint.set(form===0?0x7e7e5d:form===1?0x6f755c:0x858468);
+      shrubTint.multiplyScalar(.81+.28*hash(i*5.73+k*3.19));
+      leaf.setColorAt(i*leaves+k,shrubTint);
     }
   }
   twig.instanceMatrix.needsUpdate=true;leaf.instanceMatrix.needsUpdate=true;
+  if(leaf.instanceColor)leaf.instanceColor.needsUpdate=true;
   scene.add(twig,leaf);
   // W13A: one additional instanced draw call (<=440 octahedra x 8 tris).
   const grit=new THREE.InstancedMesh(new THREE.OctahedronGeometry(1,0),

@@ -3,6 +3,7 @@
  * An artistic world, NOT an archaeological identification of the well.
  */
 import * as THREE from 'three';
+import {makeMidianSoilTexture,MIDIAN_SOIL} from './MidianSurface.js';
 import {addMidianLandscape,MIDIAN_ROCK_COLLIDERS} from './MidianLandscape.js';
 import {midianHabitat} from './MidianBiome.js';
 import {addMidianWellMasonry} from './MidianMasonry.js';
@@ -41,7 +42,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'low-power'});
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.13;
+  renderer.toneMappingExposure=1.09;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.shadowMap.enabled=true;
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
@@ -51,8 +52,8 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   const camera=new THREE.PerspectiveCamera(56,1,.1,125);
   camera.position.set(9,5.4,12);
   camera.lookAt(0,.6,0);
-  scene.add(new THREE.HemisphereLight(0xf8e6cc,0x675b4b,1.9));
-  const sun=new THREE.DirectionalLight(0xffddae,2.45);
+  scene.add(new THREE.HemisphereLight(0xf8e6cc,0x675b4b,1.52));
+  const sun=new THREE.DirectionalLight(0xffddae,2.65);
   sun.position.set(-13,20,-8);
   sun.castShadow=true;
   sun.shadow.mapSize.set(1024,1024);
@@ -79,8 +80,10 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   }
   groundGeo.setAttribute('color',new THREE.Float32BufferAttribute(palette,3));
   groundGeo.computeVertexNormals();
+  const soilTexture=makeMidianSoilTexture();
   const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({
-    vertexColors:true,roughness:1,side:THREE.DoubleSide,
+    vertexColors:true,roughness:.99,side:THREE.DoubleSide,
+    map:soilTexture,bumpMap:soilTexture,bumpScale:MIDIAN_SOIL.bumpScale,
   }));
   ground.name='midian-ground';
   ground.receiveShadow=true;
@@ -200,6 +203,8 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
     canvas.dataset.midianRendered='true';
     if(!reducedMotion){ /* No fabricated human action is animated. */ }
   }
+  canvas.dataset.midianSoilTextureSize=String(MIDIAN_SOIL.size);
+  canvas.dataset.midianSoilMap='procedural-bump-and-albedo';
   canvas.dataset.midianWorld='well';
   canvas.dataset.midianMode='shot';
   canvas.dataset.midianWellStones=String(masonry.stones);
@@ -228,6 +233,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
       (Array.isArray(node.material)?node.material:[node.material]).forEach(m=>materials.add(m));
     });
     geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());
+    soilTexture.dispose(); // THREE.Material.dispose never disposes texture maps.
     renderer.dispose();renderer.forceContextLoss();
     for(const k of Object.keys(canvas.dataset))if(k.startsWith('midian'))delete canvas.dataset[k];
   }

@@ -10,6 +10,7 @@ import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileC
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
+import {MIDIAN_SOIL,midianSurfaceValue,makeMidianSoilTexture} from '../.test-build/engine/MidianSurface.js';
 import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
 import {midianApproachClearance,midianScrubPoint,midianPebblePoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRockOrientation,MIDIAN_ROCK_MIN_SEPARATION,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
 import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
@@ -510,6 +511,22 @@ t('W13A grounded micro-scree is small, bounded, varied and safe to walk past',
         Math.hypot(a.x,a.z)>=2.5&&midianApproachClearance(a.x,a.z)>=.95&&
         Number.isFinite(midianGround(a.x,a.z))&&a.size>=.025&&a.size<=.115)&&
       new Set(p.map(a=>a.x.toFixed(2))).size>150;
+  })());
+// W13C: material detail must be deterministic, tile without hard seams and
+// dispose GPU texture memory instead of introducing a network dependency.
+t('W13C procedural soil texture is periodic, varied and bounded',
+  (()=>{const points=Array.from({length:81},(_,i)=>
+      midianSurfaceValue(i*.1297,i*.0731));
+    const texture=makeMidianSoilTexture();
+    const ok=MIDIAN_SOIL.size===256&&
+      MIDIAN_SOIL.bumpScale>0&&MIDIAN_SOIL.bumpScale<.1&&
+      texture.image.width===256&&texture.image.height===256&&
+      texture.image.data.length===256*256*4&&
+      Math.abs(midianSurfaceValue(0,.35)-midianSurfaceValue(1,.35))<1e-9&&
+      Math.abs(midianSurfaceValue(.73,0)-midianSurfaceValue(.73,1))<1e-9&&
+      points.every(v=>Number.isFinite(v)&&Math.abs(v)<=1)&&
+      new Set(points.map(v=>v.toFixed(4))).size>60;
+    texture.dispose();return ok;
   })());
 // W13B: spatial provenance lesson, with sanitized local mastery and
 // differentiated feedback. A visit alone never counts as understanding.
