@@ -419,6 +419,41 @@ t('W12E.5 separated deposits vary substantially in scale and do not overlap',
       sizes.at(-1)>1.4&&
       midianWalkable(5.2,7.6);
   })());
+// W12E.5.1 detached navigation coverage guard: the official Midian
+// Chromium smoke tests one short forward motion, whereas changed physical
+// boulders could theoretically isolate a different region. Breadth-first
+// walk on 0.5m x/z lattice gives a conservative topological regression check.
+// Grid coverage is intentionally not 100%: tiny irrelevant cells may be
+// disconnected by circles in a discretized map even if movement is valid.
+t('W12E.5.1 rock field leaves the well and almost all terrain connected',
+  (()=>{const cols=73,rows=89,total=cols*rows;
+    const allowed=new Uint8Array(total),seen=new Uint8Array(total);
+    const idx=(i,j)=>j*cols+i;
+    let count=0;
+    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+      const x=-18+i*.5,z=-22+j*.5;
+      if(midianWalkable(x,z)){allowed[idx(i,j)]=1;count++;}
+    }
+    const seed=idx(Math.round((5.2+18)*2),Math.round((7.6+22)*2));
+    if(!allowed[seed])return false;
+    const queue=[seed];seen[seed]=1;
+    for(let head=0;head<queue.length;head++){
+      const node=queue[head],j=Math.floor(node/cols),i=node%cols;
+      for(const [dx,dz] of [[1,0],[-1,0],[0,1],[0,-1]]){
+        const x=i+dx,z=j+dz;
+        if(x<0||x>=cols||z<0||z>=rows)continue;
+        const other=idx(x,z);
+        if(!allowed[other]||seen[other])continue;
+        seen[other]=1;queue.push(other);
+      }
+    }
+    const wellAccess=idx(36,49); // physical position x=0,z=2.5
+    return count>5900&&queue.length/count>.999&&
+      seen[wellAccess]===1&&
+      midianWalkable(0,2.5)&&
+      Array.from({length:17},(_,i)=>i/16)
+        .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)));
+  })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
   Array.from({length:76},(_,i)=>midianScrubPoint(i))
