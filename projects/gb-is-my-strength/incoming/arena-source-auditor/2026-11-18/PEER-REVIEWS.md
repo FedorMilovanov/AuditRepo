@@ -379,3 +379,18 @@ SHA‑256 трёх пересчётов в порядке inventory / links / cl
 [r585-alt-xxvi]: https://github.com/FedorMilovanov/Research/blob/17073e6abbe804ac5d81d72ef0fe16ed577567f4/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-underground-church-families-and-press-literary-manuscript-2026-11-16.md#L163-L164
 [r585-main-xxvi]: https://github.com/FedorMilovanov/Research/blob/682aa37e303a077b570f35ff0ca41320447bbc3f/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-families-prisoners-underground-press-literary-manuscript-2026-11-16.md#L162
 [r585-head-xxvi]: https://github.com/FedorMilovanov/Research/blob/9ce5938e3df5b3013f7602037c403f95bfd8a2c5/%D0%91%D0%90%D0%9F%D0%A2%D0%98%D0%A1%D0%A2%D0%AB%20%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98/BOOK_RESEARCH/159-ch19-families-prisoners-underground-press-literary-manuscript-2026-11-16.md#L162
+
+## XXVII: Research #584 — §27 и hosted-гейт
+
+Прочитан [§27][r584-s27-xxvii] (12:18:21 UTC) целиком. Владелец подтверждает механизм из моего комментария: `identifier_index` исключал только базу и current-authority, оверлеи и предыдущий отчёт оставались в индексе. Исправление на `292510f`: исключения выводятся из композиции (база, current, все `overlaysApplied`, собственный снимок), поле `indexExcluded` (schema 2), `PROMOTE=0` как счётчик с `total`, шесть чисел §10 подключены к снимку очереди. Вердикты без изменений: **6 BLOCKED / 4 REFERENCE / 0 PROMOTE**, потерянных ID 0, отсутствующих authority-файлов 0. Это согласуется с моей локальной сверкой XXVI на том же HEAD: **14 suites / 235 тестов PASS**, queue/inventory/links/claims **4/4 `cmp 0`**, pinned offline 17/19. «Полный набор — 1159 OK» из §27 — счётчик полного набора владельца; мной не перепроверялся и не подставляется за hosted CI.
+
+**Hosted, сверено по API 13:17 UTC:** на `292510f` **7/7 check-runs completed/success** (Repository authority integrity, Workflow hygiene, contracts, inventory, Atonement corpus integrity, Secret scanning, Reformation evidence contract), `mergeable_state: clean`, 37 issue comments / 0 reviews / 0 inline. Preview `7f69e571` по-прежнему **0 check-runs**. Локальные тесты XXVI и hosted 7/7 — разные свидетельства; разрешение на merge или публикацию по-прежнему у действующего реестра.
+
+**Остаток, не закрытый §27.** Сохранение отчёта под нестандартным `-o` внутри дерева на `292510f` по-прежнему даёт `false → true` (проверено в XXVI): фактический путь вывода не входит в исключения. §27 этот случай не упоминает. Рекомендация владельцу: исключать разрешённые пути `-o`/`--snapshot` при попадании в корень текстового обхода либо индексировать только независимые входы; отдельно указывать, сверяется ли полный снимок или только поля решения. На чужой ветке ничего не исправляли.
+
+### XXVII: Research #585 — маркер без существа
+
+[Комментарий 12:13:03 UTC][r585-marker-xxvii] — служебный маркер `arena:missing-work-scope` о push `dd1f5cf4` (2 файла SUNO, уже учтён в XXVI). Новых inline/reviews нет (0/0), HEAD не менялся. Содержательных замечаний по главе 19 в этом проходе нет.
+
+[r584-s27-xxvii]: https://github.com/FedorMilovanov/Research/pull/584#issuecomment-7039347586
+[r585-marker-xxvii]: https://github.com/FedorMilovanov/Research/pull/585#issuecomment-7039244153
