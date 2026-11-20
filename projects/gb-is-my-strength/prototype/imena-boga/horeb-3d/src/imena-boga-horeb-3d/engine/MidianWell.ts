@@ -144,7 +144,9 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
     if(!exploring)return;const d=dir(e.key);if(!d)return;e.preventDefault();moving[d]=false;
   }
   function pointerDown(e:PointerEvent){
-    if(!exploring||paused||e.button!==0)return;
+    // Keep one active look-pointer: a second finger must not steal control.
+    if(!exploring||paused||e.button!==0||dragId!==null||
+       (e.pointerType==='touch'&&!e.isPrimary))return;
     dragId=e.pointerId;lastX=e.clientX;lastY=e.clientY;
     canvas.setPointerCapture(e.pointerId);
   }

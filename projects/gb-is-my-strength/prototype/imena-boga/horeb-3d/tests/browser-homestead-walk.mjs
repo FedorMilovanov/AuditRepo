@@ -178,6 +178,43 @@ try{
   if(mobile.w<389||mobile.h<843||!mobile.hasKeys)
     throw Error('HOMESTEAD mobile controls hidden '+JSON.stringify(mobile));
   await page.screenshot({path:join(out,'homestead-walk-mobile390.png')});
+
+ // W13D: second genuine finger must neither hijack nor rotate the active look.
+ // Primary finger still controls yaw until it releases its own capture.
+ const lookCanvas=await page.$('[data-testid="moses-midian-homestead-3d"]');
+ const lookBox=await lookCanvas.boundingBox();
+ if(!lookBox)throw Error('HOMESTEAD multi-touch canvas absent');
+ const px=lookBox.x+lookBox.width*.57,py=lookBox.y+lookBox.height*.43;
+ const qx=lookBox.x+lookBox.width*.76,qy=lookBox.y+lookBox.height*.45;
+ const getYaw=()=>page.$eval('[data-testid="moses-midian-homestead-3d"]',c=>Number(c.dataset.midianYaw));
+ const yawStart=await getYaw();
+ const multi=await page.createCDPSession();
+ try{
+   await multi.send('Input.dispatchTouchEvent',{type:'touchStart',
+     touchPoints:[{id:1,x:px,y:py}]});
+   await multi.send('Input.dispatchTouchEvent',{type:'touchStart',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx,y:qy}]});
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx+64,y:qy}]});
+   await sleep(100);
+   const yawAfterSecond=await getYaw();
+   if(Math.abs(yawAfterSecond-yawStart)>.035)
+     throw Error('HOMESTEAD second touch stole active camera '+JSON.stringify({yawStart,yawAfterSecond}));
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px+65,y:py},{id:2,x:qx+64,y:qy}]});
+   await sleep(100);
+   const yawAfterPrimary=await getYaw();
+   if(Math.abs(yawAfterPrimary-yawStart)<.11)
+     throw Error('HOMESTEAD primary touch lost look ownership '+JSON.stringify({yawStart,yawAfterPrimary}));
+   // Return to the original intentional orientation.
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx+64,y:qy}]});
+   await sleep(60);
+ }finally{
+   await multi.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+   await multi.detach();
+ }
+
   // Phone framing is not an unreachable vanity camera: movement must
   // physically advance along the same collision-checked access route.
   await page.keyboard.down('w');

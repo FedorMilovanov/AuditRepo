@@ -667,7 +667,8 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     walk.pitch=THREE.MathUtils.clamp(walk.pitch-THREE.MathUtils.clamp(dy,-120,120)*.003,-.68,.55);
   }
   function pointerDown(e:PointerEvent){
-    if(!exploring||paused||e.button!==0)return;
+    if(!exploring||paused||e.button!==0||dragId!==null||
+       (e.pointerType==='touch'&&!e.isPrimary))return;
     dragId=e.pointerId;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);
   }
   function pointerMove(e:PointerEvent){

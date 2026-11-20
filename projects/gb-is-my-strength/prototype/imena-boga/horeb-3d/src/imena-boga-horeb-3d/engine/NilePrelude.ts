@@ -619,7 +619,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   };
   const clearMovement=()=>Object.keys(directions).forEach(key=>directions[key as NileDirection]=false);
   const pointerDown=(e:PointerEvent)=>{
-    if(!exploring||e.button!==0)return;
+    if(!exploring||e.button!==0||dragPointer!==null||
+       (e.pointerType==='touch'&&!e.isPrimary))return;
     dragPointer=e.pointerId;dragX=e.clientX;dragY=e.clientY;
     canvas.setPointerCapture(e.pointerId);
   };
