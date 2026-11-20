@@ -138,7 +138,9 @@ def main(args):
         assert len(rows)==2 and {r['id'] for r in rows}=={'quiz-focus-press','quiz-focus-timer'}
         each = []
         for r in rows:
-            doc = r['offer']['doc']; assert doc not in seen; seen.add(doc)
+            docs = {r[k]['doc'] for k in ('produced', 'origin', 'offer')}
+            assert docs.isdisjoint(seen), 'same capture reused: repeated document start'
+            seen.update(docs)
             each.append(check(r,w['method']['timing']))
         cases.append(each)
     for f,digest in pins.items():

@@ -187,7 +187,9 @@ def main():
     a, b, previous, dist, ia, ib, receipt = map(Path, sys.argv[1:])
     assert a.resolve() != b.resolve() and ia.resolve() != ib.resolve()
     aw, bw = load(a / WITNESS), load(b / WITNESS)
-    assert aw != bw, 'A and B contain the same capture'
+    starts = [e['doc'] for w in (aw, bw) for r in w['rows'] for e in r['life']
+              if e['type'] == 'pageshow' and e['persisted'] is False]
+    assert starts and len(starts) == len(set(starts)), 'same capture reused: repeated document start'
     for k in ('anchor', 'chromium', 'playwright', 'node', 'server', 'fixtures', 'pagefind', 'distSha256'):
         assert aw[k] == bw[k], k
     assert aw['anchor'] == ANCHOR and aw['fixtures'] == CASE_FIXTURES | {'title': TITLE}

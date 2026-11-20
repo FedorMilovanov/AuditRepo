@@ -62,6 +62,9 @@ try {
     })}`);
     assert.equal(v.first.sha256, sha(left));
     assert.equal(v.repeat.sha256, sha(complete));
+    assert.equal(v.inputBytesEqual, left.equals(complete));
+    assert.equal(v.nativePrintWitness, 'user-attested-only');
+    if (v.inputBytesEqual) assert.match(await check.locator('#status').textContent(), /побайтно совпадают/);
     receipts.push({ result: v.result, first: v.first, repeat: v.repeat });
   }
   assert.ok(!errors.length, errors.join('\n'));

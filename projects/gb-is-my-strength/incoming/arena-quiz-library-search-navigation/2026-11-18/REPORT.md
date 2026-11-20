@@ -52,22 +52,20 @@
 
 **Воспроизводимость и пределы.** `56` dist-пинов совпали, все `52` пина этапа 23 повторно проверены (`51` общий). Две отдельные сборки Pagefind по `147` файлов совпали побайтно; браузер запросил `17` из них. В обычном запросе засвидетельствованы index/fragment `200`, не fallback без Pagefind; в точном — публичный Scripture JSON. `7/7` PNG совпали между A/B, сохранены только экземпляры A. Нет неожиданных локальных HTTP-ошибок, `pageerror` или emergency unlock. Никакой подстановки ответов поиска, правок DOM/CSS, записи storage или навигации из instrumentation. Это локальный Headless Shell, без SW, не физический мобильный Chrome, WebKit или прод. `:4178` и `QPDF‑01` остались без изменений (`PENDING_NATIVE_DIALOG`).
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/library-search-navigation-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/library-search-navigation-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-library-search-navigation-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-library-search-navigation-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/library-search-navigation.mjs
 [check]: harness/check-replays.py
-[solo-result]: evidence/route-solo-390-selected.png
+[solo-result]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-route-solo-390-selected-png
 [stack-result]: evidence/route-draft-390-selected.png
 [solo-back]: evidence/route-solo-390-back.png
-[stack-back]: evidence/route-draft-390-back.png
+[stack-back]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-route-draft-390-back-png
 [empty]: evidence/route-draft-390-reopened.png
 [exact-enter]: evidence/exact-solo-1440-destination.png
-[exact-read]: evidence/exact-link-1440-destination.png
+[exact-read]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-exact-link-1440-destination-png
 [stage23]: ../../arena-quiz-library-search-stack/2026-11-18/REPORT.md
 [notes]: ../../arena-quiz-notes-handoff/2026-11-18/REPORT.md
 [history]: ../../arena-quiz-source-history/2026-11-18/REPORT.md

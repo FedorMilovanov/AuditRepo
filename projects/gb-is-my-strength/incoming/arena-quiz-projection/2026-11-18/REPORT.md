@@ -43,13 +43,11 @@
 4. **Окружение и ограничения.** Chromium Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4, мышь и клавиши даже при 390 px, reduced motion, SW блокирован. Пустой профиль на сценарий; весь сайт от локального `dist`, сторонние запросы и загрузка Vosk намеренно заблокированы. Подменялись только приёмники платформы `speechSynthesis` и `window.print` для регистрации входных данных и запуска настоящего headless PDF. Не было голосового воспроизведения, загрузки расширенной модели, замера изменения квиза **во время уже начавшегося** прослушивания, физической печати, других движков или live-прохода. `GBReaderProjection` — не Pagefind; отказов глобального поиска отсюда не выводим.
 5. **Параллельная работа.** [#2338][journal] и его стеки [#2339][journal-font], [#2340][journal-proposal], [#2341][journal-toc], [#2342][journal-wave] сверены по файлам. У #2339, кроме Journal/G3, есть реальные изменения шрифтов и их `<head>`-подключения, в том числе на проверенных семействах, плюс ревизии ресурсов/SW. В проверенных diff нет владельцев квиза, ReaderProjection, TTS или print CSS. **Число страниц PDF относится только к этому Product SHA**, не к стекам. AuditRepo tips [39b326f][baptists] и [ec07927][sources] — свидетельства 1971 и переизданий; [#538][names] — отдельная приёмка прототипов. Прежний Draft `84c3f05…` — оба CI checks SUCCESS.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [census]: ../../arena-quiz-learning/2026-11-18/REPORT.md
 [prior-tts]: ../../../reverify/2026-10-28-publication-projection-cluster-resulting-main.md#3-sys-reader-projection-consumer-bypass--fixed-current
-[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-projection/2026-11-18/evidence/quiz-projection-witness.json
+[witness]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-projection-quiz-projection-witness-json
 [pdf]: evidence/pdf-text-witness.json
 [pdf-replay]: evidence/pdf-text-witness-replay.json
 [print-shot]: evidence/print-static-quiz-notice.png

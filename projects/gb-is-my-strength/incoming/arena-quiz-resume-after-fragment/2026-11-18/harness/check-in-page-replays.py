@@ -135,7 +135,9 @@ def main(args):
     a,b,dist,old,out=map(Path,args)
     ws=[load(d/WITNESS) for d in (a,b)]
     w0,w1=ws
-    assert w0 != w1, 'A and B contain the same capture'
+    starts = [e['doc'] for w in ws for r in w['rows'] for e in r['events']
+              if e['kind'] == 'pageshow' and e['persisted'] is False]
+    assert starts and len(starts) == len(set(starts)), 'same capture reused: repeated document start'
     for k in ('anchor','node','playwright','chromium','method','distSha256'):
         assert w0[k]==w1[k],k
     assert w0['anchor']==ANCHOR

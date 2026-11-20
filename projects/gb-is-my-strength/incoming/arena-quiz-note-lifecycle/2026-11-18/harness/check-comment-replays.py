@@ -3,6 +3,7 @@
 import hashlib
 import json
 import re
+import struct
 import sys
 from collections import Counter
 from datetime import datetime
@@ -20,6 +21,12 @@ MD, JSON = 'gb-moya-biblioteka.md', 'gb-library-backup.json'
 SHA = re.compile(r'[a-f0-9]{64}')
 CASES = {f'{arm}-{width}' for width in (390, 1440) for arm in ('same', 'delete', 'distinct')}
 WITNESS = 'comment-followup-witness.json'
+SCREENS = {
+    'delete-390-false-success.png', 'distinct-1440-distinct-after-reload.png',
+    'same-390-after-reload.png', 'same-390-peer-saved.png', 'same-390-stale-draft.png',
+    'same-390-qe-key.png', 'same-390-qe-paragraph.png',
+}
+
 
 
 def digest(data):
@@ -181,19 +188,32 @@ def verify_case(r, words):
     }
 
 
+def screen_hashes(folder):
+    paths = sorted(folder.glob('*.png'))
+    assert {p.name for p in paths} == SCREENS, 'missing or unexpected QNL screenshot name'
+    result = {}
+    for path in paths:
+        data = path.read_bytes()
+        assert data[:16] == b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR' and len(data) >= 24, path
+        size = (1440, 900) if path.name.startswith('distinct-1440-') else (390, 844)
+        assert struct.unpack('>II', data[16:24]) == size, f'wrong viewport: {path}'
+        result[path.name] = digest(data)
+    return result
+
+
 def main(argv):
     if len(argv) != 5:
         raise SystemExit('check-comment-replays.py RUN_A RUN_B DIST OLD_QNL_JSON RECEIPT')
     ra, rb, dist, previous, out = map(Path, argv)
     runs = [load(d / WITNESS) for d in (ra, rb)]
-    assert runs[0] != runs[1], 'A and B contain the same capture'
     results, ids, counts = [], [], []
     for w in runs:
         assert w['anchor'] == ANCHOR and len(w['rows']) == len(CASES) and {r['id'] for r in w['rows']} == CASES
         results.append([verify_case(r, w['words']) for r in w['rows']])
         ids.append({n['id'] for r in w['rows'] for n in r['openA']['rawNotes']})
         counts.append(Counter(name for r in w['rows'] for _, name in r['downloads']))
-    assert not ids[0] & ids[1] and min(map(len, ids)) == 8
+    assert not ids[0] & ids[1], 'same capture reused: repeated note IDs'
+    assert all(len(run_ids) == 8 for run_ids in ids)
     assert results[0] == results[1]
     for key in ('chromium', 'node', 'playwright', 'method', 'words', 'distSha256'):
         assert runs[0][key] == runs[1][key]
@@ -210,8 +230,7 @@ def main(argv):
     shared = pins.keys() & old['distSha256'].keys()
     assert all(pins[name] == old['distSha256'][name] for name in shared)
 
-    images_a, images_b = [{p.name: digest(p.read_bytes()) for p in sorted(d.glob('*.png'))} for d in (ra, rb)]
-    assert images_a.keys() == images_b.keys() and len(images_a) == 7
+    images_a, images_b = [screen_hashes(d) for d in (ra, rb)]
     image_receipts = {k: {'runA': v, 'runB': images_b[k], 'equal': v == images_b[k]} for k, v in images_a.items()}
     receipt = {
         'anchor': ANCHOR, 'result': 'reproduced witness outcomes, not fixed Product',

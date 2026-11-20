@@ -42,8 +42,6 @@
 
 **Соседние работы.** Сравнения точных HEAD: Product #2340 `1979ef2e`, #2341 `71c86927`, bare G3 `dedbcdab` — Journal/G3; AuditRepo `eef8f9ab`, `a6838502` — источниковые пакеты «Баптисты 1971» и Keston/Tokmak. В изменившихся владельцах нет пересечения с этим intake или контроллерами квиза/панели. **QPDF‑01 остаётся `PENDING_NATIVE_DIALOG`**: [нативная квитанция][print] не получена, Chromium headless её не заменяет.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [card]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/gillLearningData.ts#L159-L167
@@ -58,8 +56,8 @@
 [print]: ../../arena-quiz-native-print/2026-11-18/REPORT.md
 [screenshot-source]: evidence/gill-click-390.png
 [screenshot-forward]: evidence/gill-forward-390.png
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-history/2026-11-18/evidence/source-history-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-history/2026-11-18/evidence/source-history-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-history-source-history-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-history-source-history-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/source-history.mjs
 [commands]: commands.log

@@ -56,8 +56,8 @@ A редактирует свободную заметку. B на [Бытии 6
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [handoff]: ../../arena-quiz-notes-handoff/2026-11-18/REPORT.md
-[witness]: evidence/note-lifecycle-witness.json
-[empty-shot]: evidence/updated-note-is-absent.png
+[witness]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-note-lifecycle-note-lifecycle-witness-json
+[empty-shot]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-note-lifecycle-updated-note-is-absent-png
 [harness]: harness/note-lifecycle.mjs
 [commands]: commands.log
 [storage-hook]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/js/highlights.js#L228-L236

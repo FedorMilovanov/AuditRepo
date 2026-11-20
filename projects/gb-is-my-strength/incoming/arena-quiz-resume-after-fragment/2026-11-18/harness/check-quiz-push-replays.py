@@ -73,6 +73,7 @@ def case(r, timing, *, keyboard_source=False):
     assert wheel['deltaMode']==0 and wheel['deltaY']==r['wheelDelta']>0
     assert not [e for e in current if e['kind'] in ('hashchange','popstate')]
     [source]=[e for e in current if e.get('action')=='quiz-source']
+    assert source['kind']=='click'
     assert source['hash']=='' and source['link']==TO+'#'+target and source['history']==offer['history']
     assert source['label']==r['link']['label']
     assert offer['ageMs']<answered['ageMs']<=source['ageMs']<=landed['ageMs']<=before['ageMs']
@@ -84,6 +85,7 @@ def case(r, timing, *, keyboard_source=False):
     if outcome==NOOP:
         [cta]=ctas
         assert source['toastPhase']==cta['toastPhase']=='on' and source['ageMs']<cta['ageMs']
+        assert cta['kind']=='click'
         assert cta['hit'] and cta['label']=='Продолжить' and cta['hash']=='#'+target
         assert cta['y']==before['y']==after['y'] and cta['saved']['dismissedAt']==0
         assert visible(before['toast']['go']) and visible(after['B']) and not visible(after['A'])
@@ -128,7 +130,9 @@ def main(args):
     a,b,dist,old,out=map(Path,args)
     witnesses=[p/WITNESS if p.is_dir() else p for p in (a,b)]
     ws=[load(p) for p in witnesses]; prev=load(old)
-    assert ws[0] != ws[1], 'A and B contain the same capture'
+    starts = [e['doc'] for w in ws for r in w['rows'] for e in r['events']
+              if e['kind'] == 'pageshow' and e['persisted'] is False]
+    assert starts and len(starts) == len(set(starts)), 'same capture reused: repeated document start'
     pins=ws[0]['distSha256']
     for k in ('node','playwright','chromium','method'):
         assert ws[0][k]==ws[1][k]==prev[k],k

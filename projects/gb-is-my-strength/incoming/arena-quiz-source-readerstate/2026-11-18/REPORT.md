@@ -40,8 +40,6 @@
 
 **Координация.** Product `main` не сдвинулся. Соседний #2346 `5a5b0282` из предыдущей сверки — геометрия Гилла и оформление библиотеки, не владельцы выбора места; точные координаты относятся к Product anchor. Новые Product #2347 `67c89307` и #2348 `7d9c3d10` добавляют только материалы проверки G3/no-JS Back в `docs/reviews/` (24 и 1 файл); они не затрагивают ReaderState, библиотеку или квиз. `AuditRepo main=fe692393` и Draft до записи пакета стабильны. **QPDF‑01** остаётся `PENDING_NATIVE_DIALOG`.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [card]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/gillLearningData.ts#L159-L167
@@ -56,8 +54,8 @@
 [fixed]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2222
 [home-shot]: evidence/home-resume-390.png
 [landing]: ../../arena-quiz-source-resume/2026-11-18/evidence/gill-resumed-previous-heading.png
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18/evidence/source-readerstate-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18/evidence/source-readerstate-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-readerstate-source-readerstate-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-readerstate-source-readerstate-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/source-readerstate.mjs
 [commands]: commands.log

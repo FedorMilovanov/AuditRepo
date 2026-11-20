@@ -12,7 +12,7 @@ INCOMING = 'projects/gb-is-my-strength/incoming'
 PACKAGE = Path(__file__).resolve().parent.parent
 ROOT = PACKAGE.parents[4]
 ARCHIVE = PACKAGE / 'evidence/browser-traces.zip'
-MEMBER = re.compile(rf'{INCOMING}/arena-quiz-[a-z0-9-]+/2026-11-18/evidence/[a-z0-9-]+\.json')
+MEMBER = re.compile(rf'{INCOMING}/arena-quiz-[a-z0-9-]+/2026-11-18/evidence/[a-z0-9-]+\.(?:json|png)')
 PRINT = f'{INCOMING}/arena-quiz-print-readiness/2026-11-18/evidence/print-tail-witness.json'
 PRINT_PINS = PACKAGE.parent.parent / 'arena-quiz-native-print/2026-11-18/evidence/article-dist-pins.json'
 
@@ -67,7 +67,7 @@ def main():
                 path = args.restore / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(data)
-        print(f'PASS: {len(files)} original traces ({sum(map(len, files.values()))} bytes), including the print pin source')
+        print(f'PASS: {len(files)} archived files ({sum(map(len, files.values()))} bytes), including the print pin source')
     except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile) as exc:
         parser.exit(1, f'Evidence verification failed: {exc}\n')
 

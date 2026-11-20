@@ -169,7 +169,9 @@ def main():
     ra, rb, prev, dist, pa, pb, output = map(Path, sys.argv[1:])
     assert ra.resolve() != rb.resolve() and pa.resolve() != pb.resolve()
     wa, wb = load(ra / WITNESS), load(rb / WITNESS)
-    assert wa != wb, 'A and B contain the same capture'
+    starts = [e['doc'] for w in (wa, wb) for r in w['rows'] for e in r['life']
+              if e['type'] == 'pageshow' and e['persisted'] is False]
+    assert starts and len(starts) == len(set(starts)), 'same capture reused: repeated document start'
     prior = load(prev)
     for k in ('anchor', 'chromium', 'node', 'playwright', 'fixtures', 'method', 'distSha256', 'pagefind'):
         assert wa[k] == wb[k], k

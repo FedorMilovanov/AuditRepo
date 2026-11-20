@@ -40,13 +40,11 @@
 
 **Метод и пределы:** четыре маршрута, **10 браузерных сценариев × два самостоятельных прогона**, 28 запросов/проверок состояния поля в каждом, без локальных HTTP ≥400 и `pageerror`. HTML-перепись — 68 панелей, включая 11 с банком; у трёх маршрутов второй корень `data-pagefind-body` с endnotes. Это не 68 проверенных вручную поисков. Источники и чекпоинты из [трасс][data] связывают семь файлов `dist` по SHA-256. Chromium `153.0.8010.0`, Playwright `1.62.1`, Node `22.23.4`; локальный сервер, SW и разрешение имён внешних хостов отключены, reduced motion. Ограничение проверки видимости: сравнивали конкретные блоки с учётом `display`, `visibility` и `opacity`; это не универсальный парсер отрисованного текста и не аудит речи скринридера. Не проверяли публичный домен, реальный телефон или другой браузерный движок. Product, MASTER и ledger не менялись; `QS-*` — наблюдения intake.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [stage1]: ../../arena-quiz-learning/2026-11-18/REPORT.md
 [stage2]: ../../arena-quiz-editorial/2026-11-18/REPORT.md
 [stage3]: ../../arena-quiz-review-loop/2026-11-18/REPORT.md
 [stage4]: ../../arena-quiz-accessibility/2026-11-18/REPORT.md
-[data]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-search/2026-11-18/evidence/search-witness.json
+[data]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-search-search-witness-json
 [shot]: evidence/footnote-in-search.png
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [neighbor-a]: https://github.com/FedorMilovanov/AuditRepo/pull/562

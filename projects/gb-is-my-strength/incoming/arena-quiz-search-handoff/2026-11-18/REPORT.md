@@ -46,14 +46,12 @@
 
 Все 48 пинов dist совпали между A/B и с соответствующими пинами этапа 21; все прежние 66 повторно проверены. Кадр после закрытия идентичен побайтно; два кадра с квизом различаются (порядок вопросов и вариантов), стабильные итоги совпали; в Git оставлен A. Ноль неожиданных локальных HTTP-ошибок и `pageerror`; `HEAD /pagefind/pagefind.js → 404` — единственный ожидаемый промах на context с глобальным поиском: локальная сборка без Pagefind. Это не проверка результатов индекса, Safari/iOS, физического touch или всех маршрутов. Соседние изменения сверены read-only, см. [команды](commands.log). Нативный A4 (`QPDF‑01`) остаётся `PENDING_NATIVE_DIALOG`, вне этого прогона.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/quiz-search-handoff-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/quiz-search-handoff-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-handoff-quiz-search-handoff-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-handoff-quiz-search-handoff-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/quiz-search-handoff.mjs
-[before-frame]: evidence/before-search-390.png
+[before-frame]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-handoff-before-search-390-png
 [escape-frame]: evidence/escape-and-tab-390.png
 [solo-frame]: evidence/solo-after-next-390.png
 [qa]: ../../arena-quiz-accessibility/2026-11-18/REPORT.md#2-панель-обучение-вход-работает-два-перехода-фокуса--нет

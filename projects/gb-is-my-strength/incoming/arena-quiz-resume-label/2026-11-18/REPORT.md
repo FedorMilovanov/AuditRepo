@@ -37,8 +37,6 @@
 
 [A][a] · [B][b] · [квитанция][receipt] · [harness][harness] · [команды][commands].
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [wcag]: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
@@ -52,9 +50,9 @@
 [light]: evidence/home-resume-light-rest.png
 [hover]: evidence/home-resume-light-hover.png
 [dark]: evidence/home-resume-dark-rest.png
-[probe]: evidence/home-resume-dark-color-probe.png
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18/evidence/resume-label-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18/evidence/resume-label-witness-replay.json
+[probe]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-label-home-resume-dark-color-probe-png
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-label-resume-label-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-label-resume-label-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/resume-label.mjs
 [commands]: commands.log

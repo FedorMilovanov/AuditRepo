@@ -66,12 +66,10 @@
 
 26 из 37 запусков — точечная перепись одной фазы панели, 11 — расширенные сценарии, не 37 полных проходов статьи. Обычные кнопки активировались нативными событиями; в двух семействах keyboard-тестов начальная настройка фокуса лишь ставит курсор на вход («Настройки» / первая тема iframe), **нет** его программного перевода между шагами. Ноль `pageerror` и локальных HTTP ≥400 в итоговом прогоне. Не измерялись звук скринридера, реальный телефон/Windows High Contrast, Safari/Firefox, публичный домен и live-статус. Product, MASTER и ledger не менялись; QA-xx — идентификаторы наблюдений intake, не принятые строки матрицы.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [stage1]: ../../arena-quiz-learning/2026-11-18/REPORT.md
 [stage2]: ../../arena-quiz-editorial/2026-11-18/REPORT.md
 [stage3]: ../../arena-quiz-review-loop/2026-11-18/REPORT.md
-[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-accessibility/2026-11-18/evidence/keyboard-witness.json
+[witness]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-accessibility-keyboard-witness-json
 [shot]: evidence/next-before-answer.png
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [pr2167]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2167

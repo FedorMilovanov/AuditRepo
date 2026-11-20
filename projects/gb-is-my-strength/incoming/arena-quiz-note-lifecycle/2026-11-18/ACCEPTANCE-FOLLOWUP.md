@@ -41,18 +41,16 @@
 
 Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4, светлая тема и reduced motion, SW и запросы за пределы локального origin блокированы. Без посева заметок или подмены событий/экспорта; загрузки прочитаны с диска. Два процесса Chromium, чистый контекст на сценарий. **50** совпавших пинов `dist`, перепроверены все **15** исходных пинов этапа 9 (13 общих). 6 из 7 PNG побайтно совпали; на кадре квиза различались случайный порядок вариантов и прогресс, а не принятый ответ. Прочитаны границы [Product #2346][w57]: в `highlights.js`/CSS этого PR — версия стиля и точка счётчика, не обработка конфликтов в `saveNote`; W57 остаётся отдельным пилотом, его сборка здесь не проверялась. Нет утверждения о других движках, реальном телефоне, публичном деплое, квоте или двух одновременных записях. Product, реестры и нативная печать не менялись.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [owner]: https://github.com/FedorMilovanov/AuditRepo/pull/570#issuecomment-6990232675
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/comment-followup-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/comment-followup-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-note-lifecycle-comment-followup-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-note-lifecycle-comment-followup-replay-json
 [receipt]: evidence/comment-followup-receipt.json
 [before]: evidence/same-390-peer-saved.png
 [draft]: evidence/same-390-stale-draft.png
 [after]: evidence/same-390-after-reload.png
 [deleted]: evidence/delete-390-false-success.png
-[distinct]: evidence/distinct-1440-distinct-after-reload.png
+[distinct]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-note-lifecycle-distinct-1440-distinct-after-reload-png
 [harness]: harness/comment-followup.mjs
 [checker]: harness/check-comment-replays.py
 [commands]: commands-comment-followup.log

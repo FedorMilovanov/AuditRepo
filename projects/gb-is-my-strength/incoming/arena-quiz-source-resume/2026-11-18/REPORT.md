@@ -52,8 +52,8 @@
 [history]: ../../arena-quiz-source-history/2026-11-18/REPORT.md
 [before]: ../../arena-quiz-source-history/2026-11-18/evidence/gill-click-390.png
 [after]: evidence/gill-resumed-previous-heading.png
-[a]: evidence/source-resume-witness.json
-[b]: evidence/source-resume-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-resume-source-resume-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-resume-source-resume-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/source-resume.mjs
 [commands]: commands.log

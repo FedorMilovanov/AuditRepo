@@ -43,8 +43,6 @@
 - Координация read-only: Baptist/Keston — собственные материалы; Product journal — своё оформление. #2348 содержит смежные ссылки на CSS/JS в head и тест их версий (`assetUrl`), `floating-cluster-controller.js` меняет ссылку Vosk, не `maybeOfferResume`; отдельная правка Scripture-индекса не участвует в пустом вводе. Не тестировали сборки чужих веток и не утверждаем, что весь их `dist` равен main.
 - **Вне этого intake:** `QPDF-01` остаётся `PENDING_NATIVE_DIALOG` (48 pins/PDF.js 5.4.624; endpoint не изменился). Нужны две настоящие A4 из обычного Chrome (холодная и повторная при `390×844`). Headless PDF/рендер не заменяет этот witness. Без изменения MASTER/ledger/Drive, Product или деплоя.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/tree/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [be]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/js/bookmark-engine.js#L89-L120
@@ -60,13 +58,13 @@
 [harness]: harness/search-resume-route.mjs
 [checker]: harness/check-replays.py
 [cmd]: commands.log
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-resume-route-search-resume-route-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-resume-route-search-resume-route-witness-replay-json
 [receipt]: evidence/replay-receipt.json
-[home-card]: evidence/home-390-card.png
-[home-land]: evidence/home-390-landing.png
+[home-card]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-resume-route-home-390-card-png
+[home-land]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-resume-route-home-390-landing-png
 [cp-card]: evidence/other-enter-390-palette.png
 [cp-land]: evidence/other-enter-390-landing.png
 [cp-back]: evidence/other-enter-390-recovered.png
-[cp-wide]: evidence/other-preview-1440-palette.png
-[prior-top]: ../../arena-quiz-library-search-navigation/2026-11-18/evidence/route-draft-390-back.png
+[cp-wide]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-resume-route-other-preview-1440-palette-png
+[prior-top]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-library-search-navigation-route-draft-390-back-png

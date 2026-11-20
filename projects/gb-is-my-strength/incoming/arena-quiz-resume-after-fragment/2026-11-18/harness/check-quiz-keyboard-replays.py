@@ -95,9 +95,9 @@ def main(args):
         assert len(rows)==2 and {r['id'] for r in rows}=={'quiz-keys-1','quiz-keys-2'}
         results = []
         for r in rows:
-            doc = r['offer']['doc']
-            assert doc not in seen_docs
-            seen_docs.add(doc)
+            docs = {r[k]['doc'] for k in ('produced', 'origin', 'offer')}
+            assert docs.isdisjoint(seen_docs), 'same capture reused: repeated document start'
+            seen_docs.update(docs)
             results.append(check(r,witness['method']['timing']))
         cases.append(results)
     for file,digest in pins.items():

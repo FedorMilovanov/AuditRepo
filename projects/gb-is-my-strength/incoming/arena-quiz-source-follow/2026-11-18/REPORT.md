@@ -38,8 +38,6 @@
 - **Соседние агенты.** Реальный diff Product [#2344 `25907490`][journal-qa] — Journal-контракт и `package.json` (вызов контракта вынесен из `validate:all`), [#2340 `7d74f9d7`][journal1] — визуальный handoff G3 и его браузерный тест; не новые владельцы квиза, source handoff или TTS. Bare tips AuditRepo [f2fa039e][witnesses] — свидетельства 1971, [98343a3a][archive] — Keston/Tokmak; другие intake. Это проверка пересечения, не независимая приёмка этих изменений.
 - **Отдельно:** [QPDF‑01][native-print] остаётся `PENDING_NATIVE_DIALOG`. Ничего здесь не заменяет квитанцию холодной пары PDF из обычного Chrome.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [fixed]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2222
@@ -58,8 +56,8 @@
 [archive]: https://github.com/FedorMilovanov/AuditRepo/commit/98343a3a0559ab8526df32dee7df507bf8c6d62d
 [screenshot-source]: evidence/anatomy-at-source.png
 [screenshot-next]: evidence/anatomy-after-next-phrase.png
-[run-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness.json
-[run-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness-replay.json
+[run-a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-follow-source-follow-witness-json
+[run-b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-source-follow-source-follow-witness-replay-json
 [replay]: evidence/replay-receipt.json
 [harness]: harness/source-follow.mjs
 [commands]: commands.log

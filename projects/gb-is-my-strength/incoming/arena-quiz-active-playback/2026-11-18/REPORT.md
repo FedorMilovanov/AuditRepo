@@ -42,8 +42,6 @@
 
 [Сценарий][harness] · [Браузерная трасса][witness] · [Квитанция двух прогонов][receipt] · [Команды][commands].
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [stage10]: ../../arena-quiz-projection/2026-11-18/REPORT.md#qtts-01--озвучить-статью-добавляет-текущее-состояние-квиза-но-не-сам-квиз
@@ -64,6 +62,6 @@
 [atlas]: https://github.com/FedorMilovanov/AuditRepo/pull/538/files
 [horeb]: https://github.com/FedorMilovanov/AuditRepo/pull/543/files
 [harness]: harness/active-playback.mjs
-[witness]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18/evidence/active-playback-witness.json
+[witness]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-active-playback-active-playback-witness-json
 [receipt]: evidence/replay-receipt.json
 [commands]: commands.log

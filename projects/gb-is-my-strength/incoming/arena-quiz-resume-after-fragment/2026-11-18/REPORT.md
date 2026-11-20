@@ -42,8 +42,6 @@
 - **Координация:** изменения в Baptist/Keston и последние два коммита #2348 — вне проверенных владельцев. В накопленном delta #2348 есть Scripture-индекс: два **полных исходных объекта** по запросам сравнили с main и получили равенство; public build на основном SHA проверен отдельно. Не проверяли весь индекс или сборку соседней ветки на эквивалентность. `main`, общие реестры, чужие ветки, Drive и деплой не менялись.
 - Не заявляем о публичном хосте, обычном Chrome, WebKit, Firefox, касаниях, BFCache, MediaSession. **QPDF‑01 остаётся `PENDING_NATIVE_DIALOG`** (48 pins/PDF.js 5.4.624, endpoint не изменился): нужны холодная и повторная A4 из обычного Chrome при `390×844`.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [anchor]: https://github.com/FedorMilovanov/gb-is-my-strength/tree/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
 [offer]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/js/floating-cluster-controller.js#L2711-L2745
@@ -55,14 +53,14 @@
 [cmd]: commands.log
 [harness]: harness/resume-after-fragment.mjs
 [checker]: harness/check-replays.py
-[a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness.json
-[b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness-replay.json
+[a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-after-fragment-resume-after-fragment-witness-json
+[b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-after-fragment-resume-after-fragment-witness-replay-json
 [receipt]: evidence/replay-receipt.json
-[variation]: evidence/offer-variation.json
+[variation]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-after-fragment-offer-variation-json
 [small-before]: evidence/pactum-390-offered.png
 [small-after]: evidence/pactum-390-acted.png
-[wide-before]: evidence/pactum-1440-offered.png
-[wide-after]: evidence/pactum-1440-acted.png
+[wide-before]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-after-fragment-pactum-1440-offered-png
+[wide-after]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-resume-after-fragment-pactum-1440-acted-png
 [plain-before]: ../../arena-quiz-search-resume-route/2026-11-18/evidence/other-enter-390-landing.png
 [plain-after]: ../../arena-quiz-search-resume-route/2026-11-18/evidence/other-enter-390-recovered.png
 [same-hebrew]: ../../arena-quiz-source-resume/2026-11-18/evidence/gill-resumed-previous-heading.png

@@ -186,7 +186,9 @@ def main():
     a, b, previous, dist, ia, ib, receipt = map(Path, sys.argv[1:])
     assert a.resolve() != b.resolve() and ia.resolve() != ib.resolve()
     wa, wb = load(a / WITNESS), load(b / WITNESS)
-    assert wa != wb, 'A and B contain the same capture'
+    starts = [e['doc'] for w in (wa, wb) for r in w['rows'] for e in r['lifecycle']
+              if e['type'] == 'pageshow' and e['persisted'] is False]
+    assert starts and len(starts) == len(set(starts)), 'same capture reused: repeated document start'
     for key in ('product', 'chromium', 'playwright', 'node', 'server', 'pagefind', 'distSha256'):
         assert wa[key] == wb[key], key
     assert wa['product'] == ANCHOR and wa['pagefind']['entry']['version'] == '1.5.2'

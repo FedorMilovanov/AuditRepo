@@ -33,7 +33,7 @@
 
 **Не вся учёба — викторина.** `57/68` без вкладки «Тест» — не 57 сломанных квизов. У части страниц самопроверка находится в статье, у других не предусмотрена. У семи страниц «Подростка за кадром» `quiz: []` — прямое [решение редакции][teen] для чувствительной тематики. В «Баптистах России» есть конспекты «Коротко» в теле статьи, сопоставление двух событий 1884 года и руководство по различению источников в справочнике; пустая вкладка «Конспект» не опровергает их наличие. У 3D-карты — отдельная подсказка «Как читать карту», хронология и маршруты (не вопросы QuizHub). Родословная и карты Атласа относятся к инструментам изучения, но в проверенных владельцах и сборке не обнаружено ещё одного банка квиза; их картографическую точность и все действия здесь не переаудировали.
 
-[Перепись маршрутов](evidence/route-census.tsv) · [Браузерные результаты](https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18/evidence/browser-witness.json) · [Команды и результаты](commands.log).
+[Перепись маршрутов](evidence/route-census.tsv) · [Браузерные результаты](../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-learning-browser-witness-json) · [Команды и результаты](commands.log).
 
 ## 1. Новые наблюдения
 
@@ -186,9 +186,7 @@ done
 
 **Самое сильное новое доказательство:** цвет выдаёт ключ в **25/25** вопросах 3D в каждом профиле; старая ссылка остаётся в **91/91** переходе панели; заметка сохраняется, но вкладка её не читает. Заполненность, проверяемость материала и учебный эффект — отдельные вопросы: 23 встроенных квиза доходят до результата, но это не оправдывает угадывание, несовпадение источника или ложную калибровку. Карточки «Диотрефов» и открытые вопросы не потеряны и не являются невыполненным контрактом баллов.
 
-Пакет **reproduced-by-agent / candidate** для новой verification wave. Исходники Product, MASTER и ledger не изменены. Доказательства: [перепись](evidence/route-census.tsv), [состояния браузера](https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18/evidence/browser-witness.json), [релизная сверка](evidence/deployment-witness.json), [скрин состояния до ответа](evidence/map-before-answer.png) и [команды](commands.log).
-
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
+Пакет **reproduced-by-agent / candidate** для новой verification wave. Исходники Product, MASTER и ledger не изменены. Доказательства: [перепись](evidence/route-census.tsv), [состояния браузера](../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-learning-browser-witness-json), [релизная сверка](evidence/deployment-witness.json), [скрин состояния до ответа](evidence/map-before-answer.png) и [команды](commands.log).
 
 [standard]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/docs/CONTENT-QUALITY-STANDARD.md#4-квизы--обучающий-стандарт-и-один-источник-истины
 [deploy]: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/44313404255

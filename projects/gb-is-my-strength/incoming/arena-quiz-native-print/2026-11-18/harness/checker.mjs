@@ -78,25 +78,39 @@ try {
   $('compare').disabled = false;
   $('status').textContent = 'Выберите два файла после печати.';
 } catch (error) { $('status').textContent = error.message; }
+const controls = ['first', 'repeat', 'note', 'attest', 'compare'].map($);
+$('pair').addEventListener('input', () => {
+  if ($('receipt').hidden) return;
+  $('receipt').hidden = true;
+  $('status').textContent = 'Поля изменены. Сравните выбранные PDF заново.';
+});
 $('pair').addEventListener('submit', async event => {
   event.preventDefault();
-  if (!witness || !$('attest').checked) return;
-  $('compare').disabled = true;
+  if (!witness || $('compare').disabled || !$('attest').checked) return;
+  const files = [$('first').files[0], $('repeat').files[0]];
+  const attestedOptions = $('note').value.trim();
+  for (const control of controls) control.disabled = true;
   $('receipt').hidden = true;
   $('status').textContent = 'Читаем текст PDF на этом устройстве…';
   try {
-    const first = await parse($('first').files[0]);
-    const repeat = await parse($('repeat').files[0]);
+    const first = await parse(files[0]);
+    const repeat = await parse(files[1]);
     const [result, message] = verdict(first, repeat);
-    const receipt = { ...witness, nativePrintWitness: 'user-attested-only', attestedOptions: $('note').value.trim(),
-      result, first, repeat };
+    const inputBytesEqual = first.sha256 === repeat.sha256;
+    const receipt = { ...witness, nativePrintWitness: 'user-attested-only', attestedOptions,
+      result, inputBytesEqual, first, repeat };
     $('receipt-text').textContent = JSON.stringify(receipt, null, 2);
-    $('status').textContent = message;
+    $('status').textContent = inputBytesEqual
+      ? `${message} Файлы побайтно совпадают: это не подтверждает два отдельных сохранения. Проверьте выбор.`
+      : message;
+    $('copy').textContent = 'Скопировать квитанцию';
     $('receipt').hidden = false;
     $('receipt').open = true;
   } catch (error) {
     $('status').textContent = `Не удалось прочитать пару: ${error.message}`;
-  } finally { $('compare').disabled = false; }
+  } finally {
+    for (const control of controls) control.disabled = false;
+  }
 });
 $('copy').addEventListener('click', async () => {
   try {

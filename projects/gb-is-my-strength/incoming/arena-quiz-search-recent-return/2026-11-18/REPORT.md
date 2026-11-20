@@ -44,22 +44,20 @@
 
 **Воспроизводимость и пределы.** `67` dist-пинов совпали; заново проверены все `56` пинов этапа 24, `54` общих. Использованы его две отдельно собранные копии Pagefind: `147` файлов, проверен SHA-256 всего дерева и `32` запрошенных файлов. В обоих прогонах Pagefind module/index/fragment и публичный exact JSON отвечают `200`; нет подстановки выдачи, записи storage, скролла или focus из instrumentation. `7/7` кадров совпали побайтно, в Git только A. Это локальный Headless Shell без SW, не физический телефон, другой движок или прод. `:4178` без изменений; нативный A4 `QPDF‑01` всё ещё не подтверждён.
 
-Полные JSON по ссылкам ведут на исходный снимок. [Проверяемый архив и восстановление локальных путей](../../arena-quiz-draft-review/2026-11-18/REPORT.md#архив-и-повторная-проверка).
-
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [draft]: https://github.com/FedorMilovanov/AuditRepo/pull/570
-[run-a]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness.json
-[run-b]: https://github.com/FedorMilovanov/AuditRepo/blob/3940425bb5371fa0590163686d04620d4d45dbe3/projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness-replay.json
+[run-a]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-search-recent-return-witness-json
+[run-b]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-search-recent-return-witness-replay-json
 [receipt]: evidence/replay-receipt.json
 [harness]: harness/search-recent-return.mjs
 [check]: harness/check-replays.py
 [one]: evidence/ab-390-recent.png
-[mixed]: evidence/mixed-1440-recent.png
+[mixed]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-mixed-1440-recent-png
 [replay]: evidence/ab-390-replayed.png
 [bio]: evidence/ab-390-landed.png
-[manual]: evidence/ab-390-manual.png
-[recovered]: evidence/ab-390-recovered.png
-[wide-replay]: evidence/ba-1440-replayed.png
+[manual]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-ab-390-manual-png
+[recovered]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-ab-390-recovered-png
+[wide-replay]: ../../arena-quiz-draft-review/2026-11-18/ARCHIVE.md#q-search-recent-return-ba-1440-replayed-png
 [stage24]: ../../arena-quiz-library-search-navigation/2026-11-18/REPORT.md
 [malformed]: ../../../verified/MASTER_BUG_MATRIX.md#L183
 [destinations]: ../../../reverify/2026-10-29-scripture-exact-destination-wave37.md
