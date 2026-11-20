@@ -16,6 +16,8 @@
 | [evidence/release-and-inspections.md](evidence/release-and-inspections.md) | Release identity, рецепт сборки, результаты проверок, состав серий и контрольные способы воспроизведения. |
 | [FOLLOWUP.md](FOLLOWUP.md) | Второй проход: канон и шкала, цитаты и глоссарий, Chicago [49], локаторы документов 1971 года и сверка G3 после #2337. |
 | [evidence/followup-evidence.md](evidence/followup-evidence.md) | Сверка двух версий Product, источники и маршрут получения страниц, скрипт и JSON измерений Chromium. |
+| [evidence/followup-browser.mjs](evidence/followup-browser.mjs) | Read-only скрипт Playwright для замера геометрии `#canonTimeline`, цитат, глоссария и сноски на локальном `dist`. |
+| [evidence/followup-browser.json](evidence/followup-browser.json) | Зафиксированные замеры Chromium (5 ширин viewport, `htmlSha256`, текст цитат и сносок). |
 | [ARCHIVAL-FOLLOWUP.md](ARCHIVAL-FOLLOWUP.md) | Третий проход: текст соглашения 1945 года, раздельные документы 1971 года, расходящиеся оценки изъятого в 1974-м и поправка имени Алексеевой. |
 | [evidence/archival-evidence.md](evidence/archival-evidence.md) | Читательские локусы, колляция источников и адресные запросы на недостающие листы. |
 | [ARCHIVE-ROUTES.md](ARCHIVE-ROUTES.md) | Четвёртый проход: третье сообщение о весе бумаги, маршрут к приговору в Цесисе, карточка дела ГАРФ и резервные микрофиши для документов 1971 года. |
@@ -32,7 +34,8 @@
 | [evidence/print-run-tokmak-evidence.md](evidence/print-run-tokmak-evidence.md) | Колляция текстовых извлечений, локаторы экземпляров, остаточные проверки и непосланные запросы. |
 | [TOKMAK-ARCHIVE-AND-EDITIONS.md](TOKMAK-ARCHIVE-AND-EDITIONS.md) | Десятый проход: ноябрьские приговоры по «Вестям», дела уполномоченного в ГА РФ и новые адреса для сверки тиража. |
 | [evidence/tokmak-archive-and-edition-evidence.md](evidence/tokmak-archive-and-edition-evidence.md) | Сверка 1-1/16-1, точные шифры ГА РФ, ориентиры ЦГА КР и Чуйского РУ, реквизиты изданий и черновики запросов. |
-| [KESTON-AND-TOKMAK-HOLDINGS.md](KESTON-AND-TOKMAK-HOLDINGS.md) | Одиннадцатый проход: «Бюллетень» №106 называет Токмак местом июньского осуждения Кинаса; точные папки Keston и шифр «Вестей» в Париже. |
-| [evidence/keston-and-tokmak-holdings-evidence.md](evidence/keston-and-tokmak-holdings-evidence.md) | Колляция №102/106 с «Вестями», архивные описи, границы OCR и обновлённые черновики запросов. |
+| [KESTON-AND-TOKMAK-HOLDINGS.md](KESTON-AND-TOKMAK-HOLDINGS.md) | Проходы XI–XXXII: Токмакское дело Кинаса, папки Keston, слушания Конгресса, список Хайнца (узел `/520` и атрибуция Л. Г. Готмана), тиражи и сверка открытых архивных задач. |
+| [evidence/keston-and-tokmak-holdings-evidence.md](evidence/keston-and-tokmak-holdings-evidence.md) | Доказательная база проходов XI–XXXII: колляция №102/106 с «Вестями», описи, OCR/IIIF-координаты, проверки Drive и непосланные черновики запросов. |
+| [PEER-REVIEWS.md](PEER-REVIEWS.md) | Перекрёстные ревью чужих PR (`AuditRepo #562`, `Research #584` и `#585`), локальные проверки скриптов, байтовые контроли и аномалия `messages5.html`. |
 
 Это [intake](../../README.md) по [операционной модели AuditRepo](../../../../../AUDITREPO_OPERATING_MODEL.md), не MASTER-решение, не разрешение на правку и не аудит всех внешних ссылок, прав и источников. Product, файлы Research, активная матрица и состояния PR не менялись. Передача находок в обсуждение Research не заменяет приёмку.
