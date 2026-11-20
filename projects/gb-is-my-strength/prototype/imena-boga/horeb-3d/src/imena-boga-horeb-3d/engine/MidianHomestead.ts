@@ -627,7 +627,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   const walk:{x:number;z:number;yaw:number;pitch:number}={
     x:HOMESTEAD_WALK.startX,z:HOMESTEAD_WALK.startZ,yaw:0,pitch:-.08,
   };
-  let exploring=false,disposed=false,last=0,frame=0,dragId:number|null=null,lastX=0,lastY=0;
+  let exploring=false,paused=false,disposed=false,last=0,frame=0,dragId:number|null=null,lastX=0,lastY=0;
   const moving:Record<MidianDirection,boolean>={forward:false,backward:false,left:false,right:false};
   const reset=()=>{for(const k of Object.keys(moving) as MidianDirection[])moving[k]=false;};
   const key=(k:string):MidianDirection|null=>{
@@ -640,7 +640,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     }
   };
   const keyDown=(e:KeyboardEvent)=>{
-    if(!exploring||e.altKey||e.ctrlKey||e.metaKey)return;
+    if(!exploring||paused||e.altKey||e.ctrlKey||e.metaKey)return;
     const d=key(e.key);if(!d)return;e.preventDefault();moving[d]=true;
   };
   const keyUp=(e:KeyboardEvent)=>{
@@ -648,7 +648,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
   };
   function setExplore(on:boolean){
     if(disposed)return;
-    exploring=on;reset();last=0;
+    exploring=on;paused=false;reset();last=0;
     if(on){
       walk.x=HOMESTEAD_WALK.startX;
       // On a 390 px portrait viewport, the original 10m placement cropped
@@ -659,14 +659,15 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     }
     canvas.dataset.midianMode=on?'walk':'shot';
   }
-  function setMovement(d:MidianDirection,on:boolean){moving[d]=on&&exploring;}
+  function setMovement(d:MidianDirection,on:boolean){moving[d]=on&&exploring&&!paused;}
+  function setPaused(on:boolean){if(disposed)return;paused=on;reset();dragId=null;}
   function turn(dx:number,dy:number){
     if(!exploring)return;
     walk.yaw-=THREE.MathUtils.clamp(dx,-140,140)*.0038;
     walk.pitch=THREE.MathUtils.clamp(walk.pitch-THREE.MathUtils.clamp(dy,-120,120)*.003,-.68,.55);
   }
   function pointerDown(e:PointerEvent){
-    if(!exploring||e.button!==0)return;
+    if(!exploring||paused||e.button!==0)return;
     dragId=e.pointerId;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);
   }
   function pointerMove(e:PointerEvent){
@@ -703,7 +704,7 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
       const f=Number(moving.forward)-Number(moving.backward);
       const s=Number(moving.right)-Number(moving.left);
       const mag=Math.hypot(f,s);
-      if(mag>0){
+      if(!paused&&mag>0){
         const step=HOMESTEAD_WALK.speed*dt/mag;
         const dx=(-Math.sin(walk.yaw)*f+Math.cos(walk.yaw)*s)*step;
         const dz=(-Math.cos(walk.yaw)*f-Math.sin(walk.yaw)*s)*step;
@@ -814,5 +815,5 @@ export function createMidianHomestead(canvas:HTMLCanvasElement,reducedMotion:boo
     renderer.dispose();renderer.forceContextLoss();
     for(const name of Object.keys(canvas.dataset))if(name.startsWith('midian')||name.startsWith('homestead'))delete canvas.dataset[name];
   }
-  return {setExplore,setMovement,dispose};
+  return {setExplore,setMovement,setPaused,dispose};
 }

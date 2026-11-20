@@ -12,6 +12,7 @@ export type MidianDirection = 'forward'|'backward'|'left'|'right';
 export type MidianControl = {
   setExplore:(enabled:boolean)=>void;
   setMovement:(direction:MidianDirection,active:boolean)=>void;
+  setPaused:(paused:boolean)=>void;
   dispose:()=>void;
 };
 export const MIDIAN_BOUNDS={x:18,z:22,eye:1.68,speed:3.0} as const;
@@ -107,16 +108,17 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
   }
   const walk={x:5.2,z:7.6,yaw:.62,pitch:-.16};
   const moving:Record<MidianDirection,boolean>={forward:false,backward:false,left:false,right:false};
-  let exploring=false,disposed=false,frame=0,last=0,dragId:number|null=null;
+  let exploring=false,paused=false,disposed=false,frame=0,last=0,dragId:number|null=null;
   let lastX=0,lastY=0;
   const clear=()=>{for(const k of Object.keys(moving) as MidianDirection[])moving[k]=false;};
   function setExplore(value:boolean){
     if(disposed)return;
-    exploring=value;clear();last=0;
+    exploring=value;paused=false;clear();last=0;
     if(value){walk.x=5.2;walk.z=7.6;walk.yaw=.62;walk.pitch=-.16;}
     canvas.dataset.midianMode=value?'walk':'shot';
   }
-  function setMovement(d:MidianDirection,value:boolean){moving[d]=exploring&&value;}
+  function setMovement(d:MidianDirection,value:boolean){moving[d]=exploring&&!paused&&value;}
+  function setPaused(value:boolean){if(disposed)return;paused=value;clear();dragId=null;}
   function rotate(dx:number,dy:number){
     if(!exploring)return;
     walk.yaw-=THREE.MathUtils.clamp(dx,-140,140)*.0038;
@@ -132,14 +134,14 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
     }
   }
   function keyDown(e:KeyboardEvent){
-    if(!exploring||e.altKey||e.ctrlKey||e.metaKey)return;
+    if(!exploring||paused||e.altKey||e.ctrlKey||e.metaKey)return;
     const d=dir(e.key);if(!d)return;e.preventDefault();moving[d]=true;
   }
   function keyUp(e:KeyboardEvent){
     if(!exploring)return;const d=dir(e.key);if(!d)return;e.preventDefault();moving[d]=false;
   }
   function pointerDown(e:PointerEvent){
-    if(!exploring||e.button!==0)return;
+    if(!exploring||paused||e.button!==0)return;
     dragId=e.pointerId;lastX=e.clientX;lastY=e.clientY;
     canvas.setPointerCapture(e.pointerId);
   }
@@ -175,7 +177,7 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
       const forward=Number(moving.forward)-Number(moving.backward);
       const right=Number(moving.right)-Number(moving.left);
       const magnitude=Math.hypot(forward,right);
-      if(magnitude>0){
+      if(!paused&&magnitude>0){
         const step=MIDIAN_BOUNDS.speed*elapsed/magnitude;
         const dx=(-Math.sin(walk.yaw)*forward+Math.cos(walk.yaw)*right)*step;
         const dz=(-Math.cos(walk.yaw)*forward-Math.sin(walk.yaw)*right)*step;
@@ -229,5 +231,5 @@ export function createMidianWell(canvas:HTMLCanvasElement,reducedMotion:boolean)
     renderer.dispose();renderer.forceContextLoss();
     for(const k of Object.keys(canvas.dataset))if(k.startsWith('midian'))delete canvas.dataset[k];
   }
-  return {setExplore,setMovement,dispose};
+  return {setExplore,setMovement,setPaused,dispose};
 }
