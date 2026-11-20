@@ -1,0 +1,39 @@
+# F27 follow-up: real quiz source link via pushState and active resume CTA.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713; own Draft #570 from 9d1da7c8d641cbc1a8215fffb28aae3238f789e8.
+# Same Chromium 153.0.8010.0, Node and Playwright as commands-in-page.log; no Product changes or native print runs.
+
+[Coordination]
+# Read all issue comments on AuditRepo #570, inline and reviews. New owner comment 7044227232 routes QPDF-01 to Product #2349.
+for ep in issues/2349 issues/2349/comments issues/2349/events issues/2349/timeline; do
+  gh api --paginate "repos/FedorMilovanov/gb-is-my-strength/$ep"
+done
+# #2349 open, comment 7047013142, no linked fixing commit/PR or human Chrome PDF at check. Reader print owner:
+# src/runtime/reader-actions.js. Preserve headless evidence, wait for exact repair and first native PDF. QPDF status JSON unchanged.
+# Product #2348 513719f..1839ac0 +3/5, exact-file overlap with floating-cluster-controller.js limited to Vosk cache-bust URI.
+# #2346 c7b4670..a287413 +20, pilot/UI/CSS; #2343/#2346/#2348 files do not modify reader-actions.js.
+# Product main still exact anchor: cmp reader-state.js and floating-cluster-controller.js against local dist and prior GitHub raw copies.
+
+[Timed browser replays]
+# PRODUCT/OUT/CHROMIUM/TOOLS absolute paths, original dist and isolated stock server. The existing matrix without "quiz" is unchanged.
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --check "$Q/harness/resume-in-page.mjs"
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/observed-a" "$CHROMIUM" quiz
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/observed-b" "$CHROMIUM" quiz
+python3 "$Q/harness/check-quiz-push-replays.py" "$OUT/observed-a" "$OUT/observed-b" "$PRODUCT/dist" \
+  "$Q/evidence/resume-in-page-witness.json" "$OUT/quiz-push-receipt.json"
+# Pilots, not in formal 2+2: both stopped on narrow question 2 with the confidence button intercepted.
+# Desktop in those pilots reached #sec-systematics after 13 and 17 questions respectively; both clicks only hid the toast.
+# The final sample reads actual hit points, uses normal wheel if possible, then waits for ordinary auto-dismiss if still covered.
+# Narrow: 2/2 center x83.66 y735.25 covered; zero scroll room; same button center hit after ordinary dismiss, no CTA click.
+# Wide: 2/2 clicked after actual same-doc quiz-source #sec-hebrew; no hashchange/popstate and no scroll after CTA.
+# 49 exact dist pins equal to the previous two replays; no Search assets, four contexts, no retries conditioned on shuffle.
+# Replayed without print, seeds, forced clicks, handler/timer/shuffle interception, or DOM mutations by the harness.
+
+[Admission and publication]
+# Re-check the admitted A/B and compare the regenerated receipt to the versioned one.
+python3 "$Q/harness/check-quiz-push-replays.py" "$Q/evidence/quiz-push-witness.json" "$Q/evidence/quiz-push-replay.json" "$PRODUCT/dist" \
+  "$Q/evidence/resume-in-page-witness.json" "$OUT/checked-quiz-push-receipt.json"
+cmp "$OUT/checked-quiz-push-receipt.json" "$Q/evidence/quiz-push-receipt.json"
+# Preserve earlier reports/evidence; add one late subsection within F27 and one handoff pointer within the existing QPDF report.
+# Only own branch, exact file-delta and fresh comment checks; same draft. No review, merge, Product or release writes.

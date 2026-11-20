@@ -8,7 +8,7 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 
 const [pArg,oArg,executablePath,filter]=process.argv.slice(2);
-assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp]');
+assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp|quiz]');
 const P=path.resolve(pArg),dist=path.join(P,'dist'),out=path.resolve(oArg);
 const req=createRequire(path.join(P,'package.json')),{chromium}=req('playwright');
 const {serve}=await import(pathToFileURL(path.join(P,'scripts/lib/a04-contract.mjs')));
@@ -17,7 +17,8 @@ const TO='/articles/dzhon-gill-chast-2-uchenyi/', FROM='/articles/dzhon-gill-cha
 const A='sec-canticles', B='sec-hebrew', QUIZ='gill.scholar.canticles';
 const KEY='gb:reader-state:v1:gb-strength:'+TO.slice(0,-1);
 const ACK='gb:reader-resume-offered:v1:gb-strength:'+TO.slice(0,-1);
-const jobs=[390,1440].flatMap(width=>['plain','toc','outline'].map(arm=>({arm,width,height:width===390?844:900,id:arm+'-'+width})))
+const arms=filter==='quiz'?['quiz']:['plain','toc','outline'];
+const jobs=[390,1440].flatMap(width=>arms.map(arm=>({arm,width,height:width===390?844:900,id:arm+'-'+width})))
   .filter(j=>!filter||new RegExp(filter,'u').test(j.id));
 assert.ok(jobs.length);fs.mkdirSync(out,{recursive:true});assert.equal(fs.readdirSync(out).length,0,'fresh output required');
 const sha=f=>createHash('sha256').update(fs.readFileSync(f)).digest('hex');
@@ -53,10 +54,10 @@ function observe({a,b,key,ack,to,from}){
   const send=(kind,x)=>console.debug('GB_INPAGE '+JSON.stringify({kind,...stamp(),...x}));
   for(const k of ['pageshow','hashchange','popstate'])addEventListener(k,e=>send(k,{trusted:e.isTrusted,persisted:e.persisted??null}));
   addEventListener('wheel',e=>send('wheel',{trusted:e.isTrusted,deltaY:e.deltaY,deltaMode:e.deltaMode}),{passive:true,capture:true});
-  function read(){
+  function read(chosen=b){
     const t=q('.gbs2-resume'),s=q('#glsQuizSource'),verdict=q('#glsQuizVerdict');
     return {...stamp(),nav:performance.getEntriesByType('navigation').at(-1)?.type??null,
-      saved:saved(),ack:sessionStorage.getItem(ack),A:point(a),B:point(b),
+      saved:saved(),ack:sessionStorage.getItem(ack),A:point(a),B:point(chosen??b),
       live:window.GBReaderState?.getActiveSection?.()??null,line:window.GBReaderState?.getReadingLine?.()??null,
       toast:t?{on:t.classList.contains('gbs2-on'),label:norm(t.querySelector('span')?.textContent),go:box(t.querySelector('.gbs2-resume-go'))}:null,
       legacy:!!q('#bookmarkToast.show'),overlays:[...document.querySelectorAll('.toc-overlay.is-open,.gill-settings-overlay.is-open,.cp-backdrop.is-open')].map(name),
@@ -82,7 +83,7 @@ function observe({a,b,key,ack,to,from}){
   },{capture:true,passive:true});
   window.__gbInPage={read};
 }
-const state=p=>p.evaluate(()=>__gbInPage.read());
+const state=(p,section=null)=>p.evaluate(s=>__gbInPage.read(s),section);
 async function until(p,fn,arg=null,timeout=6000){await p.waitForFunction(fn,arg,{timeout});return state(p);}
 async function goto(p,route){const res=await p.goto(base+route,{waitUntil:'load'});assert.equal(res.status(),200);assert.equal(res.headers()['cache-control'],'no-store');}
 async function learning(p,tab){
@@ -160,11 +161,100 @@ async function changeSection(p,r){
   // write, and the toast remains within its ordinary 6.5s lifetime.
   await p.waitForTimeout(showTimes.settle);
 }
+// Timed follow-up: choose the first authored in-article source other than A.
+// Read the hit point or let Playwright scroll a clipped sheet control into
+// view, then send a real pointer click. No shuffle, timer or runtime patch.
+async function pointer(p,r,selector,label=null){
+  const probe=()=>p.evaluate(({selector,label})=>{
+    const nodes=[...document.querySelectorAll(selector)];
+    const el=label===null?nodes[0]:nodes.find(x=>x.textContent.replace(/\s+/gu,' ').trim()===label);
+    if(!el||el.disabled)return {};
+    const b=el.getBoundingClientRect(), x=(b.left+b.right)/2, y=(b.top+b.bottom)/2;
+    const hit=(x,y)=>document.elementFromPoint(x,y);
+    const covered=hit(x,y)?.closest('.gbs2-resume.gbs2-on');
+    const rect=covered?.getBoundingClientRect(), body=el.closest('.toc-sheet__body'), panel=body?.getBoundingClientRect();
+    const vw=innerWidth, vh=innerHeight;
+    const points=[[x,y],...[.2,.8].flatMap(i=>[.25,.75].map(j=>[b.x+b.width*i,b.y+b.height*j]))];
+    const point=points.find(([x,y])=>x>=0&&x<vw&&y>=0&&y<vh&&el.contains(hit(x,y)))??null;
+    const scrollTop=body?.scrollTop??null;
+    const wheelY=panel&&rect?Math.min(rect.top-32,panel.bottom-32,Math.max(panel.top+18,vh*.52)):null;
+    const wheelXY=wheelY!==null&&body.contains(hit(vw/2,wheelY))?[vw/2,wheelY]:null;
+    return {point,center:[x,y],covered:!!covered,blocker:hit(x,y)?.classList?.[0]??null,scrollTop,
+      wheelXY,delta:wheelXY?Math.min(body.scrollHeight-body.clientHeight-scrollTop,Math.max(80,Math.ceil(y-rect.top+68))):0};
+  },{selector,label});
+  const awaitAutoDismiss=async(entry)=>{
+    // No forced click. Use natural auto-dismiss as a same-question control.
+    entry.stalled=await state(p);
+    await p.waitForFunction(()=>!document.querySelector('.gbs2-resume'),null,{timeout:7400});
+    const current=await probe();entry.afterTimeout=current;entry.cleared=await state(p);return current;
+  };
+  let hit=await probe();
+  if(hit.covered){
+    const entry={selector,label,before:hit};r.pointerInterference.push(entry);
+    if(!hit.point&&hit.wheelXY&&hit.delta>0){
+      await p.mouse.move(...hit.wheelXY);await p.mouse.wheel(0,hit.delta);
+      // Read after the real scroll event/frame, never assign scrollTop.
+      await p.waitForTimeout(95);hit=await probe();entry.afterWheel=hit;
+    }
+    if(hit.covered&&!hit.point)hit=await awaitAutoDismiss(entry);
+  }
+  if(hit.point){await p.mouse.click(...hit.point);return;}
+  const locator=label===null?l(p,selector):l(p,'#glsQuizOptions').getByRole('button',{name:label,exact:true});
+  try{await locator.click({timeout:1100});}
+  catch(error){
+    // Scroll-into-view can move a clipped control under the toast. Only
+    // classify it as an overlap when a passive sample actually finds one.
+    hit=await probe();if(!hit.covered||hit.point)throw error;
+    const entry={selector,label,before:hit,afterScrollIntoViewAttempt:true};r.pointerInterference.push(entry);
+    hit=await awaitAutoDismiss(entry);
+    if(hit.point)await p.mouse.click(...hit.point);
+    else await locator.click({timeout:1100});
+  }
+}
+async function changeSectionFromQuiz(p,r){
+  await learning(p,'#tabQuiz');const pool=JSON.parse(await l(p,'#gillQuizData').getAttribute('data-quiz'));
+  r.questionWalk=[];r.pointerInterference=[];
+  for(let i=0;i<pool.length;i++){
+    const q=norm(await l(p,'#glsQuizQuestion').textContent()),x=pool.find(e=>norm(e.question)===q);assert.ok(x);
+    const u=new URL(x.sourceHref,base+TO), id=u.hash.slice(1);
+    const target=u.pathname===TO&&id&&id!==A;
+    r.questionWalk.push(x.id);
+    await pointer(p,r,'#glsQuizConfRow [data-conf=sure]');
+    await pointer(p,r,'#glsQuizOptions button',norm(x.answers[(x.correctIndex+1)%x.answers.length]));
+    if(!target){await pointer(p,r,'#glsQuizNext');continue;}
+    r.target=id;r.answered=await state(p,id);
+    assert.equal(r.answered.hash,'');assert.equal(r.answered.doc,r.offer.doc);
+    assert.equal(r.answered.history,r.offer.history);
+    assert.match(r.answered.quiz.verdict[0],/^Неверно/u);
+    assert.deepEqual(r.answered.quiz.source,[TO+'#'+id,false]);
+    r.link={href:await l(p,'#glsQuizSource').getAttribute('href'),label:norm(await l(p,'#glsQuizSource').textContent())};
+    await pointer(p,r,'#glsQuizSource');
+    await p.waitForFunction(target=>{
+      const s=__gbInPage.read(target);return s.hash==='#'+target&&s.focus===target&&s.B?.inView&&s.B.hit&&!s.overlays.length&&!s.locked;
+    },id,{timeout:2000});
+    r.landed=await state(p,id);
+    assert.equal(r.landed.doc,r.offer.doc);assert.equal(r.landed.path,TO);assert.equal(r.landed.history,r.offer.history+1);
+    assert.deepEqual(r.landed.quiz,r.answered.quiz);assert.ok(!shown(r.landed.A)&&shown(r.landed.B));
+    await p.waitForTimeout(110);
+    return;
+  }
+  throw Error('no authored in-page source other than the saved section');
+}
 async function exercise(p,r){
   await saveFromQuiz(p,r);await reenter(p,r);
-  if(r.arm!=='plain')await changeSection(p,r);
-  if(r.arm!=='plain'&&r.width===390)await shot(p,r,'before');
-  r.before=await state(p);
+  if(r.arm==='quiz')await changeSectionFromQuiz(p,r);
+  else if(r.arm!=='plain')await changeSection(p,r);
+  // Preserve the natural timeout instead of retrying a late shuffle position.
+  if(r.arm==='quiz'){
+    const candidate=await state(p,r.target), mount=candidate.transitions[0];
+    if(!candidate.toast?.on||!shown(candidate.toast.go)||candidate.ageMs-mount.ageMs>=showTimes.actByMount){
+      r.before=candidate;
+      await p.waitForFunction(()=>!document.querySelector('.gbs2-resume'),null,{timeout:7800});
+      r.after=await state(p,r.target);r.outcome='no-action-in-offer-window';return;
+    }
+  }
+  if(r.arm!=='plain'&&r.width===390&&r.arm!=='quiz')await shot(p,r,'before');
+  r.before=await state(p,r.target);
   assert.ok(r.before.toast?.on&&shown(r.before.toast.go),'toast no longer actionable: '+JSON.stringify(r.before.transitions));
   const mount=r.before.transitions.find(e=>e.phase==='off');
   assert.ok(mount&&r.before.ageMs-mount.ageMs<showTimes.actByMount,'missed click window');
@@ -173,7 +263,7 @@ async function exercise(p,r){
   await l(p,'.gbs2-resume.gbs2-on .gbs2-resume-go').click({timeout:950});
   await p.waitForFunction(()=>!document.querySelector('.gbs2-resume'),null,{timeout:1450});
   await p.waitForTimeout(1000);
-  r.after=await state(p);
+  r.after=await state(p,r.target);
   for(const k of ['doc','path','hash','history','match','quiz','ack'])assert.deepEqual(r.after[k],r.before[k],k);
   assert.equal(r.after.toast,null);assert.ok(!r.after.legacy&&!r.after.locked&&!r.after.overlays.length);
   const clicks=r.events.filter(e=>e.kind==='click'&&e.action==='continue');assert.equal(clicks.length,1);
@@ -182,14 +272,14 @@ async function exercise(p,r){
   r.delays={off:off.ageMs-click.ageMs,removed:removed.ageMs-click.ageMs};
   assert.ok(r.delays.off>=0&&r.delays.off<=50&&r.delays.removed>=375&&r.delays.removed<=600);
   const scrollAfter=r.after.scrolls.filter(([ms])=>ms>=click.ageMs);
-  if(r.arm==='toc'){
+  if(r.arm==='toc'||r.arm==='quiz'){
     assert.equal(r.after.y,click.y);assert.equal(r.before.y,click.y);assert.ok(shown(r.after.B)&&!shown(r.after.A));
     assert.deepEqual(scrollAfter,[]);r.outcome='visible-toast-click-no-return';
   }else{
     assert.ok(shown(r.after.A)&&!shown(r.after.B)&&r.after.y>1200&&r.after.y!==click.y&&scrollAfter.length);
     r.outcome='saved-heading-restored';
   }
-  if(r.arm!=='plain'&&r.width===390)await shot(p,r,'after');
+  if(r.arm!=='plain'&&r.width===390&&r.arm!=='quiz')await shot(p,r,'after');
 }
 const pins=new Set(),rows=[];let browser;
 try{
