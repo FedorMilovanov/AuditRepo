@@ -164,7 +164,7 @@ export function MidianCanvas({reducedMotion=false,world='well'}:{reducedMotion?:
       <p className="mt-2 text-parch/80">
         Режим чтения не отмечает физическое посещение или находку в 3D.
       </p>
-    </div>
+    </div>}
     {!failed&&!exploring&&<button ref={start} type="button" disabled={!ready}
       data-testid={homestead?'midian-homestead-explore-start':'midian-explore-start'} onClick={()=>toggle(true)}
       className="absolute bottom-3 left-3 z-10 rounded-sm border border-parch/70 bg-black/80 px-4 py-2.5 text-sm font-semibold text-parch shadow-lg hover:bg-black/95 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
