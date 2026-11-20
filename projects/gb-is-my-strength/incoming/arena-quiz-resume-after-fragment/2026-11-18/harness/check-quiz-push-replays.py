@@ -27,7 +27,7 @@ def digest(p):
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def case(r, timing):
+def case(r, timing, *, keyboard_source=False):
     assert r['arm']=='quiz' and r['id']==f"quiz-{r['width']}" and r['ok']
     assert (r['width'],r['height']) in ((390,844),(1440,900))
     assert not r['searchAssets'] and not r['errors']
@@ -61,7 +61,10 @@ def case(r, timing):
     assert [e['doc'] for e in r['events'] if e['kind']=='pageshow' and not e['persisted']]==[
         made['doc'],origin['doc'],offer['doc']]
     clicks=[e for e in r['events'] if e['kind']=='click']
-    assert all(e['detail']>=1 and e['button']==0 for e in clicks)
+    for click in clicks:
+        assert click['button']==0
+        source_key = keyboard_source and click['doc']==offer['doc'] and click['action']=='quiz-source'
+        assert click['detail']==0 if source_key else click['detail']>=1
     assert [(e['doc'],e['link']) for e in clicks[:2]]==[(made['doc'],TO+'#sec-canticles'),(origin['doc'],TO)]
     [wheel]=[e for e in r['events'] if e['kind']=='wheel' and e['doc']==made['doc']]
     assert wheel['deltaMode']==0 and wheel['deltaY']==r['wheelDelta']>0

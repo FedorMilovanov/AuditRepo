@@ -6,9 +6,10 @@ import {createRequire} from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {keyAction} from './quiz-keyboard.mjs';
 
 const [pArg,oArg,executablePath,filter]=process.argv.slice(2);
-assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp|quiz]');
+assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp|quiz|quiz-keys[-1|-2]]');
 const P=path.resolve(pArg),dist=path.join(P,'dist'),out=path.resolve(oArg);
 const req=createRequire(path.join(P,'package.json')),{chromium}=req('playwright');
 const {serve}=await import(pathToFileURL(path.join(P,'scripts/lib/a04-contract.mjs')));
@@ -18,8 +19,11 @@ const A='sec-canticles', B='sec-hebrew', QUIZ='gill.scholar.canticles';
 const KEY='gb:reader-state:v1:gb-strength:'+TO.slice(0,-1);
 const ACK='gb:reader-resume-offered:v1:gb-strength:'+TO.slice(0,-1);
 const arms=filter==='quiz'?['quiz']:['plain','toc','outline'];
-const jobs=[390,1440].flatMap(width=>arms.map(arm=>({arm,width,height:width===390?844:900,id:arm+'-'+width})))
+const keysMode=/^quiz-keys(?:-[12])?$/u.test(filter??'');
+const jobs=(keysMode?[1,2].map(i=>({arm:'quiz-keys',width:390,height:844,id:'quiz-keys-'+i}))
+  :[390,1440].flatMap(width=>arms.map(arm=>({arm,width,height:width===390?844:900,id:arm+'-'+width}))))
   .filter(j=>!filter||new RegExp(filter,'u').test(j.id));
+const quizArm=r=>r.arm==='quiz'||r.arm==='quiz-keys';
 assert.ok(jobs.length);fs.mkdirSync(out,{recursive:true});assert.equal(fs.readdirSync(out).length,0,'fresh output required');
 const sha=f=>createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const l=(p,s)=>p.locator(s), norm=x=>String(x??'').replace(/\s+/gu,' ').trim();
@@ -28,7 +32,7 @@ const showTimes={offerBy:3800,settle:1120,actByMount:5900};
 const shot=(p,r,stage)=>p.screenshot({path:path.join(out,`${r.id}-${stage}.png`),animations:'disabled'});
 const {base,server}=await serve();
 
-function observe({a,b,key,ack,to,from}){
+function observe({a,b,key,ack,to,from,keysMode}){
   const q=s=>document.querySelector(s), id=s=>document.getElementById(s);
   const norm=s=>String(s??'').replace(/\s+/gu,' ').trim();
   const name=e=>e?.id||e?.classList?.[0]||e?.tagName||null;
@@ -65,11 +69,21 @@ function observe({a,b,key,ack,to,from}){
       quiz:s?{q:norm(q('#glsQuizQuestion')?.textContent),verdict:[norm(verdict?.textContent),verdict?.hidden??null],
         source:[href(s),s.hidden],progress:norm(q('#glsQuizStreak')?.textContent),options:[...document.querySelectorAll('#glsQuizOptions button')].map(el=>[norm(el.textContent),el.disabled,el.className])}:null};
   }
+  const quizAction=el=>el.id==='glsQuizSource'?'quiz-source':el.id==='glsQuizNext'?'quiz-next':
+    el.matches('#glsQuizConfRow button')?'quiz-confidence':el.matches('#glsQuizOptions button')?'quiz-answer':null;
+  if(keysMode)addEventListener('keydown',e=>{
+    const el=e.target;
+    if(e.key!=='Enter'||!el?.matches)return;
+    const action=quizAction(el);
+    if(action)send('quiz-keydown',{action,key:e.key,trusted:e.isTrusted,toastPhase:phase,
+      question:norm(q('#glsQuizQuestion')?.textContent),focusIsTarget:el===document.activeElement});
+  },{capture:true,passive:true});
   document.addEventListener('click',e=>{
     const el=e.target?.closest?.('button,a');if(!el)return;
     const link=href(el);let action;
     if(el.matches('.gbs2-resume-go'))action='continue';
     else if(el.id==='glsQuizSource')action='quiz-source';
+    else if(keysMode&&quizAction(el))action=quizAction(el);
     else if(location.pathname===from&&link===to)action='entry';
     else if(link===to+'#'+b){
       if(el.matches('[data-outline-link]'))action='outline';
@@ -78,7 +92,9 @@ function observe({a,b,key,ack,to,from}){
     }
     if(action){
       send('click',{action,link,trusted:e.isTrusted,detail:e.detail,button:e.button,hit:box(el)?.hit??false,
-        toastPhase:phase,saved:saved(),label:norm(el.textContent)});
+        toastPhase:phase,saved:saved(),label:norm(el.textContent),...(keysMode&&action.startsWith('quiz-')?{
+        question:norm(q('#glsQuizQuestion')?.textContent),focusIsTarget:el===document.activeElement,
+      }:{})});
     }
   },{capture:true,passive:true});
   window.__gbInPage={read};
@@ -214,21 +230,26 @@ async function pointer(p,r,selector,label=null){
 async function changeSectionFromQuiz(p,r){
   await learning(p,'#tabQuiz');const pool=JSON.parse(await l(p,'#gillQuizData').getAttribute('data-quiz'));
   r.questionWalk=[];r.pointerInterference=[];
+  const keys=r.arm==='quiz-keys';
+  if(keys)r.keyActions=[];
+  const act=(step,selector,label,question,ordinal)=>keys
+    ?keyAction(p,r,{step,selector,label,question,ordinal})
+    :pointer(p,r,selector,label);
   for(let i=0;i<pool.length;i++){
     const q=norm(await l(p,'#glsQuizQuestion').textContent()),x=pool.find(e=>norm(e.question)===q);assert.ok(x);
     const u=new URL(x.sourceHref,base+TO), id=u.hash.slice(1);
     const target=u.pathname===TO&&id&&id!==A;
     r.questionWalk.push(x.id);
-    await pointer(p,r,'#glsQuizConfRow [data-conf=sure]');
-    await pointer(p,r,'#glsQuizOptions button',norm(x.answers[(x.correctIndex+1)%x.answers.length]));
-    if(!target){await pointer(p,r,'#glsQuizNext');continue;}
+    await act('confidence','#glsQuizConfRow [data-conf=sure]',null,x.id,i+1);
+    await act('answer','#glsQuizOptions button',norm(x.answers[(x.correctIndex+1)%x.answers.length]),x.id,i+1);
+    if(!target){await act('next','#glsQuizNext',null,x.id,i+1);continue;}
     r.target=id;r.answered=await state(p,id);
     assert.equal(r.answered.hash,'');assert.equal(r.answered.doc,r.offer.doc);
     assert.equal(r.answered.history,r.offer.history);
     assert.match(r.answered.quiz.verdict[0],/^Неверно/u);
     assert.deepEqual(r.answered.quiz.source,[TO+'#'+id,false]);
     r.link={href:await l(p,'#glsQuizSource').getAttribute('href'),label:norm(await l(p,'#glsQuizSource').textContent())};
-    await pointer(p,r,'#glsQuizSource');
+    await act('source','#glsQuizSource',null,x.id,i+1);
     await p.waitForFunction(target=>{
       const s=__gbInPage.read(target);return s.hash==='#'+target&&s.focus===target&&s.B?.inView&&s.B.hit&&!s.overlays.length&&!s.locked;
     },id,{timeout:2000});
@@ -242,10 +263,10 @@ async function changeSectionFromQuiz(p,r){
 }
 async function exercise(p,r){
   await saveFromQuiz(p,r);await reenter(p,r);
-  if(r.arm==='quiz')await changeSectionFromQuiz(p,r);
+  if(quizArm(r))await changeSectionFromQuiz(p,r);
   else if(r.arm!=='plain')await changeSection(p,r);
   // Preserve the natural timeout instead of retrying a late shuffle position.
-  if(r.arm==='quiz'){
+  if(quizArm(r)){
     const candidate=await state(p,r.target), mount=candidate.transitions[0];
     if(!candidate.toast?.on||!shown(candidate.toast.go)||candidate.ageMs-mount.ageMs>=showTimes.actByMount){
       r.before=candidate;
@@ -253,7 +274,7 @@ async function exercise(p,r){
       r.after=await state(p,r.target);r.outcome='no-action-in-offer-window';return;
     }
   }
-  if(r.arm!=='plain'&&r.width===390&&r.arm!=='quiz')await shot(p,r,'before');
+  if(r.arm!=='plain'&&r.width===390&&!quizArm(r))await shot(p,r,'before');
   r.before=await state(p,r.target);
   assert.ok(r.before.toast?.on&&shown(r.before.toast.go),'toast no longer actionable: '+JSON.stringify(r.before.transitions));
   const mount=r.before.transitions.find(e=>e.phase==='off');
@@ -272,14 +293,14 @@ async function exercise(p,r){
   r.delays={off:off.ageMs-click.ageMs,removed:removed.ageMs-click.ageMs};
   assert.ok(r.delays.off>=0&&r.delays.off<=50&&r.delays.removed>=375&&r.delays.removed<=600);
   const scrollAfter=r.after.scrolls.filter(([ms])=>ms>=click.ageMs);
-  if(r.arm==='toc'||r.arm==='quiz'){
+  if(r.arm==='toc'||quizArm(r)){
     assert.equal(r.after.y,click.y);assert.equal(r.before.y,click.y);assert.ok(shown(r.after.B)&&!shown(r.after.A));
     assert.deepEqual(scrollAfter,[]);r.outcome='visible-toast-click-no-return';
   }else{
     assert.ok(shown(r.after.A)&&!shown(r.after.B)&&r.after.y>1200&&r.after.y!==click.y&&scrollAfter.length);
     r.outcome='saved-heading-restored';
   }
-  if(r.arm!=='plain'&&r.width===390&&r.arm!=='quiz')await shot(p,r,'after');
+  if(r.arm!=='plain'&&r.width===390&&!quizArm(r))await shot(p,r,'after');
 }
 const pins=new Set(),rows=[];let browser;
 try{
@@ -289,7 +310,7 @@ try{
     const ctx=await browser.newContext({viewport:{width:r.width,height:r.height},colorScheme:'light',reducedMotion:'reduce',serviceWorkers:'block'});
     try{
       ctx.setDefaultTimeout(5200);
-      await ctx.addInitScript(observe,{a:A,b:B,key:KEY,ack:ACK,to:TO,from:FROM});
+      await ctx.addInitScript(observe,{a:A,b:B,key:KEY,ack:ACK,to:TO,from:FROM,keysMode});
       await ctx.route('**/*',route=>{const u=new URL(route.request().url());return u.origin===base||['blob:','data:'].includes(u.protocol)?route.continue():route.abort();});
       const p=await ctx.newPage();
       p.on('console',e=>{const s=e.text();if(s.startsWith('GB_INPAGE '))r.events.push(JSON.parse(s.slice(10)));
