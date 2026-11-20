@@ -17,7 +17,7 @@ import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianT
 import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
 import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
 import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
-import {FIELD_NOTES,normalizeFieldJournal,observeField,answerField,nearField} from '../.test-build/data/WorldFieldLearning.js';
+import {FIELD_NOTES,normalizeFieldJournal as normalizeWorldFieldJournal,observeField,answerField,nearField} from '../.test-build/data/WorldFieldLearning.js';
 import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
 import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
 import { EXPEDITION_EVIDENCE, EXPEDITION_CHRONOLOGY, EXPEDITION_CONTRAST, expeditionReady, normalizeExpeditionCompletion, canCompleteExpedition, completeExpedition } from '../.test-build/data/expedition.js';
@@ -520,7 +520,7 @@ t('W13B nearby Exodus field notes are tied to a physical landmark',
   !nearField(FIELD_NOTES.well,17,17)&&
   FIELD_NOTES.well.answer==='a');
 t('W13B mastery needs visit, correction and evidence-based answer',
-  (()=>{const initial=normalizeFieldJournal({observed:['forged'],
+  (()=>{const initial=normalizeWorldFieldJournal({observed:['forged'],
       understood:['midian-well'],mistakes:{'midian-well':-3}});
     if(initial.observed.length||initial.understood.length)return false;
     if(answerField(initial,'midian-well','a').understood.length)return false;
@@ -530,7 +530,7 @@ t('W13B mastery needs visit, correction and evidence-based answer',
     const pass=answerField(retry,'midian-well','a');
     return retry.mistakes['midian-well']===2&&
       retry.understood.length===0&&pass.understood.length===1&&
-      normalizeFieldJournal(pass).understood[0]==='midian-well'&&
+      normalizeWorldFieldJournal(pass).understood[0]==='midian-well'&&
       pass.observed.length===1;
   })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
