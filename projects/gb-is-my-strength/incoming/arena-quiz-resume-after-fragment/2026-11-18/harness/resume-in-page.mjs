@@ -9,7 +9,7 @@ import {pathToFileURL} from 'node:url';
 import {keyAction} from './quiz-keyboard.mjs';
 
 const [pArg,oArg,executablePath,filter]=process.argv.slice(2);
-assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp|quiz|quiz-keys[-1|-2]]');
+assert.ok(pArg&&oArg&&executablePath,'node resume-in-page.mjs PRODUCT FRESH_OUT CHROMIUM [id-regexp|quiz|quiz-keys[-1|-2]|quiz-focus[-press|-timer]]');
 const P=path.resolve(pArg),dist=path.join(P,'dist'),out=path.resolve(oArg);
 const req=createRequire(path.join(P,'package.json')),{chromium}=req('playwright');
 const {serve}=await import(pathToFileURL(path.join(P,'scripts/lib/a04-contract.mjs')));
@@ -19,11 +19,13 @@ const A='sec-canticles', B='sec-hebrew', QUIZ='gill.scholar.canticles';
 const KEY='gb:reader-state:v1:gb-strength:'+TO.slice(0,-1);
 const ACK='gb:reader-resume-offered:v1:gb-strength:'+TO.slice(0,-1);
 const arms=filter==='quiz'?['quiz']:['plain','toc','outline'];
-const keysMode=/^quiz-keys(?:-[12])?$/u.test(filter??'');
-const jobs=(keysMode?[1,2].map(i=>({arm:'quiz-keys',width:390,height:844,id:'quiz-keys-'+i}))
+const focusMode=/^quiz-focus(?:-(?:press|timer))?$/u.test(filter??'');
+const keysMode=focusMode||/^quiz-keys(?:-[12])?$/u.test(filter??'');
+const jobs=(focusMode?['press','timer'].map(dismiss=>({arm:'quiz-focus',dismiss,width:390,height:844,id:'quiz-focus-'+dismiss}))
+  :keysMode?[1,2].map(i=>({arm:'quiz-keys',width:390,height:844,id:'quiz-keys-'+i}))
   :[390,1440].flatMap(width=>arms.map(arm=>({arm,width,height:width===390?844:900,id:arm+'-'+width}))))
   .filter(j=>!filter||new RegExp(filter,'u').test(j.id));
-const quizArm=r=>r.arm==='quiz'||r.arm==='quiz-keys';
+const quizArm=r=>r.arm==='quiz'||r.arm==='quiz-keys'||r.arm==='quiz-focus';
 assert.ok(jobs.length);fs.mkdirSync(out,{recursive:true});assert.equal(fs.readdirSync(out).length,0,'fresh output required');
 const sha=f=>createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const l=(p,s)=>p.locator(s), norm=x=>String(x??'').replace(/\s+/gu,' ').trim();
@@ -32,7 +34,7 @@ const showTimes={offerBy:3800,settle:1120,actByMount:5900};
 const shot=(p,r,stage)=>p.screenshot({path:path.join(out,`${r.id}-${stage}.png`),animations:'disabled'});
 const {base,server}=await serve();
 
-function observe({a,b,key,ack,to,from,keysMode}){
+function observe({a,b,key,ack,to,from,keysMode,focusMode}){
   const q=s=>document.querySelector(s), id=s=>document.getElementById(s);
   const norm=s=>String(s??'').replace(/\s+/gu,' ').trim();
   const name=e=>e?.id||e?.classList?.[0]||e?.tagName||null;
@@ -58,9 +60,25 @@ function observe({a,b,key,ack,to,from,keysMode}){
   const send=(kind,x)=>console.debug('GB_INPAGE '+JSON.stringify({kind,...stamp(),...x}));
   for(const k of ['pageshow','hashchange','popstate'])addEventListener(k,e=>send(k,{trusted:e.isTrusted,persisted:e.persisted??null}));
   addEventListener('wheel',e=>send('wheel',{trusted:e.isTrusted,deltaY:e.deltaY,deltaMode:e.deltaMode}),{passive:true,capture:true});
+  function focusRecord(el=document.activeElement){
+    return {name:name(el),tag:el?.tagName??null,body:el===document.body,
+      label:el?.getAttribute('aria-label')||(/^(A|BUTTON|H[1-6])$/u.test(el?.tagName??'')?norm(el.textContent).slice(0,180):null),
+      href:el?.hasAttribute('href')?href(el):null,inMain:!!el?.closest('main'),visible:el===document.body?null:box(el)};
+  }
+  if(focusMode){
+    const chapter=()=>location.hash==='#'+b&&!q('#gillLearningOverlay.is-open');
+    addEventListener('keydown',e=>{
+      if(e.key==='Tab'&&chapter())send('after-source-tab',{trusted:e.isTrusted,shift:e.shiftKey,
+        active:focusRecord(),toastPhase:phase});
+    },{capture:true,passive:true});
+    addEventListener('focusin',e=>{
+      if(chapter())send('after-source-focus',{trusted:e.isTrusted,active:focusRecord(e.target),toastPhase:phase});
+    },{capture:true,passive:true});
+  }
   function read(chosen=b){
     const t=q('.gbs2-resume'),s=q('#glsQuizSource'),verdict=q('#glsQuizVerdict');
     return {...stamp(),nav:performance.getEntriesByType('navigation').at(-1)?.type??null,
+      ...(focusMode?{active:focusRecord(),pageFocus:document.hasFocus()}:{}),
       saved:saved(),ack:sessionStorage.getItem(ack),A:point(a),B:point(chosen??b),
       live:window.GBReaderState?.getActiveSection?.()??null,line:window.GBReaderState?.getReadingLine?.()??null,
       toast:t?{on:t.classList.contains('gbs2-on'),label:norm(t.querySelector('span')?.textContent),go:box(t.querySelector('.gbs2-resume-go'))}:null,
@@ -230,7 +248,7 @@ async function pointer(p,r,selector,label=null){
 async function changeSectionFromQuiz(p,r){
   await learning(p,'#tabQuiz');const pool=JSON.parse(await l(p,'#gillQuizData').getAttribute('data-quiz'));
   r.questionWalk=[];r.pointerInterference=[];
-  const keys=r.arm==='quiz-keys';
+  const keys=r.arm==='quiz-keys'||r.arm==='quiz-focus';
   if(keys)r.keyActions=[];
   const act=(step,selector,label,question,ordinal)=>keys
     ?keyAction(p,r,{step,selector,label,question,ordinal})
@@ -238,7 +256,7 @@ async function changeSectionFromQuiz(p,r){
   for(let i=0;i<pool.length;i++){
     const q=norm(await l(p,'#glsQuizQuestion').textContent()),x=pool.find(e=>norm(e.question)===q);assert.ok(x);
     const u=new URL(x.sourceHref,base+TO), id=u.hash.slice(1);
-    const target=u.pathname===TO&&id&&id!==A;
+    const target=u.pathname===TO&&id&&id!==A&&(r.arm!=='quiz-focus'||id===B);
     r.questionWalk.push(x.id);
     await act('confidence','#glsQuizConfRow [data-conf=sure]',null,x.id,i+1);
     await act('answer','#glsQuizOptions button',norm(x.answers[(x.correctIndex+1)%x.answers.length]),x.id,i+1);
@@ -261,10 +279,36 @@ async function changeSectionFromQuiz(p,r){
   }
   throw Error('no authored in-page source other than the saved section');
 }
+async function measureNextTab(p,r){
+  r.before=await state(p,r.target);
+  const mount=r.before.transitions[0];
+  const eligible=r.before.toast?.on&&shown(r.before.toast.go);
+  const inTime=eligible&&r.before.ageMs-mount.ageMs<showTimes.actByMount;
+  if(r.dismiss==='press'&&inTime){
+    await l(p,'.gbs2-resume.gbs2-on .gbs2-resume-go').click({timeout:950});
+    r.dismissal='pointer-cta';
+  }else r.dismissal=eligible&&r.dismiss==='timer'?'timer-control':'out-of-offer-window';
+  await p.waitForFunction(()=>!document.querySelector('.gbs2-resume'),null,{timeout:r.dismissal==='pointer-cta'?1450:7800});
+  // Use the same post-removal observation window in both arms. No input
+  // between activation/expiry and these first two forward Tab presses.
+  await p.waitForTimeout(125);
+  r.after=await state(p,r.target);
+  r.tabs=[];
+  for(let i=0;i<2;i++){
+    const before=i?r.tabs[i-1].after:r.after;
+    await p.keyboard.press('Tab');
+    await p.waitForTimeout(125);
+    r.tabs.push({before,after:await state(p,r.target)});
+  }
+  r.outcome=r.dismissal;
+  console.log('FOCUS',r.id,r.before.focus+'→'+r.after.focus+'→'+r.tabs.map(t=>t.after.focus).join('→'),
+    'Y='+[r.before.y,r.after.y,...r.tabs.map(t=>t.after.y)].join('→'));
+}
 async function exercise(p,r){
   await saveFromQuiz(p,r);await reenter(p,r);
   if(quizArm(r))await changeSectionFromQuiz(p,r);
   else if(r.arm!=='plain')await changeSection(p,r);
+  if(r.arm==='quiz-focus')return measureNextTab(p,r);
   // Preserve the natural timeout instead of retrying a late shuffle position.
   if(quizArm(r)){
     const candidate=await state(p,r.target), mount=candidate.transitions[0];
@@ -310,7 +354,7 @@ try{
     const ctx=await browser.newContext({viewport:{width:r.width,height:r.height},colorScheme:'light',reducedMotion:'reduce',serviceWorkers:'block'});
     try{
       ctx.setDefaultTimeout(5200);
-      await ctx.addInitScript(observe,{a:A,b:B,key:KEY,ack:ACK,to:TO,from:FROM,keysMode});
+      await ctx.addInitScript(observe,{a:A,b:B,key:KEY,ack:ACK,to:TO,from:FROM,keysMode,focusMode});
       await ctx.route('**/*',route=>{const u=new URL(route.request().url());return u.origin===base||['blob:','data:'].includes(u.protocol)?route.continue():route.abort();});
       const p=await ctx.newPage();
       p.on('console',e=>{const s=e.text();if(s.startsWith('GB_INPAGE '))r.events.push(JSON.parse(s.slice(10)));
