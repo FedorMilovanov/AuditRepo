@@ -425,7 +425,7 @@ t('W12E.5 separated deposits vary substantially in scale and do not overlap',
 // walk on 0.5m x/z lattice gives a conservative topological regression check.
 // Grid coverage is intentionally not 100%: tiny irrelevant cells may be
 // disconnected by circles in a discretized map even if movement is valid.
-t('W12E.5.1 rock field leaves the well and almost all terrain connected',
+t('W12E.5.1 walkable approach ends outside solid well and terrain stays connected',
   (()=>{const cols=73,rows=89,total=cols*rows;
     const allowed=new Uint8Array(total),seen=new Uint8Array(total);
     const idx=(i,j)=>j*cols+i;
@@ -450,9 +450,10 @@ t('W12E.5.1 rock field leaves the well and almost all terrain connected',
     const wellAccess=idx(36,49); // physical position x=0,z=2.5
     return count>5900&&queue.length/count>.999&&
       seen[wellAccess]===1&&
+      !midianWalkable(0,0)&& // the well itself must stay solid
       midianWalkable(0,2.5)&&
       Array.from({length:17},(_,i)=>i/16)
-        .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)));
+        .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)+2.5*t));
   })());
 // W11B: avoid blocking the actual playable viewpoint with toy vegetation.
 t('W11B shrub placement is sparse and never blocks the approach corridor',
