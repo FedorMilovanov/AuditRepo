@@ -57,6 +57,20 @@
 
 **Метод.** `verified-production-like-dist`, `verified-artifact`, `verified-browser`: Chromium Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4, 390×844 и 1359×900, мышь даже на узкой ширине, reduced motion, SW заблокирован. Отдельная пустая browser context на каждый сценарий; выделение реальным перетаскиванием, координаты получены из Range без подмены `Selection`. Записи создавались и удалялись только через интерфейс, без предварительной записи в хранилище, правок DOM/CSS или принудительных кликов. В обоих прогонах 0 `pageerror` и 0 HTTP ≥400 от сервера `dist`; вопросы случайно перемешаны, текущий ответ сравнивался с исходным состоянием **своей** попытки. Трасса и снимки относятся к первому из двух итоговых прогонов. Аудит не включает физический touch, новые вкладки/устройства, публичный домен, другие движки или речь скринридера.
 
+### Два открытых маршрута для передачи
+
+По [комментарию владельца #570][routing]: выбрать одну работу и взять её повтор за исходную проверку. Это две независимые правки Product, не новые находки и не закрытие QN‑01/02.
+
+| Что исправлять | Владелец в Product | Повтор и критерий приёмки |
+| --- | --- | --- |
+| **QE‑01 — ключ и разбор Гилла II** | [Банк `gillLearningData.ts`, `gill.scholar.systematics`][qe-bank]. | [Редакционный повтор: 12/12][qe-repeat]. Ключ и объяснение должны передавать квалифицированный тезис статьи, а не первенство среди всех баптистов. Проверить выбор по тексту и переход «Перечитать» в неизменный `#sec-systematics`; статью и TOC из Product #2328 не откатывать. |
+| **QNL‑01/02 — правка заметки в двух вкладках** | [`GBHighlights`, `showEditor()` / `saveNote()` в `js/highlights.js`][note-write]. | [Сценарии и приёмка][qnl-repeat] · [квитанция A/B: 6+6][qnl-receipt]. Если B изменила тот же ID, сохранить текст B и черновик A до выбора читателя; одного `savedAt` недостаточно. При удалении — сохранить черновик без ложного успеха или восстановления записи. Проверить обе вкладки, reload B, тела Markdown/JSON и контроль разных ID. Не менять «Добавить без замены». |
+
+[routing]: https://github.com/FedorMilovanov/AuditRepo/pull/570#issuecomment-7040523505
+[qe-bank]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/gillLearningData.ts#L169-L183
+[qe-repeat]: ../../arena-quiz-editorial/2026-11-18/QE-01-HANDOFF.md
+[qnl-repeat]: ../../arena-quiz-note-lifecycle/2026-11-18/ACCEPTANCE-FOLLOWUP.md
+[qnl-receipt]: ../../arena-quiz-note-lifecycle/2026-11-18/evidence/comment-followup-receipt.json
 [census]: ../../arena-quiz-learning/2026-11-18/REPORT.md
 [review]: ../../arena-quiz-review-loop/2026-11-18/REPORT.md
 [search]: ../../arena-quiz-source-search/2026-11-18/REPORT.md
