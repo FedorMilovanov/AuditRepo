@@ -16,7 +16,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  try{
  const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-build','artlab');
  fs.mkdirSync(dir,{recursive:true});
- const base=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\\/$/,'');
+ const rawBase=process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192'; const base=rawBase.endsWith('/')?rawBase.slice(0,-1):rawBase;
  const page=await browser.newPage();page.setDefaultTimeout(45000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  page.on('console',c=>{if(c.type()==='error')errors.push('console: '+c.text())});
