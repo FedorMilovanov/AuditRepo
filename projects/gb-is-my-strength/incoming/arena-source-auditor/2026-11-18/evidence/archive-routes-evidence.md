@@ -4,8 +4,8 @@
 
 ## Якорь
 
-- В **14:37:41 UTC** `gh api repos/FedorMilovanov/gb-is-my-strength/branches/main` вернул `9edef94ece08012223c1364bec7ddcd561cf5713`. [Публичный указатель](https://gospod-bog.ru/deployments/current.json?editorial=archive-routes-20261118) — тот же release/control-plane SHA и Pages **44313404255/1**; candidate digest `sha256:a3cd47357f839049daeda08ce4b2fd57d8d8b0e1dd216eb7ee99cc279681f0a7`. Это проверка указателя, не сравнение live HTML. [Предыдущие хеши локальных S/M HTML и компоненты](archival-evidence.md#якорь-и-действующие-локусы) не пересчитаны.
-- В **14:35:46 UTC** [#2338](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2338) — `OPEN`, `draft`, `CLEAN`, head `13febd326a1ab4f3d5ed1e62c6ce0cedea8ce4fd`, 9 путей, без `baptisty-rossii`. Это не изменение текста трёх маршрутов и не новое опубликованное состояние. Файлы этого прохода — только в своём intake AuditRepo.
+- Product `main` — `9edef94ece08012223c1364bec7ddcd561cf5713`, [публичный указатель](https://gospod-bog.ru/deployments/current.json?editorial=archive-routes-20261118) — тот же release/control-plane SHA и Pages **44313404255/1**; candidate digest `sha256:a3cd47357f839049daeda08ce4b2fd57d8d8b0e1dd216eb7ee99cc279681f0a7`. Это проверка указателя, не сравнение live HTML; [хеши локальных HTML из III](archival-evidence.md#якорь-и-действующие-локусы) не пересчитывались.
+- Открытый draft [Product #2338](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2338) не затрагивает пути `baptisty-rossii`. Запись сделана только в intake AuditRepo.
 
 ## Цесис
 
