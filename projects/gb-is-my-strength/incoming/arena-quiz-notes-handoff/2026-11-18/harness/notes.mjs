@@ -20,7 +20,7 @@ const C = '/hard-texts/genesis-6/';
 const head = '9edef94ece08012223c1364bec7ddcd561cf5713';
 const sheet = '#gillLearningOverlay', library = '#gb-hl-backdrop';
 const noteCard = '#notesList .note-card', libraryCard = '#gb-hl-list .gb-hl-item';
-const list = '#gb-hl-list', popup = '#selection-share-popup', nativeQuiz = '#quizPlaceholder .quiz-wrapper';
+const list = '#gb-hl-list', nativeQuiz = '#quizPlaceholder .quiz-wrapper';
 const sampleNote = 'Тестовая заметка: сверить объяснение с абзацем источника.';
 const legacyQuote = 'Кумранские фрагменты';
 const citeP = 'article.genesis6-card--planned p';

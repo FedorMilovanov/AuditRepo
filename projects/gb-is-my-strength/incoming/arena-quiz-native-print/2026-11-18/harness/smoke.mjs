@@ -67,13 +67,29 @@ try {
     if (v.inputBytesEqual) assert.match(await check.locator('#status').textContent(), /побайтно совпадают/);
     receipts.push({ result: v.result, first: v.first, repeat: v.repeat });
   }
+  // Delay the clipboard permission/result without using the host clipboard.
+  await check.evaluate(() => {
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText(text) {
+      return new Promise(resolve => { window.__pendingFixtureCopy = { text, resolve }; });
+    } } });
+  });
+  await check.locator('#copy').click();
+  await check.waitForFunction(() => window.__pendingFixtureCopy);
+  const oldText = await check.evaluate(() => window.__pendingFixtureCopy.text);
+  await check.locator('#note').fill('different fixture note');
+  await check.locator('#compare').click();
+  await check.locator('#receipt:not([hidden])').waitFor({ timeout: 22000 });
+  assert.notEqual(await check.locator('#receipt-text').textContent(), oldText);
+  await check.evaluate(() => window.__pendingFixtureCopy.resolve());
+  await check.locator('#copy:enabled').waitFor();
+  assert.equal(await check.locator('#copy').textContent(), 'Скопировать квитанцию');
   assert.ok(!errors.length, errors.join('\n'));
   assert.ok(requests.every(r => r.method === 'GET' && r.bytes === 0));
   assert.ok(requests.every(r => r.path.startsWith('/__print-witness/')));
   await writeFile(out, JSON.stringify({ ...anchor, coverage: 'fixture-only (Chromium Headless; pageRanges explicitly trims the control)',
     chromium: browser.version(), receipts, workerSameOrigin: requests.some(r => r.path.endsWith('/pdf.worker.mjs')),
     noFileBytesSent: true, writeRejectedWith: write.status(), previewHostAccepted: true }, null, 2) + '\n');
-  console.log('PASS 3 fixture classifications, no uploads, verified article bytes, compatible preview host');
+  console.log('PASS 3 fixture classifications, stale clipboard confirmation rejected, no uploads, verified article bytes and preview host');
 } finally {
   await browser.close();
 }

@@ -40,6 +40,7 @@ for (const f of [...walk(dist)].sort()) {
 }
 assert.deepEqual([routes.native.length, routes.learning.length], [23, 11]);
 fs.mkdirSync(out, { recursive: true });
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const { base, server } = await serve();
 const pins = /^\/(?:_astro\/(?:ReaderActionsRuntime|GillLearningSheet|BaseLayout)|css\/(?:site|floating-cluster)\.css$|js\/(?:site|floating-cluster-controller|reader-preferences)\.js$)/u;
 const files = new Set();

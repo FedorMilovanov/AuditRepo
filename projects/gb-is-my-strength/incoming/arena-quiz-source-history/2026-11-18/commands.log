@@ -5,10 +5,7 @@
 [Coordination and exact anchor]
 git status --short --branch
 git rev-parse HEAD
-for repo in AuditRepo gb-is-my-strength; do
-  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
-  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
-done
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
 gh api repos/FedorMilovanov/AuditRepo/pulls/570
 # Start: clean 68517dbdb0988547e6375f2799d12c992e649385, unchanged stage 15 body, 98 files, OPEN Draft.
 # Stage 15 preflight 44413068281 and validate 44413068035 SUCCESS on exact head.

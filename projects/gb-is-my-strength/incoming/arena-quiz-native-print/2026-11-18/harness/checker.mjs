@@ -79,9 +79,15 @@ try {
   $('status').textContent = 'Выберите два файла после печати.';
 } catch (error) { $('status').textContent = error.message; }
 const controls = ['first', 'repeat', 'note', 'attest', 'compare'].map($);
+let receiptVersion = 0;
+const hideReceipt = () => {
+  receiptVersion++;
+  $('receipt').hidden = true;
+  $('receipt-text').textContent = '';
+};
 $('pair').addEventListener('input', () => {
   if ($('receipt').hidden) return;
-  $('receipt').hidden = true;
+  hideReceipt();
   $('status').textContent = 'Поля изменены. Сравните выбранные PDF заново.';
 });
 $('pair').addEventListener('submit', async event => {
@@ -90,7 +96,7 @@ $('pair').addEventListener('submit', async event => {
   const files = [$('first').files[0], $('repeat').files[0]];
   const attestedOptions = $('note').value.trim();
   for (const control of controls) control.disabled = true;
-  $('receipt').hidden = true;
+  hideReceipt();
   $('status').textContent = 'Читаем текст PDF на этом устройстве…';
   try {
     const first = await parse(files[0]);
@@ -113,13 +119,19 @@ $('pair').addEventListener('submit', async event => {
   }
 });
 $('copy').addEventListener('click', async () => {
+  const button = $('copy'), box = $('receipt'), text = $('receipt-text');
+  if (button.disabled || box.hidden) return;
+  const versionAtCopy = receiptVersion;
+  const stillCurrent = () => !box.hidden && receiptVersion === versionAtCopy;
+  button.disabled = true;
   try {
-    await navigator.clipboard.writeText($('receipt-text').textContent);
-    $('copy').textContent = 'Квитанция скопирована';
+    await navigator.clipboard.writeText(text.textContent);
+    if (stillCurrent()) button.textContent = 'Квитанция скопирована';
   } catch {
+    if (!stillCurrent()) return;
     const range = document.createRange();
-    range.selectNodeContents($('receipt-text'));
+    range.selectNodeContents(text);
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
-  }
+  } finally { button.disabled = false; }
 });

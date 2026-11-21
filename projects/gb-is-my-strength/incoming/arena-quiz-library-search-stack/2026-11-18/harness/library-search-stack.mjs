@@ -68,11 +68,10 @@ function installWitness(){
       node:name(e.target),owner:owner(e.target),point:type==='click'?[e.clientX,e.clientY]:null,
       prevented:e.defaultPrevented,shift:e.shiftKey??false,ctrl:e.ctrlKey??false});
   },{capture,passive:true});
-  window.__librarySearchWitness={snapshot,events,hit};
+  window.__librarySearchWitness={snapshot,events};
 }
 const norm=s=>String(s??'').replace(/\s+/gu,' ').trim();
 const state=p=>p.evaluate(()=>__librarySearchWitness.snapshot());
-const point=(p,s)=>p.evaluate(k=>__librarySearchWitness.hit(document.querySelector(k)),s);
 const mark=p=>p.evaluate(()=>__librarySearchWitness.events.length);
 const segment=(p,n)=>p.evaluate(i=>__librarySearchWitness.events.slice(i),n);
 function locks(s,expected){

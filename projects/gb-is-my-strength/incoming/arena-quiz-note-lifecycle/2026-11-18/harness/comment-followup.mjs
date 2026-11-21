@@ -28,7 +28,7 @@ const jobs=[390,1440].flatMap(width=>['same','delete','distinct'].map(arm=>({arm
 assert.ok(jobs.length);fs.mkdirSync(out,{recursive:true});assert.equal(fs.readdirSync(out).length,0,'fresh output required');
 const sha=x=>createHash('sha256').update(x).digest('hex');
 const L=(p,s)=>p.locator(s), norm=x=>String(x??'').replace(/\s+/gu,' ').trim();
-const editor='#gb-hl-editor', field='#gb-hl-note-text', panel='#gb-hl-panel', status='#gb-hl-status';
+const editor='#gb-hl-editor', field='#gb-hl-note-text';
 const submit=editor+' button[type=submit]', cards='#gb-hl-list .gb-hl-item[data-type=note]';
 const note=(p,id)=>L(p,cards+'[data-id="'+id+'"]');
 const shot=(p,r,k)=>p.screenshot({path:path.join(out,r.id+'-'+k+'.png'),animations:'disabled'});

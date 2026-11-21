@@ -47,6 +47,17 @@ git diff --cached --check
 
 `CHANGED` — файл со строками путей проверяемого diff против его базы. Это проверки формата и состава пакета, не Product-приёмка.
 
+## Сверка веток и PR
+
+Общий блок чтения из 16 журналов. Чтобы получить только список PR, пропустите `git ls-remote`. Это первичный срез; для принятия решений сверяйте точные SHA и пути нужных PR, как в отдельных шагах журнала.
+
+```bash
+for repo in AuditRepo gb-is-my-strength; do
+  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+done
+```
+
 ## Указатель файлов
 
 ### `arena-quiz-accessibility`

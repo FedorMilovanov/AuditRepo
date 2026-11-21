@@ -6,9 +6,7 @@
 git status --short --branch
 git ls-remote origin refs/heads/main 'refs/heads/arena/*'
 git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
-for repo in AuditRepo gb-is-my-strength; do
-  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
-done
+# Список PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md («Сверка веток и PR», только gh pr list).
 gh api repos/FedorMilovanov/AuditRepo/pulls/570
 # Previous 082f15cfa2a9642337908d14c29cc3d99fd9fd4a / 82 / OPEN Draft, preflight 44403896631 and validate 44403895999 SUCCESS.
 # Initial Product delta: #2344 b434d30a07ded45968a623f58a3da62fd0be8fb1...259074909f0d1a35aca255adbb12bd40e99b3044,

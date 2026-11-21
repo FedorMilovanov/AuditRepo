@@ -14,7 +14,7 @@ const { chromium } = req('playwright');
 const { serve } = await import(pathToFileURL(path.join(product, 'scripts/lib/a04-contract.mjs')));
 const anchor = '9edef94ece08012223c1364bec7ddcd561cf5713';
 const A = '/articles/anatomiya-padeniya-pyat-stadiy/', G = '/articles/dzhon-gill-chast-2-uchenyi/';
-const N = '#quizPlaceholder', PANE = '#panelQuiz', SHEET = '#gillLearningOverlay';
+const N = '#quizPlaceholder', PANE = '#panelQuiz';
 const jobs = [
   ['anatomy-narrow-idle', A, 390, 'no-preference', 'idle'],
   ['anatomy-narrow-on', A, 390, 'no-preference', 'on'],

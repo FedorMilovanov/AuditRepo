@@ -6,9 +6,7 @@
 git status --short --branch
 git ls-remote origin refs/heads/main 'refs/heads/arena/*'
 git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
-for repo in AuditRepo gb-is-my-strength; do
-  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
-done
+# Список PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md («Сверка веток и PR», только gh pr list).
 gh api repos/FedorMilovanov/AuditRepo/pulls/570
 # Restored sandbox index at exact published 5c59d79c9442b82ac8fac637a5822385ebb2a31c by mixed reset after verifying all 68 blobs;
 # checkout never switched branches and did not overwrite files. Stage 11 preflight 44380617134 and validate 44380617062 SUCCESS.

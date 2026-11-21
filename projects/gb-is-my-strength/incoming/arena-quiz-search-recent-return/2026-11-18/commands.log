@@ -4,10 +4,7 @@
 [Read-only coordination / inputs]
 git status --short --branch
 git rev-parse HEAD
-for repo in AuditRepo gb-is-my-strength; do
-  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
-  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
-done
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
 gh api repos/FedorMilovanov/AuditRepo/pulls/570
 gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
 gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/reviews?per_page=100' | jq -cs add

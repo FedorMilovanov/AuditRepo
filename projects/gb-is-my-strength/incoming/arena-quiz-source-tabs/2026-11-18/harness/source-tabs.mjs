@@ -15,7 +15,7 @@ const { serve } = await import(pathToFileURL(path.join(product, 'scripts/lib/a04
 const anchor = '9edef94ece08012223c1364bec7ddcd561cf5713';
 const A = '/articles/anatomiya-padeniya-pyat-stadiy/', G = '/articles/dzhon-gill-chast-2-uchenyi/';
 const G1 = '/articles/dzhon-gill-chast-1-chelovek/';
-const Q = '#quizPlaceholder', PANE = '#panelQuiz', SHEET = '#gillLearningOverlay';
+const Q = '#quizPlaceholder', PANE = '#panelQuiz';
 const LINK = `${Q} .quiz-feedback a[href], #glsQuizSource[href]`;
 const TRACK = '?utm_source=reader';
 const specs = [
