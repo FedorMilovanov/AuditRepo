@@ -10,3 +10,10 @@
 - Earlier PR #596 and #605–#612 were reported closed, but ancestry and 7/7 blob proof were **not re-established in this receipt**; no mutations performed. Independent PRs and agent branches untouched.
 - Pushkin 1827 and Onegin 1833 documentary media remain **rights-pending**. No media added or clearance asserted.
 - Terminal closure and scheduled monitor pause remain blocked until exact-main pending workflows conclude and are independently rechecked. This evidence snapshot becomes stale if main or hard gates change.
+
+## Final exact-main workflow recheck (2026-11-21 UTC)
+
+- Manual Browser QA run 44945624850: completed/success at 21:49:47 UTC.
+- Brand deep reference and motion audit run 44945625028: completed/success at 21:14:01 UTC.
+- Hall Pushkin visual remediation run 44945625117: completed/success at 21:44:38 UTC.
+- Earlier pending statuses above are historical snapshots, now superseded by these directly fetched workflow conclusions. This does not independently prove a production visual inspection or rights clearance.
