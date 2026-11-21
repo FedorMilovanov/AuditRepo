@@ -232,8 +232,14 @@ export default function App() {
       if (!id) return;
       const el = document.getElementById(id);
       if (!el) return;
+      const isName = NAMES.some((name) => name.id === id);
+      // Back/Forward and direct links must restore the keyboard reading
+      // position as well as scroll. Do not steal focus from an open dialog.
+      if (isName && !document.querySelector('[role="dialog"][aria-modal="true"]')) {
+        el.querySelector<HTMLElement>('[data-name-heading]')?.focus({ preventScroll: true });
+      }
       el.scrollIntoView({ behavior: "instant", block: "start" });
-      if (NAMES.some((name) => name.id === id)) setActive(id);
+      if (isName) setActive(id);
     };
     const timeout = window.setTimeout(followHash, 120);
     window.addEventListener("hashchange", followHash);

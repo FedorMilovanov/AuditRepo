@@ -1048,6 +1048,32 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           throw Error('W111 Tab jumped back '+JSON.stringify({engine,width,kind,id,landed,next}));
       }
       console.log('W111_ALL_NONMODAL_SECTION_FOCUS_PASS',engine,width,cases.length);
+      // W113: browser history must restore keyboard focus, not merely the
+      // URL and scroll position. Otherwise Forward + Tab jumps back to the
+      // previous article (reproduced in Chromium 390/768/1440).
+      const entries=page.locator('#sozvezdie button[aria-label^="Перейти к разделу:"]');
+      for(const index of [0,1]){
+        await entries.nth(index).focus();
+        await page.keyboard.press('Enter');
+      }
+      for(const [direction,expected] of [['back','yhwh'],['forward','ehyeh']]){
+        if(direction==='back')await page.goBack({waitUntil:'domcontentloaded'});
+        else await page.goForward({waitUntil:'domcontentloaded'});
+        await page.waitForFunction(expected=>{
+          const section=document.getElementById(expected);
+          return location.hash==='#'+expected &&
+            document.activeElement===section?.querySelector('[data-name-heading]');
+        },expected,{timeout:5000});
+        const landed=await page.evaluate(()=>({hash:location.hash,scroll:scrollY}));
+        await page.keyboard.press('Tab');
+        const next=await page.evaluate(expected=>({
+          inside:!!document.getElementById(expected)?.contains(document.activeElement),
+          hash:location.hash,scroll:scrollY
+        }),expected);
+        if(!next.inside||next.hash!==landed.hash||Math.abs(next.scroll-landed.scroll)>500)
+          throw Error('W113 Back/Forward Tab bounced '+JSON.stringify({engine,width,direction,expected,landed,next}));
+      }
+      console.log('W113_HISTORY_KEYBOARD_PASS',engine,width);
     }
     // A single Constellation search hit should be centered, readable and
     // bounded by the content measure at mobile and desktop widths.
