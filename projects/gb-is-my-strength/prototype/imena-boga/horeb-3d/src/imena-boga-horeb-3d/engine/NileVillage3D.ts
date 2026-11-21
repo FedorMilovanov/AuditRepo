@@ -24,13 +24,25 @@ export function createNileVillage3D(
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
  const scene=new THREE.Scene();
  scene.background=new THREE.Color(0xc3b3a0);
- scene.fog=new THREE.FogExp2(0xcab9a4,.012);
+ scene.fog=new THREE.FogExp2(0xcab9a4,.011);
+ const skyGeo=new THREE.SphereGeometry(90,32,16);
+ const skyPos=skyGeo.getAttribute('position'),skyColors:number[]=[];
+ for(let i=0;i<skyPos.count;i++){
+   const t=THREE.MathUtils.clamp((skyPos.getY(i)/90+.23)/1.08,0,1);
+   const c=new THREE.Color(0xe1b58c).lerp(new THREE.Color(0x96adbd),t);
+   skyColors.push(c.r,c.g,c.b);
+ }
+ skyGeo.setAttribute('color',new THREE.Float32BufferAttribute(skyColors,3));
+ scene.add(new THREE.Mesh(skyGeo,new THREE.MeshBasicMaterial({
+   vertexColors:true,side:THREE.BackSide,depthWrite:false,fog:false
+ })));
  const camera=new THREE.PerspectiveCamera(64,1,.08,115);
  scene.add(new THREE.HemisphereLight(0xffe9cc,0x645e51,2.05));
  const sun=new THREE.DirectionalLight(0xffd8a2,2.45);
  sun.position.set(-8,14,-9);scene.add(sun);
  const mat=(hex:number,roughness=.96)=>new THREE.MeshStandardMaterial({color:hex,roughness});
  const plaster=[mat(0xb9a080),mat(0xc3a887),mat(0xa98e70),mat(0xc1a47e)];
+ plaster.forEach(m=>{m.map=brickTexture;m.bumpMap=brickTexture;m.bumpScale=.013;});
  const clay=mat(0x81624b),roof=mat(0x8e785e),wood=mat(0x5b4936),cloth=mat(0xb5a18a);
  const sedgeMat=mat(0x626f42),reedTip=mat(0x95854a);
  const skin=mat(0xb69176),dark=mat(0x42362b);
@@ -48,7 +60,36 @@ export function createNileVillage3D(
  }
  groundGeo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
  groundGeo.computeVertexNormals();
- const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,side:THREE.DoubleSide}));
+ // Original procedural, periodic fine soil + plaster texture. Cheap and
+ // reusable: no tile network request, no external image rights or geography.
+ function makeGrainTexture(bricks:boolean):THREE.DataTexture{
+   const size=128,pixels=new Uint8Array(size*size*4);
+   for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+     const wave=Math.sin(x*.53+y*.24)*3+Math.cos(x*.16-y*.39)*4;
+     const grain=(rand(x*59+y*373)-.5)*24;
+     let v=231+wave+grain;
+     if(bricks){
+       const row=Math.floor(y/20),mortar=y%20<1||((x+(row%2)*13)%29)<1;
+       if(mortar)v-=24;
+       else v+=3;
+     }
+     v=THREE.MathUtils.clamp(v,187,255);
+     const i=(y*size+x)*4;
+     pixels[i]=Math.round(v);pixels[i+1]=Math.round(v);
+     pixels[i+2]=Math.round(v);pixels[i+3]=255;
+   }
+   const tex=new THREE.DataTexture(pixels,size,size,THREE.RGBAFormat);
+   tex.colorSpace=THREE.SRGBColorSpace;
+   tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+   tex.repeat.set(bricks?2:9,bricks?2:15);
+   tex.generateMipmaps=true;tex.minFilter=THREE.LinearMipmapLinearFilter;
+   tex.magFilter=THREE.LinearFilter;tex.needsUpdate=true;return tex;
+ }
+ const soilTexture=makeGrainTexture(false),brickTexture=makeGrainTexture(true);
+ const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({
+   vertexColors:true,roughness:1,side:THREE.DoubleSide,
+   map:soilTexture,bumpMap:soilTexture,bumpScale:.022,
+ }));
  ground.position.set(5.5,0,-5);ground.name='nile-village-walkable-soil';scene.add(ground);
  const water=new THREE.Mesh(new THREE.PlaneGeometry(19,59),mat(0x537077,.42));
  water.rotation.x=-Math.PI/2;water.position.set(-16.8,-.205,-5);
@@ -109,19 +150,38 @@ export function createNileVillage3D(
  for(const x of [5.37,6.63])for(const z of [3.3,4.68])
    boxes(.11,.78,.11,wood,x,height(x,z)+.39,z);
  // Papyrus reeds by the actual bank. Small dense region screens the cradle.
- const stems=new THREE.InstancedMesh(new THREE.CylinderGeometry(.014,.026,1,5),sedgeMat,170);
- const heads=new THREE.InstancedMesh(new THREE.ConeGeometry(.095,.18,5),reedTip,170);
- const tmp=new THREE.Object3D();
- for(let i=0;i<170;i++){
-   const z=-27+rand(i*4.11)*52,x=-7.15+rand(i*8.17)*1.92;
-   const hh=1.65+rand(i*1.55)*1.12,y=height(x,z);
-   tmp.position.set(x,y+hh*.5,z);tmp.rotation.set(.04*rand(i),0,.045*rand(i+3));
-   tmp.scale.set(1,hh,1);tmp.updateMatrix();stems.setMatrixAt(i,tmp.matrix);
-   tmp.position.y=y+hh;tmp.rotation.set(0,rand(i*5)*Math.PI,0);
-   tmp.scale.setScalar(.8+rand(i)*.5);tmp.updateMatrix();heads.setMatrixAt(i,tmp.matrix);
+ const stemCount=170,rays=8;
+ const stems=new THREE.InstancedMesh(new THREE.CylinderGeometry(.012,.025,1,5),sedgeMat,stemCount);
+ const umbel=new THREE.InstancedMesh(new THREE.CylinderGeometry(.0028,.004,1,3),sedgeMat,stemCount*rays);
+ const seedHeads=new THREE.InstancedMesh(new THREE.SphereGeometry(.012,5,4),reedTip,stemCount*rays);
+ const tmp=new THREE.Object3D(),up=new THREE.Vector3(0,1,0);
+ const source=new THREE.Vector3(),tip=new THREE.Vector3();
+ const patches=[-23.7,-17,-8.5,1.7,8.8];
+ for(let i=0;i<stemCount;i++){
+   const anchor=patches[i%patches.length];
+   let z=anchor+(rand(i*4.11)-.5)*4.4;
+   let x=-7.12+rand(i*8.17)*1.6;
+   if(Math.abs(z+16.1)<1.45&&x> -6.45)x=-6.75-rand(i*2.4)*.18;
+   const h=1.35+rand(i*1.55)*1.56,y=height(x,z);
+   tmp.position.set(x,y+h*.5,z);tmp.rotation.set(.025*rand(i),0,.036*rand(i+3));
+   tmp.scale.set(1,h,1);tmp.updateMatrix();stems.setMatrixAt(i,tmp.matrix);
+   source.set(x,y+h,z);
+   for(let j=0;j<rays;j++){
+     const a=j*2*Math.PI/rays+rand(i*3)*.35;
+     const radius=.28+.21*rand(i*17+j*3);
+     tip.set(x+Math.cos(a)*radius,y+h-.20-rand(j+i*11)*.17,
+       z+Math.sin(a)*radius);
+     const delta=tip.clone().sub(source),idx=i*rays+j;
+     tmp.position.copy(source).add(tip).multiplyScalar(.5);
+     tmp.quaternion.setFromUnitVectors(up,delta.clone().normalize());
+     tmp.scale.set(1,delta.length(),1);tmp.updateMatrix();umbel.setMatrixAt(idx,tmp.matrix);
+     tmp.position.copy(tip);tmp.quaternion.identity();
+     tmp.scale.setScalar(.65+rand(idx)*.6);tmp.updateMatrix();
+     seedHeads.setMatrixAt(idx,tmp.matrix);
+   }
  }
- stems.instanceMatrix.needsUpdate=true;heads.instanceMatrix.needsUpdate=true;
- scene.add(stems,heads);
+ for(const mesh of [stems,umbel,seedHeads])mesh.instanceMatrix.needsUpdate=true;
+ scene.add(stems,umbel,seedHeads);
  // Simplified original human silhouettes. Dialogue and exact historical dress
  // are not asserted. A family member, town messenger and sister are distinct.
  const people=[[3,11,0x9e785a],[7,8,0xb7a187],[6,3,0x94816b],[-4.15,-12.5,0xb39c80]] as const;
@@ -267,6 +327,7 @@ export function createNileVillage3D(
        mats.forEach(m=>materials.add(m));}
    });
    geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());
+   soilTexture.dispose();brickTexture.dispose();
    renderer.dispose();renderer.forceContextLoss();
    delete canvas.dataset.villageMode;delete canvas.dataset.villageRendered;
    delete canvas.dataset.villageX;delete canvas.dataset.villageZ;

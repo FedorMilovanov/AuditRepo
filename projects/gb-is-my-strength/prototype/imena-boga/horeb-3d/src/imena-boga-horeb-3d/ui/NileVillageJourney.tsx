@@ -134,9 +134,6 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
          </div>
        </div>
      </div>
-     <div className="absolute bottom-32 right-3 max-w-64 hidden sm:block rounded-md bg-black/55 px-2 py-1 text-[11px] text-parch/85 pointer-events-none">
-       Художественная реконструкция; люди, жилища и диалоги не атрибутированы историческому месту
-     </div>
    </>}
    {!active&&<div className="border-t border-amber-200/20 bg-[#30291f] px-4 py-3 text-xs leading-relaxed text-parch/85">
      Исх. 1:22; 2:1–4 · люди, постройки и тропа условны. Без насилия и вымышленных «найденных свидетельств».
