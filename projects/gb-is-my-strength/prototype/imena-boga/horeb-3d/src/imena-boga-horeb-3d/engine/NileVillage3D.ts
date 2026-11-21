@@ -32,8 +32,8 @@ export function createNileVillage3D(
  const mat=(hex:number,roughness=.96)=>new THREE.MeshStandardMaterial({color:hex,roughness});
  const plaster=[mat(0xb9a080),mat(0xc3a887),mat(0xa98e70),mat(0xc1a47e)];
  const clay=mat(0x81624b),roof=mat(0x8e785e),wood=mat(0x5b4936),cloth=mat(0xb5a18a);
- const dust=mat(0xbba47f),sedgeMat=mat(0x626f42),reedTip=mat(0x95854a);
- const skin=mat(0xb69176),dark=mat(0x42362b),linen=mat(0xcebaa0);
+ const sedgeMat=mat(0x626f42),reedTip=mat(0x95854a);
+ const skin=mat(0xb69176),dark=mat(0x42362b);
  const groundGeo=new THREE.PlaneGeometry(27,60,30,62);
  groundGeo.rotateX(-Math.PI/2);
  const pos=groundGeo.getAttribute('position');
@@ -168,7 +168,7 @@ export function createNileVillage3D(
  marker.rotation.x=-Math.PI/2;scene.add(marker);
  let step=0,active=false,disposed=false,dragPointer:number|null=null,px=0,py=0,last=0,frame=0;
  const movement:Record<VillageDirection,boolean>={forward:false,backward:false,left:false,right:false};
- const walk={...NILE_VILLAGE_START};
+ const walk:{x:number;z:number;yaw:number;pitch:number}={...NILE_VILLAGE_START};
  const setStep=(next:number)=>{
    step=Math.max(0,Math.min(NILE_VILLAGE_STEPS.length,next));
    const target=NILE_VILLAGE_STEPS[step];
