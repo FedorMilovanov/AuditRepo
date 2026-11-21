@@ -1008,6 +1008,41 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         throw Error('W110 Tab returned to old index '+JSON.stringify({engine,width,landed,next}));
       console.log('W110_NAMEGRID_KEYBOARD_FOCUS_PASS',engine,width);
     }
+    // W111: every non-modal navigation route must preserve reading position
+    // for keyboard users; only MobileIndex waits for its dialog to exit.
+    if([390,768,1440].includes(width)){
+      const cases=[
+        ['Intro journey','nav[aria-label="Части исследования"] button','yhwh'],
+        ['Part divider chip','button[aria-label^="Перейти к имени "]','yhwh'],
+        ['Next section','#yhwh button[aria-label^="Следующее имя:"]','ehyeh']
+      ];
+      if(width>=768)cases.push(['NameTree research','button[aria-label^="Открыть исследование:"]','*']);
+      for(const [kind,selector,id] of cases){
+        const from=page.locator(selector).first();
+        await from.scrollIntoViewIfNeeded();
+        await from.focus();
+        await page.keyboard.press('Enter');
+        // NameTree's selected orbit is dynamic: assert its actual destination.
+        const chosenId=id==='*' ? await page.evaluate(()=>decodeURIComponent(location.hash.slice(1))) : id;
+        const landed=await page.evaluate(expected=>{
+          const section=document.getElementById(expected);
+          const heading=section?.querySelector('[data-name-heading]');
+          const rect=heading?.getBoundingClientRect();
+          return {hash:location.hash,focused:document.activeElement===heading,
+            visible:!!rect&&rect.top<innerHeight&&rect.bottom>0,scroll:scrollY};
+        },chosenId);
+        if(landed.hash!=='#'+chosenId||!landed.focused||!landed.visible)
+          throw Error('W111 destination focus missing '+JSON.stringify({engine,width,kind,id,landed}));
+        await page.keyboard.press('Tab');
+        const next=await page.evaluate(expected=>({
+          inSection:!!document.getElementById(expected)?.contains(document.activeElement),
+          hash:location.hash,scroll:scrollY
+        }),chosenId);
+        if(!next.inSection||next.hash!=='#'+chosenId||next.scroll<landed.scroll-500)
+          throw Error('W111 Tab jumped back '+JSON.stringify({engine,width,kind,id,landed,next}));
+      }
+      console.log('W111_ALL_NONMODAL_SECTION_FOCUS_PASS',engine,width,cases.length);
+    }
     // A single Constellation search hit should be centered, readable and
     // bounded by the content measure at mobile and desktop widths.
     const oneResultInput=page.locator('#sozvezdie input[type="search"]');

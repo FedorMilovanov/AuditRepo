@@ -126,21 +126,12 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
     });
   }, [partFilter, query]);
 
-  // The section scroll does not move keyboard focus on its own. Give the
-  // reader a real focus destination instead of leaving Tab in this old grid.
-  // The mobile dialog has its own post-exit focus handoff, so keep this local.
-  const selectAndFocus = (id: string) => {
-    onSelect(id);
-    document.getElementById(id)?.querySelector<HTMLElement>("[data-name-heading]")
-      ?.focus({ preventScroll: true });
-  };
-
   const openRandomFiltered = () => {
     const remaining = filtered.filter((name) => name.id !== active);
     const pool = remaining.length > 0 ? remaining : filtered;
     if (pool.length === 0) return;
     const name = pool[Math.floor(Math.random() * pool.length)];
-    selectAndFocus(name.id);
+    onSelect(name.id);
   };
 
   const progress = Math.round((completedIds.size / NAMES.length) * 100);
@@ -346,7 +337,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                 return (
                   <button
                     key={name.id}
-                    onClick={() => selectAndFocus(name.id)}
+                    onClick={() => onSelect(name.id)}
                     aria-label={`Перейти к разделу: ${name.translit}${isCompleted ? ", изучено" : ""}`}
                     aria-current={isActive ? "true" : undefined}
                     className={`group relative flex w-full max-w-80 min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${

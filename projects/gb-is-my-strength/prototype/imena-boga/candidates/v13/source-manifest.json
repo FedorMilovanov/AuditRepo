@@ -148,8 +148,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "e848b216b14fcb81f8333942d5f27971bf2764f98001047ee07ce72d6c5f0be8",
-      "bytes_normalized": 75178
+      "sha256": "c9d2e22e0a0f9baa0bda4a5ea28b7f06ba9c11572d1b0daa2481d694164c4515",
+      "bytes_normalized": 77333
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -240,8 +240,8 @@
       "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "ebf83d644e1b9ea99c24c7caf4373a466d81a37ec3edf00a1f0c471423c2061a",
-      "bytes_normalized": 18126
+      "sha256": "50fa838cddde567df94ab8b28b19a4887766d4452428bed487650652f297f6c4",
+      "bytes_normalized": 18521
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
@@ -264,8 +264,8 @@
       "bytes_normalized": 9959
     },
     "sozvezdie/src/components/NameGrid.tsx": {
-      "sha256": "cdbdb5ff669e9f4bba7cbe7f6a31ec35a0a012a04ed32636588aed537a003434",
-      "bytes_normalized": 21397
+      "sha256": "1ef9d5e2dc666fe2abc1c5037a822486d9f650b37446f044e117b68a8a03227b",
+      "bytes_normalized": 20963
     },
     "sozvezdie/src/components/NameSection.tsx": {
       "sha256": "f80a1f1d7c03e4e7d4e02fb213d541770a3a6c12a660248b5788f5bfa4015be0",

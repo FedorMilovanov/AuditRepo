@@ -121,9 +121,16 @@ export default function App() {
   }, []);
 
   const scrollTo = useCallback((id: string) => {
-    if (NAMES.some((n) => n.id === id)) setActive(id);
+    const isName = NAMES.some((n) => n.id === id);
+    if (isName) setActive(id);
     window.history.pushState(null, "", `#${id}`);
-    document.getElementById(id)?.scrollIntoView({
+    const target = document.getElementById(id);
+    // Every non-modal name jump owns its destination's keyboard focus.
+    // MobileIndex hands off focus after its dialog exits; never steal that focus.
+    if (isName && !document.querySelector('[role="dialog"][aria-modal="true"]')) {
+      target?.querySelector<HTMLElement>('[data-name-heading]')?.focus({ preventScroll: true });
+    }
+    target?.scrollIntoView({
       behavior: !prefs.motion || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
       block: "start",
     });
