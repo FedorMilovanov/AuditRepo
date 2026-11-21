@@ -37,7 +37,7 @@ test ! -e "$PRODUCT/dist/pagefind"
 # article-label control and native requery/activation. Neither Product nor the index was modified after pilot.
 I="$PWD/projects/gb-is-my-strength/incoming"
 S="$I/arena-quiz-search-recent-return/2026-11-18"
-V="$I/arena-quiz-library-search-navigation/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-library-search-navigation/2026-11-18"
 node --check "$S/harness/search-recent-return.mjs"
 node "$S/harness/search-recent-return.mjs" "$PRODUCT" "$INDEX_A" "$OUT/run-a" "$CHROMIUM"
 node "$S/harness/search-recent-return.mjs" "$PRODUCT" "$INDEX_B" "$OUT/run-b" "$CHROMIUM"

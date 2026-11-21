@@ -12,7 +12,12 @@ INCOMING = 'projects/gb-is-my-strength/incoming'
 PACKAGE = Path(__file__).resolve().parent.parent
 ROOT = PACKAGE.parents[4]
 ARCHIVE = PACKAGE / 'evidence/browser-traces.zip'
-MEMBER = re.compile(rf'{INCOMING}/arena-quiz-[a-z0-9-]+/2026-11-18/evidence/[a-z0-9-]+\.(?:json|png)')
+MEMBER = re.compile(rf'{INCOMING}/arena-quiz-[a-z0-9-]+/2026-11-18/evidence/'
+                    r'(?:[a-z0-9-]+\.(?:json|png)|replay-b/[a-z0-9-]+\.png)')
+REPLAY_RECEIPTS = {
+    'arena-quiz-search-handoff': ('replay-receipt.json', 'screenshots', 'a', 'b'),
+    'arena-quiz-note-lifecycle': ('comment-followup-receipt.json', 'screens', 'runA', 'runB'),
+}
 PRINT = f'{INCOMING}/arena-quiz-print-readiness/2026-11-18/evidence/print-tail-witness.json'
 PRINT_PINS = PACKAGE.parent.parent / 'arena-quiz-native-print/2026-11-18/evidence/article-dist-pins.json'
 
@@ -44,6 +49,11 @@ def verify():
             require(item.file_size == record['sizeBytes'], f'wrong size: {name}')
             data = source.read(item)
             require(len(data) == item.file_size and sha(data) == record['sha256'], f'wrong bytes: {name}')
+            frame = Path(name)
+            if frame.parent.name == 'replay-b':
+                receipt, section, a, b = REPLAY_RECEIPTS[frame.parents[3].name]
+                comparison = json.loads((ROOT / frame.parents[1] / receipt).read_bytes())[section][frame.name]
+                require(comparison[b] == record['sha256'] != comparison[a], f'B frame disagrees with receipt: {name}')
             files[name] = data
     print_source = json.loads(files[PRINT])
     require(json.loads(PRINT_PINS.read_bytes()) == {

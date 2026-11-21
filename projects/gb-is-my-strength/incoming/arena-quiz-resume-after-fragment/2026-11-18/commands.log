@@ -43,7 +43,7 @@ test ! -e "$PRODUCT/dist/pagefind"
 # Final harness retains optional absence for hash+saved and observes further, with no retries conditioned on a show.
 I="$PWD/projects/gb-is-my-strength/incoming"
 S="$I/arena-quiz-resume-after-fragment/2026-11-18"
-PREV="$I/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness.json"
+PREV="$RAW_INCOMING/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness.json"
 node --check "$S/harness/resume-after-fragment.mjs"
 node "$S/harness/resume-after-fragment.mjs" "$PRODUCT" "$INDEX_A" "$OUT/observed-a" "$CHROMIUM"
 node "$S/harness/resume-after-fragment.mjs" "$PRODUCT" "$INDEX_B" "$OUT/observed-b" "$CHROMIUM"

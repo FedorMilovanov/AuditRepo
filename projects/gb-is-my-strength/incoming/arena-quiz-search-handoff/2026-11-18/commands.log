@@ -35,7 +35,7 @@ done
 [Two independent replays]
 P="$PWD/projects/gb-is-my-strength/incoming"
 W="$P/arena-quiz-search-handoff/2026-11-18"
-V="$P/arena-quiz-home-search-focus/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-home-search-focus/2026-11-18"
 node --check "$W/harness/quiz-search-handoff.mjs"
 # Both ran in parallel, separate browser processes/contexts and ephemeral A04 servers. Reproduce sequentially if needed:
 for run in a b; do

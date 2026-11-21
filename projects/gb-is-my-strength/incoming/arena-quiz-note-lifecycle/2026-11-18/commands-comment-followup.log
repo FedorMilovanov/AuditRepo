@@ -50,7 +50,7 @@ node --check "$Q/harness/comment-followup.mjs"
 node "$Q/harness/comment-followup.mjs" "$PRODUCT" "$OUT/observed-a" "$CHROMIUM"
 node "$Q/harness/comment-followup.mjs" "$PRODUCT" "$OUT/observed-b" "$CHROMIUM"
 python3 "$Q/harness/check-comment-replays.py" "$OUT/observed-a" "$OUT/observed-b" "$PRODUCT/dist" \
-  "$Q/evidence/note-lifecycle-witness.json" "$OUT/comment-followup-receipt.json"
+  "$RAW_INCOMING/arena-quiz-note-lifecycle/2026-11-18/evidence/note-lifecycle-witness.json" "$OUT/comment-followup-receipt.json"
 # Pilot 3/3 used reload of both tabs and is not included. Formal matrix reloads B only and checks the answered A.
 # 6+6 exact cases, 50 new manifest entries, 15 earlier entries rehashed (13 shared). No local HTTP >=400/pageerror.
 # Real trusted control inputs, genuine cross-tab storage, 20 Markdown and 24 backups per run read from disk.

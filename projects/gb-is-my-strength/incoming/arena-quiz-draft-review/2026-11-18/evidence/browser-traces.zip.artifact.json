@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "path": "projects/gb-is-my-strength/incoming/arena-quiz-draft-review/2026-11-18/evidence/browser-traces.zip",
-  "sha256": "c7c259bdeb63307d4b23d8a0834b8dfed44c8c156805099ff9764e76183c1c5c",
-  "sizeBytes": 5758976,
+  "sha256": "2027768f51b37f28d7725c4f938785667a7e726c12fe229b405e00ab46186b88",
+  "sizeBytes": 6041529,
   "purpose": "Byte-for-byte trace and supplementary frame storage for Draft #570; keep raw captures out of the review diff.",
-  "provenance": "FedorMilovanov/AuditRepo@3940425bb5371fa0590163686d04620d4d45dbe3, original repository-relative paths; audited Product main 9edef94ece08012223c1364bec7ddcd561cf5713.",
+  "provenance": "FedorMilovanov/AuditRepo@3940425bb5371fa0590163686d04620d4d45dbe3 for original paths; three replay-b frames from the original F22 and QNL run B, pinned by their retained receipts. Audited Product main 9edef94ece08012223c1364bec7ddcd561cf5713.",
   "retention": "Authoritative copies in this tracked ZIP; manifests and original-path reconstruction do not depend on a surviving draft branch, old commit or external storage.",
   "sourceCommit": "3940425bb5371fa0590163686d04620d4d45dbe3",
   "members": {
@@ -79,6 +79,10 @@
     "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/note-lifecycle-witness.json": {
       "sha256": "5fe2e6a979d7fd6bd2d2a125a28d066c55208e842bac81bb31d935c67d06bd11",
       "sizeBytes": 26429
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/replay-b/same-390-qe-key.png": {
+      "sizeBytes": 95088,
+      "sha256": "70433edebacb082300e6ae496d32eadbc004a0cde7652b95169068de71a28e69"
     },
     "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/updated-note-is-absent.png": {
       "sha256": "ec6236ae66c2eea127939b7ff6ebe3660dbbbd2a9a123c595bf4a35a618ab0e5",
@@ -191,6 +195,14 @@
     "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/quiz-search-handoff-witness.json": {
       "sha256": "7391e97817968d22c9bdf0ba95c21d11da6c3d076183b18d8e8e46a911329bf4",
       "sizeBytes": 487346
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/replay-b/before-search-390.png": {
+      "sizeBytes": 94604,
+      "sha256": "b408b2059fc8d280b5d5be330d96fce87ccdd8129a56ef8f0131caa6d225fbff"
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/replay-b/solo-after-next-390.png": {
+      "sizeBytes": 95794,
+      "sha256": "0c20fdb66bd799bc8a1762950da5cf2a0843619efce97a1f96588934b8540347"
     },
     "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/ab-390-manual.png": {
       "sha256": "61a1a7c554f3aa70baa3921eb7960a982c65afed5440491b7cc4b9ee850b2c89",

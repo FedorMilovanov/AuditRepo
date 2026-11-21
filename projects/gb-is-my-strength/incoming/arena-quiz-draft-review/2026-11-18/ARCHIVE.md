@@ -2,7 +2,7 @@
 
 [ZIP с оригиналами](evidence/browser-traces.zip) · [манифест SHA‑256](evidence/browser-traces.zip.artifact.json) · [проверяющий](harness/verify-archive.py) · [ревизия](REPORT.md).
 
-51 JSON и 17 вспомогательных PNG сохранены **без изменения байтов**. Путь члена ZIP: `projects/gb-is-my-strength/incoming/<имя секции ниже>/2026-11-18/evidence/<имя файла>`. Даже если старый SHA перестанет открываться после squash, ни он, ни отдельное хранилище для восстановления не нужны. [Исходный снимок для сверки](https://github.com/FedorMilovanov/AuditRepo/commit/3940425bb5371fa0590163686d04620d4d45dbe3).
+В ZIP **51 JSON и 20 PNG**, без перекодирования. Из них 68 файлов — из [исходного снимка `3940425`](https://github.com/FedorMilovanov/AuditRepo/commit/3940425bb5371fa0590163686d04620d4d45dbe3); три кадра в `evidence/replay-b/` — из прежних прогонов B и совпадают с SHA в сохранённых квитанциях. Путь начинается с `projects/gb-is-my-strength/incoming/<пакет>/2026-11-18/evidence/`. Для распаковки старая история Git не нужна.
 
 ## Проверить и восстановить
 
@@ -16,33 +16,42 @@
   F="$I/arena-quiz-resume-after-fragment/2026-11-18"
   SCRATCH=$(mktemp -d)
   python3 "$AUDIT/harness/verify-archive.py" --restore "$SCRATCH/tree"
-  E="$SCRATCH/tree/$F/evidence"
-  python3 "$F/harness/check-quiz-focus-replays.py" \
-    "$E/quiz-focus-witness.json" "$E/quiz-focus-replay.json" \
-    "$PRODUCT/dist" "$E/quiz-keyboard-witness.json" "$SCRATCH/focus-receipt.json"
-  cmp "$SCRATCH/focus-receipt.json" "$F/evidence/quiz-focus-receipt.json"
+  RAW_INCOMING="$SCRATCH/tree/$I"
+  E="$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence"
+  prior=resume-in-page
+  for mode in quiz-push quiz-keyboard quiz-focus; do
+    python3 "$F/harness/check-$mode-replays.py" \
+      "$E/$mode-witness.json" "$E/$mode-replay.json" \
+      "$PRODUCT/dist" "$E/$prior-witness.json" "$SCRATCH/$mode-receipt.json"
+    cmp "$SCRATCH/$mode-receipt.json" "$F/evidence/$mode-receipt.json"
+    prior=$mode
+  done
   printf 'Восстановленные оригиналы: %s\n' "$SCRATCH/tree"
 )
 ```
 
 Восстановление само проверяет ZIP, имена, размеры, SHA и 48 пинов превью. Оно не пишет в checkout и не требует копировать весь `incoming`. В примере сценарий и эталон берутся из пакета, входные трассы — из распаковки. Для проверки без записи запустите `harness/verify-archive.py` из этого пакета без `--restore`.
 
-`commands*.log` — журналы, не скрипты. Берите нужные шаги сборки/проверки, подставляйте абсолютные пути к распакованным трассам; для новых браузерных прогонов используйте раздельные чистые каталоги вывода. Для F24–F27, где сценарий использует поиск, нужны два дерева Pagefind 1.5.2 вне `dist`.
+`commands*.log` — журналы, не скрипты. Для нужного шага выставьте `RAW_INCOMING` как абсолютный `…/tree/projects/gb-is-my-strength/incoming` из распаковки выше. Сценарии и компактные квитанции остаются в checkout; новые браузерные прогоны пишут в раздельные чистые каталоги. Для проверок с поисковым индексом нужны два дерева Pagefind 1.5.2 вне `dist`.
 
-**Граница воспроизведения:** для побайтного пересчёта квитанций F22 и QNL нужны исходные B-кадры, которых нет в checkout: `before-search-390.png`, `solo-after-next-390.png` и `same-390-qe-key.png` соответственно. Их хеши остались в квитанциях. Равные байты нормализованных трасс, например F13, сами по себе также не подтверждают два запуска. Новый прогон создаёт новое свидетельство, а не байты старого.
+**Побайтный пересчёт F22 и QNL.** В отдельных каталогах A/B назовите JSON так, как ожидает соответствующий проверяющий: `quiz-search-handoff-witness.json` или `comment-followup-witness.json`. Для B берите соответствующую трассу `*-replay.json` из ZIP. Имена PNG берите из карт `screenshots` (F22) и `screens` (QNL) в компактных квитанциях: A — из checkout или распаковки, отличающиеся B — из `evidence/replay-b/` под исходными именами. Для сравнения байтов допустимо использовать файл A вместо B **только** если их SHA в старой квитанции равны. Это переукладка сохранённых входов, не независимый браузерный запуск; равенство нормализованных трасс F13 также не заменяет журнал двух запусков.
 
 ## Ворота AuditRepo
 
 В 29 журналах одинаковые команды приёмки заменены одной ссылкой. Индивидуальные команды сборки/браузера, точные SHA, возвратные коды и выводы остались в своих журналах. Для текущего diff ориентироваться на [Validate](../../../../../.github/workflows/auditrepo-validate.yml) и [Preflight](../../../../../.github/workflows/auditrepo-workflow-preflight.yml). В исходных блоках повторялась эта последовательность (в части журналов без отдельного workflow preflight):
 
 ```bash
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+(
+  set -euo pipefail
+  test -r "$CHANGED"
+  AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+  python3 scripts/check_auditrepo_structure.py
+  python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+  python3 scripts/check_workflow_syntax.py
+  python3 scripts/matrix_coverage_regression_test.py
+  python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+  git diff --cached --check
+)
 ```
 
 `CHANGED` — файл со строками путей проверяемого diff против его базы. Это проверки формата и состава пакета, не Product-приёмка.
@@ -52,10 +61,13 @@ git diff --cached --check
 Общий блок чтения из 16 журналов. Чтобы получить только список PR, пропустите `git ls-remote`. Это первичный срез; для принятия решений сверяйте точные SHA и пути нужных PR, как в отдельных шагах журнала.
 
 ```bash
-for repo in AuditRepo gb-is-my-strength; do
-  git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
-  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
-done
+(
+  set -euo pipefail
+  for repo in AuditRepo gb-is-my-strength; do
+    git ls-remote "https://github.com/FedorMilovanov/$repo.git" refs/heads/main 'refs/heads/arena/*'
+    gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft
+  done
+)
 ```
 
 ## Указатель файлов
@@ -96,6 +108,8 @@ done
 - <a name="q-library-search-stack-stacked-1440-png"></a>`stacked-1440.png`
 
 ### `arena-quiz-note-lifecycle`
+
+- `replay-b/same-390-qe-key.png` — отличающийся кадр B.
 
 - <a name="q-note-lifecycle-comment-followup-replay-json"></a>`comment-followup-replay.json`
 - <a name="q-note-lifecycle-comment-followup-witness-json"></a>`comment-followup-witness.json`
@@ -155,6 +169,8 @@ done
 - <a name="q-review-loop-browser-witness-json"></a>`browser-witness.json`
 
 ### `arena-quiz-search-handoff`
+
+- `replay-b/before-search-390.png`, `replay-b/solo-after-next-390.png` — отличающиеся кадры B.
 
 - <a name="q-search-handoff-before-search-390-png"></a>`before-search-390.png`
 - <a name="q-search-handoff-quiz-search-handoff-witness-replay-json"></a>`quiz-search-handoff-witness-replay.json`

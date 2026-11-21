@@ -28,7 +28,7 @@ export GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
 
 [History observations]
 W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-history/2026-11-18"
-S="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness.json"
+S="$RAW_INCOMING/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness.json"
 node --check "$W/harness/source-history.mjs"
 # Pilot without close-before controls: 8/8, 35 pins; distinguish page geometry from URL and keep a real element-from-point check.
 # Final independently opened browser/context sessions, no state or option seeding. Put OUT outside the repository.

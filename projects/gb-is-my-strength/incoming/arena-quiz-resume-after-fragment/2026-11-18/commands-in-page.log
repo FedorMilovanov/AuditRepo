@@ -33,7 +33,7 @@ node --check "$Q/harness/resume-in-page.mjs"
 node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-a" "$CHROMIUM"
 node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-b" "$CHROMIUM"
 python3 "$Q/harness/check-in-page-replays.py" "$OUT/run-a" "$OUT/run-b" "$PRODUCT/dist" \
-  "$Q/evidence/resume-after-fragment-witness.json" "$OUT/resume-in-page-receipt.json"
+  "$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness.json" "$OUT/resume-in-page-receipt.json"
 # Pilot 3/3: wide rail, narrow outline and narrow plain. Not counted. Final observer uses getActiveSection and trusted wheel log.
 # Formal 6+6; 49 pins, all shared with the 52 rehashed F27 pins. No Pagefind, Scripture, HTTP errors or forced interactions.
 # All valid offers existed before any section choice. TOC adds native hash; outline follows JS scroll without changing URL.

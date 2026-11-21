@@ -34,7 +34,7 @@ mkdir -p "$pwdir"; ln -s "$CHROMIUM" "$pwdir/chrome-headless-shell"
 
 [Already-running queue versus current quiz]
 W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18"
-Y="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-projection/2026-11-18/evidence/quiz-projection-witness.json"
+Y="$RAW_INCOMING/arena-quiz-projection/2026-11-18/evidence/quiz-projection-witness.json"
 node --check "$W/harness/active-playback.mjs"
 for run in a b; do
   node "$W/harness/active-playback.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"

@@ -15,7 +15,7 @@
 [Browser replays]
 # PRODUCT/OUT/CHROMIUM/TOOLS absolute paths, same production-like build/stock no-store server as commands-in-page.log.
 Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
-E="$Q/evidence"
+E="$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence"
 export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 node --check "$Q/harness/resume-in-page.mjs"
 node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-a" "$CHROMIUM" quiz-focus
@@ -30,8 +30,6 @@ python3 "$Q/harness/check-quiz-focus-replays.py" "$OUT/run-a/resume-in-page-witn
 # No Search/Pagefind, SW, runtime patches, shuffle/timer interception, or screenshots.
 
 [Read-back]
-python3 "$Q/harness/check-quiz-focus-replays.py" "$E/quiz-focus-witness.json" "$E/quiz-focus-replay.json" \
-  "$PRODUCT/dist" "$E/quiz-keyboard-witness.json" "$OUT/checked-quiz-focus-receipt.json"
-cmp "$OUT/checked-quiz-focus-receipt.json" "$E/quiz-focus-receipt.json"
+# Побайтная сверка сохранённых F27-квитанций: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
 # Negative checks on copied rows rejected scroll before Tab, untrusted Tab, focus loss in the timer control, and an altered fragment.
 # Preserve original reports and raw witnesses; extend only F27 and add the scoped, read-only D7 pointer in QNL acceptance.

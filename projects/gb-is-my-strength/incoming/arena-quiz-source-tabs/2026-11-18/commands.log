@@ -28,7 +28,7 @@ export GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
 
 [Modified input and independent observations]
 W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18"
-Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness.json"
+Q="$RAW_INCOMING/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness.json"
 node --check "$W/harness/source-tabs.mjs"
 for run in a b; do
   node "$W/harness/source-tabs.mjs" "$PRODUCT" "$OUT/replay-$run" "$CHROMIUM" 2>&1 | tee "$OUT/replay-$run.log"

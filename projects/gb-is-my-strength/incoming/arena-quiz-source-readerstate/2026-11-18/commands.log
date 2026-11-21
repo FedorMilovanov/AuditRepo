@@ -31,7 +31,7 @@ node --check "$W/harness/source-readerstate.mjs"
 for run in a b; do
   node "$W/harness/source-readerstate.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
 done
-python3 "$W/harness/check-replays.py" "$OUT/run-a/source-readerstate-witness.json" "$OUT/run-b/source-readerstate-witness.json" "$Q/evidence/source-resume-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+python3 "$W/harness/check-replays.py" "$OUT/run-a/source-readerstate-witness.json" "$OUT/run-b/source-readerstate-witness.json" "$RAW_INCOMING/arena-quiz-source-resume/2026-11-18/evidence/source-resume-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
 # Result: 16/16 measured ×2, 46 exact dist pins (all 40 from stage 17). Each: 4 prior-section returns via home/toast, 8 correct via those controls,
 # 2 successful explicit-fragment controls, 2 ReaderState/library disagreements with true library button landing. Measured != correct.
 # The checker distinguishes native :target from Learning's pushState URL and matches the rendered toast text case-insensitively.

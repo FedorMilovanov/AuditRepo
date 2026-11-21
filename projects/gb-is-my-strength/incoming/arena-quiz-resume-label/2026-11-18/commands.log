@@ -27,7 +27,7 @@ export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${L
 
 [Two fresh replays]
 W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18"
-V="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-source-readerstate/2026-11-18"
 node --check "$W/harness/resume-label.mjs"
 # Pilot: foreground matched fill in hover/dark. Corrected two measurement predicates, not Product:
 # initial article already has an idle .quiz-wrapper, so assert launch and absence of options; Tab focus color is distinct from auto-scroll/in-view.

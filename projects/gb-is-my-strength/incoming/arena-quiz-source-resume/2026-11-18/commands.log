@@ -37,7 +37,7 @@ node --check "$W/harness/source-resume.mjs"
 for run in a b; do
   node "$W/harness/source-resume.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
 done
-python3 "$W/harness/check-replays.py" "$OUT/run-a/source-resume-witness.json" "$OUT/run-b/source-resume-witness.json" "$S/evidence/source-history-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+python3 "$W/harness/check-replays.py" "$OUT/run-a/source-resume-witness.json" "$OUT/run-b/source-resume-witness.json" "$RAW_INCOMING/arena-quiz-source-history/2026-11-18/evidence/source-history-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
 cmp "$OUT/run-a/gill-visible-before-leave.png" "$S/evidence/gill-click-390.png"
 # 6/6 ×2, 40 exact dist pins, 34 common with stage 16 (Anatomy HTML not loaded; six distinct paths). All 35 old pins also rechecked.
 # 2 preceding-section returns in each replay, 4 correct control returns; one true wheel on each learning-wheel arm.

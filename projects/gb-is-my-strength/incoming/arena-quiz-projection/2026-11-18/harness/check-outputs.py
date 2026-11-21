@@ -24,6 +24,13 @@ G = '/articles/dzhon-gill-chast-2-uchenyi/'
 D = '/articles/diotrefy-nashego-vremeni/'
 PRINT_ARTICLES = {A: ('anatomy', 13), G: ('gill2', 34)}
 PRINT_PHASES = {'idle': 'idle', 'idleRepeat': 'idle-repeat', 'answered': 'answered', 'result': 'result'}
+# Observed non-HTML owner files at ANCHOR, in addition to the route pages.
+RUNTIME_PINS = {
+    '_astro/GillLearningSheet.astro_astro_type_script_index_0_lang.CJgoRDlD.js',
+    '_astro/ReaderActionsRuntime.astro_astro_type_script_index_0_lang.BRhTv-pt.js',
+    '_astro/ReaderActionsRuntime.BWQE1cBa.css', '_astro/ReaderActionsRuntime.DUDpvCW2.css',
+    'css/floating-cluster.css', 'css/site.css', 'js/floating-cluster-controller.js', 'js/reader-preferences.js',
+}
 
 
 def sha(data):
@@ -106,7 +113,7 @@ def check_manifest(witness):
         assert sorted(witness['routes'][family]) == sorted(r['route'] for r in matrix), family
         assert all('speech' not in r and 'pdf' not in r for r in matrix), family
     pages = {r['route'].lstrip('/') + 'index.html' for r in rows}
-    assert pages == {f for f in witness['distSha256'] if f.endswith('/index.html')}, 'missing or unexpected page pins'
+    assert witness['distSha256'].keys() == pages | RUNTIME_PINS, 'missing or unexpected projection dist pins'
     native_questions = sum(r['totalQuestions'] for r in by_kind['native-matrix'])
     assert native_questions == 153
     for r in by_kind['native-matrix']:

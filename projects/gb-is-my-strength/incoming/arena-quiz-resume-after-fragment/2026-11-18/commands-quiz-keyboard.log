@@ -14,7 +14,7 @@
 [Keyboard replays]
 # PRODUCT/OUT/CHROMIUM/TOOLS absolute paths. Same production-like build and stock no-store server as commands-in-page.log.
 Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
-E="$Q/evidence"
+E="$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence"
 export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 node --check "$Q/harness/resume-in-page.mjs"
 node --check "$Q/harness/quiz-keyboard.mjs"
@@ -29,12 +29,7 @@ python3 "$Q/harness/check-quiz-keyboard-replays.py" "$OUT/run-a/resume-in-page-w
 # Evidence: 4/4 keyboard source while on, 6 covered confidence activations in 3/4 contexts, 4/4 CTA clicks without return.
 
 [Recheck]
-python3 "$Q/harness/check-quiz-keyboard-replays.py" "$E/quiz-keyboard-witness.json" "$E/quiz-keyboard-replay.json" \
-  "$PRODUCT/dist" "$E/quiz-push-witness.json" "$OUT/checked-quiz-keyboard-receipt.json"
-cmp "$OUT/checked-quiz-keyboard-receipt.json" "$E/quiz-keyboard-receipt.json"
-python3 "$Q/harness/check-quiz-push-replays.py" "$E/quiz-push-witness.json" "$E/quiz-push-replay.json" "$PRODUCT/dist" \
-  "$E/resume-in-page-witness.json" "$OUT/rechecked-pointer-receipt.json"
-cmp "$OUT/rechecked-pointer-receipt.json" "$E/quiz-push-receipt.json"
+# Побайтная сверка сохранённых F27-квитанций: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
 # Shared validator only accepts detail=0 for this mode's live quiz source; mouse-mode semantics and receipt unchanged.
 # Four negative verifier checks on disposable copied rows: untrusted Enter, mouse in place of Enter, hashchange,
 # and scroll after CTA were all rejected. No witness files or rendered Product code were changed in these checks.

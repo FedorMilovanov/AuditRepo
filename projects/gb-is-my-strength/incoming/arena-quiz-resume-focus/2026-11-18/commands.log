@@ -33,7 +33,7 @@ done
 [Replays]
 P="$PWD/projects/gb-is-my-strength/incoming"
 W="$P/arena-quiz-resume-focus/2026-11-18"
-V="$P/arena-quiz-resume-label/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-resume-label/2026-11-18"
 node --check "$W/harness/resume-focus.mjs"
 for run in a b; do
   node "$W/harness/resume-focus.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"

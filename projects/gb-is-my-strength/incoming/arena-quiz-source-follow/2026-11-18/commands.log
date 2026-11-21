@@ -32,7 +32,7 @@ mkdir -p "$slot"; ln -s "$CHROMIUM" "$slot/chrome-headless-shell"
 
 [Crossing a settled source landing with the next article phrase]
 W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18"
-Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18/evidence/active-playback-witness.json"
+Q="$RAW_INCOMING/arena-quiz-active-playback/2026-11-18/evidence/active-playback-witness.json"
 node --check "$W/harness/source-follow.mjs"
 for run in a b; do
   node "$W/harness/source-follow.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
