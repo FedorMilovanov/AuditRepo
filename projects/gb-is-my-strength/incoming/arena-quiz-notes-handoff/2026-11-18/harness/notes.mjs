@@ -498,8 +498,8 @@ job('html-fragment-calibration', '/control', wide, async (p, r) => {
 const selected = jobs.filter(j => !filter || `${j.scenario} ${j.route} ${j.viewport.width}`.includes(filter));
 assert.ok(selected.length);
 fs.mkdirSync(out, { recursive: true });
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const pngs = ['deleted-quote-still-listed.png', 'free-note-in-library.png'];
-for (const f of pngs) fs.rmSync(path.join(out, f), { force: true });
 const result = { anchor: head, node: process.versions.node, playwright: req('playwright/package.json').version,
   protocol: { headless: true, pointer: 'fine / mouse even at 390px', bfcache: 'Playwright default disabled', reducedMotion: 'reduce', serviceWorkers: 'block' },
   markup: markupCensus(dist), records: [] };

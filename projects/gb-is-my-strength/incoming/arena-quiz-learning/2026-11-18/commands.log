@@ -88,11 +88,7 @@ sha256sum package-lock.json dist/index.html dist/sitemap.xml dist/feed.xml dist/
 
 [AuditRepo]
 # CHANGED = список файлов только этого intake, как в CI.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
 git diff --check
 # Проверки PASS; contexts — диагностическая сводка, не новый статус строк MASTER.

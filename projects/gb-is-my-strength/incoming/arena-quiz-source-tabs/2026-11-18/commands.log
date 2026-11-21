@@ -50,12 +50,6 @@ python3 "$W/harness/check-replays.py" "$OUT/replay-a/source-tabs-witness.json" "
 
 [Admission and publication]
 # CHANGED = cumulative paths against fcf2e69b. Explicitly stage only new intake; commands.log by git add -f.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # Publish only to existing Draft #570; verify exact head/base, check runs and no merge. Neither main changed.
 # QPDF-01 still PENDING_NATIVE_DIALOG. No live/deploy/Drive writes and no Product, MASTER/ledger changes.

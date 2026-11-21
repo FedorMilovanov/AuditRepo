@@ -2,9 +2,9 @@
 """Verify two paired main/font-overlay replays; retain compact PDF receipts, not the PDFs."""
 import hashlib
 import json
+import math
 import re
 import sys
-from collections import Counter
 from contextlib import closing
 from pathlib import Path
 
@@ -16,6 +16,7 @@ if not __debug__:
 
 MAIN = '9edef94ece08012223c1364bec7ddcd561cf5713'
 FONT_REF = '0b9576278d2ec5ea89da804934823d460720501a'
+ROUTES = {'anatomy': '/articles/anatomiya-padeniya-pyat-stadiy/', 'gill2': '/articles/dzhon-gill-chast-2-uchenyi/'}
 CYR = 'fonts/SourceSans3/sourcesans3-cyrillic-500.woff2'
 LAT = 'fonts/SourceSans3/sourcesans3-latin-500.woff2'
 MARKERS = {
@@ -66,12 +67,35 @@ def read_sample(folder, source):
                            reset=source['after']['state']['prepared'] is None)), segments
 
 
-def read_run(folder, dist, overlay):
-    data = json.loads((folder / 'browser.json').read_text())
-    assert data['anchor'] == MAIN and data['overlayRef'] == (FONT_REF if overlay else None)
-    assert len(data['overlaySha256']) == (9 if overlay else 0)
-    plan = FONT_PLAN if overlay else MAIN_PLAN
-    assert Counter((r['article'], r['width'], r['mode']) for r in data['results']) == plan
+def load_runs(root):
+    runs, seen = {}, set()
+    for variant, plan in (('main', MAIN_PLAN), ('overlay', FONT_PLAN)):
+        overlay = variant == 'overlay'
+        ids = [f'{article}-{width}-{mode}-{rep}' for (article, width, mode), count in plan.items()
+               for rep in range(1, count + 1)]
+        for arm in ('a', 'b'):
+            folder = root / f'{variant}-{arm}'
+            data = json.loads((folder / 'browser.json').read_text())
+            assert data['anchor'] == MAIN and data['overlayRef'] == (FONT_REF if overlay else None)
+            assert len(data['overlaySha256']) == (9 if overlay else 0)
+            assert [r['id'] for r in data['results']] == ids, f'wrong print case IDs: {folder}'
+            assert {path.lstrip('/') + 'index.html' for path in ROUTES.values()} <= data['distSha256'].keys()
+            for row in data['results']:
+                case = row['id']
+                assert case == f"{row['article']}-{row['width']}-{row['mode']}-{row['rep']}" and row['route'] == ROUTES[row['article']]
+                assert [p['file'] for p in row['prints']] == [f'{case}-1.pdf', f'{case}-2.pdf']
+                doc = row['prints'][0]['start']['document']
+                assert type(doc) in (int, float) and math.isfinite(doc) and doc > 0, f'invalid document start: {folder} / {case}'
+                assert doc not in seen, f'reused document start: {folder} / {case}'
+                for p in row['prints']:
+                    states = [p['start'], p['before'], p['after']['state'], *p['after']['events']]
+                    assert all(s['document'] == doc for s in states), f'print moved to a different document: {folder} / {case}'
+                seen.add(doc)
+            runs[variant, arm] = (folder, data)
+    return runs
+
+
+def read_run(folder, data, dist, overlay):
     for filename, digest in data['distSha256'].items():
         assert sha((dist / filename).read_bytes()) == digest, filename
     cases = []
@@ -111,6 +135,7 @@ def read_run(folder, dist, overlay):
             if short or mode == 'font-warm':
                 assert LAT in row['overrides']
         cases.append(dict(id=row['id'], route=row['route'], mode=mode, width=row['width'],
+                          documentStart=row['prints'][0]['start']['document'],
                           overrides=row['overrides'], first=first, repeat=repeat,
                           omittedLastPage=repeat_text[-1] if short and row['rep'] == 1 else None))
     base_signature = cases[0]['repeat']['normalizedPagesSha256']
@@ -131,10 +156,11 @@ def compare_replay(first, second):
 
 
 def main(root, dist, prior):
+    inputs = load_runs(root)
     versions, assets, replays = None, {}, {}
     for variant in ('main', 'overlay'):
-        a, cases = read_run(root / (variant + '-a'), dist, variant == 'overlay')
-        b, repeat = read_run(root / (variant + '-b'), dist, variant == 'overlay')
+        a, cases = read_run(*inputs[variant, 'a'], dist, variant == 'overlay')
+        b, repeat = read_run(*inputs[variant, 'b'], dist, variant == 'overlay')
         compare_replay(cases, repeat)
         assert a['distSha256'] == b['distSha256'] and a['overlaySha256'] == b['overlaySha256']
         env = {k: a[k] for k in ('chromium', 'playwright', 'node')}

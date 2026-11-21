@@ -33,7 +33,7 @@
 
 Кандидат перечитывает запись по ID при сохранении, сверяет исходный текст, различает удаление и изменение, оставляет редактор открытым без записи при конфликте. [Автор сообщает][d7-audit] о прохождении четырёх сценариев на локальном кандидате, включая ручной перенос черновика через буфер обмена без записи новой заметки. Проба сверяет ID и текст в хранилище после reload B, но не скачанные Markdown/JSON; патч добавляет инструкцию скопировать черновик, а не отдельное действие интерфейса. Следующий контроль — точный HEAD с интегрированным исправлением: сохранить выбор B и черновик A, проверить загрузки из обеих вкладок и доступный путь копирования/создания новой записи. QNL‑01/02 остаются открытыми.
 
-**Обновление при ревизии #570.** В отдельном кандидате [Product #2352](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2352/files) на [`ecbb15e9`](https://github.com/FedorMilovanov/gb-is-my-strength/blob/ecbb15e9862648d5ced82d531ed3a2a2699d06f1/js/highlights.js#L348-L362) проверка `current.text !== editing.text` уже есть в исходнике `saveNote`, а не только в файле патча. На сверенном `#2346@599ec095` изменения `highlights.js` относятся к ключам дедупликации цитат и версии CSS; этой проверки в `saveNote` нет. #2352 открыт и не влит. Автор сообщает контроль двух вкладок, но это не независимая приёмка обоих конфликтов с реальными экспортами на интегрированном HEAD; критерии выше остаются в силе. Номера D5/D6/D7 в соседних отчётах не заменяют сравнение конкретного владельца и сценария.
+**Обновление при ревизии #570.** Проверка смены текста или удаления есть в исходнике `saveNote` отдельного кандидата [#2352][qnl-candidate]: была в `ecbb15e9` и осталась в [точном `bf230bb5`][qnl-candidate-save]. После добавления мобильных помет это уже более широкий PR, не изолированный патч QNL. В [#2346 на `d1234989`][w61-save] той проверки нет. Оба PR не влиты. [Замечание о touch и ID помет][mark-control] относится к более раннему стеку #2352, не к QNL и не к текущему HEAD. Ни эти замеры, ни авторский контроль двух вкладок не заменяют приёмку конфликтов с реальными экспортами на интегрированном HEAD; критерии выше остаются в силе.
 
 ## Воспроизводимость и границы
 
@@ -67,3 +67,7 @@ Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4, светлая �
 [d7-harness]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/6036e10305eb24d1150874abd30e9d328b2b71ae/research/reader-w57-audit/note-conflict-witness.mjs
 [d7-baseline]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2346#issuecomment-7047485329
 [d7-audit]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/6036e10305eb24d1150874abd30e9d328b2b71ae/audit/READER-W57-BROWSER-VISUAL-AUDIT-2026-11-20.md
+[qnl-candidate]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2352
+[qnl-candidate-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/bf230bb55b460f9a6b6f6aeb132a3ff7110ba989/js/highlights.js#L394-L407
+[w61-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/d1234989ffb7f8c27da3b9bbce1eca0355597c2a/js/highlights.js#L343-L366
+[mark-control]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2352#issuecomment-7053714082

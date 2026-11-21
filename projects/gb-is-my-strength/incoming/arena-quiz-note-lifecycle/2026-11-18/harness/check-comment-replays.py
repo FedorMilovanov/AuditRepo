@@ -8,6 +8,7 @@ import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
+from zlib import crc32
 
 if not __debug__:
     raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
@@ -188,15 +189,36 @@ def verify_case(r, words):
     }
 
 
+def png_size(data, path):
+    assert data.startswith(b'\x89PNG\r\n\x1a\n'), f'wrong PNG signature: {path}'
+    offset, size, payload = 8, None, 0
+    while offset + 12 <= len(data):
+        length, tag = struct.unpack_from('>I4s', data, offset)
+        end = offset + 8 + length
+        assert end + 4 <= len(data), f'truncated PNG chunk: {path}'
+        assert crc32(data[offset + 4:end]) == struct.unpack_from('>I', data, end)[0], f'bad PNG chunk CRC: {path}'
+        if offset == 8:
+            assert tag == b'IHDR' and length == 13, f'wrong PNG header: {path}'
+            size = struct.unpack_from('>II', data, offset + 8)
+        elif tag == b'IHDR':
+            raise AssertionError(f'duplicate PNG header: {path}')
+        if tag == b'IDAT':
+            payload += length
+        offset = end + 4
+        if tag == b'IEND':
+            assert length == 0 and payload and offset == len(data), f'incomplete PNG: {path}'
+            return size
+    raise AssertionError(f'truncated PNG: {path}')
+
+
 def screen_hashes(folder):
     paths = sorted(folder.glob('*.png'))
     assert {p.name for p in paths} == SCREENS, 'missing or unexpected QNL screenshot name'
     result = {}
     for path in paths:
         data = path.read_bytes()
-        assert data[:16] == b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR' and len(data) >= 24, path
         size = (1440, 900) if path.name.startswith('distinct-1440-') else (390, 844)
-        assert struct.unpack('>II', data[16:24]) == size, f'wrong viewport: {path}'
+        assert png_size(data, path) == size, f'wrong viewport: {path}'
         result[path.name] = digest(data)
     return result
 

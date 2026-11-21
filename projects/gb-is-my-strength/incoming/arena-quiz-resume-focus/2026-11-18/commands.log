@@ -50,12 +50,6 @@ python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/res
 
 [Admission]
 # CHANGED = exact cumulative paths vs fcf2e69b. Force-add only this ignored commands.log.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # Repeat the ref/PR/owner guard before publication, preserve the old PR body/title, update only the existing Draft, and check exact-head CI.
 # No Product, MASTER/ledger, other branch, review, merge, deploy or Drive mutation.

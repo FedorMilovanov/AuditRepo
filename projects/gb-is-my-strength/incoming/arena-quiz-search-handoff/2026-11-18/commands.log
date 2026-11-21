@@ -52,12 +52,6 @@ python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/hom
 
 [Admission]
 # CHANGED = exact cumulative changed path list vs fcf2e69b. Stage only this intake, including its commands.log if ignored.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # Recheck remote exact paths/foreign deltas before push. Append to existing Draft body; do not alter title, base or prior sections. Check exact-head workflows.
 # No Product, MASTER/ledger, other branch, review, merge, deploy or Drive mutation.

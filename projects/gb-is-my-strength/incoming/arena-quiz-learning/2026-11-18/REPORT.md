@@ -158,12 +158,15 @@ GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM" node scripts/series-quiz-source-ha
 Для переписи и независимых прогонов сохранены [census.cjs](harness/census.cjs) и [browser.mjs](harness/browser.mjs). Им нужны абсолютный путь `PRODUCT` к точной сборке и отдельный каталог `OUT`; `AUDIT_HARNESS` — путь к папке `harness/` этого пакета. Для Chromium использован npm-пакет `@sparticuz/chromium@153.0.0` вне репозитория и библиотеки NSS из его `al2023.tar.br` через `LD_LIBRARY_PATH` (см. Product [#2311][sandbox]); не отключалась web security. Путь к исполняемому файлу записан в `OUT/chromium-path`.
 
 ```bash
-mkdir -p "$OUT"
-printf '%s\n' "$CHROMIUM" > "$OUT/chromium-path"
-node "$AUDIT_HARNESS/census.cjs" "$PRODUCT" "$OUT"
-for mode in articles sheets map disclosures diagnostics targeted; do
-  node "$AUDIT_HARNESS/browser.mjs" "$PRODUCT" "$OUT" "$mode" || break
-done
+(
+  set -euo pipefail
+  mkdir -p "$OUT"
+  printf '%s\n' "$CHROMIUM" > "$OUT/chromium-path"
+  node "$AUDIT_HARNESS/census.cjs" "$PRODUCT" "$OUT"
+  for mode in articles sheets map disclosures diagnostics targeted; do
+    node "$AUDIT_HARNESS/browser.mjs" "$PRODUCT" "$OUT" "$mode"
+  done
+)
 ```
 
 Браузерные прогоны измеряют поведение Product, включая неверное; `ok` в сырых результатах означает успешное прохождение сценария сбора, **не** отсутствие наблюдаемого дефекта. Ожидаемые и фактические значения приведены в разделах QL-01–QL-08. Неизменяемые результаты этого прохода — в `evidence/`; заново генерировать их при каждом движении Product `main` не нужно.

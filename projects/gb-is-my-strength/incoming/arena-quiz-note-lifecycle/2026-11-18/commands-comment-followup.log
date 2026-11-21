@@ -65,12 +65,6 @@ python3 "$Q/harness/check-comment-replays.py" "$OUT/observed-a" "$OUT/observed-b
 [Admission / publish]
 # Only these two local intake families; add a pointer to each older REPORT.md, not a new matrix disposition.
 # Force-add this small command receipt (ignored *.log); no browser downloads, scratch pilot traces or builds.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # Refresh comments, remote base/head/files and QPDF status before a fast-forward of this branch only.
 # Append one cross-linked follow-up to existing Draft #570. No Product, registry, Drive, review/merge/close or deploy writes.

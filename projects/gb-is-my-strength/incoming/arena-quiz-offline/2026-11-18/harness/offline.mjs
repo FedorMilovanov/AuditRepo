@@ -10,6 +10,8 @@ import path from 'node:path';
 const [, , productArg, outputArg, executablePath, filter] = process.argv;
 if (!productArg || !outputArg || !executablePath) throw new Error('Usage: node offline.mjs PRODUCT OUT CHROMIUM [scenario-filter]');
 const dist = path.join(path.resolve(productArg), 'dist'), out = path.resolve(outputArg);
+fs.mkdirSync(out, { recursive: true });
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const req = createRequire(path.resolve(productArg, 'package.json'));
 const { chromium } = req('playwright');
 const anchor = '9edef94ece08012223c1364bec7ddcd561cf5713';
@@ -57,8 +59,6 @@ const server = createServer(async (req, res) => {
     res.end('not found');
   }
 });
-await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-const base = `http://127.0.0.1:${server.address().port}`;
 
 async function setOnline(context, p, value, name) {
   reachable = value; phase = name;
@@ -451,9 +451,9 @@ add('global-search-reconnect-after-offline-open', wide, async (p, ctx, r, create
 
 const chosen = jobs.filter(j => !filter || j.name.includes(filter));
 assert.ok(chosen.length);
-fs.mkdirSync(out, { recursive: true });
+await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+const base = `http://127.0.0.1:${server.address().port}`;
 const pngs = ['offline-source-404.png', 'reconnected-search-empty.png'];
-for (const f of pngs) fs.rmSync(path.join(out, f), { force: true });
 const result = { anchor, node: process.versions.node, playwright: req('playwright/package.json').version,
   workerGeneration: fs.readFileSync(take('sw.js'), 'utf8').match(/const CACHE_VERSION = '([^']+)'/u)[1],
   method: { noStoreServer: true, blockServerWhenOffline: true, realServiceWorker: true, noCacheSeeding: true, bfcache: 'Playwright default disabled' },

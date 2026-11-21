@@ -27,7 +27,7 @@ const jobs = [
 ].filter(([id]) => !only || id.includes(only));
 assert.ok(jobs.length);
 fs.mkdirSync(out, { recursive: true });
-assert.ok(!fs.existsSync(path.join(out, 'source-follow-witness.json')), 'use a fresh output folder');
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const norm = text => String(text ?? '').replace(/\s+/gu, ' ').trim();
 const hash = data => createHash('sha256').update(data).digest('hex');
 const L = (p, s) => p.locator(s);

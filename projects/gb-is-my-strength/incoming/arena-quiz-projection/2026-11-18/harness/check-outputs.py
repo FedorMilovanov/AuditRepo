@@ -17,9 +17,11 @@ from pypdfium2.version import PDFIUM_INFO, PYPDFIUM_INFO
 if not __debug__:
     raise SystemExit('Audit assertions are disabled; remove -O and unset PYTHONOPTIMIZE.')
 
+ANCHOR = '9edef94ece08012223c1364bec7ddcd561cf5713'
 NOTICE = 'Интерактивный тест доступен в электронной версии статьи.'
 A = '/articles/anatomiya-padeniya-pyat-stadiy/'
 G = '/articles/dzhon-gill-chast-2-uchenyi/'
+D = '/articles/diotrefy-nashego-vremeni/'
 
 
 def sha(data):
@@ -67,13 +69,17 @@ def crop_notice(doc, index, out):
     return {'file': path.name, 'sha256': sha(path.read_bytes()), 'dimensions': list(cropped.size), 'page': index}
 
 
-def main(out):
-    witness = json.loads((out / 'quiz-projection-witness.json').read_text())
-    assert witness['completed'] == witness['total'] == 38 and witness['mode'] == 'all'
+def check_manifest(witness):
+    assert witness['anchor'] == ANCHOR, 'wrong Product anchor'
+    rows = witness['results']
+    assert len(rows) == witness['completed'] == witness['total'] == 38 and witness['mode'] == 'all', 'wrong scenario total'
+    assert len({(r['kind'], r['route']) for r in rows}) == len(rows), 'duplicate route within a scenario type'
     assert all(r['ok'] and not any(r['errors'].values()) for r in witness['results'])
     by_kind = {k: [r for r in witness['results'] if r['kind'] == k] for k in
                ('native-matrix', 'learning-matrix', 'native-channels', 'learning-channels', 'disclosure-channels')}
     assert list(map(len, by_kind.values())) == [23, 11, 2, 1, 1]
+    for kind, expected in (('native-channels', {A, G}), ('learning-channels', {G}), ('disclosure-channels', {D})):
+        assert {r['route'] for r in by_kind[kind]} == expected, kind
     native_questions = sum(r['totalQuestions'] for r in by_kind['native-matrix'])
     assert native_questions == 153
     for r in by_kind['native-matrix']:
@@ -95,6 +101,12 @@ def main(out):
         assert norm(d['explanation']) in actual
         assert norm(d['prompt']) not in actual
 
+    return by_kind
+
+
+def main(out):
+    witness = json.loads((out / 'quiz-projection-witness.json').read_text())
+    by_kind = check_manifest(witness)
     receipts, crop = {}, None
     for r in by_kind['native-channels']:
         projection_state(r, {'idle': 0, 'started': 2, 'answered': 4, 'result': 3, 'restarted': 2}, True)
@@ -142,7 +154,7 @@ def main(out):
               'pages idle/repeat; quiz PDF text matches repeat, with static notice only')
     assert crop is not None
     report = {'anchor': witness['anchor'], 'pypdfium2': str(PYPDFIUM_INFO), 'pdfium': str(PDFIUM_INFO),
-              'nativeProjectionRoutes': 23, 'nativeBankSize': native_questions,
+              'nativeProjectionRoutes': len(by_kind['native-matrix']), 'nativeBankSize': 153,
               'learningProjectionRoutes': 11, 'closedDisclosureBlocks': 50,
               'speechRuns': sum(len(r.get('speech', {})) for r in witness['results']),
               'pdfFiles': sum(len(x['phases']) for x in receipts.values()), 'pdf': receipts, 'crop': crop}

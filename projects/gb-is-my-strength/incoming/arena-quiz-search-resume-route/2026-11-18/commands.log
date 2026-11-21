@@ -61,12 +61,6 @@ python3 "$S/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$PREV" "$PRIOR_
 
 [Admission]
 # CHANGED: sorted accumulated file list against fcf2e69b. Stage only this intake; force-add only commands.log.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # FF this branch only then append to current Draft #570 body after REST reports exact head/files. Check exact-head CI.
 # Product, MASTER/ledger, Drive, deployments, other branches, merge and review decisions all untouched.

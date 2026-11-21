@@ -58,11 +58,6 @@ node --check "$L/harness/adaptation.mjs"
 
 [AuditRepo admission]
 # CHANGED contains the actual staged paths or cumulative PR paths against the AuditRepo base.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
-git diff --cached --check
 # Intake-only commit, regular push restricted to arena/9713b5a4-auditrepo. No merge, deployment, Product mutation or authority transition.

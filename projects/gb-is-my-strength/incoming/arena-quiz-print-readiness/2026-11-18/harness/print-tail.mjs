@@ -33,7 +33,7 @@ const plan = fontRoot ? [
   ['anatomy', 1440, 'button', 2], ['gill2', 1440, 'button', 2],
 ];
 fs.mkdirSync(out, { recursive: true });
-assert.ok(!fs.existsSync(path.join(out, 'browser.json')), 'use a fresh output directory');
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const { base, server } = await serve();
 const files = new Set(), results = [];
 

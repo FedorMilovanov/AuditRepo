@@ -9,10 +9,11 @@ import { pathToFileURL } from 'node:url';
 const [, , productArg, outArg, executablePath, filter] = process.argv;
 if (!productArg || !outArg || !executablePath) throw new Error('Usage: node note-lifecycle.mjs PRODUCT OUT CHROMIUM [filter]');
 const product = path.resolve(productArg), out = path.resolve(outArg), dist = path.join(product, 'dist');
+fs.mkdirSync(out, { recursive: true });
+assert.equal(fs.readdirSync(out).length, 0, 'use an empty output directory');
 const req = createRequire(path.join(product, 'package.json'));
 const { chromium } = req('playwright');
 const { serve } = await import(pathToFileURL(path.join(product, 'scripts/lib/a04-contract.mjs')));
-const { server, base } = await serve();
 const A = '/articles/otstuplenie-chto-govorit-bibliya/';
 const G = '/articles/dzhon-gill-chast-2-uchenyi/';
 const C = '/hard-texts/genesis-6/';
@@ -377,10 +378,9 @@ add('distinct-notes-and-quote-context', wide, async ({ a, b, r }) => {
 const files = new Set();
 const pins = /^\/(?:js\/(?:highlights|reader-library-[^/]+|site|floating-cluster-controller)\.js|css\/(?:highlights-runtime|floating-cluster)\.css|_astro\/(?:ReaderActionsRuntime|GillLearningSheet))/u;
 const png = 'updated-note-is-absent.png';
-fs.mkdirSync(out, { recursive: true });
-fs.rmSync(path.join(out, png), { force: true });
 const jobs = scenarios.filter(j => !filter || `${j.name} ${j.viewport.width}`.includes(filter));
 assert.ok(jobs.length);
+const { server, base } = await serve();
 const result = { anchor: '9edef94ece08012223c1364bec7ddcd561cf5713', node: process.versions.node,
   playwright: req('playwright/package.json').version, scope: 'real UI, same browser context and origin except explicit fresh import control', scenarios: [] };
 const args = ['--no-sandbox', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1'];

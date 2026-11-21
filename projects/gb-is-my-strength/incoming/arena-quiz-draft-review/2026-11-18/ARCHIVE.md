@@ -6,29 +6,46 @@
 
 ## Проверить и восстановить
 
-Из корня итогового checkout, Python 3 без зависимостей:
+Из корня итогового checkout (или его копии без `.git`). Нужны Python 3 без зависимостей и, для примера проверки, `PRODUCT` с точной production-like сборкой `9edef94ece…`.
 
-```sh
-I=projects/gb-is-my-strength/incoming
-AUDIT="$I/arena-quiz-draft-review/2026-11-18"
-python3 "$AUDIT/harness/verify-archive.py"  # только сверка
-SCRATCH=$(mktemp -d)
-python3 "$AUDIT/harness/verify-archive.py" --restore "$SCRATCH/tree"
-# Добавить только пакеты этого Draft, не весь incoming:
-git archive HEAD "$I"/arena-quiz-*/2026-11-18 | tar -xf - -C "$SCRATCH/tree"
+```bash
+(
+  set -euo pipefail
+  I=projects/gb-is-my-strength/incoming
+  AUDIT="$I/arena-quiz-draft-review/2026-11-18"
+  F="$I/arena-quiz-resume-after-fragment/2026-11-18"
+  SCRATCH=$(mktemp -d)
+  python3 "$AUDIT/harness/verify-archive.py" --restore "$SCRATCH/tree"
+  E="$SCRATCH/tree/$F/evidence"
+  python3 "$F/harness/check-quiz-focus-replays.py" \
+    "$E/quiz-focus-witness.json" "$E/quiz-focus-replay.json" \
+    "$PRODUCT/dist" "$E/quiz-keyboard-witness.json" "$SCRATCH/focus-receipt.json"
+  cmp "$SCRATCH/focus-receipt.json" "$F/evidence/quiz-focus-receipt.json"
+  printf 'Восстановленные оригиналы: %s\n' "$SCRATCH/tree"
+)
 ```
 
-Проверяющий сверяет ZIP, набор имён, размеры, все SHA и пины превью. Распаковка — только в новый каталог. В самом checkout инструменты не создают исходные трассы. `commands*.log` — журналы, не скрипты. В `$SCRATCH/tree` исходные относительные пути работают; используйте из журналов конкретные шаги сборки и проверки, не публикации. Нужен `dist` точного Product `9edef94ece…`; для этапов 24–27 — два дерева Pagefind 1.5.2 вне `dist`. Для части PNG-пар в PR есть только A и SHA B. Для побайтового воспроизведения такой квитанции нужен исходный B. Новый независимый прогон даёт новую квитанцию, а не подтверждает байты старой. Архив не выдаёт копию A за B.
+Восстановление само проверяет ZIP, имена, размеры, SHA и 48 пинов превью. Оно не пишет в checkout и не требует копировать весь `incoming`. В примере сценарий и эталон берутся из пакета, входные трассы — из распаковки. Для проверки без записи запустите `harness/verify-archive.py` из этого пакета без `--restore`.
 
-Например, первый Tab проверяется без браузера по сохранённым JSON и точному `$PRODUCT/dist`:
+`commands*.log` — журналы, не скрипты. Берите нужные шаги сборки/проверки, подставляйте абсолютные пути к распакованным трассам; для новых браузерных прогонов используйте раздельные чистые каталоги вывода. Для F24–F27, где сценарий использует поиск, нужны два дерева Pagefind 1.5.2 вне `dist`.
 
-```sh
-F="$SCRATCH/tree/$I/arena-quiz-resume-after-fragment/2026-11-18"
-python3 "$F/harness/check-quiz-focus-replays.py" \
-  "$F/evidence/quiz-focus-witness.json" "$F/evidence/quiz-focus-replay.json" \
-  "$PRODUCT/dist" "$F/evidence/quiz-keyboard-witness.json" "$SCRATCH/focus-receipt.json"
-cmp "$SCRATCH/focus-receipt.json" "$F/evidence/quiz-focus-receipt.json"
+**Граница воспроизведения:** для побайтного пересчёта квитанций F22 и QNL нужны исходные B-кадры, которых нет в checkout: `before-search-390.png`, `solo-after-next-390.png` и `same-390-qe-key.png` соответственно. Их хеши остались в квитанциях. Равные байты нормализованных трасс, например F13, сами по себе также не подтверждают два запуска. Новый прогон создаёт новое свидетельство, а не байты старого.
+
+## Ворота AuditRepo
+
+В 29 журналах одинаковые команды приёмки заменены одной ссылкой. Индивидуальные команды сборки/браузера, точные SHA, возвратные коды и выводы остались в своих журналах. Для текущего diff ориентироваться на [Validate](../../../../../.github/workflows/auditrepo-validate.yml) и [Preflight](../../../../../.github/workflows/auditrepo-workflow-preflight.yml). В исходных блоках повторялась эта последовательность (в части журналов без отдельного workflow preflight):
+
+```bash
+AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
+python3 scripts/check_workflow_syntax.py
+python3 scripts/matrix_coverage_regression_test.py
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+git diff --cached --check
 ```
+
+`CHANGED` — файл со строками путей проверяемого diff против его базы. Это проверки формата и состава пакета, не Product-приёмка.
 
 ## Указатель файлов
 

@@ -45,11 +45,5 @@ python3 "$Q/harness/check-in-page-replays.py" "$OUT/run-a" "$OUT/run-b" "$PRODUC
 
 [Admission / publication]
 # Existing F27 intake only. Force-add this log (ignored *.log). No legacy or shared registries changes.
-AUDITREPO_CHANGED_PATHS_FILE="$CHANGED" python3 scripts/validate_audit_repo.py
-python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py --changed-paths "$CHANGED"
-python3 scripts/check_workflow_syntax.py
-python3 scripts/matrix_coverage_regression_test.py
-python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
-git diff --cached --check
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
 # Fresh comment/PR/base guards, fast-forward existing branch only. Link scope and evidence under F27 in #570.
