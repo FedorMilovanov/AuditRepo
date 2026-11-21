@@ -6,6 +6,7 @@ import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Origi
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
 import { SceneMoment } from './ui/SceneMoment';
 import { NilePreludeCanvas } from './ui/NilePreludeCanvas';
+import { NileVillageJourney } from './ui/NileVillageJourney';
 import { MidianCanvas } from './ui/MidianCanvas';
 import { FieldStudy } from './ui/FieldStudy';
 import { ExpeditionQuest } from './ui/ExpeditionQuest';
@@ -535,8 +536,15 @@ export default function HorebApp() {
             </button>)}
           </div>}
           <div className="relative overflow-hidden rounded-sm border border-bronze/30 bg-gradient-to-b from-[#17232b] via-[#17231d] to-[#1c130b] p-5 sm:p-8 min-h-52">
+            {originIndex === 0 && <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5">
+              <NileVillageJourney reducedMotion={settings.reducedMotion}
+                onContinue={()=>{setRescueStage(0);setOriginIndex(1);}} />
+            </div>}
             {(originIndex === 0 || (originIndex === 1 && rescueStage === 0)) &&
               <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5">
+                {originIndex === 0 && <p className="bg-[#2e2822] border-t border-bronze/25 px-4 pt-3 text-xs text-parch/80">
+                  Сравнительный старый ракурс берега — после пути от домов. Основная новая игра находится выше.
+                </p>}
                 <NilePreludeCanvas key={originIndex} moment={originIndex === 0 ? 'basket' : 'discovery'} reducedMotion={settings.reducedMotion} />
               </div>}
             {originIndex === 1 && rescueStage > 0 &&
