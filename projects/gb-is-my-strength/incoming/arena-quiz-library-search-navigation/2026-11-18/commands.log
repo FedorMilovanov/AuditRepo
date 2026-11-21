@@ -1,0 +1,67 @@
+# Stage 24 — intake slot 2026-11-18 (UTC). Evidence only: real result activation and Back from Gill II.
+# Product main 9edef94ece08012223c1364bec7ddcd561cf5713; AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only coordination and lineage]
+git status --short --branch
+git rev-parse HEAD
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/reviews?per_page=100' | jq -cs add
+# Baseline: exact 173 paths, e38d6f590b08381580df1b0a2bda657c8303236c, prior title/body/base intact, draft/open, reviews=[], not merged.
+# Prior exact-head Validate 44625329514 and Preflight 44625329695 SUCCESS.
+# Read-only REST compare: Audit d608fa54 8541e630..3ec00f6c +1/4 (Baptists); fa045b53 8ec1b1ea..84fa1f69 +1/3 (Keston).
+# Product: ff9a3e0b..ecd1cf3a +1/2 review docs; 2f1c603d..26d4e375 +1/1 JournalMasthead; 10ca546e..42d827bf +1/1 nav review docs.
+# Product anchor-to-tip comparisons: +5/5, +40/54 and +43/29 respectively, no owned Library/Search/Gill paths touched by those updates.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# Same bytes before, during and after vs stage 23. QPDF-01 PENDING_NATIVE_DIALOG, 48 pins/PDF.js 5.4.624. No print invocation.
+
+[Build and independent index bytes]
+# PRODUCT, TOOLS, CHROMIUM, OUT are absolute. OUT is scratch outside Git; run directories must be empty.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# Recreate the pinned DIST if absent: from the exact Product source, npm ci --no-audit --no-fund, then
+# GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like
+# npm run page-ownership:dist:production-like (ownership check).
+for f in js/{site-utils,search,highlights,reader-library-presenter,reader-library-v3,reader-state}.js css/{highlights-runtime,command-palette}.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# Dist Scripture JSON is the build's public serialization (copy-legacy-to-dist.js:158-178), not a raw byte copy of its source.
+# One real published-index target for Второзаконие 33:8; dist checks real id=sec-deism-polemic and browser measures the target.
+test ! -e "$PRODUCT/dist/pagefind"
+for set in pagefind pagefind-replay; do
+  node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$OUT/$set" --version 1.5.2
+  test -f "$OUT/$set/pagefind.js"
+done
+test ! -e "$PRODUCT/dist/pagefind"
+# The same stock builder as pagefind:build:dist, output redirected outside dist (not into the native-print preview).
+# Each run indexed 103 ru pages / 28,877 words, 147 output files; compare relative file names and SHA-256 (all identical).
+# Local harness serves Product files unchanged, only /pagefind/ uses the separate generated tree. GET/HEAD, 200 no-store, loopback.
+
+[Pilot corrections, then two complete runs]
+# Two harness assumptions rejected in pilot: edit selector is data-library-action, and exact Scripture history stores article title,
+# not the reference-label option text. Both changed in the harness, not in Product. Initial pilot is not admission evidence.
+# CDP bfcache probe on a separate plain A→B→Back page had no positive restore (with both cache-header policies, even after
+# removing Playwright's disabling switch). The formal flow uses the unmodified Playwright defaults; prove its three new documents
+# via HTML responses, timeOrigin, pageshow.persisted and Page.backForwardCacheNotUsed, not extrapolation to other browsers.
+I="$PWD/projects/gb-is-my-strength/incoming"
+S="$I/arena-quiz-library-search-navigation/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-library-search-stack/2026-11-18"
+node --check "$S/harness/library-search-navigation.mjs"
+# Separate browser processes; 15 newly created contexts per process; either order works (completed A/B in parallel).
+node "$S/harness/library-search-navigation.mjs" "$PRODUCT" "$OUT/pagefind" "$OUT/run-a" "$CHROMIUM"
+node "$S/harness/library-search-navigation.mjs" "$PRODUCT" "$OUT/pagefind-replay" "$OUT/run-b" "$CHROMIUM"
+python3 "$S/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/library-search-stack-witness.json" \
+    "$PRODUCT/dist" "$OUT/pagefind" "$OUT/pagefind-replay" "$OUT/replay-receipt.json"
+# PASS 15+15, 56 dist pins; rechecked all 52 prior pins, 51 shared. 147 Pagefind files per build, 17 requested; 7/7 identical PNGs.
+# Checker compares stable per-case signatures (canonical ReaderState section varies on wide solo Back, so do not require its equality).
+# Body uses class gbs-world; the inert check for an exact result is on the article target, not on the active BODY itself.
+# 12/12 stacked route Back y=0 vs 4/4 solo y=8004/5446, new document + unanswered quiz in all 16/16.
+# Saved records unchanged 8/8, new draft reopens empty 4/4, edit reopens original 4/4. Escape without leaving saves draft 4/4.
+# Same document Enter on a real anchor: hidden by position/inert with search lock 8/8; clicking preview CTA reaches same heading 2/2.
+# Only browser witness JSONs, receipt and first-run PNGs kept. No built index, dependencies or transient logs in Git.
+
+[Admission]
+# CHANGED is the sorted exact cumulative path list against fcf2e69b. Stage only this intake (including commands.log).
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Recheck prior exact head/title/body, path set and draft state, then FF this branch and append to Draft #570 body only.
+# Validate and Workflow Preflight must pass on the published exact head. No Product, registry, review, merge, other branch or Drive changes.

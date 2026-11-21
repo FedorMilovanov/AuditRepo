@@ -1,0 +1,83 @@
+# 2026-11-18 UTC — этап 10: нативный квиз, «Обучение», закрытые карточки, озвучка статьи и PDF.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713, read-only.
+# AuditRepo Draft #570, arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor and overlap]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+gh pr view 570 -R FedorMilovanov/AuditRepo --json state,isDraft,headRefOid,headRefName,baseRefName,changedFiles,reviews,statusCheckRollup
+gh pr list -R FedorMilovanov/AuditRepo --state open --limit 60 --json number,title,headRefName,headRefOid,baseRefName
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 60 --json number,title,headRefName,headRefOid,baseRefName
+# #570 OPEN/Draft, 54 paths, no reviews; exact head 84c3f052b0bb0abb8813e1abdda27a77bf62ab7a.
+# preflight 44367961595 SUCCESS, validate 44367961592 SUCCESS. Workspace restored at base + untracked snapshots:
+# fetch only the current remote branch, check descendant relationship and every one of the 54 local blobs against it,
+# then git reset --mixed to the same published head; no checkout/branch switch and no file overwritten.
+for pr in 2338 2339 2340 2341 2342; do
+  gh api --paginate "repos/FedorMilovanov/gb-is-my-strength/pulls/$pr/files?per_page=100" --jq '.[].filename'
+done
+# Product #2339 at 0b957627…: checked exact compare over base b2ae6147…, including the actual page-head diffs.
+# Journal/G3 plus Latin font files/fonts.css, font preloads/version tokens on several article families, SW.
+# Gill II/Diotrophes/pastor PageHeads: font link edits, not quiz payloads. Re-run PDF pagination if fonts land.
+# 97208b4d…0b957627 adds research proposal; #2341 d91a0b62…4223b63f changes JournalMasthead.
+# Latest #2341 0082371b… and #2342 336a6782…: checked full file lists and advances; Journal and scripture-index only.
+# AuditRepo 231a2ea1…39b326f4 adds Baptist 1971 packet changes; 223fe982…ec079275 updates reprint/Tokmak evidence.
+# #538 is a separate prototype. No competing quiz/projection/runtime owner change in reviewed lists.
+
+[Product built from exact archive]
+# PRODUCT = local isolated directory of exact codeload archive, not a second AuditRepo checkout.
+# Follow ../../arena-quiz-learning/2026-11-18/commands.log. Node 22.23.4 (separate npm prefix), npm 10.9.8.
+(cd "$PRODUCT" && npm ci --no-audit --no-fund)
+(cd "$PRODUCT" && GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like)
+(cd "$PRODUCT" && npm run page-ownership:dist:production-like && npm run pagefind:build:dist)
+# PASS: 378 packages; 112 Astro pages, 1047 copy entries; 117 HTML, 103 indexed ru, 28877 words.
+# All 15 dist hashes from stage 9 matched the rebuild. No modification to extracted Product sources.
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# Tools out of the repo: node@22.23.4, @sparticuz/chromium@153.0.0; AL2023 libs from its bin/al2023.tar.br.
+# For the ESM package use its exported name from cwd TOOLS, not require of the absolute package directory.
+# CHROMIUM is the path from executablePath(); version 153.0.8010.0; Product Playwright 1.62.1.
+export GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
+(cd "$PRODUCT" && node scripts/article-quiz-native-parity-test.mjs && node scripts/reader-projection-source-contract.mjs)
+(cd "$PRODUCT" && node scripts/series-quiz-source-handoff-browser-contract.mjs)
+# Native parity PASS. Projection source 70/70, unmodified quiz handoff 55/55.
+# The Product projection browser guard uses Playwright default resolution. For the sandbox point its temporary
+# chromium-headless-shell-<revision>/chrome-headless-shell-linux64/chrome-headless-shell to CHROMIUM,
+# with PLAYWRIGHT_BROWSERS_PATH set to that temporary root and revision from playwright-core/browsers.json.
+(cd "$PRODUCT" && node scripts/reader-projection-browser-contract.mjs)
+# PASS 194/194 (4 routes × 2 profiles and explicit inclusion/exclusion fixture). Not a real quiz-phase test.
+
+[Independent phase and channel witness]
+R=$(pwd)
+N="$R/projects/gb-is-my-strength/incoming/arena-quiz-projection/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-projection.XXXXXX")
+python3 -m venv "$OUT/pdf-venv"
+"$OUT/pdf-venv/bin/pip" install 'pypdfium2==4.30.0' 'Pillow==11.3.0'
+node --check "$N/harness/quiz-projection.mjs"
+for run in run-a run-b; do
+  (cd "$PRODUCT" && node "$N/harness/quiz-projection.mjs" "$PRODUCT" "$OUT/$run" "$CHROMIUM")
+  "$OUT/pdf-venv/bin/python" "$N/harness/check-outputs.py" "$OUT/$run" "$PRODUCT/dist"
+done
+# Optional mode matrix or channels for a targeted probe; verifier expects the complete run.
+# Playwright serves exact dist via Product's loopback/no-store helper. SW and egress blocked.
+# For speech, block enhanced Vosk script and install only a platform sink for speak/onend; do not patch the site or write storage.
+# For print, capture window.print request on normal UI click then produce actual Chromium PDF; native lifecycle observed.
+# No forced clicks or synthetic quiz events. At the mobile deep-linked section, use keyboard Home to reach header Play.
+# Exploratory print and final run-b disagreed on first-print tail; final waits for load/fonts and repeats idle as a control.
+# Anatomy run-a idle/repeat 13→13, run-b 12→13 before the quiz was used. The first 12 pages match; the missing page
+# carries the closing editorial principle/contacts. Do not attribute the first-print variation to quiz or claim a native dialog failure.
+# Answer and result snapshots have the same per-page normalized text as the untouched idle repeat on both routes in both runs.
+# 38/38 scenarios on both runs, including 23 native and 11 Learning route checkpoints; 153 is total bank size, not speech sample.
+# Per run: 12 full WebSpeech queues, 8 PDFs, 38 identical dist pins verified against bytes. 0 pageerror/local HTTP >=400.
+# PDF text tested after answer/result and idle+idle repeat: 12–13 pages Anatomy, 34 Gill II; static notice, no active quiz text.
+# All 10 closed Diotrophes disclosures: 50 hidden segments plus 2 visible intro segments; do not infer AX/voice parity from DOM.
+# Keep run-a browser JSON and 952x192 crop plus both PDF receipt sets to preserve the first-print difference.
+# No PDFs, model or raw full-article audio in Git. Compare replay by per-phase fingerprints, exact emitted quiz text,
+# PDFium page-text digests for idle-repeat/answer/result and crop hash. Separate the raw PDF metadata timestamps,
+# first-print variance and the random question in Learning (which contributes zero segments).
+
+[AuditRepo admission]
+# CHANGED = staged cumulative paths against fcf2e69b, only this lane's intake packages.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+# Ordinary publication to the same Draft only after re-check of open refs, Product scope and branch identity. No merge/deploy.

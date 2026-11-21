@@ -1,0 +1,143 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "72b6f68732fa8eef672e047417353fb720140ebee886c3508422dd4e8fa0a568",
+  "witnessSha256B": "6a1bd17f90a2de22d1f795594e96187d2cc737b5613734ed68383ee0001c1d7c",
+  "casesPerReplay": 6,
+  "distPins": 40,
+  "sharedStage16Pins": 34,
+  "previousHeadingLandingsPerReplay": 2,
+  "pairs": [
+    {
+      "id": "native-390",
+      "savedAnchorBoth": "sec-canticles",
+      "landedAnchorBoth": "sec-canticles",
+      "sourceHitOnResumeBoth": true,
+      "a": {
+        "clickedSourceTop": 88,
+        "sourceTopOnSave": 88,
+        "scrollYOnSave": 8316,
+        "recordRatio": 0.15034168564920272,
+        "scrollYAfterResume": 8316,
+        "sourceTopAfterResume": 88
+      },
+      "b": {
+        "clickedSourceTop": 88,
+        "sourceTopOnSave": 88,
+        "scrollYOnSave": 8316,
+        "recordRatio": 0.15034168564920272,
+        "scrollYAfterResume": 8316,
+        "sourceTopAfterResume": 88
+      }
+    },
+    {
+      "id": "learning-390",
+      "savedAnchorBoth": "sec-hebrew",
+      "landedAnchorBoth": "sec-hebrew",
+      "sourceHitOnResumeBoth": false,
+      "a": {
+        "clickedSourceTop": 400,
+        "sourceTopOnSave": 400,
+        "scrollYOnSave": 8004,
+        "recordRatio": 0.14792363562438782,
+        "scrollYAfterResume": 5223,
+        "sourceTopAfterResume": 3181
+      },
+      "b": {
+        "clickedSourceTop": 400,
+        "sourceTopOnSave": 400,
+        "scrollYOnSave": 8004,
+        "recordRatio": 0.14792363562438782,
+        "scrollYAfterResume": 5223,
+        "sourceTopAfterResume": 3181
+      }
+    },
+    {
+      "id": "learning-wheel-390",
+      "savedAnchorBoth": "sec-canticles",
+      "landedAnchorBoth": "sec-canticles",
+      "sourceHitOnResumeBoth": true,
+      "a": {
+        "clickedSourceTop": 400,
+        "sourceTopOnSave": 145,
+        "scrollYOnSave": 8259,
+        "recordRatio": 0.1526363451551498,
+        "scrollYAfterResume": 8316,
+        "sourceTopAfterResume": 88
+      },
+      "b": {
+        "clickedSourceTop": 400,
+        "sourceTopOnSave": 145,
+        "scrollYOnSave": 8259,
+        "recordRatio": 0.1526363451551498,
+        "scrollYAfterResume": 8316,
+        "sourceTopAfterResume": 88
+      }
+    },
+    {
+      "id": "native-1440",
+      "savedAnchorBoth": "sec-canticles",
+      "landedAnchorBoth": "sec-canticles",
+      "sourceHitOnResumeBoth": true,
+      "a": {
+        "clickedSourceTop": 168,
+        "sourceTopOnSave": 168,
+        "scrollYOnSave": 5761,
+        "recordRatio": 0.16610443156589683,
+        "scrollYAfterResume": 5761,
+        "sourceTopAfterResume": 168
+      },
+      "b": {
+        "clickedSourceTop": 168,
+        "sourceTopOnSave": 168,
+        "scrollYOnSave": 5761,
+        "recordRatio": 0.16610443156589683,
+        "scrollYAfterResume": 5761,
+        "sourceTopAfterResume": 168
+      }
+    },
+    {
+      "id": "learning-1440",
+      "savedAnchorBoth": "sec-hebrew",
+      "landedAnchorBoth": "sec-hebrew",
+      "sourceHitOnResumeBoth": false,
+      "a": {
+        "clickedSourceTop": 483,
+        "sourceTopOnSave": 483,
+        "scrollYOnSave": 5446,
+        "recordRatio": 0.1604785478547855,
+        "scrollYAfterResume": 3458,
+        "sourceTopAfterResume": 2471
+      },
+      "b": {
+        "clickedSourceTop": 483,
+        "sourceTopOnSave": 483,
+        "scrollYOnSave": 5446,
+        "recordRatio": 0.1604785478547855,
+        "scrollYAfterResume": 3458,
+        "sourceTopAfterResume": 2471
+      }
+    },
+    {
+      "id": "learning-wheel-1440",
+      "savedAnchorBoth": "sec-canticles",
+      "landedAnchorBoth": "sec-canticles",
+      "sourceHitOnResumeBoth": true,
+      "a": {
+        "clickedSourceTop": 483,
+        "sourceTopOnSave": 145,
+        "scrollYOnSave": 5784,
+        "recordRatio": 0.17043847241867044,
+        "scrollYAfterResume": 5761,
+        "sourceTopAfterResume": 168
+      },
+      "b": {
+        "clickedSourceTop": 483,
+        "sourceTopOnSave": 145,
+        "scrollYOnSave": 5784,
+        "recordRatio": 0.17043847241867044,
+        "scrollYAfterResume": 5761,
+        "sourceTopAfterResume": 168
+      }
+    }
+  ]
+}

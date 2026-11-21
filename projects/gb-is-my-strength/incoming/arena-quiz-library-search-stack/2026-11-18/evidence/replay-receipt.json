@@ -1,0 +1,158 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "casesPerRun": 14,
+  "chromium": "153.0.8010.0",
+  "node": "22.23.4",
+  "pinned": 52,
+  "playwright": "1.62.1",
+  "priorPinned": 48,
+  "priorWitnessSha256": "7391e97817968d22c9bdf0ba95c21d11da6c3d076183b18d8e8e46a911329bf4",
+  "sharedPins": 48,
+  "shots": {
+    "palette-only-390.png": {
+      "a": "275b3218ade6f4b2445df5d0a11fb5ee0b8c21298cf668daf73e1999ef0d37f9",
+      "b": "275b3218ade6f4b2445df5d0a11fb5ee0b8c21298cf668daf73e1999ef0d37f9",
+      "byteIdentical": true
+    },
+    "reopened-empty-390.png": {
+      "a": "7d8efb3af86384c0dfec5bb1ec1872ce4b42b152d5ee719d6cb19aefb095a6ed",
+      "b": "7d8efb3af86384c0dfec5bb1ec1872ce4b42b152d5ee719d6cb19aefb095a6ed",
+      "byteIdentical": true
+    },
+    "stacked-1440.png": {
+      "a": "e255ce5fead91aea4ea0535b5653bb8b7ec09f6dbce953585431350a04cd748c",
+      "b": "e255ce5fead91aea4ea0535b5653bb8b7ec09f6dbce953585431350a04cd748c",
+      "byteIdentical": true
+    },
+    "stacked-390.png": {
+      "a": "cc45300bd20b7e24bf2ca245e673ae5e4a721130d88f2a852ddbd933062e3fce",
+      "b": "cc45300bd20b7e24bf2ca245e673ae5e4a721130d88f2a852ddbd933062e3fce",
+      "byteIdentical": true
+    }
+  },
+  "stableOutcomeByCase": {
+    "apostasy-1440-stack-escape-cold": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-header",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "apostasy-390-stack-escape-cold": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-backdrop",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "gill-1440-library-only": {
+      "control": "library-only",
+      "exit": "gbs-world",
+      "saved": true
+    },
+    "gill-1440-palette-only": {
+      "control": "palette-only",
+      "restored": "sec-canticles",
+      "target": "palette-input"
+    },
+    "gill-1440-stack-escape-cold": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-header",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "gill-1440-stack-escape-warm": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-header",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "gill-1440-stack-field-click": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-header",
+      "pointer": "gb-hl-header",
+      "saved": true,
+      "settledInert": false,
+      "tabAtLibrary": "heading-anchor",
+      "twoExposedAXModals": true
+    },
+    "gill-1440-stack-save-click": {
+      "acquiredInert": true,
+      "escape": "gbs-world",
+      "fieldHit": "gb-hl-header",
+      "pointer": "note-submit",
+      "savedWithPaletteOpen": true,
+      "settledInert": false,
+      "twoExposedAXModals": true
+    },
+    "gill-390-library-only": {
+      "control": "library-only",
+      "exit": "gbs-world",
+      "saved": true
+    },
+    "gill-390-palette-only": {
+      "control": "palette-only",
+      "restored": "sec-canticles",
+      "target": "palette-input"
+    },
+    "gill-390-stack-escape-cold": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-backdrop",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "gill-390-stack-escape-warm": {
+      "acquiredInert": true,
+      "draftAfterEscape": "retained",
+      "escape": "gb-hl-note-cancel",
+      "fieldHit": "gb-hl-backdrop",
+      "saved": true,
+      "settledInert": false,
+      "tabWithPalette": "cp-clear",
+      "twoExposedAXModals": true
+    },
+    "gill-390-stack-field-click": {
+      "acquiredInert": true,
+      "draftAfterReopen": "empty",
+      "escape": "gbs-world",
+      "fieldHit": "gb-hl-backdrop",
+      "pointer": "gb-hl-backdrop",
+      "saved": false,
+      "settledInert": false,
+      "twoExposedAXModals": true
+    },
+    "gill-390-stack-save-click": {
+      "acquiredInert": true,
+      "escape": "gbs-world",
+      "fieldHit": "gb-hl-backdrop",
+      "pointer": "note-submit",
+      "savedWithPaletteOpen": true,
+      "settledInert": false,
+      "twoExposedAXModals": true
+    }
+  },
+  "witnessSha256": {
+    "a": "5e7859b23a64291993c16a24c9aca79200e0d72f6f8905ad3f2a93e7ed54c51a",
+    "b": "33bd67d57f1d255d3577ae62e5c9cb988e7302a9f69b8b7e818bd83b09e74d84"
+  }
+}
