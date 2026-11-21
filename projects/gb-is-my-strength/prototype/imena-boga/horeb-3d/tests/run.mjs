@@ -1,0 +1,1108 @@
+// Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
+import { EXHIBITS, containsTetragrammaton, isOriginalVoiced } from '../.test-build/data/exhibits.js';
+import * as THREE from 'three';
+import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
+  worldForResearchId, chapterForResearchId, HOREB_CALL_STOP, HOREB_CALL_START, MOSES_ORIGIN_BEATS, MOSES_PREHOREB_BEATS,
+  sceneExhibitsForMode } from '../.test-build/data/storyWorlds.js';
+import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
+import * as N from '../.test-build/engine/nav.js';
+import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
+import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,nileVillageMayInteract,nileVillageCanWalk} from '../.test-build/data/nileVillageQuest.js';
+import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
+import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
+import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
+import {MIDIAN_SOIL,midianSurfaceValue,makeMidianSoilTexture} from '../.test-build/engine/MidianSurface.js';
+import {HOMESTEAD_WALK,HOMESTEAD_STRUCTURE,HOMESTEAD_RIDGE_SECTORS,HOMESTEAD_TEXTILE_DETAIL,HOMESTEAD_GABLE_SEGMENTS,HOMESTEAD_REAR_GABLE_Z,HOMESTEAD_GROUND_DETAIL,HOMESTEAD_INTERIOR_STORAGE,HOMESTEAD_BASKET_DETAIL,HOMESTEAD_BASKET_PROFILE,homesteadBasketFibrePoint,HOMESTEAD_SAND_BOUNCE,HOMESTEAD_WEAVE_DETAIL,HOMESTEAD_ROCK_COUNT,HOMESTEAD_ROCK_COLLIDERS,homesteadRoofBackHeight,homesteadRearGableTop,homesteadContinuousRearPoint,homesteadRockPoint,homesteadWashCenter,homesteadWashRelief,homesteadWeaveIntensity,homesteadRearDrapeOffset,homesteadGround,homesteadWalkable} from '../.test-build/engine/MidianHomestead.js';
+import {midianApproachClearance,midianScrubPoint,midianPebblePoint,MIDIAN_ROCK_COLLIDERS,midianRockPoint,midianRockOrientation,MIDIAN_ROCK_MIN_SEPARATION,midianRidgeProfile,midianRockTone,MIDIAN_RIDGE_TERRAIN,midianRidgeTerrainPoint,MIDIAN_ROCK_FIELDS} from '../.test-build/engine/MidianLandscape.js';
+import {MIDIAN_STONE_TOTAL,makeMidianStoneGeometry} from '../.test-build/engine/MidianMasonry.js';
+import {MIDIAN_TROUGH,makeMidianTroughStone} from '../.test-build/engine/MidianTrough.js';
+import { soundscapeMixAt } from '../.test-build/engine/soundscape.js';
+import { JOURNEY_BEATS, journeyBeatCrossing } from '../.test-build/data/journeyBeats.js';
+import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
+import {FIELD_NOTES,normalizeFieldJournal as normalizeWorldFieldJournal,observeField,answerField,nearField} from '../.test-build/data/WorldFieldLearning.js';
+import { PILOT_IDS, PILOT_LESSONS, normalizeLearningJournal, observeLesson, completeLesson, nextLearningLesson } from '../.test-build/data/learningJourney.js';
+import { SITE_CLUES, SITE_CLUE_IDS, isSiteClueId, normalizeSiteClues, addSiteClue } from '../.test-build/data/siteClues.js';
+import { EXPEDITION_EVIDENCE, EXPEDITION_CHRONOLOGY, EXPEDITION_CONTRAST, expeditionReady, normalizeExpeditionCompletion, canCompleteExpedition, completeExpedition } from '../.test-build/data/expedition.js';
+import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy, markFieldStudy } from '../.test-build/data/fieldStudies.js';
+import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
+let pass = 0, fail = 0;
+const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W15: the physically navigable opening follows Exodus 1:22 and 2:1-10.
+t('W15 six sequential, source-grounded actions',NILE_VILLAGE_STEPS.length===6&&
+  NILE_VILLAGE_STEPS.map(s=>s.id).join(',')==='decree,mother,seal,wrap,reeds,sister'&&
+  NILE_VILLAGE_STEPS.every(s=>s.source.startsWith('Исх.')&&s.qualification.length>20)&&
+  NILE_VILLAGE_STEPS.every(s=>nileVillageCanWalk(s.x,s.z)));
+t('W15 houses and river are solid, no remote actions',
+  nileVillageCanWalk(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z)&&
+  !nileVillageMayInteract(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z,0)&&
+  !nileVillageCanWalk(-9,-16)&&!nileVillageCanWalk(NaN,0)&&
+  NILE_VILLAGE_HOUSES.every(h=>!nileVillageCanWalk(h.x,h.z))&&
+  NILE_VILLAGE_STEPS.every((s,i)=>nileVillageMayInteract(s.x,s.z,i)));
+// W12A: a distinct 3D encampment is physically accessible through its open
+// entrance, with walls, hearth and storage remaining real obstructions.
+t('W12A Midian household starts on safe walkable ground',
+  homesteadWalkable(HOMESTEAD_WALK.startX,HOMESTEAD_WALK.startZ));
+t('W12A household doorway allows full actual approach and interior walk',
+  Array.from({length:56},(_,i)=>HOMESTEAD_WALK.startZ-i*.22)
+    .every(z=>homesteadWalkable(0,z)));
+t('W12A physical tent wall and hearth are genuine obstacles',
+  !homesteadWalkable(HOMESTEAD_STRUCTURE.halfWidth,0)&&
+  !homesteadWalkable(2.7,HOMESTEAD_STRUCTURE.front)&&
+  !homesteadWalkable(HOMESTEAD_STRUCTURE.hearthX,HOMESTEAD_STRUCTURE.hearthZ)&&
+  homesteadWalkable(0,HOMESTEAD_STRUCTURE.front));
+t('W12A household height is continuous and measured by camera',
+  Array.from({length:70},(_,i)=>-10+i*.3).every(z=>
+    Number.isFinite(homesteadGround(0,z))&&
+    Math.abs(homesteadGround(0,z+.1)-homesteadGround(0,z))<.05));
+// W12D.7: bounded source folds persist inside the W12E.0 single rear sheet;
+// every offset stays in the original physical back-wall collision band.
+t('W12D.7 macro folds are smooth, substantial and collision-bounded',
+  (()=>{let lo=Infinity,hi=-Infinity,maxNeighbour=0;
+    for(let i=0;i<=120;i++){
+      const x=-2.96+5.92*i/120;
+      for(let j=0;j<=20;j++){
+        const v=j/20,fold=homesteadRearDrapeOffset(x,v);
+        lo=Math.min(lo,fold);hi=Math.max(hi,fold);
+        const z=-2.97+fold;
+        // Every vertex stays in front of the occluding rear gable and
+        // inside the SAME physical rear-wall collision strip.
+        if(z<=HOMESTEAD_REAR_GABLE_Z+.03||
+          z>=HOMESTEAD_STRUCTURE.back+.18)return false;
+        if(i)maxNeighbour=Math.max(maxNeighbour,
+          Math.abs(fold-homesteadRearDrapeOffset(x-5.92/120,v)));
+      }
+    }
+    return Number.isFinite(lo)&&Number.isFinite(hi)&&
+      lo>=-.055&&hi<=.145&&hi-lo>.14&&maxNeighbour<.028&&
+      HOMESTEAD_TEXTILE_DETAIL.rearU===36&&
+      HOMESTEAD_TEXTILE_DETAIL.rearV===15;
+  })());
+// W12E.0: one single continuous canopy rear wall has no hard
+// horizontal mesh join; physically bounded at every authored vertex.
+t('W12E.0 one continuous rear canvas closes roof without seam or collision escape',
+  HOMESTEAD_TEXTILE_DETAIL.rearU===36&&
+  HOMESTEAD_TEXTILE_DETAIL.rearV===15&&
+  HOMESTEAD_TEXTILE_DETAIL.rearU*HOMESTEAD_TEXTILE_DETAIL.rearV*2<1100&&
+  Array.from({length:37},(_,i)=>-2.96+5.92*i/36).every(x=>{
+    const top=homesteadContinuousRearPoint(x,1);
+    const bottom=homesteadContinuousRearPoint(x,0);
+    return Math.abs(top.y-homesteadRearGableTop(x))<1e-8&&
+      Math.abs(top.z-(HOMESTEAD_REAR_GABLE_Z+.015))<1e-8&&
+      bottom.y<top.y-1&&
+      Array.from({length:16},(_,j)=>j/15).every(v=>{
+        const p=homesteadContinuousRearPoint(x,v);
+        return Number.isFinite(p.x)&&Number.isFinite(p.y)&&
+          Number.isFinite(p.z)&&
+          p.z>HOMESTEAD_REAR_GABLE_Z-.005&&
+          p.z<HOMESTEAD_STRUCTURE.back+.18&&
+          p.y>=bottom.y-.04&&p.y<=top.y+.04;
+      });
+  }));
+// W12D.0: the physically rendered rear roof edge and the back gable top
+// must share the same curved profile, not a single straight triangle.
+t('W12D.0 roof rear edge is fully covered by its real gable profile',
+  HOMESTEAD_GABLE_SEGMENTS===48&&
+  Array.from({length:97},(_,i)=>-2.96+5.92*i/96).every(x=>
+    Number.isFinite(homesteadRoofBackHeight(x))&&
+    homesteadRearGableTop(x)-homesteadRoofBackHeight(x)>.045&&
+    homesteadRearGableTop(x)-homesteadRoofBackHeight(x)<.07));
+t('W12D.0 rear gable closes canopy behind all drape folds',
+  HOMESTEAD_REAR_GABLE_Z< -3.045&&
+  [-2.96,-2.5,0,2.5,2.96].every(x=>
+    homesteadRearGableTop(x)>1.25+homesteadGround(x,HOMESTEAD_REAR_GABLE_Z)));
+// W12D.4: sand-colored hemispheric bounce is a modest fill, not a second sun
+// or a manufactured architectural feature; its exact actual count and the
+// two roof shadow flags are checked by real Chromium below.
+t('W12D.4 bounce is bounded beneath the key sun, preserving contrast',
+  HOMESTEAD_SAND_BOUNCE.intensity>=.3&&
+  HOMESTEAD_SAND_BOUNCE.intensity<=.6&&
+  HOMESTEAD_SAND_BOUNCE.color===0xffdfbe);
+// W12D.3.1: local contrast guard, avoiding the visually distracting
+// high-contrast grid seen in the original W12D.3 interior screenshot.
+t('W12D.3.1 neighbouring yarn texels avoid graph-paper contrast',
+  HOMESTEAD_WEAVE_DETAIL.repeatU===6&&
+  HOMESTEAD_WEAVE_DETAIL.repeatV===4&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale<=.008&&
+  Array.from({length:49},(_,i)=>i*2.13).every(x=>
+    Math.abs(homesteadWeaveIntensity(x,24)-
+      homesteadWeaveIntensity(x+1,24))<.055));
+// W12D.6: the close-view natural-fibre tile must not align its yarn
+// crossings into the same graph-paper lattice every eight texels.
+t('W12D.6 fabric breaks fixed 8px warp grid without seams or noisy jumps',
+  (()=>{let dif=0,n=0;
+    for(let i=0;i<16;i++)for(let j=0;j<16;j++){
+      const x=i*8,y=j*8;
+      dif+=Math.abs(homesteadWeaveIntensity(x,y)-
+        homesteadWeaveIntensity(x+8,y));n++;
+    }
+    return dif/n>.011&&dif/n<.03&&
+      Math.abs(homesteadWeaveIntensity(0,43.7)-
+        homesteadWeaveIntensity(128,43.7))<1e-10&&
+      Math.abs(homesteadWeaveIntensity(23.4,0)-
+        homesteadWeaveIntensity(23.4,128))<1e-10;
+  })());
+// W12D.3: one seamless small tile, genuinely varying yarn illumination.
+t('W12D.3 woven texture sampling is bounded, nonuniform and tileable',
+  HOMESTEAD_WEAVE_DETAIL.size===128&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale>0&&
+  HOMESTEAD_WEAVE_DETAIL.bumpScale<.03&&
+  (()=>{const v=Array.from({length:64},(_,i)=>
+    homesteadWeaveIntensity(i*1.7,i*3.1));
+    return Math.max(...v)-Math.min(...v)>.025&&
+      Math.max(...v)-Math.min(...v)<.10&&
+      v.every(x=>x>=.78&&x<=1);
+  })()&&
+  Array.from({length:19},(_,i)=>i*6.7).every(x=>
+    Math.abs(homesteadWeaveIntensity(x,37.4)-
+      homesteadWeaveIntensity(x+128,37.4))<1e-10&&
+    Math.abs(homesteadWeaveIntensity(19.6,x)-
+      homesteadWeaveIntensity(19.6,x+128))<1e-10));
+// W12D.5.1: reject thick industrial hoops; use fine profile-bound fibres.
+t('W12D.5.1 fibre relief is subtle, profile-following and one instanced mesh',
+  HOMESTEAD_BASKET_DETAIL.strandsPerBasket===8&&
+  HOMESTEAD_BASKET_DETAIL.pathSamples>=13&&
+  HOMESTEAD_BASKET_DETAIL.pathSamples<=18&&
+  HOMESTEAD_BASKET_DETAIL.segments===48&&
+  HOMESTEAD_BASKET_DETAIL.tube>=.008&&
+  HOMESTEAD_BASKET_DETAIL.tube<=.013&&
+  HOMESTEAD_BASKET_DETAIL.skinOffset>=.008&&
+  HOMESTEAD_BASKET_DETAIL.skinOffset<=.020&&
+  HOMESTEAD_BASKET_PROFILE.length===6&&
+  HOMESTEAD_BASKET_PROFILE.every(p=>p.radius>.4&&p.radius<=1&&p.height>=0&&p.height<1)&&
+  (()=>{const ps=Array.from({length:15},(_,i)=>homesteadBasketFibrePoint(.12+.79*i/14));
+    return ps.every((p,i)=>Number.isFinite(p.x)&&Number.isFinite(p.y)&&
+      Number.isFinite(p.z)&&Math.hypot(p.x,p.z)>.89&&Math.hypot(p.x,p.z)<1.04&&
+      (i===0||p.y>ps[i-1].y))&&ps.at(-1).y-ps[0].y>.75&&
+      Math.abs(ps.at(-1).z-ps[0].z)>.25;
+  })());
+// W12D.2: small household forms must remain walk-blocking props, not
+// ghost scenery, while preserving the actual central visitor route.
+t('W12D.2 generic interior storage forms are bounded and independently colliding',
+  HOMESTEAD_INTERIOR_STORAGE.length===2&&
+  HOMESTEAD_INTERIOR_STORAGE.every(p=>
+    Number.isFinite(p.x)&&Number.isFinite(p.z)&&
+    Math.abs(p.x)+p.radius<2.95&&p.z<0&&p.z>-2.75&&
+    p.height>=.32&&p.height<.50&&
+    !homesteadWalkable(p.x,p.z))&&
+  homesteadWalkable(0,-1.60)&&homesteadWalkable(0,0)&&
+  homesteadWalkable(0,1.8));
+t('W12D.2 inner storage has a clear physical central entry corridor',
+  Array.from({length:46},(_,i)=>2.1-i*.1)
+    .every(z=>homesteadWalkable(0,z)));
+// W12D.1: weathered dry-ground contours use ONE shared physical height
+// source for camera, mesh vertices, props and their actual walk path.
+t('W12D.1 wadi-like dry wash is an explicit non-historical terrain variation',
+  HOMESTEAD_GROUND_DETAIL.pebbleCount===720&&
+  HOMESTEAD_GROUND_DETAIL.washDepth>.10&&
+  Array.from({length:15},(_,i)=>-21+i*3).every(z=>{
+    const centre=homesteadWashCenter(z);
+    const depression=homesteadWashRelief(centre,z);
+    return centre>7&&centre<12&&
+      depression<-.11&&Math.abs(homesteadWashRelief(centre+7,z))<.002;
+  }));
+t('W12D.1 ground remains finite, continuous and central approach passable',
+  Array.from({length:39},(_,i)=>-18+i).every(x=>
+    Array.from({length:45},(_,j)=>-21+j).every(z=>
+      Number.isFinite(homesteadGround(x,z))&&
+      Math.abs(homesteadGround(x+.1,z)-homesteadGround(x,z))<.09&&
+      Math.abs(homesteadGround(x,z+.1)-homesteadGround(x,z))<.09))&&
+  Array.from({length:56},(_,i)=>HOMESTEAD_WALK.phoneStartZ-i*.22)
+    .every(z=>homesteadWalkable(0,z)));
+// W12C.3: the mobile establishing camera still begins on ground from
+// which the centre corridor leads physically to the same tent opening.
+t('W12C.3 portrait camera approach corridor remains unobstructed',
+  HOMESTEAD_WALK.phoneStartZ>HOMESTEAD_WALK.startZ+3&&
+  HOMESTEAD_WALK.phoneStartZ<HOMESTEAD_WALK.maxZ&&
+  Array.from({length:25},(_,i)=>HOMESTEAD_WALK.phoneStartZ-i*.2)
+    .every(z=>homesteadWalkable(0,z)));
+t('W12C.3 mobile portrait lens remains in a controlled wide-angle range',
+  HOMESTEAD_WALK.phoneVerticalFov>=68&&HOMESTEAD_WALK.phoneVerticalFov<=76);
+// W12C.2: varied cloth relief must remain a bounded real mesh, not a
+// single flat billboard or a high-frequency fragment-shader effect.
+t('W12C.2 rear cloth and floor have finite low-cost physical subdivisions',
+  HOMESTEAD_TEXTILE_DETAIL.rearU>=24&&HOMESTEAD_TEXTILE_DETAIL.rearV>=12&&
+  HOMESTEAD_TEXTILE_DETAIL.matU>=24&&HOMESTEAD_TEXTILE_DETAIL.matV>=18&&
+  HOMESTEAD_TEXTILE_DETAIL.rearU*HOMESTEAD_TEXTILE_DETAIL.rearV*2<1100&&
+  HOMESTEAD_TEXTILE_DETAIL.matU*HOMESTEAD_TEXTILE_DETAIL.matV*2<1500);
+t('W12C.2 roof and side cloth remain physically subdivided but bounded',
+  HOMESTEAD_TEXTILE_DETAIL.roofU>=30&&HOMESTEAD_TEXTILE_DETAIL.roofV>=18&&
+  HOMESTEAD_TEXTILE_DETAIL.sideU>=20&&HOMESTEAD_TEXTILE_DETAIL.sideV>=12&&
+  HOMESTEAD_TEXTILE_DETAIL.roofU*HOMESTEAD_TEXTILE_DETAIL.roofV*4<4500);
+// W12C.1: four independent distant hill masses, not a full 360-degree wall.
+t('W12C.1 distant hills leave open azimuth gaps rather than enclosing an arena',
+  HOMESTEAD_RIDGE_SECTORS.length===4&&
+  HOMESTEAD_RIDGE_SECTORS.reduce((sum,s)=>sum+2*s.halfSpan,0)<2*Math.PI*.88&&
+  HOMESTEAD_RIDGE_SECTORS.every(s=>s.distance-s.height*.03-16>HOMESTEAD_WALK.maxZ+5));
+t('W12C.1 distant hill profiles have distinct physical scales',
+  new Set(HOMESTEAD_RIDGE_SECTORS.map(s=>s.distance)).size>=3&&
+  new Set(HOMESTEAD_RIDGE_SECTORS.map(s=>s.height)).size>=3);
+// W12B.1: home rocks cannot be hollow decorative instancing with no collision.
+t('W12B.1 homestead visible boulders and physical colliders share coordinates',
+  HOMESTEAD_ROCK_COUNT===64&&HOMESTEAD_ROCK_COLLIDERS.length>20&&
+  HOMESTEAD_ROCK_COLLIDERS.every(r=>{
+    const again=homesteadRockPoint(r.index);
+    const fields=['x','z','a','size','sx','sy','sz','tiltX','tiltZ'];
+    return fields.every(f=>Math.abs(r[f]-again[f])<1e-10);
+  }));
+t('W12B.1 physically accessible boulder centres cannot be walked through',
+  HOMESTEAD_ROCK_COLLIDERS.filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX&&
+    Math.abs(r.z)<HOMESTEAD_WALK.maxZ).length>15&&
+  HOMESTEAD_ROCK_COLLIDERS.filter(r=>Math.abs(r.x)<HOMESTEAD_WALK.maxX&&
+    Math.abs(r.z)<HOMESTEAD_WALK.maxZ).every(r=>!homesteadWalkable(r.x,r.z)));
+// W12F.1: physically bound actual rotated and nonuniformly scaled
+// homestead DodecahedronGeometry(1,1), not merely its geometric centre.
+// Use the same Euler XYZ as the instanced renderer; the projected vertices
+// must all fit within the obstruction circle after yaw/pitch/roll.
+t('W12F.1 homestead boulder projected facets all lie inside actual colliders',
+  (()=>{const geo=new THREE.DodecahedronGeometry(1,1);
+    const vertices=geo.getAttribute('position'),p=new THREE.Vector3();
+    const scale=new THREE.Vector3(),rot=new THREE.Euler();
+    let safe=true;
+    for(let index=0;index<HOMESTEAD_ROCK_COUNT;index++){
+      const rock=homesteadRockPoint(index);
+      if(Math.abs(rock.radius-Math.max(rock.sx,rock.sy,rock.sz))>1e-10){
+        safe=false;break;
+      }
+      scale.set(rock.sx,rock.sy,rock.sz);
+      rot.set(rock.tiltX,rock.a,rock.tiltZ);
+      for(let j=0;j<vertices.count;j++){
+        p.fromBufferAttribute(vertices,j).multiply(scale).applyEuler(rot);
+        if(Math.hypot(p.x,p.z)>rock.radius+1e-5){safe=false;break;}
+      }
+      if(!safe)break;
+    }
+    geo.dispose();
+    const expected=Array.from({length:HOMESTEAD_ROCK_COUNT},
+      (_,i)=>homesteadRockPoint(i)).filter(r=>
+        Math.abs(r.x)-r.radius<HOMESTEAD_WALK.maxX&&
+        Math.abs(r.z)-r.radius<HOMESTEAD_WALK.maxZ);
+    return safe&&expected.length===HOMESTEAD_ROCK_COLLIDERS.length&&
+      expected.every(r=>HOMESTEAD_ROCK_COLLIDERS.some(c=>c.index===r.index))&&
+      Array.from({length:56},(_,i)=>HOMESTEAD_WALK.startZ-i*.22)
+        .every(z=>homesteadWalkable(0,z))&&
+      homesteadWalkable(0,HOMESTEAD_WALK.phoneStartZ);
+  })());
+// W11D: visible rock instances must physically block the grounded player.
+t('W11D large landscape rocks block camera at their actual render centers',
+  MIDIAN_ROCK_COLLIDERS.length>0&&
+  MIDIAN_ROCK_COLLIDERS.every(r=>{
+    const again=midianRockPoint(r.index);
+    return again&&Math.abs(r.x-again.x)<1e-8&&
+      Math.abs(r.z-again.z)<1e-8&&
+      (!((Math.abs(r.x)<18)&&(Math.abs(r.z)<22))||
+        !midianWalkable(r.x,r.z));
+  }));
+t('W11D safe walking approach remains clear of all large rocks',
+  midianWalkable(5.2,7.6));
+// W11D: trough geometry must match a shared collision footprint.
+t('W11D real stone trough remains inside its actual pedestrian collision', 
+  !midianWalkable(MIDIAN_TROUGH.x,MIDIAN_TROUGH.z)&&
+  !midianWalkable(MIDIAN_TROUGH.x+.9,MIDIAN_TROUGH.z+.4)&&
+  midianWalkable(MIDIAN_TROUGH.x,MIDIAN_TROUGH.z+1.5));
+t('W11D rough-hewn trough walls are real solid meshes with finite corners',(()=>{
+  const g=makeMidianTroughStone(.7,.4,.24,53);
+  const p=g.getAttribute('position'),c=g.getAttribute('color');
+  const ok=p.count===36&&c.count===36&&
+    Array.from({length:p.count},(_,i)=>
+      [p.getX(i),p.getY(i),p.getZ(i)]).flat().every(Number.isFinite);
+  g.dispose();return ok;
+})());
+// W11C: the physical ring is not a painted texture or floating brick boxes.
+t('W11C well retains 96 individually modelled volumetric stone wedges',
+  MIDIAN_STONE_TOTAL===96);
+t('W11C irregular well stone has correct flat-shaded triangular volume',(()=>{
+  const geo=makeMidianStoneGeometry(.95,1.40,0,.25,.1,.36,4);
+  const p=geo.getAttribute('position'),c=geo.getAttribute('color');
+  const valid=p.count===36&&c.count===36&&
+    Array.from({length:p.count},(_,i)=>[p.getX(i),p.getY(i),p.getZ(i)])
+      .flat().every(Number.isFinite);
+  geo.dispose();return valid;
+})());
+// W12E.2: near/far massif groups must create visible depth separation,
+// broad valleys and full 360-degree continuity without sharp triangular teeth.
+t('W12E.2 massifs are wrapped, distinct, smooth and reveal broad valleys',
+  [42,61].every(depth=>{
+    const f=(a)=>midianRidgeProfile(a,depth);
+    const first=f(0),last=f(2*Math.PI);
+    const heights=Array.from({length:151},(_,i)=>
+      f(2*Math.PI*i/150).height);
+    const lo=Math.min(...heights),hi=Math.max(...heights);
+    const near=depth===42;
+    return Math.abs(first.height-last.height)<1e-9&&
+      Math.abs(first.radius-last.radius)<1e-9&&
+      heights.every(Number.isFinite)&&
+      (near?lo>.9&&hi<8:lo>3.1&&hi<10)&&
+      hi-lo>4.6&&hi-lo<6.7&&
+      heights.every((v,i)=>i===0||Math.abs(v-heights[i-1])<.55);
+  })&&
+  midianRidgeProfile(3.9,61).height-
+    midianRidgeProfile(3.9,42).height>5.5&&
+  midianRidgeProfile(4.2,42).height<1.6);
+t('W12E.4.1 angular rocks retain shape and gain guaranteed enclosed physics',
+  Array.from({length:145},(_,i)=>midianRockPoint(i))
+    .filter(Boolean).every(p=>
+      p.sy/p.sx>.22&&p.sy/p.sx<.82&&
+      Math.abs(p.rx-Math.max(p.sx,p.sy,p.sz))<1e-12&&
+      Math.abs(p.rz-p.rx)<1e-12)&&
+  Array.from({length:145},(_,i)=>midianRockTone(i))
+    .every(v=>v>=.24&&v<=.88));
+// W12E.3: the radial ridge is genuine topography, not the original
+// 4-row near-vertical curtain. Its base overlaps the real ground and
+// begins outside the playable rectangle; both mountain layers overlap.
+t('W12E.3 radially grounded ridge has gradual grade and seamless full ring',
+  (()=>{const m=MIDIAN_RIDGE_TERRAIN;
+    if(m.rows!==8||m.segments!==150||m.profile.length!==8||
+       MIDIAN_FLOOR_SIZE.width<60||MIDIAN_FLOOR_SIZE.length<66)return false;
+    let maxGrade=0;
+    for(const depth of [42,61]){
+      for(let i=0;i<=150;i++){
+        const angle=2*Math.PI*i/150;
+        const points=Array.from({length:m.rows},(_,row)=>
+          midianRidgeTerrainPoint(angle,depth,row,midianGround));
+        if(Math.abs(points[0].y-midianGround(points[0].x,points[0].z))>1e-9||
+           points[0].radius<depth-13-1e-8)return false;
+        if(depth===42&&points[0].radius<=Math.hypot(MIDIAN_BOUNDS.x,MIDIAN_BOUNDS.z))return false;
+        for(let j=1;j<points.length;j++){
+          const prev=points[j-1],p=points[j];
+          const dr=Math.hypot(p.x-prev.x,p.z-prev.z);
+          if(dr<1||p.radius<=prev.radius)return false;
+          const grade=Math.abs(p.y-prev.y)/dr;
+          if(!Number.isFinite(grade))return false;
+          maxGrade=Math.max(maxGrade,grade);
+        }
+        if(i===0||i===150){
+          const counterpart=midianRidgeTerrainPoint(i===0?2*Math.PI:0,depth,6,midianGround);
+          if(Math.hypot(points[6].x-counterpart.x,
+            points[6].z-counterpart.z)>1e-9||
+            Math.abs(points[6].y-counterpart.y)>1e-9)return false;
+        }
+      }
+    }
+    // Near outer band overlaps far inner band, no empty sky gap.
+    return maxGrade<.8 &&
+      Array.from({length:151},(_,i)=>{
+        const a=2*Math.PI*i/150;
+        return midianRidgeTerrainPoint(a,42,7,midianGround).radius>
+          midianRidgeTerrainPoint(a,61,0,midianGround).radius;
+      }).every(Boolean);
+  })());
+// W12E.4: a few separated deterministic detrital groups, not an
+// even-height circular rock fence. The same exact points drive colliders
+// and instances, while the well/approach and playable controls stay open.
+t('W12E.4 rock placements form separated fields, not a full annular fence',
+  (()=>{const points=Array.from({length:145},(_,i)=>midianRockPoint(i))
+    .filter(Boolean);
+    if(MIDIAN_ROCK_FIELDS.length!==5||points.length<90||
+      points.length>105)return false;
+    const bins=Array(12).fill(0);
+    for(const p of points){
+      if(Math.hypot(p.x,p.z)<=8||
+        midianApproachClearance(p.x,p.z)<3||
+        Math.abs(p.x)>27||Math.abs(p.z)>31)return false;
+      const a=(Math.atan2(p.z,p.x)+2*Math.PI)%(2*Math.PI);
+      bins[Math.min(11,Math.floor(a/(2*Math.PI)*12))]++;
+      const again=midianRockPoint(p.index);
+      if(!again||Math.abs(again.x-p.x)>1e-12||
+        Math.abs(again.z-p.z)>1e-12)return false;
+    }
+    return bins.filter(n=>n===0).length>=2&&
+      midianWalkable(5.2,7.6)&&
+      MIDIAN_ROCK_COLLIDERS.length>25;
+  })());
+// W12E.4.1: test the ACTUAL same Three.js DodecahedronGeometry(1,0)
+// as the rendered instanced rock, not only its centre or an assumed ellipse.
+// Every visible vertex must be inside the physics footprint after the
+// exact Euler yaw/pitch/roll used in MidianLandscape's instancing.
+t('W12E.4.1 every rendered rock facet fits its physical collision footprint',
+  (()=>{const g=new THREE.DodecahedronGeometry(1,0);
+    const positions=g.getAttribute('position');
+    const vertex=new THREE.Vector3(),scale=new THREE.Vector3();
+    const euler=new THREE.Euler();
+    const rocks=Array.from({length:145},(_,i)=>midianRockPoint(i))
+      .filter(Boolean);
+    const ok=rocks.every(p=>{
+      scale.set(p.sx,p.sy,p.sz);
+      const rotation=midianRockOrientation(p.index);
+      // Use the exact orientation fed to the renderer, not a substitute.
+      if(Math.abs(rotation.y-p.ry)>1e-12)return false;
+      euler.set(rotation.x,rotation.y,rotation.z);
+      for(let i=0;i<positions.count;i++){
+        vertex.fromBufferAttribute(positions,i).multiply(scale).applyEuler(euler);
+        if(Math.hypot(vertex.x,vertex.z)>p.rx+1e-6)return false;
+      }
+      return true;
+    });
+    g.dispose();
+    const expected=rocks.filter(p=>
+      Math.abs(p.x)-p.rx<MIDIAN_BOUNDS.x&&
+      Math.abs(p.z)-p.rz<MIDIAN_BOUNDS.z);
+    const exact=expected.length===MIDIAN_ROCK_COLLIDERS.length&&
+      expected.every(p=>MIDIAN_ROCK_COLLIDERS.some(r=>r.index===p.index));
+    const approach=Array.from({length:17},(_,i)=>i*.8/16)
+      .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)));
+    return ok&&exact&&approach&&MIDIAN_BOUNDS.x===18&&
+      MIDIAN_BOUNDS.z===22;
+  })());
+// W12E.5: actual visible silhouettes should not form overlapping block
+// piles, and rock sizes must include many grounded small fragments.
+t('W12E.5 separated deposits vary substantially in scale and do not overlap',
+  (()=>{const rocks=Array.from({length:145},(_,i)=>midianRockPoint(i))
+    .filter(Boolean);
+    if(MIDIAN_ROCK_MIN_SEPARATION!==.75||rocks.length<90||
+      rocks.length>105)return false;
+    const byField=[0,0,0,0,0],sizes=[];
+    for(let i=0;i<rocks.length;i++){
+      const p=rocks[i];sizes.push(p.k);byField[p.index%5]++;
+      for(let j=0;j<i;j++){
+        const r=rocks[j];
+        const distance=Math.hypot(p.x-r.x,p.z-r.z);
+        if(distance+.000001<MIDIAN_ROCK_MIN_SEPARATION*(p.rx+r.rx))
+          return false;
+      }
+    }
+    sizes.sort((a,b)=>a-b);
+    return byField.every(n=>n>=12)&&
+      sizes[Math.floor(sizes.length/2)]<.65&&
+      sizes.filter(k=>k>1.2).length<20&&
+      sizes.at(-1)>1.4&&
+      midianWalkable(5.2,7.6);
+  })());
+// W12E.5.1 detached navigation coverage guard: the official Midian
+// Chromium smoke tests one short forward motion, whereas changed physical
+// boulders could theoretically isolate a different region. Breadth-first
+// walk on 0.5m x/z lattice gives a conservative topological regression check.
+// Grid coverage is intentionally not 100%: tiny irrelevant cells may be
+// disconnected by circles in a discretized map even if movement is valid.
+t('W12E.5.1 walkable approach ends outside solid well and terrain stays connected',
+  (()=>{const cols=73,rows=89,total=cols*rows;
+    const allowed=new Uint8Array(total),seen=new Uint8Array(total);
+    const idx=(i,j)=>j*cols+i;
+    let count=0;
+    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+      const x=-18+i*.5,z=-22+j*.5;
+      if(midianWalkable(x,z)){allowed[idx(i,j)]=1;count++;}
+    }
+    const seed=idx(Math.round((5.2+18)*2),Math.round((7.6+22)*2));
+    if(!allowed[seed])return false;
+    const queue=[seed];seen[seed]=1;
+    for(let head=0;head<queue.length;head++){
+      const node=queue[head],j=Math.floor(node/cols),i=node%cols;
+      for(const [dx,dz] of [[1,0],[-1,0],[0,1],[0,-1]]){
+        const x=i+dx,z=j+dz;
+        if(x<0||x>=cols||z<0||z>=rows)continue;
+        const other=idx(x,z);
+        if(!allowed[other]||seen[other])continue;
+        seen[other]=1;queue.push(other);
+      }
+    }
+    const wellAccess=idx(36,49); // physical position x=0,z=2.5
+    return count>5900&&queue.length/count>.999&&
+      seen[wellAccess]===1&&
+      !midianWalkable(0,0)&& // the well itself must stay solid
+      midianWalkable(0,2.5)&&
+      Array.from({length:17},(_,i)=>i/16)
+        .every(t=>midianWalkable(5.2*(1-t),7.6*(1-t)+2.5*t));
+  })());
+// W13A nature is grounded, continuous and generated with fixed GPU budgets.
+t('W13A Wadi scrub clustering obeys terrain and navigation corridors',
+  (()=>{const points=Array.from({length:MIDIAN_NATURE.scrubSeeds},
+    (_,i)=>midianScrubPoint(i)).filter(Boolean);
+    const wet=points.filter(p=>midianHabitat(p.x,p.z).wash>.35);
+    return MIDIAN_NATURE.scrubSeeds===124&&points.length>=90&&wet.length>=30&&
+      points.every(p=>midianApproachClearance(p.x,p.z)>=2.55&&
+       Math.hypot(p.x,p.z)>=4.2&&Number.isFinite(p.size))&&
+      [-25,-10,0,15,25].every(z=>
+        midianHabitat(midianWadiCenter(z),z).wash>.999&&
+        midianHabitat(midianWadiCenter(z)+.1,z).wash>.99);
+  })());
+t('W13A grounded micro-scree is small, bounded, varied and safe to walk past',
+  (()=>{const p=Array.from({length:MIDIAN_NATURE.pebbleSeeds},
+    (_,i)=>midianPebblePoint(i)).filter(Boolean);
+    return MIDIAN_NATURE.pebbleSeeds===440&&p.length>390&&p.length<440&&
+      p.every(a=>Math.abs(a.x)<=29&&Math.abs(a.z)<=32&&
+        Math.hypot(a.x,a.z)>=2.5&&midianApproachClearance(a.x,a.z)>=.95&&
+        Number.isFinite(midianGround(a.x,a.z))&&a.size>=.025&&a.size<=.115)&&
+      new Set(p.map(a=>a.x.toFixed(2))).size>150;
+  })());
+// W13C: material detail must be deterministic, tile without hard seams and
+// dispose GPU texture memory instead of introducing a network dependency.
+t('W13C procedural soil texture is periodic, varied and bounded',
+  (()=>{const points=Array.from({length:81},(_,i)=>
+      midianSurfaceValue(i*.1297,i*.0731));
+    const texture=makeMidianSoilTexture();
+    const ok=MIDIAN_SOIL.size===256&&
+      MIDIAN_SOIL.bumpScale>0&&MIDIAN_SOIL.bumpScale<.1&&
+      texture.image.width===256&&texture.image.height===256&&
+      texture.image.data.length===256*256*4&&
+      Math.abs(midianSurfaceValue(0,.35)-midianSurfaceValue(1,.35))<1e-9&&
+      Math.abs(midianSurfaceValue(.73,0)-midianSurfaceValue(.73,1))<1e-9&&
+      points.every(v=>Number.isFinite(v)&&Math.abs(v)<=1)&&
+      new Set(points.map(v=>v.toFixed(4))).size>60;
+    texture.dispose();return ok;
+  })());
+// W13B: spatial provenance lesson, with sanitized local mastery and
+// differentiated feedback. A visit alone never counts as understanding.
+t('W13B nearby Exodus field notes are tied to a physical landmark',
+  FIELD_NOTES.well.source==='Исх. 2:16–17'&&
+  FIELD_NOTES.homestead.source==='Исх. 2:18–21'&&
+  !nearField(FIELD_NOTES.well,5.2,7.6)&&
+  !nearField(FIELD_NOTES.homestead,0,HOMESTEAD_WALK.startZ)&&
+  !nearField(FIELD_NOTES.homestead,0,HOMESTEAD_WALK.phoneStartZ)&&
+  midianWalkable(FIELD_NOTES.well.x,FIELD_NOTES.well.z)&&
+  homesteadWalkable(FIELD_NOTES.homestead.x,FIELD_NOTES.homestead.z)&&
+  nearField(FIELD_NOTES.well,0,2.5)&&
+  nearField(FIELD_NOTES.homestead,0,4.8)&&
+  Array.from({length:17},(_,i)=>i/16).every(t=>
+    midianWalkable(5.2*(1-t),7.6*(1-t)+2.5*t))&&
+  Array.from({length:12},(_,i)=>10-(i*0.48)).every(z=>homesteadWalkable(0,z))&&
+  !nearField(FIELD_NOTES.well,17,17)&&
+  FIELD_NOTES.well.answer==='a');
+t('W13B mastery needs visit, correction and evidence-based answer',
+  (()=>{const initial=normalizeWorldFieldJournal({observed:['forged'],
+      understood:['midian-well'],mistakes:{'midian-well':-3}});
+    if(initial.observed.length||initial.understood.length)return false;
+    if(answerField(initial,'midian-well','a').understood.length)return false;
+    const visit=observeField(initial,'midian-well');
+    const miss=answerField(visit,'midian-well','b');
+    const retry=answerField(miss,'midian-well','c');
+    const pass=answerField(retry,'midian-well','a');
+    return retry.mistakes['midian-well']===2&&
+      retry.understood.length===0&&pass.understood.length===1&&
+      normalizeWorldFieldJournal(pass).understood[0]==='midian-well'&&
+      pass.observed.length===1;
+  })());
+// W11B: avoid blocking the actual playable viewpoint with toy vegetation.
+t('W11B shrub placement is sparse and never blocks the approach corridor',
+  Array.from({length:MIDIAN_NATURE.scrubSeeds},(_,i)=>midianScrubPoint(i))
+    .filter(Boolean).every(p=>p&&midianApproachClearance(p.x,p.z)>=2.55));
+t('W11A Midian well and trough have genuine grounded collisions',
+  !midianWalkable(0,0)&&!midianWalkable(-2.9,-.35)&&
+  midianWalkable(5.2,7.6)&&!midianWalkable(Number.NaN,0)&&
+  !midianWalkable(MIDIAN_BOUNDS.x+.1,0));
+t('W11A Midian ground varies smoothly along the actual walking path',
+  Array.from({length:60},(_,i)=>i).every(i=>{
+    const z=-10+i*.35;
+    return Number.isFinite(midianGround(5,z))&&
+      Math.abs(midianGround(5,z+.1)-midianGround(5,z))<.06;
+  }));
+// W10B: renderer and physical camera use this same terrain, coast and
+// seeded plant topology. No hard-coded hidden rectangular water barrier.
+const nileZSamples=[-19,-14,-9,-5,-2.1,0,3,7,8.5];
+// W10C: the physical water mesh and its test agree about wave height,
+// shoreline damping, season-neutral color, and reduced-motion stillness.
+t('W10C silt-tinted shallows vary smoothly and remain finite',
+  [-20,-8,-2,0,4].every(z=>{
+    const shore=nileShoreX(z);
+    return nileWaterNearshore(shore,z)===1&&
+      nileWaterNearshore(shore-9,z)===0&&
+      nileWaterNearshore(shore-2,z)>0&&
+      nileWaterMottle(shore-2,z)>.94&&nileWaterMottle(shore-2,z)<1.06;
+  }));
+t('W10C waves meet the real shoreline without sharp steps',
+  [-18,-3,0,6].every(z=>{
+    const shore=nileShoreX(z);
+    return Math.abs(nileWaterHeight(shore,z,10603,false)-NILE_WATER_LEVEL)<1e-8&&
+      Math.abs(nileWaterHeight(shore-.1,z,10603,false)-NILE_WATER_LEVEL)<.0013&&
+      Math.abs(nileWaterHeight(shore-7,z,10603,false)-NILE_WATER_LEVEL)<.011;
+  }));
+t('W10C reduced-motion freezes river surface independent of time',
+  [-9,-4,0].every(x=>[-4,0,3].every(z=>
+    nileWaterHeight(x,z,0,true)===NILE_WATER_LEVEL&&
+    nileWaterHeight(x,z,120000,true)===NILE_WATER_LEVEL)));
+t('W10C far channel is gently animated when motion is enabled',
+  Math.abs(nileWaterHeight(-7,-4,0,false)-nileWaterHeight(-7,-4,8000,false))>.00025);
+// W10E: botanically plausible groups with a clear rescue vista; deep-channel
+// poles are prohibited. Every expected root is still the renderer's root.
+t('W10E papyrus forms five wetland thickets outside the rescue vista',
+  Array.from({length:91},(_,i)=>nilePapyrusRoot(i,'basket')).every(r=>
+    r.x>nileShoreX(r.z)+.1&&Math.abs(r.z-NILE_CRADLE.z)>=2.2));
+t('W10E thirteen water-growing stems stay in actual nearshore shallows',
+  Array.from({length:13},(_,i)=>nilePapyrusRoot(91+i,'basket')).every(r=>
+    r.x<=nileShoreX(r.z)-.15&&r.x>=nileShoreX(r.z)-1.01));
+t('W10E shoreline and graded ground stay continuous along walking corridor',
+  Array.from({length:113},(_,i)=>-19+i*.25).every(z=>{
+    const s=nileShoreX(z),next=nileShoreX(z+.25);
+    return Math.abs(next-s)<.09&&
+      Math.abs(nileGroundY(s,z)+.14)<1e-8&&
+      Math.abs(nileGroundY(7.1,z)-nileGroundY(7.1,z+.25))<.15&&
+      nileCanWalk(7.1,z,'basket');
+  }));
+t('W10E bank roots remain true physical obstacles',
+  Array.from({length:91},(_,i)=>nilePapyrusRoot(i,'basket'))
+    .filter(r=>r.x>nileShoreX(r.z)+.4)
+    .slice(0,12).every(r=>!nileCanWalk(r.x,r.z,'basket')));
+t('W10B shoreline/nav share one curving physical coast',
+  nileZSamples.every(z=>{
+    const coast=nileShoreX(z);
+    return Number.isFinite(coast)&&
+      Math.abs(nileGroundY(coast,z)+.14)<1e-6&&
+      nileGroundY(coast+5,z)>nileGroundY(coast+.2,z)&&
+      !nileCanWalk(coast+.05,z,'basket')&&
+      nileCanWalk(7.1,z,'basket');
+  }));
+t('W10B no river walking, invalid coordinates or escaping terrain',
+  !nileCanWalk(NaN,0,'basket')&&
+  !nileCanWalk(Infinity,0,'basket')&&
+  !nileCanWalk(-10,0,'basket')&&
+  !nileCanWalk(5,NILE_WALK.maxZ+.01,'basket')&&
+  !nileCanWalk(5,NILE_WALK.minZ-.01,'basket')&&
+  !nileCanWalk(NILE_WALK.maxX+.01,0,'basket'));
+t('W10B papyrus instancing is deterministic and clears the cradle vista',
+  Array.from({length:104},(_,i)=>{
+    const a=nilePapyrusRoot(i,'basket');
+    const b=nilePapyrusRoot(i,'basket');
+    return JSON.stringify(a)===JSON.stringify(b)&&a.height>=1.85&&a.height<3.5&&
+      (i>=91||Math.abs(a.z+2.1)>=2.2);
+  }).every(Boolean));
+t('W10B cradle has same physical pedestrian collision in both moments',
+  !nileCanWalk(NILE_CRADLE.x+NILE_CRADLE.r*.85,NILE_CRADLE.z,'basket')&&
+  !nileCanWalk(NILE_CRADLE.x+NILE_CRADLE.r*.85,NILE_CRADLE.z,'discovery'));
+t('W10B figures block walking only in rescue episode',
+  nileCanWalk(3.05,-2.4,'basket')&&!nileCanWalk(3.05,-2.4,'discovery'));
+t('eight original museum walking moments in ascending depth',
+  JOURNEY_BEATS.length === 8 &&
+  new Set(JOURNEY_BEATS.map(b => b.id)).size === 8 &&
+  JOURNEY_BEATS.every((b, i) => b.text.length > 32 && b.source &&
+    (i === 0 || JOURNEY_BEATS[i - 1].atZ > b.atZ)));
+t('a real 0.2m walking step announces a section at most once',
+  journeyBeatCrossing(-7.92, -8.12, new Set())?.id === 'threshold' &&
+  journeyBeatCrossing(-7.92, -8.12, new Set(['threshold'])) === null);
+t('teleports, reverse walking, stationary and invalid input never fire narration',
+  journeyBeatCrossing(0, -100, new Set()) === null &&
+  journeyBeatCrossing(-8.3, -8, new Set()) === null &&
+  journeyBeatCrossing(-8, -8, new Set()) === null &&
+  journeyBeatCrossing(NaN, -8.12, new Set()) === null);
+// W9A regression: the story must not collapse two distinct Egyptian days,
+// invent a direct route to Midian or merge the well, household and Gershom.
+t('W9A Exodus 2:11–25 stages retain distinct sequence and references',
+  MOSES_PREHOREB_BEATS.grown.map(s=>s.reference).join('|') ===
+    'Исх. 2:11–12|Исх. 2:13–14|Исх. 2:15' &&
+  MOSES_PREHOREB_BEATS.midian.map(s=>s.reference).join('|') ===
+    'Исх. 2:16–17|Исх. 2:18–21|Исх. 2:22' &&
+  MOSES_PREHOREB_BEATS.cry.map(s=>s.reference).join('|') ===
+    'Исх. 2:23|Исх. 2:24–25');
+t('W9A historical limits and stage labels are explicit without new exhibit IDs',
+  Object.values(MOSES_PREHOREB_BEATS).flat().length === 8 &&
+  new Set(Object.values(MOSES_PREHOREB_BEATS).flat().map(s=>s.id)).size === 8 &&
+  Object.values(MOSES_PREHOREB_BEATS).flat().every(s=>s.title.length>9&&
+    s.scene.length>70&&s.limitation.length>50&&!!s.label) &&
+  MOSES_PREHOREB_BEATS.midian[1].limitation.includes('Рагуил/Иофор') &&
+  MOSES_PREHOREB_BEATS.cry[0].limitation.includes('не следует'));
+const errs = validateExhibits(EXHIBITS);
+if (errs.length) console.log(errs.join('\n'));
+t('registry passes editorial invariants', errs.length === 0);
+// E1 COVERAGE — exactly the 42 Research IDs, no misses, no extras.
+const ids = new Set(EXHIBITS.map((e) => e.id));
+t('E1 exactly 42 exhibits', EXHIBITS.length === 42);
+t('E1 all 42 Research IDs present', RESEARCH_IDS_42.every((id) => ids.has(id)));
+t('E1 no extra IDs', [...ids].every((id) => RESEARCH_IDS_42.includes(id)));
+// World-split W1 is a fail-closed CURATORIAL plan, never a teleport,
+// automatic Research approval, or physical movement of 42 legacy props.
+const worlds = STORY_STOPS.flatMap(s => s.exhibitIds.map(id => ({ id, world: s.world })));
+const assigned = new Set(worlds.map(x => x.id));
+t('W1 all 42 Research IDs assigned exactly once to separate story worlds',
+  validateStoryWorlds(EXHIBITS).length === 0 &&
+  worlds.length === 42 && assigned.size === 42 &&
+  [...assigned].every(id => ids.has(id)));
+t('W1 world boundaries isolate Genesis, Exodus, later OT and future NT',
+  new Set(STORY_STOPS.map(s => s.world)).size === 4 &&
+  worlds.filter(x => x.world === 'genesis').length === 7 &&
+  worlds.filter(x => x.world === 'exodus').length === 9 &&
+  worlds.filter(x => x.world === 'later-ot').length === 16 &&
+  worlds.filter(x => x.world === 'nt-future').length === 10 &&
+  worldForResearchId('el-roi') === 'genesis' &&
+  worldForResearchId('nissi') === 'exodus' &&
+  worldForResearchId('tsur') === 'later-ot' &&
+  worldForResearchId('abba') === 'nt-future' &&
+  worldForResearchId('unverified-research-id') === null);
+t('W7A Moses story begins at the Nile before the Horeb chapter',
+  EXODUS_CHAPTER_ORDER.join('>') ===
+    'moses-childhood>moses-midian>horeb-call>egypt-return>exodus-and-sea>marah>wilderness-sin>rephidim>sinai-covenant' &&
+  chapterForResearchId('ehyeh') === 'horeb-call' &&
+  chapterForResearchId('yah') === 'exodus-and-sea' &&
+  chapterForResearchId('rapha') === 'marah' &&
+  chapterForResearchId('nissi') === 'rephidim' &&
+  chapterForResearchId('mekoddishkem') === 'sinai-covenant' &&
+  chapterForResearchId('el-olam') === 'patriarchs');
+ t('W7A biblical prologue starts with infant and ends where real Horeb begins',
+  MOSES_ORIGIN_BEATS.length === 6 &&
+  MOSES_ORIGIN_BEATS[0].reference === 'Исх. 2:1–4' &&
+  MOSES_ORIGIN_BEATS[0].id === 'basket' &&
+  MOSES_ORIGIN_BEATS[5].reference === 'Исх. 3:1' &&
+  MOSES_ORIGIN_BEATS[5].id === 'shepherd' &&
+  MOSES_ORIGIN_BEATS.every(e => !!e.title && !!e.scene && !!e.limit) &&
+  STORY_STOPS.find(s => s.id === 'moses-childhood')?.exhibitIds.length === 0 &&
+  STORY_STOPS.find(s => s.id === 'moses-midian')?.exhibitIds.length === 0);
+t('W1 Egypt and wilderness stages do not invent non-research names',
+  STORY_STOPS.find(s => s.id === 'egypt-return')?.exhibitIds.length === 0 &&
+  STORY_STOPS.find(s => s.id === 'wilderness-sin')?.exhibitIds.length === 0);
+t('W1 curatorial route cannot silently publish unapproved sources',
+  validateStoryWorlds(EXHIBITS.map((e,i) =>
+    i === 0 ? { ...e, publicationState: 'PUBLISHED' } : e))
+    .some(e => e.includes('cannot approve')));
+t('W1 curatorial route rejects removed, duplicated or extra source entries',
+  validateStoryWorlds(EXHIBITS.slice(1)).length > 0 &&
+  validateStoryWorlds([...EXHIBITS, EXHIBITS[0]]).length > 0 &&
+  validateStoryWorlds([...EXHIBITS, { id: 'future-placeholder', publicationState: 'HOLD' }])
+    .length > 0);
+// W5: the actual physical scene selector uses ONLY Exodus 3.
+const chapterIds=sceneExhibitsForMode(EXHIBITS, 'horeb').map(e=>e.id);
+t('W5 new Horeb chapter physically selects only two Exodus 3 witnesses',
+  HOREB_CALL_STOP.id==='horeb-call' &&
+  chapterIds.join('|')==='ehyeh|yhwh' &&
+  !chapterIds.some(id=>['abba','el-roi','nissi','tsur'].includes(id)));
+t('W5 legacy scene still retains all 42 unique Research exhibits',
+  sceneExhibitsForMode(EXHIBITS,'legacy').length===42 &&
+  sceneExhibitsForMode(EXHIBITS,'legacy').every((e,i)=>e.id===EXHIBITS[i].id));
+t('W5 dedicated chapter spawn is on the existing safe outer path',
+  N.constrain(HOREB_CALL_START.x,HOREB_CALL_START.z,true,'horeb').block===null &&
+  N.distToBush(HOREB_CALL_START.x,HOREB_CALL_START.z)>N.R_OUTER &&
+  N.sanitizeSpawn(HOREB_CALL_START,'horeb').z===HOREB_CALL_START.z);
+t('W5B physical north ridge closes absent old gallery only in Horeb',
+  N.HOREB_NORTH_EDGE_Z>N.TUNNEL_END-30 &&
+  N.HOREB_NORTH_EDGE_Z<N.TUNNEL_END-10 &&
+  N.constrain(0,-315,true,'horeb').z===N.HOREB_NORTH_EDGE_Z &&
+  N.constrain(0,-315,true,'horeb').block==='wall' &&
+  N.constrain(0,-315,true,'legacy').z===-315 &&
+  N.sanitizeSpawn({x:0,z:-88},'horeb').z===N.HOREB_NORTH_EDGE_Z);
+t('W5B bush radii and physical southbound wadi remain unchanged',
+  N.constrain(0,-353,true,'horeb').block==='outer' &&
+  N.constrain(0,-365,false,'horeb').block==='inner' &&
+  N.constrain(N.exodusTrailCentreX(-430),-430,true,'horeb').block===null);
+// E2 STORY-SPECIFIC — every scene has >=2 anchor props + unique signature.
+t('E2 every exhibit has >=2 anchor props', EXHIBITS.every((e) => e.anchorProps.length >= 2));
+const sig = new Set(EXHIBITS.map((e) => `${e.environmentKey}::${e.meaningfulAction}`));
+t('E2 all 42 scene signatures unique', sig.size === 42);
+// E3 SEMANTIC TRUTH — deliberately injected defects MUST be caught.
+const clone = () => JSON.parse(JSON.stringify(EXHIBITS));
+const inj = (name, mut) => { const c = clone(); mut(c); t('detects: ' + name, validateExhibits(c).length > 0); };
+inj('altar -> personal name', c => { c.find(e => e.id === 'nissi').category = 'personal_divine_name'; });
+inj('place -> divine title', c => { c.find(e => e.id === 'yireh').category = 'divine_title'; });
+inj('city -> personal name', c => { c.find(e => e.id === 'shammah').category = 'personal_divine_name'; });
+inj('El Elyon final nun replaced with final mem', c => { c.find(e => e.id === 'el-elyon').originalUnicode = 'אֵל עֶלְיוֹם'; });
+inj('El Roi root swapped to רעה', c => { c.find(e => e.id === 'el-roi').originalUnicode = 'אֵל רֹעִי'; });
+inj('Daniel marked Hebrew', c => { c.find(e => e.id === 'atiq-yomin').sourceLanguage = 'he'; });
+inj('El Hay preposition stripped', c => { c.find(e => e.id === 'el-hay').originalUnicode = 'אֵל חָי'; });
+inj('XSS in field', c => { c[0].interpretiveNotes = '<img src=x onerror=alert(1)>'; });
+inj('bidi control', c => { c[0].originalUnicode = 'אֱלֹהִים\u202E'; });
+inj('NFD Hebrew', c => { c[0].originalUnicode = 'ש\u05C1\u05BC'; });
+inj('LXX = Jn 8:58 conflated', c => { c.find(e => e.id === 'ehyeh').originalUnicode = 'ἐγὼ εἰμί'; });
+inj('published state', c => { c[0].publicationState = 'PUBLISHED'; });
+inj('Sabaoth=sabbath', c => { c.find(e => e.id === 'sabaoth').literalGloss = 'от субботы'; });
+inj('missing Research id', c => { c.splice(0, 1); });
+inj('duplicate scene signature', c => { c[1].environmentKey = c[0].environmentKey; c[1].meaningfulAction = c[0].meaningfulAction; });
+inj('empty anchor props', c => { c[2].anchorProps = ['stele']; });
+// Learning-gate checks: game progress cannot make a theological assertion,
+// bypass an unseen scene, or accept a wrong / tampered answer.
+t('learning has eight distinct canonical hero IDs',
+  PILOT_IDS.length === 8 && new Set(PILOT_IDS).size === 8 &&
+  PILOT_IDS.every((id) => EXHIBITS.some((e) => e.id === id)));
+t('each hero question has exactly one valid answer within three choices',
+  PILOT_LESSONS.every((l) => l.options.length === 3 &&
+    new Set(l.options.map((x) => x.id)).size === 3 &&
+    l.options.some((c) => c.id === l.answer) &&
+    l.question.length > 20 && l.explanation.length > 30));
+const emptyStudy = normalizeLearningJournal(null);
+t('study progress starts with zero observed and understood',
+  emptyStudy.observed.length === 0 && emptyStudy.understood.length === 0);
+t('cannot complete a lesson without first observing it',
+  completeLesson(emptyStudy, 'elohim', 'b').understood.length === 0);
+const observedStudy = observeLesson(emptyStudy, 'elohim');
+t('wrong answer does not count and correct answer counts only observed',
+  completeLesson(observedStudy, 'elohim', 'a').understood.length === 0 &&
+  completeLesson(observedStudy, 'elohim', 'b').understood.includes('elohim'));
+t('learning journal refuses forged IDs and completion without observation',
+  JSON.stringify(normalizeLearningJournal({
+    observed: ['yhwh','fake','yhwh'],
+    understood: ['fake','elohim','yhwh','yhwh'],
+  })) === JSON.stringify({ observed: ['yhwh'], understood: ['yhwh'] }));
+t('next story advances after completion, free movement remains independent',
+  nextLearningLesson(completeLesson(observedStudy, 'elohim', 'b'))?.id === 'el-elyon' &&
+  nextLearningLesson(emptyStudy)?.id === 'elohim');
+t('all eight stories can be learned without changing nav or source registry',
+  PILOT_LESSONS.reduce((state, l) => completeLesson(observeLesson(state,l.id),l.id,l.answer),
+    emptyStudy).understood.length === 8);
+// Treat the Tetragrammaton as written-only even when embedded in a phrase:
+// 12 existing records contain יהוה, only one has the exact id 'yhwh'.
+const writtenNameRefs = EXHIBITS.filter((e) => containsTetragrammaton(e.originalUnicode));
+t('all twelve written Tetragrammaton occurrences are identified',
+  writtenNameRefs.length === 12 && writtenNameRefs.some((e) => e.id === 'yhwh') &&
+  writtenNameRefs.some((e) => e.id === 'sabaoth'));
+t('every source-language phrase containing יהוה is SILENT until an explicit policy revision',
+  writtenNameRefs.every((e) => !isOriginalVoiced(e)));
+t('names without the Tetragrammaton remain future phonetic-review candidates',
+  EXHIBITS.filter((e) => !containsTetragrammaton(e.originalUnicode))
+    .every((e) => isOriginalVoiced(e)));
+t('vowel points and unpointed text match the same written-only policy',
+  containsTetragrammaton('יְהוָה יִרְאֶה') &&
+  containsTetragrammaton('יהוה') &&
+  !containsTetragrammaton('אֶהְיֶה'));
+// An observational game event must be authentic and idempotent, not a
+// client-invented item, points system or route unlock.
+t('seven 3D scene observations are canonical and tied to existing exhibits',
+  SITE_CLUE_IDS.length === 7 && new Set(SITE_CLUE_IDS).size === 7 &&
+  SITE_CLUE_IDS.every((id) => EXHIBITS.some((e) => e.id === SITE_CLUES[id].exhibitId)));
+t('site observation normalizer discards unknown/prototype IDs and duplicates',
+  JSON.stringify(normalizeSiteClues(['constructor','beersheba-well','bad','beersheba-well'])) ===
+  JSON.stringify(['beersheba-well']) && !isSiteClueId('constructor'));
+t('site observations record only known physical locations once',
+  JSON.stringify(addSiteClue(addSiteClue([], 'hagar-spring'), 'hagar-spring')) ===
+  JSON.stringify(['hagar-spring']) &&
+  JSON.stringify(addSiteClue([], 'invalid')) === '[]');
+t('site observations never imply an automatic educational completion',
+  normalizeLearningJournal({ observed: [], understood: [] }).understood.length === 0 &&
+  SITE_CLUES['beersheba-tamarisk'].reference === 'Быт. 21:33');
+// The two new hero slices require actual spatial observations as distinct
+// proof of attention, AND a source-grounded answer shared with FieldStudy.
+// Completion booleans alone may not survive lost/forged observation journals.
+const groveWitness = ['gethsemane-olive', 'gethsemane-prayer-stone'];
+const jeremiahWitness = ['jeremiah-royal-sign', 'jeremiah-city-view'];
+t('two hero studies reuse canonical source choices and seven physical meshes',
+  HERO_STUDY_IDS.length === 2 && HERO_STUDIES.length === 2 &&
+  HERO_STUDIES.every((study) => study.evidence.length === 2 &&
+    study.evidence.every((id) => SITE_CLUE_IDS.includes(id)) &&
+    FIELD_STUDIES.some((t) => t.id === study.id && t.correctAnswer)));
+t('a hero study cannot pass without both sighted details',
+  !heroStudyReady('abba', [groveWitness[0]]) &&
+  !canCompleteHeroStudy('abba', [groveWitness[0]], true, true, 'b') &&
+  !heroStudyReady('tsidkenu', [jeremiahWitness[0]]) &&
+  !canCompleteHeroStudy('tsidkenu', [jeremiahWitness[0]], true, true, 'c'));
+t('hero source conclusions fail closed when either text side is unopened',
+  !canCompleteHeroStudy('abba', groveWitness, false, true, 'b') &&
+  !canCompleteHeroStudy('abba', groveWitness, true, false, 'b') &&
+  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, false, false, 'c') &&
+  markHeroStudy([], 'abba', groveWitness, true, false, 'b').length === 0 &&
+  markHeroStudy([], 'tsidkenu', jeremiahWitness, false, true, 'c').length === 0);
+t('Gethsemane and Jeremiah are two independently grounded interpretations',
+  heroStudyReady('abba', groveWitness) && heroStudyReady('tsidkenu', jeremiahWitness) &&
+  canCompleteHeroStudy('abba', groveWitness, true, true, 'b') &&
+  !canCompleteHeroStudy('abba', groveWitness, true, true, 'c') &&
+  canCompleteHeroStudy('tsidkenu', jeremiahWitness, true, true, 'c') &&
+  !canCompleteHeroStudy('tsidkenu', jeremiahWitness, true, true, 'a') &&
+  !canCompleteHeroStudy('abba', jeremiahWitness, true, true, 'b'));
+t('hero records require verified physical clues after reload and reject invented IDs',
+  JSON.stringify(markHeroStudy([], 'abba', groveWitness, true, true, 'b')) === '["abba"]' &&
+  JSON.stringify(markHeroStudy([], 'tsidkenu', jeremiahWitness, true, true, 'c')) === '["tsidkenu"]' &&
+  JSON.stringify(markHeroStudy([], 'fake', [...groveWitness, ...jeremiahWitness], true, true, 'b')) === '[]' &&
+  normalizeHeroStudyJournal(['abba', 'abba', 'fake'], groveWitness).join('|') === 'abba' &&
+  normalizeHeroStudyJournal(['abba', 'tsidkenu'], groveWitness).join('|') === 'abba' &&
+  normalizeHeroStudyJournal(['abba'], []).length === 0 &&
+  markHeroStudy(['abba'], 'tsidkenu', groveWitness, true, true, 'c').join('|') === 'abba');
+// Four different source-analysis interactions (16 authored investigations).
+const kindCounts = Object.fromEntries(['voices','named-object','parallel-witness','written-form']
+  .map((kind) => [kind, FIELD_STUDIES.filter((task) => task.kind === kind).length]));
+t('four distinct fieldwork methods have exactly four authored dossiers each',
+  FIELD_STUDIES.length === 16 && Object.values(kindCounts).every((n) => n === 4));
+t('all fieldwork IDs exist in canonical 42 and exclude the 8 hero quizzes',
+  new Set(FIELD_IDS).size === 16 && FIELD_IDS.every((id) =>
+    EXHIBITS.some((e) => e.id === id) && !PILOT_IDS.includes(id)));
+t('all authored evidence prompts and cautions have meaningful content',
+  FIELD_STUDIES.every((task) => task.prompt.length > 35 &&
+    task.lensA.length > 30 && task.lensB.length > 30 && task.takeaway.length > 35));
+t('object classification matches registry rather than a new inferred divine name',
+  FIELD_STUDIES.filter((task) => task.kind === 'named-object').every((task) =>
+    ['altar_name','place_name','city_name'].includes(EXHIBITS.find((e) => e.id === task.id).category)));
+t('written language tasks use canonical source language rather than speculative phonetics',
+  FIELD_STUDIES.filter((task) => task.kind === 'written-form').every((task) =>
+    ['arc','grc'].includes(EXHIBITS.find((e) => e.id === task.id).sourceLanguage)));
+t('fieldwork cannot complete before both evidence perspectives are inspected',
+  !canCompleteFieldStudy('nissi', true, false, 'altar_name') &&
+  !canCompleteFieldStudy('ego-eimi', false, true, null));
+t('a false named object or false language cannot be recorded',
+  !canCompleteFieldStudy('nissi', true, true, 'city_name') &&
+  !canCompleteFieldStudy('atiq-yomin', true, true, 'grc') &&
+  markFieldStudy([], 'nissi', true, true, 'city_name').length === 0);
+t('correct source-grounded category and language allow a local study record',
+  canCompleteFieldStudy('nissi', true, true, 'altar_name') &&
+  canCompleteFieldStudy('atiq-yomin', true, true, 'arc') &&
+  markFieldStudy([], 'nissi', true, true, 'altar_name').includes('nissi'));
+t('voice and parallel context studies require a supported response, not clicks',
+  !canCompleteFieldStudy('tsidkenu', true, true, null) &&
+  !canCompleteFieldStudy('ego-eimi', true, true, null) &&
+  !canCompleteFieldStudy('tsidkenu', true, true, 'b') &&
+  !canCompleteFieldStudy('ego-eimi', true, true, 'a') &&
+  canCompleteFieldStudy('tsidkenu', true, true, 'c') &&
+  canCompleteFieldStudy('ego-eimi', true, true, 'b'));
+t('all eight context studies have three distinct choices and one keyed answer',
+  FIELD_STUDIES.filter((t) => t.kind === 'voices' || t.kind === 'parallel-witness').length === 8 &&
+  FIELD_STUDIES.filter((t) => t.kind === 'voices' || t.kind === 'parallel-witness').every((t) =>
+    t.answerOptions?.length === 3 &&
+    new Set(t.answerOptions.map((o) => o.id)).size === 3 &&
+    new Set(t.answerOptions.map((o) => o.label)).size === 3 &&
+    t.answerOptions.every((o) => o.label.length > 20) &&
+    t.answerOptions.some((o) => o.id === t.correctAnswer)));
+t('wrong context evidence never updates journal',
+  markFieldStudy([], 'tsur', true, true, null).length === 0 &&
+  markFieldStudy([], 'tsur', true, true, 'a').length === 0 &&
+  markFieldStudy([], 'tsur', true, true, 'b').includes('tsur'));
+t('forged IDs duplicates and unknown journal keys remain excluded',
+  JSON.stringify(normalizeFieldJournal(['constructor','nissi','nissi','fake'])) === JSON.stringify(['nissi']) &&
+  !canCompleteFieldStudy('constructor', true, true, 'altar_name'));
+// L7: a linked expedition requires three real spatial clues AND two
+// independent source decisions. Merely opening dossier cards is not enough.
+t('linked 3D expedition includes all and only the three canonical clues',
+  EXPEDITION_EVIDENCE.length === 3 &&
+  EXPEDITION_EVIDENCE.every((id) => SITE_CLUE_IDS.includes(id)) &&
+  EXPEDITION_CHRONOLOGY.length === 3 && EXPEDITION_CONTRAST.length === 3);
+t('linked expedition cannot complete from one or two observations',
+  !expeditionReady(['beersheba-well', 'beersheba-tamarisk']) &&
+  !canCompleteExpedition(['beersheba-well', 'beersheba-tamarisk'], 'b', 'c') &&
+  !completeExpedition(false, ['beersheba-well', 'beersheba-tamarisk'], 'b', 'c'));
+t('linked expedition refuses wrong chronology and false context conflation',
+  !canCompleteExpedition(SITE_CLUE_IDS, 'c', 'c') &&
+  !canCompleteExpedition(SITE_CLUE_IDS, 'b', 'a') &&
+  !canCompleteExpedition(SITE_CLUE_IDS, null, 'c') &&
+  !completeExpedition(false, SITE_CLUE_IDS, 'b', 'a'));
+t('linked expedition persists only with all three canonical clues and both answers',
+  expeditionReady(SITE_CLUE_IDS) &&
+  canCompleteExpedition(SITE_CLUE_IDS, 'b', 'c') &&
+  completeExpedition(false, SITE_CLUE_IDS, 'b', 'c') &&
+  completeExpedition(true, SITE_CLUE_IDS, 'a', 'a') &&
+  normalizeExpeditionCompletion(true, SITE_CLUE_IDS) &&
+  !normalizeExpeditionCompletion('true', SITE_CLUE_IDS) &&
+  !normalizeExpeditionCompletion({ completed: true }, SITE_CLUE_IDS));
+t('linked expedition rejects forged completion without supporting observations',
+  !normalizeExpeditionCompletion(true, []) &&
+  !normalizeExpeditionCompletion(true, ['hagar-spring']) &&
+  !normalizeExpeditionCompletion(true, ['hagar-spring', 'beersheba-well']) &&
+  !normalizeExpeditionCompletion(true, ['fake', 'hagar-spring', 'beersheba-well']) &&
+  !completeExpedition(true, [], 'a', 'a') &&
+  !completeExpedition(true, ['beersheba-well', 'hagar-spring'], 'a', 'a'));
+// D3 acoustic dramaturgy: the zone-six passage is ACTUALLY quieter than
+// the preceding gallery, fades in both directions and has no zone boundary
+// gain spike. Sound is synthesized only and optional; no spoken divine cues.
+const galleryAudio = soundscapeMixAt(-265, 5);
+const middleAudio = soundscapeMixAt(-305, 6);
+const outsideAudio = soundscapeMixAt(-342, 7);
+t('zone-six passage is acoustically quieter than adjacent gallery and outdoors',
+  middleAudio.windBed < galleryAudio.windBed * 0.27 &&
+  middleAudio.windBed < outsideAudio.windBed * 0.2 &&
+  middleAudio.hush < 0.25 &&
+  Math.abs(outsideAudio.windBed - 0.11) < 1e-9);
+t('acoustic transition never jumps across zone-5/6 or zone-6/7 boundaries',
+  Math.abs(soundscapeMixAt(-288.0001, 6).windBed -
+    soundscapeMixAt(-287.9999, 5).windBed) < 0.0001 &&
+  Math.abs(soundscapeMixAt(-318.0001, 7).windBed -
+    soundscapeMixAt(-317.9999, 6).windBed) < 0.0001 &&
+  Math.abs(soundscapeMixAt(-318.0001, 7).windCutoff -
+    soundscapeMixAt(-317.9999, 6).windCutoff) < 0.01);
+t('quiet passage fade is bounded, reversible and does not alter zone-four acoustics',
+  Array.from({ length: 561 }, (_, i) => -280 - i * 0.1).every((z) => {
+    const a = soundscapeMixAt(z, N.zoneAt(z));
+    const b = soundscapeMixAt(z - 0.1, N.zoneAt(z - 0.1));
+    return a.hush >= 0.18 - 1e-9 && a.hush <= 1 &&
+      Math.abs(a.windBed - b.windBed) < 0.004 &&
+      a.windBed >= 0 && a.windBed <= 0.11;
+  }) &&
+  soundscapeMixAt(-195, 4).windCutoff === 180 &&
+  soundscapeMixAt(N.ZONE_SPAWN[5].z, 5).windBed >
+    soundscapeMixAt(N.ZONE_SPAWN[6].z, 6).windBed &&
+  soundscapeMixAt(N.ZONE_SPAWN[7].z, 7).windBed >
+    soundscapeMixAt(N.ZONE_SPAWN[6].z, 6).windBed);
+// Navigation / sandals gate
+let p = { x: 0, z: -330 }, blocked = false;
+for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }
+t('shod walk stops at outer radius', blocked && N.distToBush(p.x, p.z) >= N.R_OUTER - 1e-6);
+let minD = 1e9;
+for (let a = 0; a < 720; a++) { const ang = a / 720 * Math.PI * 2; for (const rr of [0, 3, 8, 13]) {
+  const r = N.constrain(N.BUSH.x + Math.cos(ang) * rr, N.BUSH.z + Math.sin(ang) * rr, true); minD = Math.min(minD, N.distToBush(r.x, r.z)); } }
+t('shod: no position inside outer radius from any angle', minD >= N.R_OUTER - 1e-6);
+minD = 1e9;
+for (let a = 0; a < 720; a++) { const ang = a / 720 * Math.PI * 2; for (const rr of [0, 1, 4, 6]) {
+  const r = N.constrain(N.BUSH.x + Math.cos(ang) * rr, N.BUSH.z + Math.sin(ang) * rr, false); minD = Math.min(minD, N.distToBush(r.x, r.z)); } }
+t('unshod: inner boundary never crossed', minD >= N.R_INNER - 1e-6);
+const big = N.constrain(0, -366, false); t('exact center pushed out (unshod)', N.distToBush(big.x, big.z) >= N.R_INNER - 1e-6);
+t('sanitizeSpawn on bush center -> outside outer', N.distToBush(N.sanitizeSpawn({ x: 0, z: -366 }).x, N.sanitizeSpawn({ x: 0, z: -366 }).z) >= N.R_OUTER - 1e-6);
+t('sanitizeSpawn NaN -> start', N.sanitizeSpawn({ x: NaN, z: 1 }).z === N.START.z);
+let wallOk = true;
+for (let z = 2; z > -318; z -= 0.37) for (const x of [-40, 40]) { const r = N.constrain(x, z, true); if (Math.abs(r.x) > N.halfWidth(r.z)) wallOk = false; }
+t('walls clamp at all z (angled entries)', wallOk);
+t('chasm ledge enforced', N.constrain(10, -200, true).x <= N.LEDGE_X);
+// W2: actual route around (not through) the burning bush.
+const wadiSamples = Array.from({ length: 461 }, (_, i) => {
+  const z=-344-i*0.2, x=N.exodusTrailCentreX(z);
+  return { x,z,d:N.distToBush(x,z),actual:N.constrain(x,z,true) };
+});
+t('W2 92m trail stays at least 2.5m beyond 14m outer holy radius',
+  Math.min(...wadiSamples.map(p=>p.d))>N.R_OUTER+2.5 &&
+  wadiSamples.every(p=>Number.isFinite(p.x)&&Math.abs(p.x)<=26));
+t('W2 all centreline waypoints physically traversable without correction',
+  wadiSamples.every(p=>Math.abs(p.actual.x-p.x)<1e-5 &&
+    Math.abs(p.actual.z-p.z)<1e-5 && p.actual.block===null));
+const endWadi=N.exodusTrailWalkBounds(-430);
+t('W2 natural 16m wadi matches the visible flanking rock banks',
+  Math.abs(endWadi.right-endWadi.left-16)<1e-6 &&
+  Math.abs(N.constrain(24,-430,true).x-endWadi.right)<1e-6 &&
+  Math.abs(N.constrain(-25,-430,true).x-endWadi.left)<1e-6 &&
+  N.constrain(0,-500,true).z===N.EXODUS_TRAIL_LIMIT_Z);
+t('W2 preserves existing cave and 14m/6.5m bush barriers',
+  N.constrain(0,-330,true).x===0 &&
+  N.constrain(0,-353,true).block==='outer' &&
+  N.constrain(0,-365,false).block==='inner' &&
+  N.constrain(NaN,-420,true).z===N.START.z);
+t('W2 route continuous at walking-sized samples',
+  wadiSamples.every((p,i)=>i===0||Math.hypot(
+    p.actual.x-wadiSamples[i-1].actual.x,
+    p.actual.z-wadiSamples[i-1].actual.z)<0.65) &&
+  N.EXODUS_TRAIL_LOOKOUT_Z>N.EXODUS_TRAIL_LIMIT_Z);
+
+// The old step-function ledge snapped x by several metres at z=-176.
+let previous = N.constrain(10, -175.9, true), largestJump = 0;
+for (let z = -175.91; z > -182; z -= 0.01) {
+  const current = N.constrain(previous.x, z, true);
+  largestJump = Math.max(largestJump, Math.hypot(current.x - previous.x, current.z - previous.z));
+  previous = current;
+}
+t('chasm entrance cannot teleport player sideways', largestJump < 0.06, `largest jump=${largestJump.toFixed(4)}`);
+t('chasm geometry and collision use same taper', N.chasmFactor(-181) === 1 && N.chasmFactor(-176) === 0 && N.chasmFactor(-224) === 0);
+// Walk along the centreline at walking-sized steps, then come back without a zone jump.
+let journey = { ...N.START }, seen = new Set([N.zoneAt(journey.z)]), journeySafe = true;
+for (const direction of [-1, 1]) {
+  const target = direction < 0 ? -352 : N.START.z;
+  for (let i = 0; i < 4000 && Math.abs(journey.z - target) > 0.03; i++) {
+    const next = N.constrain(journey.x, journey.z + Math.sign(target - journey.z) * Math.min(0.08, Math.abs(target - journey.z)), true);
+    if (Math.abs(next.z - journey.z) > 0.09 || N.distToBush(next.x, next.z) < N.R_OUTER - 1e-6) journeySafe = false;
+    journey = next;
+    seen.add(N.zoneAt(journey.z));
+  }
+}
+t('continuous axial route reaches every zone and returns safely', journeySafe && seen.size === 8 && Math.abs(journey.z - N.START.z) < 0.03, `zones=${[...seen]}`);
+t('non-finite coordinates fail closed', N.constrain(Infinity, -366, false).z === N.START.z && N.constrain(NaN, NaN, true).z === N.START.z);
+
+// Regression: exact-centre collider contacts must not skip displacement.
+// This happens when a spawn/teleport or a rare frame lands on a prop anchor.
+const propCollider = { x: 5, z: -100, r: 0.85 };
+const pushedCentre = N.separateObstacle(5, -100, 0, -100, propCollider);
+t('exact obstacle centre is pushed outside physical player radius',
+  Math.hypot(pushedCentre.x - propCollider.x, pushedCentre.z - propCollider.z) >= 1.2 - 1e-6 && pushedCentre.x < 5);
+const centredWithoutHistory = N.separateObstacle(-5, -100, -5, -100, { x: -5, z: -100, r: 0.85 });
+t('zero normal uses a deterministic corridor-facing escape',
+  centredWithoutHistory.x > -5 && Math.hypot(centredWithoutHistory.x + 5, centredWithoutHistory.z + 100) >= 1.2 - 1e-6);
+let propContactSafe = true;
+for (let a = 0; a < 720; a++) {
+  const angle = a * Math.PI * 2 / 720;
+  for (const radius of [0, 0.05, 0.7, 1.0, 1.2, 1.5]) {
+    const x = 5 + Math.cos(angle) * radius, z = -100 + Math.sin(angle) * radius;
+    const out = N.separateObstacle(x, z, 0, -100, propCollider);
+    if (Math.hypot(out.x - 5, out.z + 100) < 1.2 - 1e-6) propContactSafe = false;
+  }
+}
+t('single-obstacle collision displaces every interior contact', propContactSafe);
+const outside = N.separateObstacle(6.8, -100, 0, -100, propCollider);
+t('separation does not alter a safe position', outside.x === 6.8 && outside.z === -100);
+
+// Auto-FPS downgrade is sticky during unrelated settings edits, but reversible
+// when the user explicitly switches between graphics quality modes.
+t('high-DPR graphics use a capped ratio', choosePixelRatio('high', 3, false) === 2);
+t('low quality and FPS downgrade use at most native 1x',
+  choosePixelRatio('low', 3, false) === 1 && choosePixelRatio('high', 3, true) === 1);
+t('fractional DPR and non-finite DPR remain safe',
+  choosePixelRatio('high', 0.8, true) === 0.8 && choosePixelRatio('high', NaN, false) === 1);
+const autoState = { quality: 'high', autoQuality: true };
+t('changing volume/brightness does not reset FPS resolution downgrade',
+  !resetsAutoLowered(autoState, { ...autoState }));
+t('changing manual/automatic quality resets FPS downgrade',
+  resetsAutoLowered(autoState, { quality: 'high', autoQuality: false }) &&
+  resetsAutoLowered(autoState, { quality: 'low', autoQuality: true }));
+
+console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

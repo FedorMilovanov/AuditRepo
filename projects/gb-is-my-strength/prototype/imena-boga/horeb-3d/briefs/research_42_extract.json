@@ -1,0 +1,855 @@
+[
+ {
+  "id": "yhwh",
+  "cat": "personal_divine_name",
+  "verse": "Exodus 3:15",
+  "lang": "hebrew",
+  "form": "יהוה",
+  "label": "ЯХВЕ",
+  "src": "https://mechon-mamre.org/p/pt/pt0203.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "God speaking to Moses",
+  "referent": "YHWH God of Israel",
+  "surface": "יְהוָה אֱלֹהֵי אֲבֹתֵיכֶם",
+  "nameClaim": "זֶה-שְּׁמִי לְעֹלָם",
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "YHWH is explicit covenantal divine name: Exodus3:15 God identifies His name, 6:2 God self identifies, 15:3 Moses and Israel sing YHWH His name. MT vocalization is a reading tradition, not proof of original pronunciation; distinguish Ehyeh first person, Yah short form and Greek Kyrios."
+ },
+ {
+  "id": "ehyeh",
+  "cat": "divine_self_declaration",
+  "verse": "Exodus 3:14",
+  "lang": "hebrew",
+  "form": "אֶהְיֶה אֲשֶׁר אֶהְיֶה",
+  "label": "Эхье ашер Эхье",
+  "src": "https://mechon-mamre.org/p/pt/pt0203.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "YHWH speaking to Moses",
+  "referent": "Moses",
+  "surface": "כִּי-אֶהְיֶה עִמָּךְ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Direct publisher LXX Rahlfs-Hanhart Ex3:14 Ἐγώ εἰμι ὁ ὤν, Ὁ ὢν ἀπέσταλκέν με; MT אֶהְיֶה אֲשֶׁר אֶהְיֶה, Ex3:12 presence promise. John8:58 only ἐγὼ εἰμί, no ὁ ὤν. Linguistic/editorial distinctions do not negate Christian interpretation."
+ },
+ {
+  "id": "yireh",
+  "cat": "place_name",
+  "verse": "Genesis 22:14",
+  "lang": "hebrew",
+  "form": "יְהוָה יִרְאֶה",
+  "label": "ЯХВЕ-Ире",
+  "src": "https://mechon-mamre.org/p/pt/pt0122.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "God provides/foresees offering",
+  "surface": "אֱלֹהִים יִרְאֶה-לּוֹ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Genesis22:9 Abraham builds ALTAR, but 22:14 explicitly names PLACE. Gen22:8 and 22:14a יִרְאֶה Qal versus 22:14b יֵרָאֶה Niphal; NET offers competing 'provide/appear' renderings, not one settled etymology."
+ },
+ {
+  "id": "rapha",
+  "cat": "predication_about_yhwh",
+  "verse": "Exodus 15:26",
+  "lang": "hebrew",
+  "form": "כִּי אֲנִי יְהוָה, רֹפְאֶךָ",
+  "label": "ЯХВЕ-Рафа",
+  "src": "https://mechon-mamre.org/p/pt/pt0215.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "YHWH heals the Israelite addressee",
+  "surface": "כִּי אֲנִי יְהוָה, רֹפְאֶךָ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Exodus15:26 participial 'your healer' (2ms) in conditional divine covenant speech after Mara; Jer17:14 petition 'heal me' is different verbal morphology and speaker. Neither scene formally coins a new independent personal name."
+ },
+ {
+  "id": "nissi",
+  "cat": "altar_name",
+  "verse": "Exodus 17:15",
+  "lang": "hebrew",
+  "form": "יְהוָה נִסִּי",
+  "label": "ЯХВЕ-Нисси",
+  "src": "https://mechon-mamre.org/p/pt/pt0217.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "YHWH in battle memorial",
+  "surface": "יְהוָה נִסִּי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Exodus17:15 Moses names altar, not God or Massah/Meribah place (17:7). LXX Rahlfs Ex17:15 Κύριός μου καταφυγή not literal 'banner'; v16 MT יד על כס יה vs LXX εν χειρι κρυφαια; hypothetical emendation כס→נס is not attested MT."
+ },
+ {
+  "id": "mekoddishkem",
+  "cat": "predication_about_yhwh",
+  "verse": "Exodus 31:13",
+  "lang": "hebrew",
+  "form": "יְהוָה מְקַדִּשְׁכֶם",
+  "label": "ЯХВЕ-Мекаддешкем",
+  "src": "https://mechon-mamre.org/p/pt/pt0231.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "YHWH sanctifies Israel, plural addressee",
+  "surface": "כִּי אֲנִי יְהוָה מְקַדִּשְׁכֶם",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Ex31:13 and Lev20:8 both divine first-person covenant predications, with מְקַדִּשְׁכֶם 2mp not a person-name or a 1cs experience quote; cannot transfer every Mosaic Sabbath application to NT church without separate exegesis."
+ },
+ {
+  "id": "ro-i",
+  "cat": "predication_about_yhwh",
+  "verse": "Psalm 23:1",
+  "lang": "hebrew",
+  "form": "יְהוָה רֹעִי",
+  "label": "ЯХВЕ-Рои",
+  "src": "https://mechon-mamre.org/p/pt/pt2623.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "YHWH as my shepherd",
+  "surface": "יְהוָה רֹעִי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Psalm23:1 YHWH is MY shepherd, root רעה, not Hagar's El Roi ראה; John10:11 Jesus explicitly says Ἐγώ εἰμι ὁ ποιμὴν ὁ καλός, with Christological canonical relation not identical original language or independent third deity."
+ },
+ {
+  "id": "shalom",
+  "cat": "altar_name",
+  "verse": "Judges 6:24",
+  "lang": "hebrew",
+  "form": "יְהוָה שָׁלוֹם",
+  "label": "ЯХВЕ-Шалом",
+  "src": "https://mechon-mamre.org/p/pt/pt0706.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": "Gideon receives assurance",
+  "surface": "שָׁלוֹם לְךָ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Judges6:23 YHWH SPEAKS peace, 6:24 Gideon NAMES an altar, 6:25 references DIFFERENT Baal altar to destroy. No direct divine self-naming in 6:24."
+ },
+ {
+  "id": "tsidkenu",
+  "cat": "symbolic_royal_and_city_name",
+  "verse": "Jeremiah 23:6 (royal name); Jeremiah 33:16 (city name in MT; passage absent from Old Greek Jeremiah)",
+  "lang": "hebrew",
+  "form": "יְהוָה צִדְקֵנוּ",
+  "label": "ЯХВЕ-Цидкену",
+  "src": "https://mechon-mamre.org/p/pt/pt1123.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": null,
+  "surface": "יְהוָה צִדְקֵנוּ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Identical string YHWH tsidqenu in 23:6 refers to male royal Davidic branch, 33:16 to Jerusalem female named city. MT 33:14–26 absent from Old Greek; no invented Greek equivalent."
+ },
+ {
+  "id": "shammah",
+  "cat": "city_name",
+  "verse": "Ezekiel 48:35",
+  "lang": "hebrew",
+  "form": "יְהוָה שָׁמָּה",
+  "label": "ЯХВЕ-Шамма",
+  "src": "https://mechon-mamre.org/p/pt/pt1248.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": null,
+  "surface": "יְהוָה שָׁמָּה",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Explicit וְשֵׁם-הָעִיר = name of city; Yahweh is there is a city designation reflecting divine presence. Not personal divine name or equation of city with YHWH."
+ },
+ {
+  "id": "sabaoth",
+  "cat": "divine_title",
+  "verse": "Zechariah 10:3",
+  "lang": "hebrew",
+  "form": "יְהוָה צְבָאוֹת",
+  "label": "ЯХВЕ Саваоф",
+  "src": "https://mechon-mamre.org/p/pt/pt2310.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "narrator",
+  "referent": "YHWH invoked at Shiloh",
+  "surface": "לַיהוָה צְבָאוֹת",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Hosts title in worship at Shiloh, David's human battle context, heavenly seraphim's hymn, Zechariah oracle and Greek NT transliteration. Greek Σαβαὼθ is not σάββατον (Sabbath). No single context fully resolves historical title origin."
+ },
+ {
+  "id": "elohim",
+  "cat": "deity_designation",
+  "verse": "Genesis 1:1",
+  "lang": "hebrew",
+  "form": "אֱלֹהִים",
+  "label": "Элохим",
+  "src": "https://mechon-mamre.org/p/pt/pt0101.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Genesis narrative voice",
+  "referent": "one creator God",
+  "surface": "בָּרָא אֱלֹהִים",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Gen1:1 morphologically plural אֱלֹהִים governs singular בָּרָא for one Creator; Ex20:2 MT / Eng20:3 same lexeme for other gods with plural adjective; Deut6:4 suffixed אֱלֹהֵינוּ. Morphology alone neither proves Trinity nor multiple creators."
+ },
+ {
+  "id": "el",
+  "cat": "deity_designation",
+  "verse": "Exodus 34:6",
+  "lang": "hebrew",
+  "form": "אֵל",
+  "label": "Эль",
+  "src": "https://mechon-mamre.org/p/pt/pt0234.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "YHWH proclamation, narrator describing scene",
+  "referent": "YHWH described as merciful God",
+  "surface": "אֵל רַחוּם וְחַנּוּן",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "El is noun meaning god/God: Ex34:6, Deut32:4 and Isa43:12 positive YHWH referent; Deut32:12 and Isa43:10 negated foreign/possible god referent, NOT YHWH. Two lexical occurrences in Isa43 same chapter have opposite referent roles."
+ },
+ {
+  "id": "el-shaddai",
+  "cat": "divine_self_designation",
+  "verse": "Genesis 35:11",
+  "lang": "hebrew",
+  "form": "אֵל שַׁדַּי",
+  "label": "Эль Шаддай",
+  "src": "https://mechon-mamre.org/p/pt/pt0135.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "YHWH",
+  "referent": null,
+  "surface": "אֵל שַׁדַּי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Divine self-identification vs Isaac's benediction vs retrospective revelation. Mechon-Mamre shows שַׁדַּי in Genesis and שַׁדָּי in Exodus 6:3; preserve edition-specific points and don't attribute an unverified etymology or phonetic explanation."
+ },
+ {
+  "id": "el-elyon",
+  "cat": "divine_title",
+  "verse": "Genesis 14:20",
+  "lang": "hebrew",
+  "form": "אֵל עֶלְיוֹן",
+  "label": "Эль Элион",
+  "src": "https://mechon-mamre.org/p/pt/pt0114.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "narrator",
+  "referent": null,
+  "surface": "לְאֵל עֶלְיוֹן",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "MT Gen 14:22 joins YHWH and El Elyon in Abram's oath. Cargill 2019 hypothesis of a later gloss is secondary scholarship, not a verified manuscript variant here."
+ },
+ {
+  "id": "el-olam",
+  "cat": "divine_title",
+  "verse": "Genesis 21:33",
+  "lang": "hebrew",
+  "form": "אֵל עוֹלָם",
+  "label": "Эль Олам",
+  "src": "https://mechon-mamre.org/p/pt/pt0121.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Abraham",
+  "referent": null,
+  "surface": "יְהוָה אֵל עוֹלָם",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Genesis 21:31 names Beer-sheba as place; 21:33 Abraham invokes YHWH, El Olam. The latter is not another name of the place."
+ },
+ {
+  "id": "el-roi",
+  "cat": "direct_address_to_god",
+  "verse": "Genesis 16:13",
+  "lang": "hebrew",
+  "form": "אֵל רֳאִי",
+  "label": "Эль Рои",
+  "src": "https://mechon-mamre.org/p/pt/pt0116.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Hagar",
+  "referent": null,
+  "surface": "אַתָּה אֵל רֳאִי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Narrator explicitly says וַתִּקְרָא שֵׁם־יְהוָה: Hagar calls the name of YHWH in 16:13. Verse 14 separately names the well. Do not wrongly assert no divine naming occurs; classification as permanent proper name is open."
+ },
+ {
+  "id": "el-gibbor",
+  "cat": "royal_and_divine_epithet",
+  "verse": "Isaiah 9:5 [Hebrew numbering; English 9:6]; Isaiah 10:21",
+  "lang": "hebrew",
+  "form": "אֵל גִּבּוֹר",
+  "label": "Эль Гиббор",
+  "src": "https://mechon-mamre.org/p/pt/pt1009.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": null,
+  "referent": null,
+  "surface": "אֵל גִּבּוֹר",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Isa9:5 MT royal naming context (English 9:6), interpretation of who bears each title disputed between Jewish and Christian traditions. Isa10:21 God is the explicit recipient of a remnant's return. Preposition אֶל- not silently removed."
+ },
+ {
+  "id": "el-bethel",
+  "cat": "place_name",
+  "verse": "Genesis 35:7",
+  "lang": "hebrew",
+  "form": "אֵל בֵּית-אֵל",
+  "label": "Эль Бет-Эль",
+  "src": "https://mechon-mamre.org/p/pt/pt0135.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Jacob",
+  "referent": null,
+  "surface": "אֵל בֵּית-אֵל",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Jacob builds an altar, but names the PLACE (לַמָּקוֹם), not the altar. Gen 28:19 and 35:15 independently name Beth-El."
+ },
+ {
+  "id": "el-qanna",
+  "cat": "divine_epithet",
+  "verse": "Exodus 34:14",
+  "lang": "hebrew",
+  "form": "אֵל קַנָּא",
+  "label": "Эль-Канна",
+  "src": "https://mechon-mamre.org/p/pt/pt0234.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "YHWH in divine speech to Moses, third-person self-reference",
+  "referent": "YHWH rejecting worship of other gods",
+  "surface": "קַנָּא שְׁמוֹ, אֵל קַנָּא",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Ex34:14 explicitly includes קַנָּא שְׁמוֹ and אֵל קַנָּא; Deut4:24 is a covenant-warning descriptive epithet. Do not erase divine naming clause or make every adjective a new etymologically independent proper name."
+ },
+ {
+  "id": "adonai",
+  "cat": "divine_title",
+  "verse": "Exodus 34:9",
+  "lang": "hebrew",
+  "form": "אֲדֹנָי",
+  "label": "Адонай",
+  "src": "https://mechon-mamre.org/p/pt/pt0234.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Moses addressing God, two tokens in one verse",
+  "referent": "YHWH, addressed by Moses",
+  "surface": "אֲדֹנָי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Adonai direct address in Exodus34, Isaiah narrative vision, Psalm8 has אֲדֹנֵינוּ possessive, Genesis23 human honorific אֲדֹנִי. Same broad semantic family does not guarantee identical pointed form or divine referent."
+ },
+ {
+  "id": "qedosh-yisrael",
+  "cat": "divine_epithet",
+  "verse": "Isaiah 1:4",
+  "lang": "hebrew",
+  "form": "קְדוֹשׁ יִשְׂרָאֵל",
+  "label": "Святой Израилев",
+  "src": "https://mechon-mamre.org/p/pt/pt1001.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Isaiah prophetic accusation",
+  "referent": "YHWH, Holy One of Israel, despised by nation",
+  "surface": "אֶת-קְדוֹשׁ יִשְׂרָאֵל",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Isa1:4 object of rejection with את marker, Isa43:3 explicit YHWH first-person self-description, Isa47:4 adjoining Redeemer and YHWH of hosts with edition punctuation. Editorial punctuation is not manuscript lexical segmentation."
+ },
+ {
+  "id": "tsur",
+  "cat": "divine_metaphor",
+  "verse": "Deuteronomy 32:4",
+  "lang": "hebrew",
+  "form": "הַצּוּר",
+  "label": "Цур / Скала",
+  "src": "https://mechon-mamre.org/p/pt/pt0532.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Moses, Song of Moses",
+  "referent": "YHWH the Rock, perfect work",
+  "surface": "הַצּוּר",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "The same צור lemma appears in positive metaphors of YHWH and ironic references to another people's rock/foreign gods. Never classify all occurrences as direct personal names of YHWH; Deut32:31 is mixed and 32:37 negative."
+ },
+ {
+  "id": "atiq-yomin",
+  "cat": "visionary_divine_designation",
+  "verse": "Daniel 7:9",
+  "lang": "aramaic",
+  "form": "עַתִּיק יוֹמִין",
+  "label": "Ветхий днями",
+  "src": "https://mechon-mamre.org/p/pt/pt3407.htm",
+  "ed": "Mechon-Mamre MT digital transcription",
+  "speaker": "Daniel, reporting visionary scene",
+  "referent": "Ancient of Days (sitting judge)",
+  "surface": "עַתִּיק יוֹמִין",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": ""
+ },
+ {
+  "id": "abba",
+  "cat": "address_to_father",
+  "verse": "Mark 14:36",
+  "lang": "aramaic_transliterated_in_greek",
+  "form": "Αββα ὁ πατήρ",
+  "label": "Авва",
+  "src": "https://www.biblegateway.com/verse/grc/Mark%2014%3A36",
+  "ed": "SBLGNT 2010 via BibleGateway (digital display)",
+  "speaker": "Jesus praying in Gethsemane",
+  "referent": "God the Father",
+  "surface": "Αββα ὁ πατήρ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "SBLGNT three occurrences same Greek transcription Αββα ὁ πατήρ but Mark Jesus prays, Rom believers cry κράζομεν, Gal Spirit of Son cries κρᾶζον. Article+nominative πατήρ functions as address; Aramaic derivation not separate manuscript in Hebrew script. English daddy exclusive lexical claim not established from Barr abstract."
+ },
+ {
+  "id": "pantokrator",
+  "cat": "divine_title",
+  "verse": "Revelation 1:8",
+  "lang": "greek",
+  "form": "ὁ παντοκράτωρ",
+  "label": "Пантократор",
+  "src": "https://www.biblegateway.com/passage/?search=Revelation+1%3A8&version=SBLGNT",
+  "ed": "SBLGNT 2010 via BibleGateway (digital display)",
+  "speaker": "κύριος, ὁ θεός (Lord God)",
+  "referent": "Lord God Almighty",
+  "surface": "ὁ παντοκράτωρ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": ""
+ },
+ {
+  "id": "alpha-omega",
+  "cat": "apocalyptic_self_designation",
+  "verse": "Revelation 1:8",
+  "lang": "greek",
+  "form": "τὸ Ἄλφα καὶ τὸ Ὦ",
+  "label": "Альфа и Омега",
+  "src": "https://www.biblegateway.com/passage/?search=Revelation+1%3A8&version=SBLGNT",
+  "ed": "SBLGNT 2010 via BibleGateway (digital display)",
+  "speaker": "κύριος, ὁ θεός (Lord God)",
+  "referent": "divine first-person declaration",
+  "surface": "τὸ Ἄλφα καὶ τὸ Ὦ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": ""
+ },
+ {
+  "id": "ego-eimi",
+  "cat": "christological_self_declaration",
+  "verse": "John 8:58",
+  "lang": "greek",
+  "form": "ἐγὼ εἰμί",
+  "label": "Эго эйми / Я есмь",
+  "src": "https://www.biblegateway.com/passage/?search=john8%3A58&version=SBLGNT",
+  "ed": "SBLGNT 2010 via BibleGateway (digital display)",
+  "speaker": "Jesus",
+  "referent": "speaker's own identity",
+  "surface": "Ἐγώ εἰμι",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "John9:9 healed man uses exact Ἐγώ εἰμι while John8:58 Jesus places ἐγὼ εἰμί alongside πρὶν Ἀβραὰμ γενέσθαι. Lexical two-word formula itself not unique divine name; Christology rests on context/intertext, not exact quote of LXX Ex3:14 Ἐγώ εἰμι ὁ ὤν. John18:5,6,8 repeated identity answers."
+ },
+ {
+  "id": "immanuel",
+  "cat": "prophetic_child_name_christological_reading",
+  "verse": "Isaiah 7:14; Matthew 1:23",
+  "lang": "hebrew_and_greek",
+  "form": "עִמָּנוּ אֵל / Ἐμμανουήλ",
+  "label": "Эммануил",
+  "src": "https://www.biblegateway.com/passage/?search=Matthew+1%3A23&version=SBLGNT",
+  "ed": "MT Isaiah 7:14 + SBLGNT Matthew 1:23",
+  "speaker": null,
+  "referent": null,
+  "surface": "עִמָּנוּ אֵל",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Isaiah 7:14 child-naming; 8:8 name invocation/allusion; 8:10 assertion for God with us; Matthew 1:23 Christian citation with 3pl καλέσουσιν and Greek gloss. MT naming verb וְקָרָאת grammatically debated; Matthew cannot be copied into MT. Rahlfs-Hanhart 2006 LXX Isaiah 7:14 prints καλέσεις (2sg) as compared with SBLGNT Matthew 1:23 καλέσουσιν (3pl); direct digital editions checked, underlying textual apparatus not collated."
+ },
+ {
+  "id": "yah",
+  "cat": "abbreviated_divine_name",
+  "verse": "Exodus 15:2",
+  "lang": "hebrew",
+  "form": "יָהּ",
+  "label": "Ях / Йах",
+  "src": "https://mechon-mamre.org/p/pt/pt0215.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "Yah, God of Israel",
+  "surface": "עָזִּי וְזִמְרָת יָהּ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Краткая форма божественного имени, отдельно от тетраграмматона. См. повтор во Пс. 68:5 (еврейская нумерация)."
+ },
+ {
+  "id": "eloah",
+  "cat": "deity_designation",
+  "verse": "Deuteronomy 32:15",
+  "lang": "hebrew",
+  "form": "אֱלוֹהַּ",
+  "label": "Элоах",
+  "src": "https://mechon-mamre.org/p/pt/pt0532.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "God who made Jeshurun; rejected by Jeshurun",
+  "surface": "אֱלוֹהַּ עָשָׂהוּ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Форма существительного God; историческая деривация от אל/אלהים неоднозначна, её не выводить только из сходства."
+ },
+ {
+  "id": "elah-shmaya",
+  "cat": "aramaic_divine_title",
+  "verse": "Daniel 2:18",
+  "lang": "aramaic",
+  "form": "אֱלָהּ שְׁמַיָּא",
+  "label": "Элах Шемайя / Бог Небес",
+  "src": "https://mechon-mamre.org/p/pt/pt3402.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "God of heaven, prayed to by Daniel and companions",
+  "surface": "מִן-קֳדָם אֱלָהּ שְׁמַיָּא",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Арамейское обозначение. Не вставлять автоматически в еврейский словарь без языковой пометы."
+ },
+ {
+  "id": "el-hay",
+  "cat": "divine_epithet_in_prayer",
+  "verse": "Psalm 42:3 (Hebrew numbering; English 42:2)",
+  "lang": "hebrew",
+  "form": "לְאֵל חָי",
+  "label": "Бог живой",
+  "src": "https://mechon-mamre.org/p/pt/pt2642.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "living God, object of soul's thirst",
+  "surface": "לְאֵל חָי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Форма в стихе с предлогом לְ; при цитировании нельзя молча выдавать לְאֵל за אֵל."
+ },
+ {
+  "id": "avinu",
+  "cat": "covenantal_address_to_god",
+  "verse": "Isaiah 63:16",
+  "lang": "hebrew",
+  "form": "אַתָּה יְהוָה אָבִינוּ",
+  "label": "Отец наш",
+  "src": "https://mechon-mamre.org/p/pt/pt1063.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "YHWH as our Father",
+  "surface": "אַתָּה יְהוָה אָבִינוּ",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Полная синтаксическая конструкция с прямым обращением. Именование Отцом засвидетельствовано в ВЗ задолго до новозаветного Авва."
+ },
+ {
+  "id": "yhwh-ori",
+  "cat": "poetic_predication",
+  "verse": "Psalm 27:1",
+  "lang": "hebrew",
+  "form": "יְהוָה אוֹרִי וְיִשְׁעִי",
+  "label": "ЯХВЕ — свет мой",
+  "src": "https://mechon-mamre.org/p/pt/pt2627.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "YHWH as my light and salvation",
+  "surface": "יְהוָה אוֹרִי וְיִשְׁעִי",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Не превращать два образных предиката в самостоятельное имя «ЯХВЕ-Ори»."
+ },
+ {
+  "id": "el-emunah",
+  "cat": "divine_attribute_phrase",
+  "verse": "Deuteronomy 32:4",
+  "lang": "hebrew",
+  "form": "אֵל אֱמוּנָה",
+  "label": "Бог верный",
+  "src": "https://mechon-mamre.org/p/pt/pt0532.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "God of faithfulness, the Rock",
+  "surface": "אֵל אֱמוּנָה",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Контекст поэтической характеристики Бога; а не новый эквивалент тетраграмматона."
+ },
+ {
+  "id": "el-rahum-hannun",
+  "cat": "divine_attribute_phrase",
+  "verse": "Exodus 34:6",
+  "lang": "hebrew",
+  "form": "אֵל רַחוּם וְחַנּוּן",
+  "label": "Бог милосердный и милостивый",
+  "src": "https://mechon-mamre.org/p/pt/pt0234.htm",
+  "ed": "Mechon-Mamre MT online transcription",
+  "speaker": null,
+  "referent": "YHWH merciful and gracious",
+  "surface": "אֵל רַחוּם וְחַנּוּן",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "В собственном раскрытии Бога в Исх. 34:6; связь с другими исповедальными формулами отдельно верифицировать."
+ },
+ {
+  "id": "kyrios-ho-theos",
+  "cat": "new_testament_divine_title",
+  "verse": "Luke 1:26–33 (quotation 1:32, THGNT 2017)",
+  "lang": "greek",
+  "form": "κύριος ὁ θεὸς",
+  "label": "Господь Бог",
+  "src": "https://www.biblegateway.com/passage/?search=Luke+1%3A30-33&version=THGNT",
+  "ed": "THGNT 2017",
+  "speaker": null,
+  "referent": "Lord God, grammatical agent of δώσει; distinct from recipient Jesus",
+  "surface": "κύριος ὁ θεὸς",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Говорящий в повествовании — ангел Гавриил, обращающийся к Марии (Лк. 1:26,30). В ст. 32 κύριος ὁ θεὸς — грамматический субъект дώσει; αὐτῷ — Иисус, получатель престола Давида. Не отождествлять narratorial speaker (Гавриил), grammatical agent (Бог) и recipient (Иисус). Отнесение Бога к Отцу — богословское/контекстуальное толкование, а не идентичность одного поля speaker."
+ },
+ {
+  "id": "poimen-ho-kalos",
+  "cat": "christological_predicative_title",
+  "verse": "John 10:11",
+  "lang": "greek",
+  "form": "ὁ ποιμὴν ὁ καλός",
+  "label": "Добрый Пастырь",
+  "src": "https://www.biblegateway.com/passage/?search=John+10%3A11&version=SBLGNT",
+  "ed": "SBLGNT 2010",
+  "speaker": null,
+  "referent": "Jesus, the Good Shepherd",
+  "surface": "ὁ ποιμὴν ὁ καλός",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Самоописание Иисуса в полной фразе Ἐγώ εἰμι ...; не то же самое, что абсолютное ἐγώ εἰμι Ин. 8:58."
+ },
+ {
+  "id": "anastasis-zoe",
+  "cat": "christological_predicative_title",
+  "verse": "John 11:25",
+  "lang": "greek",
+  "form": "ἡ ἀνάστασις καὶ ἡ ζωή",
+  "label": "Воскресение и жизнь",
+  "src": "https://www.biblegateway.com/passage/?search=John+11%3A25&version=SBLGNT",
+  "ed": "SBLGNT 2010",
+  "speaker": null,
+  "referent": "Jesus, the Resurrection and the Life",
+  "surface": "ἡ ἀνάστασις καὶ ἡ ζωή",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "У Иисуса есть грамматический предикат после Ἐγώ εἰμι, в отличие от Ин. 8:58."
+ },
+ {
+  "id": "ho-on-erchomenos",
+  "cat": "apocalyptic_divine_epithet",
+  "verse": "Revelation 1:4",
+  "lang": "greek",
+  "form": "ὁ ὢν καὶ ὁ ἦν καὶ ὁ ἐρχόμενος",
+  "label": "Тот, Кто есть, был и грядёт",
+  "src": "https://www.biblegateway.com/passage/?search=Revelation+1%3A4&version=SBLGNT",
+  "ed": "SBLGNT 2010",
+  "speaker": "the One who is/was/is coming, separately listed from Jesus Christ in 1:5",
+  "referent": null,
+  "surface": "ὁ ὢν καὶ ὁ ἦν καὶ ὁ ἐρχόμενος",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "Rev 1:4–5: John offers greeting ἀπὸ the One who is/was/is coming, then ἀπὸ seven spirits, then ἀπὸ Jesus Christ; referents are grammatically distinguished. Preserve odd ἀπὸ ὁ ὢν (nominative article after preposition). Rev 1:8 applies formula to speaker κύριος, ὁ θεός. Allusion to LXX Exod 3:14 is interpretive, not complete verbal identity."
+ },
+ {
+  "id": "arche-telos",
+  "cat": "apocalyptic_self_designation",
+  "verse": "Revelation 21:6",
+  "lang": "greek",
+  "form": "ἡ ἀρχὴ καὶ τὸ τέλος",
+  "label": "Начало и конец",
+  "src": "https://www.biblegateway.com/passage/?search=Revelation+21%3A6&version=SBLGNT",
+  "ed": "SBLGNT 2010",
+  "speaker": "the one seated upon throne, introduced at Revelation 21:5",
+  "referent": null,
+  "surface": "ἡ ἀρχὴ καὶ τὸ τέλος",
+  "nameClaim": null,
+  "holds": [
+   "RIGHTS_HOLD",
+   "PUBLICATION_HOLD",
+   "EVIDENCE_HOLD"
+  ],
+  "pub": "BLOCKED",
+  "extra": "SBLGNT Rev21:6 and Rev22:13 contain ἡ ἀρχὴ καὶ τὸ τέλος. In Rev1:8 SBLGNT lacks this clause, TR1550 contains αρχη και τελος. Rev21:6 SBLGNT has ἐγὼ without εἰμι; THGNT and TR1550 include the verb. In Rev22:13 speaker identification through 22:16 is a contextual inference with intervening angelic voice, not explicit attribution in v13."
+ }
+]

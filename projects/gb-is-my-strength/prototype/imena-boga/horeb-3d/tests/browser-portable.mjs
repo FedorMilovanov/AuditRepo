@@ -1,0 +1,170 @@
+// Confirm that the Vite single-file bundle can be opened from an extracted
+// directory, without a dev server or external network services.
+import puppeteer from 'puppeteer-core';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const candidatePaths = [
+  process.env.HOREB_BROWSER_PATH,
+  process.env.PUPPETEER_EXECUTABLE_PATH,
+  '/usr/bin/google-chrome',
+  'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+].filter(Boolean);
+const executablePath = candidatePaths.find((path) => existsSync(path));
+if (!executablePath) throw new Error('Chrome required for portable local preview test');
+const args = process.env.HOREB_SWIFTSHADER === '1'
+  ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] : [];
+if (process.env.HOREB_NO_SANDBOX === '1') args.push('--no-sandbox', '--disable-setuid-sandbox');
+
+const html = join(process.cwd(), 'dist', 'index.html');
+const reader = join(process.cwd(), 'dist', 'reader.html');
+if (!existsSync(html) || !existsSync(reader)) throw new Error('Missing offline index.html / reader.html');
+const browser = await puppeteer.launch({ executablePath, headless: true, args, protocolTimeout: 90000 });
+const errors = [];
+try {
+  const page = await browser.newPage();
+  page.setDefaultTimeout(90000);
+  page.on('pageerror', (err) => errors.push(err.message));
+  // A forged ?e2e in a production preview must not expose the mutable World.
+  const response = await page.goto(pathToFileURL(html).href + '?e2e', { waitUntil: 'domcontentloaded' });
+  if (!response || response.status() !== 200) throw new Error('file:// preview cannot be loaded');
+  await page.waitForSelector('h1', { timeout: 45000 });
+  const title = await page.$eval('h1', (h) => h.textContent);
+  if (!title?.includes('ИМЕНА БОГА')) throw new Error('Offline intro title missing');
+  // The cinematic story must begin with the baby on the Nile even in
+  // offline/portable mode; no WebGL is required to see its six preludes.
+  await page.click('[data-testid="moses-origin-start"]');
+  if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 portable duplicate WebGL');
+  await page.click('[data-testid="nile-legacy-open"]');
+  await page.waitForFunction(()=>
+    document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true',
+    {timeout:30000});
+  const firstTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
+  if(firstTitle!=='Младенец у Нила')throw new Error('Portable story does not start with infant Moses');
+  await page.click('[data-testid="moses-origin-next"]');
+  await page.waitForFunction(()=>
+    document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileRendered==='true',
+    {timeout:30000});
+  const discovery=await page.$eval('[data-testid="moses-nile-discovery-3d"]',el=>({
+    moment:el.dataset.nileMoment,
+    figures:Number(el.dataset.nileFigures),
+    pleats:Number(el.dataset.nilePleatedFigures),
+    drapes:Number(el.dataset.nileRoyalDrapes),
+    reaching:el.dataset.nileReachingPose,
+    count:document.querySelectorAll('canvas').length,
+  }));
+  if(discovery.moment!=='discovery'||discovery.figures!==3||discovery.count!==1||
+     discovery.pleats!==3||discovery.drapes!==1||discovery.reaching!=='true'||
+     await page.$('[data-testid="moses-nile-3d"]'))
+    throw new Error('Offline Nile discovery failed '+JSON.stringify(discovery));
+  // Even a single-file offline build must support both cinematic shots.
+  await page.click('[data-testid="moses-nile-shot-toggle"]');
+  await page.waitForFunction(()=>{
+    const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+    return c?.dataset.nileView==='close'&&c?.dataset.nileCameraPhase==='settled';
+  },{timeout:6000});
+  if(await page.$eval('[data-testid="moses-nile-shot-toggle"]',e=>e.getAttribute('aria-pressed'))!=='true')
+    throw new Error('Offline Nile close shot button state mismatch');
+  await page.click('[data-testid="moses-nile-shot-toggle"]');
+  await page.waitForFunction(()=>{
+    const c=document.querySelector('[data-testid="moses-nile-discovery-3d"]');
+    return c?.dataset.nileView==='wide'&&c?.dataset.nileCameraPhase==='settled';
+  },{timeout:6000});
+  // W8D: the two later moments are readable offline and leave no
+  // 3D scene pretending to depict the passage of unknown years.
+  for(const [stage,reference] of [[1,'Исх. 2:7–9'],[2,'Исх. 2:10']]){
+    await page.click(`[data-testid="moses-rescue-stage-${stage}"]`);
+    const content=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
+    if(!content.includes(reference)||!(await page.$('[data-testid="moses-rescue-intertitle"]'))||
+       (await page.$$('canvas')).length)
+      throw new Error('Offline Moses rescue sequence failed '+JSON.stringify({stage,reference}));
+  }
+  await page.click('[data-testid="moses-origin-next"]');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="moses-nile-discovery-3d"]'));
+  if((await page.$$('canvas')).length)throw new Error('Offline Nile WebGL canvas leaked');
+  // W11A.2: offline must load the REAL 3D Midian well in stage zero.
+  // Household is a second real WebGL environment; Gershom remains a text time transition.
+  // Do not regress this to a mere static illustration or intertitle.
+  const prehorebRefs=[
+    ['Исх. 2:11–12','Исх. 2:13–14','Исх. 2:15'],
+    ['Исх. 2:16–17','Исх. 2:18–21','Исх. 2:22'],
+    ['Исх. 2:23','Исх. 2:24–25'],
+  ];
+  for(let index=0;index<prehorebRefs.length;index++){
+    const refs=prehorebRefs[index];
+    if((await page.$$('[data-testid="moses-prehoreb-sequence"] button')).length!==refs.length)
+      throw new Error('Offline preHoreb stage count mismatch '+index);
+    for(let stage=0;stage<refs.length;stage++){
+      await page.click(`[data-testid="moses-prehoreb-stage-${stage}"]`);
+      if(index===1 && stage<=1) {
+        await page.waitForFunction((name)=>
+          document.querySelector(`[data-testid="${name}"]`)?.dataset.midianRendered==='true',
+          {timeout:30000},stage===0?'moses-midian-well-3d':'moses-midian-homestead-3d');
+      }
+      const text=await page.$eval('[data-testid="moses-origin-story"]',e=>e.textContent||'');
+      const expected3D=index===1&&stage<=1;
+      const actualCanvasCount=(await page.$$('canvas')).length;
+      const scene=expected3D?await page.$eval(stage===0?'[data-testid="moses-midian-well-3d"]':'[data-testid="moses-midian-homestead-3d"]',e=>({
+        world:e.dataset.midianWorld,
+        rendered:e.dataset.midianRendered,
+        stones:Number(e.dataset.midianWellStones),shelter:e.dataset.homesteadShelter,
+        roof:Number(e.dataset.homesteadRoofPanels),
+        side:Number(e.dataset.homesteadSidePanels),
+      })):null;
+      if(!text.includes(refs[stage])||
+         actualCanvasCount!==(expected3D?1:0)||
+         (expected3D&&(scene?.world!==(stage===0?'well':'homestead')||scene?.rendered!=='true'||(stage===0?scene?.stones!==96:(scene?.shelter!=='3d-woven-fabric-and-posts'||scene?.roof!==2||scene?.side!==2)))))
+        throw new Error('Offline preHoreb physical 3D contract failed '+
+          JSON.stringify({ref:refs[stage],expected3D,actualCanvasCount,scene}));
+    }
+    await page.click('[data-testid="moses-origin-next"]');
+  }
+  const lastTitle=await page.$eval('[data-testid="moses-origin-title"]',e=>e.textContent);
+  if(lastTitle!=='Пастух на пути к Хориву')
+    throw new Error('Portable story does not end at Horeb: '+lastTitle);
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>!document.querySelector('[role="dialog"]'));
+  // The planned Egypt reading sequence is available before any WebGL world,
+  // including from a portable file:// copy.
+  await page.click('[data-testid="egypt-reading-intro"]');
+  await page.waitForSelector('[data-testid="egypt-intro-reading"]');
+  const stages = await page.$$eval('[data-testid="egypt-reading-sequence"] > li', nodes => nodes.length);
+  if (stages !== 4) throw new Error('Offline Egypt reading sequence missing: ' + stages);
+  await page.click('[data-testid="egypt-return-notes"] summary');
+  const beats = await page.$$eval('[data-testid="egypt-return-beat"]', nodes => nodes.length);
+  if (beats !== 5) throw new Error('Offline Exodus 4:18-31 notes missing: ' + beats);
+  await page.click('[data-testid="egypt-pharaoh-notes"] summary');
+  const pharaohBeats=await page.$$eval('[data-testid="egypt-pharaoh-beat"]', nodes=>nodes.length);
+  const museumHref=await page.$eval('[data-testid="egypt-brickwork-context"] a', el=>el.href);
+  if(pharaohBeats!==7||museumHref!=='https://www.metmuseum.org/art/collection/search/544649')
+    throw new Error('Offline Exodus 5:1-7:7 notes missing: '+pharaohBeats);
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 10000 });
+  const start = await page.evaluate(() => {
+    const btn = [...document.querySelectorAll('button')]
+      .find((b) => b.textContent?.includes('Начать путешествие'));
+    btn?.click();
+    return !!btn;
+  });
+  if (!start) throw new Error('Offline WebGL start button missing');
+  // aria-busy is the public accessibility contract for WebGL readiness:
+  // unlike a canvas mount or translated loading text, it waits for WorldState.
+  await page.waitForSelector('main[aria-busy="false"] canvas', { timeout: 90000 });
+  const screenError = await page.evaluate(() => [...document.querySelectorAll('[role="alert"]')]
+    .some((el) => el.textContent?.includes('Не удалось запустить 3D-сцену')));
+  if (screenError) throw new Error('Offline WebGL world failed to initialize');
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  if (!await page.evaluate(() => window.__horeb === undefined))
+    throw new Error('Production build leaked mutable e2e World API under ?e2e');
+  // Production World remains private even with an explicit ?e2e query.
+  // The canvas has entered its active rendered state, not merely mounted.
+  if (errors.length) throw new Error('Offline runtime errors: ' + errors.join(' | '));
+  const read = await page.goto(pathToFileURL(reader).href, { waitUntil: 'domcontentloaded' });
+  if (!read || read.status() !== 200) throw new Error('Offline reader cannot load');
+  const count = await page.$$eval('article[id]', (nodes) => nodes.length);
+  if (count !== 42) throw new Error('Offline reader contains ' + count + ' dossiers');
+  console.log('PASS portable local file:// preview: 3D intro and all 42 offline reader dossiers');
+} finally {
+  await browser.close();
+}

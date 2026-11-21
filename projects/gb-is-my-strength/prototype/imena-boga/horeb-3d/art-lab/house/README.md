@@ -1,0 +1,47 @@
+# HOREB W17 — original art-asset pilot (NOT PREMIUM-ART ACCEPTED)
+
+**Laboratory only / visual ART HOLD / no release or Product merge.** This is a reproducible proof of an authoring pipeline, not a claim that the house of Moses is known and not yet the target visual quality.
+
+## What is physically present
+- `source/build_house_pilot.py`: editable Blender 4.5.16 LTS mesh/UV/PBR authoring script (scene rooted at `HOREB_HOUSE_01__RECONSTRUCTION_NOT_ATTESTED`).
+- `source/horeb_egypt_house_hero_pilot.blend`: editable Blender scene, **CC0 textures packed**, no external file references required to inspect.
+- `source/textures/*`: source maps from Poly Haven, each checked against Poly Haven API's MD5.
+- `../../public/artlab/horeb_egypt_house_hero_pilot.glb`: actual 3D model loaded by Three.js, not an AI painting.
+- `../../artlab.html`, `../../src/imena-boga-horeb-3d/ui/HouseArtLab.tsx`: independent Vite **dev-only** art review surface with courtyard / threshold / room / wicker basket views and a hide-roof toggle. Not part of the main story.
+
+The geometry includes a room with an open entrance, courtyard wall, roof poles, woven awning, hand-formed clay vessels, clothing, a real 3D wicker basket and an authored work table. **These are a modelled concept**, not archaeologically verified objects belonging to Moses or his family.
+
+## Build
+Use the official portable Blender 4.5.16 LTS (or compatible version), no installer required. On this project directory:
+```powershell
+$env:HOREB_ART_PIPELINE_ROOT = "$PWD\art-lab\house"
+& "H:\HOREB_ArtPipeline\tools\blender-4.5.16-windows-x64\blender.exe" --background --factory-startup --python art-lab\house\source\build_house_pilot.py
+Copy-Item art-lab\house\export\horeb_egypt_house_hero_pilot.glb public\artlab\horeb_egypt_house_hero_pilot.glb
+npm.cmd run dev -- --host 127.0.0.1 --port 5192 --strictPort
+```
+Open `http://127.0.0.1:5192/artlab.html`. For actual desktop and 390px mobile screenshots:
+```powershell
+$env:HOREB_ARTLAB_BASE_URL='http://127.0.0.1:5192'
+$env:HOREB_BROWSER_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
+node tests\browser-house-artlab.cjs
+```
+This browser test is an **engineering gate**, never automatic visual ART approval. Real Android/iOS hardware and image-by-image aesthetic review remain open.
+
+## Source, license and interpretation
+Original HOREB-only mesh geometry is authored locally. Ground and clay wall PBR maps from Poly Haven, licensed **CC0**:
+- https://polyhaven.com/a/clay_plaster (Amal Kumar)
+- https://polyhaven.com/a/sand_01
+- https://polyhaven.com/license
+
+General archaeology reference, **NOT an identification of a biblical house**:
+- https://www.ucl.ac.uk/museums-static/digitalegypt/3d/houses.html
+
+The Blender tool itself is GPL, but output GLB and self-authored model geometry are not automatically GPL merely because Blender was used.
+
+## Honest independent ART review after first W17.1 screenshots
+- **PASS**: real Blender file, physically loaded GLB, textured earthen walls, distinct working tabletop and wicker geometry, 1440/390 working controls; no JS/page errors.
+- **FAIL / HOLD**: house remains architecturally boxy, generic and sparsely populated; wall detailing repeats; original wicker still too stylized; no rigged mother or family interaction, no authentic doorway/street continuity, still no gameplay incorporation.
+- **DO NOT** call this an 8/10 art slice. Don't replace W15's visible world with this pilot. Next artist must author a significantly better house/actor and pass close-up and gameplay review. Engineering tests are no substitute for artistic acceptance.
+
+## Retention
+Large binary GLB and BLEND carry adjacent `.artifact.json` with SHA-256, byte size, source/rights and retention reason. Never copy Blender ZIP into Git. Original Chromium PNG evidence resides in an isolated local QA folder, not inside the Git tree. This pilot is protected as evidence until another accepted model supersedes it.

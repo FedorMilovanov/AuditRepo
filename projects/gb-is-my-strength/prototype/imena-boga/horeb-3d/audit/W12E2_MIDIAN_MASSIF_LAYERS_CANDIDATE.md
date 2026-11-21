@@ -1,0 +1,14 @@
+# W12E.2 — Midian well: separated massif silhouettes / angular rock forms
+
+## Evidence (original CI PNGs)
+W12E.1 `8defeb2` passed exact-SHA HOREB QA #44595189882 **6/6 SUCCESS**, Validate #44595189892 SUCCESS, Preflight #44595190078 SUCCESS. Comparing real Chromium screenshot artifacts W12E.0 #14477897814 and W12E.1 #14567535811 — `midian-walk-desktop.png`, `midian-shot-desktop.png` and `midian-walk-mobile390.png` — shows W12E.1 removed artificial zigzag peaks **but visually regressed to a single flat brown continuous mountain wall** and rounded 'potato' rock rows. Thus W12E.1 engineering PASS, ART HOLD. This is not an archaeological site recreation.
+
+## Bounded W12E.2 design
+- Keep exactly **two** 150×4 original ring meshes: same vertex/triangle topology, same two draw calls, unchanged fog, sun, terrain, well, clay vessels, trough and physical movements.
+- Replace repeated near/far harmonic hills with a handful of **wide angular massif groups separated by valleys**. Wrapped angular distances ensure a true 2π seam, smooth adjacent 150-sector samples, and a deeply visible far massif near the initial walking camera sightline where the near ridge falls away.
+- Near and distant ridges have deliberately separate, muted tones and well-separated height distributions (not two identical brown silhouettes). Avoid periodic sawteeth and undifferentiated straight ridge line.
+- Keep the **same 145 rock X/Z points, all original SX/SZ values and every collider/footprint unchanged**; only adjust visible Y scale and replace subdivision-level 1 dodecahedron with the more faceted level 0 shared geometry, still one InstancedMesh draw call and deterministic instance colours.
+- New source guards assert 2π continuity, smooth slope, silhouette range/valleys, camera-direction near/far depth separation, and unchanged collision footprint relationships. Do not change Biblical scenes, geolocation, historical truth claims, other worlds or the 42 dossiers.
+
+## Gate
+Initial numerical preflight of the 151-sample circumferences showed near min 1.22m/max 6.66m/max adjacent step .36m; far min 3.49m/max 8.90m/max step .33m. Both close at 0=2π and far peak at 3.9rad stands about 6.6m higher than near. **No claim of rendered appearance**: independent Windows desktop access is rate-limited. After any publication demand new exact-SHA GitHub source, four pedestrian groups, full actual Chromium (6/6), Validate/Preflight, then *original* desktop 1024×768 and mobile390 PNGs side-by-side against W12E.1. Reject if the new ridge is just another big wall, looks like artificial bumps, colors are unnatural, low-quality angular rocks become faceted toys, well is obscured, or mobile HUD is clipped. Physical phones, research/rights, actors, animals, voice and release HOLD. Only existing Draft PR #543; main, Product, Research and dirty local W10D protected.
