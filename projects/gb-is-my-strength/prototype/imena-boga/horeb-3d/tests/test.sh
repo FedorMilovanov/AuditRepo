@@ -26,6 +26,7 @@ npx tsc --outDir .test-build --module es2022 --target es2022 --moduleResolution 
   src/imena-boga-horeb-3d/engine/quality.ts
 echo '{"type":"module"}' > .test-build/package.json
 node tests/run.mjs
+node tests/verify-mother-asset.mjs
 # Construction smoke test: esbuild bundles TS source (resolves extensionless imports), three stays external.
 npx esbuild tests/construct.ts --bundle --platform=node --format=esm --external:three --outfile=.test-build/construct.mjs
 node .test-build/construct.mjs

@@ -17,6 +17,7 @@
     "test:browser:quality": "node tests/browser-quality.mjs",
     "test:browser:chapters": "node tests/browser-chapters.mjs && node tests/browser-nile-walk.mjs && node tests/browser-nile-village.mjs && node tests/browser-midian-walk.mjs && node tests/browser-homestead-walk.mjs",
     "test:browser:nile-village": "node tests/browser-nile-village.mjs",
+    "test:browser:mother": "node tests/browser-mother-artlab.cjs",
     "test:browser:midian-walk": "node tests/browser-midian-walk.mjs",
     "test:browser:homestead-walk": "node tests/browser-homestead-walk.mjs",
     "test:browser:nile-walk": "node tests/browser-nile-walk.mjs",

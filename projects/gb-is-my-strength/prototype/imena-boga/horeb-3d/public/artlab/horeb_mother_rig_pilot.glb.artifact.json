@@ -1,0 +1,9 @@
+{
+    "schemaVersion":  1,
+    "path":  "projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/public/artlab/horeb_mother_rig_pilot.glb",
+    "sha256":  "c70c51c46194a5dae59201ae0e6c77fd94ef6c92343c39c0931f35c291398657",
+    "sizeBytes":  6301372,
+    "purpose":  "Game-loadable 53-bone skinned MakeHuman performer and 2 clips, ART HOLD",
+    "provenance":  "MakeHuman core anatomical mesh under CC0; MPFB 2.0.18 GPL extension used only for authoring; HOREB original garment and bone keyframes; model is an illustrative, not attested likeness",
+    "retention":  "ART HOLD: preserve reproducible animated performer as a proof, never use in Product or W15 until independent cinematic quality and rights gates"
+}
