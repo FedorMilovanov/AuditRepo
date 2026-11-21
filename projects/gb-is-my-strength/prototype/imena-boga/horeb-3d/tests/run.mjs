@@ -7,6 +7,7 @@ import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
+import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,nileVillageMayInteract,nileVillageCanWalk} from '../.test-build/data/nileVillageQuest.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
@@ -26,6 +27,17 @@ import { FIELD_IDS, FIELD_STUDIES, normalizeFieldJournal, canCompleteFieldStudy,
 import { HERO_STUDIES, HERO_STUDY_IDS, heroStudyReady, canCompleteHeroStudy, normalizeHeroStudyJournal, markHeroStudy } from '../.test-build/data/heroStudies.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
+// W15: the physically navigable opening follows Exodus 1:22 and 2:1-10.
+t('W15 six sequential, source-grounded actions',NILE_VILLAGE_STEPS.length===6&&
+  NILE_VILLAGE_STEPS.map(s=>s.id).join(',')==='decree,mother,seal,wrap,reeds,sister'&&
+  NILE_VILLAGE_STEPS.every(s=>s.source.startsWith('Исх.')&&s.qualification.length>20)&&
+  NILE_VILLAGE_STEPS.every(s=>nileVillageCanWalk(s.x,s.z)));
+t('W15 houses and river are solid, no remote actions',
+  nileVillageCanWalk(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z)&&
+  !nileVillageMayInteract(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z,0)&&
+  !nileVillageCanWalk(-9,-16)&&!nileVillageCanWalk(NaN,0)&&
+  NILE_VILLAGE_HOUSES.every(h=>!nileVillageCanWalk(h.x,h.z))&&
+  NILE_VILLAGE_STEPS.every((s,i)=>nileVillageMayInteract(s.x,s.z,i)));
 // W12A: a distinct 3D encampment is physically accessible through its open
 // entrance, with walls, hearth and storage remaining real obstructions.
 t('W12A Midian household starts on safe walkable ground',

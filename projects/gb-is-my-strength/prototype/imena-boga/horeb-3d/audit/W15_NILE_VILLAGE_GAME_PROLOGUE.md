@@ -19,3 +19,7 @@
 ## W15.1 — визуальная проверка и правки
 
 По реальным 1024px/390px кадрам W15 первая версия была слишком однотонной, а папирус выглядел одинаковыми зелёными палками с огромными треугольными наконечниками. W15.1 заменяет эти конусы низкополигональными, но более узнаваемыми тонкими зонтиками с поникающими ветвями, сбивает регулярную линию на несколько естественных куртин и оставляет просвет у физической точки установки. Добавлены небесный градиент, общие оригинальные периодические карты мелкой фактуры грунта и глиняной штукатурки без сетевых ассетов. Удалён текстовый накладывающийся на нижнюю плашку UI. Геометрические коллайдеры и тексты Исхода неизменны. ART premium HOLD, до реальных новых кадров и GPU/мобильных тестов.
+
+## W15.2 — source + real pedestrian browser regressions
+
+Six different real WASD approaches, six proximity-gated interactive actions, completion at reeds and handoff to discovery are tested in browser-nile-village.mjs. Unit checks prohibit remote interaction, entering river and passing through house walls. CI test:browser:chapters now includes this standalone path, preserving existing Nile tests. A green test is NOT overall artistic acceptance; local phone-touch proof and an original 1024/390 screenshot review are mandatory.
