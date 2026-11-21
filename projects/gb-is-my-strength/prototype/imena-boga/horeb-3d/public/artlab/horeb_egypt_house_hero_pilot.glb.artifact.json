@@ -1,0 +1,9 @@
+{
+    "schemaVersion":  1,
+    "path":  "projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/public/artlab/horeb_egypt_house_hero_pilot.glb",
+    "sha256":  "689f489a20ed0686e8e93fe94c5e4259c8c842a97509d95cfdd6c8c10ae6832d",
+    "sizeBytes":  4601352,
+    "purpose":  "Game-loadable standalone GLB lookdev pilot; ART HOLD",
+    "provenance":  "Original HOREB W17.1 Blender 4.5.16 authored model; Poly Haven clay_plaster and sand_01 CC0 source textures, model NOT an attested biblical residence",
+    "retention":  "Retain as exact reproducible asset pipeline ART-HOLD witness until specifically retired after superior accepted replacement; no production/release admission"
+}
