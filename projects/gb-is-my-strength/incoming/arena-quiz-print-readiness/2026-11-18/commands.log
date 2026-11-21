@@ -80,6 +80,8 @@ done
 # Early print media also gives 13 pages, but modifies grouping. Exploratory print->screen toggle is not the retained control:
 # it produced 15-page output without the static quiz notice and is not an acceptable workaround.
 # Raw artifacts and parser trace remain temporary. Retain only summary/print-tail-witness.json and a PDFium crop of page 13.
+# The counts above are the original series. On a fresh run, use coldTail and the first-PDF comparison flags in the summary;
+# successful parsing does not mean that all first PDFs match the old observations or that the product is fixed.
 
 [AuditRepo admission and draft publication]
 # CHANGED = paths staged cumulatively vs fcf2e69b; new diff restricted to this intake.

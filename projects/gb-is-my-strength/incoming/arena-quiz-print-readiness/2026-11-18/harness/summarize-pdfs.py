@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify two paired main/font-overlay replays; retain compact PDF receipts, not the PDFs."""
+"""Measure paired first/repeat PDFs without assuming every cold attempt loses the tail."""
 import hashlib
 import json
 import math
@@ -95,6 +95,10 @@ def load_runs(root):
     return runs
 
 
+def cold_mobile(row):
+    return row['route'] == ROUTES['anatomy'] and row['width'] == 390 and row['mode'] in ('button', 'delay', 'direct')
+
+
 def read_run(folder, data, dist, overlay):
     for filename, digest in data['distSha256'].items():
         assert sha((dist / filename).read_bytes()) == digest, filename
@@ -102,7 +106,7 @@ def read_run(folder, data, dist, overlay):
     for row in data['results']:
         mode = row['mode']
         anatomy = row['article'] == 'anatomy'
-        short = anatomy and row['width'] == 390 and mode in ('button', 'delay', 'direct')
+        cold = cold_mobile(row)
         reference_pages = 13 if anatomy else 34
         assert row['ok'] and len(row['prints']) == 2 and not any(row['errors'].values())
         assert all(p['start']['fontStatus'] == 'loaded' for p in row['prints'])
@@ -112,12 +116,12 @@ def read_run(folder, data, dist, overlay):
         assert repeat['pages'] == reference_pages and repeat['markerPages']['signature']
         if anatomy:
             assert repeat['markerPages']['editorial'] == repeat['markerPages']['feedback'] == [13]
-        if short:
-            assert first['pages'] == 12 and first_text == repeat_text[:-1], row['id']
+        omitted = first_text != repeat_text
+        if omitted:
+            assert cold and first['pages'] == 12 and first_text == repeat_text[:-1], row['id']
             assert not any(first['markerPages'][x] for x in ('editorial', 'feedback', 'signature'))
+        if cold:
             assert not first['fontRequests']['before'] and CYR in first['fontRequests']['during']
-        else:
-            assert first_text == repeat_text, row['id']
         if mode == 'font-warm':
             assert CYR in first['fontRequests']['before'] and CYR not in first['fontRequests']['during']
             assert first['fontRequests']['loaded500Ranges']
@@ -132,12 +136,12 @@ def read_run(folder, data, dist, overlay):
                 assert receipt['print']['feedback']['follower'] is False
         if overlay:
             assert 'fonts/fonts.css' in row['overrides']
-            if short or mode == 'font-warm':
+            if cold or mode == 'font-warm':
                 assert LAT in row['overrides']
         cases.append(dict(id=row['id'], route=row['route'], mode=mode, width=row['width'],
                           documentStart=row['prints'][0]['start']['document'],
                           overrides=row['overrides'], first=first, repeat=repeat,
-                          omittedLastPage=repeat_text[-1] if short and row['rep'] == 1 else None))
+                          omittedLastPage=repeat_text[-1] if omitted and row['rep'] == 1 else None))
     base_signature = cases[0]['repeat']['normalizedPagesSha256']
     assert all(c['repeat']['normalizedPagesSha256'] == base_signature
                for c in cases if 'anatomiya' in c['route'] and c['mode'] != 'print-media')
@@ -146,22 +150,34 @@ def read_run(folder, data, dist, overlay):
 
 
 def compare_replay(first, second):
+    first_pdfs_match = True
     for a, b in zip(first, second, strict=True):
         assert a['id'] == b['id'] and a['overrides'] == b['overrides']
         for phase in ('first', 'repeat'):
-            for key in ('pageSha256', 'markerPages', 'pages', 'fontRequests'):
-                assert a[phase][key] == b[phase][key], (a['id'], phase, key)
+            assert a[phase]['fontRequests'] == b[phase]['fontRequests'], (a['id'], phase, 'fontRequests')
             for key in ('beforePrintMedia', 'groups', 'geometry', 'author', 'feedback', 'signature'):
                 assert a[phase]['print'][key] == b[phase]['print'][key], (a['id'], phase, key)
+            if phase == 'first' and a[phase]['pages'] != b[phase]['pages']:
+                # read_run has already validated both the full text and any shorter prefix.
+                assert cold_mobile(a) and cold_mobile(b), a['id']
+                first_pdfs_match = False
+            else:
+                for key in ('pageSha256', 'markerPages', 'pages'):
+                    assert a[phase][key] == b[phase][key], (a['id'], phase, key)
+    return first_pdfs_match
 
 
 def main(root, dist, prior):
     inputs = load_runs(root)
-    versions, assets, replays = None, {}, {}
+    versions = None
+    assets, replays, first_pdf_matches, cold_tail = {}, {}, {}, {}
     for variant in ('main', 'overlay'):
         a, cases = read_run(*inputs[variant, 'a'], dist, variant == 'overlay')
         b, repeat = read_run(*inputs[variant, 'b'], dist, variant == 'overlay')
-        compare_replay(cases, repeat)
+        first_pdf_matches[variant] = compare_replay(cases, repeat)
+        cold_cases = [c for c in cases + repeat if cold_mobile(c)]
+        cold_tail[variant] = dict(attempts=len(cold_cases),
+                                  omitted=sum(c['first']['pages'] < c['repeat']['pages'] for c in cold_cases))
         assert a['distSha256'] == b['distSha256'] and a['overlaySha256'] == b['overlaySha256']
         env = {k: a[k] for k in ('chromium', 'playwright', 'node')}
         assert all(v == b[k] for k, v in env.items()) and (versions is None or versions == env)
@@ -175,9 +191,8 @@ def main(root, dist, prior):
     if prior:
         entry = json.loads(prior.read_text())
         prev = entry['pdf'][cold['route']]['phases']
-        assert prev['idle']['normalizedPageTextSha256'] == cold['first']['normalizedPagesSha256']
         assert prev['idleRepeat']['normalizedPageTextSha256'] == cold['repeat']['normalizedPagesSha256']
-        prior_match = True
+        prior_match = prev['idle']['normalizedPageTextSha256'] == cold['first']['normalizedPagesSha256']
     # Real PDF page 13 from the repeat; not a screen/print-media screenshot.
     cropped = result / 'anatomy-repeat-page-13.png'
     with closing(pdf.PdfDocument(root / 'main-a' / cold['repeat']['file'])) as doc, closing(doc[12]) as page:
@@ -185,11 +200,15 @@ def main(root, dist, prior):
             image = bitmap.to_pil().copy()
             image.crop((0, 78, image.width, min(545, image.height))).save(cropped)
     evidence = dict(anchor=MAIN, overlayRef=FONT_REF, versions=versions, pypdfium2=str(PYPDFIUM_INFO), pdfium=str(PDFIUM_INFO),
-                    stage10ReplayTextMatched=prior_match, cases=sum(len(v) for r in replays.values() for v in r.values()),
+                    stage10ReplayTextMatched=prior_match, firstPdfTextMatchedAcrossReplays=first_pdf_matches,
+                    coldTail=cold_tail, cases=sum(len(v) for r in replays.values() for v in r.values()),
                     assets=assets, replays=replays, raster=dict(file=cropped.name, page=13, sha256=sha(cropped.read_bytes()),
                     source=cold['repeat']['file'], pdfSha256=cold['repeat']['sha256']))
     (result / 'print-tail-witness.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n')
-    print(f"PASS {evidence['cases']} contexts / {2 * evidence['cases']} PDFs; retained exact pins and both replay receipts")
+    print(f"MEASURED {evidence['cases']} contexts / {2 * evidence['cases']} PDFs; "
+          + ', '.join(f"{variant}: {m['omitted']}/{m['attempts']} cold tail omissions" for variant, m in cold_tail.items()))
+    if not all(first_pdf_matches.values()) or prior_match is False:
+        print('First PDF text varied between samples; see comparison flags. This is not an exact replay.')
 
 
 if __name__ == '__main__':
