@@ -35,6 +35,8 @@ try {
   // The cinematic story must begin with the baby on the Nile even in
   // offline/portable mode; no WebGL is required to see its six preludes.
   await page.click('[data-testid="moses-origin-start"]');
+  if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 portable duplicate WebGL');
+  await page.click('[data-testid="nile-legacy-open"]');
   await page.waitForFunction(()=>
     document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true',
     {timeout:30000});

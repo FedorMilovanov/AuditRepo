@@ -67,6 +67,29 @@ const coarse = () => typeof matchMedia !== 'undefined' && (
 );
 const prefersReduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/** Previous Nile bank shot is an opt-in comparison, never a second
+ * default WebGL renderer running alongside the playable village. */
+function NileLegacyComparison({reducedMotion}:{reducedMotion:boolean}){
+ const [open,setOpen]=useState(false);
+ return <section data-testid="nile-legacy-comparison"
+   className="mb-5 rounded-lg border border-bronze/30 bg-[#28251f]">
+   <div className="flex items-center justify-between gap-3 px-4 py-3">
+     <div>
+       <p className="font-display text-parch text-base">Прежний берег Нила</p>
+       <p className="text-xs text-parch/70">Дополнительный сравнительный ракурс · не часть игрового маршрута</p>
+     </div>
+     <button type="button" data-testid="nile-legacy-open"
+       aria-expanded={open} onClick={()=>setOpen(v=>!v)}
+       className="rounded-md border border-parch/50 bg-black/60 px-3 py-2 text-parch text-xs font-semibold">
+       {open?'Закрыть сравнение':'Открыть старый ракурс'}
+     </button>
+   </div>
+   {open&&<div data-testid="nile-legacy-scene">
+     <NilePreludeCanvas moment="basket" reducedMotion={reducedMotion}/>
+   </div>}
+ </section>;
+}
+
 function EgyptReadingSequence() {
   return <>
     <p className="font-display text-lg text-parch">Порядок чтения · четыре эпизода</p>
@@ -540,12 +563,11 @@ export default function HorebApp() {
               <NileVillageJourney reducedMotion={settings.reducedMotion}
                 onContinue={()=>{setRescueStage(0);setOriginIndex(1);}} />
             </div>}
-            {(originIndex === 0 || (originIndex === 1 && rescueStage === 0)) &&
+            {originIndex === 0 &&
+              <NileLegacyComparison reducedMotion={settings.reducedMotion}/>}
+            {originIndex === 1 && rescueStage === 0 &&
               <div className="-mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5">
-                {originIndex === 0 && <p className="bg-[#2e2822] border-t border-bronze/25 px-4 pt-3 text-xs text-parch/80">
-                  Сравнительный старый ракурс берега — после пути от домов. Основная новая игра находится выше.
-                </p>}
-                <NilePreludeCanvas key={originIndex} moment={originIndex === 0 ? 'basket' : 'discovery'} reducedMotion={settings.reducedMotion} />
+                <NilePreludeCanvas moment="discovery" reducedMotion={settings.reducedMotion}/>
               </div>}
             {originIndex === 1 && rescueStage > 0 &&
               <div data-testid="moses-rescue-intertitle" className="relative isolate -mx-5 -mt-5 sm:-mx-8 sm:-mt-8 mb-5 overflow-hidden border-b border-bronze/30 min-h-48 sm:min-h-60 bg-gradient-to-tr from-[#141b1c] via-[#30302b] to-[#57483a] flex flex-col items-center justify-center gap-4 px-6 py-8 text-center">

@@ -33,6 +33,8 @@ try{
  const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
  if(response?.status()!==200)throw new Error('Intro HTTP failure');
  await page.click('[data-testid="moses-origin-start"]');
+ if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 legacy Nile ran by default');
+ await page.click('[data-testid="nile-legacy-open"]');
  // Clicking before the async module is ready must never enter fullscreen
  // without a controller (W12F.1); the button has a real disabled gate.
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true');

@@ -18,6 +18,7 @@ const fs={mkdirSync},path={join};
  await page.setViewport({width:1024,height:768});
  await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
  await page.click('[data-testid="moses-origin-start"]');
+ if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 duplicate WebGL on game launch');
  await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-start"]')?.disabled);
  await page.click('[data-testid="nile-village-start"]');
  const checkpoints=[[3,11],[7,8],[6,3],[6,3],[-5.45,-16.1],[-4.15,-12.5]];

@@ -89,6 +89,8 @@ try{
    if(t!==expectedOrigins[i]||step.trim()!==`${i+1} / 6`)
      throw new Error('MOSES STORY ORDER '+JSON.stringify({i,t,step}));
    if(i===0){
+     if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 duplicate legacy WebGL');
+     await page.click('[data-testid="nile-legacy-open"]');
      await page.waitForFunction(()=>
        document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true',
        {timeout:30000});
