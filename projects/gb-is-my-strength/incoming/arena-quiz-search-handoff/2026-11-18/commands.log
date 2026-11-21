@@ -1,0 +1,54 @@
+# Stage 22 — intake 2026-11-18 UTC. Gill II Learning -> global search -> Escape -> resume.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0, existing Draft #570.
+
+[Coordination and owner review]
+git status --short --branch
+git rev-parse HEAD
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+# Before: 152 exact paths, dc92569c3792cb9333c07b7dc0cab03abad1b164, same title/body, Draft open, no reviews/merge.
+# AuditRepo main fe692393 and Product main 9edef94e unchanged. No foreign writes.
+# Compare read-only: Audit source lanes b5babdc2->3e5182d7 (+1/3), 97ed46a6->39847652 (+1/4), separate intake.
+# Product #2341 4c69ec0c->10ca546e, #2348 eb07098f->ff9a3e0b, #2340 f8590220->c0a84871 (+1 review doc each).
+# Anchor->tips +42/29, +4/3, +36/46 (commits/paths): no audited owner overlap.
+# Dedup: QA-02/03 from stage 4, #2248 and stages 15/21; historic close-first policy, not a new owner or registry row.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# QPDF status and anchors unchanged: 48 verified pins at startup, PDF.js 5.4.624; native dialog pending.
+
+[Exact distribution]
+# Unmodified production-like dist from stages 12/21, no Pagefind artifact; see stage 12 commands.log for build.
+# PRODUCT/TOOLS absolute. CHROMIUM extracted Shell. OUT points to scratch with fresh run dirs.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && npm run overlay:runtime:test)
+for f in js/site-utils.js js/search.js js/floating-cluster-controller.js css/command-palette.css css/floating-cluster.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# Runtime integrity + shared runtime API contracts PASS; source/served bytes identical for checked files.
+# site-utils.js canonical key and top Escape, floating-cluster-controller.js search closer, Learning button/closeSheet,
+# ReaderPreferencesHead.astro bootstrap and observer, search.js ne/re + body child inert cleanup. Source attribution verified against event order.
+# Pilot: fallback narrow article click selector not visible, and trying tabSearch *after* Ctrl+K timed out; wrong premise (sheet already closed).
+# Later pilot had assumed skip-link as first stop on wide warm; actual gb-hl-fab. Wrap pilot assumed close control on desktop, actual heading-anchor inside sheet.
+# Formal witnesses below only; no opportunity to force coexistence by calling a private Product API.
+
+[Two independent replays]
+P="$PWD/projects/gb-is-my-strength/incoming"
+W="$P/arena-quiz-search-handoff/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-home-search-focus/2026-11-18"
+node --check "$W/harness/quiz-search-handoff.mjs"
+# Both ran in parallel, separate browser processes/contexts and ephemeral A04 servers. Reproduce sequentially if needed:
+for run in a b; do
+  node "$W/harness/quiz-search-handoff.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/home-search-focus-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# PASS: 16 + 16 cases, 48 exact pins, 48/66 shared/prior, 1/3 identical frames. Both quiz-frame A/B digests retained; only A images committed.
+# Close→open, sole palette owner, Escape→BODY at check times 0/80/250/600ms: 20/20; state intact and source reached 20/20; 8/8 uninterrupted source controls.
+# Solo narrow Next→Tab→Tab puts in-view skip-link behind open sheet 2/2; 1440 stays inside 2/2. Direct settings Escape hit 4/4, solo Learning Escape BODY 4/4.
+# Page errors and unexpected local HTTP errors 0. HEAD /pagefind/pagefind.js -> 404 once per search context only; warmup does not double it. No result-index/native GUI claims.
+
+[Admission]
+# CHANGED = exact cumulative changed path list vs fcf2e69b. Stage only this intake, including its commands.log if ignored.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Recheck remote exact paths/foreign deltas before push. Append to existing Draft body; do not alter title, base or prior sections. Check exact-head workflows.
+# No Product, MASTER/ledger, other branch, review, merge, deploy or Drive mutation.
