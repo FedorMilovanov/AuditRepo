@@ -1,0 +1,77 @@
+{
+  "method": "Chrome; 390x844; 4x CPU; emulated 150ms RTT / 1.6Mbps; gzip; 4 runs; 500ms after h1; trigger click to keyboard focus in dialog",
+  "summary": [
+    {
+      "version": "v10",
+      "n": 4,
+      "medianClickMs": 691,
+      "raw": [
+        691,
+        696,
+        576,
+        544
+      ]
+    },
+    {
+      "version": "v11",
+      "n": 4,
+      "medianClickMs": 931,
+      "raw": [
+        999,
+        931,
+        870,
+        840
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "iteration": 1,
+      "version": "v10",
+      "firstModalReadyMs": 691,
+      "chunkFetched": 0
+    },
+    {
+      "iteration": 1,
+      "version": "v11",
+      "firstModalReadyMs": 999,
+      "chunkFetched": 1
+    },
+    {
+      "iteration": 2,
+      "version": "v11",
+      "firstModalReadyMs": 931,
+      "chunkFetched": 1
+    },
+    {
+      "iteration": 2,
+      "version": "v10",
+      "firstModalReadyMs": 696,
+      "chunkFetched": 0
+    },
+    {
+      "iteration": 3,
+      "version": "v10",
+      "firstModalReadyMs": 576,
+      "chunkFetched": 0
+    },
+    {
+      "iteration": 3,
+      "version": "v11",
+      "firstModalReadyMs": 870,
+      "chunkFetched": 1
+    },
+    {
+      "iteration": 4,
+      "version": "v11",
+      "firstModalReadyMs": 840,
+      "chunkFetched": 1
+    },
+    {
+      "iteration": 4,
+      "version": "v10",
+      "firstModalReadyMs": 544,
+      "chunkFetched": 0
+    }
+  ]
+}

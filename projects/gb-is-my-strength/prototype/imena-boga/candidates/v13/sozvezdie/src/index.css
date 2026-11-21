@@ -1,0 +1,330 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "EB Garamond", "Times New Roman", serif;
+  --font-hebrew: "Frank Ruhl Libre", "Noto Serif Hebrew", "Times New Roman", serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  --color-ink-950: #0a0907;
+  --color-ink-900: #100e09;
+  --color-ink-850: #151209;
+  --color-ink-800: #1b1710;
+  --color-ink-700: #262115;
+  --color-ink-600: #37301f;
+
+  --color-gold-100: #fff3d6;
+  --color-gold-200: #f4e5bb;
+  --color-gold-300: #ecd39a;
+  --color-gold-400: #dfbe72;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b3912f;
+  --color-gold-700: #8a6f24;
+  --color-gold-800: #5c4a18;
+
+  --color-cream-50: #faf6ea;
+  --color-cream-100: #f2ebd8;
+  --color-cream-200: #e6dcc3;
+  --color-cream-300: #d9cdae;
+  --color-cream-400: #c2b592;
+  --color-cream-500: #a99a78;
+  --color-cream-600: #9b8d6e;
+  --color-cream-700: #8d8065;
+  --color-cream-800: #4a4232;
+
+  --animate-rotate-slow: rotate360 80s linear infinite;
+  --animate-rotate-rev: rotate360 110s linear infinite reverse;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-glow-pulse: glowPulse 5s ease-in-out infinite;
+  --animate-scroll-cue: scrollCue 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 7s linear infinite;
+  --animate-diamond: diamond 3.2s ease-in-out infinite;
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes scrollCue {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to { background-position: 200% center; }
+}
+@keyframes diamond {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); }
+  50% { box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0907;
+  color: #f2ebd8;
+  font-family: var(--font-body);
+  /* `clip` (not `hidden`) prevents sideways overflow WITHOUT turning <body>
+     into a scroll container — that would break scroll-margin-top on anchors. */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.35);
+  color: #faf6ea;
+}
+
+/* One consistent clearing control: the accessible in-app button.
+   Retain native search-input semantics without a second browser X. */
+input[data-name-grid-search]::-webkit-search-cancel-button,
+input[data-name-grid-search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0907;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#8a6f24, #5c4a18);
+  border-radius: 8px;
+  border: 2px solid #0a0907;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b3912f;
+}
+
+/* ————— signature utilities ————— */
+
+.gold-text {
+  background: linear-gradient(
+    105deg,
+    #8a6f24 0%,
+    #d4af37 25%,
+    #f4e5bb 50%,
+    #d4af37 75%,
+    #8a6f24 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+.gold-static {
+  background: linear-gradient(120deg, #b3912f, #ecd39a 45%, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-gold {
+  text-shadow:
+    0 0 18px rgba(212, 175, 55, 0.55),
+    0 0 60px rgba(212, 175, 55, 0.22);
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+  height: 1px;
+}
+
+.vignette::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(5, 4, 2, 0.55) 100%);
+}
+
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.card-parchment {
+  background:
+    radial-gradient(ellipse 120% 140% at 20% 0%, rgba(212, 175, 55, 0.08), transparent 55%),
+    linear-gradient(160deg, #1b1710 0%, #100e09 100%);
+}
+
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 4.6em;
+  line-height: 0.78;
+  float: left;
+  padding-right: 0.12em;
+  padding-top: 0.06em;
+  background: linear-gradient(135deg, #ecd39a, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: -120% -40%;
+  background: linear-gradient(100deg, transparent 38%, rgba(244, 229, 187, 0.28) 50%, transparent 62%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.sheen:hover::after,
+.sheen:focus-visible::after {
+  transform: translateX(120%);
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media print {
+  @page {
+    margin: 16mm 14mm;
+  }
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+  body {
+    background: #fff !important;
+    color: #211d15 !important;
+    font-size: 11pt;
+  }
+  body *, body *::before, body *::after {
+    color: #211d15 !important;
+    -webkit-text-fill-color: #211d15 !important;
+  }
+  header, canvas, button,
+  [aria-label="Все имена Бога: указатель"],
+  [aria-label="Указатель имен Бога"],
+  nav[aria-label="Сразу к ЯХВЕ"] {
+    display: none !important;
+  }
+  [aria-hidden="true"], .vignette::after, .noise::before {
+    display: none !important;
+  }
+  .gold-text, .gold-static {
+    background: none !important;
+  }
+  .card-parchment {
+    background: #fff !important;
+    border: 1pt solid #b9a86a !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  section {
+    break-inside: auto;
+    page-break-inside: auto;
+    padding-top: 12pt !important;
+    padding-bottom: 12pt !important;
+  }
+  h1, h2, h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  a {
+    color: #211d15 !important;
+    text-decoration: none !important;
+  }
+}
+
+/* ————— reader preferences ————— */
+.reader-measure {
+  max-width: var(--measure, 48rem);
+  transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reader-body {
+  font-size: var(--body-size, 1.0625rem);
+  line-height: 1.8;
+  transition: font-size 0.3s ease;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.9);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* rail scrollbar in the artifact's own language */
+.rail-scroll { scrollbar-width: thin; scrollbar-color: rgba(179,145,47,0.55) transparent; }
+.rail-scroll::-webkit-scrollbar { width: 4px; }
+.rail-scroll::-webkit-scrollbar-track { background: transparent; }
+.rail-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(#b3912f, #5c4a18);
+  border-radius: 4px;
+}
+.rail-scroll::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+@media print {
+  [data-reader-dock], [data-rails] { display: none !important; }
+}
+
+.glow-gold-strong {
+  text-shadow:
+    0 0 14px rgba(244, 229, 187, 0.75),
+    0 0 38px rgba(212, 175, 55, 0.55),
+    0 0 90px rgba(212, 175, 55, 0.3);
+}
+
+@media print {
+  #tsentr, [role="status"], [aria-label="Продолжить чтение"] { display: none !important; }
+}
+
+/* On compact viewports both reading controls occupy the main header.
+   They do not need floating offsets over editorial text. */
