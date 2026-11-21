@@ -982,6 +982,32 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       throw Error('Reader preferences regression '+JSON.stringify({width,finalLayout,errors,requests}));
     results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true,contrastRatios:{light:lightContrast,sepia:sepiaContrast,dark:darkContrast}});
    }else{
+    // W110: entering a NameGrid result must move both the viewport AND
+    // keyboard focus to the selected section, otherwise the next Tab snaps
+    // the reader back to the old index despite the correct URL hash.
+    if([390,768,1440].includes(width)){
+      const entry=page.locator('#sozvezdie button[aria-label^="Перейти к разделу: ЯХВЕ"]').first();
+      await entry.focus();
+      await page.keyboard.press('Enter');
+      const landed=await page.evaluate(()=>{
+        const section=document.getElementById('yhwh');
+        const heading=section?.querySelector('[data-name-heading]');
+        const rect=heading?.getBoundingClientRect();
+        return {hash:location.hash,focused:document.activeElement===heading,
+          visible:!!rect&&rect.top<innerHeight&&rect.bottom>0,scroll:scrollY};
+      });
+      if(landed.hash!=='#yhwh'||!landed.focused||!landed.visible)
+        throw Error('W110 NameGrid focus handoff missing '+JSON.stringify({engine,width,landed}));
+      await page.keyboard.press('Tab');
+      const next=await page.evaluate(()=>({
+        withinSection:!!document.getElementById('yhwh')?.contains(document.activeElement),
+        hash:location.hash,scroll:scrollY,
+        active:document.activeElement?.getAttribute('aria-label')
+      }));
+      if(!next.withinSection||next.hash!=='#yhwh'||next.scroll<landed.scroll-500)
+        throw Error('W110 Tab returned to old index '+JSON.stringify({engine,width,landed,next}));
+      console.log('W110_NAMEGRID_KEYBOARD_FOCUS_PASS',engine,width);
+    }
     // A single Constellation search hit should be centered, readable and
     // bounded by the content measure at mobile and desktop widths.
     const oneResultInput=page.locator('#sozvezdie input[type="search"]');
@@ -998,6 +1024,18 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     if(!centeredResult||centeredResult.count!==1||centeredResult.delta>2||
        centeredResult.width>322||!centeredResult.within)
       throw Error('Constellation single search result not centered '+JSON.stringify({engine,width,centeredResult}));
+    if([390,768,1440].includes(width)){
+      // The random-result shortcut uses the same focus handoff as a name card.
+      await page.getByRole('button',{name:'Открыть случайное имя из результатов поиска'}).click();
+      const selected=await page.evaluate(()=>{
+        const id=decodeURIComponent(location.hash.slice(1));
+        const heading=document.getElementById(id)?.querySelector('[data-name-heading]');
+        return {id,focused:!!heading&&heading===document.activeElement,
+          visible:!!heading&&heading.getBoundingClientRect().top<innerHeight};
+      });
+      if(!selected.id||!selected.focused||!selected.visible)
+        throw Error('W110 random result left keyboard focus in index '+JSON.stringify({engine,width,selected}));
+    }
     await oneResultInput.fill('');
     // The prominent divine name is Hebrew, not a Russian/Latin token.
     // Keep correct reading direction and language metadata for assistive tech.
