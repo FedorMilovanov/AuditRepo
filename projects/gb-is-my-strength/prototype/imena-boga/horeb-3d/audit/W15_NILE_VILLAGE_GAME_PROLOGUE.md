@@ -23,3 +23,7 @@
 ## W15.2 — source + real pedestrian browser regressions
 
 Six different real WASD approaches, six proximity-gated interactive actions, completion at reeds and handoff to discovery are tested in browser-nile-village.mjs. Unit checks prohibit remote interaction, entering river and passing through house walls. CI test:browser:chapters now includes this standalone path, preserving existing Nile tests. A green test is NOT overall artistic acceptance; local phone-touch proof and an original 1024/390 screenshot review are mandatory.
+
+## W15.3 — точный QA файл
+
+Отладочный файл, временно считанный с Windows, содержал транспортную строку '[executed on device...]' в конце после исходного JavaScript; эта строка удалена, как и любые результаты удалённого оболочечного вывода. Browser QA проверяет как весь реальный маршрут, так и 390px с CDP touchStart/touchEnd, а не событиями мыши.

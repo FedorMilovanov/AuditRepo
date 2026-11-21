@@ -50,7 +50,35 @@ const fs={mkdirSync},path={join};
  await page.waitForSelector('[data-testid="moses-nile-discovery-3d"]');
  console.log('W15_COMPLETE',JSON.stringify({discovery:true,errors:errs.length}));
  if(errs.length)throw Error(errs.join('; '));
+ // W15.3: a genuine touch on the movement control, not desktop page.mouse.
+ await page.setViewport({width:390,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true});
+ await page.goto(base+'/?e2e&nile-village-mobile=1',{waitUntil:'domcontentloaded'});
+ await page.click('[data-testid="moses-origin-start"]');
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-start"]')?.disabled);
+ await page.screenshot({path:path.join(dir,'w15-village-intro-mobile390.png')});
+ await page.click('[data-testid="nile-village-start"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="nile-village-canvas"]')?.dataset.villageMode==='walk');
+ const mobileStart=await read();
+ const forward=await page.$('[data-testid="nile-village-move-forward"]');
+ const box=await forward?.boundingBox();
+ if(!box)throw Error('W15 mobile movement missing');
+ const session=await page.createCDPSession();
+ const px=box.x+box.width/2,py=box.y+box.height/2;
+ await session.send('Input.dispatchTouchEvent',{type:'touchStart',
+   touchPoints:[{id:3,x:px,y:py}]});
+ try{
+   await page.waitForFunction(start=>{
+     const c=document.querySelector('[data-testid="nile-village-canvas"]');
+     return Math.abs(Number(c?.dataset.villageZ)-start.z)>.30;
+   },{timeout:35000},mobileStart);
+ }finally{
+   await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+   await session.detach();
+ }
+ await page.screenshot({path:path.join(dir,'w15-village-walk-mobile390.png')});
+ await page.click('[data-testid="nile-village-close"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="nile-village-canvas"]')?.dataset.villageMode==='preview');
+ if(errs.length)throw Error(errs.join('; '));
+ console.log('PASS W15 real mobile touch, portrait 390 and safe exit');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
-
-[executed on device: DESKTOP-O3FDOA4 (dcfca44d-427d-4b25-8515-7666448433c4)]
