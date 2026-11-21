@@ -1,0 +1,28 @@
+src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiVsehib1944Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro: OK
+ .../BaptistyRossiiDvaSezda1884Body.astro           |    2 +-
+ .../BaptistyRossiiPeterburgskayaLiniyaBody.astro   |    2 +-
+ .../BaptistyRossiiSovetskayaNochBody.astro         |    4 ++--
+ .../BaptistyRossiiVsehib1944Body.astro             |    4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ .../BaptistyRossiiPodpolnayaPechatBody.astro       |    6 +++---
+ .../BaptistyRossiiSpravochnikBody.astro            |   10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiVsehib1944Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro: OK
+Exact cmp with the built candidate source: PASS
+src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiVsehib1944Body.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatBody.astro: OK
+src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro: OK
+Applied both patches and reversed both; exact base hashes restored.
