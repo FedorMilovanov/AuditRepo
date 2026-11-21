@@ -33,7 +33,7 @@
 
 Кандидат перечитывает запись по ID при сохранении, сверяет исходный текст, различает удаление и изменение, оставляет редактор открытым без записи при конфликте. [Автор сообщает][d7-audit] о прохождении четырёх сценариев на локальном кандидате, включая ручной перенос черновика через буфер обмена без записи новой заметки. Проба сверяет ID и текст в хранилище после reload B, но не скачанные Markdown/JSON; патч добавляет инструкцию скопировать черновик, а не отдельное действие интерфейса. Следующий контроль — точный HEAD с интегрированным исправлением: сохранить выбор B и черновик A, проверить загрузки из обеих вкладок и доступный путь копирования/создания новой записи. QNL‑01/02 остаются открытыми.
 
-**Обновление при ревизии #570.** Проверка смены текста или удаления есть в исходнике `saveNote` отдельного кандидата [#2352][qnl-candidate]: была в `ecbb15e9` и осталась в [точном `bf230bb5`][qnl-candidate-save]. После добавления мобильных помет это уже более широкий PR, не изолированный патч QNL. В [#2346 на `d1234989`][w61-save] той проверки нет. Оба PR не влиты. [Замечание о touch и ID помет][mark-control] относится к более раннему стеку #2352, не к QNL и не к текущему HEAD. Ни эти замеры, ни авторский контроль двух вкладок не заменяют приёмку конфликтов с реальными экспортами на интегрированном HEAD; критерии выше остаются в силе.
+**Передача владельцу Reader/Library.** На Product `main@e733dd29` [исходник `GBHighlights`][qnl-main-save] совпал с аудированным: отдельной проверки конфликта нет. В [открытом Draft #2352][qnl-candidate] на [`f8df423a`][qnl-candidate-save] `saveNote` перечитывает запись, отказывает до записи при удалении/смене текста и не закрывает редактор. Сверен код, не поведение кандидата. Продолжать в #2352 без второго движка: на принятом HEAD нужны две вкладки, сохранённый черновик, reload и реально скачанные Markdown/JSON. [Более ранний touch-контроль помет][mark-control] не закрывает QNL.
 
 ## Воспроизводимость и границы
 
@@ -68,6 +68,6 @@ Headless Shell 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4, светлая �
 [d7-baseline]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2346#issuecomment-7047485329
 [d7-audit]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/6036e10305eb24d1150874abd30e9d328b2b71ae/audit/READER-W57-BROWSER-VISUAL-AUDIT-2026-11-20.md
 [qnl-candidate]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2352
-[qnl-candidate-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/bf230bb55b460f9a6b6f6aeb132a3ff7110ba989/js/highlights.js#L394-L407
-[w61-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/d1234989ffb7f8c27da3b9bbce1eca0355597c2a/js/highlights.js#L343-L366
+[qnl-candidate-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/f8df423a308fb3b84081bae1cd338c6d4e35a3a8/js/highlights.js#L417-L430
+[qnl-main-save]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/e733dd29f6186801eff9260365eeff8e72d4da0c/js/highlights.js#L345-L368
 [mark-control]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2352#issuecomment-7053714082

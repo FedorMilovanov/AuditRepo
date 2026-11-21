@@ -8,6 +8,8 @@
 
 **Независимый повтор браузера.** «Настройки → Обучение → Тест», выбор по тексту, не по позиции; «Точно знаю» и указанный вариант дали **«Верно — и вы были уверены. Точная калибровка.»** Клик по «Перечитать» закрыл лист и сфокусировал видимый заголовок `#sec-systematics` в том же документе (**12/12**, два прогона, 390×844 / 1440×900). Опровергающий абзац ниже заголовка; обычная прокрутка показала его в том же разделе (**12/12**). Это не навигационный сбой: [кадр ответа][answer] · [абзац после прокрутки][paragraph] · [квитанция с трассой][receipt]. Состояние вопроса сохранено при возврате в «Обучение». Дальнейшая проверка заметок относится к [QNL‑01/02](../../arena-quiz-note-lifecycle/2026-11-18/ACCEPTANCE-FOLLOWUP.md), не к ключу.
 
+**Текущая задача: [Product #2356][issue].** На `main@e733dd29` [банк][current-bank] и [абзац статьи][current-article] совпали побайтно с аудированным источником: `correctIndex=0` всё ещё засчитывает первенство, которое статья прямо исключает. Это свежая сверка исходников, не новый браузерный прогон. Владелец исправления — банк обучения Гилла, не статья или общий движок.
+
 ## Что передать редактору банка
 
 - Переписать вариант-ключ и разбор вместе: значимость труда — в развернутой партикулярно-баптистской догматике и церковной практике, а не в непроверенном первенстве среди всех баптистов. Не просто переставить `correctIndex` на один из нынешних дистракторов.
@@ -19,6 +21,9 @@
 [owner]: https://github.com/FedorMilovanov/AuditRepo/pull/570#issuecomment-6983861606
 [product]: https://github.com/FedorMilovanov/gb-is-my-strength/commit/9edef94ece08012223c1364bec7ddcd561cf5713
 [article-pr]: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2328
+[issue]: https://github.com/FedorMilovanov/gb-is-my-strength/issues/2356
+[current-bank]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/e733dd29f6186801eff9260365eeff8e72d4da0c/src/components/article-pilots/gill-series/gillLearningData.ts#L169-L183
+[current-article]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/e733dd29f6186801eff9260365eeff8e72d4da0c/src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro#L479-L484
 [bank]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/gillLearningData.ts#L169-L183
 [article]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro#L479-L484
 [handoff]: https://github.com/FedorMilovanov/gb-is-my-strength/blob/9edef94ece08012223c1364bec7ddcd561cf5713/src/components/article-pilots/gill-series/GillLearningSheet.astro#L553-L597
