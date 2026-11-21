@@ -37,5 +37,6 @@
 | [KESTON-AND-TOKMAK-HOLDINGS.md](KESTON-AND-TOKMAK-HOLDINGS.md) | Проходы XI–XXXII: Токмакское дело Кинаса, папки Keston, слушания Конгресса, список Хайнца (узел `/520` и атрибуция Л. Г. Готмана), тиражи и сверка открытых архивных задач. |
 | [evidence/keston-and-tokmak-holdings-evidence.md](evidence/keston-and-tokmak-holdings-evidence.md) | Доказательная база проходов XI–XXXII: колляция №102/106 с «Вестями», описи, OCR/IIIF-координаты, проверки Drive и непосланные черновики запросов. |
 | [PEER-REVIEWS.md](PEER-REVIEWS.md) | Перекрёстные ревью чужих PR (`AuditRepo #562`, `Research #584` и `#585`), локальные проверки скриптов, байтовые контроли и аномалия `messages5.html`. |
+| [CROSSWALK.md](CROSSWALK.md) | Приёмочная сверка: replay/provenance на `381f8f96`/`9edef94e`, crosswalk к `MASTER_BUG_MATRIX.md`/`WORK_QUEUE.md`/`legacy/` и Product `main` (`e733dd29`, 6 актуальных пунктов), статусы 1971 г. и сопоставление с `d608` (`#573`) и `Research #585`. |
 
 Это [intake](../../README.md) по [операционной модели AuditRepo](../../../../../AUDITREPO_OPERATING_MODEL.md), не MASTER-решение, не разрешение на правку и не аудит всех внешних ссылок, прав и источников. Product, файлы Research, активная матрица и состояния PR не менялись. Передача находок в обсуждение Research не заменяет приёмку.
