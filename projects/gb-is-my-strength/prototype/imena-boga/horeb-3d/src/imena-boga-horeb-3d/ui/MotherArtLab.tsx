@@ -18,7 +18,8 @@ const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
 };
 type Controller={setShot:(v:Shot)=>void;setClip:(v:Clip)=>void;setPause:(v:boolean)=>void};
-export function MotherArtLab(){
+type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb";
+export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"}:{modelName?:ActorModel;phase?:"W18"|"W19"}){
  const canvas=useRef<HTMLCanvasElement>(null);
  const controller=useRef<Controller|null>(null);
  const [shot,setShot]=useState<Shot>('full');
@@ -92,7 +93,7 @@ export function MotherArtLab(){
    setReady(true);
   };
   const houseUrl=new URL('./artlab/horeb_egypt_house_hero_pilot.glb',location.href).href;
-  const actorUrl=new URL('./artlab/horeb_mother_rig_pilot.glb',location.href).href;
+  const actorUrl=new URL('./artlab/'+modelName,location.href).href;
   load.load(houseUrl,gltf=>{
    if(destroyed)return;
    house=gltf.scene;
@@ -172,13 +173,13 @@ export function MotherArtLab(){
    garbageMaterials.forEach(m=>m.dispose());
    gl.dispose();
   };
- },[]);
+ },[modelName]);
  const choose=(v:Shot)=>{setShot(v);controller.current?.setShot(v)};
  const changeClip=(v:Clip)=>{setClip(v);controller.current?.setClip(v)};
  const changePause=()=>{const v=!paused;setPaused(v);controller.current?.setPause(v)};
  return <main className="wrap" data-testid="mother-art-lab">
   <header className="top">
-   <div><p className="kicker">HOREB · W18 REAL HUMAN ACTOR · ART HOLD</p>
+   <div><p className="kicker">HOREB · {phase} REAL HUMAN ACTOR · ART HOLD</p>
     <div className="brand">Мать Моисея — образ</div></div>
    <span className="status">ANATOMICAL MODEL · SKINNING · GLB CLIPS</span>
   </header>
