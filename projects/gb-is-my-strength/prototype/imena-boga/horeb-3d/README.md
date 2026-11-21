@@ -1,102 +1,39 @@
-# HOREB 3D — Имена Бога: перед Святым
+# HOREB 3D — библейская 3D-экспедиция и игра
 
-## Актуальное состояние · 20.11.2026 · W12E.5 — кандидаты каменного окружения
+> **Текущий единственный художественный маршрут:** [ART-FIRST PRODUCTION STRATEGY](docs/ART_FIRST_PRODUCTION_STRATEGY.md). Это действующая инструкция для **следующей** волны; старые W12/W13-планы и `AGENT_HANDOFF.md` ниже по истории — не текущие приказы.
 
-**Единственный Draft PR #543**, каноническая ветка `lane/horeb-3d-lab-20261108`. Проверяйте GitHub на **фактическом точном HEAD SHA**: результаты предыдущих волн не переносятся на следующий commit. [PR](https://github.com/FedorMilovanov/AuditRepo/pull/543).
+## Состояние / владелец
 
-**W12E.3 геометрия склонов:** `4c03322`, [HOREB QA #44610123225 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44610123225), Validate и Preflight SUCCESS, целевой визуальный PASS устранения отвесных горных стен. **W12E.4 поля валунов:** `0f02b89`, [HOREB QA #44634743511 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44634743511), Validate и Preflight SUCCESS, source 157/157, geometry 198/198, placement 8/8. Реальные одинаковые Chromium-кадры W12E.3 artifact #14571544367 против W12E.4 artifact #14584332862 подтвердили разрыв старого кольца, **но ART HOLD из-за визуально искусственных каменных куч**, особенно mobile390. [Подробный акт](https://github.com/FedorMilovanov/AuditRepo/pull/543#issuecomment-7025067362).
+- **Один канонический [Draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543)**, ветка `lane/horeb-3d-lab-20261108`. Реальный HEAD и exact-SHA CI каждый раз сверять заново. Ни один старый SUCCESS не переносить на новый коммит.
+- На момент смены стратегии (21.11.2026) W15.5 реализовал **playable blockout**: от условного жилого квартала к тростнику у Нила и к встрече дочери фараона. Игровая последовательность работает в тестах, но **премиальный ART, полноценные живые персонажи, физические игровые действия, историческая/Research/rights редактура, аппаратные iOS/Android и релиз — HOLD**.
+- Реальные сюжетные миры: ранний Нил, колодец Мадиама, условная семейная стоянка, Хорив/несгорающий куст. 42 исследования — отдельный архив лабораторных досье (не 42 личных имени Бога и не 42 готовых полноценных миров). Остальные главы Исхода не объявлять реализованной 3D-картой.
+- Сцены — уважительная **художественная реконструкция**, не заявленная археологическая идентификация дома Моисея или горы; Бога не изображать, не искажать Исход 1–4.
 
-**W12E.4.1 физическая геометрия:** `9837168`, [HOREB QA #44637444069](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44637444069), [Validate #44637444023](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44637444023), [Preflight #44637444142](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44637444142). В новом исходниковом тесте реальные вершины повёрнутых дodecahedron проверяются на полное покрытие коллайдером; старый `0.68*sx` радиус был слишком мал. Source 158/158, geometry 198/198, placement 8/8 и Validate/Preflight PASS при написании акта. **Проверить терминальный exact-SHA 6/6, прежде чем присваивать полный инженерный PASS.**
+## С чего начать новому агенту
+1. **[docs/ART_FIRST_PRODUCTION_STRATEGY.md](docs/ART_FIRST_PRODUCTION_STRATEGY.md)** — единственная актуальная визуально-игровая стратегия, gates, ограничение scope, cleanup ledger и метод приёмки.
+2. **[AGENT_NEXT_PROMPT.md](AGENT_NEXT_PROMPT.md)** — короткая текущая инструкция на следующий инженерно-художественный шаг.
+3. **[AGENT_HANDOFF.md](AGENT_HANDOFF.md)** — исторический журнал многочисленных прежних волн, пригоден для forensic. **НЕ является текущим планом и не должен сам запускать W12E.5.**
+4. **[SOURCE_PROVENANCE.md](SOURCE_PROVENANCE.md)**, **[IMPORT_MANIFEST.json](IMPORT_MANIFEST.json)** и `original/arena-horeb-original.zip` — нетронутый авторский исходник/архив. Оригинальные доказательства и сведения о лицензиях беречь.
+5. `src/imena-boga-horeb-3d/data/nileVillageQuest.ts`, `ui/NileVillageJourney.tsx`, `engine/NileVillage3D.ts` — нынешний playable blockout. `NilePrelude.ts`, `MidianWell.ts`, `MidianHomestead.ts` — существующие независимые миры и защитная физика.
+6. `tests/` — текущие regressions; `briefs/SCENE_SPEC_42.md` и `audit/` — **исторические** решения/артефакты, не указание клонировать 42 сцены.
 
-**W12E.5 (текущая предлагаемая волна):** уменьшить чрезмерное скопление одинаково крупных валунов, отбирая около **94** из исходных 145 детерминированных семян с неравномерным размером и попарным безопасным расстоянием между камнями. Это сохраняет пять разных каменистых участков, один InstancedMesh/draw call, общий список для рендера и коллизий, неизменные колодец, сосуды, крыши, тексты и 42 досье. **До exact-SHA 6/6 и новых оригинальных PNG W12E.5 ENGINEERING/ART = HOLD.** [План и риски](audit/W12E5_ROCK_SILHOUETTE_SPACING_CANDIDATE.md).
-
-**Только четыре основные 3D главы:** младенец Моисей у Нила (Исх. 2:1–6), колодец Мадиама (2:16–17), условная семейная стоянка (2:18–21), отдельный Хорив (3–4). 42 досье — исторический лабораторный архив, **не** 42 собственных имени Бога; остальная часть Исхода ещё не самостоятельные готовые 3D-миры. Сцены Мадиама условны, точная археологическая идентификация не заявляется.
-
-**Все глобальные HOLD:** общий премиальный ART, права/Research/содержательная библейская редактура, люди и стада, настоящие GPU Android/iOS, голос, незавершённый Исход и релиз. Без main merge, deployment, новых веток/PR, Product/Research и вмешательства в незавершённую локальную Windows W10D `NilePrelude.ts`.
-
-### Архив · состояние W12D.7 — ограниченная коррекция складок стоянки
-
-**Текущая кодовая волна:** W12D.7, отдельный кандидат на основе полностью проверенной W12D.6 `dd90c52a0218d4ca15f944e8ec307130a35f6493`. [W12D.6 HOREB QA #44378422909 — 6/6 SUCCESS](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422909), [Validate #44378422708](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422708) и [Preflight #44378422704](https://github.com/FedorMilovanov/AuditRepo/actions/runs/44378422704) SUCCESS; 151/151 source, 198/198 geometry, 8/8 placement, полный Chromium и четыре независимых пешеходных задания. Сравнены настоящие PNG `homestead-walk-interior.png` и `homestead-walk-mobile390.png` с W12D.5.1: сетка волокон стала менее механической, новых крупных пятен, световых щелей, смещения навеса, корзин или элементов управления нет. Это **локальный целевой ART PASS W12D.6**, не всей среды.
-
-**Что добавлено W12D.7:** только более естественные *трёхмерные* складки существующей 28×14 задней ткани при неизменных геометрии крыши, габаритах коллизий и едином процедурном материале. Реальная независимая локальная Windows/CPU-Chrome-проверка, TypeScript, Vite и 152/152 source, 198/198 geometry, 8/8 placement успешны; новые контрольные точки строго держат ткань перед закрывающим фронтоном и внутри прежнего препятствия. **Новому HEAD W12D.7 требуется собственный 6/6 HOREB QA + Validate/Preflight и проверка точных новых CI PNG; до этого W12D.7 ENGINEERING/ART = HOLD.**
-
-**Текущая архитектура:** реальные независимые 3D Нил (Исх. 2:1–6), колодец Мадиама (Исх. 2:16–17), условная семейная стоянка (Исх. 2:18–21), отдельный Хорив (Исх. 3–4); 42 досье — сохранённая лаборатория Research, а не 42 личных имени Бога. Эпизод Гирсама и большая часть последующего Египта/Исхода остаются текстовыми переходами. Визуальная реконструкция материалов/дома/географии **условна**, не археологически доказана.
-
-**Глобальные HOLD:** дальнейшая художественная режиссура, персонажи/стада, настоящие GPU Android/iOS, Research/редактура/права, голос и релиз. Только один [Draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) и каноническая ветка `lane/horeb-3d-lab-20261108`. Никаких `main` merge, Product/Research, force-push/deploy, новых веток или вмешательства в незавершённую Windows W10D `NilePrelude.ts`. Статусы всегда проверять на точном SHA.
-
-Основной актуальный ретроспективный акт: [HOREB_WORLD_SPLIT_EXODUS_TIMELINE_V1.md](audit/HOREB_WORLD_SPLIT_EXODUS_TIMELINE_V1.md). Раздел W1 ниже — сохранённый исторический план, а не нынешнее состояние реализации.
-
-**Раздел:** AuditRepo → [Отдел разработок / Prototype Lab](../../../../../references/PROTOTYPE_LAB.md) · `gb-is-my-strength` → `prototype/imena-boga/horeb-3d/`.
-
-**Статус:** `IMPORTED / LAB DEVELOPMENT`; настоящий исходный Arena-проект находится в [Draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) на ветке `lane/horeb-3d-lab-20261108`. **Не Product, не деплой и не редакционно опубликованный материал.**
-
-## Новый сюжетный маршрут — W1 (15 ноября 2026)
-
-**Готовится хронологическая экспедиция «Исход 3–40».** Купина перестаёт
-быть концом большого музея: после призвания Моисей возвращается
-в Египет, затем море, Марра, Рефидим и Синайский завет.
-**«Патриархи» получают самостоятельный будущий мир**. Более поздний
-Ветхий Завет и Новый Завет остаются отдельными планируемыми мирами.
-
-[Решение, волны и независимые ворота](audit/HOREB_WORLD_SPLIT_EXODUS_TIMELINE_V1.md)
-· `src/imena-boga-horeb-3d/data/storyWorlds.ts` — проверяемый план
-распределения 42 ID. **Внимание: это не внедрённая геометрия новой
-экспедиции**; исходная линейная лаборатория сохранена до отдельной W2.
-Никакой Product merge/deploy, редакционные `HOLD` действуют.
-
-## Начать здесь
-
-1. **[AGENT_HANDOFF.md](AGENT_HANDOFF.md)** — фактическое состояние, иммутабельный источник, SHA, тесты, допуски, ближайшая работа.
-2. **[AGENT_NEXT_PROMPT.md](AGENT_NEXT_PROMPT.md)** — рабочий запрос для Arena Agent, который продолжает *этот* код.
-3. **[ARENA_ORIGINAL_README.md](ARENA_ORIGINAL_README.md)** — неизменённая оригинальная инструкция Arena, переименованная при импорте для сохранения лабораторной навигации.
-4. **[SOURCE_PROVENANCE.md](SOURCE_PROVENANCE.md)** · [IMPORT_MANIFEST.json](IMPORT_MANIFEST.json) · [original/arena-horeb-original.zip](original/arena-horeb-original.zip) — происхождение и побайтовый оригинал.
-5. **[docs/SCENE_MAP.md](docs/SCENE_MAP.md)**, **[docs/SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md)**, **[audit/acceptance-matrix.md](audit/acceptance-matrix.md)**, **[audit/iteration-log.md](audit/iteration-log.md)** — имеющийся маршрут и подтверждённые/незакрытые проверки.
-6. **[briefs/SCENE_SPEC_42.md](briefs/SCENE_SPEC_42.md)** — режиссура 42 различных исследовательских экспозиций (исторический художественный бриф, только после сохранения имеющегося проекта).
-
-## Что действительно импортировано
-
-Исходное приложение React 19 / TypeScript / Vite / Three.js, 8 пространственных зон, 42 исследовательские записи Research (29+13), управление от первого лица и на мобильных устройствах, аппарат снятия обуви и ограничения у горящего куста, доступный режим чтения с/без JS, детальные unit- и браузерные тесты. Ключевые файлы:
-
-- `package.json` и `package-lock.json`;
-- `src/imena-boga-horeb-3d/HorebApp.tsx`;
-- `src/imena-boga-horeb-3d/engine/World.ts`, `SceneZones.ts`, `BurningBush.ts`, `nav.ts`;
-- `src/imena-boga-horeb-3d/data/exhibits.ts` и `validate.ts`;
-- `tests/run.mjs`, `tests/test.sh`, `tests/e2e.mjs`, `tests/regression.mjs`, `tests/generate-reader.mjs`;
-- `public/reader.html` — исторически сгенерированный HTML без JavaScript.
-
-Подтверждённый первоначальный импорт: коммит `4d9ec9f7899ff6f6af349f404460e9137b4766b8`. SHA-256 исходного ZIP: `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`. SHA каждого исходного файла проверен против Git-дерева при импорте. Архив `.test-build` сохранён **в оригинальном ZIP**, а не включён в активное дерево.
-
-## Локальная разработка
+## Инженерный запуск
 
 ```bash
 cd projects/gb-is-my-strength/prototype/imena-boga/horeb-3d
 npm ci
-npm run build  # prebuild regenerates reader.html and fonts from the 42-entry registry
+npm run build
 npx tsc --noEmit
-sh tests/test.sh
-npm run dev  # predev regenerates reader.html and fonts
+bash tests/test.sh
+npm run dev -- --host 127.0.0.1
 ```
 
-Браузерные тесты: `tests/e2e.mjs` и `tests/regression.mjs`; см. оригинальный README для переменной `PW_PATH`. Версии и браузерный результат нужно засвидетельствовать в текущей рабочей ветке. **Наличие исходников и 24/24 повторённых unit-тестов из архивного предварительно скомпилированного набора не означает проверку чистой сборки после `npm ci`.** Реальные GPU/WebKit/Firefox и редакционная сверка — отдельные незакрытые ворота.
+Для настоящего Chromium с работающим сервером: `HOREB_BASE_URL=http://127.0.0.1:5173 HOREB_BROWSER_PATH=/path/to/chrome npm run test:browser:chapters`. Используйте также source, accessibility и остальной тестовый набор по риску конкретного изменения. Переменные на Windows: `npm.cmd`, `npx.cmd`, Git Bash, `$env:HOREB_BROWSER_PATH`. Не полагаться на результат только headless SwiftShader как на FPS телефона.
 
-## Границы
+Локальный Windows preview лаборатории W15: `http://127.0.0.1:5191/` (доступен **только на компьютере**, где поднят сервер). W14 эксперимент отдельно на `:5189`, не текущий ART baseline и не Product. Не считать наличие URL доказательством качества/релиза.
 
-- Основное исследование [Research #379](https://github.com/FedorMilovanov/Research/pull/379): 29 + 13 = **42 исследуемых обозначения**, не «42 личных имени Бога», **0 публикационных допусков**.
-- Прототипы [Atlas/Созвездие #538](https://github.com/FedorMilovanov/AuditRepo/pull/538) — **отдельные** концепции; не переписывать.
-- Сайт [gospod-bog.ru](https://gospod-bog.ru/) / [Product](https://github.com/FedorMilovanov/gb-is-my-strength) — отдельный владелец. Никакой автоматической замены страниц, публикации или Product-переноса.
-- Все карточки `HOLD` до независимого source/editorial/rights review. Благоговейная сценография, без визуального изображения Бога; куст должен быть **вне** художественной пещеры на Хориве. Даже после снятия обуви внутренний запрет подхода к кусту действует.
+## Новый способ производства
 
-**Один прототип — одна каноническая ветка/PR.** Следующий агент должен читать и менять **реальные исходники** здесь, а не создавать новоявленное приложение с таким же названием.
+**Один hero slice, а не 20 параллельных микроволн**: готовая авторская 3D-модель дома, персонаж матери со скелетом и анимациями, предметы подготовки корзины, связная улица и густой берег. Blender → glTF/GLB → лицензированный asset manifest → real-time Three.js → 6 одинаковых проверенных камер + настоящий desktop/mobile walkthrough. До ART LOOKDEV gate не развивать все остальные миры.
 
-## Доказательный браузерный smoke-тест (не входит в 88 unit/geometry)
-
-Запусти в отдельном терминале `npm run dev -- --host 127.0.0.1`, затем:
-
-```bash
-HOREB_BASE_URL=http://127.0.0.1:5173 HOREB_BROWSER_PATH=/path/to/chrome npm run test:browser:smoke
-```
-
-На Windows в PowerShell: `$env:HOREB_BROWSER_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'; npm.cmd run test:browser:smoke`.
-Проверка использует реальный Chromium, не отключает web security и **падает**, если браузер или работающий сервер недоступны; не объявлять её PASS при SKIPPED. Проверяются загрузка, фокус модального окна, старт WebGL, 42 размещения, WASD, пауза анимации на время диалога, HTML reader с 42 статьями, no-WebGL fallback и мобильный viewport. Скриншоты: `.test-build/screenshots/smoke-*.png` — локальные QA-артефакты, не источник исторических фактов и не GPU-бенчмарк.
-
-Для полного прохода всех 42 экспонатов в Chromium с настоящими проверками панели и источников: `npm run test:browser:exhibits` при работающем Vite-сервере и `HOREB_BROWSER_PATH`. Каждая метка проверяется через ограниченный `teleportTo` (защита от стен/границ), появление точного prompt ID, клавишу E, правильное досье и Esc. **PASS только при 42/42**, ошибки перечисляются с ID; физическую историческую точность тест не доказывает.
+**Запреты:** не переписывать Product/Research, не merge/deploy, не создавать параллельные HOREB V2, PR/ветки, не делать force-push или reset чужой грязной рабочей копии W10D. Не удалять временные каталоги, исходный ZIP/Research/evidence или тесты без доказанной замены. Итоговая художественная приёмка отделена от инженерной.
