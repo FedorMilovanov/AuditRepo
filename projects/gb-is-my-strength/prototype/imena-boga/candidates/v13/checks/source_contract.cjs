@@ -1158,11 +1158,12 @@ const w108Expected={
   'el-rachum-ve-channun': {exact_surface:1,related_formula:4},
   'el-olam': {exact_surface:1,related_formula:1},
   'yhwh-mekaddishkem': {exact_surface:4,related_formula:1},
-  'immanuel': {exact_surface:2,greek_reception:1}
+  'immanuel': {exact_surface:2,greek_reception:1},
+  'el-chai': {exact_surface:1,related_formula:3,greek_reception:1}
 };
 const w108Counts={},w108Seen=new Set();
-if(!Array.isArray(w108Ledger.attestations)||w108Ledger.attestations.length!==15)
-  throw Error('W108 expected 15 verse attestations');
+if(!Array.isArray(w108Ledger.attestations)||w108Ledger.attestations.length!==20)
+  throw Error('W108/W109 expected 20 verse attestations');
 for(const a of w108Ledger.attestations){
   const id=a.cardId+':'+a.verse;
   if(w108Seen.has(id))throw Error('W108 duplicate verse '+id);
@@ -1193,3 +1194,29 @@ for(const a of w108Ledger.attestations){
 if(JSON.stringify(w108Counts)!==JSON.stringify(w108Expected))
   throw Error('W108 relation matrix changed '+JSON.stringify(w108Counts));
 console.log('W108_ATTESTATION_RELATION_SSOT_PASS',w108Ledger.attestations.length);
+
+
+// W109: El Chai is a Hebrew epithet with distinct prefixed/maqaf witnesses;
+// Matthew 16:16 is Greek reception, never an exact Hebrew attestation.
+const w109Card=w107Slice(w108Src,"id: 'el-chai'","id: 'el-roi'");
+for(const required of [
+ "original: 'אֵל חַי'",
+ "literalMeaning: 'Живой Бог'",
+ "occurrencesShort: 'Нав. 3:10",
+ "В Иер. 10:10 употреблено другое выражение",
+ "масоретский Пс. 42:3",
+ "масоретский Пс. 84:3",
+ "масоретский Ос. 2:1",
+ "богословское сопоставление, а не исходный еврейский стих"
+])if(!w109Card.includes(required))throw Error('W109 El Chai guard missing '+required);
+const w109Evidence=w108Ledger.attestations.filter(x=>x.cardId==='el-chai');
+if(w109Evidence.length!==5)throw Error('W109 evidence count mismatch');
+for(const [verse,form,lang,relation] of [
+ ['Joshua 3:10','אֵל חַי','hebrew','exact_surface'],
+ ['Psalm 42:3 (MT) / Russian 41:3','לְאֵל חָי','hebrew','related_formula'],
+ ['Psalm 84:3 (MT) / Russian 83:3','אֵל־חָי','hebrew','related_formula'],
+ ['Hosea 2:1 (MT) / Russian 1:10','אֵל־חָי','hebrew','related_formula'],
+ ['Matthew 16:16','τοῦ θεοῦ τοῦ ζῶντος','greek','greek_reception']
+])if(!w109Evidence.some(x=>x.verse===verse&&x.form===form&&x.language===lang&&x.relation===relation))
+ throw Error('W109 inaccurate attestation '+verse);
+console.log('W109_EL_CHAI_HEBREW_GREEK_SCOPE_PASS',w109Evidence.length);
