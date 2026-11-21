@@ -42,7 +42,6 @@ export function createNileVillage3D(
  sun.position.set(-8,14,-9);scene.add(sun);
  const mat=(hex:number,roughness=.96)=>new THREE.MeshStandardMaterial({color:hex,roughness});
  const plaster=[mat(0xb9a080),mat(0xc3a887),mat(0xa98e70),mat(0xc1a47e)];
- plaster.forEach(m=>{m.map=brickTexture;m.bumpMap=brickTexture;m.bumpScale=.013;});
  const clay=mat(0x81624b),roof=mat(0x8e785e),wood=mat(0x5b4936),cloth=mat(0xb5a18a);
  const sedgeMat=mat(0x626f42),reedTip=mat(0x95854a);
  const skin=mat(0xb69176),dark=mat(0x42362b);
@@ -86,6 +85,7 @@ export function createNileVillage3D(
    tex.magFilter=THREE.LinearFilter;tex.needsUpdate=true;return tex;
  }
  const soilTexture=makeGrainTexture(false),brickTexture=makeGrainTexture(true);
+ plaster.forEach(m=>{m.map=brickTexture;m.bumpMap=brickTexture;m.bumpScale=.013;});
  const ground=new THREE.Mesh(groundGeo,new THREE.MeshStandardMaterial({
    vertexColors:true,roughness:1,side:THREE.DoubleSide,
    map:soilTexture,bumpMap:soilTexture,bumpScale:.022,

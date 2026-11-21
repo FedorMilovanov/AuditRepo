@@ -23,7 +23,7 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
      const control=createNileVillage3D(c,reducedMotion,(x,z)=>setPosition({x,z}));
      if(disposed){control.dispose();return;}
      engine.current=control;control.setStep(step);setReady(true);
-   }).catch(()=>{if(!disposed)setFailed(true);});
+   }).catch(err=>{console.error('W15 village scene init failed',err);if(!disposed)setFailed(true);});
    return ()=>{disposed=true;engine.current?.dispose();engine.current=null;};
  // New journey is intentionally independent of legacy Nile scene remount.
  // eslint-disable-next-line react-hooks/exhaustive-deps
