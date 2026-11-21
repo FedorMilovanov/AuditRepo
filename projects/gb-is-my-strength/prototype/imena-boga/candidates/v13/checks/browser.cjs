@@ -1016,7 +1016,13 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         ['Part divider chip','button[aria-label^="Перейти к имени "]','yhwh'],
         ['Next section','#yhwh button[aria-label^="Следующее имя:"]','ehyeh']
       ];
-      if(width>=768)cases.push(['NameTree research','button[aria-label^="Открыть исследование:"]','*']);
+      // Test the *rendered* responsive branch, not the nominal viewport.
+      // Linux/WebKit can reserve 10px for the classic scrollbar: with a
+      // 768px viewport, the 758px layout uses NameTree's mobile buttons.
+      const desktopTree=await page.evaluate(()=>matchMedia('(min-width: 768px)').matches);
+      cases.push(desktopTree
+        ? ['NameTree research','button[aria-label^="Открыть исследование:"]','*']
+        : ['NameTree mobile root','#tsentr button.card-parchment','yhwh']);
       for(const [kind,selector,id] of cases){
         const from=page.locator(selector).first();
         await from.scrollIntoViewIfNeeded();
