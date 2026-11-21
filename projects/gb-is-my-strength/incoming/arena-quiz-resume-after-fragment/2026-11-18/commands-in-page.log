@@ -1,0 +1,49 @@
+# F27 supplemental replay: same rendered heading via native TOC (+hash) and Learning outline (no hash).
+# Audited anchor: Product 9edef94ece08012223c1364bec7ddcd561cf5713, intake lineage 2026-11-18.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only coordination]
+# Existing Draft #570 at db41f2472390821804d831fc2fc0ea718888e2ef, 241 paths and 27 REPORTs.
+# Exact-head Validate 44743423468 and Preflight 44743423563 PASS. No reruns.
+for endpoint in issues/570/comments pulls/570/comments pulls/570/reviews; do
+  gh api --paginate "repos/FedorMilovanov/AuditRepo/$endpoint?per_page=100" | jq -cs add
+done
+# Issue comments 6983861606, 6990232675, 7040523505 unchanged; no inline or review records.
+# Prior route handoff QE/QNL not rewritten. No sweep of all 27 reports.
+gh api 'repos/FedorMilovanov/gb-is-my-strength/compare/ca6262f88a851a19d30466d57aafd112fc3ed01a...513719f9d00e6a581227bbfe65345e79da15f5dd'
+# #2348 +1/10, workflow/head/voice changes, no direct diff to checked owners. Not a full-build equivalence claim.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# Byte-equal status: 48 dist pins, PDF.js 5.4.624, pending native dialog. No print run.
+
+[Exact Product owners and browser A/B]
+# PRODUCT, TOOLS, OUT, CHROMIUM absolute paths; same production-like build as F27 (see commands.log).
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+A=9edef94ece08012223c1364bec7ddcd561cf5713
+S=src/components/article-pilots/gill-series
+for f in js/floating-cluster-controller.js js/reader-state.js "$S/GillLearningSheet.astro" "$S/GillPartTocOverlay.astro" "$S/gillSeriesData.ts"; do
+  gh api -H 'Accept: application/vnd.github.raw+json' "repos/FedorMilovanov/gb-is-my-strength/contents/$f?ref=$A" > "$OUT/source-$(basename "$f")"
+  cmp "$OUT/source-$(basename "$f")" "$PRODUCT/$f"
+done
+for f in js/reader-state.js js/floating-cluster-controller.js js/bookmark-engine.js js/site-utils.js css/floating-cluster.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+(cd "$PRODUCT" && node scripts/reader-state-regression-test.js)
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
+node --check "$Q/harness/resume-in-page.mjs"
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-a" "$CHROMIUM"
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-b" "$CHROMIUM"
+python3 "$Q/harness/check-in-page-replays.py" "$OUT/run-a" "$OUT/run-b" "$PRODUCT/dist" \
+  "$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness.json" "$OUT/resume-in-page-receipt.json"
+# Pilot 3/3: wide rail, narrow outline and narrow plain. Not counted. Final observer uses getActiveSection and trusted wheel log.
+# Formal 6+6; 49 pins, all shared with the 52 rehashed F27 pins. No Pagefind, Scripture, HTTP errors or forced interactions.
+# All valid offers existed before any section choice. TOC adds native hash; outline follows JS scroll without changing URL.
+# Both reach sec-hebrew before CTA, with different offsets. CTA fails to scroll only in native hash arm; plain and outline restore A.
+# Two wide trials differ in when the canonical record changes relative to the click. Verifier uses recorded at-click snapshots,
+# not an assertion that storage must already reflect the visible section. Source click midpoint can be clipped; actual click trusted.
+# 4/4 PNG pairs exactly equal. Alias toc-390-before to F17 gill-resumed-previous-heading.png;
+# alias outline-390-after to F26 other-enter-390-recovered.png. Both new PNGs are selected from A; raw A and B traces retained.
+
+[Admission / publication]
+# Existing F27 intake only. Force-add this log (ignored *.log). No legacy or shared registries changes.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Fresh comment/PR/base guards, fast-forward existing branch only. Link scope and evidence under F27 in #570.

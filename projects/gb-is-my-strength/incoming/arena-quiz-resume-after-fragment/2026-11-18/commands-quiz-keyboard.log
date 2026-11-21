@@ -1,0 +1,36 @@
+# F27 narrow follow-up: focus and keyboard activation in the existing Gill II quiz, then pointer CTA.
+# No Product changes. Draft #570 previously at 712976330179a7c7ff10a32b5b435d357844c882, 255 paths.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713. Reverified all earlier F27 receipts, 9+9, 6+6 and 2+2, without browsing anew.
+# Source/raw/dist byte equality checked for site-utils, ReaderState, floating controller and floating cluster CSS.
+# GillLearningSheet.astro raw source also equal. Chromium 153.0.8010.0, Playwright 1.62.1, Node 22.23.4 as before.
+
+[Coordination]
+# Fresh #570: four issue comments, no inline comments/reviews, Validate / Preflight green on previous head.
+# Product #2350 is one W57 audit MD, not a runtime patch. #2346 a287413..e415560 +7/34:
+# exact site-utils.js change is quotation identity (deduplication), not trapTopOverlayFocus or resume.
+# #2348 1839ac0..9262011 +3/4: no match to the F27 or print owners. No admission of the adjacent drafts.
+# QPDF-01 still Product #2349, same timeline, no linked repair/native print pair; preview status byte-equal. No printing.
+
+[Keyboard replays]
+# PRODUCT/OUT/CHROMIUM/TOOLS absolute paths. Same production-like build and stock no-store server as commands-in-page.log.
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
+E="$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence"
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --check "$Q/harness/resume-in-page.mjs"
+node --check "$Q/harness/quiz-keyboard.mjs"
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-a" "$CHROMIUM" quiz-keys
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-b" "$CHROMIUM" quiz-keys
+python3 "$Q/harness/check-quiz-keyboard-replays.py" "$OUT/run-a/resume-in-page-witness.json" \
+  "$OUT/run-b/resume-in-page-witness.json" "$PRODUCT/dist" "$E/quiz-push-witness.json" "$OUT/quiz-keyboard-receipt.json"
+# Both processes exit 0, two contexts each. All four retained regardless of overlap or order.
+# Pilot (excluded from 2+2): one context, initial keyboard driver, nine questions to #sec-hebrew, same CTA effect.
+# Driver does not wait for auto-dismiss or click answers with the mouse; no seed, DOM focus/scroll writes, patched runtime/timer.
+# CTA stays a real pointer click. Clean mode, no touch, native dialog, live host, Search or SW.
+# Evidence: 4/4 keyboard source while on, 6 covered confidence activations in 3/4 contexts, 4/4 CTA clicks without return.
+
+[Recheck]
+# Побайтная сверка сохранённых F27-квитанций: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+# Shared validator only accepts detail=0 for this mode's live quiz source; mouse-mode semantics and receipt unchanged.
+# Four negative verifier checks on disposable copied rows: untrusted Enter, mouse in place of Enter, hashchange,
+# and scroll after CTA were all rejected. No witness files or rendered Product code were changed in these checks.
+# Append-only result within F27 plus reproducible harness additions. No changes to other intake reports or shared registries.

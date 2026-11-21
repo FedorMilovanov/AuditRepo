@@ -1,0 +1,51 @@
+# Stage 23 — intake slot 2026-11-18 UTC. Reader library editor + global search stacking.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713 (production-like dist).
+# AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0; append to existing Draft #570.
+
+[Coordination / provenance]
+git status --short --branch
+git rev-parse HEAD
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+# Before: 162 exact paths; 28fc722ef172ef22978329bbbcf436fbba017a00; exact prior body/title, open Draft, no reviews/merge.
+# Audit main fe692393 / Product main 9edef94e unchanged. Read-only compare: d608fa54 39847652->8541e630 (+1/4 Baptists),
+# fa045b53 3e5182d7->8ec1b1ea (+1/3 Keston), separate intake. No neighboring Product owner delta at start/mid.
+gh api repos/FedorMilovanov/gb-is-my-strength/pulls/1039 --jq '[.state,.merged,.merge_commit_sha]'
+# #1039 merged 007c2d3c50b9ada78a7f4ee709ea493d1ec20d3a. Source only for historical SEARCH-P2-11; today stock blocker z=2147482500 is not a real library.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# QPDF-01 same exact status (48 pins / PDF.js 5.4.624 / pending); checked before and after. Not a browser print run.
+
+[Product controls and exact build]
+# PRODUCT/TOOLS/CHROMIUM are absolute; OUT is scratch with fresh run dirs. Build as in stage 12 (unmodified exact dist, no Pagefind).
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && npm run overlay:runtime:test)
+for f in js/{highlights,reader-library-presenter,reader-library-v3,site-utils,search,floating-cluster-controller}.js css/{highlights-runtime,command-palette}.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# Source/runtime integrity guards PASS, not proof of two actual windows. Inspect site-utils.js claimOverlayInert and syncHighlightDialog,
+# highlights.js open/close/hideEditor, search.js ne/re, CSS z/paint, stock probe scripts/search-modal-browser-contract.mjs:308-324.
+# Initial pilot measured layers, field hit and standalone Escape. A false premise (library inert after GUI settled) failed: save was still library hit.
+# Earlier trial of DOMSnapshot decoder tripped absent attribute-table values; fixed the harness (not Product) before the two complete runs.
+
+[Two independent replays]
+P="$PWD/projects/gb-is-my-strength/incoming"
+W="$P/arena-quiz-library-search-stack/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-search-handoff/2026-11-18"
+node --check "$W/harness/library-search-stack.mjs"
+# Both ran in parallel in separate browser processes and fresh contexts; repeat sequentially if preferred:
+for run in a b; do
+  node "$W/harness/library-search-stack.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/quiz-search-handoff-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# PASS 14+14, 52 pins, all 48 prior pins shared/reverified; 4/4 PNGs A=B, only A copies in Git.
+# 20 real stacks with input focused, hit owned by library and two AX modals, versus 4 palette-only + 4 library-only.
+# Stacked Escape-only: 12/12 keep the draft at Cancel, Tab+Enter saves. Wide field click: library header/panel and own next Tab 2/2.
+# Narrow field click: actual library backdrop closes editor, global palette stays; reopen empty with no submit/no record 2/2.
+# Real save click via same visible button, not field: library commits while palette logically open 4/4. No seeded storage, API or style injection.
+# One document each, preserved quiz review; no unexpected local HTTP/pageerror/emergency unlock. One expected HEAD /pagefind/pagefind.js 404 per search context.
+
+[Admission]
+# CHANGED = sorted exact cumulative path list against fcf2e69b. Stage only this intake incl. its commands.log if ignored.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Watch exact-head GitHub checks on this Draft only. No Product, ledger/MASTER, other branch, review, merge, deploy or Drive mutation.
