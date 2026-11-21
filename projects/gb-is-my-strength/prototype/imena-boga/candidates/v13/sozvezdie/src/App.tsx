@@ -68,6 +68,7 @@ export default function App() {
     }
   });
   const mainRef = useRef<HTMLElement>(null);
+  const unfragmentedReturnFocusRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
 
@@ -121,6 +122,14 @@ export default function App() {
   }, []);
 
   const scrollTo = useCallback((id: string) => {
+    // Remember the control that started navigation from the plain index URL.
+    // Native Back restores its scroll but not the focus of a SPA jump.
+    if (!window.location.hash) {
+      const source = document.activeElement;
+      if (source instanceof HTMLElement && source !== document.body) {
+        unfragmentedReturnFocusRef.current = source;
+      }
+    }
     const isName = NAMES.some((n) => n.id === id);
     if (isName) setActive(id);
     window.history.pushState(null, "", `#${id}`);
@@ -229,7 +238,11 @@ export default function App() {
       } catch {
         return; // A malformed external fragment must not crash navigation.
       }
-      if (!id) return;
+      if (!id) {
+        const source = unfragmentedReturnFocusRef.current;
+        if (source?.isConnected) source.focus({ preventScroll: true });
+        return;
+      }
       const el = document.getElementById(id);
       if (!el) return;
       const isName = NAMES.some((name) => name.id === id);

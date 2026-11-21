@@ -1074,6 +1074,33 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           throw Error('W113 Back/Forward Tab bounced '+JSON.stringify({engine,width,direction,expected,landed,next}));
       }
       console.log('W113_HISTORY_KEYBOARD_PASS',engine,width);
+      // W114: returning to an unfragmented grid URL must restore the
+      // initiating control. Native browser scroll restoration alone leaves
+      // focus in the departed article and the next Tab jumps thousands of px.
+      const rootPage=await ctx.newPage();
+      try{
+        await rootPage.goto(base+'/sozvezdie/',{waitUntil:'domcontentloaded'});
+        const origin=rootPage.locator('#sozvezdie button[aria-label^="Перейти к разделу:"]').first();
+        await origin.scrollIntoViewIfNeeded();
+        await origin.focus();
+        await rootPage.keyboard.press('Enter');
+        await rootPage.waitForFunction(()=>location.hash==='#yhwh');
+        await rootPage.goBack({waitUntil:'domcontentloaded'});
+        await rootPage.waitForFunction(()=>location.hash===''&&
+          !!document.activeElement?.matches('#sozvezdie button[aria-label^="Перейти к разделу:"]'),null,{timeout:5000});
+        const landed=await rootPage.evaluate(()=>({hash:location.hash,scroll:scrollY}));
+        await rootPage.keyboard.press('Tab');
+        const next=await rootPage.evaluate(()=>({
+          inGrid:!!document.activeElement?.closest('[data-name-result-grid]'),
+          hash:location.hash,scroll:scrollY
+        }));
+        if(!next.inGrid||next.hash||Math.abs(next.scroll-landed.scroll)>500)
+          throw Error('W114 root Back Tab escaped grid '+JSON.stringify({engine,width,landed,next}));
+        await rootPage.goForward({waitUntil:'domcontentloaded'});
+        await rootPage.waitForFunction(()=>location.hash==='#yhwh'&&
+          document.activeElement===document.querySelector('#yhwh [data-name-heading]'));
+        console.log('W114_ROOT_HISTORY_FOCUS_PASS',engine,width);
+      }finally{await rootPage.close()}
     }
     // A single Constellation search hit should be centered, readable and
     // bounded by the content measure at mobile and desktop widths.
