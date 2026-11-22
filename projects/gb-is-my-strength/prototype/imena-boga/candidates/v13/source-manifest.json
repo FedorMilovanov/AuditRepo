@@ -148,8 +148,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "8a45ce81d04d9521661a5c0e04ecfbae7ce8af4bde52d09101145ab517b471dc",
-      "bytes_normalized": 81051
+      "sha256": "94ea04f201f4ac857a7b11aa2234d241b9c55c912e8f049cc1c2027332341a56",
+      "bytes_normalized": 82881
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -260,8 +260,8 @@
       "bytes_normalized": 8155
     },
     "sozvezdie/src/components/MobileIndex.tsx": {
-      "sha256": "d45dfe4adf37ad9204a8a2e6b094a574423c36e61e161596c3ae86b0adfa6a64",
-      "bytes_normalized": 9959
+      "sha256": "f86361548ea5bbc2e8af748a041cd7ef71d6fbf0fde0df7ab2788aa6e89957ce",
+      "bytes_normalized": 10137
     },
     "sozvezdie/src/components/NameGrid.tsx": {
       "sha256": "1ef9d5e2dc666fe2abc1c5037a822486d9f650b37446f044e117b68a8a03227b",

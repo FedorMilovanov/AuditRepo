@@ -79,6 +79,38 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
        : [];
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
    }
+   // W115: use the CSS breakpoint, not nominal innerWidth, when deciding
+   // whether the mobile-index dialog should close during browser resizing.
+   // Linux WebKit reserves scrollbar width; at 1280px the CSS can remain mobile.
+   if(name==='sozvezdie'&&width===1440){
+     const breakpointCtx=await browser.newContext({viewport:{width:1260,height:844},
+       locale:'ru-RU',reducedMotion:'reduce'});
+     try{
+       const bp=await breakpointCtx.newPage();
+       await bp.goto(base+'/sozvezdie/#yhwh',{waitUntil:'domcontentloaded'});
+       await bp.locator('#yhwh').scrollIntoViewIfNeeded();
+       const trigger=bp.locator('#sozvezdie-mobile-index-trigger');
+       await trigger.waitFor({state:'visible',timeout:10000});
+       await trigger.click();
+       const modal=bp.getByRole('dialog',{name:'Указатель библейских выражений'});
+       await modal.waitFor({state:'visible',timeout:5000});
+       await bp.setViewportSize({width:1280,height:844});
+       const responsive=await bp.evaluate(()=>({
+         innerWidth,clientWidth:document.documentElement.clientWidth,
+         desktopCss:matchMedia('(min-width: 1280px)').matches
+       }));
+       if(responsive.desktopCss){
+         await modal.waitFor({state:'detached',timeout:5000});
+       }else if(!(await modal.isVisible())||!(await trigger.isVisible())){
+         throw Error('W115 modal closed while mobile layout remains visible '+
+           JSON.stringify({engine,responsive}));
+       }
+       await bp.setViewportSize({width:1320,height:844});
+       await modal.waitFor({state:'detached',timeout:5000});
+       await bp.waitForFunction(()=>document.body.style.overflow!=='hidden',null,{timeout:5000});
+       console.log('W115_CSS_BREAKPOINT_DIALOG_PASS',engine,responsive);
+     }finally{await breakpointCtx.close()}
+   }
    if(name==='atlas'){
     // Readability of the navbar must not depend on backdrop-filter support.
     const navPaint=await page.locator('nav[aria-label="Основная навигация сайта"]')

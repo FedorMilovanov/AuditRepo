@@ -56,7 +56,9 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
       }
     };
     const onResize = () => {
-      if (window.innerWidth >= 1280) {
+      // CSS xl:hidden uses the layout viewport. Classic scrollbar widths
+      // (notably WebKit) can make innerWidth >= 1280 while CSS is still mobile.
+      if (window.matchMedia("(min-width: 1280px)").matches) {
         restoreTriggerRef.current = false;
         setOpen(false);
       }
