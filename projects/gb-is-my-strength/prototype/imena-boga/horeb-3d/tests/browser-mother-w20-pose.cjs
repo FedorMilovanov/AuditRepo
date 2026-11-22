@@ -62,7 +62,8 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    // Log the comparison but don't mistake pixel identity for artistic acceptance.
    const frozenByteIdentical=peak1.equals(peak2);
    await page.click('[data-testid="mother-animation-pause"]');
-   await sleep(400);
+   // The authored pose is held through frame 70, so sample well after that plateau.
+   await sleep(1200);
    const resumed=await canvas.screenshot();
    if(resumed.equals(peak1))throw Error('Resume did not change the actor's image');
    if(errors.length)throw Error(errors.join('; '));
