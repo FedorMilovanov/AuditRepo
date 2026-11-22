@@ -28,6 +28,7 @@ echo '{"type":"module"}' > .test-build/package.json
 node tests/run.mjs
 node tests/verify-mother-asset.mjs
 node tests/verify-mother-w19.mjs
+node tests/verify-mother-w19h.mjs
 # Construction smoke test: esbuild bundles TS source (resolves extensionless imports), three stays external.
 npx esbuild tests/construct.ts --bundle --platform=node --format=esm --external:three --outfile=.test-build/construct.mjs
 node .test-build/construct.mjs

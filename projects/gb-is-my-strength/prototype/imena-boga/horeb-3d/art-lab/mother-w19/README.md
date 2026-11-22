@@ -51,3 +51,12 @@ Use `node tests/browser-mother-w19e.cjs` with the local dev server + actual Chro
 ## Next W20: meaningful art only
 
 Require (1) proper face topology/eyes/lips with a credible likeness-neutral adult character, (2) eyelids and emotionally appropriate facial animation with retained blendshapes **without reintroducing helper faces**, (3) artist-designed fitted full-length linen with convincing shoulder sleeves, hem and folds, (4) hair/head covering that is physically compatible with rig and documented as artistic reconstruction, (5) actual hands touching/holding the basket. Demand paired 1440/390 frames in **identical camera/light** and evaluate artistic credibility independently. Only after ART is accepted should one mother NPC replace a currently working W15 placeholder, with further live browser and hardware FPS gates. Leave all biblical, rights, Product, Research, merge, deployment and public-release gates closed.
+
+
+## W19H â€” controlled face-material correction (22 Nov 2026)
+
+W19E screenshots had severe eye/mouth artifacts. W19F removing eyebrow/lash meshes did not help; W19G showed the untextured bare basemesh was anatomically intact. W19H keeps the 53-bone original MPFB actor and both skeletal clips, replaces the problematic color texture with a reproducibly muted derivative of the official CC0 skin diffuse, and scales/recesses the CC0 low-poly eye geometry. The skin is NOT premium photoreal, and the eyes are still flat; source skin color is illustrative, never an attested ancient identity.
+
+Separate native Blender scene and scripted rebuild are in source, together with the adapted CC0 PNG. The W19E version is NOT replaced. The preview actorlab-w19h.html is independent; its browser test ran 1440x900 and emulated 390x844 with 53 bones, 6 skinned meshes, two clips, no page errors or horizontal overflow. Native screenshots live only on the authorized Windows computer under HOREB_ArtPipeline/evidence/w19h-mother-*.png. Binary integrity and CC0 provenance are checked through verify-mother-w19h.mjs and SHA sidecars.
+
+**ART HOLD**: skin appears too smooth, eyes remain incomplete, hair absent, draping sleeves stiff, no facial blendshapes or real hand-to-basket manipulation. Do not transfer this asset to W15, main, Product or Research. Do not merge/deploy.

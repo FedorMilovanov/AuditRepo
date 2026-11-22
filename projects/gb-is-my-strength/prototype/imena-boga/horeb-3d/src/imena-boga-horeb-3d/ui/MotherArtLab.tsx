@@ -18,7 +18,7 @@ const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
 };
 type Controller={setShot:(v:Shot)=>void;setClip:(v:Clip)=>void;setPause:(v:boolean)=>void};
-type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb";
+type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb" | "horeb_mother_lookdev_w19h.glb";
 export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"}:{modelName?:ActorModel;phase?:"W18"|"W19"}){
  const canvas=useRef<HTMLCanvasElement>(null);
  const controller=useRef<Controller|null>(null);
