@@ -150,7 +150,7 @@
 >
 > **Resulting-main owner state (refreshed 2026-10-29, broad wave 41).** Product owner merged PR #2217 as `f63aac01…`; PR head `ff860d39…` is its ancestor and both commits have identical tree `8a121d90…`. Exact PR-head admission finished at 39 success / 4 intentional skipped / 0 failure / 0 pending. Fresh resulting-main index and glossary contracts pass; the final main check suite is 32 success / 13 skipped / 1 failure, with `interactive-audit` the only red check. Exact deployment `7420006801` succeeded. Artifact/stage reconciliation cannot name the internal runtime assertion, so no new root is invented and resulting-main CI remains explicitly not fully green. The publication lane is no longer an open-PR collision, but any Product repair still requires a fresh owner/open-PR check and a separate declared lane.
 
-## CURRENT DEFECTS — 11
+## CURRENT DEFECTS — 10
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
