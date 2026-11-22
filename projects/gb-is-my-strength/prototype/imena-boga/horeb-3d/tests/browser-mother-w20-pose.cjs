@@ -46,7 +46,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    await sleep(280);
    const canvas=await page.$('[data-testid="mother-art-canvas"]');
    if(!canvas)throw Error('Live 3D canvas missing');
-   const idle=await canvas.screenshot();
+   const idle=Buffer.from(await canvas.screenshot());
    await page.click('[data-testid="mother-pose-peak"]');
    await page.waitForSelector('[data-testid="mother-peak-state"]');
    const peakState=await page.$eval('[data-testid="mother-peak-state"]',e=>e.textContent);
@@ -55,11 +55,11 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    if(!peakState.includes('60/105')||gestureSelected!=='true'||!pausedText.includes('Продолжить'))
     throw Error('Peak-pose control did not freeze frame 60');
    await sleep(250);
-   const peak1=await canvas.screenshot();
+   const peak1=Buffer.from(await canvas.screenshot());
    await page.screenshot({path:path.join(out,'visual-detail-w20-gesture-peak-'+label+'.png')});
    await fs.promises.writeFile(path.join(out,'visual-detail-w20-gesture-canvas-'+label+'.png'),peak1);
    await sleep(450);
-   const peak2=await canvas.screenshot();
+   const peak2=Buffer.from(await canvas.screenshot());
    if(idle.equals(peak1))throw Error('Peak gesture image identical to natural idle pose');
    // GPU drivers may produce tiny antialiasing differences in frozen-frame captures.
    // Log the comparison but don't mistake pixel identity for artistic acceptance.
@@ -67,7 +67,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    await page.click('[data-testid="mother-animation-pause"]');
    // The authored pose is held through frame 70, so sample well after that plateau.
    await sleep(1200);
-   const resumed=await canvas.screenshot();
+   const resumed=Buffer.from(await canvas.screenshot());
    if(resumed.equals(peak1))throw Error('Resume did not change the actor image');
    if(errors.length)throw Error(errors.join('; '));
    const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
