@@ -29,6 +29,7 @@ node tests/run.mjs
 node tests/verify-mother-asset.mjs
 node tests/verify-mother-w19.mjs
 node tests/verify-mother-w19h.mjs
+node --check tests/browser-mother-w20-pose.cjs
 # Construction smoke test: esbuild bundles TS source (resolves extensionless imports), three stays external.
 npx esbuild tests/construct.ts --bundle --platform=node --format=esm --external:three --outfile=.test-build/construct.mjs
 node .test-build/construct.mjs
