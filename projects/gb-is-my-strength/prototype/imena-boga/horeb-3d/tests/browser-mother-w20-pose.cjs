@@ -10,13 +10,16 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
  const browser=await puppeteer.launch({
   executablePath,headless:true,protocolTimeout:120000,
-  args:['--ignore-gpu-blocklist',...(process.platform==='linux'?['--no-sandbox']:[])]
+  args:['--ignore-gpu-blocklist',
+   ...(process.env.HOREB_SWIFTSHADER==='1'?
+    ['--enable-webgl','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']:[]),
+   ...(process.platform==='linux'?['--no-sandbox']:[])]
  });
  try{
   const out=process.env.HOREB_ARTLAB_SCREENSHOTS||
-   path.join(process.cwd(),'.test-build','artlab-w20');
+   path.join(process.cwd(),'.test-build','screenshots');
   fs.mkdirSync(out,{recursive:true});
-  const url=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192')
+  const url=(process.env.HOREB_ARTLAB_BASE_URL||process.env.HOREB_BASE_URL||'http://127.0.0.1:5192')
    .replace(/[/]$/,'')+'/actorlab-w19h.html';
   for(const [width,height,isMobile,label] of [
    [1440,900,false,'desktop1440'],
@@ -53,8 +56,8 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
     throw Error('Peak-pose control did not freeze frame 60');
    await sleep(250);
    const peak1=await canvas.screenshot();
-   await page.screenshot({path:path.join(out,'w20-gesture-peak-'+label+'.png')});
-   await fs.promises.writeFile(path.join(out,'w20-gesture-canvas-'+label+'.png'),peak1);
+   await page.screenshot({path:path.join(out,'visual-detail-w20-gesture-peak-'+label+'.png')});
+   await fs.promises.writeFile(path.join(out,'visual-detail-w20-gesture-canvas-'+label+'.png'),peak1);
    await sleep(450);
    const peak2=await canvas.screenshot();
    if(idle.equals(peak1))throw Error('Peak gesture image identical to natural idle pose');
@@ -71,7 +74,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    console.log('W20_GESTURE_PEAK_BROWSER_PASS',JSON.stringify({
     label,stats,frame:60,frozenByteIdentical,
     idleSha:sha(idle),peakSha:sha(peak1),resumedSha:sha(resumed),
-    screenshot:'w20-gesture-peak-'+label+'.png',pageErrors:errors.length
+    screenshot:'visual-detail-w20-gesture-peak-'+label+'.png',pageErrors:errors.length
    }));
    await page.close();
   }
