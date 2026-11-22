@@ -17,7 +17,7 @@ const SHOTS:Record<Shot,{eye:[number,number,number];target:[number,number,number
 const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
 };
-type Controller={setShot:(v:Shot)=>void;setClip:(v:Clip)=>void;setPause:(v:boolean)=>void};
+type Controller={setShot:(v:Shot)=>void;setClip:(v:Clip)=>void;setPause:(v:boolean)=>void;showGesturePeak:()=>void};
 type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb" | "horeb_mother_lookdev_w19h.glb";
 export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"}:{modelName?:ActorModel;phase?:"W18"|"W19"}){
  const canvas=useRef<HTMLCanvasElement>(null);
@@ -25,6 +25,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
  const [shot,setShot]=useState<Shot>('full');
  const [clip,setClip]=useState<Clip>('Mother_QuietIdle');
  const [paused,setPaused]=useState(false);
+ const [inspectionFrame,setInspectionFrame]=useState<number|null>(null);
  const [ready,setReady]=useState(false);
  const [error,setError]=useState('');
  const [stats,setStats]=useState({bones:0,meshes:0,clips:0,skinned:0});
@@ -83,12 +84,29 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
    playing=next;
    animationElapsed=0;
   };
+  // The authored gesture holds frames 48-70 at 24 fps; the previous 1.05s
+  // browser capture was too early to judge the intended peak pose.
+  // Stop cross-fades and sample the true skeletal GLB action deterministically.
+  const showGesturePeak=()=>{
+   if(!mixer)return;
+   const gesture=actions.get('Mother_GestureTowardsBasket');
+   if(!gesture)return;
+   for(const a of actions.values())a.stop();
+   gesture.reset().setLoop(THREE.LoopOnce,1);
+   gesture.clampWhenFinished=true;
+   gesture.setEffectiveWeight(1);
+   gesture.play();
+   mixer.timeScale=1;
+   mixer.setTime(60/24);
+   mixer.timeScale=0;
+   playing=gesture;
+  };
   const load=new GLTFLoader();
   let houseLoaded=false,actorLoaded=false;
   const loaded=()=>{
    if(destroyed||!houseLoaded||!actorLoaded)return;
    controller.current={setShot:setCam,setClip:startClip,
-     setPause:p=>{if(mixer)mixer.timeScale=p?0:1;}};
+     setPause:p=>{if(mixer)mixer.timeScale=p?0:1;},showGesturePeak};
    startClip('Mother_QuietIdle');
    setReady(true);
   };
@@ -175,8 +193,15 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
   };
  },[modelName]);
  const choose=(v:Shot)=>{setShot(v);controller.current?.setShot(v)};
- const changeClip=(v:Clip)=>{setClip(v);controller.current?.setClip(v)};
- const changePause=()=>{const v=!paused;setPaused(v);controller.current?.setPause(v)};
+ const changeClip=(v:Clip)=>{setClip(v);setInspectionFrame(null);controller.current?.setClip(v)};
+ const changePause=()=>{const v=!paused;setPaused(v);if(!v)setInspectionFrame(null);controller.current?.setPause(v)};
+ const inspectPeakGesture=()=>{
+  if(!controller.current)return;
+  setClip('Mother_GestureTowardsBasket');
+  setPaused(true);
+  setInspectionFrame(60);
+  controller.current.showGesturePeak();
+ };
  return <main className="wrap" data-testid="mother-art-lab">
   <header className="top">
    <div><p className="kicker">HOREB · {phase} REAL HUMAN ACTOR · ART HOLD</p>
@@ -220,6 +245,11 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
     <div><button type="button" className={'switch '+(paused?'selected':'')}
      data-testid="mother-animation-pause" disabled={!ready}
      onClick={changePause}>{paused?'Продолжить движение':'Остановить движение'}</button></div>
+    {phase==='W19'&&<div><button type="button" className="switch"
+     data-testid="mother-pose-peak" disabled={!ready}
+     onClick={inspectPeakGesture}>Показать пик жеста · кадр 60</button>
+     {inspectionFrame===60&&<p className="kicker" data-testid="mother-peak-state">Стоп-кадр 60/105 · 24 кадра/с</p>}
+    </div>}
     <div className="note">
      <h3>Подтверждено в реальном GLB</h3>
      <div className="kv">
