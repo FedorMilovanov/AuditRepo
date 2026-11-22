@@ -73,14 +73,15 @@ function transforms(asset,clipName,seconds){
  };
  for(const channel of anim?.channels||[]){
   const s=anim.samplers[channel.sampler],t=read(s.input).map(x=>x[0]),v=read(s.output);
-  assert.equal(s.interpolation||'LINEAR','LINEAR','Unexpected GLB interpolation');
+  const interpolation=s.interpolation||'LINEAR';
+  assert.ok(interpolation==='LINEAR'||interpolation==='STEP','Unsupported GLB interpolation: '+interpolation);
   let value;
   if(seconds<=t[0])value=v[0];
   else if(seconds>=t[t.length-1])value=v[v.length-1];
   else {
    let i=0;while(i<t.length-2&&t[i+1]<seconds)i++;
    const u=(seconds-t[i])/(t[i+1]-t[i]);
-   value=channel.target.path==='rotation'?qslerp(v[i],v[i+1],u):
+   value=interpolation==='STEP'?v[i]:channel.target.path==='rotation'?qslerp(v[i],v[i+1],u):
     v[i].map((x,k)=>x*(1-u)+v[i+1][k]*u);
   }
   p[channel.target.node][channel.target.path]=value;
