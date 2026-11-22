@@ -65,7 +65,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    // The authored pose is held through frame 70, so sample well after that plateau.
    await sleep(1200);
    const resumed=await canvas.screenshot();
-   if(resumed.equals(peak1))throw Error('Resume did not change the actor's image');
+   if(resumed.equals(peak1))throw Error('Resume did not change the actor image');
    if(errors.length)throw Error(errors.join('; '));
    const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
    console.log('W20_GESTURE_PEAK_BROWSER_PASS',JSON.stringify({
