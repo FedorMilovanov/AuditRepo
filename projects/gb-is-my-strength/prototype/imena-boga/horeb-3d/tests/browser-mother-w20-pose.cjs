@@ -17,7 +17,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    path.join(process.cwd(),'.test-build','artlab-w20');
   fs.mkdirSync(out,{recursive:true});
   const url=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192')
-   .replace(/\\/$/,'')+'/actorlab-w19h.html';
+   .replace(/[/]$/,'')+'/actorlab-w19h.html';
   for(const [width,height,isMobile,label] of [
    [1440,900,false,'desktop1440'],
    [390,844,true,'mobile390']
