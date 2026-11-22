@@ -155,7 +155,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
           Панорама имён
           <span className="hairline w-10" />
         </p>
-        <h2 className="mt-4 font-display text-3xl font-medium text-cream-100 md:text-4xl">
+        <h2 data-name-grid-heading tabIndex={-1} className="mt-4 font-display text-3xl font-medium text-cream-100 md:text-4xl">
           29 именований и выражений — <span className="gold-static italic">одним взглядом</span>
         </h2>
         <p className="mt-3 max-w-lg font-body text-base italic leading-relaxed text-cream-500">

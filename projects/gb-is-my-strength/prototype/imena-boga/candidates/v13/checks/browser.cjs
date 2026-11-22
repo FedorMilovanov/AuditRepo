@@ -79,6 +79,40 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
        : [];
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
    }
+   // W116: the desktop header's "all names" action must land keyboard
+   // focus in NameGrid, and Back/Forward must restore it in both directions.
+   if(name==='sozvezdie'&&width===1440){
+     const indexCtx=await browser.newContext({viewport:{width:1440,height:844},
+       locale:'ru-RU',reducedMotion:'reduce'});
+     try{
+       const navPage=await indexCtx.newPage();
+       await navPage.goto(base+'/sozvezdie/#yhwh',{waitUntil:'domcontentloaded'});
+       const openIndex=navPage.locator('header button[title="Открыть указатель всех имён"]');
+       await openIndex.waitFor({state:'visible',timeout:10000});
+       await openIndex.focus();
+       await navPage.keyboard.press('Enter');
+       await navPage.waitForFunction(()=>location.hash==='#sozvezdie'&&
+         document.activeElement===document.querySelector('#sozvezdie [data-name-grid-heading]'),
+         null,{timeout:5000});
+       await navPage.keyboard.press('Tab');
+       if(!(await navPage.locator('#sozvezdie input[data-name-grid-search]')
+         .evaluate(el=>document.activeElement===el)))
+         throw Error('W116 index heading Tab did not reach search '+engine);
+       await navPage.goBack({waitUntil:'domcontentloaded'});
+       await navPage.waitForFunction(()=>location.hash==='#yhwh'&&
+         document.activeElement===document.querySelector('#yhwh [data-name-heading]'),
+         null,{timeout:5000});
+       await navPage.goForward({waitUntil:'domcontentloaded'});
+       await navPage.waitForFunction(()=>location.hash==='#sozvezdie'&&
+         document.activeElement===document.querySelector('#sozvezdie [data-name-grid-heading]'),
+         null,{timeout:5000});
+       await navPage.keyboard.press('Tab');
+       if(!(await navPage.locator('#sozvezdie input[data-name-grid-search]')
+         .evaluate(el=>document.activeElement===el)))
+         throw Error('W116 Forward index focus returned to article '+engine);
+       console.log('W116_INDEX_HEADER_HISTORY_FOCUS_PASS',engine);
+     }finally{await indexCtx.close()}
+   }
    // W115: use the CSS breakpoint, not nominal innerWidth, when deciding
    // whether the mobile-index dialog should close during browser resizing.
    // Linux WebKit reserves scrollbar width; at 1280px the CSS can remain mobile.

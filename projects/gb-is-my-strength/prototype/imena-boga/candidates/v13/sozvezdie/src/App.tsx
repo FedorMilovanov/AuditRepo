@@ -134,10 +134,11 @@ export default function App() {
     if (isName) setActive(id);
     window.history.pushState(null, "", `#${id}`);
     const target = document.getElementById(id);
-    // Every non-modal name jump owns its destination's keyboard focus.
+    // Name articles and the main index both need an accessible landing focus.
     // MobileIndex hands off focus after its dialog exits; never steal that focus.
-    if (isName && !document.querySelector('[role="dialog"][aria-modal="true"]')) {
-      target?.querySelector<HTMLElement>('[data-name-heading]')?.focus({ preventScroll: true });
+    if (!document.querySelector('[role="dialog"][aria-modal="true"]')) {
+      const selector = isName ? '[data-name-heading]' : id === 'sozvezdie' ? '[data-name-grid-heading]' : null;
+      if (selector) target?.querySelector<HTMLElement>(selector)?.focus({ preventScroll: true });
     }
     target?.scrollIntoView({
       behavior: !prefs.motion || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
@@ -246,10 +247,11 @@ export default function App() {
       const el = document.getElementById(id);
       if (!el) return;
       const isName = NAMES.some((name) => name.id === id);
-      // Back/Forward and direct links must restore the keyboard reading
-      // position as well as scroll. Do not steal focus from an open dialog.
-      if (isName && !document.querySelector('[role="dialog"][aria-modal="true"]')) {
-        el.querySelector<HTMLElement>('[data-name-heading]')?.focus({ preventScroll: true });
+      // Back/Forward and direct links must restore article/index keyboard
+      // focus as well as scroll. Never steal focus from an open dialog.
+      if (!document.querySelector('[role="dialog"][aria-modal="true"]')) {
+        const selector = isName ? '[data-name-heading]' : id === 'sozvezdie' ? '[data-name-grid-heading]' : null;
+        if (selector) el.querySelector<HTMLElement>(selector)?.focus({ preventScroll: true });
       }
       el.scrollIntoView({ behavior: "instant", block: "start" });
       if (isName) setActive(id);
