@@ -1,10 +1,10 @@
 {
   "status": "ART_HOLD_W22_EARLY_CANDIDATE",
   "source_w19h_sha256": "1286f8d50129d7e37110fe9abaee600e60ca235504af1d8144e4a2a6445537c9",
-  "blender_source_sha256": "b3447f156815c198c56f2953efdc10b5d73ef584cc92bac07eb96393e0eded49",
-  "blender_bytes": 11291102,
-  "glb_sha256": "cec44976a1f5a5d9cd1a9148939690379748e047b6b90089a2515b7ca3dd2809",
-  "glb_bytes": 5206904,
+  "blender_source_sha256": "e752aa619c5f7d4fcff00efe44d53a6ecfb265a9c23db64d5534af39bf4451eb",
+  "blender_bytes": 11298046,
+  "glb_sha256": "d3f889213cdbab5d050c216dbd6dbf0ea3a4f2a445d328901547adb5273ec157",
+  "glb_bytes": 5206912,
   "bones": 53,
   "clips": [
     "Mother_QuietIdle",

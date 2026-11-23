@@ -65,6 +65,25 @@ print("W22_NATIVE_REST_AND_HEAD_COVER_PASS", {
     "scalp_top": round(scalp_top, 4),
     "hood_top": round(hood_top, 4),
 }, flush=True)
+# W22e: the sleeves must be rooted in the tunic, using actual spine/arm
+# weights, not an unskinned shoulder decal or a disconnected second bodice.
+for side in ("l", "r"):
+    sleeve = bpy.data.objects["Linen_sleeve_" + side]
+    assert len(sleeve.data.vertices) == 420
+    group = sleeve.vertex_groups.get("spine_03")
+    assert group is not None, "Shoulder sleeve lacks spine-to-arm blend"
+    def vertex_weight(index):
+        return next((v.weight for v in sleeve.data.vertices[index].groups
+                     if v.group == group.index), 0.0)
+    root_weight = vertex_weight(0)
+    cuff_weight = vertex_weight(419)
+    assert .35 < root_weight < .65 and cuff_weight < .015, (
+        "W22 sleeve root blend regressed", side, root_weight, cuff_weight)
+    assert not any("shoulderseam_" in obj.name or
+                   "soft_shoulder_linen_" in obj.name
+                   for obj in bpy.data.objects), "Rejected overlay returned"
+    print("W22_NATIVE_SHOULDER_ROOT_PASS", side,
+          round(root_weight, 4), round(cuff_weight, 4), flush=True)
 scene.render.engine = "CYCLES"
 scene.cycles.device = "CPU"
 scene.cycles.samples = 12

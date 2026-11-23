@@ -11,7 +11,7 @@ This is an **independent, reproducible art candidate**, not an accepted depictio
 
 ## W22 experimental changes
 
-- Retails the original skinned tunic and reduces oversized rigid sleeve geometry; adds authored waist tie and plain linen head covering.
+- Retains the original skinned tunic and reconstructs the existing sleeve roots with a gradual spine-to-upperarm weight transition, rather than adding disconnected shoulder overlays. The two larger overlayer experiments failed visual review and were not promoted. The authored waist tie and plain linen head covering remain art candidates.
 - Creates a new skeletal animation from **actual two-bone Blender IK**, baked into the left shoulder/elbow chain. This is not a detached or screen-space hand animation.
 - In the isolated viewer, stages the actor at (-0.50, 0.015, 0.30) and shows the **real house GLB and basket** in the gesture camera.
 - At frame 60, the independently parsed **exported GLB wrist is 0.0051 m from the real rim**, versus W19H's 0.6219 m for its nearer hand. Acceptance gate: <=0.12 m.

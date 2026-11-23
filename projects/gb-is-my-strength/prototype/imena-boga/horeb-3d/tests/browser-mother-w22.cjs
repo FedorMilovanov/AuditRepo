@@ -65,14 +65,26 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    // Log the comparison but don't mistake pixel identity for artistic acceptance.
    const frozenByteIdentical=peak1.equals(peak2);
    await page.click('[data-testid="mother-animation-pause"]');
-   // The authored pose is held through frame 70, so sample well after that plateau.
-   await sleep(1200);
-   const resumed=Buffer.from(await canvas.screenshot());
-   if(resumed.equals(peak1))throw Error('Resume did not change the actor image');
+   // The action holds frames 48-70. Under SwiftShader the renderer may only
+   // paint a few frames per second and its animation delta is capped to 75 ms.
+   // An arbitrary 1200-ms wall-clock delay cannot prove the held pose ended.
+   // Keep the strict pixel-change assertion, but wait for a genuinely painted
+   // changed frame with a bounded timeout; a stalled mixer still fails.
+   const resumedAt=Date.now();
+   let resumed=peak1;
+   let resumeChecks=0;
+   while(resumed.equals(peak1)&&Date.now()-resumedAt<30000){
+    await sleep(650);
+    resumed=Buffer.from(await canvas.screenshot());
+    resumeChecks++;
+   }
+   const resumeWaitMs=Date.now()-resumedAt;
+   if(resumed.equals(peak1))
+    throw Error('W22 animation remained frozen after resume '+JSON.stringify({label,resumeChecks,resumeWaitMs}));
    if(errors.length)throw Error(errors.join('; '));
    const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
    console.log('W22_GESTURE_PEAK_BROWSER_PASS',JSON.stringify({
-    label,stats,frame:60,frozenByteIdentical,
+    label,stats,frame:60,frozenByteIdentical,resumeChecks,resumeWaitMs,
     idleSha:sha(idle),peakSha:sha(peak1),resumedSha:sha(resumed),
     screenshot:'visual-detail-w22-gesture-peak-'+label+'.png',pageErrors:errors.length
    }));

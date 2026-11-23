@@ -33,15 +33,37 @@ for v in tunic.data.vertices:
  v.co.x*=sx
  v.co.y*=.92
  if z<.60:v.co.z+=.005*math.sin(17*math.atan2(v.co.y,v.co.x)+z*7)
+# W22e: rebuild the same original sleeves with shoulder-root geometry
+# tucked into the tunic instead of layering disconnected cloth on top.
+# The first three rings blend to the spine; outer rings follow the arm.
 for side in ('l','r'):
  o=bpy.data.objects['Linen_sleeve_'+side]
  u=rig.data.bones['upperarm_'+side]
  f=rig.data.bones['lowerarm_'+side]
- start=u.head_local.copy();end=u.tail_local.lerp(f.tail_local,.33)
+ head=u.head_local.copy()
+ end=u.tail_local.lerp(f.tail_local,.33)
+ axis=(end-head).normalized()
+ radial=axis.cross(Vector((0,1,0))).normalized()
+ other=axis.cross(radial).normalized()
+ sign=1 if side=='l' else -1
+ n=28
+ assert len(o.data.vertices)==n*15
+ spine=o.vertex_groups.get('spine_03') or o.vertex_groups.new(name='spine_03')
+ upper=o.vertex_groups['upperarm_'+side]
+ lower=o.vertex_groups['lowerarm_'+side]
  for i,v in enumerate(o.data.vertices):
-  t=(i//28)/14
-  centre=start.lerp(end,t)
-  v.co=centre+(v.co-centre)*(.70+.10*t)
+  j=i//n;t=j/14;k=i%n
+  phi=2*math.pi*k/n
+  centre=head.lerp(end,t)
+  blend=max(0,1-t*4)
+  centre+=Vector((-sign*.07,0,.055))*blend
+  radius=(.092-.017*t)*(.84+.16*(1-blend))
+  radius*=1+.018*math.sin(phi*9+t*5)
+  v.co=centre+(radial*math.cos(phi)+other*math.sin(phi))*radius
+  spine_weight=.50*blend
+  spine.add([i],max(.00001,spine_weight),'REPLACE')
+  upper.add([i],max(.00001,(1-spine_weight)*(.9-.12*t)),'REPLACE')
+  lower.add([i],max(.00001,(1-spine_weight)*(.1+.12*t)),'REPLACE')
 for v in bpy.data.objects['Stitched_lower_hem'].data.vertices:
  v.co.x*=.925;v.co.y*=.92
 
