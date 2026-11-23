@@ -14,12 +14,18 @@ const SHOTS:Record<Shot,{eye:[number,number,number];target:[number,number,number
  portrait:{eye:[-1.12,1.53,1.50],target:[-1.12,1.49,.30]},
  gesture:{eye:[-.78,1.59,2.5],target:[-1.12,1.05,.29]},
 };
+const W22_SHOTS:Record<Shot,{eye:[number,number,number];target:[number,number,number]}>={
+ doorway:{eye:[.1,1.85,5.3],target:[-.2,1.16,.26]},
+ full:{eye:[-.50,1.65,3.1],target:[-.50,.91,.30]},
+ portrait:{eye:[-.50,1.53,1.55],target:[-.50,1.49,.30]},
+ gesture:{eye:[-.05,1.68,2.7],target:[-.13,1.16,.26]},
+};
 const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
 };
 type Controller={setShot:(v:Shot)=>void;setClip:(v:Clip)=>void;setPause:(v:boolean)=>void;showGesturePeak:()=>void};
-type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb" | "horeb_mother_lookdev_w19h.glb";
-export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"}:{modelName?:ActorModel;phase?:"W18"|"W19"}){
+type ActorModel = "horeb_mother_rig_pilot.glb" | "horeb_mother_lookdev_w19e.glb" | "horeb_mother_lookdev_w19h.glb" | "horeb_mother_w22_candidate.glb";
+export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"}:{modelName?:ActorModel;phase?:"W18"|"W19"|"W22"}){
  const canvas=useRef<HTMLCanvasElement>(null);
  const controller=useRef<Controller|null>(null);
  const [shot,setShot]=useState<Shot>('full');
@@ -71,9 +77,10 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
   const garbageTextures=new Set<THREE.Texture>();
   const clock=new THREE.Clock();
   const setCam=(target:Shot)=>{
-   const d=SHOTS[target];
+   const d=phase==="W22"?W22_SHOTS[target]:SHOTS[target];
    camera.position.set(...d.eye);
-   orbit.target.set(...d.target);orbit.update();if(house)house.visible=target==="doorway";
+   orbit.target.set(...d.target);orbit.update();
+   if(house)house.visible=target==="doorway"||(phase==="W22"&&target==="gesture");
   };
   setCam('full');
   const startClip=(name:Clip)=>{
@@ -131,6 +138,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
    actor=gltf.scene;
    actor.name='MPFB_FEMALE_ANIMATED_ACTOR_ART_HOLD';
    actor.position.set(-1.12,.015,.30);
+   if(phase==="W22")actor.position.set(-.50,.015,.30);
    let boneCount=0,skinnedCount=0,meshCount=0;
    actor.traverse(o=>{
     const m=o as THREE.Mesh;
@@ -191,7 +199,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
    garbageMaterials.forEach(m=>m.dispose());
    gl.dispose();
   };
- },[modelName]);
+ },[modelName,phase]);
  const choose=(v:Shot)=>{setShot(v);controller.current?.setShot(v)};
  const changeClip=(v:Clip)=>{setClip(v);setInspectionFrame(null);controller.current?.setClip(v)};
  const changePause=()=>{const v=!paused;setPaused(v);if(!v)setInspectionFrame(null);controller.current?.setPause(v)};
@@ -245,7 +253,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
     <div><button type="button" className={'switch '+(paused?'selected':'')}
      data-testid="mother-animation-pause" disabled={!ready}
      onClick={changePause}>{paused?'Продолжить движение':'Остановить движение'}</button></div>
-    {phase==='W19'&&<div><button type="button" className="switch"
+    {(phase==='W19'||phase==='W22')&&<div><button type="button" className="switch"
      data-testid="mother-pose-peak" disabled={!ready}
      onClick={inspectPeakGesture}>Показать пик жеста · кадр 60</button>
      {inspectionFrame===60&&<p className="kicker" data-testid="mother-peak-state">Стоп-кадр 60/105 · 24 кадра/с</p>}

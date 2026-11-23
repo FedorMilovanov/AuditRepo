@@ -1,0 +1,29 @@
+{
+  "status": "ART_HOLD_W22_EARLY_CANDIDATE",
+  "source_w19h_sha256": "1286f8d50129d7e37110fe9abaee600e60ca235504af1d8144e4a2a6445537c9",
+  "blender_source_sha256": "652909f858d9644218acff22cf79ab997143fcaff052e6fd744610cbd7b5f476",
+  "blender_bytes": 11291102,
+  "glb_sha256": "00a63e0ff4f97aa5f1364d9f0f74a590ad8e8b6ddbec5f92e401b04f4d983d46",
+  "glb_bytes": 5212428,
+  "bones": 53,
+  "clips": [
+    "Mother_QuietIdle",
+    "Mother_GestureTowardsBasket"
+  ],
+  "staged_actor_offset_three": [
+    -0.5,
+    0.015,
+    0.3
+  ],
+  "contact_target_world_three": [
+    -0.15,
+    1.159,
+    0.26
+  ],
+  "contact_target_local_blender": [
+    0.35,
+    0.04,
+    1.144
+  ],
+  "limitations": "ART HOLD; independent spatial and browser visual review; not an attested likeness; DO NOT integrate W15"
+}
