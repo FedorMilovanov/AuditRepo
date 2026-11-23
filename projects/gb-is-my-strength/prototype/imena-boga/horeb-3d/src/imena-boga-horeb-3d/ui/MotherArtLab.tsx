@@ -18,7 +18,7 @@ const W22_SHOTS:Record<Shot,{eye:[number,number,number];target:[number,number,nu
  doorway:{eye:[.1,1.85,5.3],target:[-.2,1.16,.26]},
  full:{eye:[-.50,1.65,3.1],target:[-.50,.91,.30]},
  portrait:{eye:[-.50,1.53,1.55],target:[-.50,1.49,.30]},
- gesture:{eye:[-.05,1.68,2.7],target:[-.13,1.16,.26]},
+ gesture:{eye:[-.58,2.02,1.73],target:[-.11,1.18,.27]},
 };
 const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
