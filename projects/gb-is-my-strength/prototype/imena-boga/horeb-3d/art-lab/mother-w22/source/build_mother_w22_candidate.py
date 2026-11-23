@@ -4,7 +4,7 @@ and bakes an actual two-bone IK hand gesture into a new GLB/NLA action.
 """
 from pathlib import Path
 import bpy, math, hashlib, json
-from mathutils import Vector
+from mathutils import Vector, Quaternion
 ROOT=Path(__file__).resolve().parents[3]
 SOURCE=ROOT/'art-lab/mother-w19/source/horeb_mother_lookdev_w19h.blend'
 OUT=ROOT/'art-lab/mother-w22/source'
@@ -29,6 +29,7 @@ tunic=bpy.data.objects['Tunic_orig_hand_draped']
 for v in tunic.data.vertices:
  z=v.co.z
  sx=.84+.065*max(0,(z-1.05)/.28)+.09*max(0,(.52-z)/.38)
+ sx*=1-.17*min(1,max(0,(z-1.05)/.22))
  v.co.x*=sx
  v.co.y*=.92
  if z<.60:v.co.z+=.005*math.sin(17*math.atan2(v.co.y,v.co.x)+z*7)
@@ -73,7 +74,7 @@ for j,z in enumerate([.856,.876,.896]):
  for k in range(N):
   a=2*math.pi*k/N
   rr=1+.022*math.sin(11*a)+.016*math.cos(19*a)
-  verts.append((.277*rr*math.cos(a),.228*rr*math.sin(a)-.012,z+.005*math.sin(3*a)))
+  verts.append(( .269*rr*math.cos(a),.218*rr*math.sin(a)-.012,z+.005*math.sin(3*a)))
   weights.append({'pelvis':1})
 for j in range(2):
  for k in range(N):faces.append((j*N+k,j*N+(k+1)%N,(j+1)*N+(k+1)%N,(j+1)*N+k))
@@ -87,7 +88,7 @@ for j in range(R+1):
   front=max(0,-math.sin(a))
   verts.append((.101*math.sin(t)*math.cos(a),
                 -.026+.107*math.sin(t)*math.sin(a),
-                1.534+.142*math.cos(t)+.073*front*math.sin(t)**2))
+                1.414+.142*math.cos(t)+.073*front*math.sin(t)**2))
   weights.append({'head':1})
 for j in range(R):
  for k in range(N):faces.append((j*N+k,j*N+(k+1)%N,(j+1)*N+(k+1)%N,(j+1)*N+k))
@@ -99,7 +100,7 @@ for j in range(rows+1):
   x=2*k/(cols-1)-1
   verts.append((.110*x*(1+.11*t),
                 .073+.064*t+.012*math.cos(math.pi*x),
-                1.53-.245*t+.025*(1-x*x)*t))
+                1.41-.245*t+.025*(1-x*x)*t))
   weights.append({'head':1-t*.7,'neck_01':t*.7})
 for j in range(rows):
  for k in range(cols-1):faces.append((j*cols+k,j*cols+k+1,(j+1)*cols+k+1,(j+1)*cols+k))
@@ -132,7 +133,7 @@ for frame,pct in [(1,0),(20,.36),(48,1),(70,1),(105,0)]:
  qs={}
  for bone in [upper,fore]:
   local=rig.convert_space(pose_bone=bone,matrix=bone.matrix.copy(),from_space='POSE',to_space='LOCAL')
-  qs[bone.name]=local.to_quaternion()
+  qs[bone.name]=Quaternion((1,0,0,0)) if pct==0 else local.to_quaternion()
  if frame==48:assert (fore.tail-contact).length<.015, (fore.tail,contact)
  samples.append((frame,pct,qs))
 fore.constraints.remove(ik)
@@ -163,9 +164,18 @@ actual=fore.tail.copy()
 print('W22_IK_CONTACT_POSE',tuple(round(v,4) for v in actual),
       'distance',round((actual-contact).length,5),flush=True)
 assert (actual-contact).length<.025,'Baked action lost contact'
+# Return to a neutral saved pose: NLA still exports both independent tracks.
+scene.frame_set(1)
+for bone in (upper,fore):
+ bone.rotation_mode='QUATERNION'
+ bone.rotation_quaternion=Quaternion((1,0,0,0))
+for bone_name in ('head','spine_03'):
+ rig.pose.bones[bone_name].rotation_euler=(0,0,0)
+bpy.context.view_layer.update()
 # Source preserves original anatomical mesh and shape keys, rig and cloth UVs.
 OUT.mkdir(parents=True,exist_ok=True)
 bpy.ops.file.pack_all()
+bpy.context.preferences.filepaths.save_version=0
 blend=OUT/'horeb_mother_w22_candidate.blend'
 bpy.ops.wm.save_as_mainfile(filepath=str(blend),check_existing=False)
 bpy.ops.object.select_all(action='DESELECT')

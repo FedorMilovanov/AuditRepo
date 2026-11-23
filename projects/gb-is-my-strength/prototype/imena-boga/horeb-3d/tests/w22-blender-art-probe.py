@@ -36,6 +36,35 @@ track_names = {t.name for t in tracks}
 assert {"Mother_QuietIdle", "Mother_GestureTowardsBasket"} <= track_names, track_names
 
 scene = bpy.context.scene
+# W22b regression gates inspect the actual EDITABLE native scene, not only
+# GLB animation transforms. Early W22 passed glTF contact but saved the rest
+# pose with an extended arm and a linen hood floating above the scalp.
+for track in tracks:
+    track.mute = track.name != "Mother_QuietIdle"
+scene.frame_set(1)
+bpy.context.view_layer.update()
+neutral_wrist = rig.pose.bones["lowerarm_l"].tail.copy()
+assert neutral_wrist.z < 1.02 and neutral_wrist.y < -.07, (
+    "W22 idle native arm is still raised", tuple(neutral_wrist))
+
+def evaluated_top(object_name):
+    depsgraph = bpy.context.evaluated_depsgraph_get()
+    obj = bpy.data.objects[object_name].evaluated_get(depsgraph)
+    mesh = obj.to_mesh()
+    try:
+        return max((obj.matrix_world @ v.co).z for v in mesh.vertices)
+    finally:
+        obj.to_mesh_clear()
+
+scalp_top = evaluated_top(body.name)
+hood_top = evaluated_top("W22_plain_linen_head_cover")
+assert abs(hood_top - scalp_top) < .035, (
+    "W22 linen cover floats above anatomical scalp", scalp_top, hood_top)
+print("W22_NATIVE_REST_AND_HEAD_COVER_PASS", {
+    "wrist": [round(float(v), 4) for v in neutral_wrist],
+    "scalp_top": round(scalp_top, 4),
+    "hood_top": round(hood_top, 4),
+}, flush=True)
 scene.render.engine = "CYCLES"
 scene.cycles.device = "CPU"
 scene.cycles.samples = 12
