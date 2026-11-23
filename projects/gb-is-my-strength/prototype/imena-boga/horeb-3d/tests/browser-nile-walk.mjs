@@ -101,6 +101,14 @@ try{
  // canvas.dataset yaw even though real PointerEvents and camera updates ran.
  const settleLook=()=>page.evaluate(()=>new Promise(resolve=>
    requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ // On slow software WebGL, the desktop drag can be reversed and the viewport
+ // resized before the next 3D frame publishes the returned yaw to dataset.
+ // Verify the real camera has returned to its pre-drag heading before using
+ // that value as the strict second-finger ownership baseline.
+ await page.waitForFunction(expected=>{
+   const yaw=Number(document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileLookYaw);
+   return Number.isFinite(yaw)&&Math.abs(yaw-expected)<.035;
+ },{polling:100,timeout:12000},lookStart);
  const yawStart=await getYaw();
  const multi=await page.createCDPSession();
  try{
