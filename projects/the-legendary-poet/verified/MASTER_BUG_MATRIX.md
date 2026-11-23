@@ -42,6 +42,8 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 
+**2026-11-24 freshness boundary (W93):** the zero-row matrix below is not a current terminal release attestation. [Targeted recheck](../reverify/REVERIFY_3ca630c_2026-11-24_non-hall-release-and-editorial-retention.md) records the reopened Product #343, red exact-head PR browser gates, existing repair owners and a narrow editorial-retention proof. Current-main runtime revalidation is still required before promoting separate confirmed defect rows; do not duplicate Product repair lanes. Hall is owner-deferred, not certified complete.
+
 ## Summary
 
 | Категория | Количество |
