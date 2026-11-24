@@ -1,0 +1,32 @@
+# Local execution and remote resource protocol
+
+Status: mandatory shared workstation operating policy after integration into each repository's authority. Applies to all agents, repositories and tool accounts on the owner's Windows workstation. It governs execution transport and resource use, not evidence quality, provider writes, release approval or source ownership. Stricter repository-specific constraints remain binding.
+
+## 1. Choose the least expensive valid execution surface
+
+- GitHub connector/API: read current source, bounded diffs, Issues/PRs/checks, inspect CI logs/artifacts; use exact refs and guarded writes in the owning lane. No Remote Desktop Commander (RDC) just to invoke git/gh, read repo files or inspect PR status when the connector can do it.
+- Hosted sandbox/CI: static analysis, build/typecheck, fixture-based tests, full Chromium/Firefox/WebKit matrices, research downloads or media processing where the inputs and rights permit. Reuse exact-head evidence if applicable; do not confuse synthetic merge, stale HEAD or different device with a required witness.
+- Official provider connector/API for provider operations where supported and authorized. Preserve provider scope, quotas, no-replay, rights and write gates. Never treat a local fallback as authority to publish.
+- RDC only when evidence/actions truly depend on the owner's device: existing local files, physical-device/Windows-specific reproduction, an approved isolated local preview, device-specific media processing or operator handoff. Explain why the cheaper surfaces cannot satisfy the requirement. Headless alone does not prove isolation.
+- Do not interact with owner tabs, profiles, desktop, credentials or unrelated processes. Fresh, scoped owner consent is required for foreground UI actions. Do not upload private local inputs to another environment merely to save calls.
+
+## 2. Remote call economy
+
+Before RDC, record objective, target device, necessary local evidence, reason alternatives fail, bounded command, expected output, stop condition. Batch related read-only checks in one bounded script; return compact structured evidence (counts, paths, hashes, exit status, failures), not giant repeated listings or base64 screenshots in terminal output. Prefer existing repo scripts over ad hoc clones, installs, builds and browser launches. Reuse worktrees, dependencies and artifact outputs when exact provenance matches; never reset a dirty checkout.
+
+Default target for a small local phase: one preflight/execution call and one result verification call when possible, not a rigid cap that excuses incomplete QA. For long commands use one process/call ID, terminal logs and bounded status reads. Do not repeat a timed-out command until the prior process or remote effect is reconciled. Poll only at meaningful intervals or after a state change; no busy-looping, redundant account enumeration, or repeated identical diagnostics. If transport is blocked, report HOLD and continue independent work elsewhere; do not switch accounts to evade service limits. Explicit owner-selected authorized account changes remain subject to service rules.
+
+## 3. Shared machine admission and timeouts
+
+- Before any resource-heavy owner-PC task (build, browser, encoding, ASR, large image/PDF batch), check system commit bytes/limit, free physical memory and disk on the actual target, plus existing owned heavy jobs. A wording-only GitHub change requires no desktop inventory.
+- Until a cross-process admission controller is installed and verified, **at most one heavy job across the whole workstation**, with positive coordination evidence; if ownership/admission cannot be established, use CI/sandbox or HOLD. After verified controller deployment, maximum two slots, with WebKit, CUDA and large media jobs requiring stricter explicit admission. No parallel browser engines inside a slot.
+- Warn at 75% Commit; deny new heavy jobs at 80%; at 90% stop adding work and diagnose/coordinate cleanup. Also deny when available RAM < 6 GiB or target disk free < 15 GiB; large outputs require a calculated larger disk reserve. Fail closed on missing counters or lock; never use a stale measurement as admission.
+- Windows local WebKit is **disabled by default**: use hosted WebKit CI. Incident 2026-11-24: two long-running test WebKit GPU processes each showed about 25 GiB shared commit; terminating their verified test trees reduced actual system commit by about 55 GiB. This is a workstation incident, not a claim about all WebKit versions. A necessary Windows-specific exception requires explicit owner approval, dedicated isolation, one slot, memory supervision and a short bounded reproduction. CUDA disabled by default on this machine; no silent fallback to a different transcription model.
+- Default browser probe deadline 10 min, heavy local build/QA 20 min. A genuinely long media task may use a separately approved bounded deadline with progress, estimated disk/memory, cancel path and no duplicate runs. Never represent a timed-out test as PASS. Mandatory final checks still run in suitable hosted environments.
+- Every launched job has a job ID, repo/lane, exact head or local input identity, root PID plus creation time, start/deadline, owned children, and artifact/log path. Close browser/context/server in finally; external watchdog must cover a hung process. On timeout terminate only the verified job tree, after identifying PID reuse and protecting owner/other jobs. Retain outputs, dirty changes and partial evidence; no blanket taskkill by process name.
+
+## 4. Enforcement and reporting
+
+A policy document is not a running scheduler. A common workstation controller must provide atomic cross-process admission, live counters, bounded timeout, job-tree containment, cleanup, crash recovery and logs without secrets. Install only after isolated tests and explicit workstation rollout; until then section 3's conservative admission applies. Direct RDC commands must not bypass the controller once adopted. Repository instructions must link this policy and carry essential fail-closed rules so link unavailability does not authorize unsafe execution.
+
+Report transport, RDC calls actually used (not guessed credits), local job outcome/cleanup, exact evidence, remaining HOLD. Do not weaken browser matrices, visual/manual acceptance, source verification, editorial or release gates to save resources; move the same required checks to the appropriate execution surface. Do not call an incident closed until measured verification confirms it.

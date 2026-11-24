@@ -1,5 +1,7 @@
 # AuditRepo Operating Model
 
+**Shared workstation execution:** [LOCAL_EXECUTION_RESOURCE_PROTOCOL.md](LOCAL_EXECUTION_RESOURCE_PROTOCOL.md) is mandatory for local/remote execution and complements this evidence model; it does not supersede Product or research authority.
+
 ## Назначение
 
 AuditRepo — evidence/reasoning слой для мультиагентной работы: сырые аудиты, anchors, проверки, опровержения, root-cause synthesis и выбранная очередь проблем.
