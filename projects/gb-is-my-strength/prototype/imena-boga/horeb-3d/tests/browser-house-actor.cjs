@@ -8,6 +8,10 @@ const m=study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.jso
 if(m&&(!['w26-house-study.glb','w26b-house-study.glb','w26c-house-study.glb'].includes(m.glb_file||'w26-house-study.glb')||m.status!=='ART_HOLD_W26_HOUSE_STUDY'))throw Error('Invalid study manifest');
 const bytes=m?fs.readFileSync(path.join(study,m.glb_file||'w26-house-study.glb')):null;
 if(bytes&&(crypto.createHash('sha256').update(bytes).digest('hex')!==m.glb_sha256||bytes.length!==m.bytes))throw Error('Asset hash mismatch');
+const actorStudy=process.env.HOREB_ACTOR_STUDY_DIR;
+const am=actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
+const actorBytes=am?fs.readFileSync(path.join(actorStudy,'w24-wardrobe-study.glb')):null;
+if(am&&(am.status!=='ART_HOLD_LOCAL_W24_WARDROBE'||am.glb_sha256!=='f3d9a470cb2371f600cc8b6c58547fd63aebd8c1d025e80ff327926ef2870cbb'||crypto.createHash('sha256').update(actorBytes).digest('hex')!==am.glb_sha256||actorBytes.length!==am.glb_bytes))throw Error('Actor study hash mismatch');
 const chrome=[process.env.HOREB_BROWSER_PATH,'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&fs.existsSync(x));
 if(!chrome)throw Error('Actual Chromium required');
 (async()=>{
@@ -16,21 +20,22 @@ if(!chrome)throw Error('Actual Chromium required');
  fs.mkdirSync(dir,{recursive:true});
  const page=await browser.newPage();page.setDefaultTimeout(60000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- let requests=0;
- if(bytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
- page.on('request',r=>{if(new URL(r.url()).pathname.endsWith('/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}return r.continue();});}
+ let requests=0,actorRequests=0;
+ if(bytes||actorBytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
+ page.on('request',r=>{if(bytes&&new URL(r.url()).pathname.endsWith('/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith('/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
  const sel='[data-testid="house-lookdev-canvas"]';
  const state=()=>page.$eval(sel,c=>({...c.dataset}));
  const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
  async function hold(key,fn){await page.keyboard.down(key);try{await until(fn);}finally{await page.keyboard.up(key);}}
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
- const prior=requests;
+ const prior=requests,priorActor=actorRequests;
  await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html',{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(bytes&&requests<=prior)throw Error('No candidate request');
  await page.click('[data-testid="house-actor-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle');
+ if(actorBytes&&actorRequests<=priorActor)throw Error('No exact actor study request');
  const actor=await state();
  if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2)throw Error('Missing real skinning');
  await page.click('[data-testid="house-walk-toggle"]');
@@ -66,14 +71,25 @@ if(!chrome)throw Error('Actual Chromium required');
  const peak=await state();
  if(!Number.isFinite(Number(peak.houseActorContactMm)))await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorContactMm)));
  const actual=await state();
- if(Number(actual.houseActorContactMm)>=120)throw Error('W27 wrist misses actual rim: '+JSON.stringify(actual));
+ if(Number(actual.houseActorContactMm)>=25)throw Error('W27 wrist misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
  const endGesture=await state();
- if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorContactMm)>=120)throw Error('Action completion invalid '+JSON.stringify(endGesture));
- console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,bones:actor.houseActorBones}));
+ if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=25||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
+ console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,actor:am?.glb_sha256||'canonical W22'}));
 
+ // A replay must reset contact evidence and cancel on leaving the walk.
+ await page.click('[data-testid="house-actor-perform"]');
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
+ if((await state()).houseActorHoldSeconds!==undefined)throw Error('Stale contact on replay');
+ await page.click('[data-testid="house-walk-toggle"]');
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle'&&document.querySelector(s).dataset.houseWalk==='false');
+ if((await state()).houseActorTime!==undefined)throw Error('Stale clip clock after cancellation');
+ // Re-enter and approach the actual table again.
+ await page.click('[data-testid="house-walk-toggle"]');
+ await hold('w',s=>document.querySelector(s).dataset.houseWalkBlocked==='true');
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="house-inspect-basket"]').disabled);
  const beforeInspect=await state();
  if(mobile)await page.tap('[data-testid="house-inspect-basket"]');else await page.keyboard.press('f');
  await page.waitForSelector('[data-testid="house-basket-inspection"]');
