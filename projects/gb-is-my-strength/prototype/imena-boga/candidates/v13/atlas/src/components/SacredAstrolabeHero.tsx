@@ -414,7 +414,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
       <div className="relative z-10 mx-auto max-w-4xl px-5 sm:px-8 text-center">
         {/* Eyebrow */}
         <div
-          className="gb-hero-eyebrow font-ui mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium tracking-wider uppercase"
+          className="gb-hero-eyebrow font-ui mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium tracking-wider uppercase"
           style={{
             borderColor: 'var(--gb-border-strong)',
             backgroundColor: 'var(--gb-glass)',
@@ -427,7 +427,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
         </div>
 
         {/* Interactive 3D Tilting Sacred Medallion with Manual Glyph Switcher */}
-        <div className="gb-hero-medallion-frame mb-8" style={{ perspective: '900px' }}>
+        <div className="gb-hero-medallion-frame mb-5 sm:mb-8" style={{ perspective: '900px' }}>
           <div className="gb-hero-medallion-controls flex w-full items-center justify-center gap-1.5 sm:gap-3">
           <button
             type="button"
@@ -557,35 +557,8 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
           в завете, истории и Христе
         </h1>
 
-        {/* Lead Subtitle */}
-        <p
-          className="font-body-editorial mx-auto mt-6 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed"
-          style={{ color: 'var(--gb-ink-secondary)' }}
-        >
-          В Библии имя Бога — не условный ярлык и не магическая формула, а самооткровение Его
-          характера, святости и верности. По мере чтения ниже по бокам страницы будут последовательно
-          являться и озаряться 36 исследуемых библейских выражений — нажмите на любое, чтобы
-          открыть лексический и богословский разбор.
-        </p>
-
-        {/* Editorial Meta Strip */}
-        <div
-          className="font-ui mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs"
-          style={{ color: 'var(--gb-muted)' }}
-        >
-          <span>
-            Автор-редактор: <strong style={{ color: 'var(--gb-ink)' }}>Фёдор Милованов</strong>
-          </span>
-          <span aria-hidden="true">·</span>
-          <span>36 исследуемых выражений (еврейский, арамейский, греческий)</span>
-          <span aria-hidden="true">·</span>
-          <span>Пять тематических частей</span>
-          <span aria-hidden="true">·</span>
-          <span>Библейский текст · лексика · контекст</span>
-        </div>
-
         {/* Action Buttons */}
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
+        <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3.5">
           <button
             type="button"
             onClick={onStartReading}
@@ -614,6 +587,33 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
             <Compass className="h-4 w-4" style={{ color: 'var(--gb-gold)' }} />
             <span>Сводная схема · 36 позиций</span>
           </button>
+        </div>
+
+        {/* Lead Subtitle */}
+        <p
+          className="font-body-editorial mx-auto mt-8 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed"
+          style={{ color: 'var(--gb-ink-secondary)' }}
+        >
+          В Библии имя Бога — не условный ярлык и не магическая формула, а самооткровение Его
+          характера, святости и верности. По мере чтения ниже по бокам страницы будут последовательно
+          являться и озаряться 36 исследуемых библейских выражений — нажмите на любое, чтобы
+          открыть лексический и богословский разбор.
+        </p>
+
+        {/* Editorial Meta Strip */}
+        <div
+          className="font-ui mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs"
+          style={{ color: 'var(--gb-muted)' }}
+        >
+          <span>
+            Автор-редактор: <strong style={{ color: 'var(--gb-ink)' }}>Фёдор Милованов</strong>
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>36 исследуемых выражений (еврейский, арамейский, греческий)</span>
+          <span aria-hidden="true">·</span>
+          <span>Пять тематических частей</span>
+          <span aria-hidden="true">·</span>
+          <span>Библейский текст · лексика · контекст</span>
         </div>
 
         <nav aria-label="Два формата исследования имён Бога" className="mt-6 flex items-center justify-center">

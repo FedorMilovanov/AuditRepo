@@ -81,6 +81,18 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
        : [];
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
    }
+   // W120b: the primary study entry belongs in the initial viewport, after
+   // the title and before the long editorial lead. Verify normal text size.
+   if(name==='atlas'&&(width===390||width===1440)){
+     const entry=await page.evaluate(()=>{
+       const hero=document.querySelector('#atlas-hero');
+       const title=hero.querySelector('h1'), action=hero.querySelector('.gb-hero-action'), lead=hero.querySelector('p');
+       const a=action.getBoundingClientRect(),h=title.getBoundingClientRect(),l=lead.getBoundingClientRect();
+       return {top:a.top,bottom:a.bottom,viewport:innerHeight,titleBottom:h.bottom,leadTop:l.top,height:a.height,domOrder:!!(action.compareDocumentPosition(lead)&Node.DOCUMENT_POSITION_FOLLOWING)};
+     });
+     if(entry.top<entry.titleBottom-1||entry.bottom>entry.viewport||entry.height<44||entry.bottom>entry.leadTop||!entry.domOrder)throw Error('W120b hero entry failure '+JSON.stringify({engine,width,entry}));
+     console.log('W120B_ATLAS_PRIMARY_ENTRY_FIRST_VIEW_PASS',engine,width,JSON.stringify(entry));
+   }
    // W120: a reduced-motion hero must repaint after a real offscreen resize.
    if(name==='atlas'&&width===390){
      const heroCtx=await browser.newContext({viewport:{width,height:844},locale:'ru-RU',reducedMotion:'reduce'});
