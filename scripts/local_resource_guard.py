@@ -178,6 +178,7 @@ class Windows:
             "WaitForSingleObject": (W.DWORD, [W.HANDLE, W.DWORD]),
             "ReleaseMutex": (W.BOOL, [W.HANDLE]),
             "CloseHandle": (W.BOOL, [W.HANDLE]),
+            "CreateFileW": (W.HANDLE, [W.LPCWSTR, W.DWORD, W.DWORD, C.c_void_p, W.DWORD, W.DWORD, W.HANDLE]),
             "CreateJobObjectW": (W.HANDLE, [C.c_void_p, W.LPCWSTR]),
             "SetInformationJobObject": (W.BOOL, [W.HANDLE, C.c_int, C.c_void_p, W.DWORD]),
             "QueryInformationJobObject": (W.BOOL, [W.HANDLE, C.c_int, C.c_void_p, W.DWORD, C.POINTER(W.DWORD)]),
@@ -210,6 +211,29 @@ class Windows:
         if result not in (WAIT_OBJECT_0, WAIT_ABANDONED, WAIT_TIMEOUT):
             raise C.WinError(C.get_last_error())
         return result
+
+    def wait_log_released(self, path: Path, seconds: float = 5.0) -> bool:
+        """Verify inherited log handles have drained, not just job accounting.
+
+        Windows may report zero active job members before all inherited file
+        handles finish rundown. An exclusive read-open is an independent
+        witness of release. A temporary sharing/lock violation is retryable;
+        other errors and an expired deadline are not successful cleanup.
+        """
+        end = time.monotonic() + seconds
+        invalid = C.c_void_p(-1).value
+        while True:
+            handle = self.k.CreateFileW(str(path), 0x80000000, 0, None, 3, 0x80, None)
+            if handle != invalid and handle:
+                self.require(self.k.CloseHandle(handle))
+                return True
+            error = C.get_last_error()
+            if error not in (32, 33):
+                raise C.WinError(error)
+            remaining = end - time.monotonic()
+            if remaining <= 0:
+                return False
+            time.sleep(min(0.05, remaining))
 
     def snapshot(self, disks: tuple[Path, ...]) -> Snapshot:
         p = Performance()
@@ -393,6 +417,42 @@ class Job:
         return self.wait_empty(5.0)
 
 
+def run_owned_job(api: Windows, command: list[str], cwd: Path, log,
+                  seconds: int, before: Snapshot, warning: bool, event, sample) -> dict:
+    with Job(api) as job:
+        start = time.monotonic()
+        try:
+            pid = job.start(command, cwd, log)
+            event({"status": "STARTED", "pid": pid, "root_created_utc": job.creation_time(),
+                   "deadline_seconds": seconds, "before": before.report(), "warning": warning})
+            end = start + seconds
+            while True:
+                if job.prohibited_child():
+                    return {"status": "POLICY_STOP", "reason": "local_webkit_child",
+                            "cleanup_verified": job.stop(), "pid": pid, "exit": 26}
+                remaining = end - time.monotonic()
+                if remaining <= 0:
+                    return {"status": "TIMEOUT", "cleanup_verified": job.stop(), "pid": pid, "exit": 21}
+                if job.exited(max(1, min(500, int(remaining * 1000)))):
+                    code = job.exit_code()
+                    if not job.wait_empty(2.0):
+                        return {"status": "ORPHAN_CHILDREN", "child_exit": code,
+                                "cleanup_verified": job.stop(), "pid": pid, "exit": 23}
+                    return {"status": "PASS" if code == 0 else "CHILD_FAILED",
+                            "child_exit": code, "cleanup_verified": True, "pid": pid,
+                            "exit": 0 if code == 0 else 24}
+                current = sample()
+                reason = pressure(current)
+                if reason:
+                    return {"status": "PRESSURE_STOP", "reason": reason,
+                            "sample": current.report(), "cleanup_verified": job.stop(), "pid": pid, "exit": 22}
+        except BaseException:
+            # A counter failure or interrupt is fail-closed, not a success.
+            if job.process:
+                job.stop()
+            raise
+
+
 def run_guarded(api: Windows, command: list[str], cwd: Path, log_path: Path,
                 seconds: int, disk_min: int, disks: tuple[Path, ...],
                 event, sample=None, mutex_name: str = MUTEX) -> dict:
@@ -405,38 +465,22 @@ def run_guarded(api: Windows, command: list[str], cwd: Path, log_path: Path,
         denied, warning = admission(before, disk_min)
         if denied:
             return {"status": "DENIED", "reason": denied, "before": before.report(), "exit": 20}
-        with log_path.open("xb", buffering=0) as log, Job(api) as job:
-            start = time.monotonic()
-            try:
-                pid = job.start(command, cwd, log)
-                event({"status": "STARTED", "pid": pid, "root_created_utc": job.creation_time(),
-                       "deadline_seconds": seconds, "before": before.report(), "warning": warning})
-                end = start + seconds
-                while True:
-                    if job.prohibited_child():
-                        return {"status": "POLICY_STOP", "reason": "local_webkit_child",
-                                "cleanup_verified": job.stop(), "pid": pid, "exit": 26}
-                    remaining = end - time.monotonic()
-                    if remaining <= 0:
-                        return {"status": "TIMEOUT", "cleanup_verified": job.stop(), "pid": pid, "exit": 21}
-                    if job.exited(max(1, min(500, int(remaining * 1000)))):
-                        code = job.exit_code()
-                        if not job.wait_empty(2.0):
-                            return {"status": "ORPHAN_CHILDREN", "child_exit": code,
-                                    "cleanup_verified": job.stop(), "pid": pid, "exit": 23}
-                        return {"status": "PASS" if code == 0 else "CHILD_FAILED",
-                                "child_exit": code, "cleanup_verified": True, "pid": pid,
-                                "exit": 0 if code == 0 else 24}
-                    current = sample()
-                    reason = pressure(current)
-                    if reason:
-                        return {"status": "PRESSURE_STOP", "reason": reason,
-                                "sample": current.report(), "cleanup_verified": job.stop(), "pid": pid, "exit": 22}
-            except BaseException:
-                # A counter failure or interrupt is fail-closed, not a success.
-                if job.process:
-                    job.stop()
-                raise
+        # Keep the machine-wide lease held until the owned process tree AND
+        # its inherited log handles are gone. Opening the log exclusively here
+        # also means a failed open cannot mistake someone else's file for ours.
+        log = log_path.open("xb", buffering=0)
+        try:
+            with log:
+                result = run_owned_job(api, command, cwd, log, seconds, before, warning, event, sample)
+        except BaseException:
+            if not api.wait_log_released(log_path):
+                raise RuntimeError("owned log handle rundown unverified after failure")
+            raise
+        if not api.wait_log_released(log_path):
+            return {**result, "prior_status": result["status"], "status": "CLEANUP_HOLD",
+                    "reason": "owned_log_handle_rundown_timeout", "cleanup_verified": False, "exit": 27}
+        return result
+
 
 
 def main(argv=None) -> int:

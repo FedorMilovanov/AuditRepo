@@ -8,6 +8,8 @@ import subprocess
 import sys
 import tempfile
 import time
+import threading
+from unittest.mock import patch
 import unittest
 import uuid
 
@@ -85,6 +87,27 @@ class WindowsIntegration(unittest.TestCase):
 
     def test_live_counters(self):
         self.assertTrue(self.api.snapshot((self.root,)).valid())
+
+    def test_log_handle_rundown(self):
+        path = self.root / "held.log"
+        path.write_bytes(b"fixture")
+        with path.open("rb") as held:
+            self.assertFalse(self.api.wait_log_released(path, seconds=0.05))
+            timer = threading.Timer(0.20, held.close)
+            timer.start()
+            try:
+                self.assertTrue(self.api.wait_log_released(path, seconds=2.0))
+            finally:
+                timer.join(timeout=2.0)
+        path.unlink()
+
+    def test_cleanup_hold_is_not_pass(self):
+        with patch.object(self.api, "wait_log_released", return_value=False):
+            r = self.run_child("print('ok')", "cleanup-hold.log")
+        self.assertEqual(r["status"], "CLEANUP_HOLD", r)
+        self.assertEqual(r["prior_status"], "PASS")
+        self.assertFalse(r["cleanup_verified"])
+        self.assertEqual(r["exit"], 27)
 
     def test_success_nonzero_and_log(self):
         r = self.run_child("print('witness', flush=True)", "success.log")
