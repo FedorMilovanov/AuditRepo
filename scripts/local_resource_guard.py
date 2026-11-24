@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import shutil
 import subprocess
 import sys
@@ -83,6 +83,34 @@ def timeout_for(kind: str, seconds: int | None, approval: str | None) -> int:
     if value > default and not (approval or "").strip():
         raise ValueError("extended deadline requires recorded owner approval reference")
     return value
+
+
+def prohibited_image(path: str) -> bool:
+    """Recognize Windows Playwright WebKit images; not a security sandbox."""
+    p = PureWindowsPath(path)
+    name = p.name.casefold()
+    return (name in {"webkitgpuprocess.exe", "webkitwebprocess.exe", "webkitnetworkprocess.exe"}
+            or any(part.casefold().startswith("webkit-") for part in p.parts)
+            or name == "webkit.exe")
+
+
+class EventJournal:
+    """Small durable status ledger; does not log command arguments or environment."""
+    def __init__(self, stream, meta: dict):
+        self.stream = stream
+        self.meta = meta
+
+    def emit(self, data: dict) -> None:
+        row = {**self.meta, **data, "utc": datetime.now(timezone.utc).isoformat()}
+        line = json.dumps(row, ensure_ascii=True)
+        self.stream.write(line + "\n")
+        self.stream.flush()
+        os.fsync(self.stream.fileno())
+        try:
+            print(line, flush=True)
+        except BrokenPipeError:
+            # The durable result remains available if the transport disconnects.
+            pass
 
 
 class Performance(C.Structure):
@@ -161,6 +189,9 @@ class Windows:
                 W.DWORD, C.c_void_p, W.LPCWSTR, C.POINTER(Startup), C.POINTER(ProcessInfo)]),
             "GetExitCodeProcess": (W.BOOL, [W.HANDLE, C.POINTER(W.DWORD)]),
             "OpenProcess": (W.HANDLE, [W.DWORD, W.BOOL, W.DWORD]),
+            "IsProcessInJob": (W.BOOL, [W.HANDLE, W.HANDLE, C.POINTER(W.BOOL)]),
+            "QueryFullProcessImageNameW": (W.BOOL, [W.HANDLE, W.DWORD, W.LPWSTR, C.POINTER(W.DWORD)]),
+            "GetProcessTimes": (W.BOOL, [W.HANDLE, C.POINTER(W.FILETIME), C.POINTER(W.FILETIME), C.POINTER(W.FILETIME), C.POINTER(W.FILETIME)]),
         }
         for name, (restype, argtypes) in specs.items():
             f = getattr(self.k, name)
@@ -287,6 +318,59 @@ class Job:
             self.handle, 1, C.byref(info), C.sizeof(info), None))
         return info.ActiveProcesses
 
+    def creation_time(self) -> str:
+        created, exited, kernel, user = (W.FILETIME() for _ in range(4))
+        self.api.require(self.api.k.GetProcessTimes(
+            self.process, C.byref(created), C.byref(exited), C.byref(kernel), C.byref(user)))
+        ticks = (created.dwHighDateTime << 32) | created.dwLowDateTime
+        return datetime.fromtimestamp(ticks / 10_000_000 - 11644473600, timezone.utc).isoformat()
+
+    def process_ids(self) -> tuple[int, ...]:
+        # JobObjectBasicProcessIdList. Retry a bounded number of times if the
+        # list grows while we query; never scan/attach to owner processes.
+        capacity = 64
+        while capacity <= 4096:
+            class IdList(C.Structure):
+                _fields_ = [("NumberOfAssignedProcesses", W.DWORD),
+                            ("NumberOfProcessIdsInList", W.DWORD),
+                            ("ProcessIdList", C.c_size_t * capacity)]
+            info = IdList()
+            ok = self.api.k.QueryInformationJobObject(
+                self.handle, 3, C.byref(info), C.sizeof(info), None)
+            if ok and info.NumberOfProcessIdsInList <= capacity:
+                if info.NumberOfAssignedProcesses <= info.NumberOfProcessIdsInList:
+                    return tuple(int(info.ProcessIdList[i]) for i in range(info.NumberOfProcessIdsInList))
+            elif not ok and C.get_last_error() != 234:  # ERROR_MORE_DATA
+                raise C.WinError(C.get_last_error())
+            capacity *= 2
+        raise RuntimeError("owned job process list too large or unstable")
+
+    def prohibited_child(self) -> bool:
+        for pid in self.process_ids():
+            h = self.api.k.OpenProcess(0x1000, False, pid)  # QUERY_LIMITED_INFORMATION
+            if not h:
+                error = C.get_last_error()
+                if pid in self.process_ids():
+                    raise C.WinError(error)
+                continue  # transient child already exited
+            try:
+                member = W.BOOL()
+                self.api.require(self.api.k.IsProcessInJob(h, self.handle, C.byref(member)))
+                if not member.value:
+                    continue  # PID reuse: not our job, do not inspect the image
+                size = W.DWORD(32768)
+                buf = C.create_unicode_buffer(size.value)
+                if not self.api.k.QueryFullProcessImageNameW(h, 0, buf, C.byref(size)):
+                    error = C.get_last_error()
+                    if pid in self.process_ids():
+                        raise C.WinError(error)
+                    continue
+                if prohibited_image(buf.value):
+                    return True
+            finally:
+                self.api.k.CloseHandle(h)
+        return False
+
     def exited(self, ms: int) -> bool:
         return self.api.wait(self.process, ms) == WAIT_OBJECT_0
 
@@ -325,10 +409,13 @@ def run_guarded(api: Windows, command: list[str], cwd: Path, log_path: Path,
             start = time.monotonic()
             try:
                 pid = job.start(command, cwd, log)
-                event({"status": "STARTED", "pid": pid, "deadline_seconds": seconds,
-                       "before": before.report(), "warning": warning})
+                event({"status": "STARTED", "pid": pid, "root_created_utc": job.creation_time(),
+                       "deadline_seconds": seconds, "before": before.report(), "warning": warning})
                 end = start + seconds
                 while True:
+                    if job.prohibited_child():
+                        return {"status": "POLICY_STOP", "reason": "local_webkit_child",
+                                "cleanup_verified": job.stop(), "pid": pid, "exit": 26}
                     remaining = end - time.monotonic()
                     if remaining <= 0:
                         return {"status": "TIMEOUT", "cleanup_verified": job.stop(), "pid": pid, "exit": 21}
@@ -370,9 +457,9 @@ def main(argv=None) -> int:
     a = parser.parse_args(argv)
     meta = {"job_id": uuid.uuid4().hex, "repo": a.repo, "lane": a.lane, "input_id": a.input_id,
             "kind": a.kind, "engine": a.engine, "accelerator": a.accelerator,
-            "utc": datetime.now(timezone.utc).isoformat(), "log": str(a.log)}
+            "supervisor_pid": os.getpid(), "log": str(a.log)}
     def emit(data):
-        print(json.dumps({**meta, **data}, ensure_ascii=True), flush=True)
+        print(json.dumps({**meta, **data, "utc": datetime.now(timezone.utc).isoformat()}, ensure_ascii=True), flush=True)
     try:
         if a.engine == "webkit" or a.accelerator == "cuda":
             raise ValueError("WebKit/CUDA are not admitted by this initial Windows controller")
@@ -390,16 +477,26 @@ def main(argv=None) -> int:
         executable = Path(command[0]).resolve(strict=True)
         if not executable.is_file():
             raise ValueError("executable must be an existing file")
+        if prohibited_image(str(executable)):
+            raise ValueError("local WebKit executable denied")
         cwd = a.workdir.resolve(strict=True)
         log = a.log.resolve()
         disks = tuple(dict.fromkeys((cwd, log.parent, *(p.resolve(strict=True) for p in a.disk_path))))
-        if not all(p.is_dir() for p in disks) or log.exists():
-            raise ValueError("directories must exist; log must be a new file")
+        events = log.with_name(log.name + ".events.jsonl")
+        if not all(p.is_dir() for p in disks) or log.exists() or events.exists():
+            raise ValueError("directories must exist; log and event ledger must be new files")
         api = Windows()
-        result = run_guarded(api, [str(executable), *command[1:]], cwd, log, seconds,
-                             a.min_free_gib * GIB, disks, emit)
-        emit(result)
-        return result["exit"]
+        with events.open("x", encoding="utf-8") as stream:
+            journal = EventJournal(stream, {**meta, "events": str(events)})
+            journal.emit({"status": "ADMISSION_REQUEST"})
+            try:
+                result = run_guarded(api, [str(executable), *command[1:]], cwd, log, seconds,
+                                     a.min_free_gib * GIB, disks, journal.emit)
+            except (OSError, ValueError, RuntimeError, KeyboardInterrupt) as exc:
+                result = {"status": "INFRASTRUCTURE_HOLD", "reason": type(exc).__name__,
+                          "winerror": getattr(exc, "winerror", None), "message": str(exc), "exit": 25}
+            journal.emit(result)
+            return result["exit"]
     except (OSError, ValueError, RuntimeError, KeyboardInterrupt) as exc:
         emit({"status": "INFRASTRUCTURE_HOLD", "reason": type(exc).__name__,
               "winerror": getattr(exc, "winerror", None), "message": str(exc), "exit": 25})

@@ -2,6 +2,7 @@
 """Portable policy tests and actual Windows Job Object integration tests."""
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -12,7 +13,7 @@ import uuid
 
 from local_resource_guard import (
     GIB, Job, Snapshot, Windows, admission, pressure, timeout_for, lease, run_guarded,
-    WAIT_OBJECT_0,
+    WAIT_OBJECT_0, prohibited_image, EventJournal,
 )
 
 
@@ -37,6 +38,23 @@ class Policy(unittest.TestCase):
         self.assertIsNotNone(admission(snap(), 14 * GIB)[0])
         self.assertIsNotNone(pressure(snap(ram=2)))
         self.assertIsNotNone(pressure(snap(disk=4)))
+
+    def test_prohibited_images(self):
+        self.assertTrue(prohibited_image(r"C:\Temp\WebKitGPUProcess.exe"))
+        self.assertTrue(prohibited_image(r"C:\ms-playwright\webkit-2248\Playwright.exe"))
+        self.assertFalse(prohibited_image(r"C:\ms-playwright\chromium-1234\chrome.exe"))
+        self.assertFalse(prohibited_image(r"C:\ms-playwright\firefox-1538\firefox.exe"))
+
+    def test_event_journal(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "events.jsonl"
+            with p.open("x", encoding="utf-8") as stream:
+                j = EventJournal(stream, {"job_id": "fixture"})
+                j.emit({"status": "STARTED", "pid": 42})
+                j.emit({"status": "PASS", "cleanup_verified": True})
+            rows = [json.loads(x) for x in p.read_text().splitlines()]
+            self.assertEqual([x["status"] for x in rows], ["STARTED", "PASS"])
+            self.assertTrue(all(x["job_id"] == "fixture" and x["utc"] for x in rows))
 
     def test_deadlines(self):
         self.assertEqual(timeout_for("browser", None, None), 600)
@@ -97,6 +115,17 @@ class WindowsIntegration(unittest.TestCase):
         r = self.run_child(code, "timeout.log", seconds=4)
         self.assertEqual(r["status"], "TIMEOUT", r)
         self.assertTrue(marker.exists(), "descendant was never launched")
+        self.assertTrue(r["cleanup_verified"])
+
+    def test_real_prohibited_child_cleanup(self):
+        # Harmless loopback program under the exact incident executable name.
+        # This tests real process-tree detection, not a browser/GPU workload.
+        binary = self.root / "WebKitGPUProcess.exe"
+        shutil.copyfile(Path(os.environ["SystemRoot"]) / "System32" / "ping.exe", binary)
+        code = ("import subprocess,time;"
+                f"subprocess.Popen([{str(binary)!r},'-t','127.0.0.1']);time.sleep(30)")
+        r = self.run_child(code, "policy-stop.log")
+        self.assertEqual(r["status"], "POLICY_STOP", r)
         self.assertTrue(r["cleanup_verified"])
 
     def test_orphan_is_not_pass(self):
