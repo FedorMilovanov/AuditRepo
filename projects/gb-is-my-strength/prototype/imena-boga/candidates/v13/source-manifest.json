@@ -92,8 +92,8 @@
       "bytes_normalized": 1283
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "e728691b5fe5470e7307d3c2490f2f3d67357094d8ab0adfe881807449f1c8b7",
-      "bytes_normalized": 28637
+      "sha256": "273132b2865d950bf28f5308391beb4aa0e4708c04bc6d5cbbe596304fcf513a",
+      "bytes_normalized": 28979
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "4211307444d5f27f5a9177f3bf2ea45f93e101f9cf04a3b32e6ac16e214bea3c",
@@ -148,8 +148,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "6215bd5fea107d1514800153cdb156ad918a4f210d6e043b979ded11fa46b29d",
-      "bytes_normalized": 92408
+      "sha256": "0fda3f8b8ca5e68e218a2029a92d46168287ce86f234d8d7031dc88d58954da1",
+      "bytes_normalized": 94591
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",

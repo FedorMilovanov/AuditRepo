@@ -99,8 +99,10 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
+      const rasterWidth = Math.max(1, Math.floor(width * dpr));
+      const rasterHeight = Math.max(1, Math.floor(height * dpr));
+      if (canvas.width !== rasterWidth) canvas.width = rasterWidth;
+      if (canvas.height !== rasterHeight) canvas.height = rasterHeight;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       measureScene();
     };
@@ -172,9 +174,12 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
 
     const restartAnimation = () => {
       window.cancelAnimationFrame(animationFrameId);
-      if (isVisible && isPageVisible && !prefersReducedMotion) {
-        animationFrameId = window.requestAnimationFrame(render);
-      }
+      if (!isVisible || !isPageVisible) return;
+      // A resize while offscreen can clear the backing store. Reduced-motion
+      // readers still need a complete still frame when they return.
+      lastTimestamp = 0;
+      if (prefersReducedMotion) render();
+      else animationFrameId = window.requestAnimationFrame(render);
     };
 
     const handleVisibility = () => {

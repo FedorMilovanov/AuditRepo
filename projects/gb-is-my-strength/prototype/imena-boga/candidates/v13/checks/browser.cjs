@@ -36,6 +36,8 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
  const base='http://127.0.0.1:'+server.address().port;
  const opts={headless:true};
  if(engine==='chromium'&&process.env.CHROMIUM_PATH)opts.executablePath=process.env.CHROMIUM_PATH;
+ // Opt-in local diagnostic for broken hardware Canvas readback; CI defaults unchanged.
+ if(engine==='chromium'&&process.env.CHROMIUM_SOFTWARE_RENDERING==='1'){opts.args=['--disable-gpu'];console.log('CHROMIUM_SOFTWARE_RENDERING enabled (local diagnostic)');}
  let browser;
  const results=[];
  try{
@@ -78,6 +80,38 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
          })
        : [];
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
+   }
+   // W120: a reduced-motion hero must repaint after a real offscreen resize.
+   if(name==='atlas'&&width===390){
+     const heroCtx=await browser.newContext({viewport:{width,height:844},locale:'ru-RU',reducedMotion:'reduce'});
+     try{
+       const heroPage=await heroCtx.newPage();
+       await heroPage.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+       const canvas=heroPage.locator('header canvas');
+       await canvas.waitFor({state:'visible'});
+       await heroPage.evaluate(async()=>{await document.fonts.ready;});
+       const painted=()=>heroPage.waitForFunction(()=>{
+         const c=document.querySelector('header canvas'),ctx=c?.getContext('2d');
+         if(!ctx)return false;
+         const a=ctx.getImageData(0,0,c.width,c.height).data;
+         for(let i=3;i<a.length;i+=4)if(a[i]>3)return true;
+         return false;
+       },null,{timeout:10000});
+       await painted();
+       await heroPage.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+       await heroPage.waitForFunction(()=>document.querySelector('header canvas').getBoundingClientRect().bottom<0);
+       // Observe a settled offscreen state before changing backing dimensions.
+       await heroPage.evaluate(()=>new Promise(resolve=>{
+         const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting){io.disconnect();resolve();}});
+         io.observe(document.querySelector('header canvas'));
+       }));
+       const before=await canvas.evaluate(c=>c.width);
+       await heroPage.setViewportSize({width:414,height:844});
+       await heroPage.waitForFunction(previous=>document.querySelector('header canvas').width!==previous,before);
+       await heroPage.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+       await painted();
+       console.log('W120_ATLAS_STATIC_RETURN_AFTER_OFFSCREEN_RESIZE_PASS',engine,width);
+     }finally{await heroCtx.close()}
    }
    // W118: test actual word fragments, not only document scrollWidth.
    if(name==='atlas'&&(width===320||width===390)){
