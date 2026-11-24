@@ -20,17 +20,28 @@ const TITLES:Record<View,string>={
  room:'Внутри жилища',
  basket:'Подготовка корзины',
 };
-type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void};
+type WalkKey='w'|'a'|'s'|'d'|'q'|'e';
+type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void};
 export function HouseArtLab(){
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
  const [view,setView]=useState<View>('courtyard');
  const [roof,setRoof]=useState(true);
+ const [walking,setWalking]=useState(false);
+ const [canInspect,setCanInspect]=useState(false);
+ const [inspected,setInspected]=useState(false);
+ const inspectClose=useRef<HTMLButtonElement>(null);
+ const focusRestore=useRef(false);
+ useEffect(()=>{
+  if(inspected){focusRestore.current=true;inspectClose.current?.focus();}
+  else if(focusRestore.current){focusRestore.current=false;canvas.current?.focus({preventScroll:true});}
+ },[inspected]);
  const [status,setStatus]=useState<'loading'|'ready'|'failed'>('loading');
  const [detail,setDetail]=useState('Загружается оригинальная 3D-модель…');
  const [stats,setStats]=useState({meshes:0,triangles:0,bytes:0});
  useEffect(()=>{
-  const c=canvas.current;if(!c)return;
+  const element=canvas.current;if(!element)return;
+  const c:HTMLCanvasElement=element;
   let disposed=false,loaded:THREE.Group|null=null;
   const objectsToDispose:THREE.Object3D[]=[];
   let renderer:THREE.WebGLRenderer|undefined;
@@ -65,6 +76,109 @@ export function HouseArtLab(){
   let basketBounds:THREE.Box3|null=null;
   let basketRoot:THREE.Object3D|null=null;
   let fitDirty=true;
+  // Laboratory-only walk mode. Collider footprints are derived from the
+  // loaded named authored meshes, not guessed from a second house model.
+  const obstacles:THREE.Box3[]=[];
+  const keys=new Set<WalkKey>();
+  let walking=false,walkX=0,walkZ=7.2,yaw=0,pitch=-.09,lastFrame=0,blocked=false;
+  const radius=.26;
+  let inspecting=false,inspectReady=false,probeTime=0;
+  const inspectTarget=new THREE.Vector3(),inspectDirection=new THREE.Vector3();
+  const inspectRay=new THREE.Raycaster();
+  const inspectObstacles:THREE.Mesh[]=[];
+  function inspectAvailable(){
+   if(!walking||!basketBounds||!basketRoot)return false;
+   basketBounds.getCenter(inspectTarget);inspectTarget.y=basketBounds.max.y-.035;
+   inspectDirection.copy(inspectTarget).sub(camera.position);
+   const distance=inspectDirection.length();
+   if(distance>2.0||distance<.08)return false;
+   // Facing the object and an unobstructed segment to its opening.
+   if(camera.getWorldDirection(new THREE.Vector3()).dot(inspectDirection.clone().normalize())<.52)return false;
+   inspectRay.set(camera.position,inspectDirection.normalize());inspectRay.far=distance-.025;
+   return inspectRay.intersectObjects(inspectObstacles,false).length===0;
+  }
+  function updateInspectReady(ready:boolean){
+   if(ready===inspectReady)return;
+   inspectReady=ready;setCanInspect(ready);c.dataset.houseInspectReady=String(ready);
+  }
+  function inspect(){
+   if(inspecting||!inspectAvailable())return false;
+   clear();inspecting=true;setInspected(true);c.dataset.houseInspected='true';return true;
+  }
+  function closeInspect(){
+   clear();inspecting=false;setInspected(false);c.dataset.houseInspected='false';
+  }
+  const walkable=(x:number,z:number)=>{
+   if(!Number.isFinite(x)||!Number.isFinite(z)||Math.abs(x)>3.12||z>8.3||z< -2.05)return false;
+   return !obstacles.some(b=>{
+    const dx=x-THREE.MathUtils.clamp(x,b.min.x,b.max.x);
+    const dz=z-THREE.MathUtils.clamp(z,b.min.z,b.max.z);
+    return dx*dx+dz*dz<radius*radius;
+   });
+  };
+  const walkCamera=()=>{
+   const ground=walkZ>2.95?-.11:-.005;
+   camera.position.set(walkX,ground+1.69,walkZ);
+   camera.rotation.set(pitch,yaw,0,'YXZ');
+   camera.updateMatrixWorld(true);
+   c.dataset.houseWalkX=walkX.toFixed(3);c.dataset.houseWalkZ=walkZ.toFixed(3);
+   c.dataset.houseWalkPitch=pitch.toFixed(3);c.dataset.houseWalkYaw=yaw.toFixed(3);c.dataset.houseWalkBlocked=String(blocked);
+   c.dataset.houseWalkRegion=walkZ<2.24?'room':walkZ>3.10?'yard':'threshold';
+  };
+  let pointer:number|null=null,px=0,py=0;
+  const releaseLook=()=>{
+   if(pointer!==null&&c.hasPointerCapture(pointer))c.releasePointerCapture(pointer);
+   pointer=null;
+  };
+  const clear=()=>{keys.clear();releaseLook();};
+  const lookStart=(event:PointerEvent)=>{
+   if(!walking||inspecting||pointer!==null||event.button!==0)return;
+   pointer=event.pointerId;px=event.clientX;py=event.clientY;c.setPointerCapture(pointer);
+  };
+  const lookMove=(event:PointerEvent)=>{
+   if(!walking||inspecting||event.pointerId!==pointer)return;
+   yaw-=(event.clientX-px)*.004;
+   pitch=THREE.MathUtils.clamp(pitch-(event.clientY-py)*.004,-1.16,.65);
+   px=event.clientX;py=event.clientY;
+  };
+  const lookEnd=(event:PointerEvent)=>{if(pointer===event.pointerId)releaseLook();};
+  const move=(key:WalkKey,on:boolean)=>{if(!on)keys.delete(key);else if(walking&&!inspecting&&!document.hidden)keys.add(key);};
+  const getKey=(event:KeyboardEvent):WalkKey|undefined=>{
+   if(event.altKey||event.ctrlKey||event.metaKey)return;
+   const key=event.key.toLowerCase();
+   if(['w','a','s','d','q','e'].includes(key))return key as WalkKey;
+   return ({arrowup:'w',arrowdown:'s',arrowleft:'q',arrowright:'e'} as Record<string,WalkKey>)[key];
+  };
+  const keyDown=(event:KeyboardEvent)=>{
+   if(!walking||event.target instanceof HTMLElement&&event.target.matches('input,textarea,select,[contenteditable=true]'))return;
+   if(event.key==='Escape'&&inspecting){event.preventDefault();closeInspect();return;}
+   if(event.key.toLowerCase()==='f'&&!event.repeat){event.preventDefault();inspect();return;}
+   const key=getKey(event);if(key){event.preventDefault();move(key,true);}
+  };
+  const keyUp=(event:KeyboardEvent)=>{const key=getKey(event);if(key&&walking){event.preventDefault();move(key,false);}};
+  const visibility=()=>{if(document.hidden){clear();lastFrame=0;}};
+  function walkFrame(now:number){
+   const dt=lastFrame?Math.min(.05,Math.max(0,(now-lastFrame)/1000)):0;lastFrame=now;
+   if(document.hidden||inspecting)return;
+   yaw+=((keys.has('q')?1:0)-(keys.has('e')?1:0))*1.7*dt;
+   const f=(keys.has('w')?1:0)-(keys.has('s')?1:0),side=(keys.has('d')?1:0)-(keys.has('a')?1:0);
+   const norm=Math.max(1,Math.hypot(f,side));
+   const dx=(-Math.sin(yaw)*f+Math.cos(yaw)*side)*1.75*dt/norm;
+   const dz=(-Math.cos(yaw)*f-Math.sin(yaw)*side)*1.75*dt/norm;
+   blocked=false;
+   if(walkable(walkX+dx,walkZ))walkX+=dx;else blocked=true;
+   if(walkable(walkX,walkZ+dz))walkZ+=dz;else blocked=true;
+   walkCamera();
+   if(now-probeTime>100){probeTime=now;updateInspectReady(inspectAvailable());}
+  }
+  function setWalk(on:boolean){
+   clear();closeInspect();updateInspectReady(false);walking=on;lastFrame=0;blocked=false;
+   activeControls.enabled=!on;
+   c.dataset.houseWalk=String(on);
+   if(on){delete c.dataset.basketFrameExtent;delete c.dataset.basketBlockedRays;delete c.dataset.basketBlockers;delete c.dataset.houseView;}
+   if(on){walkX=0;walkZ=7.2;yaw=0;pitch=-.09;roofObjs.forEach(o=>o.visible=true);camera.fov=65;camera.updateProjectionMatrix();walkCamera();c.focus();}
+   else{setPose(POSES[currentView]);activeControls.update();}
+  }
   function fitLens(){
    const horizontal=THREE.MathUtils.degToRad(currentView==='basket'?60:48);
    const adaptive=THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(horizontal/2)/Math.max(camera.aspect,.28)));
@@ -100,18 +214,22 @@ export function HouseArtLab(){
   }
   const activeRenderer=renderer;
   const activeControls=controls;
+  c.addEventListener('pointerdown',lookStart);c.addEventListener('pointermove',lookMove);c.addEventListener('pointerup',lookEnd);c.addEventListener('pointercancel',lookEnd);c.addEventListener('lostpointercapture',lookEnd);
+  window.addEventListener('keydown',keyDown);window.addEventListener('keyup',keyUp);
+  window.addEventListener('blur',clear);document.addEventListener('visibilitychange',visibility);
+
   function resize(){
    if(disposed||!c)return;
    const w=Math.max(1,c.clientWidth),h=Math.max(1,c.clientHeight);
-   camera.aspect=w/h;fitLens();
+   camera.aspect=w/h;if(walking){camera.fov=65;camera.updateProjectionMatrix();}else fitLens();
    activeRenderer.setSize(w,h,false);
   }
   const observer=new ResizeObserver(resize);observer.observe(c);
   resize();
-  const render=()=>{
+  const render=(now:number)=>{
    if(disposed)return;
-   activeControls.update();
-   if(fitDirty&&basketBounds){
+   if(walking)walkFrame(now);else activeControls.update();
+   if(!walking&&fitDirty&&basketBounds){
     camera.updateMatrixWorld(true);
     let extent=0,depthOk=true;
     const v=new THREE.Vector3();
@@ -167,12 +285,27 @@ export function HouseArtLab(){
     triangleCount+=(geom.index?geom.index.count:geom.getAttribute('position')?.count||0)/3;
    });
    scene.add(loaded);loaded.updateMatrixWorld(true);
+   loaded.traverse(o=>{
+    const m=o as THREE.Mesh;if(!m.isMesh)return;
+    if(!/^(Back_wall_thick|West_wall|East_wall|Facade_left_of_open_door|Facade_right_of_open_door|Doorframe_|Yard_west_wall|Yard_east_wall|Yard_entrance_|Domestic_clay_bench|Coarse_work_surface|Water_storage_jar|Small_oil_vessel|Courtyard_grain_jar|Second_storage_pot)/.test(o.name))return;
+    const b=new THREE.Box3().setFromObject(m);
+    if(!b.isEmpty())obstacles.push(b);
+   });
+   c.dataset.houseWalkColliders=String(obstacles.length);
    const basket=loaded.getObjectByName('BASKET_OBJECT_ACTION_ANCHOR');
-   if(basket){basketRoot=basket;basketBounds=new THREE.Box3().setFromObject(basket);}
+   if(basket){
+    basketRoot=basket;basketBounds=new THREE.Box3().setFromObject(basket);
+    loaded.traverse(o=>{
+     if(!(o as THREE.Mesh).isMesh)return;
+     let parent:THREE.Object3D|null=o;
+     while(parent&&parent!==basket)parent=parent.parent;
+     if(!parent)inspectObstacles.push(o as THREE.Mesh);
+    });
+   }
    fitDirty=true;
    const showRoof=true;
    roofObjs.forEach(o=>o.visible=showRoof);
-   api.current={view:mode=>{currentView=mode;setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show)};
+   api.current={view:mode=>{currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect};
    const size=Math.round((performance.getEntriesByName(src)[0] as PerformanceResourceTiming|undefined)?.transferSize||0);
    setStats({meshes:meshCount,triangles:Math.round(triangleCount),bytes:size});
    setStatus('ready');setDetail('GLB действительно загружен; модель можно осмотреть вращением и с разных ракурсов.');
@@ -182,7 +315,10 @@ export function HouseArtLab(){
    setDetail('Не удалось загрузить модель: '+String(error).slice(0,220));
   });
   return()=>{
-   disposed=true;api.current=null;observer.disconnect();
+   disposed=true;api.current=null;observer.disconnect();clear();
+   c.removeEventListener('pointerdown',lookStart);c.removeEventListener('pointermove',lookMove);c.removeEventListener('pointerup',lookEnd);c.removeEventListener('pointercancel',lookEnd);c.removeEventListener('lostpointercapture',lookEnd);
+   window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);window.removeEventListener('blur',clear);document.removeEventListener('visibilitychange',visibility);
+   for(const key of ['houseWalk','houseWalkX','houseWalkZ','houseWalkYaw','houseWalkPitch','houseWalkBlocked','houseWalkRegion','houseWalkColliders','houseInspectReady','houseInspected'])delete c.dataset[key];
    activeRenderer.setAnimationLoop(null);activeControls.dispose();
    const geos=new Set<THREE.BufferGeometry>(),mats=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
    if(loaded)loaded.traverse(o=>{
@@ -204,7 +340,8 @@ export function HouseArtLab(){
    doorway.shadow.dispose();sun.shadow.dispose();activeRenderer.dispose();
   };
  },[]);
- const choose=(v:View)=>{setView(v);api.current?.view(v);};
+ const choose=(v:View)=>{setWalking(false);setView(v);api.current?.view(v);};
+ const toggleWalk=()=>{const on=!walking;if(on)setRoof(true);setWalking(on);api.current?.walk(on);};
  const toggleRoof=()=>{const next=!roof;setRoof(next);api.current?.roof(next);};
  return <main className="wrap" data-testid="house-art-lab">
   <header className="top">
@@ -213,20 +350,40 @@ export function HouseArtLab(){
    <span className="status">LOOKDEV ONLY · ART HOLD</span>
   </header>
   <div className="layout house-layout">
-   <section className="viewer" aria-label="Трёхмерная художественная лаборатория дома">
-    <canvas ref={canvas} data-testid="house-lookdev-canvas" aria-label="Вращаемая 3D-модель глинобитного дома и двора" />
+    <section className={'viewer'+(walking?' house-walking':'')} aria-label="Трёхмерная художественная лаборатория дома">
+    <canvas ref={canvas} data-testid="house-lookdev-canvas" tabIndex={0} aria-label={walking?"Прогулка по дому: WASD, поворот Q/E":"Вращаемая 3D-модель глинобитного дома и двора"} />
     <div className="corner"><span className="kicker">01 / THE HOUSE · EXODUS 2</span>
-     <h1>{TITLES[view]}</h1>
+     <h1>{walking?'Прогулка по жилищу':TITLES[view]}</h1>
      <p>Авторская художественная модель. Исторический тип жилища условен, конкретный дом семьи Моисея не установлен.</p>
     </div>
     {status!=='ready'&&<div className="loading" data-testid="house-lookdev-status" role="status">
       <div style={{maxWidth:340,padding:20,textAlign:'center'}}>{detail}</div>
     </div>}
+    {walking&&!inspected&&<div className="house-walk-hud">
+     <div className="house-walk-objective">{canInspect?'Корзина рядом · осмотреть':'Найдите стол с корзиной'}</div>
+     <button type="button" data-testid="house-inspect-basket" disabled={!canInspect||inspected} onClick={()=>api.current?.inspect()}>Осмотреть · F</button>
+    </div>}
+     {walking&&!inspected&&<div className="house-walk-pad" aria-label="Управление прогулкой">
+      {([['q','↶','Повернуть налево'],['w','↑','Вперёд'],['e','↷','Повернуть направо'],['a','←','Влево'],['s','↓','Назад'],['d','→','Вправо']] as const).map(([key,label,aria])=><button key={key} type="button" data-testid={'house-walk-'+key} aria-label={aria}
+       onPointerDown={event=>{event.currentTarget.setPointerCapture(event.pointerId);api.current?.move(key,true);}}
+       onPointerUp={()=>api.current?.move(key,false)} onPointerCancel={()=>api.current?.move(key,false)} onLostPointerCapture={()=>api.current?.move(key,false)}
+       onKeyDown={event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();api.current?.move(key,true);}}}
+       onKeyUp={event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();api.current?.move(key,false);}}} onBlur={()=>api.current?.move(key,false)}>{label}</button>)}
+     </div>}
+    {walking&&inspected&&<section className="house-inspection" role="region" aria-label="Корзина из тростника" data-testid="house-basket-inspection">
+     <span className="kicker">Исход 2:3</span><h2>Корзина из тростника</h2>
+     <p>«взяла корзинку из тростника и осмолила ее асфальтом и смолою»</p>
+     <p>Форма, плетение и обстановка — художественная реконструкция, не сохранившийся библейский предмет.</p>
+     <button type="button" ref={inspectClose} data-testid="house-inspect-close" onClick={()=>api.current?.closeInspect()}>Продолжить прогулку</button>
+    </section>}
     <div className="footerbar"><span>{status==='ready'?'WebGL · настоящий GLB':'Загрузка сцены'}</span>
-     <span>Мышь / палец: вращение · Колесо / щипок: приближение</span></div>
+     <span className="house-desktop-hint">{walking?'WASD — идти · мышь — обзор':'Мышь: вращение · Колесо: приближение'}</span>
+     <span className="house-touch-hint">{walking?'Стрелки — идти · свайп — обзор':'Палец: вращение · Щипок: приближение'}</span></div>
    </section>
    <section className="side house-tools" aria-label="Управление сценой">
     <div>
+     <h3>Исследование пространства</h3>
+     <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
      {(Object.keys(POSES) as View[]).map(key=><button key={key}
@@ -238,7 +395,7 @@ export function HouseArtLab(){
     <div>
      <h3>Геометрия и кровля</h3>
      <button className={'switch '+(roof?'selected':'')} type="button"
-       data-testid="house-roof-toggle" disabled={status!=='ready'}
+       data-testid="house-roof-toggle" disabled={status!=='ready'||walking}
        onClick={toggleRoof}>Кровля: {roof?'показана':'скрыта для осмотра'}</button>
     </div>
    </section>

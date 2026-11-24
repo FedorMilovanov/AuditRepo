@@ -48,3 +48,17 @@ button:disabled{opacity:.55;cursor:wait}
 .house-layout .house-info{grid-area:info;padding:0}
 @media(max-width:980px){.house-layout{grid-template-areas:"view" "tools" "info";grid-template-rows:auto;gap:14px}.house-layout .house-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.65fr);align-items:start;gap:12px}}
 @media(max-width:560px){.house-layout .viewer{height:55vh;min-height:360px}.house-layout .house-tools{display:flex;gap:10px}.house-layout .house-tools h3{margin-bottom:6px}.house-layout .house-tools .choices{gap:6px}.house-layout .house-tools .choices button{min-height:42px}.house-layout .house-tools .switch{min-height:42px;width:100%}.house-layout .footerbar{font-size:9px}}
+
+.house-walk-pad{display:grid;grid-template-columns:repeat(3,minmax(42px,1fr));gap:6px;margin:10px 0 18px}.house-walk-pad button{min-height:44px;border:1px solid var(--line,#8b7b60);border-radius:5px;background:#302b22;color:#f4e2bb;font-size:22px;touch-action:none;user-select:none}.house-walk-pad button:active{background:#5e4b32}.house-walk-pad button:focus-visible{outline:2px solid #d8b67f;outline-offset:2px}
+
+.house-walking .house-walk-pad{position:absolute;left:12px;bottom:54px;width:144px;gap:4px;margin:0;z-index:3}
+.house-walking .house-walk-pad button{background:#201c16d9;border-color:#ceb78b80}
+.house-walk-hud{position:absolute;right:12px;bottom:54px;max-width:calc(100% - 176px);display:flex;flex-direction:column;gap:6px;align-items:flex-end;z-index:3}
+.house-walk-objective{font-size:11px;padding:6px 8px;background:#1b1814e8;color:#f4e2bb;border-radius:4px}
+.house-walk-hud button,.house-inspection button{min-height:44px;padding:7px 10px;border:1px solid #c8a36b;color:#f4dfb9;background:#33281b;border-radius:4px;font-size:12px}
+.house-walk-hud button:disabled{opacity:.65;cursor:default}
+.house-inspection{position:absolute;inset:auto 12px 54px;z-index:5;background:#1c1914f5;border:1px solid #a9936b;padding:14px;color:#eee0c6}
+.house-inspection h2{font:400 30px 'Cormorant Garamond',Georgia,serif;margin:4px 0}.house-inspection p{font-size:13px;line-height:1.5}
+@media(max-width:560px){.house-layout .house-walking{height:65svh;min-height:400px}.house-walking .corner h1{font-size:26px}.house-walking .house-walk-pad{left:8px;bottom:48px;width:138px}.house-walk-hud{right:8px;bottom:48px;max-width:calc(100% - 162px)}}
+
+.house-touch-hint{display:none}.house-walking .corner{max-width:min(350px,80%)}.house-walking .corner h1{font-size:clamp(25px,2.8vw,38px)}.house-walking .corner p{font-size:11px}.house-inspection{max-width:460px;left:auto;max-height:calc(100% - 105px);overflow:auto}.house-walking canvas:focus-visible{outline:2px solid #c6ad82;outline-offset:-2px}@media(pointer:coarse),(max-width:560px){.house-touch-hint{display:inline}.house-desktop-hint{display:none}.house-inspection{left:10px;right:10px;bottom:48px;max-width:none}}
