@@ -131,8 +131,10 @@ assert.ok(Math.abs(peak.hand_l-0.6218742)<0.012,'Basket/actor left wrist frame n
 assert.ok(Math.abs(peak.hand_r-1.2718638)<0.012,'Basket/actor right wrist frame no longer matches audited GLBs');
 assert.ok(peak.hand_l>.3&&peak.hand_r>.3,'This reference action is ART HOLD, not a contact animation');
 assert.ok(peak.hand_r<idle.hand_r-.08,'The right arm moves, but misses the basket');
-assert.match(actorSource,/house\.visible=target==="doorway"/,
- 'Current gesture view must not claim basket is shown without an art revision');
+assert.match(actorSource,/const isGestureStudy=\(\)=>phase==="W22"&&currentShot==="gesture"/,
+ 'Only the W22 contact candidate may reveal the basket in a gesture cutaway');
+assert.match(actorSource,/house\.visible=currentShot==="doorway"\|\|isGestureStudy\(\)/,
+ 'The W19H reference gesture must still hide the house/basket');
 console.log('W20_BASKET_CONTACT_AUDIT_ART_HOLD',JSON.stringify({
  actorOffset:offset,frame:60,fps:24,
  restMeters:idle,peakMeters:peak,

@@ -43,6 +43,10 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    if(stats.bones!==53||stats.skinned<6||stats.clips<2||!stats.noOverflow)
     throw Error('Invalid W20 actor: '+JSON.stringify(stats));
    await page.click('[data-testid="mother-shot-gesture"]');
+   await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.basketVisible==='false'&&d.facadeVisible==='false';
+   });
    await sleep(280);
    const canvas=await page.$('[data-testid="mother-art-canvas"]');
    if(!canvas)throw Error('Live 3D canvas missing');
@@ -65,10 +69,20 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    // Log the comparison but don't mistake pixel identity for artistic acceptance.
    const frozenByteIdentical=peak1.equals(peak2);
    await page.click('[data-testid="mother-animation-pause"]');
-   // The authored pose is held through frame 70, so sample well after that plateau.
-   await sleep(1200);
-   const resumed=Buffer.from(await canvas.screenshot());
+   // Slow software renderers can take longer than wall-clock clip duration.
+   // Require actual pixel change, not a fixed sleep or a button label.
+   const resumedAt=Date.now();
+   let resumed=peak1;
+   while(resumed.equals(peak1)&&Date.now()-resumedAt<30000){
+    await sleep(650);
+    resumed=Buffer.from(await canvas.screenshot());
+   }
    if(resumed.equals(peak1))throw Error('Resume did not change the actor image');
+   await page.click('[data-testid="mother-shot-doorway"]');
+   await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.basketVisible==='true'&&d.facadeVisible==='true';
+   });
    if(errors.length)throw Error(errors.join('; '));
    const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
    console.log('W20_GESTURE_PEAK_BROWSER_PASS',JSON.stringify({

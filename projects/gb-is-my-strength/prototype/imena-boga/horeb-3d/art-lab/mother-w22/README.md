@@ -41,3 +41,14 @@ No claims about a historically attested likeness, garment pattern, hairstyle, fa
 - Clip selection exits inspection pause and removes stale fades; reselecting the same action no longer crossfades an action against itself. Resume plays the original clip from the frozen frame.
 - The browser test reads the real mixer action time, weight and time scale, and checks basket/facade visibility on both 1440x900 and 390x844. The previous W20 browser contract also passes on both viewport sizes.
 - W24 wardrobe/skin experiments are local visual studies, not promoted asset changes. The accepted W22 BLEND/GLB stay unchanged; ART HOLD and the no-W15-integration gate remain.
+
+## W24b reproducible wardrobe study
+The W24 wardrobe study is deliberately separate from the canonical W22 binary. Rebuild it in Blender 4.5.16 from the SHA-bound original source:
+
+```sh
+blender --background --factory-startup --python art-lab/mother-w22/source/build_mother_w24_study.py
+```
+
+The default output is the ignored `.test-build/w24-wardrobe-study` folder; set `HOREB_W24_ART_OUTPUT` to a new absolute output directory to preserve long-term evidence. Existing output directories are rejected. The generator refits the tunic, belt and hem, adjusts linen/skin lookdev and performs a nine-frame native BVH clearance gate across both clips, before producing a separate editable BLEND and runtime GLB. W22 had 79 intersecting belt/tunic face pairs per sampled pose. W24 study has zero, with minimum clearance 7.345 mm. Two independent local builds yielded the same GLB SHA-256 `f3d9a470cb2371f600cc8b6c58547fd63aebd8c1d025e80ff327926ef2870cbb` (5,545,660 bytes). The separate exported asset retained 53 joints, both clips and 5.09 mm wrist-to-rim distance; actual Chromium desktop/mobile passed through exact-byte interception of the canonical asset request. Neither historical likeness nor final art approval is implied. The warmer skin still reads too orange in the viewer; shoulders and hood remain stiff. No generated binary is added to the repo by this study.
+
+W24b also fixes the older W19H visibility guard after the W24 cutaway refactor: only W22 shows the basket during its gesture study. W19H now verifies actual runtime basket/facade visibility and restoration at doorway in the browser, and waits for real changed pixels when resuming the clip instead of relying on a fixed delay.
