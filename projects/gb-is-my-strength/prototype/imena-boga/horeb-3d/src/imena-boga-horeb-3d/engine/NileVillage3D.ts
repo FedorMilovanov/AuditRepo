@@ -4,11 +4,13 @@
  */
 import * as THREE from 'three';
 import {NILE_VILLAGE_HOUSES,NILE_VILLAGE_STEPS,NILE_VILLAGE_START,
- nileVillageCanWalk} from '../data/nileVillageQuest';
+ nileVillageCanWalk,beginNileVillageAction,advanceNileVillageAction,cancelNileVillageAction,
+ restartNileVillageQuest,initialNileVillageQuest,type NileVillageQuest} from '../data/nileVillageQuest';
 export type VillageDirection='forward'|'backward'|'left'|'right';
 export type NileVillageController={
  start:()=>void;stop:()=>void;setDirection:(dir:VillageDirection,on:boolean)=>void;
- setStep:(step:number)=>void;getPosition:()=>{x:number;z:number};
+ beginAction:(revision:number,step:number)=>boolean;restart:()=>void;
+ getPosition:()=>{x:number;z:number};
  dispose:()=>void;
 };
 const rand=(n:number)=>{const v=Math.sin(n*41.73+2.1)*31217.53;return v-Math.floor(v);};
@@ -16,6 +18,9 @@ const height=(x:number,z:number)=>-.06+.045*Math.sin(x*.34+z*.16)+.027*Math.cos(
 export function createNileVillage3D(
  canvas:HTMLCanvasElement,reducedMotion:boolean,
  onPosition:(x:number,z:number)=>void,
+ onQuest:(quest:NileVillageQuest)=>void,
+ initialQuest:NileVillageQuest=initialNileVillageQuest(),
+ initialPosition?:{x:number;z:number},
 ):NileVillageController{
  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'low-power'});
  renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -203,6 +208,7 @@ export function createNileVillage3D(
    group.rotation.y=i===3?.8:-.6;scene.add(group);figures.push(group);
  });
  const weave=mat(0x826342),sealing=mat(0x3c3029),bundle=mat(0xe7d4b9);
+ sealing.transparent=true;bundle.transparent=true;
  function createCradle(){
    const g=new THREE.Group();
    const boat=new THREE.Mesh(new THREE.SphereGeometry(1,16,10,0,Math.PI*2,Math.PI*.48,Math.PI*.52),weave);
@@ -216,57 +222,138 @@ export function createNileVillage3D(
    wrapped.scale.set(.31,.14,.20);wrapped.position.y=.29;wrapped.name='wrapped-infant';
    g.add(wrapped);return g;
  }
- const tableBasket=createCradle();tableBasket.position.set(tableX,height(tableX,tableZ)+.89,tableZ+1);
- scene.add(tableBasket);
- const carriedBasket=createCradle();carriedBasket.position.set(.32,-.39,-.85);
- carriedBasket.scale.setScalar(.6);camera.add(carriedBasket);scene.add(camera);
- const riverBasket=createCradle();riverBasket.position.set(-6.25,height(-6.25,-16.7)+.02,-16.7);
- riverBasket.rotation.y=.48;scene.add(riverBasket);
+ // One world prop for the entire chapter; camera attachment is an explicit
+ // first-person carry proxy, NOT a rigged hand/child performance or ART pass.
+ const basket=createCradle();basket.name='nile-story-basket';scene.add(basket);scene.add(camera);
+ const tablePosition=new THREE.Vector3(tableX,height(tableX,tableZ)+.89,tableZ+1);
+ const carriedPosition=new THREE.Vector3(.32,-.52,-1.10);
+ const riverPosition=new THREE.Vector3(-6.25,height(-6.25,-16.7)+.02,-16.7);
+ const riverRotation=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),.48);
+ const pitch=basket.getObjectByName('waterproof-pitch')!;
+ const baby=basket.getObjectByName('wrapped-infant')!;
+ const identity=new THREE.Quaternion();
+ const transferStart=new THREE.Vector3(),transferEnd=new THREE.Vector3();
+ const transferRotationStart=new THREE.Quaternion(),transferRotationEnd=new THREE.Quaternion();
+ let transferring=false;
+ const basketWitness=(mode:string)=>{
+  canvas.dataset.villageBasketMode=mode;
+  canvas.dataset.villageBasketId=basket.uuid;
+  let count=0;scene.traverse(o=>{if(o.name==='nile-story-basket')count++;});
+  canvas.dataset.villageBasketInstances=String(count);
+ };
+ const applyBasket=(step:number)=>{
+  transferring=false;
+  pitch.visible=step>=3;sealing.opacity=1;sealing.depthWrite=true;
+  baby.visible=step>=4;bundle.opacity=1;bundle.depthWrite=true;
+  const carried=step===4,bank=step>=5;
+  (carried?camera:scene).add(basket);
+  basket.position.copy(carried?carriedPosition:bank?riverPosition:tablePosition);
+  basket.quaternion.copy(bank?riverRotation:identity);
+  basket.scale.setScalar(1);
+  basketWitness(carried?'carried':bank?'bank':'table');
+ };
  // A physical, world-space destination marker for the CURRENT meaningful act.
  const marker=new THREE.Mesh(new THREE.RingGeometry(.43,.55,36),
    new THREE.MeshBasicMaterial({color:0xd7af6a,transparent:true,opacity:.86,side:THREE.DoubleSide,depthWrite:false}));
  marker.rotation.x=-Math.PI/2;scene.add(marker);
- let step=0,active=false,disposed=false,dragPointer:number|null=null,px=0,py=0,last=0,frame=0;
+ let quest=cancelNileVillageAction(initialQuest),active=false,disposed=false,dragPointer:number|null=null,px=0,py=0,last=0,frame=0;
  const movement:Record<VillageDirection,boolean>={forward:false,backward:false,left:false,right:false};
  const walk:{x:number;z:number;yaw:number;pitch:number}={...NILE_VILLAGE_START};
- const setStep=(next:number)=>{
-   step=Math.max(0,Math.min(NILE_VILLAGE_STEPS.length,next));
-   const target=NILE_VILLAGE_STEPS[step];
-   marker.visible=!!target;
-   if(target)marker.position.set(target.x,height(target.x,target.z)+.11,target.z);
-   tableBasket.visible=step<4;
-   const pitch=tableBasket.getObjectByName('waterproof-pitch');
-   if(pitch)pitch.visible=step>=3;
-   const baby=tableBasket.getObjectByName('wrapped-infant');
-   if(baby)baby.visible=step>=4;
-   carriedBasket.visible=step===4;
-   riverBasket.visible=step>=5;
-   canvas.dataset.villageStep=String(step);
+ if(initialPosition&&nileVillageCanWalk(initialPosition.x,initialPosition.z)){
+  walk.x=initialPosition.x;walk.z=initialPosition.z;
+ }
+ const publishQuest=()=>{
+  canvas.dataset.villageStep=String(quest.step);
+  canvas.dataset.villageAction=quest.pending?NILE_VILLAGE_STEPS[quest.step].id:'idle';
+  onQuest(quest);
  };
- setStep(0);
- const setDirection=(dir:VillageDirection,on:boolean)=>{movement[dir]=active&&on;};
+ const applyCommitted=()=>{
+  const target=NILE_VILLAGE_STEPS[quest.step];
+  marker.visible=!!target;
+  if(target)marker.position.set(target.x,height(target.x,target.z)+.11,target.z);
+  applyBasket(quest.step);basket.visible=active||quest.step!==4;
+  publishQuest();
+ };
+ applyCommitted();
+ const setDirection=(dir:VillageDirection,on:boolean)=>{movement[dir]=active&&!quest.pending&&on;};
  const clearMovement=()=>{for(const d of Object.keys(movement) as VillageDirection[])movement[d]=false;};
  const getPosition=()=>({x:walk.x,z:walk.z});
- const start=()=>{active=true;clearMovement();walk.x=NILE_VILLAGE_START.x;walk.z=NILE_VILLAGE_START.z;
-   walk.yaw=NILE_VILLAGE_START.yaw;walk.pitch=NILE_VILLAGE_START.pitch;
-   last=0;canvas.dataset.villageMode='walk';onPosition(walk.x,walk.z);};
- const stop=()=>{active=false;clearMovement();dragPointer=null;canvas.dataset.villageMode='preview';};
+ const syncWalkCamera=()=>{
+  camera.position.set(walk.x,height(walk.x,walk.z)+1.69,walk.z);
+  camera.rotation.set(walk.pitch,walk.yaw,0,'YXZ');
+  camera.updateMatrixWorld(true);
+ };
+ const start=()=>{
+  if(disposed||active)return;
+  active=true;clearMovement();last=0;basket.visible=true;
+  canvas.dataset.villageMode='walk';syncWalkCamera();onPosition(walk.x,walk.z);
+ };
+ const abortAction=()=>{
+  const cancelled=cancelNileVillageAction(quest);
+  if(cancelled===quest)return;
+  quest=cancelled;applyCommitted();
+ };
+ const stop=()=>{
+  active=false;clearMovement();dragPointer=null;abortAction();
+  basket.visible=quest.step!==4;onPosition(walk.x,walk.z);canvas.dataset.villageMode='preview';
+ };
+ const restart=()=>{
+  if(disposed)return;
+  clearMovement();dragPointer=null;
+  Object.assign(walk,NILE_VILLAGE_START);quest=restartNileVillageQuest(quest);
+  last=0;applyCommitted();syncWalkCamera();onPosition(walk.x,walk.z);
+ };
+ const beginAction=(revision:number,step:number)=>{
+  if(disposed||!active||document.hidden)return false;
+  const next=beginNileVillageAction(quest,revision,step,walk.x,walk.z,reducedMotion);
+  if(next===quest)return false;
+  quest=next;clearMovement();dragPointer=null;last=0;
+  if(step===2){pitch.visible=true;sealing.opacity=0;sealing.depthWrite=false;}
+  if(step===3||step===4){
+   syncWalkCamera();scene.updateMatrixWorld(true);
+   basket.getWorldPosition(transferStart);basket.getWorldQuaternion(transferRotationStart);
+   if(step===3){
+    transferEnd.copy(carriedPosition);camera.localToWorld(transferEnd);
+    camera.getWorldQuaternion(transferRotationEnd);
+    baby.visible=true;bundle.opacity=0;bundle.depthWrite=false;
+   }else{transferEnd.copy(riverPosition);transferRotationEnd.copy(riverRotation);}
+   scene.attach(basket);transferring=true;basketWitness('transfer');
+  }
+  publishQuest();return true;
+ };
+ const advanceAction=(seconds:number)=>{
+  if(!quest.pending)return;
+  const before=quest.pending;
+  quest=advanceNileVillageAction(quest,seconds);
+  const p=quest.pending?quest.pending.elapsed/before.duration:1;
+  const eased=p*p*(3-2*p);
+  if(before.step===2)sealing.opacity=eased;
+  if(before.step===3){bundle.opacity=Math.min(1,p*2.5);bundle.depthWrite=bundle.opacity>=1;}
+  if(transferring){
+   basket.position.lerpVectors(transferStart,transferEnd,eased);
+   if(!reducedMotion)basket.position.y+=.12*Math.sin(Math.PI*eased);
+   basket.quaternion.copy(transferRotationStart).slerp(transferRotationEnd,eased);
+  }
+  if(!quest.pending)applyCommitted();
+ };
+ const onVisibility=()=>{if(document.hidden){clearMovement();dragPointer=null;abortAction();last=0;}};
  const keyToDir=(key:string):VillageDirection|null=>({
    w:'forward',arrowup:'forward',s:'backward',arrowdown:'backward',
    a:'left',arrowleft:'left',d:'right',arrowright:'right'
  } as Record<string,VillageDirection>)[key.toLowerCase()]||null;
  const keyDown=(e:KeyboardEvent)=>{
-   if(!active||e.altKey||e.ctrlKey||e.metaKey)return;
+   if(!active||quest.pending||e.altKey||e.ctrlKey||e.metaKey||
+    (e.target instanceof HTMLElement&&e.target.matches('input,textarea,select,[contenteditable=true]')))return;
    const dir=keyToDir(e.key);if(dir){e.preventDefault();movement[dir]=true;}
  };
  const keyUp=(e:KeyboardEvent)=>{const dir=keyToDir(e.key);if(dir){movement[dir]=false;}};
  const pointerDown=(e:PointerEvent)=>{
-   if(!active||e.button!==0||dragPointer!==null||
+   if(!active||quest.pending||e.button!==0||dragPointer!==null||
      (e.pointerType==='touch'&&!e.isPrimary))return;
    dragPointer=e.pointerId;px=e.clientX;py=e.clientY;canvas.setPointerCapture(e.pointerId);
  };
  const pointerMove=(e:PointerEvent)=>{
-   if(!active||dragPointer!==e.pointerId)return;
+   if(!active||quest.pending||dragPointer!==e.pointerId)return;
    walk.yaw-=THREE.MathUtils.clamp(e.clientX-px,-135,135)*.0037;
    walk.pitch=THREE.MathUtils.clamp(walk.pitch-(e.clientY-py)*.003,-.75,.55);
    px=e.clientX;py=e.clientY;
@@ -281,13 +368,14 @@ export function createNileVillage3D(
  };
  const resizer=new ResizeObserver(resize);resizer.observe(canvas);resize();
  window.addEventListener('keydown',keyDown);window.addEventListener('keyup',keyUp);
- window.addEventListener('blur',clearMovement);
+ window.addEventListener('blur',clearMovement);document.addEventListener('visibilitychange',onVisibility);
  canvas.addEventListener('pointerdown',pointerDown);canvas.addEventListener('pointermove',pointerMove);
- canvas.addEventListener('pointerup',pointerUp);canvas.addEventListener('pointercancel',pointerUp);
+ canvas.addEventListener('pointerup',pointerUp);canvas.addEventListener('pointercancel',pointerUp);canvas.addEventListener('lostpointercapture',pointerUp);
  let lastNotice=0;
  const render=(now:number)=>{
    if(disposed)return;frame=requestAnimationFrame(render);
-   const elapsed=last?Math.min(.045,(now-last)/1000):0;last=now;
+   const seconds=last?Math.max(0,(now-last)/1000):0;last=now;
+   const elapsed=Math.min(.045,seconds);
    if(active){
      const f=Number(movement.forward)-Number(movement.backward),r=Number(movement.right)-Number(movement.left);
      const speed=2.85*elapsed/Math.max(1,Math.hypot(f,r));
@@ -296,8 +384,8 @@ export function createNileVillage3D(
      // Axis-separated conservative collision, avoids tunnelling through houses.
      if(nileVillageCanWalk(walk.x+dx,walk.z))walk.x+=dx;
      if(nileVillageCanWalk(walk.x,walk.z+dz))walk.z+=dz;
-     camera.position.set(walk.x,height(walk.x,walk.z)+1.69,walk.z);
-     camera.rotation.set(walk.pitch,walk.yaw,0,'YXZ');
+     syncWalkCamera();
+     if(!document.hidden)advanceAction(seconds);
      if(now-lastNotice>160){lastNotice=now;onPosition(walk.x,walk.z);}
    }else{
      camera.position.set(3.9,height(3.9,18)+1.85,18);
@@ -312,12 +400,12 @@ export function createNileVillage3D(
  };
  canvas.dataset.villageMode='preview';canvas.dataset.villageScene='mudbrick-homes-to-reeds';
  frame=requestAnimationFrame(render);
- return {start,stop,setDirection,setStep,getPosition,dispose:()=>{
+ return {start,stop,setDirection,beginAction,restart,getPosition,dispose:()=>{
    disposed=true;cancelAnimationFrame(frame);
    window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);
-   window.removeEventListener('blur',clearMovement);
+   window.removeEventListener('blur',clearMovement);document.removeEventListener('visibilitychange',onVisibility);
    canvas.removeEventListener('pointerdown',pointerDown);canvas.removeEventListener('pointermove',pointerMove);
-   canvas.removeEventListener('pointerup',pointerUp);canvas.removeEventListener('pointercancel',pointerUp);
+   canvas.removeEventListener('pointerup',pointerUp);canvas.removeEventListener('pointercancel',pointerUp);canvas.removeEventListener('lostpointercapture',pointerUp);
    resizer.disconnect();
    const geometries=new Set<THREE.BufferGeometry>(),materials=new Set<THREE.Material>();
    scene.traverse(obj=>{
@@ -331,6 +419,7 @@ export function createNileVillage3D(
    renderer.dispose();renderer.forceContextLoss();
    delete canvas.dataset.villageMode;delete canvas.dataset.villageRendered;
    delete canvas.dataset.villageX;delete canvas.dataset.villageZ;
-   delete canvas.dataset.villageStep;delete canvas.dataset.villageScene;
+   delete canvas.dataset.villageStep;delete canvas.dataset.villageScene;delete canvas.dataset.villageAction;
+   delete canvas.dataset.villageBasketMode;delete canvas.dataset.villageBasketInstances;delete canvas.dataset.villageBasketId;
  }} satisfies NileVillageController;
 }

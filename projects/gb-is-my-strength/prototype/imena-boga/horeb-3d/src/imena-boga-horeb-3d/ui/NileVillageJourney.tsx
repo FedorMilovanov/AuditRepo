@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {NILE_VILLAGE_STEPS,NILE_VILLAGE_START,
-  nileVillageDistance,nileVillageMayInteract} from '../data/nileVillageQuest';
+  nileVillageDistance,nileVillageMayInteract,initialNileVillageQuest,cancelNileVillageAction,type NileVillageQuest} from '../data/nileVillageQuest';
 import type {NileVillageController,VillageDirection} from '../engine/NileVillage3D';
 /** A playable, visibly staged prologue. Separate from established Nile shoreline
  * and independent of the research/field-study mastery registry. */
@@ -10,25 +10,35 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
  const canvas=useRef<HTMLCanvasElement>(null),engine=useRef<NileVillageController|null>(null);
  const startButton=useRef<HTMLButtonElement>(null),actionButton=useRef<HTMLButtonElement>(null);
  const [ready,setReady]=useState(false),[failed,setFailed]=useState(false);
- const [active,setActive]=useState(false),[step,setStep]=useState(0);
+ const [active,setActive]=useState(false);
+ const [quest,setQuest]=useState(initialNileVillageQuest),questRef=useRef(quest);
+ const step=quest.step,acting=quest.pending!==null;
  const [position,setPosition]=useState<{x:number;z:number}>({x:NILE_VILLAGE_START.x,z:NILE_VILLAGE_START.z});
+ const positionRef=useRef(position);
  const [message,setMessage]=useState('');
  const site=NILE_VILLAGE_STEPS[step],finished=step>=NILE_VILLAGE_STEPS.length;
  const distance=site?nileVillageDistance(position.x,position.z,site):0;
- const near=!!site&&distance<=site.reach;
+ const near=!!site&&nileVillageMayInteract(position.x,position.z,step);
  useEffect(()=>{
-   const c=canvas.current;if(!c)return;let disposed=false;setReady(false);setFailed(false);
+   const c=canvas.current;if(!c)return;let disposed=false;setReady(false);setFailed(false);setActive(false);
    import('../engine/NileVillage3D').then(({createNileVillage3D})=>{
      if(disposed)return;
-     const control=createNileVillage3D(c,reducedMotion,(x,z)=>setPosition({x,z}));
+     const updateQuest=(next:NileVillageQuest)=>{
+      if(disposed)return;
+      const prev=questRef.current;
+      questRef.current=next;setQuest(next);
+      if(next.step===prev.step+1)setMessage(NILE_VILLAGE_STEPS[prev.step].description);
+     };
+     const control=createNileVillage3D(c,reducedMotion,(x,z)=>{
+      if(disposed)return;positionRef.current={x,z};setPosition({x,z});
+     },updateQuest,cancelNileVillageAction(questRef.current),positionRef.current);
      if(disposed){control.dispose();return;}
-     engine.current=control;control.setStep(step);setReady(true);
+     engine.current=control;setReady(true);
    }).catch(err=>{console.error('W15 village scene init failed',err);if(!disposed)setFailed(true);});
    return ()=>{disposed=true;engine.current?.dispose();engine.current=null;};
  // New journey is intentionally independent of legacy Nile scene remount.
  // eslint-disable-next-line react-hooks/exhaustive-deps
  },[reducedMotion]);
- useEffect(()=>{engine.current?.setStep(step);},[step]);
  useEffect(()=>{
    if(!active)return;
    const before=document.body.style.overflow;document.body.style.overflow='hidden';
@@ -40,12 +50,8 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
  };
  const start=()=>{if(!ready||failed||!engine.current)return;engine.current.start();setActive(true);setMessage('');};
  const interact=()=>{
-   if(!active||failed||!engine.current||finished)return;
-   const p=engine.current.getPosition();
-   if(!nileVillageMayInteract(p.x,p.z,step))return;
-   const completed=NILE_VILLAGE_STEPS[step];
-   setMessage(completed.description);
-   setStep(s=>s+1);
+   if(!active||failed||!engine.current||finished||acting)return;
+   engine.current.beginAction(quest.revision,step);
  };
  useEffect(()=>{
    if(!active)return;
@@ -102,6 +108,7 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
            {finished?'Продолжите библейскую историю: дочь фараона обнаруживает корзину.':
            'Подойдите к отмеченному человеку или месту, затем нажмите E / «Взаимодействовать».'}
          </p>
+         {acting&&<p role="status" data-testid="nile-village-acting" className="text-xs text-amber-100 mt-1">Действие выполняется…</p>}
          {!finished&&<p data-testid="nile-village-distance" className="text-xs text-amber-100/95 mt-1">До цели: {distance.toFixed(1)} м · {site.source}</p>}
        </div>
        <button type="button" data-testid="nile-village-close" onClick={close}
@@ -122,12 +129,12 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
              Дальше: обнаружение младенца
            </button>
            <button type="button" data-testid="nile-village-replay"
-             onClick={()=>{setStep(0);setMessage('');engine.current?.start();}}
+             onClick={()=>{engine.current?.restart();setMessage('');}}
              className="text-xs underline text-parch">Повторить маршрут</button>
          </>:<button ref={actionButton} type="button" data-testid="nile-village-interact"
-           disabled={!near} onClick={interact}
+           disabled={!near||acting} aria-busy={acting} onClick={interact}
            className="rounded-lg border border-amber-200 bg-[#342b1b]/95 px-4 py-3 font-semibold text-parch shadow-lg disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">
-           {near?site.action:'Подойдите к месту'} · E
+           {acting?'Действие выполняется…':near?site.action:'Подойдите к месту'} · E
          </button>}
          <div className="rounded-md bg-black/65 text-parch/85 px-2 py-1 text-[10px] sm:text-xs">
            WASD / стрелки · мышь — осмотреться · E — действие

@@ -52,3 +52,25 @@ export function nileVillageMayInteract(x:number,z:number,step:number):boolean{
  const s=NILE_VILLAGE_STEPS[step];
  return !!s&&nileVillageCanWalk(x,z)&&nileVillageDistance(x,z,s)<=s.reach;
 }
+
+/** W25: a scene-owned transaction. Repeated/stale input never advances
+ * another objective. Only a completed scene-clock action commits progress. */
+export type NileVillageAction=Readonly<{step:number;elapsed:number;duration:number}>;
+export type NileVillageQuest=Readonly<{step:number;revision:number;pending:NileVillageAction|null}>;
+export const initialNileVillageQuest=():NileVillageQuest=>({step:0,revision:0,pending:null});
+export function beginNileVillageAction(q:NileVillageQuest,revision:number,step:number,x:number,z:number,reduced=false):NileVillageQuest{
+ if(q.pending||revision!==q.revision||step!==q.step||!nileVillageMayInteract(x,z,step))return q;
+ const duration=reduced ? .12 : step===3||step===4 ? 1.2 : step===2 ? .9 : .45;
+ return {step:q.step,revision:q.revision+1,pending:{step,elapsed:0,duration}};
+}
+export function advanceNileVillageAction(q:NileVillageQuest,seconds:number):NileVillageQuest{
+ if(!q.pending||!Number.isFinite(seconds)||seconds<=0)return q;
+ const elapsed=Math.min(q.pending.duration,q.pending.elapsed+Math.min(seconds,.25));
+ return elapsed>=q.pending.duration
+  ?{step:q.step+1,revision:q.revision+1,pending:null}
+  :{...q,pending:{...q.pending,elapsed}};
+}
+export const cancelNileVillageAction=(q:NileVillageQuest):NileVillageQuest=>
+ q.pending?{step:q.step,revision:q.revision+1,pending:null}:q;
+export const restartNileVillageQuest=(q:NileVillageQuest):NileVillageQuest=>
+ ({step:0,revision:q.revision+1,pending:null});

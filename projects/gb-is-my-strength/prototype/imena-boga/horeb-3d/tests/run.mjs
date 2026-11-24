@@ -7,7 +7,7 @@ import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
-import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,nileVillageMayInteract,nileVillageCanWalk} from '../.test-build/data/nileVillageQuest.js';
+import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,nileVillageMayInteract,nileVillageCanWalk,initialNileVillageQuest,beginNileVillageAction,advanceNileVillageAction,cancelNileVillageAction,restartNileVillageQuest} from '../.test-build/data/nileVillageQuest.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
@@ -38,6 +38,40 @@ t('W15 houses and river are solid, no remote actions',
   !nileVillageCanWalk(-9,-16)&&!nileVillageCanWalk(NaN,0)&&
   NILE_VILLAGE_HOUSES.every(h=>!nileVillageCanWalk(h.x,h.z))&&
   NILE_VILLAGE_STEPS.every((s,i)=>nileVillageMayInteract(s.x,s.z,i)));
+// W25: scene transactions must reject stale/duplicate inputs and commit only on completion.
+{
+ const init=initialNileVillageQuest(),site=NILE_VILLAGE_STEPS[0];
+ const begin=(q,revision=q.revision,step=q.step,x=site.x,z=site.z)=>
+  beginNileVillageAction(q,revision,step,x,z);
+ t('W25 rejects distant, stale and out-of-order actions',
+  begin(init,0,0,NILE_VILLAGE_START.x,NILE_VILLAGE_START.z)===init&&
+  begin(init,1)===init&&begin(init,0,1)===init);
+ const action=begin(init);
+ t('W25 begin is atomic and cannot advance committed stage',
+  action.step===0&&action.pending?.step===0&&action.revision===1&&begin(action)===action);
+ const partial=advanceNileVillageAction(action,.1);
+ t('W25 partial render and invalid clock cannot commit',
+  partial.step===0&&partial.pending.elapsed===.1&&
+  advanceNileVillageAction(partial,NaN)===partial&&advanceNileVillageAction(partial,-1)===partial);
+ const cancelled=cancelNileVillageAction(partial);
+ t('W25 cancel rolls back stage and invalidates old input',
+  cancelled.step===0&&!cancelled.pending&&begin(cancelled,init.revision)===cancelled&&
+  advanceNileVillageAction(cancelled,5)===cancelled);
+ let done=action;
+ for(let i=0;i<20;i++)done=advanceNileVillageAction(done,.1);
+ t('W25 commit occurs exactly once after completion',
+  done.step===1&&!done.pending&&advanceNileVillageAction(done,1)===done&&begin(done,0)===done);
+ let all=init;
+ for(const [i,goal] of NILE_VILLAGE_STEPS.entries()){
+  all=beginNileVillageAction(all,all.revision,i,goal.x,goal.z,true);
+  for(let j=0;j<3;j++)all=advanceNileVillageAction(all,.1);
+ }
+ t('W25 all six actions remain ordered and terminal state cannot advance',
+  all.step===6&&!all.pending&&beginNileVillageAction(all,all.revision,6,0,0)===all);
+ const reset=restartNileVillageQuest(all);
+ t('W25 replay resets stage and invalidates every old token',
+  reset.step===0&&!reset.pending&&reset.revision>all.revision&&begin(reset,0)===reset);
+}
 // W12A: a distinct 3D encampment is physically accessible through its open
 // entrance, with walls, hearth and storage remaining real obstructions.
 t('W12A Midian household starts on safe walkable ground',

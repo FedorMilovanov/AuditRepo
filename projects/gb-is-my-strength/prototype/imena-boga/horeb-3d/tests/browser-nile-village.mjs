@@ -14,7 +14,7 @@ const fs={mkdirSync},path={join};
  const errs=[];page.on('pageerror',e=>errs.push(e.message));
  const dir=path.join(process.cwd(),'.test-build','screenshots');fs.mkdirSync(dir,{recursive:true});
  const base=(process.env.HOREB_BASE_URL||'http://127.0.0.1:5173').replace(/\/$/,'');
- const read=()=>page.$eval('[data-testid="nile-village-canvas"]',c=>({x:Number(c.dataset.villageX),z:Number(c.dataset.villageZ),stage:Number(c.dataset.villageStep),mode:c.dataset.villageMode}));
+ const read=()=>page.$eval('[data-testid="nile-village-canvas"]',c=>({x:Number(c.dataset.villageX),z:Number(c.dataset.villageZ),stage:Number(c.dataset.villageStep),mode:c.dataset.villageMode,action:c.dataset.villageAction,basket:c.dataset.villageBasketMode,instances:Number(c.dataset.villageBasketInstances),basketId:c.dataset.villageBasketId}));
  await page.setViewport({width:1024,height:768});
  await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
  await page.click('[data-testid="moses-origin-start"]');
@@ -35,14 +35,35 @@ const fs={mkdirSync},path={join};
    finally{await page.keyboard.up(key);}
    await sleep(80);
  };
+ const basketId=(await read()).basketId;
+ if(!basketId)throw Error('W25 missing physical basket identity');
  for(let i=0;i<checkpoints.length;i++){
    const [x,z]=checkpoints[i];
    await go('x',x);await go('z',z);
    await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-interact"]')?.disabled,{timeout:7000});
    const before=await read();
+   if(before.stage!==i||before.action!=='idle'||before.instances!==1||before.basketId!==basketId)throw Error('W25 invalid committed state '+JSON.stringify(before));
+   if(i===2){
+    const witness=await page.evaluate(()=>{
+     const c=document.querySelector('[data-testid="nile-village-canvas"]');
+     const b=document.querySelector('[data-testid="nile-village-interact"]');
+     b.click();b.click();
+     const pending={stage:Number(c.dataset.villageStep),action:c.dataset.villageAction};
+     document.querySelector('[data-testid="nile-village-close"]').click();
+     return {pending,after:{stage:Number(c.dataset.villageStep),action:c.dataset.villageAction}};
+    });
+    if(witness.pending.stage!==2||witness.pending.action!=='seal'||witness.after.stage!==2||witness.after.action!=='idle')throw Error('W25 duplicate/cancel regression '+JSON.stringify(witness));
+    await page.waitForSelector('[data-testid="nile-village-start"]');
+    await page.click('[data-testid="nile-village-start"]');
+    await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-interact"]')?.disabled);
+    const resumed=await read();
+    if(Math.hypot(resumed.x-before.x,resumed.z-before.z)>.15)throw Error('W25 resume teleported');
+   }
    await page.click('[data-testid="nile-village-interact"]');
    await page.waitForFunction(stage=>Number(document.querySelector('[data-testid="nile-village-canvas"]')?.dataset.villageStep)===stage+1,{timeout:10000},i);
    const after=await read();
+   const expectedBasket=i<3?'table':i===3?'carried':'bank';
+   if(after.instances!==1||after.basket!==expectedBasket||after.basketId!==basketId||after.action!=='idle')throw Error('W25 basket/commit mismatch '+JSON.stringify(after));
    console.log('W15_CHECKPOINT',JSON.stringify({i,position:before,afterStage:after.stage}));
    await page.screenshot({path:path.join(dir,'w15-checkpoint-'+i+'.png')});
  }
