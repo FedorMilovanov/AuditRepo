@@ -45,3 +45,14 @@ The Blender tool itself is GPL, but output GLB and self-authored model geometry 
 
 ## Retention
 Large binary GLB and BLEND carry adjacent `.artifact.json` with SHA-256, byte size, source/rights and retention reason. Never copy Blender ZIP into Git. Original Chromium PNG evidence resides in an isolated local QA folder, not inside the Git tree. This pilot is protected as evidence until another accepted model supersedes it.
+
+## W26 house study (2026-11-24, ART HOLD)
+
+Rebuild from the exact W17 packed Blender file with Blender 4.5.16:
+    blender --background --factory-startup --python-exit-code 1 --python art-lab/house/source/build_house_w26_study.py
+
+Set HOREB_W26_ART_OUTPUT to a new output directory; existing evidence is never overwritten. The generator closes the earthen roof, lays a reed ceiling, adds a closed basket base and woven inner floor, and replaces the four thin vessel shells with closed thick-walled clay geometry. Six closed meshes are validated by edge incidence. The original basket rim and W17 canonical BLEND/GLB are untouched. Native Cycles CPU renders and the separate GLB are generated for review. Original geometry and existing packed CC0 textures only.
+
+First export SHA-256: c546269099b2b5de3c4e831279222483f4827f07d6820e42706ca4001b95e4a9, 5590196 bytes. Native source and GLB stay outside Git with the study manifest. This is not yet accepted for gameplay; visual quality, exact tabletop contact, renderer/device performance and integration are separate gates.
+
+To compare in the existing viewer, set HOREB_HOUSE_STUDY_DIR to that output directory and run node tests/browser-house-artlab.cjs. The optional study mode verifies SHA-256 and serves the exact candidate bytes to the original viewer without modifying public assets. Do not claim art approval from a browser pass. The default test continues to use W17.
