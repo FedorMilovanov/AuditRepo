@@ -1,0 +1,114 @@
+const puppeteer=require('puppeteer-core');
+const fs=require('node:fs');
+const path=require('node:path');
+const crypto=require('node:crypto');
+const study=process.env.HOREB_HOUSE_STUDY_DIR;
+const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-build','house-walk');
+const m=study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
+if(m&&(!['w26-house-study.glb','w26b-house-study.glb','w26c-house-study.glb'].includes(m.glb_file||'w26-house-study.glb')||m.status!=='ART_HOLD_W26_HOUSE_STUDY'))throw Error('Invalid study manifest');
+const bytes=m?fs.readFileSync(path.join(study,m.glb_file||'w26-house-study.glb')):null;
+if(bytes&&(crypto.createHash('sha256').update(bytes).digest('hex')!==m.glb_sha256||bytes.length!==m.bytes))throw Error('Asset hash mismatch');
+const chrome=[process.env.HOREB_BROWSER_PATH,'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&fs.existsSync(x));
+if(!chrome)throw Error('Actual Chromium required');
+(async()=>{
+ const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist',...(process.env.HOREB_NO_SANDBOX==='1'?['--no-sandbox']:[])],protocolTimeout:120000});
+ try{
+ fs.mkdirSync(dir,{recursive:true});
+ const page=await browser.newPage();page.setDefaultTimeout(60000);
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ let requests=0;
+ if(bytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
+ page.on('request',r=>{if(new URL(r.url()).pathname.endsWith('/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}return r.continue();});}
+ const sel='[data-testid="house-lookdev-canvas"]';
+ const state=()=>page.$eval(sel,c=>({...c.dataset}));
+ const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
+ async function hold(key,fn){await page.keyboard.down(key);try{await until(fn);}finally{await page.keyboard.up(key);}}
+ for(const mobile of [false,true]){
+ await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
+ const prior=requests;
+ await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
+ if(bytes&&requests<=prior)throw Error('No candidate request');
+ await page.click('[data-testid="house-actor-toggle"]');
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle');
+ const actor=await state();
+ if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2)throw Error('Missing real skinning');
+ await page.click('[data-testid="house-walk-toggle"]');
+ await until(s=>document.querySelector(s).dataset.houseWalk==='true');
+ const start=await state();
+ if(Number(start.houseWalkColliders)<12||start.houseWalkRegion!=='yard')throw Error('Incomplete walk start '+JSON.stringify(start));
+ if(!await page.$eval('[data-testid="house-inspect-basket"]',b=>b.disabled))throw Error('Distant basket interaction available');
+ await page.keyboard.press('f');
+ if(await page.$('[data-testid="house-basket-inspection"]'))throw Error('Distant keyboard interaction allowed');
+ if(mobile){
+  const touch=await page.target().createCDPSession();
+  const b=await page.$('[data-testid="house-walk-w"]');await b.scrollIntoView();
+  const rect=await b.boundingBox();const cv=await (await page.$(sel)).boundingBox();
+  if(rect.x<cv.x||rect.y<cv.y||rect.x+rect.width>cv.x+cv.width||rect.y+rect.height>cv.y+cv.height)throw Error('Touch controls outside game view');
+  const point={x:rect.x+rect.width/2,y:rect.y+rect.height/2,id:1};
+  await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});
+  try{await until(s=>document.querySelector(s).dataset.houseWalkBlocked==='true');}finally{await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
+  await touch.detach();
+  const stop=await state();
+  if(stop.houseWalkRegion!=='room'||Number(stop.houseWalkZ)<.65||Number(stop.houseWalkZ)>1.2)throw Error('Mobile failed actual entrance and table stop '+JSON.stringify(stop));
+ }else{
+  await hold('w',s=>document.querySelector(s).dataset.houseWalkRegion==='room');
+  const room=await state();if(Math.abs(Number(room.houseWalkX))>.05)throw Error('Unexpected sideways motion');
+  await hold('w',s=>document.querySelector(s).dataset.houseWalkBlocked==='true');
+  const stop=await state();
+  if(Number(stop.houseWalkZ)<.65||Number(stop.houseWalkZ)>1.2)throw Error('Workbench stop outside expected range '+JSON.stringify(stop));
+ }
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="house-inspect-basket"]').disabled);
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="house-actor-perform"]').disabled);
+ await page.click('[data-testid="house-actor-perform"]');
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
+ await until(s=>Number(document.querySelector(s).dataset.houseActorTime)>=2);
+ const peak=await state();
+ if(!Number.isFinite(Number(peak.houseActorContactMm)))await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorContactMm)));
+ const actual=await state();
+ if(Number(actual.houseActorContactMm)>=120)throw Error('W27 wrist misses actual rim: '+JSON.stringify(actual));
+ const actorCanvas=await page.$(sel);
+ await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
+ const endGesture=await state();
+ if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorContactMm)>=120)throw Error('Action completion invalid '+JSON.stringify(endGesture));
+ console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,bones:actor.houseActorBones}));
+
+ const beforeInspect=await state();
+ if(mobile)await page.tap('[data-testid="house-inspect-basket"]');else await page.keyboard.press('f');
+ await page.waitForSelector('[data-testid="house-basket-inspection"]');
+ if(await page.$('[data-testid="house-walk-w"]'))throw Error('Walk controls still active in inspection');
+ await page.waitForFunction(()=>document.activeElement?.getAttribute('data-testid')==='house-inspect-close');
+ await page.keyboard.down('s');await new Promise(r=>setTimeout(r,600));await page.keyboard.up('s');
+ const frozen=await state();
+ if(frozen.houseWalkX!==beforeInspect.houseWalkX||frozen.houseWalkZ!==beforeInspect.houseWalkZ||frozen.houseInspected!=='true')throw Error('Inspection failed to suspend movement');
+ const canvasInspect=await page.$(sel);await canvasInspect.screenshot({path:path.join(dir,mobile?'inspect-mobile390.png':'inspect-desktop1440.png')});
+ await page.click('[data-testid="house-inspect-close"]');
+ await page.waitForFunction(()=>!document.querySelector('[data-testid="house-basket-inspection"]')&&document.activeElement?.getAttribute('data-testid')==='house-lookdev-canvas');
+ const pitchBefore=Number((await state()).houseWalkPitch);
+ const cv=await (await page.$(sel)).boundingBox();
+ const x=cv.x+cv.width*.52,y=cv.y+cv.height*.38;
+ if(mobile){
+  const touch=await page.target().createCDPSession();
+  await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{id:9,x,y}]});
+  await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{id:9,x,y:y+80}]});
+  await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.detach();
+ }else{
+  await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x,y+80,{steps:6});await page.mouse.up();
+ }
+ await page.waitForFunction((s,p)=>Number(document.querySelector(s).dataset.houseWalkPitch)<p-.15,{timeout:10000},sel,pitchBefore);
+ const looked=await page.$(sel);await looked.screenshot({path:path.join(dir,mobile?'look-mobile390.png':'look-desktop1440.png')});
+
+ const end=await state();
+ const canvas=await page.$(sel);await canvas.screenshot({path:path.join(dir,mobile?'walk-mobile390.png':'walk-desktop1440.png')});
+ await page.click('[data-testid="house-walk-toggle"]');
+ await until(s=>document.querySelector(s).dataset.houseWalk==='false');
+ await page.click('[data-testid="house-actor-toggle"]');
+ await until(s=>document.querySelector(s).dataset.houseActorPhase==='off');
+ if((await state()).houseActorBones!==undefined)throw Error('Actor retained after removal');
+
+ if(errors.length)throw Error(errors.join('; '));
+ console.log('W27A_HOUSE_ACTOR_PASS',JSON.stringify({mobile,asset:m?.glb_sha256||'canonical W17',start,end,errors}));
+ }
+ }finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exit(1)});

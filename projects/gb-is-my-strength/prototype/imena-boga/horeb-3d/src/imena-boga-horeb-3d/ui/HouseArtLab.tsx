@@ -6,6 +6,7 @@ import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {createHouseActorRehearsal,HOUSE_ACTOR_FOOTPRINT,type ActorPhase} from '../engine/HouseActorRehearsal';
 type View='courtyard'|'threshold'|'room'|'basket';
 type CameraPose={eye:readonly [number,number,number]; target:readonly [number,number,number]};
 const POSES:Record<View,CameraPose>={
@@ -21,7 +22,7 @@ const TITLES:Record<View,string>={
  basket:'Подготовка корзины',
 };
 type WalkKey='w'|'a'|'s'|'d'|'q'|'e';
-type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void};
+type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void;toggleActor:()=>void;performActor:()=>void};
 export function HouseArtLab(){
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
@@ -30,6 +31,7 @@ export function HouseArtLab(){
  const [walking,setWalking]=useState(false);
  const [canInspect,setCanInspect]=useState(false);
  const [inspected,setInspected]=useState(false);
+ const [actorPhase,setActorPhase]=useState<ActorPhase>('off');
  const inspectClose=useRef<HTMLButtonElement>(null);
  const focusRestore=useRef(false);
  useEffect(()=>{
@@ -76,6 +78,7 @@ export function HouseArtLab(){
   let basketBounds:THREE.Box3|null=null;
   let basketRoot:THREE.Object3D|null=null;
   let fitDirty=true;
+  let rehearsal:ReturnType<typeof createHouseActorRehearsal>|null=null,actorClock=0;
   // Laboratory-only walk mode. Collider footprints are derived from the
   // loaded named authored meshes, not guessed from a second house model.
   const obstacles:THREE.Box3[]=[];
@@ -110,6 +113,7 @@ export function HouseArtLab(){
   }
   const walkable=(x:number,z:number)=>{
    if(!Number.isFinite(x)||!Number.isFinite(z)||Math.abs(x)>3.12||z>8.3||z< -2.05)return false;
+   if(rehearsal?.present()&&Math.hypot(x-HOUSE_ACTOR_FOOTPRINT.x,z-HOUSE_ACTOR_FOOTPRINT.z)<radius+HOUSE_ACTOR_FOOTPRINT.radius)return false;
    return !obstacles.some(b=>{
     const dx=x-THREE.MathUtils.clamp(x,b.min.x,b.max.x);
     const dz=z-THREE.MathUtils.clamp(z,b.min.z,b.max.z);
@@ -156,7 +160,7 @@ export function HouseArtLab(){
    const key=getKey(event);if(key){event.preventDefault();move(key,true);}
   };
   const keyUp=(event:KeyboardEvent)=>{const key=getKey(event);if(key&&walking){event.preventDefault();move(key,false);}};
-  const visibility=()=>{if(document.hidden){clear();lastFrame=0;}};
+  const visibility=()=>{if(document.hidden){clear();lastFrame=0;actorClock=0;rehearsal?.cancel();}};
   function walkFrame(now:number){
    const dt=lastFrame?Math.min(.05,Math.max(0,(now-lastFrame)/1000)):0;lastFrame=now;
    if(document.hidden||inspecting)return;
@@ -172,7 +176,8 @@ export function HouseArtLab(){
    if(now-probeTime>100){probeTime=now;updateInspectReady(inspectAvailable());}
   }
   function setWalk(on:boolean){
-   clear();closeInspect();updateInspectReady(false);walking=on;lastFrame=0;blocked=false;
+   if(on&&rehearsal?.phase()==='loading')return;
+   clear();closeInspect();rehearsal?.cancel();updateInspectReady(false);walking=on;lastFrame=0;blocked=false;
    activeControls.enabled=!on;
    c.dataset.houseWalk=String(on);
    if(on){delete c.dataset.basketFrameExtent;delete c.dataset.basketBlockedRays;delete c.dataset.basketBlockers;delete c.dataset.houseView;}
@@ -228,6 +233,8 @@ export function HouseArtLab(){
   resize();
   const render=(now:number)=>{
    if(disposed)return;
+   const actorDt=actorClock?(now-actorClock)/1000:0;actorClock=now;
+   rehearsal?.tick(actorDt);
    if(walking)walkFrame(now);else activeControls.update();
    if(!walking&&fitDirty&&basketBounds){
     camera.updateMatrixWorld(true);
@@ -305,7 +312,19 @@ export function HouseArtLab(){
    fitDirty=true;
    const showRoof=true;
    roofObjs.forEach(o=>o.visible=showRoof);
-   api.current={view:mode=>{currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect};
+   rehearsal=createHouseActorRehearsal(scene,loaded,c,setActorPhase);
+   api.current={view:mode=>{currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect,
+    toggleActor:()=>{
+     if(!rehearsal)return;
+     if(rehearsal.phase()==='off'){
+      // Enable only outside walk mode: never spawn into the player's footprint.
+      if(!walking)void rehearsal.enable();
+     }else rehearsal.clear();
+    },
+    performActor:()=>{
+     if(!walking||inspecting||!inspectAvailable())return;
+     if(rehearsal?.perform()){clear();c.focus({preventScroll:true});}
+    }};
    const size=Math.round((performance.getEntriesByName(src)[0] as PerformanceResourceTiming|undefined)?.transferSize||0);
    setStats({meshes:meshCount,triangles:Math.round(triangleCount),bytes:size});
    setStatus('ready');setDetail('GLB действительно загружен; модель можно осмотреть вращением и с разных ракурсов.');
@@ -315,7 +334,7 @@ export function HouseArtLab(){
    setDetail('Не удалось загрузить модель: '+String(error).slice(0,220));
   });
   return()=>{
-   disposed=true;api.current=null;observer.disconnect();clear();
+   disposed=true;api.current=null;observer.disconnect();clear();rehearsal?.dispose();
    c.removeEventListener('pointerdown',lookStart);c.removeEventListener('pointermove',lookMove);c.removeEventListener('pointerup',lookEnd);c.removeEventListener('pointercancel',lookEnd);c.removeEventListener('lostpointercapture',lookEnd);
    window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);window.removeEventListener('blur',clear);document.removeEventListener('visibilitychange',visibility);
    for(const key of ['houseWalk','houseWalkX','houseWalkZ','houseWalkYaw','houseWalkPitch','houseWalkBlocked','houseWalkRegion','houseWalkColliders','houseInspectReady','houseInspected'])delete c.dataset[key];
@@ -341,7 +360,7 @@ export function HouseArtLab(){
   };
  },[]);
  const choose=(v:View)=>{setWalking(false);setView(v);api.current?.view(v);};
- const toggleWalk=()=>{const on=!walking;if(on)setRoof(true);setWalking(on);api.current?.walk(on);};
+ const toggleWalk=()=>{const on=!walking;if(on&&actorPhase==='loading')return;if(on)setRoof(true);setWalking(on);api.current?.walk(on);};
  const toggleRoof=()=>{const next=!roof;setRoof(next);api.current?.roof(next);};
  return <main className="wrap" data-testid="house-art-lab">
   <header className="top">
@@ -362,6 +381,9 @@ export function HouseArtLab(){
     {walking&&!inspected&&<div className="house-walk-hud">
      <div className="house-walk-objective">{canInspect?'Корзина рядом · осмотреть':'Найдите стол с корзиной'}</div>
      <button type="button" data-testid="house-inspect-basket" disabled={!canInspect||inspected} onClick={()=>api.current?.inspect()}>Осмотреть · F</button>
+     {actorPhase!=='off'&&<button type="button" data-testid="house-actor-perform" disabled={!canInspect||!['idle','complete'].includes(actorPhase)} onClick={()=>api.current?.performActor()}>{actorPhase==='performing'?'Жест выполняется…':actorPhase==='complete'?'Повторить жест':'Наблюдать жест'}</button>}
+     {actorPhase==='complete'&&<span role="status" className="house-walk-objective">Жест завершён</span>}
+     {actorPhase==='failed'&&<span role="status" className="house-walk-objective">Репетиция не прошла проверку</span>}
     </div>}
      {walking&&!inspected&&<div className="house-walk-pad" aria-label="Управление прогулкой">
       {([['q','↶','Повернуть налево'],['w','↑','Вперёд'],['e','↷','Повернуть направо'],['a','←','Влево'],['s','↓','Назад'],['d','→','Вправо']] as const).map(([key,label,aria])=><button key={key} type="button" data-testid={'house-walk-'+key} aria-label={aria}
@@ -383,7 +405,10 @@ export function HouseArtLab(){
    <section className="side house-tools" aria-label="Управление сценой">
     <div>
      <h3>Исследование пространства</h3>
-     <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
+     <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'||actorPhase==='loading'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
+     <h3>Репетиция персонажа · ART HOLD</h3>
+     <button type="button" className="switch" data-testid="house-actor-toggle" disabled={status!=='ready'||walking||actorPhase==='loading'} aria-pressed={actorPhase!=='off'} onClick={()=>api.current?.toggleActor()}>{actorPhase==='off'?'Показать персонажа':actorPhase==='loading'?'Загрузка персонажа…':'Убрать персонажа'}</button>
+     <p className="house-actor-note">Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.</p>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
      {(Object.keys(POSES) as View[]).map(key=><button key={key}
