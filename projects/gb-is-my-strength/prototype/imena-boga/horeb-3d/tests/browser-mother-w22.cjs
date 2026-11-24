@@ -43,6 +43,11 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    if(stats.bones!==53||stats.skinned<6||stats.clips<2||!stats.noOverflow)
     throw Error('Invalid W22 actor: '+JSON.stringify(stats));
    await page.click('[data-testid="mother-shot-gesture"]');
+   await page.waitForSelector('[data-testid="mother-cutaway-label"]');
+   await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.basketVisible==='true'&&d.facadeVisible==='false';
+   });
    await sleep(280);
    const canvas=await page.$('[data-testid="mother-art-canvas"]');
    if(!canvas)throw Error('Live 3D canvas missing');
@@ -81,6 +86,33 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    const resumeWaitMs=Date.now()-resumedAt;
    if(resumed.equals(peak1))
     throw Error('W22 animation remained frozen after resume '+JSON.stringify({label,resumeChecks,resumeWaitMs}));
+   // A real inspector state transition: choose an action while the frame
+   // is frozen. A button label alone cannot prove that the mixer resumed.
+   const waitAction=(name,scale=1)=>page.waitForFunction((n,sc)=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.actionName===n&&Number(d.mixerScale)===sc&&Number(d.actionWeight)>.97;
+   },{},name,scale);
+   await page.click('[data-testid="mother-pose-peak"]');
+   await waitAction('Mother_GestureTowardsBasket',0);
+   const peakTime=await page.$eval('[data-testid="mother-art-canvas"]',e=>Number(e.dataset.actionTime));
+   if(Math.abs(peakTime-2.5)>.01)throw Error('Actual mixer peak is not frame 60: '+peakTime);
+   await page.click('[data-testid="mother-clip-idle"]');
+   await waitAction('Mother_QuietIdle');
+   await page.waitForFunction(()=>Number(document.querySelector('[data-testid="mother-art-canvas"]').dataset.actionTime)>.15);
+   if(await page.$('[data-testid="mother-peak-state"]'))throw Error('Stale inspection label after choosing another clip');
+   await page.click('[data-testid="mother-clip-idle"]');
+   await waitAction('Mother_QuietIdle');
+   await page.click('[data-testid="mother-shot-doorway"]');
+   await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.basketVisible==='true'&&d.facadeVisible==='true';
+   });
+   await page.click('[data-testid="mother-shot-gesture"]');
+   await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="mother-art-canvas"]').dataset;
+    return d.basketVisible==='true'&&d.facadeVisible==='false';
+   });
+   console.log('W24_INSPECTOR_STATE_AND_CUTAWAY_PASS',JSON.stringify({label,peakTime,clipSwitch:true,sameActionWeight:true,doorwayRestored:true}));
    if(errors.length)throw Error(errors.join('; '));
    const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
    console.log('W22_GESTURE_PEAK_BROWSER_PASS',JSON.stringify({

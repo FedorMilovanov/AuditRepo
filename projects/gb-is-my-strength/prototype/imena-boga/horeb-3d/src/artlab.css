@@ -34,3 +34,10 @@ button:disabled{opacity:.55;cursor:wait}
 @media(max-width:980px){.layout{grid-template-columns:1fr}.viewer{height:65vh;min-height:430px}.side{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
 @media(max-width:560px){.wrap{padding:12px}.status{font-size:9px;white-space:normal;text-align:right}.top{gap:15px}.viewer{height:61vh;min-height:390px}.corner{left:14px;top:14px}.corner p{display:none}.side{display:flex;gap:16px}.footerbar{font-size:10px}.choices button{padding:9px 8px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.study-tag{display:inline-block;background:#1b1b16df;color:#f4dfbb;border:1px solid #b9a07770;border-radius:3px;padding:5px 8px;font-size:10px;letter-spacing:.04em;margin:3px 0 5px}
+@media(max-width:560px){.study-tag{font-size:9px}.corner h1{margin:3px 0}.footerbar{left:8px;right:8px;bottom:8px;padding:8px 9px}}
+
+.viewer:has(.study-tag) .corner{max-width:min(410px,92%);padding:12px 14px 11px;background:linear-gradient(115deg,#171812e8,#1718129c 78%,#17181200);border-radius:3px}
+.viewer:has(.study-tag) .corner h1{color:#f8e9ca}
+@media(max-width:560px){.viewer:has(.study-tag) .corner{padding:8px 10px;top:10px;left:10px}.viewer:has(.study-tag) .corner h1{font-size:26px}}

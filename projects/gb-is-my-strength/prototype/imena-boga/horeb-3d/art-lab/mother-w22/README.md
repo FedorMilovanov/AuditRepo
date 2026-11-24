@@ -34,3 +34,10 @@ Viewer: `/actorlab-w22.html` on localhost. Evidence files remain under ignored `
 No claims about a historically attested likeness, garment pattern, hairstyle, facial expression or final realism. Real-world figure animation may still exhibit cloth clipping and poor visual design, especially near the elbow. A skin/face and fabric pass, transparent costume scholarship, real browser screenshots and a physical hand-to-basket review are required before W15 integration or merger.
 
 **Do not merge, deploy or interpret a structural green test as an artistic approval.**
+
+## W24 inspector revision (24 Nov 2026)
+- The W22 gesture shot is explicitly labeled as a cutaway study. Walls are hidden only in this inspection shot; the authored basket, work surface, supports and linen remain at their original transforms. The doorway shot restores the house.
+- Camera framing adapts its horizontal field of view to the viewport. The actual wrist/basket spatial gate is unchanged (5.09 mm at frame 60).
+- Clip selection exits inspection pause and removes stale fades; reselecting the same action no longer crossfades an action against itself. Resume plays the original clip from the frozen frame.
+- The browser test reads the real mixer action time, weight and time scale, and checks basket/facade visibility on both 1440x900 and 390x844. The previous W20 browser contract also passes on both viewport sizes.
+- W24 wardrobe/skin experiments are local visual studies, not promoted asset changes. The accepted W22 BLEND/GLB stay unchanged; ART HOLD and the no-W15-integration gate remain.

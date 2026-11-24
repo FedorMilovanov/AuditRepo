@@ -18,7 +18,7 @@ const W22_SHOTS:Record<Shot,{eye:[number,number,number];target:[number,number,nu
  doorway:{eye:[.1,1.85,5.3],target:[-.2,1.16,.26]},
  full:{eye:[-.50,1.65,3.1],target:[-.50,.91,.30]},
  portrait:{eye:[-.50,1.53,1.55],target:[-.50,1.49,.30]},
- gesture:{eye:[-.58,2.02,1.73],target:[-.11,1.18,.27]},
+ gesture:{eye:[-1.7,1.63,3.55],target:[-.055,.93,.27]},
 };
 const shotLabel:Record<Shot,string>={
  doorway:'Порог дома',full:'Фигура и одежда',portrait:'Лицо вблизи',gesture:'Руки и жест',
@@ -70,26 +70,64 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
   const gl=renderer,orbit=controls;
   let actor:THREE.Group|null=null,house:THREE.Group|null=null,mixer:THREE.AnimationMixer|null=null;
   let playing:THREE.AnimationAction|null=null;
-  let animationElapsed=0;
   const actions=new Map<string,THREE.AnimationAction>();
   const resourceMeshes=new Set<THREE.Mesh>();
   const garbageMaterials=new Set<THREE.Material>();
   const garbageTextures=new Set<THREE.Texture>();
   const clock=new THREE.Clock();
+  let currentShot:Shot='full';
+  const isGestureStudy=()=>phase==="W22"&&currentShot==="gesture";
+  // An explicit cutaway inspection, not a change to the reconstructed house.
+  // Keep the authored basket and physical support at exactly the same transforms.
+  const applyHouseVisibility=()=>{
+   if(!house)return;
+   house.visible=currentShot==="doorway"||isGestureStudy();
+   house.traverse(o=>{
+    if(!(o as THREE.Mesh).isMesh)return;
+    const roof=/^(Roof_|Parapet_)/.test(o.name);
+    const study=/^(Basket_|Hand_woven_basket_body$|Coarse_work_surface$|Workshop_wood_support|Folded_linen_by_basket$|Room_floor_earthen$)/.test(o.name);
+    o.visible=!roof&&(!isGestureStudy()||study);
+   });
+   const basket=house.getObjectByName('Basket_thick_lipped_rim');
+   const facade=house.getObjectByName('Facade_left_of_open_door');
+   el.dataset.basketVisible=String(house.visible&&!!basket?.visible);
+   el.dataset.facadeVisible=String(house.visible&&!!facade?.visible);
+  };
+  const applyLens=()=>{
+   // Maintain a minimum horizontal field of view on a narrow canvas;
+   // do not move the character or change basket size to fake contact.
+   const aspect=Math.max(.25,camera.aspect);
+   const base=THREE.MathUtils.degToRad(32);
+   camera.fov=isGestureStudy()?THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(base/2)*Math.max(1,1.05/aspect))):51;
+   camera.updateProjectionMatrix();
+  };
   const setCam=(target:Shot)=>{
+   currentShot=target;
+   // Deliberately neutral cutaway stage, not a reconstructed outdoor scene.
+   (scene.background as THREE.Color).setHex(isGestureStudy()?0x34332e:0x9f9b8e);
+   floor.visible=!isGestureStudy();
+   applyLens();
    const d=phase==="W22"?W22_SHOTS[target]:SHOTS[target];
    camera.position.set(...d.eye);
    orbit.target.set(...d.target);orbit.update();
-   if(house)house.visible=target==="doorway"||(phase==="W22"&&target==="gesture");
+   applyHouseVisibility();
   };
   setCam('full');
   const startClip=(name:Clip)=>{
    const next=actions.get(name);
    if(!next)return;
-   playing?.fadeOut(.24);
-   next.reset().setLoop(THREE.LoopRepeat,Infinity).fadeIn(.24).play();
+   // A same-action reset cannot crossfade against itself; discard old
+   // fade envelopes, and leave the inspection clock explicitly.
+   if(!mixer)return;
+   const previous=playing;
+   mixer.timeScale=1;
+   if(previous&&previous!==next)previous.stopFading().fadeOut(.24);
+   next.stopFading().reset().setEffectiveTimeScale(1).setEffectiveWeight(1);
+   next.clampWhenFinished=false;
+   next.setLoop(THREE.LoopRepeat,Infinity);
+   if(previous&&previous!==next)next.fadeIn(.24);
+   next.play();
    playing=next;
-   animationElapsed=0;
   };
   // The authored gesture holds frames 48-70 at 24 fps; the previous 1.05s
   // browser capture was too early to judge the intended peak pose.
@@ -99,8 +137,8 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
    const gesture=actions.get('Mother_GestureTowardsBasket');
    if(!gesture)return;
    for(const a of actions.values())a.stop();
-   gesture.reset().setLoop(THREE.LoopOnce,1);
-   gesture.clampWhenFinished=true;
+   gesture.stopFading().reset().setEffectiveTimeScale(1).setLoop(THREE.LoopRepeat,Infinity);
+   gesture.clampWhenFinished=false;
    gesture.setEffectiveWeight(1);
    gesture.play();
    mixer.timeScale=1;
@@ -130,7 +168,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
     }
     if(/^(Roof_|Parapet_)/.test(o.name))o.visible=false;
    });
-   house.visible=false;scene.add(house);
+   scene.add(house);applyHouseVisibility();
    houseLoaded=true;loaded();
   },undefined,e=>{if(!destroyed)setError('Не загрузился дом: '+String(e))});
   load.load(actorUrl,gltf=>{
@@ -170,12 +208,23 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
   const observer=new ResizeObserver(()=>{
    if(destroyed)return;
    const w=Math.max(1,el.clientWidth),h=Math.max(1,el.clientHeight);
-   camera.aspect=w/h;camera.updateProjectionMatrix();gl.setSize(w,h,false);
+   camera.aspect=w/h;applyLens();gl.setSize(w,h,false);
   });observer.observe(el);
   gl.setAnimationLoop(()=>{
    if(destroyed)return;
    const dt=Math.min(clock.getDelta(),.075);
-   if(mixer){mixer.update(dt);animationElapsed+=dt;}
+   if(mixer){
+    mixer.update(dt);
+    // Runtime witness from the actual Three.js action; independent of React
+    // button state and useful when inspecting a slow software renderer.
+    if(playing){
+     const data=el.dataset;
+     data.actionName=playing.getClip().name;
+     data.actionTime=playing.time.toFixed(3);
+     data.actionWeight=playing.getEffectiveWeight().toFixed(3);
+     data.mixerScale=mixer.timeScale.toString();
+    }
+   }
    orbit.update();gl.render(scene,camera);
   });
   return()=>{
@@ -201,7 +250,11 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
   };
  },[modelName,phase]);
  const choose=(v:Shot)=>{setShot(v);controller.current?.setShot(v)};
- const changeClip=(v:Clip)=>{setClip(v);setInspectionFrame(null);controller.current?.setClip(v)};
+ const changeClip=(v:Clip)=>{
+  if(!controller.current)return;
+  setClip(v);setPaused(false);setInspectionFrame(null);
+  controller.current.setClip(v);
+ };
  const changePause=()=>{const v=!paused;setPaused(v);if(!v)setInspectionFrame(null);controller.current?.setPause(v)};
  const inspectPeakGesture=()=>{
   if(!controller.current)return;
@@ -221,6 +274,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
     <canvas ref={canvas} data-testid="mother-art-canvas" aria-label="3D-модель с настоящей костной анимацией" />
     <div className="corner"><p className="kicker">EXODUS 2 · VISUAL RECONSTRUCTION</p>
      <h1>{shotLabel[shot]}</h1>
+     {phase==='W22'&&shot==='gesture'&&<span className="study-tag" data-testid="mother-cutaway-label">Изолированный ракурс · стены скрыты</span>}
      <p>Сценический образ. Реальная внешность матери Моисея неизвестна. Материалы и одежда ещё проходят художественную разработку.</p>
     </div>
     {!ready&&<div className="loading" role="status" data-testid="mother-art-status">
@@ -252,7 +306,7 @@ export function MotherArtLab({modelName="horeb_mother_rig_pilot.glb",phase="W18"
     </div></div>
     <div><button type="button" className={'switch '+(paused?'selected':'')}
      data-testid="mother-animation-pause" disabled={!ready}
-     onClick={changePause}>{paused?'Продолжить движение':'Остановить движение'}</button></div>
+     aria-pressed={paused} onClick={changePause}>{paused?'Продолжить движение':'Остановить движение'}</button></div>
     {(phase==='W19'||phase==='W22')&&<div><button type="button" className="switch"
      data-testid="mother-pose-peak" disabled={!ready}
      onClick={inspectPeakGesture}>Показать пик жеста · кадр 60</button>

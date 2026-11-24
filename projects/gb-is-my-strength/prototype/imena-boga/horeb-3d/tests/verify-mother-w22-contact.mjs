@@ -110,8 +110,10 @@ const offset=manifest.staged_actor_offset_three;
 assert.deepEqual(offset,[-.5,.015,.30]);
 assert.match(actorSource,/if\(phase==="W22"\)actor\.position\.set\(-\.50,\.015,\.30\)/,
  'The W22 rig spatial test must match the actual separate viewer placement');
-assert.match(actorSource,/house\.visible=target==="doorway"\|\|\(phase==="W22"&&target==="gesture"\)/,
+assert.match(actorSource,/house\.visible=currentShot==="doorway"\|\|isGestureStudy\(\)/,
  'The W22 gesture shot must show the actual basket scene');
+assert.match(actorSource,/Basket_\|Hand_woven_basket_body/,
+ 'The cutaway must retain the real basket geometry');
 const basket=transforms(room);
 const rimNode=basket.name('Basket_thick_lipped_rim');
 assert.ok(rimNode>=0,'The actual CC0/reference basket rim must exist');
