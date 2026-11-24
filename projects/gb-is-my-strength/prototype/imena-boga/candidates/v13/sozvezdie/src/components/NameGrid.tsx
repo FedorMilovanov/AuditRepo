@@ -340,7 +340,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     onClick={() => onSelect(name.id)}
                     aria-label={`Перейти к разделу: ${name.translit}${isCompleted ? ", изучено" : ""}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`group relative flex w-full max-w-80 min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
+                    className={`group relative flex w-full min-w-0 max-w-80 min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 pb-4 pt-8 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
                       isActive
                         ? "border-gold-500/60 bg-gradient-to-b from-ink-800 to-ink-900 shadow-[0_0_35px_-8px_rgba(212,175,55,0.35)]"
                         : isCompleted
@@ -362,7 +362,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     ) : null}
                     <span
                       {...attrs}
-                      className={`select-none text-center font-hebrew text-xl font-medium leading-tight transition-all duration-500 md:text-2xl ${
+                      className={`min-w-0 max-w-full break-words [overflow-wrap:anywhere] select-none text-center font-hebrew text-xl font-medium leading-tight transition-all duration-500 md:text-2xl ${
                         isActive ? "glow-gold text-gold-200" : "text-gold-300/90 group-hover:text-gold-200"
                       }`}
                     >
@@ -375,7 +375,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     >
                       <Highlight text={name.translit} query={query} />
                     </span>
-                    <span className="mt-1 line-clamp-3 max-w-full break-words text-center font-display text-sm italic leading-snug text-cream-300 transition-colors group-hover:text-cream-100">
+                    <span data-name-russian className="mt-1 min-w-0 max-w-full break-words [overflow-wrap:anywhere] text-center font-display text-sm italic leading-snug text-cream-200 transition-colors group-hover:text-cream-100">
                       <Highlight text={name.russian} query={query} />
                     </span>
                   </button>

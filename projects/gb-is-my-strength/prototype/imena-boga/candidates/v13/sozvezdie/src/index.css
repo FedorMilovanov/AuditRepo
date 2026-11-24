@@ -326,5 +326,14 @@ h1, h2, h3 {
   #tsentr, [role="status"], [aria-label="Продолжить чтение"] { display: none !important; }
 }
 
+/* W119: keep two editorial cards at ordinary mobile sizes, and let
+   enlarged type collapse to one column instead of truncating names.
+   The rem minimum follows the reader's actual root font size. */
+@media (max-width: 639px) {
+  [data-name-result-grid][data-single-result="false"] {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(7rem, calc((100% - 0.5rem) / 2))), 1fr));
+  }
+}
+
 /* On compact viewports both reading controls occupy the main header.
    They do not need floating offsets over editorial text. */

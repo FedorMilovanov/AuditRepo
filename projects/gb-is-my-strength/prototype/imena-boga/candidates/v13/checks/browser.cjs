@@ -114,6 +114,48 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
        console.log('W118_ENLARGED_TITLE_WHOLE_WORDS_PASS',engine,width,JSON.stringify(title));
      }finally{await typeCtx.close()}
    }
+   // W119: full names must be readable at 200% (not just accessible names).
+   if(name==='sozvezdie'&&(width===320||width===390||width===1440)){
+     const gridCtx=await browser.newContext({viewport:{width,height:844},locale:'ru-RU',reducedMotion:'reduce'});
+     try{
+       const gridPage=await gridCtx.newPage();
+       await gridPage.goto(base+'/sozvezdie/',{waitUntil:'domcontentloaded'});
+       await gridPage.locator('[data-name-russian]').first().waitFor({state:'visible'});
+       await gridPage.evaluate(async()=>{await document.fonts.ready;});
+       const measure=()=>gridPage.evaluate(()=>{
+         const labels=[...document.querySelectorAll('[data-name-russian]')];
+         const failures=[];
+         for(const e of labels){
+           const box=e.getBoundingClientRect(),card=e.closest('button').getBoundingClientRect();
+           const range=document.createRange();range.selectNodeContents(e);
+           if(e.scrollHeight>e.clientHeight+1||e.scrollWidth>e.clientWidth+1||
+              [...range.getClientRects()].some(r=>r.top<box.top-1||r.bottom>box.bottom+1||r.left<card.left-1||r.right>card.right+1))
+             failures.push(e.textContent);
+         }
+         return {count:labels.length,failures,columns:getComputedStyle(document.querySelector('[data-name-result-grid][data-single-result="false"]')).gridTemplateColumns.split(' ').length};
+       });
+       const normal=await measure();
+       await gridPage.evaluate(()=>{document.documentElement.style.fontSize='200%'});
+       await gridPage.waitForFunction(()=>parseFloat(getComputedStyle(document.documentElement).fontSize)>=31);
+       await gridPage.evaluate(async()=>{await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+       const scaled=await measure();
+       if(normal.count!==29||scaled.count!==29||normal.failures.length||scaled.failures.length||
+          (width<640&&(normal.columns!==2||scaled.columns!==1)))
+         throw Error('W119 grid reflow '+JSON.stringify({engine,width,normal,scaled}));
+       // Use the actual rendered arrow color against the brighter hover surface.
+       const arrow=await gridPage.evaluate(()=>{
+         const elements=[...document.querySelectorAll('[data-name-related-arrow]')];
+         const ctx=document.createElement('canvas').getContext('2d',{willReadFrequently:true});
+         const lum=color=>{ctx.clearRect(0,0,1,1);ctx.fillStyle=color;ctx.fillRect(0,0,1,1);
+           const rgba=ctx.getImageData(0,0,1,1).data;const s=[...rgba].slice(0,3).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);
+           return .2126*s[0]+.7152*s[1]+.0722*s[2];};
+         const bg=lum(getComputedStyle(document.documentElement).getPropertyValue('--color-ink-800').trim());
+         return {count:elements.length,min:Math.min(...elements.map(e=>{const fg=lum(getComputedStyle(e).color);return (Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05)}))};
+       });
+       if(!arrow.count||arrow.min<3)throw Error('W119 related-arrow contrast '+JSON.stringify(arrow));
+       console.log('W119_GRID_READABILITY_PASS',engine,width,JSON.stringify({normal,scaled,arrow}));
+     }finally{await gridCtx.close()}
+   }
    // W117: Back from a resume pill that has unmounted must restore useful
    // focus without scrolling away from the restored root position.
    if(name==='sozvezdie'&&(width===390||width===1440)){

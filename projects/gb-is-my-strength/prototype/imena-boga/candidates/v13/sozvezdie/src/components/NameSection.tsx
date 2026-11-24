@@ -317,7 +317,7 @@ function NameSection({
                         <span className="min-w-0 break-words font-ui text-xs uppercase tracking-[0.2em] text-cream-500 transition-colors group-hover:text-cream-200">
                           {r.translit}
                         </span>
-                        <ArrowRight className="h-3 w-3 text-cream-800 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-gold-400" strokeWidth={1.5} />
+                        <ArrowRight data-name-related-arrow aria-hidden="true" className="h-3 w-3 shrink-0 text-cream-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-gold-400" strokeWidth={1.5} />
                       </button>
                     ))}
                   </div>
