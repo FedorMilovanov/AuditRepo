@@ -21,16 +21,16 @@ const fs={mkdirSync},path={join};
  if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 duplicate WebGL on game launch');
  await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-start"]')?.disabled);
  await page.click('[data-testid="nile-village-start"]');
- const checkpoints=[[3,11],[7,8],[6,3],[6,3],[-5.45,-16.1],[-4.15,-12.5]];
+ const checkpoints=[[3,12.6],[7,9.7],[6,5.65],[6,5.65],[-5.45,-16.1],[-4.15,-14.0]];
  const go=async (axis,target)=>{
    const cur=await read(),axisVal=cur[axis],delta=target-axisVal;
-   if(Math.abs(delta)<.72)return;
+   if(Math.abs(delta)<.22)return;
    const key=axis==='z'?(delta<0?'w':'s'):(delta<0?'a':'d');
    await page.keyboard.down(key);
    try{await page.waitForFunction(({axis,target})=>{
       const c=document.querySelector('[data-testid="nile-village-canvas"]');
       const v=Number(axis==='x'?c?.dataset.villageX:c?.dataset.villageZ);
-      return Number.isFinite(v)&&Math.abs(target-v)<.75;
+      return Number.isFinite(v)&&Math.abs(target-v)<.24;
    },{timeout:120000},{axis,target});}
    finally{await page.keyboard.up(key);}
    await sleep(80);
@@ -39,6 +39,11 @@ const fs={mkdirSync},path={join};
  if(!basketId)throw Error('W25 missing physical basket identity');
  for(let i=0;i<checkpoints.length;i++){
    const [x,z]=checkpoints[i];
+   if(i===2){await go('x',5.6);await go('z',z);}
+   if(i===4){
+    // A true walk around the table and village houses, not a teleport.
+    await go('x',4.1);await go('z',-10.6);
+   }
    await go('x',x);await go('z',z);
    await page.waitForFunction(()=>!document.querySelector('[data-testid="nile-village-interact"]')?.disabled,{timeout:7000});
    const before=await read();
@@ -81,6 +86,7 @@ const fs={mkdirSync},path={join};
  await page.click('[data-testid="nile-village-start"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="nile-village-canvas"]')?.dataset.villageMode==='walk');
  const mobileStart=await read();
+ await page.waitForSelector('[data-testid="nile-village-bearing"]');
  const forward=await page.$('[data-testid="nile-village-move-forward"]');
  const box=await forward?.boundingBox();
  if(!box)throw Error('W15 mobile movement missing');

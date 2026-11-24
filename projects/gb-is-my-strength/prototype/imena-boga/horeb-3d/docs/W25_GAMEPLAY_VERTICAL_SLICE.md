@@ -13,3 +13,6 @@ Scope: one existing Nile playable blockout, one existing PR #543. No promotion o
 2. Art production: original room, yard, woven basket, papyrus edge, credible mother and sister, lighting/material references and rights. Build/preserve editable Blender source, glTF, animations and manifest. Review six matched frames. Do not integrate rejected assets.
 3. Real character performance: approach/reach/grip/place, hand/basket ownership, animation markers and completion from actual action, dialogue/source boundaries, accessible alternatives.
 4. Connect the complete playable slice; coherent spatial audio, objective HUD, journal, checkpoint recovery, keyboard/touch; actual device GPU and full walkthrough. Only then extend later chapters.
+
+## W25b spatial staging
+A browser capture of W25 revealed the camera clipping into a placeholder inhabitant at the workbench. Shared NPC/table footprints now constrain player movement; separate safe approach coordinates position the markers outside occupied space. The test traverses the actual safe path around the workbench toward the river, and the HUD displays camera-relative objective bearing and committed progress. This remains blockout, not final art or complete collision coverage for every minor prop.

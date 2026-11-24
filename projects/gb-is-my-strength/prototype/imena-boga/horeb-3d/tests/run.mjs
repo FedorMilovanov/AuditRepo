@@ -7,7 +7,7 @@ import { STORY_STOPS, EXODUS_CHAPTER_ORDER, validateStoryWorlds,
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 import { NILE_CRADLE, NILE_WALK, nileShoreX, nileGroundY, nilePapyrusRoot, nileCanWalk } from '../.test-build/engine/NileTerrain.js';
-import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,nileVillageMayInteract,nileVillageCanWalk,initialNileVillageQuest,beginNileVillageAction,advanceNileVillageAction,cancelNileVillageAction,restartNileVillageQuest} from '../.test-build/data/nileVillageQuest.js';
+import {NILE_VILLAGE_START,NILE_VILLAGE_STEPS,NILE_VILLAGE_HOUSES,NILE_VILLAGE_APPROACHES,NILE_VILLAGE_PEOPLE,NILE_VILLAGE_TABLE,nileVillageGoalBearing,nileVillageMayInteract,nileVillageCanWalk,initialNileVillageQuest,beginNileVillageAction,advanceNileVillageAction,cancelNileVillageAction,restartNileVillageQuest} from '../.test-build/data/nileVillageQuest.js';
 import { NILE_WATER_LEVEL, nileWaterNearshore, nileWaterHeight, nileWaterMottle } from '../.test-build/engine/NileWater.js';
 import { MIDIAN_BOUNDS, MIDIAN_FLOOR_SIZE, midianGround, midianWalkable } from '../.test-build/engine/MidianWell.js';
 import {MIDIAN_NATURE,midianHabitat,midianWadiCenter} from '../.test-build/engine/MidianBiome.js';
@@ -31,16 +31,25 @@ const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAI
 t('W15 six sequential, source-grounded actions',NILE_VILLAGE_STEPS.length===6&&
   NILE_VILLAGE_STEPS.map(s=>s.id).join(',')==='decree,mother,seal,wrap,reeds,sister'&&
   NILE_VILLAGE_STEPS.every(s=>s.source.startsWith('Исх.')&&s.qualification.length>20)&&
-  NILE_VILLAGE_STEPS.every(s=>nileVillageCanWalk(s.x,s.z)));
+  NILE_VILLAGE_APPROACHES.every(s=>nileVillageCanWalk(s.x,s.z)));
 t('W15 houses and river are solid, no remote actions',
   nileVillageCanWalk(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z)&&
   !nileVillageMayInteract(NILE_VILLAGE_START.x,NILE_VILLAGE_START.z,0)&&
   !nileVillageCanWalk(-9,-16)&&!nileVillageCanWalk(NaN,0)&&
   NILE_VILLAGE_HOUSES.every(h=>!nileVillageCanWalk(h.x,h.z))&&
-  NILE_VILLAGE_STEPS.every((s,i)=>nileVillageMayInteract(s.x,s.z,i)));
+  NILE_VILLAGE_APPROACHES.every((s,i)=>nileVillageMayInteract(s.x,s.z,i)));
+t('W25b table and all four actors are physical pedestrian obstacles',
+ NILE_VILLAGE_PEOPLE.every(p=>!nileVillageCanWalk(p.x,p.z))&&
+ !nileVillageCanWalk(NILE_VILLAGE_TABLE.x,NILE_VILLAGE_TABLE.z));
+t('W25b safe approach markers stand outside occupied footprints',
+ NILE_VILLAGE_APPROACHES.every((p,i)=>nileVillageMayInteract(p.x,p.z,i)));
+t('W25b camera-relative bearing follows yaw and wraps at pi',
+ Math.abs(nileVillageGoalBearing(0,0,0,{x:0,z:-5}))<1e-8&&
+ Math.abs(nileVillageGoalBearing(0,0,Math.PI/2,{x:-5,z:0}))<1e-8&&
+ Math.abs(nileVillageGoalBearing(0,0,Math.PI*2,{x:0,z:-5}))<1e-8);
 // W25: scene transactions must reject stale/duplicate inputs and commit only on completion.
 {
- const init=initialNileVillageQuest(),site=NILE_VILLAGE_STEPS[0];
+ const init=initialNileVillageQuest(),site=NILE_VILLAGE_APPROACHES[0];
  const begin=(q,revision=q.revision,step=q.step,x=site.x,z=site.z)=>
   beginNileVillageAction(q,revision,step,x,z);
  t('W25 rejects distant, stale and out-of-order actions',
@@ -62,7 +71,7 @@ t('W15 houses and river are solid, no remote actions',
  t('W25 commit occurs exactly once after completion',
   done.step===1&&!done.pending&&advanceNileVillageAction(done,1)===done&&begin(done,0)===done);
  let all=init;
- for(const [i,goal] of NILE_VILLAGE_STEPS.entries()){
+ for(const [i,goal] of NILE_VILLAGE_APPROACHES.entries()){
   all=beginNileVillageAction(all,all.revision,i,goal.x,goal.z,true);
   for(let j=0;j<3;j++)all=advanceNileVillageAction(all,.1);
  }

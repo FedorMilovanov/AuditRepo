@@ -3,7 +3,7 @@
  * Source boundary: Exodus 1:22 and 2:1–10.
  */
 import * as THREE from 'three';
-import {NILE_VILLAGE_HOUSES,NILE_VILLAGE_STEPS,NILE_VILLAGE_START,
+import {NILE_VILLAGE_HOUSES,NILE_VILLAGE_STEPS,NILE_VILLAGE_START,NILE_VILLAGE_APPROACHES,NILE_VILLAGE_PEOPLE,NILE_VILLAGE_TABLE,
  nileVillageCanWalk,beginNileVillageAction,advanceNileVillageAction,cancelNileVillageAction,
  restartNileVillageQuest,initialNileVillageQuest,type NileVillageQuest} from '../data/nileVillageQuest';
 export type VillageDirection='forward'|'backward'|'left'|'right';
@@ -17,7 +17,7 @@ const rand=(n:number)=>{const v=Math.sin(n*41.73+2.1)*31217.53;return v-Math.flo
 const height=(x:number,z:number)=>-.06+.045*Math.sin(x*.34+z*.16)+.027*Math.cos(z*.39-x*.13);
 export function createNileVillage3D(
  canvas:HTMLCanvasElement,reducedMotion:boolean,
- onPosition:(x:number,z:number)=>void,
+ onPosition:(x:number,z:number,yaw:number)=>void,
  onQuest:(quest:NileVillageQuest)=>void,
  initialQuest:NileVillageQuest=initialNileVillageQuest(),
  initialPosition?:{x:number;z:number},
@@ -150,7 +150,7 @@ export function createNileVillage3D(
  for(const [x,z,w] of [[-1,19,2.7],[10,10,1.8],[11,-9,2.3]]){
    boxes(w,.68,.28,clay,x,height(x,z)+.34,z);
  }
- const tableX=6,tableZ=3;
+ const tableX=NILE_VILLAGE_TABLE.x,tableZ=NILE_VILLAGE_TABLE.z-1;
  boxes(1.6,.13,.82,wood,tableX,height(tableX,tableZ)+.78,tableZ+1);
  for(const x of [5.37,6.63])for(const z of [3.3,4.68])
    boxes(.11,.78,.11,wood,x,height(x,z)+.39,z);
@@ -189,9 +189,8 @@ export function createNileVillage3D(
  scene.add(stems,umbel,seedHeads);
  // Simplified original human silhouettes. Dialogue and exact historical dress
  // are not asserted. A family member, town messenger and sister are distinct.
- const people=[[3,11,0x9e785a],[7,8,0xb7a187],[6,3,0x94816b],[-4.15,-12.5,0xb39c80]] as const;
  const figures:THREE.Group[]=[];
- people.forEach(([x,z,c],i)=>{
+ NILE_VILLAGE_PEOPLE.forEach(({x,z,color:c},i)=>{
    const group=new THREE.Group();
    group.position.set(x,height(x,z),z);group.name=['anonymous-townsperson','mother-silhouette','household-helper','sister-silhouette'][i];
    const dress=mat(c);
@@ -270,7 +269,8 @@ export function createNileVillage3D(
  const applyCommitted=()=>{
   const target=NILE_VILLAGE_STEPS[quest.step];
   marker.visible=!!target;
-  if(target)marker.position.set(target.x,height(target.x,target.z)+.11,target.z);
+  const approach=NILE_VILLAGE_APPROACHES[quest.step];
+  if(target&&approach)marker.position.set(approach.x,height(approach.x,approach.z)+.11,approach.z);
   applyBasket(quest.step);basket.visible=active||quest.step!==4;
   publishQuest();
  };
@@ -286,7 +286,7 @@ export function createNileVillage3D(
  const start=()=>{
   if(disposed||active)return;
   active=true;clearMovement();last=0;basket.visible=true;
-  canvas.dataset.villageMode='walk';syncWalkCamera();onPosition(walk.x,walk.z);
+  canvas.dataset.villageMode='walk';syncWalkCamera();onPosition(walk.x,walk.z,walk.yaw);
  };
  const abortAction=()=>{
   const cancelled=cancelNileVillageAction(quest);
@@ -295,13 +295,13 @@ export function createNileVillage3D(
  };
  const stop=()=>{
   active=false;clearMovement();dragPointer=null;abortAction();
-  basket.visible=quest.step!==4;onPosition(walk.x,walk.z);canvas.dataset.villageMode='preview';
+  basket.visible=quest.step!==4;onPosition(walk.x,walk.z,walk.yaw);canvas.dataset.villageMode='preview';
  };
  const restart=()=>{
   if(disposed)return;
   clearMovement();dragPointer=null;
   Object.assign(walk,NILE_VILLAGE_START);quest=restartNileVillageQuest(quest);
-  last=0;applyCommitted();syncWalkCamera();onPosition(walk.x,walk.z);
+  last=0;applyCommitted();syncWalkCamera();onPosition(walk.x,walk.z,walk.yaw);
  };
  const beginAction=(revision:number,step:number)=>{
   if(disposed||!active||document.hidden)return false;
@@ -386,7 +386,7 @@ export function createNileVillage3D(
      if(nileVillageCanWalk(walk.x,walk.z+dz))walk.z+=dz;
      syncWalkCamera();
      if(!document.hidden)advanceAction(seconds);
-     if(now-lastNotice>160){lastNotice=now;onPosition(walk.x,walk.z);}
+     if(now-lastNotice>160){lastNotice=now;onPosition(walk.x,walk.z,walk.yaw);}
    }else{
      camera.position.set(3.9,height(3.9,18)+1.85,18);
      camera.lookAt(4.2,1.5,3);
@@ -395,6 +395,7 @@ export function createNileVillage3D(
      (marker.material.opacity=.69+(reducedMotion?0:.14*Math.sin(now*.002)));
    if(!reducedMotion&&active)figures.forEach((g,i)=>{g.rotation.y=(i===3?.8:-.6)+.045*Math.sin(now*.00065+i);});
    canvas.dataset.villageX=walk.x.toFixed(3);canvas.dataset.villageZ=walk.z.toFixed(3);
+   canvas.dataset.villageYaw=walk.yaw.toFixed(4);
    canvas.dataset.villageRendered='true';
    renderer.render(scene,camera);
  };
@@ -418,7 +419,7 @@ export function createNileVillage3D(
    soilTexture.dispose();brickTexture.dispose();
    renderer.dispose();renderer.forceContextLoss();
    delete canvas.dataset.villageMode;delete canvas.dataset.villageRendered;
-   delete canvas.dataset.villageX;delete canvas.dataset.villageZ;
+   delete canvas.dataset.villageX;delete canvas.dataset.villageZ;delete canvas.dataset.villageYaw;
    delete canvas.dataset.villageStep;delete canvas.dataset.villageScene;delete canvas.dataset.villageAction;
    delete canvas.dataset.villageBasketMode;delete canvas.dataset.villageBasketInstances;delete canvas.dataset.villageBasketId;
  }} satisfies NileVillageController;

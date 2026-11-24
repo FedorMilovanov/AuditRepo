@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {NILE_VILLAGE_STEPS,NILE_VILLAGE_START,
-  nileVillageDistance,nileVillageMayInteract,initialNileVillageQuest,cancelNileVillageAction,type NileVillageQuest} from '../data/nileVillageQuest';
+  nileVillageDistance,nileVillageMayInteract,nileVillageGoalBearing,NILE_VILLAGE_APPROACHES,initialNileVillageQuest,cancelNileVillageAction,type NileVillageQuest} from '../data/nileVillageQuest';
 import type {NileVillageController,VillageDirection} from '../engine/NileVillage3D';
 /** A playable, visibly staged prologue. Separate from established Nile shoreline
  * and independent of the research/field-study mastery registry. */
@@ -13,12 +13,14 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
  const [active,setActive]=useState(false);
  const [quest,setQuest]=useState(initialNileVillageQuest),questRef=useRef(quest);
  const step=quest.step,acting=quest.pending!==null;
- const [position,setPosition]=useState<{x:number;z:number}>({x:NILE_VILLAGE_START.x,z:NILE_VILLAGE_START.z});
+ const [position,setPosition]=useState<{x:number;z:number;yaw:number}>({x:NILE_VILLAGE_START.x,z:NILE_VILLAGE_START.z,yaw:NILE_VILLAGE_START.yaw});
  const positionRef=useRef(position);
  const [message,setMessage]=useState('');
  const site=NILE_VILLAGE_STEPS[step],finished=step>=NILE_VILLAGE_STEPS.length;
  const distance=site?nileVillageDistance(position.x,position.z,site):0;
  const near=!!site&&nileVillageMayInteract(position.x,position.z,step);
+ const bearing=site?nileVillageGoalBearing(position.x,position.z,position.yaw,near?site:NILE_VILLAGE_APPROACHES[step]):0;
+ const heading=Math.abs(bearing)>Math.PI*.75?'позади':Math.abs(bearing)<Math.PI/8?'впереди':bearing>0?'слева':'справа';
  useEffect(()=>{
    const c=canvas.current;if(!c)return;let disposed=false;setReady(false);setFailed(false);setActive(false);
    import('../engine/NileVillage3D').then(({createNileVillage3D})=>{
@@ -29,8 +31,8 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
       questRef.current=next;setQuest(next);
       if(next.step===prev.step+1)setMessage(NILE_VILLAGE_STEPS[prev.step].description);
      };
-     const control=createNileVillage3D(c,reducedMotion,(x,z)=>{
-      if(disposed)return;positionRef.current={x,z};setPosition({x,z});
+     const control=createNileVillage3D(c,reducedMotion,(x,z,yaw)=>{
+      if(disposed)return;positionRef.current={x,z,yaw};setPosition({x,z,yaw});
      },updateQuest,cancelNileVillageAction(questRef.current),positionRef.current);
      if(disposed){control.dispose();return;}
      engine.current=control;setReady(true);
@@ -97,19 +99,29 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
    </div>
    {active&&<>
      <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-3 pointer-events-none">
-       <div className="pointer-events-auto max-w-[74%] rounded-xl border border-amber-200/35 bg-[#1e211e]/90 px-3 py-3 text-parch shadow-2xl">
+       <div className="pointer-events-auto flex-1 min-w-0 max-w-[480px] rounded-xl border border-amber-200/35 bg-[#1e211e]/90 px-3 py-3 text-parch shadow-2xl">
          <div className="flex gap-2 text-[10px] uppercase tracking-widest text-amber-200">
-           <span>Младенец Моисей</span><span data-testid="nile-village-progress">{Math.min(step+1,NILE_VILLAGE_STEPS.length)} / {NILE_VILLAGE_STEPS.length}</span>
+           <span>Младенец Моисей</span><span data-testid="nile-village-progress">{step} / {NILE_VILLAGE_STEPS.length}</span>
+         </div>
+         <div aria-hidden="true" className="mt-1.5 flex gap-1">
+           {NILE_VILLAGE_STEPS.map((s,i)=><span key={s.id} className={'h-0.5 flex-1 rounded-full '+(i<step?'bg-amber-200':i===step?'bg-amber-200/60':'bg-white/15')}/>)}
          </div>
          <p className="font-display text-lg sm:text-2xl mt-1" data-testid="nile-village-objective">
            {finished?'Корзина укрыта · сестра наблюдает':site.title}
          </p>
          <p className="text-xs sm:text-sm text-parch/85 mt-1">
            {finished?'Продолжите библейскую историю: дочь фараона обнаруживает корзину.':
-           'Подойдите к отмеченному человеку или месту, затем нажмите E / «Взаимодействовать».'}
+           acting?'Подождите завершения действия.':near?'Цель рядом. Можно взаимодействовать.':'Следуйте к отметке на земле.'}
          </p>
          {acting&&<p role="status" data-testid="nile-village-acting" className="text-xs text-amber-100 mt-1">Действие выполняется…</p>}
-         {!finished&&<p data-testid="nile-village-distance" className="text-xs text-amber-100/95 mt-1">До цели: {distance.toFixed(1)} м · {site.source}</p>}
+         {!finished&&<div className="mt-2 flex items-center gap-2 text-xs text-amber-100/95">
+           <span data-testid="nile-village-bearing" aria-label={'Цель '+heading} className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full border border-amber-200/40">
+             <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" style={{transform:'rotate('+(-bearing*180/Math.PI)+'deg)'}}>
+               <path d="M12 3 20 19 12 15 4 19Z" fill="currentColor"/>
+             </svg>
+           </span>
+           <span data-testid="nile-village-distance">Цель {heading} · {distance.toFixed(1)} м<br/>{site.source}</span>
+         </div>}
        </div>
        <button type="button" data-testid="nile-village-close" onClick={close}
          className="pointer-events-auto shrink-0 rounded-lg border border-parch/70 bg-black/85 px-3 py-3 text-parch text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Вернуться</button>
@@ -119,8 +131,8 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
          {directional('forward','↑')}
          <div className="flex gap-1">{directional('left','←')}{directional('backward','↓')}{directional('right','→')}</div>
        </div>
-       <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2 max-w-[min(80%,340px)]">
-         {message&&<p role="status" data-testid="nile-village-feedback" className="max-h-32 overflow-auto rounded-lg border border-amber-200/30 bg-black/85 text-parch px-3 py-2 text-xs sm:text-sm leading-relaxed">
+       <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2 min-w-0 max-w-[340px]">
+         {message&&<p role="status" data-testid="nile-village-feedback" className="max-h-20 sm:max-h-32 overflow-auto rounded-lg border border-amber-200/30 bg-black/85 text-parch px-3 py-2 text-xs sm:text-sm leading-relaxed">
            {message}
          </p>}
          {finished?<>
@@ -137,7 +149,7 @@ export function NileVillageJourney({reducedMotion=false,onContinue}:{
            {acting?'Действие выполняется…':near?site.action:'Подойдите к месту'} · E
          </button>}
          <div className="rounded-md bg-black/65 text-parch/85 px-2 py-1 text-[10px] sm:text-xs">
-           WASD / стрелки · мышь — осмотреться · E — действие
+           <span className="sm:hidden">Стрелки — идти · свайп — обзор</span><span className="hidden sm:inline">WASD / стрелки · мышь — обзор · E — действие</span>
          </div>
        </div>
      </div>

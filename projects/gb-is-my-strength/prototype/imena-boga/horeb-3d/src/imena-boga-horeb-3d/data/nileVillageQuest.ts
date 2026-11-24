@@ -6,6 +6,15 @@ export type NileVillageStep=Readonly<{
  action:string;source:string;description:string;qualification:string
 }>;
 export const NILE_VILLAGE_START=Object.freeze({x:4,z:18,yaw:0,pitch:-.14});
+// Blockout staging, not identified historical locations. Both rendering and
+// pedestrian clearance consume the same table/NPC footprint.
+export const NILE_VILLAGE_PEOPLE=Object.freeze([
+ {x:3,z:11,radius:.86,color:0x9e785a},
+ {x:7,z:8,radius:.86,color:0xb7a187},
+ {x:7.65,z:4.1,radius:.86,color:0x94816b},
+ {x:-4.15,z:-12.5,radius:.78,color:0xb39c80}
+]);
+export const NILE_VILLAGE_TABLE=Object.freeze({x:6,z:4,halfX:.8,halfZ:.8});
 export const NILE_VILLAGE_STEPS:readonly NileVillageStep[]=Object.freeze([
  {id:'decree',title:'Известие об указе',x:3,z:11,reach:2.4,
   action:'Узнать об указе',source:'Исх. 1:15–22',
@@ -15,11 +24,11 @@ export const NILE_VILLAGE_STEPS:readonly NileVillageStep[]=Object.freeze([
   action:'Поговорить с матерью',source:'Исх. 2:1–2',
   description:'Мать скрывала сына три месяца. Дальше скрывать его она не могла. Игра предлагает помочь подготовить корзину.',
   qualification:'Реплик матери и плана дома в библейском повествовании нет.'},
- {id:'seal',title:'Подготовить корзину',x:6,z:3,reach:2.35,
+ {id:'seal',title:'Подготовить корзину',x:NILE_VILLAGE_TABLE.x,z:NILE_VILLAGE_TABLE.z,reach:2.35,
   action:'Обмазать корзину для защиты от воды',source:'Исх. 2:3',
   description:'Корзина из папируса была обмазана асфальтом и смолой: это важная деталь самого текста.',
   qualification:'Порядок работы и мастерская — игровые средства, не отдельное библейское свидетельство.'},
- {id:'wrap',title:'Осторожно уложить ребёнка',x:6,z:3,reach:2.35,
+ {id:'wrap',title:'Осторожно уложить ребёнка',x:NILE_VILLAGE_TABLE.x,z:NILE_VILLAGE_TABLE.z,reach:2.35,
   action:'Уложить младенца в корзину',source:'Исх. 2:3',
   description:'Мать положила ребёнка в подготовленную корзину. В игре игрок помогает ей совершить это действие.',
   qualification:'Непосредственное участие посетителя — художественный приём.'},
@@ -32,10 +41,25 @@ export const NILE_VILLAGE_STEPS:readonly NileVillageStep[]=Object.freeze([
   description:'Сестра остаётся на расстоянии и наблюдает. Далее дочь фараона замечает корзину, а сестра предлагает найти кормилицу.',
   qualification:'Местоположение наблюдения, внешность сестры и любая мизансцена приблизительны.'}
 ]);
+// Safe approach marker rather than a marker embedded in an NPC or table.
+export const NILE_VILLAGE_APPROACHES=Object.freeze([
+ {x:3,z:12.6},{x:7,z:9.7},{x:6,z:5.65},{x:6,z:5.65},
+ {x:-5.45,z:-16.1},{x:-4.15,z:-14.0}
+]);
+export function nileVillageGoalBearing(x:number,z:number,yaw:number,target:{x:number;z:number}):number{
+ if(![x,z,yaw,target.x,target.z].every(Number.isFinite))return 0;
+ if(Math.hypot(target.x-x,target.z-z)<.05)return 0;
+ const relative=Math.atan2(x-target.x,z-target.z)-yaw;
+ return Math.atan2(Math.sin(relative),Math.cos(relative));
+}
 export function nileVillageCanWalk(x:number,z:number):boolean{
  if(!Number.isFinite(x)||!Number.isFinite(z)||x< -7.25||x>17.8||z< -23||z>20)return false;
  for(const h of NILE_VILLAGE_HOUSES)
    if(Math.abs(x-h.x)<h.w/2+.38 && Math.abs(z-h.z)<h.d/2+.38)return false;
+ for(const person of NILE_VILLAGE_PEOPLE)
+   if(Math.hypot(x-person.x,z-person.z)<person.radius)return false;
+ const table=NILE_VILLAGE_TABLE;
+ if(Math.abs(x-table.x)<table.halfX+.38&&Math.abs(z-table.z)<table.halfZ+.38)return false;
  return true;
 }
 export const NILE_VILLAGE_HOUSES:readonly Readonly<{x:number;z:number;w:number;d:number;h:number}>[]=Object.freeze([
