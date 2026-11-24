@@ -128,8 +128,8 @@
       "bytes_normalized": 6193
     },
     "atlas/src/index.css": {
-      "sha256": "dab734602d944bf9fdb6c02da3ecfa1d4bb9d88a34aad5ecb34ec3cb2464bde4",
-      "bytes_normalized": 10524
+      "sha256": "536b0d318567f436e3b780222866e7ea8660fa19d41c00365a2d67c901f4127d",
+      "bytes_normalized": 10954
     },
     "atlas/src/main.tsx": {
       "sha256": "b958f86783daa9a48342c318140ed95b9cf718ae9a3c58d2ce7b7e6194385d3b",
@@ -148,8 +148,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "38dca0178c69d4676742e6ba80789b13fad3bc2714acedd3a60a20b017724643",
-      "bytes_normalized": 84925
+      "sha256": "2343abd4a758fab698c89f447f069bb78b897f23556bbc129b21456ef261b5f9",
+      "bytes_normalized": 89218
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
@@ -184,16 +184,16 @@
       "bytes_normalized": 2463
     },
     "checks/source_contract.cjs": {
-      "sha256": "0576bed4f85f4ab7ace7f4bc54b38e63900e548d0479491cb83c50b41c5a73f7",
-      "bytes_normalized": 88553
+      "sha256": "1667fc08b96b8762fb2c7ef604bb0f90158fc49184270db575c2c47afcbf4848",
+      "bytes_normalized": 88575
     },
     "checks/visual_review.cjs": {
       "sha256": "4a35b9d24d4076f72ec88d0021e51f06bb7eb096721421401d69dbdf46fd0d41",
       "bytes_normalized": 89248
     },
     "README.md": {
-      "sha256": "46d450152530961702d048ac64f5be4015500276659933e7426d534ff45ce8fa",
-      "bytes_normalized": 4712
+      "sha256": "e19141f5a2df449331738411ef7a8e1f5667a46ab2209b2f2c05e11fc2af3511",
+      "bytes_normalized": 7982
     },
     "sozvezdie/index.html": {
       "sha256": "71208783dd675e624971a8243279a81e699d6a0af8f5574e7b68cb0139a0391f",
@@ -240,8 +240,8 @@
       "bytes_normalized": 52156
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "a0b87002a71174b3eadb0fe141a1dcd6d479c20cc29d33f6bcfc4aac39ff5115",
-      "bytes_normalized": 19686
+      "sha256": "4e6fc545cfb0be4509aa113c2a956c5b88e960d9e9a3ea165d0ea049dbd52db4",
+      "bytes_normalized": 20382
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",

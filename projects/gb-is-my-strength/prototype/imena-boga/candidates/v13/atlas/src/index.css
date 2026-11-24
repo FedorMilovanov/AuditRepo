@@ -436,6 +436,19 @@ input:focus-visible,
   opacity: 0.72;
 }
 
+/* W118: let enlarged mobile editorial titles reflow by whole words.
+   The rem floor preserves text scaling; the fluid term prevents oversized
+   desktop proportions from consuming a narrow reading column. */
+@media (max-width: 639px) {
+  .gb-hero-title {
+    font-size: clamp(1.125rem, calc(6.5vw + 0.35rem), 1.875rem);
+    line-height: 1.18;
+    overflow-wrap: break-word;
+    word-break: normal;
+    text-wrap: pretty;
+  }
+}
+
 /* The catalogue launcher respects physical screen cutouts and home indicators. */
 [data-atlas-launcher-shell] {
   bottom: max(1rem, env(safe-area-inset-bottom, 0px));

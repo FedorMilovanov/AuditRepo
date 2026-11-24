@@ -79,6 +79,77 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
        : [];
      throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
    }
+   // W118: test actual word fragments, not only document scrollWidth.
+   if(name==='atlas'&&(width===320||width===390)){
+     const typeCtx=await browser.newContext({viewport:{width,height:844},
+       locale:'ru-RU',reducedMotion:'reduce'});
+     try{
+       const typePage=await typeCtx.newPage();
+       await typePage.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+       await typePage.locator('.gb-hero-title').waitFor({state:'visible'});
+       await typePage.evaluate(async()=>{await document.fonts.ready;
+         document.documentElement.style.fontSize='200%';});
+       await typePage.waitForFunction(()=>parseFloat(getComputedStyle(document.documentElement).fontSize)>=31);
+       await typePage.evaluate(async()=>{await document.fonts.ready;
+         await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+       const title=await typePage.evaluate(()=>{
+         const h=document.querySelector('.gb-hero-title'),bounds=h.getBoundingClientRect();
+         const walker=document.createTreeWalker(h,NodeFilter.SHOW_TEXT);
+         const broken=[],outside=[];let node,words=0;
+         while(node=walker.nextNode()){
+           for(const match of node.textContent.matchAll(/\S+/gu)){
+             const range=document.createRange();
+             range.setStart(node,match.index);range.setEnd(node,match.index+match[0].length);
+             const rects=[...range.getClientRects()].filter(r=>r.width>0);
+             words++;
+             if(rects.length>1)broken.push(match[0]);
+             if(rects.some(r=>r.left<bounds.left-1||r.right>bounds.right+1))outside.push(match[0]);
+           }
+         }
+         return {words,broken,outside,font:parseFloat(getComputedStyle(h).fontSize),
+           height:Math.round(bounds.height),rootFont:parseFloat(getComputedStyle(document.documentElement).fontSize)};
+       });
+       if(title.words!==14||title.broken.length||title.outside.length||title.font<36)
+         throw Error('W118 enlarged title reflow '+JSON.stringify({engine,width,title}));
+       console.log('W118_ENLARGED_TITLE_WHOLE_WORDS_PASS',engine,width,JSON.stringify(title));
+     }finally{await typeCtx.close()}
+   }
+   // W117: Back from a resume pill that has unmounted must restore useful
+   // focus without scrolling away from the restored root position.
+   if(name==='sozvezdie'&&(width===390||width===1440)){
+     for(const waitDetached of [false,true]){
+       const resumeCtx=await browser.newContext({viewport:{width,height:844},
+         locale:'ru-RU',reducedMotion:'reduce'});
+       try{
+         const resumePage=await resumeCtx.newPage();
+         await resumePage.addInitScript(()=>localStorage.setItem('gb-imena-last-v1','ehyeh'));
+         await resumePage.goto(base+'/sozvezdie/',{waitUntil:'domcontentloaded'});
+         const resume=resumePage.locator('[data-panorama-resume-action]');
+         await resume.waitFor({state:'visible',timeout:10000});
+         await resume.focus();
+         await resumePage.keyboard.press('Enter');
+         await resumePage.waitForFunction(()=>location.hash==='#ehyeh'&&
+           document.activeElement===document.querySelector('#ehyeh [data-name-heading]'));
+         if(waitDetached)await resume.waitFor({state:'detached',timeout:5000});
+         await resumePage.goBack({waitUntil:'domcontentloaded'});
+         try {
+           await resumePage.waitForFunction(()=>!location.hash&&
+             document.activeElement===document.querySelector('[data-panorama-return-focus]')&&
+             window.scrollY<10,null,{timeout:5000});
+         } catch(error) {
+           throw Error('W117 resume Back '+JSON.stringify(await resumePage.evaluate(()=>({
+             hash:location.hash,y:scrollY,active:document.activeElement?.outerHTML.slice(0,160),
+             resume:!!document.querySelector('[data-panorama-resume-action]')
+           })))+' '+error.message);
+         }
+         await resumePage.goForward({waitUntil:'domcontentloaded'});
+         await resumePage.waitForFunction(()=>location.hash==='#ehyeh'&&
+           document.activeElement===document.querySelector('#ehyeh [data-name-heading]'),
+           null,{timeout:5000});
+         console.log('W117_RESUME_REMOVED_OPENER_HISTORY_PASS',engine,width,waitDetached);
+       }finally{await resumeCtx.close()}
+     }
+   }
    // W116: the desktop header's "all names" action must land keyboard
    // focus in NameGrid, and Back/Forward must restore it in both directions.
    if(name==='sozvezdie'&&width===1440){

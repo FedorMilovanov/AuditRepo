@@ -1107,7 +1107,7 @@ console.log('W106_RAHUM_FORMS_AND_CONTEXT_PASS');
 // W107: precise verse surfaces, person suffix, inter-language distinctions,
 // and compact cards retaining full source details in the open dossier.
 const w107Names=fs.readFileSync(path.join(root,'atlas','src','data','divineNames.ts'),'utf8');
-const w107Pano=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8');
+const w107Pano=fs.readFileSync(path.join(root,'sozvezdie','src','data','names.ts'),'utf8').replace(/\r\n/g,'\n');
 const w107Card=fs.readFileSync(path.join(root,'atlas','src','components','DivineNameTiltCard.tsx'),'utf8');
 const w107Slice=(s,from,to)=>{const a=s.indexOf(from),b=s.indexOf(to,a+1);if(a<0||b<=a)throw Error('W107 boundary failure '+from);return s.slice(a,b);};
 const w107Olam=w107Slice(w107Names,"id: 'el-olam'","id: 'el-chai'");

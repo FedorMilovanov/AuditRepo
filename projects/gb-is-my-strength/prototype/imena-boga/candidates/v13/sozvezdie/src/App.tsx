@@ -126,9 +126,8 @@ export default function App() {
     // Native Back restores its scroll but not the focus of a SPA jump.
     if (!window.location.hash) {
       const source = document.activeElement;
-      if (source instanceof HTMLElement && source !== document.body) {
-        unfragmentedReturnFocusRef.current = source;
-      }
+      unfragmentedReturnFocusRef.current =
+        source instanceof HTMLElement && source !== document.body ? source : null;
     }
     const isName = NAMES.some((n) => n.id === id);
     if (isName) setActive(id);
@@ -241,7 +240,18 @@ export default function App() {
       }
       if (!id) {
         const source = unfragmentedReturnFocusRef.current;
-        if (source?.isConnected) source.focus({ preventScroll: true });
+        if (source && !document.querySelector('[role="dialog"][aria-modal="true"]')) {
+          // The resume pill is intentionally removed after activation. Return to
+          // the persistent header link, even while the exit animation is running.
+          const transient = source.hasAttribute('data-panorama-resume-action');
+          if (!transient && source.isConnected && source.getClientRects().length) {
+            source.focus({ preventScroll: true });
+          }
+          if (transient || document.activeElement !== source) {
+            document.querySelector<HTMLElement>('[data-panorama-return-focus]')
+              ?.focus({ preventScroll: true });
+          }
+        }
         return;
       }
       const el = document.getElementById(id);
@@ -340,6 +350,7 @@ export default function App() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
           <a
             href="https://gospod-bog.ru"
+            data-panorama-return-focus
             aria-label="Господь Бог — Сила Моя"
             className="flex min-h-[44px] min-w-0 shrink-0 items-center whitespace-nowrap font-ui text-xs font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
@@ -439,6 +450,7 @@ export default function App() {
           >
             <button
               type="button"
+              data-panorama-resume-action
               onClick={() => {
                 const id = resumeId;
                 setResumeId(null);

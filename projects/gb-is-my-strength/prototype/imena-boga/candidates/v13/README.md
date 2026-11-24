@@ -46,3 +46,18 @@ The 390px CPU×4/1.6Mbps synthetic cold-load samples indicate the hybrid Atlas h
 ## Publication blockers remain
 
 Confirm Sinai image copyright/source. Complete corpus/references in Research #379. Owner review of full screenshots. Actual iOS Safari and slow Android devices with touch/focus and LCP/CLS/INP. Astro route-local Product implementation, SSR SEO/Reader/Search and Product exact-head certification. No full SPA conversion and no automatic merge to Production.
+
+## Product integration contract — W117/W118 handoff (not implementation)
+
+The Atlas and Panorama remain separate editorial presentations, not independent Reader platforms. Product owns canonical routes `/imena-boga/atlas/` and `/imena-boga/`, respectively. This branch remains Draft and must not merge/deploy or change Research #379.
+
+Observed on the W116 exact-head Product audit: the Product main tree has no imena-boga route. Both reference builds render an empty root when JS is disabled; the nested-route/browser PASS is not a Product readiness claim.
+
+- **Content:** render complete headings, original-language text, citations, cross-links and article bodies in Astro HTML (SSG/SSR). Preserve the 36 Atlas identifiers and 29 Panorama identifiers. Reuse the existing 24 explicitly verified topic-crosswalk pairs; never infer missing matches or collapse distinct titles/formulas. Keep both reference datasets unchanged until the independent research review admits them.
+- **Visual ownership:** one Product BaseLayout, one header/footer, one main landmark. Preserve each hero's editorial art, but scope its CSS to the route or component; no Tailwind preflight/global body reset or duplicate font pipeline in Product. No iframe publication.
+- **Preferences:** Product's `js/reader-preferences-head.js` and `js/reader-preferences.js` own `gb:reader-preferences:v1`, root attributes `data-reader-theme`, `data-reader-measure`, `data-reader-motion`, `--gb-reader-font-scale`, `--gb-reader-line-height`, and the `gb:reader-preferences-change` event. Read/subscribe via the supported runtime; do not write a second root-theme owner. Map light/sepia/dark and narrow/normal/wide onto both editorial palettes without changing the artistic hero. Do not copy prototype storage keys over existing Product preferences.
+- **Reader state:** Product's `js/reader-state.js` owns canonical route-scoped state and `gb:reader-state-change`. Use its semantic range/headings and existing ReaderProjection/ReaderActionsRuntime/ReaderFloatingControlsRuntime integration; do not run a second document scroll loop or duplicate global shortcuts. Atlas completion and Panorama completion remain distinct domain records until a migration is explicitly reviewed; no destructive conversion.
+- **Navigation:** retain `#name-<atlas-id>` and `#<panorama-id>` and the verified crosswalk, including Back/Forward, focus restoration after removal of ephemeral controls and browser history. A deep-linked dossier must have a server-readable destination before JS enhancement.
+- **Verification gates:** first-paint HTML with JS disabled; both routes and reciprocal links; 320–1600px, landscape, 200% root text, keyboard/real mobile/screen reader; shared Reader theme/font/measure/progress across route changes; no CSS or shortcut regressions on other GB readers; canonical/search metadata, asset budgets, print, and fail-closed research/image rights/owner review. Run Product exact-head checks only after the Reader coordinator approves the bounded integration lane.
+
+W117/W118 checkpoint: focus recovery after consumed Resume control, narrow title whole-word reflow, and CRLF-portable W107 source assertion. New exact-head CI and physical-device review are pending. W116 acceptance does not transfer.
