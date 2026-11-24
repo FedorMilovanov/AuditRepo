@@ -64,20 +64,27 @@ if(!chrome)throw Error('Actual Chromium required');
   if(Number(stop.houseWalkZ)<.65||Number(stop.houseWalkZ)>1.2)throw Error('Workbench stop outside expected range '+JSON.stringify(stop));
  }
  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-inspect-basket"]').disabled);
+ // Back away from the table to the marked director position, by real input.
+ await hold('s',s=>Number(document.querySelector(s).dataset.houseWalkZ)>=1.92);
  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-actor-perform"]').disabled);
+ const observation=await state();
  await page.click('[data-testid="house-actor-perform"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
- await until(s=>Number(document.querySelector(s).dataset.houseActorTime)>=2);
+ await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorFrameExtent)));
  const peak=await state();
  if(!Number.isFinite(Number(peak.houseActorContactMm)))await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorContactMm)));
  const actual=await state();
+ if(mobile&&(!actual.houseActorAperture||Number(actual.houseActorAperture.split('x')[0])/Number(actual.houseActorAperture.split('x')[1])<1.35))throw Error('Missing portrait cinema aperture');
+ if(Number(actual.houseActorFrameExtent)>.96)throw Error('Actor or rim out of the peak frame: '+JSON.stringify(actual));
+ if(actual.houseWalkX!==observation.houseWalkX||actual.houseWalkZ!==observation.houseWalkZ)throw Error('Director moved player');
+
  if(Number(actual.houseActorContactMm)>=25)throw Error('W27 wrist misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
  const endGesture=await state();
  if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=25||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
- console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,actor:am?.glb_sha256||'canonical W22'}));
+ console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:actual.houseActorAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,actor:am?.glb_sha256||'canonical W22'}));
 
  // A replay must reset contact evidence and cancel on leaving the walk.
  await page.click('[data-testid="house-actor-perform"]');

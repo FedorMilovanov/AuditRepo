@@ -39,9 +39,9 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
  };
  function resetContact(){
   min=Infinity;max=0;hold=0;previousSample=null;
-  for(const k of ['houseActorContactMm','houseActorWorstMm','houseActorHoldSeconds','houseActorTime'])delete canvas.dataset[k];
+  for(const k of ['houseActorContactMm','houseActorWorstMm','houseActorHoldSeconds','houseActorTime','houseActorFrameExtent'])delete canvas.dataset[k];
  }
- function sample(time:number){
+ function sample(time:number,camera:THREE.PerspectiveCamera){
   if(!wrist||!rimPoints.length)return;
   wrist.updateWorldMatrix(true,false);
   const pos=wrist.getWorldPosition(new THREE.Vector3());
@@ -54,6 +54,17 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
   canvas.dataset.houseActorContactMm=(min*1000).toFixed(2);
   canvas.dataset.houseActorWorstMm=(max*1000).toFixed(2);
   canvas.dataset.houseActorHoldSeconds=hold.toFixed(3);
+  if(actor&&time>=2.3&&!canvas.dataset.houseActorFrameExtent){
+   actor.updateWorldMatrix(true,true);
+   const box=new THREE.Box3().setFromObject(actor,true);
+   for(const p of rimPoints)box.expandByPoint(p);
+   let extent=0,valid=true;
+   for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){
+    const v=new THREE.Vector3(x,y,z).project(camera);
+    extent=Math.max(extent,Math.abs(v.x),Math.abs(v.y));valid=valid&&v.z>=-1&&v.z<=1;
+   }
+   canvas.dataset.houseActorFrameExtent=valid?extent.toFixed(4):'outside';
+  }
  }
  function finished(e:{action:THREE.AnimationAction}){
   if(phase!=='performing'||e.action!==gesture)return;
@@ -99,12 +110,12 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
   idle.stop();gesture.reset().setEffectiveWeight(1).setEffectiveTimeScale(1).setLoop(THREE.LoopOnce,1);
   gesture.clampWhenFinished=true;gesture.play();report('performing');return true;
  }
- function tick(dt:number){
+ function tick(dt:number,camera:THREE.PerspectiveCamera){
   if(disposed||!mixer||document.hidden)return;
   mixer.update(Math.min(.075,Math.max(0,dt)));
   if(phase==='performing'&&gesture){
    canvas.dataset.houseActorTime=gesture.time.toFixed(3);
-   if(gesture.time>=48/24&&gesture.time<=70/24)sample(gesture.time);
+   if(gesture.time>=48/24&&gesture.time<=70/24)sample(gesture.time,camera);
   }
  }
  return {enable,clear,cancel,perform,tick,phase:()=>phase,present:()=>!!actor&&!!mixer,dispose:()=>{disposed=true;clear();delete canvas.dataset.houseActorPhase;}};
