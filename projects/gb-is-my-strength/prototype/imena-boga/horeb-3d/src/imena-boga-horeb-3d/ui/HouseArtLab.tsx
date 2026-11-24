@@ -11,8 +11,8 @@ type CameraPose={eye:readonly [number,number,number]; target:readonly [number,nu
 const POSES:Record<View,CameraPose>={
  courtyard:{eye:[9,6.2,12.4],target:[0,1.45,0.2]},
  threshold:{eye:[0,2.30,8.15],target:[0,1.48,-1.1]},
- room:{eye:[.1,1.78,1.80],target:[.2,1.22,-2.30]},
- basket:{eye:[1.76,1.64,1.42],target:[.35,.96,.26]},
+ room:{eye:[-1.35,1.69,1.65],target:[.7,1.05,-.55]},
+ basket:{eye:[1.12,1.72,1.13],target:[.35,1.02,.26]},
 };
 const TITLES:Record<View,string>={
  courtyard:'Двор и дом',
@@ -39,23 +39,39 @@ export function HouseArtLab(){
   scene.background=new THREE.Color(0xaaa89b);
   scene.fog=new THREE.Fog(0xb1ac99,32,95);
   const camera=new THREE.PerspectiveCamera(53,1,.06,140);
-  const hemi=new THREE.HemisphereLight(0xfff2d7,0x6b6158,2.25);
+  const hemi=new THREE.HemisphereLight(0xfff4e1,0x736b61,1.05);
   scene.add(hemi);
-  const sun=new THREE.DirectionalLight(0xffdab1,3.15);
+  const sun=new THREE.DirectionalLight(0xffe3bc,2.55);
   sun.position.set(-12,19,7);sun.castShadow=true;
   sun.shadow.mapSize.set(2048,2048);
   sun.shadow.camera.left=-22;sun.shadow.camera.right=22;
   sun.shadow.camera.top=22;sun.shadow.camera.bottom=-22;
   sun.shadow.bias=-.0002;sun.shadow.normalBias=.04;
   scene.add(sun);
-  const ambient=new THREE.DirectionalLight(0xd1d9df,.65);
+  const ambient=new THREE.DirectionalLight(0xd1d9df,.25);
   ambient.position.set(6,6,-10);scene.add(ambient);
+  // Real-time approximation of daylight reflected through the open door.
+  // Native Cycles uses a rectangular area source; glTF excludes lights.
+  const doorway=new THREE.SpotLight(0xffe4bf,32,8,.77,.7,2);
+  doorway.position.set(0,1.84,2.22);doorway.target.position.set(.2,1.02,-.8);
+  doorway.castShadow=true;doorway.shadow.mapSize.set(1024,1024);
+  doorway.shadow.bias=-.00035;doorway.shadow.normalBias=.02;
+  scene.add(doorway,doorway.target);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(180,180),
    new THREE.MeshStandardMaterial({color:0xb1a086,roughness:1}));
   floor.rotation.x=-Math.PI/2;floor.position.y=-.32;floor.receiveShadow=true;
   scene.add(floor);objectsToDispose.push(floor);
+  let currentView:View='courtyard';
+  let basketBounds:THREE.Box3|null=null;
+  let basketRoot:THREE.Object3D|null=null;
+  let fitDirty=true;
+  function fitLens(){
+   const horizontal=THREE.MathUtils.degToRad(currentView==='basket'?60:48);
+   const adaptive=THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(horizontal/2)/Math.max(camera.aspect,.28)));
+   camera.fov=Math.min(90,Math.max(currentView==='basket'?57:53,adaptive));camera.updateProjectionMatrix();fitDirty=true;
+  }
   function setPose(p:CameraPose){
-   camera.position.set(...p.eye);
+   camera.position.set(...p.eye);fitLens();
    if(controls){
      controls.target.set(...p.target);
      controls.update();
@@ -87,7 +103,7 @@ export function HouseArtLab(){
   function resize(){
    if(disposed||!c)return;
    const w=Math.max(1,c.clientWidth),h=Math.max(1,c.clientHeight);
-   camera.aspect=w/h;camera.updateProjectionMatrix();
+   camera.aspect=w/h;fitLens();
    activeRenderer.setSize(w,h,false);
   }
   const observer=new ResizeObserver(resize);observer.observe(c);
@@ -95,6 +111,43 @@ export function HouseArtLab(){
   const render=()=>{
    if(disposed)return;
    activeControls.update();
+   if(fitDirty&&basketBounds){
+    camera.updateMatrixWorld(true);
+    let extent=0,depthOk=true;
+    const v=new THREE.Vector3();
+    for(const x of [basketBounds.min.x,basketBounds.max.x])
+     for(const y of [basketBounds.min.y,basketBounds.max.y])
+      for(const z of [basketBounds.min.z,basketBounds.max.z]){
+       v.set(x,y,z).project(camera);
+       extent=Math.max(extent,Math.abs(v.x),Math.abs(v.y));
+       depthOk=depthOk&&v.z>=-1&&v.z<=1;
+      }
+    c.dataset.basketFrameExtent=depthOk?extent.toFixed(4):'outside';
+    // Test actual line of sight to the opening, not just a bounding box
+    // that could be completely hidden behind a wall or hanging linen.
+    if(currentView==='basket'&&loaded&&basketRoot){
+     const obstacles:THREE.Mesh[]=[];
+     loaded.traverseVisible(o=>{
+      if(!(o as THREE.Mesh).isMesh)return;
+      let parent:THREE.Object3D|null=o;
+      while(parent&&parent!==basketRoot)parent=parent.parent;
+      if(!parent)obstacles.push(o as THREE.Mesh);
+     });
+     const ray=new THREE.Raycaster(),target=new THREE.Vector3();
+     let blocked=0;const blockers=new Set<string>();
+     for(const [u,w] of [[.5,.5],[.25,.5],[.75,.5],[.5,.25],[.5,.75]]){
+      target.set(THREE.MathUtils.lerp(basketBounds.min.x,basketBounds.max.x,u),
+       basketBounds.max.y-.04,THREE.MathUtils.lerp(basketBounds.min.z,basketBounds.max.z,w));
+      const direction=target.clone().sub(camera.position);
+      ray.set(camera.position,direction.clone().normalize());ray.far=Math.max(0,direction.length()-.015);
+      const hits=ray.intersectObjects(obstacles,false);
+      if(hits.length){blocked++;blockers.add(hits[0].object.name);}
+     }
+     c.dataset.basketBlockedRays=String(blocked);
+     c.dataset.basketBlockers=Array.from(blockers).join(',');
+    }else {delete c.dataset.basketBlockedRays;delete c.dataset.basketBlockers;}
+    c.dataset.houseView=currentView;fitDirty=false;
+   }
    activeRenderer.render(scene,camera);
   };
   activeRenderer.setAnimationLoop(render);
@@ -113,10 +166,13 @@ export function HouseArtLab(){
     const geom=m.geometry;
     triangleCount+=(geom.index?geom.index.count:geom.getAttribute('position')?.count||0)/3;
    });
-   scene.add(loaded);
+   scene.add(loaded);loaded.updateMatrixWorld(true);
+   const basket=loaded.getObjectByName('BASKET_OBJECT_ACTION_ANCHOR');
+   if(basket){basketRoot=basket;basketBounds=new THREE.Box3().setFromObject(basket);}
+   fitDirty=true;
    const showRoof=true;
    roofObjs.forEach(o=>o.visible=showRoof);
-   api.current={view:mode=>setPose(POSES[mode]),roof:show=>roofObjs.forEach(o=>o.visible=show)};
+   api.current={view:mode=>{currentView=mode;setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show)};
    const size=Math.round((performance.getEntriesByName(src)[0] as PerformanceResourceTiming|undefined)?.transferSize||0);
    setStats({meshes:meshCount,triangles:Math.round(triangleCount),bytes:size});
    setStatus('ready');setDetail('GLB действительно загружен; модель можно осмотреть вращением и с разных ракурсов.');
@@ -144,18 +200,19 @@ export function HouseArtLab(){
     const m=o as THREE.Mesh;geos.add(m.geometry);mats.add(m.material as THREE.Material);
    }
    geos.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());
-   activeRenderer.dispose();
+   delete c.dataset.basketFrameExtent;delete c.dataset.houseView;delete c.dataset.basketBlockedRays;delete c.dataset.basketBlockers;
+   doorway.shadow.dispose();sun.shadow.dispose();activeRenderer.dispose();
   };
  },[]);
  const choose=(v:View)=>{setView(v);api.current?.view(v);};
  const toggleRoof=()=>{const next=!roof;setRoof(next);api.current?.roof(next);};
  return <main className="wrap" data-testid="house-art-lab">
   <header className="top">
-   <div><p className="kicker">HOREB · ORIGINAL ASSET PRODUCTION · W17 PILOT</p>
+   <div><p className="kicker">HOREB · ORIGINAL HOUSE LOOKDEV</p>
    <div className="brand">Тихий дом у Нила</div></div>
    <span className="status">LOOKDEV ONLY · ART HOLD</span>
   </header>
-  <div className="layout">
+  <div className="layout house-layout">
    <section className="viewer" aria-label="Трёхмерная художественная лаборатория дома">
     <canvas ref={canvas} data-testid="house-lookdev-canvas" aria-label="Вращаемая 3D-модель глинобитного дома и двора" />
     <div className="corner"><span className="kicker">01 / THE HOUSE · EXODUS 2</span>
@@ -168,11 +225,7 @@ export function HouseArtLab(){
     <div className="footerbar"><span>{status==='ready'?'WebGL · настоящий GLB':'Загрузка сцены'}</span>
      <span>Мышь / палец: вращение · Колесо / щипок: приближение</span></div>
    </section>
-   <aside className="side">
-    <div><p className="kicker">ART DIRECTION / EXPERIMENTAL</p>
-     <h2>Среда как рассказ</h2>
-     <p>Первая авторская модель вместо домов, создаваемых прямо из BoxGeometry. Важны глубина порога, тёплая фактура глины, следы быта и свободный путь в дом.</p>
-    </div>
+   <section className="side house-tools" aria-label="Управление сценой">
     <div>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
@@ -187,6 +240,12 @@ export function HouseArtLab(){
      <button className={'switch '+(roof?'selected':'')} type="button"
        data-testid="house-roof-toggle" disabled={status!=='ready'}
        onClick={toggleRoof}>Кровля: {roof?'показана':'скрыта для осмотра'}</button>
+    </div>
+   </section>
+   <aside className="side house-info">
+    <div><p className="kicker">ART DIRECTION / EXPERIMENTAL</p>
+     <h2>Среда как рассказ</h2>
+     <p>Первая авторская модель вместо домов, создаваемых прямо из BoxGeometry. Важны глубина порога, тёплая фактура глины, следы быта и свободный путь в дом.</p>
     </div>
     <div className="note">
      <h3>Проверенные факты пилота</h3>
