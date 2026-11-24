@@ -51,7 +51,16 @@ try{
     first.fineBranches!==2808||Math.abs(first.y-first.ground-1.64)>.006||
     size.width<size.winX-2||size.height<size.winY-2||Math.abs(size.x)>1||Math.abs(size.y)>1)
    throw new Error('W10 MUST BE FULLSCREEN REAL 3D '+JSON.stringify({first,size}));
- await page.keyboard.down('w');await sleep(800);await page.keyboard.up('w');
+ await page.keyboard.down('w');
+ try{
+   // Keep real input held until the same physical displacement gate is
+   // reached. Slow SwiftShader runners may paint very few frames in 800ms.
+   await page.waitForFunction(start=>{
+     const c=document.querySelector('[data-testid="moses-nile-3d"]');
+     const dx=Number(c?.dataset.nileCameraX)-start.x,dz=Number(c?.dataset.nileCameraZ)-start.z;
+     return Math.hypot(dx,dz)>=.22&&-dx*Math.sin(1.06)-dz*Math.cos(1.06)>=.2;
+   },{timeout:15000},first);
+ }finally{await page.keyboard.up('w');}
  await sleep(90);
  const next=await read();
  // Software WebGL in GitHub Actions renders at fewer frames than desktop.
@@ -187,7 +196,14 @@ try{
  await page.click('[data-testid="nile-explore-start"]');
  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileCameraPhase==='walk');
  const beforeRescue=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>Number(c.dataset.nileCameraZ));
- await page.keyboard.down('a');await sleep(500);await page.keyboard.up('a');await sleep(80);
+ await page.keyboard.down('a');
+ try{
+   await page.waitForFunction(start=>{
+     const z=Number(document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileCameraZ);
+     return Number.isFinite(z)&&Math.abs(z-start)>=.16;
+   },{timeout:15000},beforeRescue);
+ }finally{await page.keyboard.up('a');}
+ await sleep(80);
  const afterRescue=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>Number(c.dataset.nileCameraZ));
  if(Math.abs(afterRescue-beforeRescue)<.16)
    throw new Error('RESCUE WORLD CAMERA CANNOT WALK '+JSON.stringify({beforeRescue,afterRescue}));
