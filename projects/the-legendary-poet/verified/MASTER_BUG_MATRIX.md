@@ -36,7 +36,7 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| SYS-TLP-DIALOG-RETURN-FOCUS | current-local | W104–W107: touch activation loses invoker before click in WebKit; delayed modal cleanup steals newer focus in Chromium and WebKit. [Evidence](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md). | Existing shared dialog/focus owner; integrate explicit invoker and guarded restore, certify nested overlays and strict exit lifecycle; no parallel owner. |
+| SYS-TLP-DIALOG-LIFETIME-AND-FOCUS | current-local | W113 #615 exact unchanged runtime: Linux WebKit Escape received but portal and lease remain after 5s (retry passes); W104–W107 invoker loss and stale focus restoration independently reproduced. [Evidence](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md). | Existing shared dialog/focus owner; integrate explicit invoker and guarded restore, certify nested overlays and strict exit lifecycle; no parallel owner. |
 | SYS-TLP-OPTIONAL-POET-MODULE-CONTAINMENT | current-local | W104: aborting MoralPortrait chunk after successful corpus JSON replaces complete poet page with route recovery; localized candidate 8/8 Chromium/iPhone passes. [Evidence](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md). | Existing Reader lane; integrate isolated optional import failure handling and exact-head regression proof without whole Arena port. |
 
 ## 🟢 P3 — ОТКРЫТО (0)
@@ -44,7 +44,7 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 
-**2026-11-24 W113 targeted release recheck:** [exact-tree Safari release and remaining independent defects](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md) supersedes W93's red release boundary for Product #618 only. Its resulting-main Pages, Browser QA and Brand Deep Audit passed. The verified additional dialog-focus and optional-module containment roots below remain unmerged. Neither the earlier zero-row snapshot nor this bounded closure is a terminal whole-project attestation. Hall remains owner-deferred.
+**2026-11-24 W113 targeted release recheck:** [exact-tree Safari release and remaining independent defects](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md) supersedes W93's red release boundary for Product #618 only. Its resulting-main Pages, Browser QA and Brand Deep Audit passed, but later #615 on identical runtime reproduced the original exit failure; #343 remains open. The dialog lifecycle/focus and optional-module containment roots below remain active. Neither the earlier zero-row snapshot nor this bounded closure is a terminal whole-project attestation. Hall remains owner-deferred.
 
 ## Summary
 
