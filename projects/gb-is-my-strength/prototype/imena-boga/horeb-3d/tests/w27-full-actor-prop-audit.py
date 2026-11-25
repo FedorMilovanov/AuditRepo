@@ -31,7 +31,21 @@ start,end=float(strip.frame_start),float(strip.frame_end)
 assert abs((end-start)-104)<1.01,(start,end)
 rig.animation_data.action=None
 for t in tracks:t.mute=t!=gesture
-actor_meshes=[o for o in bpy.data.objects if o.type=="MESH"]
+# Exclude only verified importer-created bone display geometry, never an
+# actual GLB mesh. Fail on unexpected objects instead of silently ignoring them.
+helpers={b.custom_shape for b in rig.pose.bones if b.custom_shape is not None}
+exported_names={n.get("name") for n in doc["nodes"] if "mesh" in n}
+actor_meshes=[]
+excluded=[]
+for o in bpy.data.objects:
+ if o.type!="MESH":continue
+ if o in helpers and o.name not in exported_names:
+  excluded.append({"name":o.name,"custom_shape_users":sum(b.custom_shape==o for b in rig.pose.bones)})
+  continue
+ assert o.name in exported_names,("Unclassified mesh",o.name)
+ actor_meshes.append(o)
+assert len(actor_meshes)==9
+print("W28_EXCLUDED_HELPERS",json.dumps(excluded),flush=True)
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(glb))
 imported=[o for o in bpy.data.objects if o not in prior]
 basket=next(o for o in imported if o.name.startswith("BASKET_OBJECT_ACTION_ANCHOR"))
@@ -46,8 +60,9 @@ assert len(props)>60
 rim=next(tree for name,tree in props if name.startswith("Basket_thick_lipped_rim"))
 
 for o in imported:
- if o.type=="MESH" and o.name.startswith(("Coarse_work_surface","Domestic_clay_bench")):
+ if o.type=="MESH" and o.name.startswith(("Coarse_work_surface","Domestic_clay_bench","Workshop_wood_support")):
   props.append((o.name,BVHTree.FromPolygons([o.matrix_world@v.co for v in o.data.vertices],[tuple(p.vertices) for p in o.data.polygons])))
+assert len(props)==98,len(props)
 offset=Vector((-.5,-.30,.015))
 rows=[]
 for j in range(105):
@@ -65,6 +80,6 @@ for j in range(105):
    if count:hits.append({"actor_mesh":o.name,"prop":name,"pairs":count})
  rows.append({"frame":j+1,"hits":hits})
 bad=[r["frame"] for r in rows if r["hits"]]
-out=root/"full-actor-prop-audit.json";assert not out.exists()
-out.write_text(json.dumps({"status":"FULL_ACTOR_SAMPLED_PROP_DIAGNOSTIC","glb_sha256":sha(asset),"house_sha256":sha(glb),"actor_meshes":[o.name for o in actor_meshes],"props":[n for n,_ in props],"rows":rows,"colliding_frames":bad},indent=2),encoding="utf8")
+out=root/"full-actor-prop-audit-v2.json";assert not out.exists()
+out.write_text(json.dumps({"status":"FULL_ACTOR_SAMPLED_PROP_DIAGNOSTIC","glb_sha256":sha(asset),"house_sha256":sha(glb),"actor_meshes":[o.name for o in actor_meshes],"excluded_importer_helpers":excluded,"props":[n for n,_ in props],"rows":rows,"colliding_frames":bad},indent=2),encoding="utf8")
 print("W27H_FULL_ACTOR",json.dumps({"frames":len(rows),"meshes":len(actor_meshes),"props":len(props),"colliding_frames":bad,"first_hit":next((r for r in rows if r["hits"]),None)}),flush=True)
