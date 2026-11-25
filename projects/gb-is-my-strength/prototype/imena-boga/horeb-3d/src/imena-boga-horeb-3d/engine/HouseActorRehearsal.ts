@@ -6,6 +6,7 @@ export const HOUSE_ACTOR_PROFILES={
  canonical:{file:'horeb_mother_w22_candidate.glb',offset:[-.50,.015,.30],metric:'wrist-vertex',limit:.025},
  w28:{file:'w28-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w28e:{file:'w28e-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
+ w28f:{file:'w28f-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
 } as const;
 export type HouseActorProfile=typeof HOUSE_ACTOR_PROFILES[keyof typeof HOUSE_ACTOR_PROFILES];
 const IDLE='Mother_QuietIdle',GESTURE='Mother_GestureTowardsBasket';

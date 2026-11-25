@@ -4,22 +4,29 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 const study=process.env.HOREB_HOUSE_STUDY_DIR;
 const actorStudy=process.env.HOREB_ACTOR_STUDY_DIR;
-const w28House=process.env.HOREB_W28_HOUSE_OUTPUT,oldActor=process.env.HOREB_W28_ACTOR_OUTPUT,newActor=process.env.HOREB_W28E_OUTPUT;
-if(oldActor&&newActor)throw Error('Choose one actor profile');
-const w28Actor=newActor||oldActor,w28e=!!newActor;
+const w28House=process.env.HOREB_W28_HOUSE_OUTPUT;
+const pairedProfiles=[
+ {name:'w28',dir:process.env.HOREB_W28_ACTOR_OUTPUT,status:'ART_HOLD_W28_STAGED_ACTOR',sha:'e8101ec691c52a5ce3549f0825e925688ecb15ba76ebc8ca2937c6e13d24662a',meshes:9,audit:'w28-pair-reimport-audit.json',manifest:'w28-actor-manifest.json'},
+ {name:'w28e',dir:process.env.HOREB_W28E_OUTPUT,status:'ART_HOLD_W28E_TAILORED_LINEN',sha:'6ec8db07064ac848ffe121b6fb7d0ca3eb9869b39390cb9bb2af2241b86a8014',meshes:7,audit:'w28e-glb-audit.json',manifest:'w28e-manifest.json'},
+ {name:'w28f',dir:process.env.HOREB_W28F_OUTPUT,status:'ART_HOLD_W28F_NECKLINE_SASH',sha:'d0638cd9f808820e1295e73e0421b003e36fcaf58068e841c0b9b8790497df59',meshes:7,audit:'w28f-glb-audit.json',manifest:'w28f-manifest.json'},
+].filter(p=>p.dir);
+if(pairedProfiles.length>1)throw Error('Choose one actor profile');
+const pair=pairedProfiles[0],w28Actor=pair?.dir;
 const w28=!!(w28House||w28Actor);
 if(w28&&(!w28House||!w28Actor||study||actorStudy))throw Error('W28 requires its exact paired assets; no mixed studies');
-const actorFile=w28e?'w28e-actor.glb':'w28-actor.glb';
+const actorFile=pair?pair.name+'-actor.glb':null;
 const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-build','house-walk');
 const m=w28?JSON.parse(fs.readFileSync(path.join(w28House,'w28-house-manifest.json'),'utf8')):study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
-const am=w28?JSON.parse(fs.readFileSync(path.join(w28Actor,w28e?'w28e-manifest.json':'w28-actor-manifest.json'),'utf8')):actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
+const am=w28?JSON.parse(fs.readFileSync(path.join(w28Actor,pair.manifest),'utf8')):actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
 if(w28){
  if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]')throw Error('Invalid W28 house/placement contract');
- if(w28e){
-  if(am.status!=='ART_HOLD_W28E_TAILORED_LINEN'||am.glb_sha256!=='6ec8db07064ac848ffe121b6fb7d0ca3eb9869b39390cb9bb2af2241b86a8014'||am.topology?.faces!==36332||am.topology?.verts!==18390)throw Error('Invalid triangle candidate');
- }else if(am.status!=='ART_HOLD_W28_STAGED_ACTOR'||am.glb_sha256!=='e8101ec691c52a5ce3549f0825e925688ecb15ba76ebc8ca2937c6e13d24662a')throw Error('Invalid W28 actor');
- const a=JSON.parse(fs.readFileSync(path.join(w28Actor,w28e?'w28e-glb-audit.json':'w28-pair-reimport-audit.json'),'utf8'));
- if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==(w28e?7:9)||a.props!==98||a.clips?.length!==2||a.clips[0].rows.length!==417||a.clips[1].rows.length!==144||a.clips.some(c=>c.bad.length||c.rows.some(r=>w28e?(!Array.isArray(r.skin_cloth)||!Array.isArray(r.prop_hits)||r.skin_cloth.length||r.prop_hits.length||r.self_pairs!==0):r.hits.length)))throw Error('Missing full pair clearance');
+ if(am.status!==pair.status||am.glb_sha256!==pair.sha)throw Error('Invalid paired actor');
+ if(pair.name==='w28e'&&(am.topology?.faces!==36332||am.topology?.verts!==18390))throw Error('Invalid triangle topology');
+ if(pair.name==='w28f'&&JSON.stringify(am.params)!=='[0.025,0.012,0.006]')throw Error('Invalid neckline/sash parameters');
+ const a=JSON.parse(fs.readFileSync(path.join(w28Actor,pair.audit),'utf8'));
+ const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(pair.name!=='w28f'||r.sash_pairs===0&&r.sash_self_pairs===0);
+ const validClip=(c,name,count,step)=>c?.name===name&&Array.isArray(c.bad)&&c.bad.length===0&&Array.isArray(c.rows)&&c.rows.length===count&&c.rows.every((r,i)=>r?.frame===1+i*step&&validRow(r));
+ if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==pair.meshes||a.props!==98||!Array.isArray(a.clips)||a.clips.length!==2||!validClip(a.clips[0],'Mother_GestureTowardsBasket',417,.25)||!validClip(a.clips[1],'Mother_QuietIdle',144,1))throw Error('Missing full pair clearance');
 
 }else{
  if(m&&(!['w26-house-study.glb','w26b-house-study.glb','w26c-house-study.glb'].includes(m.glb_file||'w26-house-study.glb')||m.status!=='ART_HOLD_W26_HOUSE_STUDY'))throw Error('Invalid study manifest');
@@ -59,14 +66,14 @@ if(!chrome)throw Error('Actual Chromium required');
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
  const prior=requests,priorActor=actorRequests;
- await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?(w28e?'?study=w28e':'?study=w28'):''),{waitUntil:'domcontentloaded'});
+ await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(bytes&&requests<=prior)throw Error('No candidate request');
  await page.click('[data-testid="house-actor-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle');
  if(actorBytes&&actorRequests<=priorActor)throw Error('No exact actor study request');
  const actor=await state();
- if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2)throw Error('Missing real skinning');
+ if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2||(pair&&Number(actor.houseActorSkinned)!==pair.meshes))throw Error('Missing real skinning');
  if(actor.houseActorContactMetric!==(w28?'middle-skin-vertex':'wrist-vertex')||(w28&&Number(actor.houseActorSkinSamples)<20))throw Error('Wrong proximity metric '+JSON.stringify(actor));
  await enterWalk();
  const start=await state();
