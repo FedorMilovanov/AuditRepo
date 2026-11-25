@@ -26,7 +26,18 @@ if(!chrome)throw Error('Actual Chromium required');
  const sel='[data-testid="house-lookdev-canvas"]';
  const state=()=>page.$eval(sel,c=>({...c.dataset}));
  const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
- async function hold(key,fn){await page.keyboard.down(key);try{await until(fn);}finally{await page.keyboard.up(key);}}
+ async function hold(key,fn,label='walk'){
+  await page.keyboard.down(key);
+  try{await page.waitForFunction(fn,{timeout:120000},sel);}
+  catch(error){
+   console.error('W27_INPUT_FAILURE',JSON.stringify({label,key,state:await state(),focus:await page.evaluate(()=>document.activeElement?.getAttribute('data-testid')),hidden:await page.evaluate(()=>document.hidden)}));
+   throw error;
+  }finally{await page.keyboard.up(key);}
+ }
+ async function enterWalk(){
+  await page.click('[data-testid="house-walk-toggle"]');
+  await until(s=>{const c=document.querySelector(s),d=c.dataset;return d.houseWalk==='true'&&d.houseWalkRegion==='yard'&&Number(d.houseWalkZ)>7.1&&Math.abs(Number(d.houseWalkYaw))<.01&&d.houseObservationReady==='false'&&document.activeElement===c;});
+ }
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
  const prior=requests,priorActor=actorRequests;
@@ -38,8 +49,7 @@ if(!chrome)throw Error('Actual Chromium required');
  if(actorBytes&&actorRequests<=priorActor)throw Error('No exact actor study request');
  const actor=await state();
  if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2)throw Error('Missing real skinning');
- await page.click('[data-testid="house-walk-toggle"]');
- await until(s=>document.querySelector(s).dataset.houseWalk==='true');
+ await enterWalk();
  const start=await state();
  if(Number(start.houseWalkColliders)<12||start.houseWalkRegion!=='yard')throw Error('Incomplete walk start '+JSON.stringify(start));
  if(!await page.$eval('[data-testid="house-inspect-basket"]',b=>b.disabled))throw Error('Distant basket interaction available');
@@ -93,9 +103,11 @@ if(!chrome)throw Error('Actual Chromium required');
  await page.click('[data-testid="house-walk-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle'&&document.querySelector(s).dataset.houseWalk==='false');
  if((await state()).houseActorTime!==undefined)throw Error('Stale clip clock after cancellation');
- // Re-enter and approach the actual table again.
- await page.click('[data-testid="house-walk-toggle"]');
- await hold('w',s=>document.querySelector(s).dataset.houseWalkBlocked==='true');
+ // A fresh real entry must acknowledge the reset before input, not only
+ // dispatch a click and race the React event/focus on slow runners.
+ await enterWalk();
+ console.log('W27_REENTRY_READY',JSON.stringify(await state()));
+ await hold('w',s=>{const d=document.querySelector(s).dataset;return d.houseWalkBlocked==='true'&&d.houseWalkRegion==='room'&&Number(d.houseWalkZ)>.65&&Number(d.houseWalkZ)<1.2;},'re-entry to table');
  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-inspect-basket"]').disabled);
  const beforeInspect=await state();
  if(mobile)await page.tap('[data-testid="house-inspect-basket"]');else await page.keyboard.press('f');

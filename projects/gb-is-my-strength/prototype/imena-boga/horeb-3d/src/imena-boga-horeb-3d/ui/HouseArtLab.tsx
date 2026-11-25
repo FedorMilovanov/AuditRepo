@@ -202,11 +202,12 @@ export function HouseArtLab(){
   function setWalk(on:boolean){
    if(on&&rehearsal?.phase()==='loading')return;
    clear();closeInspect();rehearsal?.cancel();updateInspectReady(false);walking=on;lastFrame=0;blocked=false;
-   activeControls.enabled=!on;updateObservation();
+   activeControls.enabled=!on;
    c.dataset.houseWalk=String(on);
    if(on){delete c.dataset.basketFrameExtent;delete c.dataset.basketBlockedRays;delete c.dataset.basketBlockers;delete c.dataset.houseView;}
-   if(on){walkX=0;walkZ=7.2;yaw=0;pitch=-.09;roofObjs.forEach(o=>o.visible=true);camera.fov=65;camera.updateProjectionMatrix();walkCamera();c.focus();}
+   if(on){walkX=0;walkZ=7.2;yaw=0;pitch=-.09;roofObjs.forEach(o=>o.visible=true);walkLens();walkCamera();c.focus({preventScroll:true});}
    else{setPose(POSES[currentView]);activeControls.update();}
+   updateObservation();
   }
   function fitLens(){
    const horizontal=THREE.MathUtils.degToRad(currentView==='basket'?60:48);
