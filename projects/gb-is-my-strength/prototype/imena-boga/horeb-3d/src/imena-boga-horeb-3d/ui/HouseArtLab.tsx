@@ -6,7 +6,7 @@ import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {createHouseActorRehearsal,HOUSE_ACTOR_FOOTPRINT,type ActorPhase} from '../engine/HouseActorRehearsal';
+import {createHouseActorRehearsal,HOUSE_ACTOR_PROFILES,type ActorPhase} from '../engine/HouseActorRehearsal';
 type View='courtyard'|'threshold'|'room'|'basket';
 type CameraPose={eye:readonly [number,number,number]; target:readonly [number,number,number]};
 const POSES:Record<View,CameraPose>={
@@ -24,6 +24,10 @@ const TITLES:Record<View,string>={
 type WalkKey='w'|'a'|'s'|'d'|'q'|'e';
 type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void;toggleActor:()=>void;performActor:()=>void};
 export function HouseArtLab(){
+ // Dev-only exact paired rehearsal; distinct URLs fail closed without the
+ // explicitly supplied candidate files. Never substitute canonical binaries.
+ const w28=import.meta.env.DEV&&new URLSearchParams(location.search).get('study')==='w28';
+ const actorProfile=w28?HOUSE_ACTOR_PROFILES.w28:HOUSE_ACTOR_PROFILES.canonical;
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
  const [view,setView]=useState<View>('courtyard');
@@ -136,7 +140,7 @@ export function HouseArtLab(){
   }
   const walkable=(x:number,z:number)=>{
    if(!Number.isFinite(x)||!Number.isFinite(z)||Math.abs(x)>3.12||z>8.3||z< -2.05)return false;
-   if(rehearsal?.present()&&Math.hypot(x-HOUSE_ACTOR_FOOTPRINT.x,z-HOUSE_ACTOR_FOOTPRINT.z)<radius+HOUSE_ACTOR_FOOTPRINT.radius)return false;
+   if(rehearsal?.present()&&Math.hypot(x-actorProfile.offset[0],z-actorProfile.offset[2])<radius+.31)return false;
    return !obstacles.some(b=>{
     const dx=x-THREE.MathUtils.clamp(x,b.min.x,b.max.x);
     const dz=z-THREE.MathUtils.clamp(z,b.min.z,b.max.z);
@@ -320,7 +324,7 @@ export function HouseArtLab(){
   activeRenderer.setAnimationLoop(render);
   const loader=new GLTFLoader();
   // Served from a same-origin local art lab. The local asset is not a Product dependency.
-  const src=new URL('./artlab/horeb_egypt_house_hero_pilot.glb',window.location.href).href;
+  const src=new URL('./artlab/'+(w28?'w28-house.glb':'horeb_egypt_house_hero_pilot.glb'),window.location.href).href;
   loader.load(src,gltf=>{
    if(disposed){gltf.scene.traverse(o=>{const m=o as THREE.Mesh;if(m.isMesh){m.geometry?.dispose();}});return;}
    loaded=gltf.scene;loaded.name='HOREB_ORIGINAL_HOUSE_PILOT';
@@ -354,7 +358,7 @@ export function HouseArtLab(){
    fitDirty=true;
    const showRoof=true;
    roofObjs.forEach(o=>o.visible=showRoof);
-   rehearsal=createHouseActorRehearsal(scene,loaded,c,next=>{setActorPhase(next);if(walking)walkLens();if(next!=='performing')delete c.dataset.houseActorAperture;updateObservation();});
+   rehearsal=createHouseActorRehearsal(scene,loaded,c,next=>{setActorPhase(next);if(walking)walkLens();if(next!=='performing')delete c.dataset.houseActorAperture;updateObservation();},actorProfile);
    api.current={view:mode=>{currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect,
     toggleActor:()=>{
      if(!rehearsal)return;
@@ -459,7 +463,7 @@ export function HouseArtLab(){
      <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'||actorPhase==='loading'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
      <h3>Репетиция персонажа · ART HOLD</h3>
      <button type="button" className="switch" data-testid="house-actor-toggle" disabled={status!=='ready'||walking||actorPhase==='loading'} aria-pressed={actorPhase!=='off'} onClick={()=>api.current?.toggleActor()}>{actorPhase==='off'?'Показать персонажа':actorPhase==='loading'?'Загрузка персонажа…':'Убрать персонажа'}</button>
-     <p className="house-actor-note">Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.</p>
+     <p className="house-actor-note">{w28?'Экспериментальная пара W28. Измерение поверхности пальца, не захват.':'Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.'}</p>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
      {(Object.keys(POSES) as View[]).map(key=><button key={key}

@@ -3,15 +3,26 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const study=process.env.HOREB_HOUSE_STUDY_DIR;
-const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-build','house-walk');
-const m=study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
-if(m&&(!['w26-house-study.glb','w26b-house-study.glb','w26c-house-study.glb'].includes(m.glb_file||'w26-house-study.glb')||m.status!=='ART_HOLD_W26_HOUSE_STUDY'))throw Error('Invalid study manifest');
-const bytes=m?fs.readFileSync(path.join(study,m.glb_file||'w26-house-study.glb')):null;
-if(bytes&&(crypto.createHash('sha256').update(bytes).digest('hex')!==m.glb_sha256||bytes.length!==m.bytes))throw Error('Asset hash mismatch');
 const actorStudy=process.env.HOREB_ACTOR_STUDY_DIR;
-const am=actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
-const actorBytes=am?fs.readFileSync(path.join(actorStudy,'w24-wardrobe-study.glb')):null;
-if(am&&(am.status!=='ART_HOLD_LOCAL_W24_WARDROBE'||am.glb_sha256!=='f3d9a470cb2371f600cc8b6c58547fd63aebd8c1d025e80ff327926ef2870cbb'||crypto.createHash('sha256').update(actorBytes).digest('hex')!==am.glb_sha256||actorBytes.length!==am.glb_bytes))throw Error('Actor study hash mismatch');
+const w28House=process.env.HOREB_W28_HOUSE_OUTPUT,w28Actor=process.env.HOREB_W28_ACTOR_OUTPUT;
+const w28=!!(w28House||w28Actor);
+if(w28&&(!w28House||!w28Actor||study||actorStudy))throw Error('W28 requires its exact paired assets; no mixed studies');
+const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-build','house-walk');
+const m=w28?JSON.parse(fs.readFileSync(path.join(w28House,'w28-house-manifest.json'),'utf8')):study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
+const am=w28?JSON.parse(fs.readFileSync(path.join(w28Actor,'w28-actor-manifest.json'),'utf8')):actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
+if(w28){
+ if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||am.status!=='ART_HOLD_W28_STAGED_ACTOR'||am.glb_sha256!=='e8101ec691c52a5ce3549f0825e925688ecb15ba76ebc8ca2937c6e13d24662a'||JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]')throw Error('Invalid W28 contract');
+ const a=JSON.parse(fs.readFileSync(path.join(w28Actor,'w28-pair-reimport-audit.json'),'utf8'));
+ if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==9||a.props!==98||a.clips?.length!==2||a.clips[0].rows.length!==417||a.clips[1].rows.length!==144||a.clips.some(c=>c.bad.length||c.rows.some(r=>r.hits.length)))throw Error('Missing full pair clearance');
+}else{
+ if(m&&(!['w26-house-study.glb','w26b-house-study.glb','w26c-house-study.glb'].includes(m.glb_file||'w26-house-study.glb')||m.status!=='ART_HOLD_W26_HOUSE_STUDY'))throw Error('Invalid study manifest');
+ if(am&&(am.status!=='ART_HOLD_LOCAL_W24_WARDROBE'||am.glb_sha256!=='f3d9a470cb2371f600cc8b6c58547fd63aebd8c1d025e80ff327926ef2870cbb'))throw Error('Invalid actor study manifest');
+}
+const bytes=m?fs.readFileSync(path.join(w28?w28House:study,w28?'w28-house.glb':m.glb_file||'w26-house-study.glb')):null;
+const actorBytes=am?fs.readFileSync(path.join(w28?w28Actor:actorStudy,w28?'w28-actor.glb':'w24-wardrobe-study.glb')):null;
+if(bytes&&(crypto.createHash('sha256').update(bytes).digest('hex')!==m.glb_sha256||bytes.length!==m.bytes))throw Error('Asset hash mismatch');
+if(actorBytes&&(crypto.createHash('sha256').update(actorBytes).digest('hex')!==am.glb_sha256||actorBytes.length!==am.glb_bytes))throw Error('Actor study hash mismatch');
+const contactLimit=w28?10:25;
 const chrome=[process.env.HOREB_BROWSER_PATH,'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&fs.existsSync(x));
 if(!chrome)throw Error('Actual Chromium required');
 (async()=>{
@@ -22,7 +33,7 @@ if(!chrome)throw Error('Actual Chromium required');
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  let requests=0,actorRequests=0;
  if(bytes||actorBytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
- page.on('request',r=>{if(bytes&&new URL(r.url()).pathname.endsWith('/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith('/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
+ page.on('request',r=>{if(bytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-house.glb':'/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-actor.glb':'/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
  const sel='[data-testid="house-lookdev-canvas"]';
  const state=()=>page.$eval(sel,c=>({...c.dataset}));
  const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
@@ -41,7 +52,7 @@ if(!chrome)throw Error('Actual Chromium required');
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
  const prior=requests,priorActor=actorRequests;
- await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html',{waitUntil:'domcontentloaded'});
+ await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study=w28':''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(bytes&&requests<=prior)throw Error('No candidate request');
  await page.click('[data-testid="house-actor-toggle"]');
@@ -49,6 +60,7 @@ if(!chrome)throw Error('Actual Chromium required');
  if(actorBytes&&actorRequests<=priorActor)throw Error('No exact actor study request');
  const actor=await state();
  if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2)throw Error('Missing real skinning');
+ if(actor.houseActorContactMetric!==(w28?'middle-skin-vertex':'wrist-vertex')||(w28&&Number(actor.houseActorSkinSamples)<20))throw Error('Wrong proximity metric '+JSON.stringify(actor));
  await enterWalk();
  const start=await state();
  if(Number(start.houseWalkColliders)<12||start.houseWalkRegion!=='yard')throw Error('Incomplete walk start '+JSON.stringify(start));
@@ -88,13 +100,13 @@ if(!chrome)throw Error('Actual Chromium required');
  if(Number(actual.houseActorFrameExtent)>.96)throw Error('Actor or rim out of the peak frame: '+JSON.stringify(actual));
  if(actual.houseWalkX!==observation.houseWalkX||actual.houseWalkZ!==observation.houseWalkZ)throw Error('Director moved player');
 
- if(Number(actual.houseActorContactMm)>=25)throw Error('W27 wrist misses actual rim: '+JSON.stringify(actual));
+ if(Number(actual.houseActorContactMm)>=contactLimit)throw Error('Actor contact witness misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
  const endGesture=await state();
- if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=25||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
- console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:actual.houseActorAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,actor:am?.glb_sha256||'canonical W22'}));
+ if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=contactLimit||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
+ console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:actual.houseActorAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,metric:actor.houseActorContactMetric,skinSamples:actor.houseActorSkinSamples,actor:am?.glb_sha256||'canonical W22'}));
 
  // A replay must reset contact evidence and cancel on leaving the walk.
  await page.click('[data-testid="house-actor-perform"]');
