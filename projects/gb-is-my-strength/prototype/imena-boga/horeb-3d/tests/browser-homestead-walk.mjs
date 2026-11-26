@@ -83,8 +83,14 @@ try{
     throw Error('HOMESTEAD 3D CONTRACT '+JSON.stringify(witness));
   await page.screenshot({path:join(out,'homestead-shot-desktop.png')});
   await page.click('[data-testid="midian-homestead-explore-start"]');
-  await page.waitForFunction(()=>document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset.midianMode==='walk');
-  await sleep(130);
+  // The mode flag is synchronous, the grounded camera witness is not.
+  // Wait for the real first walking pose instead of an arbitrary sleep.
+  await page.waitForFunction(()=>{
+    const d=document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset;
+    return d?.midianMode==='walk'&&['midianX','midianZ','midianY','midianGround','midianYaw'].every(k=>Number.isFinite(Number(d[k])))&&
+      Math.abs(Number(d.midianX))<.08&&Math.abs(Number(d.midianZ)-10)<.08&&
+      Math.abs(Number(d.midianY)-Number(d.midianGround)-1.68)<.01;
+  },{timeout:20000});
   const a=await read();
   if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
     throw Error('W13B household lesson wrongly available at entry');
@@ -93,12 +99,18 @@ try{
     return {w:r.width,h:r.height,vw:innerWidth,vh:innerHeight};
   });
   if(dims.w<dims.vw-2||dims.h<dims.vh-2)throw Error('HOMESTEAD not fullscreen');
-  await page.keyboard.down('w');await sleep(900);await page.keyboard.up('w');await sleep(90);
+  await page.keyboard.down('w');
+  try{
+    await page.waitForFunction(start=>{
+      const d=document.querySelector('[data-testid="moses-midian-homestead-3d"]')?.dataset;
+      return d?.midianMode==='walk'&&Number.isFinite(Number(d.midianZ))&&start-Number(d.midianZ)>=.25;
+    },{timeout:20000},a.z);
+  }finally{await page.keyboard.up('w');}
   const b=await read();
   if(!(await page.$eval('[data-testid="midian-field-observe"]',e=>e.disabled)))
     throw Error('W13B household lesson activated before visiting entrance');
   const distance=Math.hypot(b.x-a.x,b.z-a.z);
-  if(distance<.19||a.z-b.z<.17||Math.abs(b.y-b.ground-1.68)>.01)
+  if(![a.x,a.z,a.y,a.ground,a.yaw,b.x,b.z,b.y,b.ground,b.yaw,distance].every(Number.isFinite)||distance<.19||a.z-b.z<.17||Math.abs(b.y-b.ground-1.68)>.01)
     throw Error('HOMESTEAD GROUNDED WALK '+JSON.stringify({a,b,distance}));
   await page.screenshot({path:join(out,'homestead-walk-desktop.png')});
   // Physically approach the exterior shelter observation marker, then study.

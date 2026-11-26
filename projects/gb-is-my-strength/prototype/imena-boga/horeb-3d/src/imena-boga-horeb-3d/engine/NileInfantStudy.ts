@@ -16,22 +16,44 @@ export function createNileInfantStudy(){
  }
  padGeo.computeVertexNormals();
  const bedding=new THREE.Mesh(padGeo,under);bedding.name='W33a_floor_linen';group.add(bedding);
+ // Compressed fold beneath the head: fills the previous unsupported gap.
+ const pillowGeo=new THREE.SphereGeometry(1,32,16);
+ const pillowPos=pillowGeo.getAttribute('position');
+ for(let i=0;i<pillowPos.count;i++){
+  const x=pillowPos.getX(i),y=pillowPos.getY(i),z=pillowPos.getZ(i);
+  pillowPos.setXYZ(i,-.211+.097*x,.109+.011*y+.0015*Math.sin(z*7)*Math.sin(x*5),.081*z);
+ }
+ pillowGeo.computeVertexNormals();
+ const pillow=new THREE.Mesh(pillowGeo,under);pillow.name='W33b_head_support_fold';group.add(pillow);
  // Continuous tapered longitudinal surface, not overlapping ellipsoids.
  // Stations describe the silhouette of the concealed torso and legs.
  const profile=[[-.172,.023,.024],[-.125,.087,.080],[-.060,.100,.088],
   [.035,.098,.078],[.135,.083,.069],[.219,.062,.060],[.270,.032,.035],[.286,.010,.013]];
+ // Nonuniform cubic interpolation without flat tangents at each station.
+ // Limit slopes at extrema, preserving the original silhouette envelope.
+ const slope=(i:number,k:number)=>{
+  if(i===0)return (profile[1][k]-profile[0][k])/(profile[1][0]-profile[0][0]);
+  if(i===profile.length-1)return (profile[i][k]-profile[i-1][k])/(profile[i][0]-profile[i-1][0]);
+  const l=(profile[i][k]-profile[i-1][k])/(profile[i][0]-profile[i-1][0]);
+  const r=(profile[i+1][k]-profile[i][k])/(profile[i+1][0]-profile[i][0]);
+  return l*r>0?2*l*r/(l+r):0;
+ };
  const pos:number[]=[],colors:number[]=[],indices:number[]=[];
  const rings=57,sides=48;
  for(let i=0;i<rings;i++){
   const x=THREE.MathUtils.lerp(profile[0][0],profile.at(-1)![0],i/(rings-1));
   let j=0;while(j<profile.length-2&&x>profile[j+1][0])j++;
-  const a=profile[j],b=profile[j+1],t=(x-a[0])/(b[0]-a[0]),u=t*t*(3-2*t);
-  const ry=THREE.MathUtils.lerp(a[1],b[1],u),rz=THREE.MathUtils.lerp(a[2],b[2],u);
+  const a=profile[j],b=profile[j+1],dx=b[0]-a[0],t=(x-a[0])/dx,t2=t*t,t3=t2*t;
+  const interp=(k:number)=>THREE.MathUtils.clamp((2*t3-3*t2+1)*a[k]+(t3-2*t2+t)*dx*slope(j,k)+(-2*t3+3*t2)*b[k]+(t3-t2)*dx*slope(j+1,k),Math.min(a[k],b[k]),Math.max(a[k],b[k]));
+  const ry=interp(1),rz=interp(2);
   for(let k=0;k<sides;k++){
    const angle=2*Math.PI*k/sides,cy=Math.cos(angle),sz=Math.sin(angle);
    // Broad diagonal overlap ridges and finer restrained wrinkles.
-   const phase=x*57+angle*1.7;
-   const fold=.0042*Math.pow(.5+.5*Math.cos(phase),6)+.0015*Math.sin(x*109+angle*3);
+   // Integer angular harmonics close exactly around the seam. Vary the
+   // spacing and strength along the fabric instead of regular ribs.
+   const phase=x*45+2*angle+1.1*Math.sin(x*17);
+   const taper=THREE.MathUtils.smoothstep(x,-.172,-.10)*(1-THREE.MathUtils.smoothstep(x,.22,.286));
+   const fold=taper*(.0032*Math.pow(.5+.5*Math.cos(phase),7)+.0012*Math.sin(x*109+3*angle));
    const y=.111+ry+(ry+fold)*cy,z=(rz+fold)*sz+.003*Math.sin(x*19);
    pos.push(x,Math.max(.110,y),z);
    const c=1-.12*Math.pow(.5+.5*Math.sin(phase),7)+.018*Math.cos(x*113+angle*5);
@@ -61,17 +83,34 @@ export function createNileInfantStudy(){
  const head=new THREE.Mesh(headGeo,skin);head.name='W33a_head_sculpt';group.add(head);
  // The overlap at the neck is intended wrapping contact. The two tiny
  // closed eyelid arcs read only in a close shot, not as open cartoon eyes.
- const lidMat=new THREE.MeshStandardMaterial({color:0x815e4c,roughness:1});
+ // Project facial lines on the actual sculpted head, rather than an
+ // approximate ellipsoid that can bury or float the detail.
+ head.updateMatrixWorld(true);
+ const faceRay=new THREE.Raycaster(),down=new THREE.Vector3(0,-1,0);
+ const facePoint=(x:number,z:number,offset:number)=>{
+  faceRay.set(new THREE.Vector3(x,.5,z),down);
+  const hit=faceRay.intersectObject(head,false)[0];
+  if(!hit)throw Error('Infant facial feature outside head');
+  return hit.point.add(new THREE.Vector3(0,offset,0));
+ };
+ const lidMat=new THREE.MeshStandardMaterial({color:0x916a55,roughness:1});
  for(const sign of [-1,1]){
   const points:THREE.Vector3[]=[];
   for(let i=0;i<=12;i++){
    const z=sign*(.019+i*.0017),x=-.240+.005*Math.sin(Math.PI*i/12);
-   const qx=(x+.216)/.081,qz=z/.063,y=.186+.073*Math.sqrt(Math.max(0,1-qx*qx-qz*qz))+.0008;
-   points.push(new THREE.Vector3(x,y,z));
+   points.push(facePoint(x,z,.00065));
   }
   const lid=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points),12,.00085,5,false),lidMat);
   lid.name='W33a_closed_lid';group.add(lid);
  }
+ // A short, neutral closed mouth; no stylized smile or open lips.
+ const lipPoints:THREE.Vector3[]=[];
+ for(let i=0;i<=12;i++){
+  const t=i/12,z=(t-.5)*.026,x=-.184+.0015*Math.cos(2*Math.PI*t);
+  lipPoints.push(facePoint(x,z,.00055));
+ }
+ const mouth=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lipPoints),12,.00075,5,false),lidMat);
+ mouth.name='W33b_closed_mouth';group.add(mouth);
  group.updateMatrixWorld(true);
  return group;
 }

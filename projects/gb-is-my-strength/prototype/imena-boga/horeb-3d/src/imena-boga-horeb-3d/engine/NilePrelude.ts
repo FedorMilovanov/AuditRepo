@@ -245,7 +245,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   }
   // A cloth-wrapped silhouette, no invented face/identity or depiction of
   // specific human anatomy. The baby is deliberately not animated.
-  if(infantStudy){basket.add(createNileInfantStudy());canvas.dataset.nileInfantStudy='w33a';}
+  if(infantStudy){basket.add(createNileInfantStudy());canvas.dataset.nileInfantStudy='w33b';}
   else{
   const cloth = new THREE.Mesh(new THREE.SphereGeometry(1,16,10), material(0xd2bda0));
   if(sharedBasket){cloth.scale.set(.28,.105,.145);cloth.position.set(0,.13,0);}
