@@ -184,6 +184,18 @@ if tunic:
  assert tm3["probe_sha256"]==sha(candidate/"w30d-probe.json") and tm3["delta_sha256"]==sha(candidate/"w30d-tunic-delta.json")
  asset=candidate/"w30d-actor.glb"
  assert sha(asset)==tm3["glb_sha256"]=="8b63fcab7933a8493b6337437f0ae7f17c5ba3e50106d40945687ea1ce8aac6b"
+join=os.environ.get("HOREB_W30E_OUTPUT")
+join_compare=os.environ.get("HOREB_VISUAL_HEAD_JOIN_COMPARE")=="1"
+if join:
+ assert tunic and join_compare
+ candidate=Path(join)
+ jm=json.loads((candidate/"w30e-manifest.json").read_text(encoding="utf8"))
+ assert jm["status"]=="ART_HOLD_W30E_HEAD_JOIN_TRIAL" and jm["source_sha256"]==tm3["glb_sha256"]
+ assert jm["only_drape_positions_normals_changed"] is True and jm["unchanged_views"]==309
+ assert jm["probe_sha256"]==sha(candidate/"w30e-probe.json") and jm["delta_sha256"]==sha(candidate/"w30e-drape-delta.json")
+ asset=candidate/"w30e-actor.glb"
+ assert sha(asset)==jm["glb_sha256"]=="af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669"
+assert not join_compare or (tunic_compare and tunic)
 assert not tunic_compare or (shape_compare and shape)
 assert not shape_compare or (drape_compare and drape)
 assert not drape_compare or (head_compare and head_linen)
@@ -202,7 +214,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-head-join" if join_compare else "visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -280,6 +292,8 @@ if shape_compare:
  fill=bpy.data.objects.new("Drape_inspection_fill",light_data);scene.collection.objects.link(fill)
 if tunic_compare:
  views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("skirt-peak",60,(-.65,-1.65,1.05),(-.40,-.30,.58),43)]
+if join_compare:
+ views=[("side-peak",60,None,None,70),("rear-peak",60,None,None,70)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
@@ -289,7 +303,7 @@ for name,frame,eye,target,lens in views:
   assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
  if lashes:
   assert max(abs(lk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
- if (close or brow_compare) and not tunic_compare:
+ if (close or brow_compare) and (not tunic_compare or join_compare):
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
   focus=transform@Vector((0,-.102479,1.424))
@@ -302,8 +316,11 @@ for name,frame,eye,target,lens in views:
    focus=transform@Vector((0,.015,1.33))
    direction=(side-.7*front if name=="side-peak" else -front+.38*side).normalized()
    eye=focus+direction*.80+up*.04;target=focus
+   if join_compare:
+    focus=transform@Vector((0,.055,1.42))
+    eye=focus+direction*.68+up*.04;target=focus
  if shape_compare:
-  fill.location=Vector(eye)+(Vector((0,0,.25)) if tunic_compare else up*.25)
+  fill.location=Vector(eye)+(Vector((0,0,.25)) if tunic_compare and not join_compare else up*.25)
   fill.rotation_euler=(Vector(target)-fill.location).to_track_quat("-Z","Y").to_euler()
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))

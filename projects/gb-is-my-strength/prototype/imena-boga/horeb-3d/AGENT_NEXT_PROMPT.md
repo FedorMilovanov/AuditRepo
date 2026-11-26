@@ -8,7 +8,13 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W30d tunic volume (2026-11-26)
+## Current handoff: W30e head-cover join (2026-11-26)
+
+- W30d full pair audit PASS: 417 gesture + 144 idle, zero bad samples. W30e fits the 25 head-weighted upper drape vertices to the authored rear cap rim, with a nominal 0.8 mm gap instead of 2.17-30.63 mm and a smooth 65 mm transition into the existing drape. First coarse candidate 18/18 PASS. Independent GLB measurement verifies 0.79995-0.80005 mm on all 25 matched vertices. This is a fitted visual join, not a welded mesh or cloth simulation.
+- W30e exact SHA-256 af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669, 10,543,116 bytes, 100 changed vertices, max displacement 29.827 mm, 309 untouched buffer views. Reproducible export PASS. Evidence H:/HOREB_ArtPipeline/evidence/W30e-head-join-20261126. Side/rear comparison completed 4/4; reviewed rear pair shows the former dark gap replaced by a thin join line. Confirm full w30e-full-pair.log before promotion.
+- Fixed corrupted Russian ArtLab actor note by explicit Unicode-safe UTF-8 replacement. Next: review the join and whole actor, then W31 performance and motion. No canonical asset swap; W29c remains last full browser-proven candidate, ART HOLD.
+
+### Prior handoff: W30d tunic volume (2026-11-26)
 
 - W30c full paired reimport PASS, 417 gesture + 144 idle, zero bad samples. Rear comparison finally received: narrower drape is visible, but a dark discontinuity remains between cap and rear drape. ART remains unaccepted; do not claim a unified head-cover seam.
 - W30d v2 focuses on skirt volume and seven broad longitudinal folds; upper shoulder/neck and sash remain unchanged, as do the lower hem and its attachment zone. Initial independent skirt taper failed because of stitched hem contact. Revised shape fades to zero below 240 mm height and above 825 mm. Existing stitched hem contacts are compared to baseline (unchanged counts across 18 samples); other pairs must be zero. Strong .15/.012/.008/.004 and .12/.010/.004/.002 variants rejected for skin intersections. Chosen [.10,.008,0,0] passes 18/18. No new garment geometry or animation channels. The shared transfer uses scipy cKDTree in the existing local Python environment for exact bijective 18,390-vertex mapping (distance <1e-6 m), after a lexicographic match was rejected. No application dependency added.

@@ -1,17 +1,18 @@
-"""Transfer measured W30b/W30c drape and W30d tunic corrections to exact source GLBs."""
+"""Transfer measured W30b-W30e garment corrections to exact source GLBs."""
 import copy,hashlib,json,os,struct
 from pathlib import Path
 import numpy as np
 def sha(x):return hashlib.sha256(x).hexdigest()
-# Reuse the same verified transfer for all three garment studies.
-tunic=bool(os.environ.get("HOREB_W30D_OUTPUT"))
-shape=bool(os.environ.get("HOREB_W30C_OUTPUT")) and not tunic
-variant="w30d" if tunic else "w30c" if shape else "w30b"
-source="w30c" if tunic else "w30b" if shape else "w30a"
+# Reuse the same verified transfer for garment studies.
+join=bool(os.environ.get("HOREB_W30E_OUTPUT"))
+tunic=bool(os.environ.get("HOREB_W30D_OUTPUT")) and not join
+shape=bool(os.environ.get("HOREB_W30C_OUTPUT")) and not tunic and not join
+variant="w30e" if join else "w30d" if tunic else "w30c" if shape else "w30b"
+source="w30d" if join else "w30c" if tunic else "w30b" if shape else "w30a"
 root=Path(os.environ["HOREB_"+source.upper()+"_OUTPUT"]);out=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"])
 raw=(root/(source+"-actor.glb")).read_bytes();m=json.loads((root/(source+"-manifest.json")).read_text())
-assert sha(raw)==m["glb_sha256"]==("d5b1dc8af5e2dc0156be33b03f78b4c2d91baf2e3c7ea2646e8b8803f965e442" if tunic else "cff945d163c95bd7673e3a5405f55b45168b764eaa412fa7b8b81714f9da6668" if shape else "85c24882620b35154ac9e333c6d37406b457d4d3b05aa07fbc024812b5f0ac35")
-assert m["only_drape_positions_normals_changed" if shape or tunic else "only_head_linen_positions_normals_changed"] is True
+assert sha(raw)==m["glb_sha256"]==("8b63fcab7933a8493b6337437f0ae7f17c5ba3e50106d40945687ea1ce8aac6b" if join else "d5b1dc8af5e2dc0156be33b03f78b4c2d91baf2e3c7ea2646e8b8803f965e442" if tunic else "cff945d163c95bd7673e3a5405f55b45168b764eaa412fa7b8b81714f9da6668" if shape else "85c24882620b35154ac9e333c6d37406b457d4d3b05aa07fbc024812b5f0ac35")
+assert m["only_tunic_positions_normals_changed" if join else "only_drape_positions_normals_changed" if shape or tunic else "only_head_linen_positions_normals_changed"] is True
 def decode(raw):
  assert struct.unpack_from("<4sII",raw)==(b"glTF",2,len(raw))
  n,t=struct.unpack_from("<I4s",raw,12);assert t==b"JSON"
@@ -46,6 +47,7 @@ assert win["bad_samples"]==win["pairs"]==0
 if tunic:
  assert win["params"]==[.10,.008,0,0] and len(probe["baseline"])==18
  assert all(not any(n for k,n in r["pairs"].items() if k!="Stitched_lower_hem") and r["pairs"]["Stitched_lower_hem"]==base["pairs"]["Stitched_lower_hem"] and r["frame"]==base["frame"] and r["clip"]==base["clip"] for r,base in zip(win["rows"],probe["baseline"]))
+elif join:assert win["params"]==[.0008,.065]
 elif shape:assert win["params"]==[.70,.88,.014,.006,.003]
 else:assert win["back_mm"]==30 and win["lift_mm"]==0
 if not tunic:assert all(not any(r["pairs"].values()) for r in win["rows"])
@@ -66,7 +68,7 @@ else:
 if tunic:
  assert np.linalg.norm(delta,axis=1).max()<.040 and np.isfinite(delta).all()
  assert not np.any(delta[rest[:,2]<=.24]) and not np.any(delta[rest[:,2]>=.825])
-elif shape:
+elif shape or join:
  assert np.linalg.norm(delta,axis=1).max()<.040 and np.isfinite(delta).all()
 else:
  assert np.max(np.abs(delta[:,[0,2]]))<1e-7 and delta[:,1].min()>=-1e-7 and delta[:,1].max()<.030001
@@ -81,7 +83,7 @@ for i,bv in enumerate(original["bufferViews"]):
  if i not in changed:assert b[o:o+l]==qb[o:o+l]
 for i in changed.values():q["accessors"][i]=original["accessors"][i]
 assert q==original
-report={"status":"ART_HOLD_W30D_TUNIC_SHAPE_TRIAL" if tunic else "ART_HOLD_W30C_DRAPE_SHAPE_TRIAL" if shape else "ART_HOLD_W30B_DRAPE_TRIAL","source_sha256":sha(raw),"house_sha256":m["house_sha256"],"glb_sha256":sha(res),"glb_bytes":len(res),"unchanged_views":len(d["bufferViews"])-2,("only_tunic_positions_normals_changed" if tunic else "only_drape_positions_normals_changed"):True,"probe_sha256":sha(probe_bytes),"delta_sha256":sha(delta_bytes),"coarse_samples":18,"max_delta_mm":float(np.linalg.norm(dp,axis=1).max()*1000),"changed_vertices":int((np.linalg.norm(dp,axis=1)>1e-7).sum())}
+report={"status":"ART_HOLD_W30E_HEAD_JOIN_TRIAL" if join else "ART_HOLD_W30D_TUNIC_SHAPE_TRIAL" if tunic else "ART_HOLD_W30C_DRAPE_SHAPE_TRIAL" if shape else "ART_HOLD_W30B_DRAPE_TRIAL","source_sha256":sha(raw),"house_sha256":m["house_sha256"],"glb_sha256":sha(res),"glb_bytes":len(res),"unchanged_views":len(d["bufferViews"])-2,("only_tunic_positions_normals_changed" if tunic else "only_drape_positions_normals_changed"):True,"probe_sha256":sha(probe_bytes),"delta_sha256":sha(delta_bytes),"coarse_samples":18,"max_delta_mm":float(np.linalg.norm(dp,axis=1).max()*1000),"changed_vertices":int((np.linalg.norm(dp,axis=1)>1e-7).sum())}
 asset=out/(variant+"-actor.glb");manifest=out/(variant+"-manifest.json")
 if asset.exists():
  assert asset.read_bytes()==res and json.loads(manifest.read_text())==report
