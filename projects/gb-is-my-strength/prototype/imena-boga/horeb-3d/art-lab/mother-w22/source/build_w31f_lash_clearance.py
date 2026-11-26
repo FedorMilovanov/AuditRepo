@@ -1,7 +1,7 @@
 """W31f: repair lash/skin clearance across continuous equal-eye blink samples.
-Preserves W31d animation, materials, mesh indices, weights, normals and morph deltas.
+Remove only proven unsafe symmetric ribbon pairs; preserve all remaining geometry and motion.
 """
-import bpy,copy,hashlib,json,math,os,struct
+import bpy,copy,hashlib,json,os,struct
 from pathlib import Path
 import numpy as np
 from mathutils import Vector
@@ -63,31 +63,44 @@ def safe(v,ds,faces):
   if t.overlap(skin) or t.overlap(brow):return False
   if t.overlap(eyes):return False
  return True
-v=l.copy();changes=[]
-for pair in range(22):
- ix=slice(pair*10,pair*10+10);fs=np.concatenate([local_faces,local_faces+5])
- # Choose the smallest rigid translation (mirrored lateral component).
- # A pure forward shift failed for pair 2; retain this hard local displacement cap.
- options=sorted({(dx,dy,dz) for dx in range(-150,151,50) for dy in range(-350,351,25) for dz in range(0,451,25) if dx*dx+dy*dy+dz*dz<=450*450},key=lambda p:(sum(x*x for x in p),abs(p[0]),abs(p[1]),p[2],p[0],p[1]))
- for dx,dy,dz in options:
-  candidate=l[ix].copy()
-  candidate[:,0]+=np.sign(candidate[:,0])*dx*1e-6
-  candidate[:,1]+=dy*1e-6;candidate[:,2]+=dz*1e-6
-  if safe(candidate,[x[ix] for x in lm],fs):
-   v[ix]=candidate
-   if dx or dy or dz:changes.append({"pair":pair,"offset_um":[dx,dy,dz]})
-   break
- else:raise AssertionError(("No safe symmetric pair translation under 0.45 mm",pair))
-print("W31F_PAIR_CHANGES",changes,flush=True)
-assert changes and safe(v,lm,lt)
-sets=list(map(set,lt))
+
+bad_ids=[i for i in range(44) if not safe(l[i*5:i*5+5],[x[i*5:i*5+5] for x in lm],local_faces)]
+assert bad_ids==[4,5,8,9],bad_ids
+keep=[i for i in range(44) if i not in bad_ids]
+iv=np.array([5*i+k for i in keep for k in range(5)])
+v=l[iv];morph=[x[iv] for x in lm];tri=np.concatenate([local_faces+5*i for i in range(len(keep))])
+assert len(v)==200 and len(tri)==120 and safe(v,morph,tri)
+sets=list(map(set,tri))
 for a,c,skin,brow,eyes in states:
- t=tree(v+a*lm[0]+c*lm[1],lt)
+ t=tree(v+a*morph[0]+c*morph[1],tri)
  assert not any(i<j and not sets[i]&sets[j] for i,j in t.overlap(t))
-i=lp["attributes"]["POSITION"];a=d["accessors"][i];bv=d["bufferViews"][a["bufferView"]];assert a.get("byteOffset",0)==0 and bv["byteLength"]==v.nbytes and sum(x["bufferView"]==a["bufferView"] for x in d["accessors"])==1
-o=bv.get("byteOffset",0);payload[o:o+v.nbytes]=v.astype("<f4").tobytes();a["min"]=v.min(0).tolist();a["max"]=v.max(0).tolist()
-res=encode(d,bytes(payload));q,qb=decode(res);q["accessors"][i]=original["accessors"][i];assert q==original and qb[:o]==b[:o] and qb[o+v.nbytes:]==b[o+v.nbytes:]
-report={"status":"ART_HOLD_W31F_LASH_CLEARANCE_TRIAL","source_sha256":sha(raw),"house_sha256":m["house_sha256"],"glb_sha256":sha(res),"glb_bytes":len(res),"source_blend_audit_sha256":sha(audit_bytes),"only_lash_positions_changed":True,"sample_states":len(states),"skin_region_triangles":len(sf),"changes":changes,"max_offset_mm":max(math.sqrt(sum(x*x for x in c["offset_um"])) for c in changes)/1000}
+# Compact just the lash accessors in their original buffer ranges. Zero the
+# vacated bytes, preserve the original GLB allocation and all other views.
+changed=set();acc=set()
+def compact(i,k,x):
+ a=d["accessors"][i];bv=d["bufferViews"][a["bufferView"]];old=read(i,k)
+ x=np.asarray(x,dtype=old.dtype).reshape(-1,k)
+ assert a.get("byteOffset",0)==0 and bv["byteLength"]==old.nbytes and sum(t["bufferView"]==a["bufferView"] for t in d["accessors"])==1
+ o=bv.get("byteOffset",0);payload[o:o+old.nbytes]=x.tobytes()+bytes(old.nbytes-x.nbytes)
+ a["count"]=len(x);bv["byteLength"]=x.nbytes
+ if "min" in a:a["min"]=x.min(0).tolist()
+ if "max" in a:a["max"]=x.max(0).tolist()
+ changed.add(a["bufferView"]);acc.add(i)
+for name,i in lp["attributes"].items():
+ k=4 if name in ("JOINTS_0","WEIGHTS_0") else 3
+ assert name in ("JOINTS_0","WEIGHTS_0","POSITION","NORMAL")
+ compact(i,k,read(i,k)[iv])
+for t in lp["targets"]:
+ for name,i in t.items():assert name in ("POSITION","NORMAL");compact(i,3,read(i,3)[iv])
+compact(lp["indices"],1,tri.reshape(-1,1))
+res=encode(d,bytes(payload));q,qb=decode(res)
+for i in acc:q["accessors"][i]=original["accessors"][i]
+for i in changed:q["bufferViews"][i]=original["bufferViews"][i]
+assert q==original and len(changed)==9
+for i,bv in enumerate(original["bufferViews"]):
+ o=bv.get("byteOffset",0);end=o+bv["byteLength"]
+ if i not in changed:assert qb[o:end]==b[o:end]
+report={"status":"ART_HOLD_W31F_LASH_CLEARANCE_TRIAL","source_sha256":sha(raw),"house_sha256":m["house_sha256"],"glb_sha256":sha(res),"glb_bytes":len(res),"source_blend_audit_sha256":sha(audit_bytes),"only_lash_topology_subset_changed":True,"sample_states":len(states),"skin_region_triangles":len(sf),"removed_strands":bad_ids,"strands":40,"vertices":200,"triangles":120,"unchanged_views":len(d["bufferViews"])-9}
 if out.exists():
  assert (out/"w31f-actor.glb").read_bytes()==res and json.loads((out/"w31f-manifest.json").read_text())==report
  print("W31F_REPRO_PASS",sha(res),flush=True)

@@ -219,6 +219,19 @@ if free_arm:
  assert fm["geometry_idle_and_non_target_channels_unchanged"] is True and fm["loop_endpoints_preserved"] is True
  asset=candidate/"w31d-actor.glb"
  assert sha(asset)==fm["glb_sha256"]=="4b87b59ac8c7c61968ef7c9a00f23939f21e53558d8f74072fde5e5b495e9db8"
+lash_subset=os.environ.get("HOREB_W31F_OUTPUT")
+subset_compare=os.environ.get("HOREB_VISUAL_LASH_SUBSET_COMPARE")=="1"
+if lash_subset:
+ assert free_arm and subset_compare
+ prior_arm=candidate
+ candidate=Path(lash_subset)
+ lm2=json.loads((candidate/"w31f-manifest.json").read_text(encoding="utf8"))
+ assert lm2["status"]=="ART_HOLD_W31F_LASH_CLEARANCE_TRIAL" and lm2["source_sha256"]==fm["glb_sha256"]
+ assert lm2["only_lash_topology_subset_changed"] is True and lm2["removed_strands"]==[4,5,8,9] and lm2["sample_states"]==547
+ assert lm2["source_blend_audit_sha256"]==sha(prior_arm/"w31e-blend-audit.json")
+ asset=candidate/"w31f-actor.glb"
+ assert sha(asset)==lm2["glb_sha256"]=="2a72465f5efb0995926b9641a103365122907174447af1ca61b875366e43eb3b"
+assert not subset_compare or (arm_compare and free_arm)
 assert not arm_compare or (idle_compare and idle_motion)
 assert not idle_compare or (join_compare and join)
 assert not join_compare or (tunic_compare and tunic)
@@ -240,7 +253,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-free-arm" if arm_compare else "visual-idle" if idle_compare else "visual-head-join" if join_compare else "visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-lash-subset" if subset_compare else "visual-free-arm" if arm_compare else "visual-idle" if idle_compare else "visual-head-join" if join_compare else "visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -340,10 +353,12 @@ if arm_compare:
   rows.append({"frame":frame,"bones":{name:list(rig.matrix_world@rig.pose.bones[name].head) for name in names}})
  (out/"gesture-bone-positions.json").write_text(json.dumps({"asset_sha256":sha(asset),"rows":rows},indent=2),encoding="utf8")
  views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("upper-peak",60,(-.85,-1.65,1.49),(-.44,-.32,1.18),45)]
+if subset_compare:
+ views=[("frontal-open",60,None,None,105),("frontal-closed",12,None,None,105)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
-  expected_blink=0 if idle_compare else 1 if frame==12 else 0
+  expected_blink=1 if subset_compare and frame==12 else 0 if idle_compare else 1 if frame==12 else 0
   assert all(abs(bk.key_blocks[k].value-expected_blink)<.0001 for k in ("blink_left","blink_right"))
  if brows:
   assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
@@ -365,6 +380,12 @@ for name,frame,eye,target,lens in views:
    if join_compare:
     focus=transform@Vector((0,.055,1.42))
     eye=focus+direction*.68+up*.04;target=focus
+ if subset_compare:
+  head=rig.pose.bones["head"];transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
+  focus=transform@Vector((0,-.102479,1.424))
+  front=(transform.to_3x3()@Vector((0,-1,0))).normalized()
+  up=(transform.to_3x3()@Vector((0,0,1))).normalized()
+  eye=focus+front*.48+up*.012;target=focus
  if shape_compare:
   fill.location=Vector(eye)+(Vector((0,0,.25)) if idle_compare or (tunic_compare and not join_compare) else up*.25)
   fill.rotation_euler=(Vector(target)-fill.location).to_track_quat("-Z","Y").to_euler()

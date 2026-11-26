@@ -4,7 +4,7 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
+variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
 assert len(variants)==1,"Choose one audit candidate"
 variant=variants[0]
 root=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
@@ -22,6 +22,7 @@ expected={
  "w30e":("ART_HOLD_W30E_HEAD_JOIN_TRIAL","8b63fcab7933a8493b6337437f0ae7f17c5ba3e50106d40945687ea1ce8aac6b",None),
  "w31a":("ART_HOLD_W31A_IDLE_MOTION_TRIAL","af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669",None),
  "w31d":("ART_HOLD_W31D_FREE_ARM_TRIAL","8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113",None),
+ "w31f":("ART_HOLD_W31F_LASH_CLEARANCE_TRIAL","4b87b59ac8c7c61968ef7c9a00f23939f21e53558d8f74072fde5e5b495e9db8",None),
 }[variant]
 m=json.loads((root/{"w28l":"w28l-eye-manifest.json","w28o":"w28o-blink-manifest.json"}.get(variant,variant+"-manifest.json")).read_text(encoding="utf8"))
 h=json.loads((house/"w28-house-manifest.json").read_text(encoding="utf8"))
@@ -52,13 +53,22 @@ elif variant=="w28r":
  assert probe["source_sha256"]==m["source_sha256"] and probe["house_sha256"]==m["house_sha256"] and not probe["best"]["prop_hits"] and probe["best"]["self_pairs"]==0
  # The source morph schedule is unchanged and checked sample by sample below.
  m["events"]={"Mother_QuietIdle":[34,110],"Mother_GestureTowardsBasket":[12,91]}
-elif variant in ("w29c","w30b","w30c","w30d","w30e","w31a","w31d"):
+elif variant in ("w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
  if variant=="w29c":
   assert m["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94"
   assert m["all_other_json_identical_after_remap"] is True and m["accessors_byte_identical"]==305 and m["active_material_graphs_identical"]==9
   fa=json.loads((root/"w29c-lash-audit.json").read_text(encoding="utf8"))
   assert fa["actor_sha256"]==m["glb_sha256"] and fa["source_rows_identical"] is True
   assert [len(c["rows"]) for c in fa["clips"]]==[417,144] and all(not c["bad"] for c in fa["clips"])
+ elif variant=="w31f":
+  assert m["glb_sha256"]=="2a72465f5efb0995926b9641a103365122907174447af1ca61b875366e43eb3b"
+  assert m["only_lash_topology_subset_changed"] is True and m["sample_states"]==547 and m["removed_strands"]==[4,5,8,9] and m["strands"]==40 and m["vertices"]==200 and m["triangles"]==120 and m["unchanged_views"]==310
+  source=Path(os.environ["HOREB_W31F_SOURCE"])
+  assert sha(source/"w31d-actor.glb")==m["source_sha256"]
+  assert sha(source/"w31e-blend-audit.json")==m["source_blend_audit_sha256"]=="c2ae78bb67c1a0911f18fd67a717a8a72d0226b928d644c1fb165a83e0d59292"
+  source_audit=json.loads((source/"w31d-glb-audit.json").read_text(encoding="utf8"))
+  assert source_audit["actor_sha256"]==m["source_sha256"] and source_audit["house_sha256"]==m["house_sha256"]
+  assert [len(c["rows"]) for c in source_audit["clips"]]==[417,144] and all(not c["bad"] for c in source_audit["clips"])
  elif variant=="w31d":
   assert m["glb_sha256"]=="4b87b59ac8c7c61968ef7c9a00f23939f21e53558d8f74072fde5e5b495e9db8"
   assert m["geometry_idle_and_non_target_channels_unchanged"] is True and m["gesture_samples"]==105 and m["loop_endpoints_preserved"] is True
@@ -123,7 +133,7 @@ helpers={b.custom_shape for b in rig.pose.bones if b.custom_shape is not None}
 exported_names={n.get("name") for n in doc["nodes"] if "mesh" in n}
 eyes=None
 blink_keys=None
-if variant in ("w28l","w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d"):
+if variant in ("w28l","w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
  eye_nodes=[n for n in doc["nodes"] if n.get("name")=="W19_CC0_Eyes" and "mesh" in n]
  assert len(eye_nodes)==1
  eye_doc=doc["meshes"][eye_nodes[0]["mesh"]]
@@ -134,13 +144,13 @@ if variant in ("w28l","w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w
  assert [k.name for k in list(eyes.data.shape_keys.key_blocks)[1:]]==eye_doc["extras"]["targetNames"]
  assert len(eyes.data.vertices)==96
  assert all(len(v.groups)==1 and eyes.vertex_groups[v.groups[0].group].name=="head" and abs(v.groups[0].weight-1)<1e-6 for v in eyes.data.vertices)
-if variant in ("w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d"):
+if variant in ("w28o","w28q","w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
  assert body.name=="base" and body.parent==rig
  assert bpy.data.objects["ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0"].type=="EMPTY"
  blink_keys=body.data.shape_keys
  assert [k.name for k in blink_keys.key_blocks]==["Basis","blink_left","blink_right"]
 overlays=[]
-if variant in ("w29c","w30b","w30c","w30d","w30e","w31a","w31d"):
+if variant in ("w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
  overlays=[next(o for o in bpy.data.objects if o.type=="MESH" and o.data.name.startswith(name)) for name in ("W28t_CC0_brows","W29b_CC0_lashes")]
  assert all(o.parent==rig and [k.name for k in o.data.shape_keys.key_blocks]==["Basis","blink_left","blink_right"] for o in overlays)
 # GLB UV seams can split geometrically identical vertices. Recognize shared
@@ -198,7 +208,7 @@ assert len(clothes)==5,[o.name for o in actor_meshes]
 assert any(o.name=="W28e_tailored_linen" for o in clothes)
 ad=rig.animation_data
 hand_faces=None
-if variant in ("w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d"):
+if variant in ("w28r","w29c","w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
  digits=("thumb","index","middle","ring","pinky")
  names={"hand_l"}|{f"{d}_{i:02d}_l" for d in digits for i in (1,2,3)}
  groups={g.index for g in body.vertex_groups if g.name in names}
@@ -320,7 +330,7 @@ def check(track,n,mixed=None):
     row.setdefault("facial_uv_seam_contacts",{})[o.name]=seams
    row["facial_pairs"]=facial
    row["facial_bad"]=bool(facial["overlay_pair"] or any(any(facial[o.name].values()) for o in overlays))
-  if variant in ("w30b","w30c","w30d","w30e","w31a","w31d"):
+  if variant in ("w30b","w30c","w30d","w30e","w31a","w31d","w31f"):
    head_linen=[o for o in clothes if o.name in ("W22_plain_linen_head_cover","W22_linen_rear_drape")]
    assert len(head_linen)==2
    garment={}
@@ -366,8 +376,8 @@ def check(track,n,mixed=None):
  return {"name":track.name,"rows":rows,"bad":bad}
 idle=next(t for t in tracks if t.name=="Mother_QuietIdle")
 if os.environ.get("HOREB_W31E_BLEND_AUDIT")=="1":
- assert variant=="w31d"
- accepted=json.loads((root/"w31d-glb-audit.json").read_text(encoding="utf8"))
+ assert variant in ("w31d","w31f")
+ accepted=json.loads((root/(variant+"-glb-audit.json")).read_text(encoding="utf8"))
  assert accepted["actor_sha256"]==sha(asset) and accepted["house_sha256"]==sha(glb)
  assert [len(c["rows"]) for c in accepted["clips"]]==[417,144] and all(not c["bad"] for c in accepted["clips"])
  owners=[eyes.data.shape_keys,blink_keys,*[o.data.shape_keys for o in overlays]]
@@ -440,6 +450,13 @@ if variant=="w31d":
  for a,b in zip(results[0]["rows"],source_audit["clips"][0]["rows"]):
   assert a["frame"]==b["frame"] and (Vector(a["wrist"])-Vector(b["wrist"])).length<1e-6
  print("W31D_IDLE_REPLAY_IDENTICAL_AND_LEFT_WRIST_PASS",144,417,flush=True)
+if variant=="w31f":
+ for before,after in zip(source_audit["clips"],results):
+  assert len(before["rows"])==len(after["rows"])
+  for a,b in zip(before["rows"],after["rows"]):
+   for k in ("wrist","eye_weights","blink_weights","prop_hits","skin_cloth","self_pairs","sash_pairs","sash_self_pairs","head_linen_pairs","hand_self_pairs"):
+    assert a[k]==b[k],("Unexpected non-lash change",a["frame"],k)
+ print("W31F_NON_LASH_REPLAY_IDENTICAL",561,flush=True)
 out=root/(variant+"-glb-audit.json");assert not out.exists()
 out.write_text(json.dumps({"status":variant.upper()+"_EXPORTED_SKIN_PROP_SAMPLED_CLEARANCE","actor_sha256":sha(asset),"house_sha256":sha(glb),"actor_meshes":len(actor_meshes),"props":len(props),"excluded_importer_helpers":excluded,"clips":results},indent=2),encoding="utf8")
 assert all(not r["bad"] for r in results),"Exported garment failed clearance"
