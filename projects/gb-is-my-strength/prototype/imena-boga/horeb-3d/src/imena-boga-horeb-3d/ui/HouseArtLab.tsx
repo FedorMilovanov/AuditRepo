@@ -29,6 +29,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
  const study=import.meta.env.DEV?new URLSearchParams(location.search).get('study'):null;
  const w28=study==='w28'||study==='w28e'||study==='w28f'||study==='w28g'||study==='w28o'||study==='w28q'||study==='w28r'||study==='w29c'||study==='w31a'||study==='w31f';
  const actorProfile=study==='w31f'?HOUSE_ACTOR_PROFILES.w31f:study==='w31a'?HOUSE_ACTOR_PROFILES.w31a:study==='w29c'?HOUSE_ACTOR_PROFILES.w29c:study==='w28r'?HOUSE_ACTOR_PROFILES.w28r:study==='w28q'?HOUSE_ACTOR_PROFILES.w28q:study==='w28o'?HOUSE_ACTOR_PROFILES.w28o:study==='w28g'?HOUSE_ACTOR_PROFILES.w28g:study==='w28f'?HOUSE_ACTOR_PROFILES.w28f:study==='w28e'?HOUSE_ACTOR_PROFILES.w28e:w28?HOUSE_ACTOR_PROFILES.w28:HOUSE_ACTOR_PROFILES.canonical;
+ const lightTrial=study==='w31f'&&new URLSearchParams(location.search).get('light')==='w32c';
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
  const [view,setView]=useState<View>('courtyard');
@@ -60,23 +61,25 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
   scene.background=new THREE.Color(0xaaa89b);
   scene.fog=new THREE.Fog(0xb1ac99,32,95);
   const camera=new THREE.PerspectiveCamera(53,1,.06,140);
-  const hemi=new THREE.HemisphereLight(0xfff4e1,0x736b61,1.05);
+  const hemi=new THREE.HemisphereLight(lightTrial?0xf9f1e4:0xfff4e1,lightTrial?0x827264:0x736b61,lightTrial?.72:1.05);
   scene.add(hemi);
   const sun=new THREE.DirectionalLight(0xffe3bc,2.55);
   sun.position.set(-12,19,7);sun.castShadow=true;
   sun.shadow.mapSize.set(2048,2048);
-  sun.shadow.camera.left=-22;sun.shadow.camera.right=22;
-  sun.shadow.camera.top=22;sun.shadow.camera.bottom=-22;
-  sun.shadow.bias=-.0002;sun.shadow.normalBias=.04;
+  // Concentrate the existing shadow budget on the authored house and yard.
+  const shadowSpan=lightTrial?10:22;
+  sun.shadow.camera.left=-shadowSpan;sun.shadow.camera.right=shadowSpan;
+  sun.shadow.camera.top=shadowSpan;sun.shadow.camera.bottom=-shadowSpan;
+  sun.shadow.bias=-.0002;sun.shadow.normalBias=lightTrial?.018:.04;
   scene.add(sun);
-  const ambient=new THREE.DirectionalLight(0xd1d9df,.25);
+  const ambient=new THREE.DirectionalLight(0xd1d9df,lightTrial?.12:.25);
   ambient.position.set(6,6,-10);scene.add(ambient);
   // Real-time approximation of daylight reflected through the open door.
   // Native Cycles uses a rectangular area source; glTF excludes lights.
-  const doorway=new THREE.SpotLight(0xffe4bf,32,8,.77,.7,2);
+  const doorway=new THREE.SpotLight(lightTrial?0xffead0:0xffe4bf,lightTrial?46:32,8,.77,.7,2);
   doorway.position.set(0,1.84,2.22);doorway.target.position.set(.2,1.02,-.8);
   doorway.castShadow=true;doorway.shadow.mapSize.set(1024,1024);
-  doorway.shadow.bias=-.00035;doorway.shadow.normalBias=.02;
+  doorway.shadow.bias=-.00035;doorway.shadow.normalBias=lightTrial?.009:.02;
   scene.add(doorway,doorway.target);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(180,180),
    new THREE.MeshStandardMaterial({color:0xb1a086,roughness:1}));
@@ -242,7 +245,8 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
    renderer=new THREE.WebGLRenderer({canvas:c,antialias:true,powerPreference:'high-performance'});
    renderer.outputColorSpace=THREE.SRGBColorSpace;
    renderer.toneMapping=THREE.ACESFilmicToneMapping;
-   renderer.toneMappingExposure=1.15;
+   renderer.toneMappingExposure=lightTrial?1.12:1.15;
+   c.dataset.houseLight=lightTrial?'w32c':'baseline';
    renderer.shadowMap.enabled=true;
    renderer.shadowMap.type=THREE.PCFShadowMap;
    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
@@ -414,7 +418,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
    c.removeEventListener('pointerdown',lookStart);c.removeEventListener('pointermove',lookMove);c.removeEventListener('pointerup',lookEnd);c.removeEventListener('pointercancel',lookEnd);c.removeEventListener('lostpointercapture',lookEnd);
    window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);window.removeEventListener('blur',clear);document.removeEventListener('visibilitychange',visibility);
    for(const key of ['houseWalk','houseWalkX','houseWalkZ','houseWalkYaw','houseWalkPitch','houseWalkBlocked','houseWalkRegion','houseWalkColliders','houseInspectReady','houseInspected','houseObservationReady','houseActorAperture'])delete c.dataset[key];
-   delete c.dataset.houseEpisodeProgress;
+   delete c.dataset.houseLight;delete c.dataset.houseEpisodeProgress;
    activeRenderer.setAnimationLoop(null);activeControls.dispose();
    const geos=new Set<THREE.BufferGeometry>(),mats=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
    if(loaded)loaded.traverse(o=>{

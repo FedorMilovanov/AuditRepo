@@ -84,7 +84,23 @@ if(!chrome)throw Error('Actual Chromium required');
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
  const prior=requests,priorActor=actorRequests;
- await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:''),{waitUntil:'domcontentloaded'});
+ const baseUrl=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:'');
+ const compare=pair?.name==='w31f'&&process.env.HOREB_W32C_LIGHT_COMPARE==='1';
+ if(compare&&!mobile){
+  for(const light of ['baseline','w32c']){
+   await page.goto(baseUrl+'&light='+light,{waitUntil:'domcontentloaded'});
+   await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
+   if((await state()).houseLight!==light)throw Error('Wrong light profile');
+   for(const view of ['courtyard','room','basket']){
+    await page.click('[data-testid="house-view-'+view+'"]');
+    await page.waitForFunction((s,v)=>document.querySelector(s).dataset.houseView===v,{},sel,view);
+    await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+    await (await page.$(sel)).screenshot({path:path.join(dir,'light-'+light+'-'+view+'.png')});
+   }
+  }
+  console.log('W32C_LIGHT_COMPARE_PASS');
+ }
+ await page.goto(baseUrl+(compare?'&light=w32c':''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(bytes&&requests<=prior)throw Error('No candidate request');
  const episode=pair?.name==='w31f';
