@@ -44,7 +44,8 @@ export async function loadNileSharedBasket(url:string):Promise<THREE.Group>{
     return group;
   }catch(e){disposeNileSharedBasket(group);throw e;}
 }
-export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket',sharedBasket?:THREE.Group): NilePreludeControl {
+export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket',sharedBasket?:THREE.Group,shoreTrial=false): NilePreludeControl {
+  const refined=shoreTrial&&!!sharedBasket&&moment==='basket';
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
   });
@@ -89,9 +90,27 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   scene.add(hemi, sun);
   const material = (color: number, roughness = 0.9) =>
     new THREE.MeshStandardMaterial({ color, roughness, metalness: 0, side: THREE.DoubleSide });
+  // A small periodic original normal map gives the physical water material
+  // fine ripples without more animated vertices or a second water renderer.
+  let rippleNormal:THREE.DataTexture|undefined;
+  if(refined){
+    const n=128,bytes=new Uint8Array(n*n*4);
+    for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+      const u=2*Math.PI*x/n,v=2*Math.PI*y/n;
+      const dx=.18*Math.cos(3*u+5*v)+.075*Math.cos(9*u-2*v);
+      const dy=.20*Math.cos(3*u+5*v)-.045*Math.cos(9*u-2*v)+.09*Math.cos(2*u-11*v);
+      const normal=new THREE.Vector3(-dx,-dy,1).normalize(),i=(y*n+x)*4;
+      bytes[i]=Math.round(127.5*(1+normal.x));bytes[i+1]=Math.round(127.5*(1+normal.y));bytes[i+2]=Math.round(127.5*(1+normal.z));bytes[i+3]=255;
+    }
+    rippleNormal=new THREE.DataTexture(bytes,n,n,THREE.RGBAFormat);
+    rippleNormal.wrapS=rippleNormal.wrapT=THREE.RepeatWrapping;
+    rippleNormal.repeat.set(14,22);rippleNormal.magFilter=THREE.LinearFilter;
+    rippleNormal.minFilter=THREE.LinearMipmapLinearFilter;rippleNormal.generateMipmaps=true;rippleNormal.needsUpdate=true;
+  }
   const waterMaterial = new THREE.MeshPhysicalMaterial({
-    color:0xffffff,vertexColors:true,roughness:.43,metalness:0,
-    clearcoat:.16,clearcoatRoughness:.3,side:THREE.DoubleSide,
+    color:0xffffff,vertexColors:true,roughness:refined?.31:.43,metalness:0,
+    clearcoat:refined?.26:.16,clearcoatRoughness:.3,side:THREE.DoubleSide,
+    ...(rippleNormal?{normalMap:rippleNormal,normalScale:new THREE.Vector2(.65,.65)}:{}),
   });
   // Lightly animated surface, but the cradle never drifts or changes position.
   // The wet bank must physically join the same shoreline as the basket.
@@ -234,7 +253,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   basket.add(foldedCloth);
   // Approximate readable scale only; Scripture gives no basket dimensions.
   // The base intersects the shallow water by a few centimetres, not mid-air.
-  basket.position.set(NILE_CRADLE.x,sharedBasket?NILE_WATER_LEVEL-.012:-.03,NILE_CRADLE.z);
+  basket.position.set(refined?.60:NILE_CRADLE.x,sharedBasket?NILE_WATER_LEVEL-.012:-.03,NILE_CRADLE.z);
   basket.rotation.y=-0.25;
   basket.scale.setScalar(sharedBasket?1:.88);
   scene.add(basket);
@@ -249,7 +268,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   // fine, drooping branched umbels and tiny ochre seed-bearing tips,
   // not cartoon spherical fruit on thick star-shaped plastic arms.
   // Original geometry, no third-party meshes or textures.
-  const stems=104,rays=9,branchesPerRay=3;
+  const extraStems=refined?18:0,stems=104+extraStems,rays=9,branchesPerRay=3;
   const stemMat=material(0x556e53),headMat=material(0x6e7950),
     spikeletMat=material(0x89784e);
   const shaft=new THREE.InstancedMesh(new THREE.CylinderGeometry(.012,.024,1,5),stemMat,stems);
@@ -270,14 +289,25 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   const origin=new THREE.Vector3(), tip=new THREE.Vector3();
   const sideStart=new THREE.Vector3(),sideTip=new THREE.Vector3();
   for(let i=0;i<stems;i++){
-    const {x,z,height,sway}=nilePapyrusRoot(i,moment);
+    const original=nilePapyrusRoot(i,moment);
+    // Cluster the new roots along the wet lip, behind the basket and to its
+    // sides. These are additional shot dressing, not a walkable route.
+    const extra=i>=104,j=i-104;
+    const z=extra?NILE_CRADLE.z+(j<9?-1:1)*(.48+hash(j*4.71+9)*1.10):original.z;
+    const x=extra?nileShoreX(z)+.40+hash(j*7.31+2)*.57:original.x;
+    const height=extra?1.38+hash(j*3.93+7)*1.42:original.height;
+    const sway=extra?(hash(j*5.19+8)-.5)*.11:original.sway;
     const baseY=nileGroundY(x,z)-.045;
-    dummy.position.set(x,baseY+height/2,z);
+    // Rotate about the rooted lower end, not the middle of the stem.
+    const topX=refined?x-height*Math.sin(sway):x-height*.5*Math.sin(sway);
+    const topY=refined?baseY+height*Math.cos(sway):baseY+height;
+    if(extra&&sharedBounds&&Math.min(x,topX)-.025<=sharedBounds.max.x+.05&&z>=sharedBounds.min.z-.05&&z<=sharedBounds.max.z+.05)throw Error('Papyrus intersects shared basket envelope');
+    dummy.position.set(refined?(x+topX)/2:x,refined?(baseY+topY)/2:baseY+height/2,z);
     dummy.rotation.set(0,0,sway);
     dummy.scale.set(1,height,1);
     dummy.updateMatrix();
     shaft.setMatrixAt(i,dummy.matrix);
-    origin.set(x-height*.5*Math.sin(sway),baseY+height,z);
+    origin.set(topX,topY,z);
     dummy.position.copy(origin);
     dummy.rotation.set(0,0,0);
     dummy.scale.setScalar(1);
@@ -329,6 +359,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   const sedge=new THREE.InstancedMesh(
     new THREE.ConeGeometry(.027,.46,3),material(0x7f8050),tufts*blades);
   sedge.name='nile-shore-sedges';
+  let sedgeCount=0;
   for(let i=0;i<tufts;i++){
     const x=1.6+hash(i*2.93+31)*4.7;
     const z=-14+hash(i*7.17+81)*20;
@@ -336,7 +367,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     for(let k=0;k<blades;k++){
       const scale=.48+hash(i*11+k)*.95;
       const angle=k*Math.PI*2/blades+hash(i*5)*.6;
-      const index=i*blades+k;
+      const index=sedgeCount++;
       dummy.position.set(x+Math.cos(angle)*.06,bankHeight(x,z)+scale*.23,z+Math.sin(angle)*.06);
       dummy.rotation.set(Math.sin(angle)*.23,angle,Math.cos(angle)*.23);
       dummy.scale.set(1,scale,1);
@@ -344,6 +375,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
       sedge.setMatrixAt(index,dummy.matrix);
     }
   }
+  sedge.count=sedgeCount;
   sedge.instanceMatrix.needsUpdate=true;
   scene.add(sedge);
   const pebbles=90;
@@ -720,6 +752,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   canvas.dataset.nilePapyrusCount=String(shaft.count);
   canvas.dataset.nileUmbelRays=String(spokes.count);
   canvas.dataset.nileMoment=moment;
+  if(refined){canvas.dataset.nileShoreStudy='w32f';canvas.dataset.nileExtraPapyrus=String(extraStems);canvas.dataset.nileBasketCenterX=basket.position.x.toFixed(3);}
   canvas.dataset.nileFigures=String(figures.children.length);
   // Physical-art witnesses: actual, nested fabric and pose meshes.
   canvas.dataset.nilePleatedFigures=String(figures.children.filter(f=>
@@ -785,9 +818,11 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
         mats.forEach(m=>m.dispose());
       }
     });
+    rippleNormal?.dispose();
     renderer.dispose();
     renderer.forceContextLoss();
     delete canvas.dataset.nileBasketAsset;delete canvas.dataset.nileBasketMeshes;delete canvas.dataset.nileBasketScale;delete canvas.dataset.nileBasketFrameExtent;
+    delete canvas.dataset.nileShoreStudy;delete canvas.dataset.nileExtraPapyrus;delete canvas.dataset.nileBasketCenterX;
     delete canvas.dataset.nileReady;
     delete canvas.dataset.nileMoment;
     delete canvas.dataset.nileFigures;

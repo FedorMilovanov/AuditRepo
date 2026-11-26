@@ -143,7 +143,7 @@ if(!chrome)throw Error('Actual Chromium required');
   }
   console.log(plasterBytes?'W32D_PLASTER_COMPARE_PASS':'W32C_LIGHT_COMPARE_PASS');
  }
- await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':'')+(sharedBasketBytes?'&basket=w32e':''),{waitUntil:'domcontentloaded'});
+ await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':'')+(sharedBasketBytes?'&basket=w32e'+(process.env.HOREB_W32F_SHORE==='1'?'&shore=w32f':''):''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(plasterBytes?plasterRequests<=priorPlaster:bytes&&requests<=prior)throw Error('No candidate request');
  const episode=pair?.name==='w31f';
@@ -229,6 +229,10 @@ if(!chrome)throw Error('Actual Chromium required');
   if(shore.nileFigures!=='0'||Number(shore.nilePapyrusCount)<=0)throw Error('Wrong Nile moment '+JSON.stringify(shore));
   if(sharedBasketBytes){
    if(basketRequests<=priorBasket||shore.nileBasketAsset!=='w32e'||shore.nileBasketMeshes!=='92'||shore.nileBasketScale!=='1'||!Number.isFinite(Number(shore.nileBasketFrameExtent))||Number(shore.nileBasketFrameExtent)>=1)throw Error('Shared basket not framed '+JSON.stringify(shore));
+   if(process.env.HOREB_W32F_SHORE==='1'){
+    if(shore.nileShoreStudy!=='w32f'||shore.nileExtraPapyrus!=='18'||shore.nilePapyrusCount!=='122'||shore.nileBasketCenterX!=='0.600')throw Error('Wrong shore trial '+JSON.stringify(shore));
+    console.log('W32F_SHORE_PASS',JSON.stringify({mobile,papyrus:shore.nilePapyrusCount,center:shore.nileBasketCenterX}));
+   }
    console.log('W32E_SHARED_BASKET_PASS',JSON.stringify({mobile,meshes:shore.nileBasketMeshes,extent:shore.nileBasketFrameExtent}));
   }
   await (await page.$('[data-testid="moses-nile-3d"]')).screenshot({path:path.join(dir,mobile?'nile-mobile390.png':'nile-desktop1440.png')});
