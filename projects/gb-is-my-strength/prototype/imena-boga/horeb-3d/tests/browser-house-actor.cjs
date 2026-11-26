@@ -143,7 +143,7 @@ if(!chrome)throw Error('Actual Chromium required');
   }
   console.log(plasterBytes?'W32D_PLASTER_COMPARE_PASS':'W32C_LIGHT_COMPARE_PASS');
  }
- await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':'')+(sharedBasketBytes?'&basket=w32e'+(process.env.HOREB_W32F_SHORE==='1'?'&shore=w32f':''):''),{waitUntil:'domcontentloaded'});
+ await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':'')+(sharedBasketBytes?'&basket=w32e'+(process.env.HOREB_W32F_SHORE==='1'?'&shore=w32f':'')+(process.env.HOREB_W33A_INFANT==='1'?'&infant=w33a':''):''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(plasterBytes?plasterRequests<=priorPlaster:bytes&&requests<=prior)throw Error('No candidate request');
  const episode=pair?.name==='w31f';
@@ -232,6 +232,10 @@ if(!chrome)throw Error('Actual Chromium required');
    if(process.env.HOREB_W32F_SHORE==='1'){
     if(shore.nileShoreStudy!=='w32f'||shore.nileExtraPapyrus!=='18'||shore.nilePapyrusCount!=='122'||shore.nileBasketCenterX!=='0.600')throw Error('Wrong shore trial '+JSON.stringify(shore));
     console.log('W32F_SHORE_PASS',JSON.stringify({mobile,papyrus:shore.nilePapyrusCount,center:shore.nileBasketCenterX}));
+   }
+   if(process.env.HOREB_W33A_INFANT==='1'){
+    if(shore.nileInfantStudy!=='w33a'||Number(shore.nileInfantSamples)<5000||Number(shore.nileInfantGapMm)<3||Number(shore.nileInfantBaseMm)<86.2||!Number.isFinite(Number(shore.nileInfantFrameExtent))||Number(shore.nileInfantFrameExtent)>=1)throw Error('Infant study not accepted '+JSON.stringify(shore));
+    console.log('W33A_INFANT_PASS',JSON.stringify({mobile,samples:shore.nileInfantSamples,gapMm:shore.nileInfantGapMm,baseMm:shore.nileInfantBaseMm,extent:shore.nileInfantFrameExtent}));
    }
    console.log('W32E_SHARED_BASKET_PASS',JSON.stringify({mobile,meshes:shore.nileBasketMeshes,extent:shore.nileBasketFrameExtent}));
   }

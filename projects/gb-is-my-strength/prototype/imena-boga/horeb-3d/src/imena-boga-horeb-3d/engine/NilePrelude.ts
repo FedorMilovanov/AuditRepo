@@ -6,6 +6,7 @@
  * canvas; no map coordinates, Research exhibit, or checkpoint mutations.
  */
 import * as THREE from 'three';
+import {createNileInfantStudy} from './NileInfantStudy';
 import { NILE_CRADLE, NILE_WALK, nileCanWalk, nileGroundY, nilePapyrusRoot, nileShoreX, nileHash } from './NileTerrain';
 import { NILE_WATER_LEVEL, nileWaterHeight, nileWaterNearshore, nileWaterMottle } from './NileWater';
 
@@ -44,8 +45,9 @@ export async function loadNileSharedBasket(url:string):Promise<THREE.Group>{
     return group;
   }catch(e){disposeNileSharedBasket(group);throw e;}
 }
-export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket',sharedBasket?:THREE.Group,shoreTrial=false): NilePreludeControl {
+export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket',sharedBasket?:THREE.Group,shoreTrial=false,infantTrial=false): NilePreludeControl {
   const refined=shoreTrial&&!!sharedBasket&&moment==='basket';
+  const infantStudy=refined&&infantTrial;
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
   });
@@ -60,7 +62,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   // Shoot FROM the river side: neither reeds nor the bank obscure the chest.
   const wideShot = moment === 'discovery'
     ? { x: -1.55, y: 2.15, z: 3.2, focusX: 1.85, focusY: .92, focusZ: -2.0 }
-    : sharedBasket?{x:-1.45,y:1.28,z:.45,focusX:.73,focusY:.25,focusZ:-2.1}:{ x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
+    : infantStudy?{x:-.68,y:1.75,z:-.65,focusX:.60,focusY:.14,focusZ:-2.1}:sharedBasket?{x:-1.45,y:1.28,z:.45,focusX:.73,focusY:.25,focusZ:-2.1}:{ x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
   // W8C second, closer cinematographic angle: the same real scene and
   // stationary cradle, never a new physical path or false location.
   const closeShot = { x: -.82, y: 1.82, z: 1.06, focusX: 1.44, focusY: .80, focusZ: -2.20 };
@@ -243,6 +245,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   }
   // A cloth-wrapped silhouette, no invented face/identity or depiction of
   // specific human anatomy. The baby is deliberately not animated.
+  if(infantStudy){basket.add(createNileInfantStudy());canvas.dataset.nileInfantStudy='w33a';}
+  else{
   const cloth = new THREE.Mesh(new THREE.SphereGeometry(1,16,10), material(0xd2bda0));
   if(sharedBasket){cloth.scale.set(.28,.105,.145);cloth.position.set(0,.13,0);}
   else{cloth.scale.set(0.46,0.19,0.27);cloth.position.set(0,0.16,0);}
@@ -251,6 +255,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   if(sharedBasket){foldedCloth.scale.set(.12,.075,.12);foldedCloth.position.set(.18,.15,-.015);}
   else{foldedCloth.scale.set(0.19,0.13,0.22);foldedCloth.position.set(0.28,0.18,-0.03);}
   basket.add(foldedCloth);
+  }
   // Approximate readable scale only; Scripture gives no basket dimensions.
   // The base intersects the shallow water by a few centimetres, not mid-air.
   basket.position.set(refined?.60:NILE_CRADLE.x,sharedBasket?NILE_WATER_LEVEL-.012:-.03,NILE_CRADLE.z);
@@ -259,6 +264,40 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   scene.add(basket);
   if(sharedBasket)basket.updateWorldMatrix(true,true);
   const sharedBounds=sharedBasket?new THREE.Box3().setFromObject(sharedBasket):null;
+  const infantGroup=infantStudy?basket.getObjectByName('W33a_wrapped_infant_study'):undefined;
+  const infantBounds=infantGroup?new THREE.Box3().setFromObject(infantGroup):null;
+  if(infantGroup){
+   // Test actual local-space vertices against the authored basket interior.
+   // Use horizontal rays against the woven shell/rim, not only bounding boxes.
+   const shell:THREE.Mesh[]=[];
+   sharedBasket?.traverse(o=>{if(o instanceof THREE.Mesh&&/Hand_woven_basket_body|Basket_thick_lipped_rim/.test(o.name))shell.push(o);});
+   if(shell.length!==2)throw Error('Missing basket shell for infant study');
+   const ray=new THREE.Raycaster(),p=new THREE.Vector3(),dir=new THREE.Vector3();
+   let samples=0,minGap=Infinity,minY=Infinity;
+   const side=new Map<THREE.Material,THREE.Side>();
+   for(const o of shell)for(const m of Array.isArray(o.material)?o.material:[o.material]){if(!side.has(m))side.set(m,m.side);m.side=THREE.DoubleSide;}
+   try{
+    infantGroup.traverse(o=>{
+     if(!(o instanceof THREE.Mesh))return;
+     const vertices=o.geometry.getAttribute('position');
+     for(let i=0;i<vertices.count;i++){
+      p.fromBufferAttribute(vertices,i);o.localToWorld(p);basket.worldToLocal(p);
+      minY=Math.min(minY,p.y);
+      const radius=Math.hypot(p.x,p.z);if(radius<.0001)continue;
+      dir.set(p.x/radius,0,p.z/radius).transformDirection(basket.matrixWorld);
+      const origin=basket.localToWorld(new THREE.Vector3(0,p.y,0));
+      ray.set(origin,dir);ray.far=1;
+      const hit=ray.intersectObjects(shell,false)[0];
+      if(!hit)throw Error('No shell at infant sample');
+      minGap=Math.min(minGap,hit.distance-radius);samples++;
+     }
+    });
+   }finally{for(const [m,v] of side)m.side=v;}
+   if(minGap<.003||minY<.0862)throw Error('Infant study intersects shell/floor');
+   canvas.dataset.nileInfantSamples=String(samples);
+   canvas.dataset.nileInfantGapMm=(minGap*1000).toFixed(2);
+   canvas.dataset.nileInfantBaseMm=(minY*1000).toFixed(2);
+  }
   if(sharedBasket){
     canvas.dataset.nileBasketAsset='w32e';
     canvas.dataset.nileBasketMeshes='92';
@@ -794,6 +833,13 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
       }
       canvas.dataset.nileBasketFrameExtent=depth?extent.toFixed(4):'outside';
     }
+    if(infantBounds){
+      let extent=0;
+      for(const x of [infantBounds.min.x,infantBounds.max.x])for(const y of [infantBounds.min.y,infantBounds.max.y])for(const z of [infantBounds.min.z,infantBounds.max.z]){
+       const v=new THREE.Vector3(x,y,z).project(camera);extent=Math.max(extent,Math.abs(v.x),Math.abs(v.y));
+      }
+      canvas.dataset.nileInfantFrameExtent=extent.toFixed(4);
+    }
     renderer.render(scene,camera);
     canvas.dataset.nileRendered='true';
   };
@@ -823,6 +869,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     renderer.forceContextLoss();
     delete canvas.dataset.nileBasketAsset;delete canvas.dataset.nileBasketMeshes;delete canvas.dataset.nileBasketScale;delete canvas.dataset.nileBasketFrameExtent;
     delete canvas.dataset.nileShoreStudy;delete canvas.dataset.nileExtraPapyrus;delete canvas.dataset.nileBasketCenterX;
+    delete canvas.dataset.nileInfantStudy;delete canvas.dataset.nileInfantSamples;delete canvas.dataset.nileInfantGapMm;delete canvas.dataset.nileInfantBaseMm;delete canvas.dataset.nileInfantFrameExtent;
     delete canvas.dataset.nileReady;
     delete canvas.dataset.nileMoment;
     delete canvas.dataset.nileFigures;

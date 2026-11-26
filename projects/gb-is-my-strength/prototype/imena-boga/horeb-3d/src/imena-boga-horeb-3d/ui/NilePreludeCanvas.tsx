@@ -43,7 +43,7 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false, la
       const shared=useShared?await loadNileSharedBasket(new URL('./artlab/w32e-basket.glb',window.location.href).href):undefined;
       if(disposed){if(shared)disposeNileSharedBasket(shared);return;}
       let scene:NilePreludeControl;
-      try{scene=createNilePrelude(canvas,reduced,moment,shared,useShared&&new URLSearchParams(location.search).get('shore')==='w32f');}
+      try{scene=createNilePrelude(canvas,reduced,moment,shared,useShared&&new URLSearchParams(location.search).get('shore')==='w32f',useShared&&new URLSearchParams(location.search).get('infant')==='w33a');}
       catch(e){if(shared)disposeNileSharedBasket(shared);throw e;}
       if(disposed){scene.dispose();return;}
       controller.current=scene;
