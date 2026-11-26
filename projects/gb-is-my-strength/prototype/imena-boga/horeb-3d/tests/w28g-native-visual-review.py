@@ -119,6 +119,17 @@ if lashes:
  assert lm2["existing_actor_unchanged"] is True and lm2["strand_count"]==44 and all(t["overlap_pairs"]==[0]*4 for t in lm2["trials"])
  asset=candidate/"w29b-actor.glb"
  assert sha(asset)==lm2["glb_sha256"]=="8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1" and asset.stat().st_size==lm2["glb_bytes"]
+compact=os.environ.get("HOREB_W29C_OUTPUT")
+if compact:
+ assert lashes
+ prior_lashes=candidate
+ candidate=Path(compact)
+ cm=json.loads((candidate/"w29c-manifest.json").read_text(encoding="utf8"))
+ assert cm["status"]=="ART_HOLD_W29C_LOSSLESS_COMPACT_TRIAL" and cm["source_sha256"]==lm2["glb_sha256"]
+ assert cm["source_lash_audit_sha256"]==sha(prior_lashes/"w29b-lash-audit.json")
+ assert cm["all_other_json_identical_after_remap"] is True and cm["active_material_graphs_identical"]==9
+ asset=candidate/"w29c-actor.glb"
+ assert sha(asset)==cm["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94" and asset.stat().st_size==cm["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
@@ -131,6 +142,7 @@ assert not linen or linen_compare or brow_compare
 assert not brows or brow_compare
 assert not skin or brow_compare
 assert not lashes or brow_compare
+assert not compact or brow_compare
 out=(candidate or root)/("visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1

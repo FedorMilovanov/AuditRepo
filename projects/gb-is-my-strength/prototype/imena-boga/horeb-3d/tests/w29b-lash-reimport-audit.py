@@ -10,8 +10,20 @@ m=json.loads((root/"w29b-manifest.json").read_text(encoding="utf8"))
 assert sha(root/"w29b-actor.glb")==m["glb_sha256"]=="8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1"
 assert sha(base/"w29a-actor.glb")==m["source_sha256"] and m["existing_actor_unchanged"] is True
 assert m["strand_count"]==44 and len(m["trials"])==55 and all(t["overlap_pairs"]==[0]*4 for t in m["trials"])
+compact=os.environ.get("HOREB_W29C_OUTPUT")
+asset=root/"w29b-actor.glb"
+if compact:
+ prior=root
+ root=Path(compact)
+ cm=json.loads((root/"w29c-manifest.json").read_text(encoding="utf8"))
+ assert cm["status"]=="ART_HOLD_W29C_LOSSLESS_COMPACT_TRIAL" and cm["source_sha256"]==m["glb_sha256"]
+ assert cm["source_lash_audit_sha256"]==sha(prior/"w29b-lash-audit.json")
+ assert cm["accessors_byte_identical"]==305 and cm["active_material_graphs_identical"]==9 and cm["all_other_json_identical_after_remap"] is True
+ asset=root/"w29c-actor.glb"
+ assert sha(asset)==cm["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94" and asset.stat().st_size==cm["glb_bytes"]
+
 bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;s.render.fps=24
-bpy.ops.import_scene.gltf(filepath=str(root/"w29b-actor.glb"),merge_vertices=True)
+bpy.ops.import_scene.gltf(filepath=str(asset),merge_vertices=True)
 rig=next(o for o in bpy.data.objects if o.type=="ARMATURE");assert len(rig.data.bones)==53
 meshes=[o for o in bpy.data.objects if o.type=="MESH" and o.parent==rig]
 assert len(meshes)==9,[(o.name,o.data.name) for o in meshes]
@@ -50,6 +62,10 @@ for name,count,step in (("Mother_GestureTowardsBasket",417,.25),("Mother_QuietId
  results.append({"name":name,"rows":rows,"bad":bad})
  print("W29B_REIMPORT",name,len(rows),"bad",len(bad),"max",{k:max(r["overlap_pairs"][k] for r in rows) for k in ("skin","eyes","head_cover","brows","self")},flush=True)
 report={"status":"ART_HOLD_W29B_FOCUSED_LASH_AUDIT","actor_sha256":m["glb_sha256"],"source_sha256":m["source_sha256"],"clips":results}
-p=root/"w29b-lash-audit.json";assert not p.exists();p.write_text(json.dumps(report,indent=2),encoding="utf8")
+if compact:
+ prior_audit=json.loads((prior/"w29b-lash-audit.json").read_text(encoding="utf8"))
+ assert results==prior_audit["clips"],"Compact import differs from original sampled clip"
+ report.update({"status":"ART_HOLD_W29C_FOCUSED_LASH_AUDIT","actor_sha256":cm["glb_sha256"],"source_sha256":cm["source_sha256"],"source_rows_identical":True})
+p=root/("w29c-lash-audit.json" if compact else "w29b-lash-audit.json");assert not p.exists();p.write_text(json.dumps(report,indent=2),encoding="utf8")
 assert all(not c["bad"] for c in results),"Eyelash overlap detected"
 print("W29B_FOCUSED_AUDIT_PASS",sum(len(c["rows"]) for c in results),flush=True)

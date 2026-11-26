@@ -8,7 +8,13 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W29b v3 (2026-11-26)
+## Current handoff: W29c (2026-11-26)
+
+- W29c losslessly compacts W29b v3: 10,534,856 bytes versus 12,592,592, saves 2,057,736 bytes (16.3%). SHA-256 0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94. Removes obsolete skin and eye textures only; all 305 accessors, 311 retained buffer views, 9 active material graphs identical. Evidence H:/HOREB_ArtPipeline/evidence/W29c-compact-20261126. Reproducible, focused reimport 561/561 rows identical to W29b, focused Chromium 561/561 and 9 skinned meshes/53 bones. Native comparison 2/2; per-channel max pixel difference 1 and 2, PSNR 81.38/70.79 dB.
+- W29c DEV profile and full pair audit now include both facial overlays and all 98 existing prop trees. Initial full audit flagged UV-seam adjacency on brows at frames 12.75 and 82.75. Diagnosis confirmed exact shared edges; improved test accepts only identical rest/morph/skin signatures, coincident posed edges and opposite-side third vertices, preserving the original rejected audit. Full rerun and full-scene browser test are required before promotion.
+- W29d diagnostic (not a new asset): 303 unique actual blink/gaze states. Forward eye movement 0-4 mm did not increase frontal ray-visible eye area; 5-6 mm intersects skin in all 303 states. Do not shift eyes forward as a cosmetic fix. Next visual priority: iris/sclera lighting and restrained skin microsurface, then garment/hood silhouette. No canonical replacement or ART HOLD lift.
+
+### Prior handoff: W29b v3 (2026-11-26)
 
 - W29b v3 adds 44 short upper-lid lash strands (220 vertices, 132 triangles) fitted to the visible skin, not the colliding original helper strips. Source references are pinned CC0 MakeHuman assets. Lower lashes are not implemented. Candidate SHA-256 8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1, 12,592,592 bytes. Evidence H:/HOREB_ArtPipeline/evidence/W29b-lashes-v3-20261126. Reproducible; 55 coarse/guard states and independent 417+144 reimport samples pass, zero overlaps with skin, eyes, brows, hood and self; focused Chromium facial channels 561/561, 9 meshes, 53 bones, no JS errors. Earlier v2 failed 6 samples and is rejected. Full scene browser and ART acceptance still required; no canonical replacement.
 

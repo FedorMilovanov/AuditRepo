@@ -4,7 +4,7 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
+variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r","w29c") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
 assert len(variants)==1,"Choose one audit candidate"
 variant=variants[0]
 root=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
@@ -15,6 +15,7 @@ expected={
  "w28o":("ART_HOLD_W28O_BLINK_TRIAL","70cd23b9029efcd1357a9211ce7ab651d8b816438f20ad0c198fdbf7bd042741",None),
  "w28q":("ART_HOLD_W28Q_SHOULDER_TRIAL","a4c2bad8ee870766717151369ce3de6cda2fdaddc17bf14e43741d4c79397f74",None),
  "w28r":("ART_HOLD_W28R_GRIP_MOTION_TRIAL","6bb286037d794b0830840dd709ba257d5a3e722540665f6527b782338f8499cd",None),
+ "w29c":("ART_HOLD_W29C_LOSSLESS_COMPACT_TRIAL","8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1",None),
 }[variant]
 m=json.loads((root/{"w28l":"w28l-eye-manifest.json","w28o":"w28o-blink-manifest.json"}.get(variant,variant+"-manifest.json")).read_text(encoding="utf8"))
 h=json.loads((house/"w28-house-manifest.json").read_text(encoding="utf8"))
@@ -45,6 +46,18 @@ elif variant=="w28r":
  assert probe["source_sha256"]==m["source_sha256"] and probe["house_sha256"]==m["house_sha256"] and not probe["best"]["prop_hits"] and probe["best"]["self_pairs"]==0
  # The source morph schedule is unchanged and checked sample by sample below.
  m["events"]={"Mother_QuietIdle":[34,110],"Mother_GestureTowardsBasket":[12,91]}
+elif variant=="w29c":
+ assert m["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94"
+ assert m["all_other_json_identical_after_remap"] is True and m["accessors_byte_identical"]==305 and m["active_material_graphs_identical"]==9
+ fa=json.loads((root/"w29c-lash-audit.json").read_text(encoding="utf8"))
+ assert fa["actor_sha256"]==m["glb_sha256"] and fa["source_rows_identical"] is True
+ assert [len(c["rows"]) for c in fa["clips"]]==[417,144] and all(not c["bad"] for c in fa["clips"])
+ grip_root=Path(os.environ["HOREB_W29C_GRIP_SOURCE"])
+ gm=json.loads((grip_root/"w28r-manifest.json").read_text(encoding="utf8"))
+ assert sha(grip_root/"w28r-actor.glb")==gm["glb_sha256"]=="40b966d66bd72ef628e572bf2f356d6ff13f7752d021b60bdd6c217bb77b81dc"
+ assert sha(grip_root/"w28r-grip-probe.json")==gm["probe_sha256"]
+ probe=json.loads((grip_root/"w28r-grip-probe.json").read_text(encoding="utf8"))
+ m["events"]={"Mother_QuietIdle":[34,110],"Mother_GestureTowardsBasket":[12,91]}
 else:
  assert sha(root/expected[2])==m["audit_sha256"]
  assert m["sample_counts"]==[417,144] and m["placement_three"]==[-.58,.015,.30]
@@ -74,7 +87,7 @@ helpers={b.custom_shape for b in rig.pose.bones if b.custom_shape is not None}
 exported_names={n.get("name") for n in doc["nodes"] if "mesh" in n}
 eyes=None
 blink_keys=None
-if variant in ("w28l","w28o","w28q","w28r"):
+if variant in ("w28l","w28o","w28q","w28r","w29c"):
  eye_nodes=[n for n in doc["nodes"] if n.get("name")=="W19_CC0_Eyes" and "mesh" in n]
  assert len(eye_nodes)==1
  eye_doc=doc["meshes"][eye_nodes[0]["mesh"]]
@@ -85,11 +98,25 @@ if variant in ("w28l","w28o","w28q","w28r"):
  assert [k.name for k in list(eyes.data.shape_keys.key_blocks)[1:]]==eye_doc["extras"]["targetNames"]
  assert len(eyes.data.vertices)==96
  assert all(len(v.groups)==1 and eyes.vertex_groups[v.groups[0].group].name=="head" and abs(v.groups[0].weight-1)<1e-6 for v in eyes.data.vertices)
-if variant in ("w28o","w28q","w28r"):
+if variant in ("w28o","w28q","w28r","w29c"):
  assert body.name=="base" and body.parent==rig
  assert bpy.data.objects["ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0"].type=="EMPTY"
  blink_keys=body.data.shape_keys
  assert [k.name for k in blink_keys.key_blocks]==["Basis","blink_left","blink_right"]
+overlays=[]
+if variant=="w29c":
+ overlays=[next(o for o in bpy.data.objects if o.type=="MESH" and o.data.name.startswith(name)) for name in ("W28t_CC0_brows","W29b_CC0_lashes")]
+ assert all(o.parent==rig and [k.name for k in o.data.shape_keys.key_blocks]==["Basis","blink_left","blink_right"] for o in overlays)
+# GLB UV seams can split geometrically identical vertices. Recognize shared
+# topology only when rest, every morph target and nonzero skin weights agree exactly.
+def overlay_topology(o):
+ keys=o.data.shape_keys.key_blocks
+ canonical={};ids=[]
+ for v in o.data.vertices:
+  signature=(tuple(v.co),tuple(tuple(k.data[v.index].co) for k in keys),tuple(sorted((g.group,float(g.weight)) for g in v.groups if g.weight!=0)))
+  ids.append(canonical.setdefault(signature,len(canonical)))
+ return ids
+overlay_ids={o.name:overlay_topology(o) for o in overlays}
 actor_meshes=[]
 excluded=[]
 for o in bpy.data.objects:
@@ -97,9 +124,9 @@ for o in bpy.data.objects:
  if o in helpers and o.name not in exported_names:
   excluded.append({"name":o.name,"custom_shape_users":sum(b.custom_shape==o for b in rig.pose.bones)})
   continue
- assert o.name in exported_names or o==eyes or (blink_keys and o==body),("Unclassified mesh",o.name)
+ assert o.name in exported_names or o==eyes or (blink_keys and o==body) or o in overlays,("Unclassified mesh",o.name)
  actor_meshes.append(o)
-assert len(actor_meshes)==7
+assert len(actor_meshes)==(9 if overlays else 7)
 print("W28_EXCLUDED_HELPERS",json.dumps(excluded),flush=True)
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(glb))
 imported=[o for o in bpy.data.objects if o not in prior]
@@ -130,12 +157,12 @@ assert abs(tb[0][0]+.005)<.001 and abs(tb[1][0]-1.195)<.001
 assert bb[0][0]-tb[0][0]>.039
 assert all(tb[0][k]<=bb[0][k] and tb[1][k]>=bb[1][k] for k in (0,1))
 
-clothes=[o for o in actor_meshes if o!=body and o!=eyes and o.name!="W19_CC0_Eyes"]
+clothes=[o for o in actor_meshes if o!=body and o!=eyes and o.name!="W19_CC0_Eyes" and o not in overlays]
 assert len(clothes)==5,[o.name for o in actor_meshes]
 assert any(o.name=="W28e_tailored_linen" for o in clothes)
 ad=rig.animation_data
 hand_faces=None
-if variant=="w28r":
+if variant in ("w28r","w29c"):
  digits=("thumb","index","middle","ring","pinky")
  names={"hand_l"}|{f"{d}_{i:02d}_l" for d in digits for i in (1,2,3)}
  groups={g.index for g in body.vertex_groups if g.name in names}
@@ -159,6 +186,9 @@ def activate(track):
  if blink_keys:
   ba=blink_keys.animation_data;bt=next(t for t in ba.nla_tracks if t.name==track.name)
   bs=bt.strips[0];ba.use_nla=False;ba.action=bs.action;ba.action_slot=bs.action_slot
+ for overlay in overlays:
+  ka=overlay.data.shape_keys.animation_data;kt=next(t for t in ka.nla_tracks if t.name==track.name);ks=kt.strips[0]
+  ka.use_nla=False;ka.action=ks.action;ka.action_slot=ks.action_slot
  return float(strip.action_frame_start),float(strip.action_frame_end)
 def check(track,n):
  start,end=activate(track)
@@ -166,13 +196,14 @@ def check(track,n):
  for j in range(n):
   f=start+(end-start)*j/(n-1)
   scene.frame_set(math.floor(f),subframe=f-math.floor(f));bpy.context.view_layer.update()
-  hits=[];skin=[];self_pairs=0;sash_self_pairs=0;dg=bpy.context.evaluated_depsgraph_get();trees={};hand_extra={}
+  hits=[];skin=[];self_pairs=0;sash_self_pairs=0;dg=bpy.context.evaluated_depsgraph_get();trees={};hand_extra={};overlay_positions={}
   for o in actor_meshes:
    obj=o.evaluated_get(dg);me=obj.to_mesh()
    if not me.polygons:obj.to_mesh_clear();continue
    fs=[tuple(p.vertices) for p in me.polygons]
    pts=[obj.matrix_world@v.co+offset for v in me.vertices]
    tree=BVHTree.FromPolygons(pts,fs)
+   if o in overlays:overlay_positions[o.name]=pts
    if hand_faces is not None and o==body:
     ht=BVHTree.FromPolygons(pts,hand_faces)
     hand_extra["hand_self_pairs"]=sum(1 for i,j in ht.overlap(ht) if i<j and not hand_sets[i]&hand_sets[j])
@@ -215,6 +246,34 @@ def check(track,n):
    bw=[k.value for k in list(blink_keys.key_blocks)[1:]]
    assert len(bw)==2 and abs(bw[0]-bw[1])<1e-6 and all(-1e-6<=w<=1+1e-6 for w in bw)
    row["blink_weights"]=bw
+  if overlays:
+   facial={}
+   for o in overlays:
+    ow=[k.value for k in list(o.data.shape_keys.key_blocks)[1:]]
+    assert max(abs(a-b) for a,b in zip(ow,bw))<1e-6
+    facial[o.name]={other.name:len(trees[o.name].overlap(trees[other.name])) for other in [body,eyes,*clothes] }
+   facial["overlay_pair"]=len(trees[overlays[0].name].overlap(trees[overlays[1].name]))
+   for o in overlays:
+    fs=[set(p.vertices) for p in o.data.polygons];ids=overlay_ids[o.name];pts=overlay_positions[o.name]
+    count=0;seams=0
+    for i,j in trees[o.name].overlap(trees[o.name]):
+     if i>=j or fs[i]&fs[j]:continue
+     a={ids[k]:k for k in fs[i]};b={ids[k]:k for k in fs[j]};shared=set(a)&set(b)
+     # Do not discard proximity or coincident faces. Only an exact shared
+     # edge with opposite-side third vertices is a legitimate seam contact.
+     if len(shared)==2 and len(a)==len(b)==3:
+      u,v=sorted(shared)
+      if pts[a[u]]==pts[b[u]] and pts[a[v]]==pts[b[v]]:
+       edge=pts[a[v]]-pts[a[u]]
+       av=pts[a[next(iter(set(a)-shared))]]-pts[a[u]]
+       bv=pts[b[next(iter(set(b)-shared))]]-pts[b[u]]
+       if edge.length>0 and edge.cross(av).dot(edge.cross(bv))<0:
+        seams+=1;continue
+     count+=1
+    facial[o.name]["self"]=count
+    row.setdefault("facial_uv_seam_contacts",{})[o.name]=seams
+   row["facial_pairs"]=facial
+   row["facial_bad"]=bool(facial["overlay_pair"] or any(any(facial[o.name].values()) for o in overlays))
   row.update(hand_extra)
   rows.append(row)
  assert all(abs(r["frame"]-(1+i*(.25 if track==gesture else 1)))<1e-6 for i,r in enumerate(rows))
@@ -238,11 +297,11 @@ def check(track,n):
    f=r["frame"];lo=math.floor(f);t=f-lo
    expected=(1-t)*blink_at(lo)+t*blink_at(lo+1)
    assert abs(r["blink_weights"][0]-expected)<.0001,(f,r["blink_weights"],expected)
- bad=[r["frame"] for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0)]
+ bad=[r["frame"] for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False)]
  if track==gesture:
   assert (Vector(rows[0]["wrist"])-Vector((.40878424,-.15502822,.94349938))).length<.001,rows[0]
   assert (Vector(rows[236]["wrist"])-Vector((.4070375,.0368253,1.1945803))).length<.001,rows[236]
- print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0)),None)}),flush=True)
+ print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False)),None)}),flush=True)
  return {"name":track.name,"rows":rows,"bad":bad}
 idle=next(t for t in tracks if t.name=="Mother_QuietIdle")
 results=[check(gesture,417),check(idle,144)]
