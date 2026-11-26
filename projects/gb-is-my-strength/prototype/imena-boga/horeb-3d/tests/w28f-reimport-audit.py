@@ -226,12 +226,15 @@ def activate(track):
   ka=overlay.data.shape_keys.animation_data;kt=next(t for t in ka.nla_tracks if t.name==track.name);ks=kt.strips[0]
   ka.use_nla=False;ka.action=ks.action;ka.action_slot=ks.action_slot
  return float(strip.action_frame_start),float(strip.action_frame_end)
-def check(track,n):
- start,end=activate(track)
+def check(track,n,mixed=None):
+ if mixed is None:start,end=activate(track)
  rows=[]
  for j in range(n):
-  f=start+(end-start)*j/(n-1)
-  scene.frame_set(math.floor(f),subframe=f-math.floor(f));bpy.context.view_layer.update()
+  if mixed is None:
+   f=start+(end-start)*j/(n-1)
+   scene.frame_set(math.floor(f),subframe=f-math.floor(f));bpy.context.view_layer.update()
+  else:
+   f=j;apply_mixed(mixed[j])
   hits=[];skin=[];self_pairs=0;sash_self_pairs=0;dg=bpy.context.evaluated_depsgraph_get();trees={};hand_extra={};overlay_positions={}
   for o in actor_meshes:
    obj=o.evaluated_get(dg);me=obj.to_mesh()
@@ -243,6 +246,9 @@ def check(track,n):
    if hand_faces is not None and o==body:
     ht=BVHTree.FromPolygons(pts,hand_faces)
     hand_extra["hand_self_pairs"]=sum(1 for i,j in ht.overlap(ht) if i<j and not hand_sets[i]&hand_sets[j])
+    if mixed is not None:
+     arm=BVHTree.FromPolygons(pts,[fs[i] for i in blend_arm_region])
+     hand_extra["right_skin_pairs"]=sum(1 for i,j in arm.overlap(tree) if blend_arm_region[i]!=j and not blend_body_sets[blend_arm_region[i]]&blend_body_sets[j])
     if track==gesture and abs(f-60)<1e-6:
      hand_extra["distal_pad_clearance_mm"]={d:sum(sorted(rim.find_nearest(pts[i])[3]*1000 for i in indices)[:5])/5 for d,indices in distal.items()}
      assert all(abs(v-probe["best"]["distal_pad_clearance_mm"][d])<.02 for d,v in hand_extra["distal_pad_clearance_mm"].items())
@@ -277,7 +283,11 @@ def check(track,n):
    eo.to_mesh_clear()
    row["eye_face_pairs"]=actual
    row["eye_face_pairs_neutral"]=len(trees[body.name].overlap(baseline))
-   ka.action=action;ka.action_slot=slot
+   ka.action=action
+   if action is not None:ka.action_slot=slot
+   else:
+    for k,w in zip(list(keys.key_blocks)[1:],weights):k.value=w
+    bpy.context.view_layer.update()
   if blink_keys:
    bw=[k.value for k in list(blink_keys.key_blocks)[1:]]
    assert len(bw)==2 and abs(bw[0]-bw[1])<1e-6 and all(-1e-6<=w<=1+1e-6 for w in bw)
@@ -324,7 +334,9 @@ def check(track,n):
    row["head_linen_pairs"]=garment
    row["head_linen_bad"]=any(garment.values()) or bool(row["eye_face_pairs"] or row["eye_face_pairs_neutral"])
   row.update(hand_extra)
+  if mixed is not None:row["transition"]=mixed[j]["label"]
   rows.append(row)
+ if mixed is not None:return rows
  assert all(abs(r["frame"]-(1+i*(.25 if track==gesture else 1)))<1e-6 for i,r in enumerate(rows))
  if eyes:
   if track==gesture:
@@ -353,6 +365,66 @@ def check(track,n):
  print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False) or r.get("head_linen_bad",False)),None)}),flush=True)
  return {"name":track.name,"rows":rows,"bad":bad}
 idle=next(t for t in tracks if t.name=="Mother_QuietIdle")
+if os.environ.get("HOREB_W31E_BLEND_AUDIT")=="1":
+ assert variant=="w31d"
+ accepted=json.loads((root/"w31d-glb-audit.json").read_text(encoding="utf8"))
+ assert accepted["actor_sha256"]==sha(asset) and accepted["house_sha256"]==sha(glb)
+ assert [len(c["rows"]) for c in accepted["clips"]]==[417,144] and all(not c["bad"] for c in accepted["clips"])
+ owners=[eyes.data.shape_keys,blink_keys,*[o.data.shape_keys for o in overlays]]
+ assert all(b.rotation_mode=="QUATERNION" for b in rig.pose.bones)
+ bones=list(rig.pose.bones)
+ cache={}
+ def snapshot(track,time):
+  # GLTF runtime duration includes the first key's 1/24 s offset.
+  # Clamp before the first key and at the final key; the idle loops at 6 s.
+  frame=max(1.,min(144. if track==idle else 105.,time*24))
+  key=(track.name,round(frame,8))
+  if key not in cache:
+   activate(track)
+   lo=math.floor(frame);scene.frame_set(lo,subframe=frame-lo);bpy.context.view_layer.update()
+   cache[key]=([(b.location.copy(),b.rotation_quaternion.copy(),b.scale.copy()) for b in bones],[[k.value for k in list(owner.key_blocks)[1:]] for owner in owners])
+  return cache[key]
+ mixed=[]
+ # Include both blinking intervals, arbitrary loop phase, and wrap at 6 s.
+ for phase in (0.,.75,1.3333333333,1.5,2.25,3.,4.5,4.5833333333,5.875):
+  for i in range(16):
+   t=i/60;u=t/.25;w=u*u*(3-2*u)
+   mixed.append({"label":{"kind":"enter","idle_start_s":phase,"elapsed_s":t,"gesture_weight":w},"a":snapshot(idle,(phase+t)%6),"b":snapshot(gesture,t),"w":w})
+ for i in range(16):
+  t=i/60;u=t/.25;w=u*u*(3-2*u)
+  mixed.append({"label":{"kind":"return","elapsed_s":t,"gesture_weight":1-w},"a":snapshot(gesture,105/24),"b":snapshot(idle,t),"w":w})
+ # Remove active actions once snapshots have been captured; avoid NLA evaluation
+ # overwriting the explicit local-space quaternion and morph interpolation.
+ for owner in [rig,*owners]:
+  ad2=owner.animation_data;ad2.action=None;ad2.use_nla=False
+ def apply_mixed(sample):
+  aa,am=sample["a"];bb,bm=sample["b"];w=sample["w"]
+  for bone,a,b in zip(bones,aa,bb):
+   bone.location=a[0].lerp(b[0],w);bone.rotation_quaternion=a[1].slerp(b[1],w);bone.scale=a[2].lerp(b[2],w)
+  for owner,a,b in zip(owners,am,bm):
+   for k,x,y in zip(list(owner.key_blocks)[1:],a,b):k.value=x+(y-x)*w
+  bpy.context.view_layer.update()
+ names={"clavicle_r","upperarm_r","lowerarm_r","hand_r"}|{f"{d}_{i:02d}_r" for d in ("thumb","index","middle","ring","pinky") for i in (1,2,3)}
+ groups={g.index for g in body.vertex_groups if g.name in names}
+ ids={v.index for v in body.data.vertices if sum(g.weight for g in v.groups if g.group in groups)>.1}
+ ci=overlay_topology(body)
+ blend_body_sets=[{ci[i] for i in p.vertices} for p in body.data.polygons]
+ blend_arm_region=[p.index for p in body.data.polygons if any(i in ids for i in p.vertices)]
+ assert len(blend_arm_region)==4693
+ rows=check(None,len(mixed),mixed)
+ # Check unblended endpoints against the accepted independently imported clips.
+ for idx,prior in [(0,accepted["clips"][1]["rows"][0]),(15,accepted["clips"][0]["rows"][20]),(144,accepted["clips"][0]["rows"][-1]),(159,accepted["clips"][1]["rows"][5])]:
+  row=rows[idx]
+  assert (Vector(row["wrist"])-Vector(prior["wrist"])).length<.000002,(idx,row["wrist"],prior["wrist"])
+  for field in ("eye_weights","blink_weights"):
+   assert max(abs(x-y) for x,y in zip(row[field],prior[field]))<1e-5,(idx,field)
+
+ bad=[r for r in rows if r.get("right_skin_pairs",0) or r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False) or r.get("head_linen_bad",False)]
+ out=root/"w31e-blend-audit.json";assert not out.exists()
+ out.write_text(json.dumps({"status":"ART_HOLD_W31E_OFFLINE_BLEND_SAMPLES","actor_sha256":sha(asset),"house_sha256":sha(glb),"sample_rate":60,"method":"Blender imported local pose slerp; nominal 250 ms smoothstep; not runtime mesh replay","rows":rows,"bad":bad},indent=2),encoding="utf8")
+ print("W31E_BLEND_RESULT",json.dumps({"samples":len(rows),"bad":len(bad),"first_bad":bad[0] if bad else None}),flush=True)
+ assert not bad,"Mixed poses failed sampled clearance"
+ raise SystemExit(0)
 results=[check(gesture,417),check(idle,144)]
 if variant=="w31a":
  # Independent replay of the untouched gesture must reproduce the source evidence.
