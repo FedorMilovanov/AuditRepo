@@ -17,6 +17,8 @@ def encode(d,b):
 root=Path(os.environ["HOREB_W28N_OUTPUT"]);out=Path(os.environ["HOREB_W28O_OUTPUT"])
 mpfb=Path(os.environ["HOREB_MPFB_ROOT"]);targetdir=mpfb/"data/targets/expression/units"
 assert 'version = "2.0.18"' in (mpfb/"blender_manifest.toml").read_text(encoding="utf8")
+# Upstream v2.0.18 asset hashes verified on 2026-11-26; CC0, see W28O_ASSET_PROVENANCE.md.
+PINNED_TARGETS={'data/targets/expression/units/african/eye-left-closure.target.gz': '2d358745e955ead9d73f85ed224568a8d347f3f3b897c26cbd412faf2bfa9f3a', 'data/targets/expression/units/asian/eye-left-closure.target.gz': '0d52fee2d66b933ece83f3c7aa48e85bfe85e8adbed0931dbd37025866a1a67d', 'data/targets/expression/units/caucasian/eye-left-closure.target.gz': 'ff0d21ceb6da55fe51e03b48a7562a650924fea9bef0c686fcd7aa44d16422ed', 'data/targets/expression/units/african/eye-right-closure.target.gz': 'c1b0c3609d9fb59a97dabe8ace10622da58969f4566125b38f47285afef320d5', 'data/targets/expression/units/asian/eye-right-closure.target.gz': '0c99a5f559a1d67f630a329b9724fe3742a2c35709b8baa8a6d37903f35b9b77', 'data/targets/expression/units/caucasian/eye-right-closure.target.gz': '2b7be6bc65845d77e5f83b7bf852090854747e448644997795fa59b6cf76122d'}
 m=json.loads((root/"w28n-eye-manifest.json").read_text(encoding="utf8"));raw=(root/"w28n-actor.glb").read_bytes()
 assert sha(raw)==m["glb_sha256"]=="70cd23b9029efcd1357a9211ce7ab651d8b816438f20ad0c198fdbf7bd042741"
 assert m["geometry_and_motion_unchanged"] is True
@@ -63,7 +65,9 @@ base_normals=normals(pos);targets=[];stats=[];sources={}
 for side in ("left","right"):
  full=np.zeros((len(coords),3))
  for folder,w in zip(presets,weights):
-  f=targetdir/folder/f"eye-{side}-closure.target.gz";sources[str(f.relative_to(mpfb))]=sha(f.read_bytes())
+  f=targetdir/folder/f"eye-{side}-closure.target.gz";actual=sha(f.read_bytes())
+  assert actual==PINNED_TARGETS[f.relative_to(mpfb).as_posix()],("Unexpected MPFB asset",f)
+  sources[str(f.relative_to(mpfb))]=actual
   seen=set()
   for line in gzip.open(f,"rt"):
    if not line.strip() or line.startswith("#"):continue

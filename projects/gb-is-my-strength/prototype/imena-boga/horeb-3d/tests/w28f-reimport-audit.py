@@ -4,7 +4,7 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-variants=[v for v in ("w28f","w28g","w28l") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
+variants=[v for v in ("w28f","w28g","w28l","w28o") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
 assert len(variants)==1,"Choose one audit candidate"
 variant=variants[0]
 root=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
@@ -12,8 +12,9 @@ expected={
  "w28f":("ART_HOLD_W28F_NECKLINE_SASH","be7c3f919d56f3b415d6fdaf707be11663888898408fb425134d6a5699e19e64","w28f-dense-audit.json"),
  "w28g":("ART_HOLD_W28G_HEAD_ARM","a30e66d6b0bf1b973d52869244873ca1be2ad2033b36e4cb397af8e563da4c36","w28g-native-audit.json"),
  "w28l":("ART_HOLD_W28L_GAZE_TRIAL","3e1baf347b9197b2a59da935f15245f2ef289302b72cde22047642e563acc488",None),
+ "w28o":("ART_HOLD_W28O_BLINK_TRIAL","70cd23b9029efcd1357a9211ce7ab651d8b816438f20ad0c198fdbf7bd042741",None),
 }[variant]
-m=json.loads((root/("w28l-eye-manifest.json" if variant=="w28l" else variant+"-manifest.json")).read_text(encoding="utf8"))
+m=json.loads((root/{"w28l":"w28l-eye-manifest.json","w28o":"w28o-blink-manifest.json"}.get(variant,variant+"-manifest.json")).read_text(encoding="utf8"))
 h=json.loads((house/"w28-house-manifest.json").read_text(encoding="utf8"))
 asset=root/(variant+"-actor.glb");glb=house/"w28-house.glb"
 assert m["status"]==expected[0]
@@ -24,6 +25,11 @@ assert asset.stat().st_size==m["glb_bytes"] and glb.stat().st_size==h["bytes"]
 if variant=="w28l":
  assert m["glb_sha256"]=="76fa64646830931c7cfc4e5b17524a7fea1f83c315fe1e7168c9dbf526d14c4b"
  assert m["bones"]==53 and m["morph_targets"]==8 and m["original_geometry_and_bone_animation_unchanged"] is True
+elif variant=="w28o":
+ assert m["glb_sha256"]=="a4c2bad8ee870766717151369ce3de6cda2fdaddc17bf14e43741d4c79397f74"
+ assert m["bone_animation_unchanged"] is True and m["mapped_vertices"]==14517
+ assert m["events"]=={"Mother_QuietIdle":[34,110],"Mother_GestureTowardsBasket":[12,91]}
+ assert len(m["blink_morphs"])==2 and all(t["vertices"]==115 for t in m["blink_morphs"])
 else:
  assert sha(root/expected[2])==m["audit_sha256"]
  assert m["sample_counts"]==[417,144] and m["placement_three"]==[-.58,.015,.30]
@@ -52,7 +58,8 @@ for t in tracks:t.mute=t!=gesture
 helpers={b.custom_shape for b in rig.pose.bones if b.custom_shape is not None}
 exported_names={n.get("name") for n in doc["nodes"] if "mesh" in n}
 eyes=None
-if variant=="w28l":
+blink_keys=None
+if variant in ("w28l","w28o"):
  eye_nodes=[n for n in doc["nodes"] if n.get("name")=="W19_CC0_Eyes" and "mesh" in n]
  assert len(eye_nodes)==1
  eye_doc=doc["meshes"][eye_nodes[0]["mesh"]]
@@ -63,6 +70,11 @@ if variant=="w28l":
  assert [k.name for k in list(eyes.data.shape_keys.key_blocks)[1:]]==eye_doc["extras"]["targetNames"]
  assert len(eyes.data.vertices)==96
  assert all(len(v.groups)==1 and eyes.vertex_groups[v.groups[0].group].name=="head" and abs(v.groups[0].weight-1)<1e-6 for v in eyes.data.vertices)
+if variant=="w28o":
+ assert body.name=="base" and body.parent==rig
+ assert bpy.data.objects["ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0"].type=="EMPTY"
+ blink_keys=body.data.shape_keys
+ assert [k.name for k in blink_keys.key_blocks]==["Basis","blink_left","blink_right"]
 actor_meshes=[]
 excluded=[]
 for o in bpy.data.objects:
@@ -70,7 +82,7 @@ for o in bpy.data.objects:
  if o in helpers and o.name not in exported_names:
   excluded.append({"name":o.name,"custom_shape_users":sum(b.custom_shape==o for b in rig.pose.bones)})
   continue
- assert o.name in exported_names or o==eyes,("Unclassified mesh",o.name)
+ assert o.name in exported_names or o==eyes or (blink_keys and o==body),("Unclassified mesh",o.name)
  actor_meshes.append(o)
 assert len(actor_meshes)==7
 print("W28_EXCLUDED_HELPERS",json.dumps(excluded),flush=True)
@@ -115,6 +127,9 @@ def activate(track):
   kt=next(t for t in ka.nla_tracks if t.name==track.name)
   ks=kt.strips[0]
   ka.use_nla=False;ka.action=ks.action;ka.action_slot=ks.action_slot
+ if blink_keys:
+  ba=blink_keys.animation_data;bt=next(t for t in ba.nla_tracks if t.name==track.name)
+  bs=bt.strips[0];ba.use_nla=False;ba.action=bs.action;ba.action_slot=bs.action_slot
  return float(strip.action_frame_start),float(strip.action_frame_end)
 def check(track,n):
  start,end=activate(track)
@@ -160,13 +175,32 @@ def check(track,n):
    row["eye_face_pairs"]=actual
    row["eye_face_pairs_neutral"]=len(trees[body.name].overlap(baseline))
    ka.action=action;ka.action_slot=slot
+  if blink_keys:
+   bw=[k.value for k in list(blink_keys.key_blocks)[1:]]
+   assert len(bw)==2 and abs(bw[0]-bw[1])<1e-6 and all(-1e-6<=w<=1+1e-6 for w in bw)
+   row["blink_weights"]=bw
   rows.append(row)
  assert all(abs(r["frame"]-(1+i*(.25 if track==gesture else 1)))<1e-6 for i,r in enumerate(rows))
  if eyes:
   if track==gesture:
-   expected=next(a["peak_frame_60"] for a in m["animations"] if a["name"]==track.name)
+   expected=([1,0,0,.5701439025971043,1,0,0,.5513946836384895] if blink_keys else next(a["peak_frame_60"] for a in m["animations"] if a["name"]==track.name))
    assert max(abs(a-b) for a,b in zip(rows[236]["eye_weights"],expected))<.0001
   else:assert all(max(abs(w) for w in r["eye_weights"])<1e-6 for r in rows)
+ if blink_keys:
+  events=m["events"][track.name]
+  def blink_at(frame):
+   def pulse(center):
+    x=frame-center
+    if x < -2 or x > 4:return 0.
+    if x <= 0:t=(x+2)/2
+    elif x <= 1:return 1.
+    else:t=(4-x)/3
+    return t*t*(3-2*t)
+   return max(pulse(c) for c in events)
+  for r in rows:
+   f=r["frame"];lo=math.floor(f);t=f-lo
+   expected=(1-t)*blink_at(lo)+t*blink_at(lo+1)
+   assert abs(r["blink_weights"][0]-expected)<.0001,(f,r["blink_weights"],expected)
  bad=[r["frame"] for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"]]
  if track==gesture:
   assert (Vector(rows[0]["wrist"])-Vector((.40878424,-.15502822,.94349938))).length<.001,rows[0]
