@@ -76,7 +76,7 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
  };
  function resetContact(){
   min=Infinity;max=0;hold=0;previousSample=null;
-  for(const k of ['houseActorContactMm','houseActorWorstMm','houseActorHoldSeconds','houseActorTime','houseActorFrameExtent'])delete canvas.dataset[k];
+  for(const k of ['houseActorContactMm','houseActorWorstMm','houseActorHoldSeconds','houseActorTime','houseActorFrameExtent','houseActorPeakAperture','houseActorEnterBlendSeen','houseActorReturnBlendSeen'])delete canvas.dataset[k];
  }
  function sample(time:number,camera:THREE.PerspectiveCamera){
   if(!wrist||!rimPoints.length)return;
@@ -111,6 +111,7 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
     extent=Math.max(extent,Math.abs(v.x),Math.abs(v.y));valid=valid&&v.z>=-1&&v.z<=1;
    }
    canvas.dataset.houseActorFrameExtent=valid?extent.toFixed(4):'outside';
+   if(canvas.dataset.houseActorAperture)canvas.dataset.houseActorPeakAperture=canvas.dataset.houseActorAperture;
   }
  }
  function finished(e:{action:THREE.AnimationAction}){
@@ -187,6 +188,7 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
    idle.setEffectiveWeight(activeBlend.kind==='enter'?1-w:w);
    gesture.setEffectiveWeight(activeBlend.kind==='enter'?w:1-w);
    canvas.dataset.houseActorBlendWeight=w.toFixed(3);
+   if(w>0&&w<1)canvas.dataset[activeBlend.kind==='enter'?'houseActorEnterBlendSeen':'houseActorReturnBlendSeen']='true';
   }
   mixer.update(step);
   if(activeBlend&&blend===activeBlend&&activeBlend.elapsed>=blendSeconds){

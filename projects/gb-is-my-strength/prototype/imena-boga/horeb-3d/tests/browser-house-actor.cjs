@@ -119,27 +119,28 @@ if(!chrome)throw Error('Actual Chromium required');
  await page.click('[data-testid="house-actor-perform"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
  if(pair?.name==='w31a'){
-  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend==='enter'&&Number(d.houseActorBlendWeight)>0&&Number(d.houseActorBlendWeight)<1;});
-  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorPhase==='performing'&&d.houseActorBlend===undefined;});
+  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorEnterBlendSeen==='true';});
+  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend!=='enter';});
  }
  await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorFrameExtent)));
  const peak=await state();
  if(!Number.isFinite(Number(peak.houseActorContactMm)))await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorContactMm)));
  const actual=await state();
- if(mobile&&(!actual.houseActorAperture||Number(actual.houseActorAperture.split('x')[0])/Number(actual.houseActorAperture.split('x')[1])<1.35))throw Error('Missing portrait cinema aperture');
+ const peakAperture=actual.houseActorPeakAperture;
+ if(mobile&&(!peakAperture||Number(peakAperture.split('x')[0])/Number(peakAperture.split('x')[1])<1.35))throw Error('Missing portrait cinema aperture '+JSON.stringify(actual));
  if(Number(actual.houseActorFrameExtent)>.96)throw Error('Actor or rim out of the peak frame: '+JSON.stringify(actual));
  if(actual.houseWalkX!==observation.houseWalkX||actual.houseWalkZ!==observation.houseWalkZ)throw Error('Director moved player');
 
  if(Number(actual.houseActorContactMm)>=contactLimit)throw Error('Actor contact witness misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
- if(pair?.name==='w31a')await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend==='return'&&Number(d.houseActorBlendWeight)>0&&Number(d.houseActorBlendWeight)<1;});
+ if(pair?.name==='w31a')await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorReturnBlendSeen==='true';});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
  if(pair?.name==='w31a'&&(await state()).houseActorBlend!==undefined)throw Error('Stale blend on completion');
 
  const endGesture=await state();
  if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=contactLimit||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
- console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:actual.houseActorAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,metric:actor.houseActorContactMetric,skinSamples:actor.houseActorSkinSamples,actor:am?.glb_sha256||'canonical W22'}));
+ console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:peakAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,metric:actor.houseActorContactMetric,skinSamples:actor.houseActorSkinSamples,actor:am?.glb_sha256||'canonical W22'}));
 
  // A replay must reset contact evidence and cancel on leaving the walk.
  await page.click('[data-testid="house-actor-perform"]');
@@ -149,6 +150,7 @@ if(!chrome)throw Error('Actual Chromium required');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle'&&document.querySelector(s).dataset.houseWalk==='false');
  if((await state()).houseActorTime!==undefined)throw Error('Stale clip clock after cancellation');
  if((await state()).houseActorBlend!==undefined)throw Error('Stale blend on cancellation');
+ if((await state()).houseActorPeakAperture!==undefined||(await state()).houseActorEnterBlendSeen!==undefined||(await state()).houseActorReturnBlendSeen!==undefined)throw Error('Stale transition evidence on cancellation');
  // A fresh real entry must acknowledge the reset before input, not only
  // dispatch a click and race the React event/focus on slow runners.
  await enterWalk();
