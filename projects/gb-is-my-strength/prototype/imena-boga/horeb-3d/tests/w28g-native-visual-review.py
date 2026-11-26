@@ -88,15 +88,27 @@ if linen:
  assert lm["house_sha256"]==m["house_sha256"] and len(lm["material_changes"])==3
  asset=candidate/"w28s-actor.glb"
  assert sha(asset)==lm["glb_sha256"]=="52053a9553e195fd32d413b49509ab9360af2810148c570c73464c25f6b7943d" and asset.stat().st_size==lm["glb_bytes"]
+brows=os.environ.get("HOREB_W28T_OUTPUT")
+if brows:
+ assert linen
+ candidate=Path(brows)
+ tm=json.loads((candidate/"w28t-manifest.json").read_text(encoding="utf8"))
+ assert tm["status"]=="ART_HOLD_W28T_BROW_TRIAL" and tm["source_sha256"]==lm["glb_sha256"]
+ assert tm["existing_actor_unchanged"] is True and tm["rest_skin_overlap_pairs"]==0
+ assert tm["house_sha256"]==m["house_sha256"] and tm["conform_trials"][-1]["overlap_pairs"]==[0]*5
+ asset=candidate/"w28t-actor.glb"
+ assert sha(asset)==tm["glb_sha256"]=="689c81ae948f6ba0dca8f338b9a06dcd9f604bee525edea1499ff21c9dac6cb3" and asset.stat().st_size==tm["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
 linen_compare=os.environ.get("HOREB_VISUAL_LINEN_COMPARE")=="1"
-assert sum((close,shoulder_compare,grip_compare,linen_compare))<=1
-assert not shoulder or shoulder_compare or grip_compare or linen_compare
-assert not grip or grip_compare or linen_compare
-assert not linen or linen_compare
-out=(candidate or root)/("visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+brow_compare=os.environ.get("HOREB_VISUAL_BROW_COMPARE")=="1"
+assert sum((close,shoulder_compare,grip_compare,linen_compare,brow_compare))<=1
+assert not shoulder or shoulder_compare or grip_compare or linen_compare or brow_compare
+assert not grip or grip_compare or linen_compare or brow_compare
+assert not linen or linen_compare or brow_compare
+assert not brows or brow_compare
+out=(candidate or root)/("visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -115,9 +127,13 @@ if gaze:
  ka=keys.animation_data;kt=next(t for t in ka.nla_tracks if t.name=="Mother_GestureTowardsBasket")
  ka.use_nla=False;ka.action=kt.strips[0].action;ka.action_slot=kt.strips[0].action_slot
 if blink:
- body=next(o for o in imported if o.type=="MESH" and o.data.shape_keys and "blink_left" in o.data.shape_keys.key_blocks)
+ body=next(o for o in imported if o.type=="MESH" and o.data.shape_keys and "blink_left" in o.data.shape_keys.key_blocks and len(o.data.vertices)>10000)
  bk=body.data.shape_keys;ba=bk.animation_data;bt=next(t for t in ba.nla_tracks if t.name=="Mother_GestureTowardsBasket")
  ba.use_nla=False;ba.action=bt.strips[0].action;ba.action_slot=bt.strips[0].action_slot
+if brows:
+ brow=next(o for o in imported if o.type=="MESH" and o.data.name.startswith("W28t_CC0_brows"))
+ brk=brow.data.shape_keys;bra=brk.animation_data;brt=next(t for t in bra.nla_tracks if t.name=="Mother_GestureTowardsBasket")
+ bra.use_nla=False;bra.action=brt.strips[0].action;bra.action_slot=brt.strips[0].action_slot
 scene.frame_set(60);bpy.context.view_layer.update()
 if gaze:
  expected=next(a["peak_frame_60"] for a in gm["animations"] if a["name"]=="Mother_GestureTowardsBasket")
@@ -139,7 +155,7 @@ views=[
 if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
 elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
 if close:views=[("frontal-peak",60,None,None,82),("threequarter-peak",60,None,None,82)]
-if blink and not shoulder_compare and not grip_compare and not linen_compare:
+if blink and not shoulder_compare and not grip_compare and not linen_compare and not brow_compare:
  assert close
  views=[("blink-open-before",10,None,None,82),("blink-closed",12,None,None,82),("blink-open-after",16,None,None,82)]
 if shoulder_compare:
@@ -151,12 +167,17 @@ if grip_compare:
 if linen_compare:
  assert grip
  views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("upper-peak",60,(-.85,-1.65,1.49),(-.44,-.32,1.23),49)]
+if brow_compare:
+ assert linen
+ views=[("frontal-peak",60,None,None,82),("frontal-blink",12,None,None,82)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
   expected_blink=1 if frame==12 else 0
   assert all(abs(bk.key_blocks[k].value-expected_blink)<.0001 for k in ("blink_left","blink_right"))
- if close:
+ if brows:
+  assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
+ if close or brow_compare:
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
   focus=transform@Vector((0,-.102479,1.424))
