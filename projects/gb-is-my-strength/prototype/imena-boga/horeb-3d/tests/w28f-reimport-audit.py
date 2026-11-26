@@ -4,7 +4,7 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r","w29c") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
+variants=[v for v in ("w28f","w28g","w28l","w28o","w28q","w28r","w29c","w30b") if os.environ.get("HOREB_"+v.upper()+"_OUTPUT")]
 assert len(variants)==1,"Choose one audit candidate"
 variant=variants[0]
 root=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
@@ -16,6 +16,7 @@ expected={
  "w28q":("ART_HOLD_W28Q_SHOULDER_TRIAL","a4c2bad8ee870766717151369ce3de6cda2fdaddc17bf14e43741d4c79397f74",None),
  "w28r":("ART_HOLD_W28R_GRIP_MOTION_TRIAL","6bb286037d794b0830840dd709ba257d5a3e722540665f6527b782338f8499cd",None),
  "w29c":("ART_HOLD_W29C_LOSSLESS_COMPACT_TRIAL","8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1",None),
+ "w30b":("ART_HOLD_W30B_DRAPE_TRIAL","85c24882620b35154ac9e333c6d37406b457d4d3b05aa07fbc024812b5f0ac35",None),
 }[variant]
 m=json.loads((root/{"w28l":"w28l-eye-manifest.json","w28o":"w28o-blink-manifest.json"}.get(variant,variant+"-manifest.json")).read_text(encoding="utf8"))
 h=json.loads((house/"w28-house-manifest.json").read_text(encoding="utf8"))
@@ -46,12 +47,19 @@ elif variant=="w28r":
  assert probe["source_sha256"]==m["source_sha256"] and probe["house_sha256"]==m["house_sha256"] and not probe["best"]["prop_hits"] and probe["best"]["self_pairs"]==0
  # The source morph schedule is unchanged and checked sample by sample below.
  m["events"]={"Mother_QuietIdle":[34,110],"Mother_GestureTowardsBasket":[12,91]}
-elif variant=="w29c":
- assert m["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94"
- assert m["all_other_json_identical_after_remap"] is True and m["accessors_byte_identical"]==305 and m["active_material_graphs_identical"]==9
- fa=json.loads((root/"w29c-lash-audit.json").read_text(encoding="utf8"))
- assert fa["actor_sha256"]==m["glb_sha256"] and fa["source_rows_identical"] is True
- assert [len(c["rows"]) for c in fa["clips"]]==[417,144] and all(not c["bad"] for c in fa["clips"])
+elif variant in ("w29c","w30b"):
+ if variant=="w29c":
+  assert m["glb_sha256"]=="0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94"
+  assert m["all_other_json_identical_after_remap"] is True and m["accessors_byte_identical"]==305 and m["active_material_graphs_identical"]==9
+  fa=json.loads((root/"w29c-lash-audit.json").read_text(encoding="utf8"))
+  assert fa["actor_sha256"]==m["glb_sha256"] and fa["source_rows_identical"] is True
+  assert [len(c["rows"]) for c in fa["clips"]]==[417,144] and all(not c["bad"] for c in fa["clips"])
+ else:
+  assert m["glb_sha256"]=="cff945d163c95bd7673e3a5405f55b45168b764eaa412fa7b8b81714f9da6668"
+  assert m["only_drape_positions_normals_changed"] is True and m["unchanged_views"]==309 and m["coarse_samples"]==18
+  assert sha(root/"w30b-probe.json")==m["probe_sha256"] and sha(root/"w30b-drape-delta.json")==m["delta_sha256"]
+  win=json.loads((root/"w30b-probe.json").read_text(encoding="utf8"))["winner"]
+  assert len(win["rows"])==18 and all(not any(r["pairs"].values()) for r in win["rows"])
  grip_root=Path(os.environ["HOREB_W29C_GRIP_SOURCE"])
  gm=json.loads((grip_root/"w28r-manifest.json").read_text(encoding="utf8"))
  assert sha(grip_root/"w28r-actor.glb")==gm["glb_sha256"]=="40b966d66bd72ef628e572bf2f356d6ff13f7752d021b60bdd6c217bb77b81dc"
@@ -87,7 +95,7 @@ helpers={b.custom_shape for b in rig.pose.bones if b.custom_shape is not None}
 exported_names={n.get("name") for n in doc["nodes"] if "mesh" in n}
 eyes=None
 blink_keys=None
-if variant in ("w28l","w28o","w28q","w28r","w29c"):
+if variant in ("w28l","w28o","w28q","w28r","w29c","w30b"):
  eye_nodes=[n for n in doc["nodes"] if n.get("name")=="W19_CC0_Eyes" and "mesh" in n]
  assert len(eye_nodes)==1
  eye_doc=doc["meshes"][eye_nodes[0]["mesh"]]
@@ -98,13 +106,13 @@ if variant in ("w28l","w28o","w28q","w28r","w29c"):
  assert [k.name for k in list(eyes.data.shape_keys.key_blocks)[1:]]==eye_doc["extras"]["targetNames"]
  assert len(eyes.data.vertices)==96
  assert all(len(v.groups)==1 and eyes.vertex_groups[v.groups[0].group].name=="head" and abs(v.groups[0].weight-1)<1e-6 for v in eyes.data.vertices)
-if variant in ("w28o","w28q","w28r","w29c"):
+if variant in ("w28o","w28q","w28r","w29c","w30b"):
  assert body.name=="base" and body.parent==rig
  assert bpy.data.objects["ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0"].type=="EMPTY"
  blink_keys=body.data.shape_keys
  assert [k.name for k in blink_keys.key_blocks]==["Basis","blink_left","blink_right"]
 overlays=[]
-if variant=="w29c":
+if variant in ("w29c","w30b"):
  overlays=[next(o for o in bpy.data.objects if o.type=="MESH" and o.data.name.startswith(name)) for name in ("W28t_CC0_brows","W29b_CC0_lashes")]
  assert all(o.parent==rig and [k.name for k in o.data.shape_keys.key_blocks]==["Basis","blink_left","blink_right"] for o in overlays)
 # GLB UV seams can split geometrically identical vertices. Recognize shared
@@ -162,7 +170,7 @@ assert len(clothes)==5,[o.name for o in actor_meshes]
 assert any(o.name=="W28e_tailored_linen" for o in clothes)
 ad=rig.animation_data
 hand_faces=None
-if variant in ("w28r","w29c"):
+if variant in ("w28r","w29c","w30b"):
  digits=("thumb","index","middle","ring","pinky")
  names={"hand_l"}|{f"{d}_{i:02d}_l" for d in digits for i in (1,2,3)}
  groups={g.index for g in body.vertex_groups if g.name in names}
@@ -274,6 +282,19 @@ def check(track,n):
     row.setdefault("facial_uv_seam_contacts",{})[o.name]=seams
    row["facial_pairs"]=facial
    row["facial_bad"]=bool(facial["overlay_pair"] or any(any(facial[o.name].values()) for o in overlays))
+  if variant=="w30b":
+   head_linen=[o for o in clothes if o.name in ("W22_plain_linen_head_cover","W22_linen_rear_drape")]
+   assert len(head_linen)==2
+   garment={}
+   for o in head_linen:
+    t=trees[o.name];fs=[set(p.vertices) for p in o.data.polygons]
+    garment[o.name+"|self"]=sum(1 for i,j in t.overlap(t) if i<j and not fs[i]&fs[j])
+    for other in clothes:
+     if o==other:continue
+     k="|".join(sorted((o.name,other.name)))
+     if k not in garment:garment[k]=len(t.overlap(trees[other.name]))
+   row["head_linen_pairs"]=garment
+   row["head_linen_bad"]=any(garment.values()) or bool(row["eye_face_pairs"] or row["eye_face_pairs_neutral"])
   row.update(hand_extra)
   rows.append(row)
  assert all(abs(r["frame"]-(1+i*(.25 if track==gesture else 1)))<1e-6 for i,r in enumerate(rows))
@@ -297,11 +318,11 @@ def check(track,n):
    f=r["frame"];lo=math.floor(f);t=f-lo
    expected=(1-t)*blink_at(lo)+t*blink_at(lo+1)
    assert abs(r["blink_weights"][0]-expected)<.0001,(f,r["blink_weights"],expected)
- bad=[r["frame"] for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False)]
+ bad=[r["frame"] for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False) or r.get("head_linen_bad",False)]
  if track==gesture:
   assert (Vector(rows[0]["wrist"])-Vector((.40878424,-.15502822,.94349938))).length<.001,rows[0]
   assert (Vector(rows[236]["wrist"])-Vector((.4070375,.0368253,1.1945803))).length<.001,rows[236]
- print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False)),None)}),flush=True)
+ print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"] or r.get("hand_self_pairs",0) or r.get("facial_bad",False) or r.get("head_linen_bad",False)),None)}),flush=True)
  return {"name":track.name,"rows":rows,"bad":bad}
 idle=next(t for t in tracks if t.name=="Mother_QuietIdle")
 results=[check(gesture,417),check(idle,144)]
