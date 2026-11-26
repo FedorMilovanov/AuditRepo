@@ -46,6 +46,15 @@ if surface:
  assert nm["geometry_and_motion_unchanged"] is True and nm["house_sha256"]==m["house_sha256"]
  asset=candidate/"w28n-actor.glb"
  assert sha(asset)==nm["glb_sha256"] and asset.stat().st_size==nm["glb_bytes"]
+blink=os.environ.get("HOREB_W28O_OUTPUT")
+if blink:
+ assert surface and gaze
+ candidate=Path(blink)
+ bm=json.loads((candidate/"w28o-blink-manifest.json").read_text(encoding="utf8"))
+ assert bm["status"]=="ART_HOLD_W28O_BLINK_TRIAL" and bm["source_sha256"]==nm["glb_sha256"]
+ assert bm["bone_animation_unchanged"] is True and bm["house_sha256"]==m["house_sha256"]
+ asset=candidate/"w28o-actor.glb"
+ assert sha(asset)==bm["glb_sha256"] and asset.stat().st_size==bm["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 out=(candidate or root)/("visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
@@ -65,6 +74,10 @@ if gaze:
  keys=eyes.data.shape_keys
  ka=keys.animation_data;kt=next(t for t in ka.nla_tracks if t.name=="Mother_GestureTowardsBasket")
  ka.use_nla=False;ka.action=kt.strips[0].action;ka.action_slot=kt.strips[0].action_slot
+if blink:
+ body=next(o for o in imported if o.type=="MESH" and o.data.shape_keys and "blink_left" in o.data.shape_keys.key_blocks)
+ bk=body.data.shape_keys;ba=bk.animation_data;bt=next(t for t in ba.nla_tracks if t.name=="Mother_GestureTowardsBasket")
+ ba.use_nla=False;ba.action=bt.strips[0].action;ba.action_slot=bt.strips[0].action_slot
 scene.frame_set(60);bpy.context.view_layer.update()
 if gaze:
  expected=next(a["peak_frame_60"] for a in gm["animations"] if a["name"]=="Mother_GestureTowardsBasket")
@@ -86,8 +99,14 @@ views=[
 if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
 elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
 if close:views=[("frontal-peak",60,None,None,82),("threequarter-peak",60,None,None,82)]
+if blink:
+ assert close
+ views=[("blink-open-before",10,None,None,82),("blink-closed",12,None,None,82),("blink-open-after",16,None,None,82)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
+ if blink:
+  expected_blink=1 if frame==12 else 0
+  assert all(abs(bk.key_blocks[k].value-expected_blink)<.0001 for k in ("blink_left","blink_right"))
  if close:
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
