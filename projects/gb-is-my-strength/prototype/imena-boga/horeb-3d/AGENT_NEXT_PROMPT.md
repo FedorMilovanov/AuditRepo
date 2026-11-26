@@ -8,7 +8,14 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W34b anatomical hinge feasibility (2026-11-27)
+## Current handoff: W34c volume-preserving skinning screen (2026-11-27)
+
+- PR #543 on b72772d3: all eight checks PASS including actual-chromium. No new runtime modifications.
+- New offline diagnostic probe_w34c_volume.py reuses the saved W34b 16-pose far-stance set and exact W31f/W28 sources, compares four skinning configurations (linear/dual quaternion separately for body and tunic). The Blender volume-preserving modifier is only an offline experiment, not the glTF linear skinning runtime. No canonical asset or pose export. Evidence H:/HOREB_ArtPipeline/evidence/W34c-volume-20261127; replay source w34a-dual-ik.json copied from W34b-hinge-52-20261127, env same as W34a.
+- Completed volume screen: [{"body_dq":false,"tunic_dq":false,"tested":16,"clear":0,"best_skin":118,"best_skin_cloth":0,"best_cloth_self":4,"best_prop_hits":0},{"body_dq":true,"tunic_dq":false,"tested":16,"clear":0,"best_skin":116,"best_skin_cloth":0,"best_cloth_self":4,"best_prop_hits":0},{"body_dq":false,"tunic_dq":true,"tested":16,"clear":0,"best_skin":118,"best_skin_cloth":0,"best_cloth_self":20,"best_prop_hits":0},{"body_dq":true,"tunic_dq":true,"tested":16,"clear":0,"best_skin":116,"best_skin_cloth":0,"best_cloth_self":20,"best_prop_hits":0}].
+- Next: if volume preservation improves the pose, derive localized corrective deltas in linear-skinning space, validate them on exact evaluated geometry and visual frame before considering morph export. Otherwise isolate joint-region topology and solve targeted corrections, not another broad pose grid. Static grasp is not yet accepted, no lift or carry. Keep existing PR/branch, ART HOLD.
+
+### Prior handoff: W34b anatomical hinge feasibility (2026-11-27)
 
 - PR #543 on W34a commit 851d0020: all eight checks PASS including actual-chromium. Existing W33b experimental scene remains unchanged.
 - Bone probe exact W31f: original elbow bend plane normal in local lowerarm coordinates approx [0.998,0,-0.068] left and [1,0,.026] right, frame 1. Frame 60 left bend 105.12 degrees, plane near local X. New optional HOREB_W34B_HINGE=1 in existing stance probe aligns the entire upper-arm bending plane, then solves the elbow and distributes desired axial hand orientation with forearm pronation (default .65). This is an experimental geometric solver, not a fully anatomically constrained rig. Score actual side skin/tunic intersections before selecting combined poses. HOREB_W34B_PALM_DEG allows alternate palm orientation. No canonical asset or runtime changes.
