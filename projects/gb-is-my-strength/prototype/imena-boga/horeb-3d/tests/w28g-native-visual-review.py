@@ -195,6 +195,19 @@ if join:
  assert jm["probe_sha256"]==sha(candidate/"w30e-probe.json") and jm["delta_sha256"]==sha(candidate/"w30e-drape-delta.json")
  asset=candidate/"w30e-actor.glb"
  assert sha(asset)==jm["glb_sha256"]=="af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669"
+idle_motion=os.environ.get("HOREB_W31A_OUTPUT")
+idle_compare=os.environ.get("HOREB_VISUAL_IDLE_COMPARE")=="1"
+if idle_motion:
+ assert join and idle_compare
+ prior_join=candidate
+ candidate=Path(idle_motion)
+ im=json.loads((candidate/"w31a-manifest.json").read_text(encoding="utf8"))
+ assert im["status"]=="ART_HOLD_W31A_IDLE_MOTION_TRIAL" and im["source_sha256"]==jm["glb_sha256"]
+ assert im["source_pair_audit_sha256"]==sha(prior_join/"w30e-glb-audit.json")
+ assert im["geometry_gesture_and_other_channels_unchanged"] is True and im["loop_endpoints_preserved"] is True
+ asset=candidate/"w31a-actor.glb"
+ assert sha(asset)==im["glb_sha256"]=="8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113"
+assert not idle_compare or (join_compare and join)
 assert not join_compare or (tunic_compare and tunic)
 assert not tunic_compare or (shape_compare and shape)
 assert not shape_compare or (drape_compare and drape)
@@ -214,7 +227,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-head-join" if join_compare else "visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-idle" if idle_compare else "visual-head-join" if join_compare else "visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -252,6 +265,16 @@ if gaze:
  print("W28L_MORPH_REIMPORT_PASS",actual,flush=True)
 w=rig.matrix_world@rig.pose.bones["hand_l"].head
 assert (w-Vector((-.1729625,-.2631747,1.2095803))).length<.002,tuple(w)
+if idle_compare:
+ for owner in (rig,keys,bk,brk,lk):
+  anim=owner.animation_data;t=next(t for t in anim.nla_tracks if t.name=="Mother_QuietIdle");st=t.strips[0]
+  anim.use_nla=False;anim.action=st.action;anim.action_slot=st.action_slot
+ names=["pelvis","spine_01","spine_02","clavicle_l","clavicle_r","upperarm_l","upperarm_r","hand_l","hand_r","foot_l","foot_r","head"]
+ rows=[]
+ for frame in (1,36,72,108,144):
+  scene.frame_set(frame);bpy.context.view_layer.update()
+  rows.append({"frame":frame,"bones":{name:list(rig.matrix_world@rig.pose.bones[name].head) for name in names}})
+ (out/"idle-bone-positions.json").write_text(json.dumps({"asset_sha256":sha(asset),"rows":rows},indent=2),encoding="utf8")
 scene.render.engine="CYCLES";scene.cycles.device="CPU";scene.cycles.samples=16;scene.cycles.use_denoising=True
 scene.render.resolution_percentage=100;scene.render.resolution_x=720;scene.render.resolution_y=540
 scene.render.image_settings.file_format="PNG"
@@ -294,16 +317,18 @@ if tunic_compare:
  views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("skirt-peak",60,(-.65,-1.65,1.05),(-.40,-.30,.58),43)]
 if join_compare:
  views=[("side-peak",60,None,None,70),("rear-peak",60,None,None,70)]
+if idle_compare:
+ views=[("idle-rise",45,(-.85,-1.65,1.49),(-.44,-.32,1.18),45),("idle-peak",72,(-.85,-1.65,1.49),(-.44,-.32,1.18),45)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
-  expected_blink=1 if frame==12 else 0
+  expected_blink=0 if idle_compare else 1 if frame==12 else 0
   assert all(abs(bk.key_blocks[k].value-expected_blink)<.0001 for k in ("blink_left","blink_right"))
  if brows:
   assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
  if lashes:
   assert max(abs(lk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
- if (close or brow_compare) and (not tunic_compare or join_compare):
+ if (close or brow_compare) and (not tunic_compare or join_compare) and not idle_compare:
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
   focus=transform@Vector((0,-.102479,1.424))
@@ -320,7 +345,7 @@ for name,frame,eye,target,lens in views:
     focus=transform@Vector((0,.055,1.42))
     eye=focus+direction*.68+up*.04;target=focus
  if shape_compare:
-  fill.location=Vector(eye)+(Vector((0,0,.25)) if tunic_compare and not join_compare else up*.25)
+  fill.location=Vector(eye)+(Vector((0,0,.25)) if idle_compare or (tunic_compare and not join_compare) else up*.25)
   fill.rotation_euler=(Vector(target)-fill.location).to_track_quat("-Z","Y").to_euler()
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))

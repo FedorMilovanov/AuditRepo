@@ -8,7 +8,14 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W30e head-cover join (2026-11-26)
+## Current handoff: W31a idle motion (2026-11-26)
+
+- W30e full paired reimport PASS, 417 gesture + 144 idle, zero bad samples. The prior visible head-cover gap is corrected. W30e remains a study, not production art.
+- W31a adds only four idle rotation channels (spine_02 peak .650 deg, spine_01 .312 deg, clavicle_l/r .750 deg), with the original 144 integer-frame times and exact original end quaternions. Source GLB bytes, full gesture, facial tracks, geometry, and other channels remain unchanged. No pelvis or foot motion. Exact GLB SHA-256 8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113, 10,553,668 bytes, deterministic rerun PASS. Evidence H:/HOREB_ArtPipeline/evidence/W31a-idle-20261126.
+- Real Blender reimport at frames 1/36/72/108/144: source/candidate pelvis and foot positions identical within 1 micrometer; at frame 72 added upper-arm head displacement 3.64/3.70 mm, hand displacement 5.09/5.05 mm, head 5.43 mm. All measured bone heads match source at first/last frames. Full paired audit PASS: 417 gesture rows exactly equal to source, 144 idle rows, zero bad samples. Idle visual comparison uses frames 45 and 72 (frame 36 was rejected because it lies in an existing blink). Native comparison 4/4 completed; reviewed peak pair shows a subtle rather than dramatic posture change.
+- Added the exact W31a DEV profile after dense clearance. Next: run whole-scene desktop/mobile acceptance; assess transition from arbitrary idle phase to gesture and return, then more expressive body performance. No canonical asset swap, ART HOLD. W29c remains last full browser-proven candidate.
+
+### Prior handoff: W30e head-cover join (2026-11-26)
 
 - W30d full pair audit PASS: 417 gesture + 144 idle, zero bad samples. W30e fits the 25 head-weighted upper drape vertices to the authored rear cap rim, with a nominal 0.8 mm gap instead of 2.17-30.63 mm and a smooth 65 mm transition into the existing drape. First coarse candidate 18/18 PASS. Independent GLB measurement verifies 0.79995-0.80005 mm on all 25 matched vertices. This is a fitted visual join, not a welded mesh or cloth simulation.
 - W30e exact SHA-256 af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669, 10,543,116 bytes, 100 changed vertices, max displacement 29.827 mm, 309 untouched buffer views. Reproducible export PASS. Evidence H:/HOREB_ArtPipeline/evidence/W30e-head-join-20261126. Side/rear comparison completed 4/4; reviewed rear pair shows the former dark gap replaced by a thin join line. Confirm full w30e-full-pair.log before promotion.
