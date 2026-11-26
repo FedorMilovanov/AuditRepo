@@ -110,6 +110,15 @@ if skin:
  assert sk["house_sha256"]==m["house_sha256"] and sk["source_samples"]==561
  asset=candidate/"w29a-actor.glb"
  assert sha(asset)==sk["glb_sha256"]=="3cd8372200534849bbdb39ccc6d48dedddce21dac0305ef3963be53a016c5e69" and asset.stat().st_size==sk["glb_bytes"]
+lashes=os.environ.get("HOREB_W29B_OUTPUT")
+if lashes:
+ assert skin
+ candidate=Path(lashes)
+ lm2=json.loads((candidate/"w29b-manifest.json").read_text(encoding="utf8"))
+ assert lm2["status"]=="ART_HOLD_W29B_LASH_TRIAL" and lm2["source_sha256"]==sk["glb_sha256"]
+ assert lm2["existing_actor_unchanged"] is True and lm2["strand_count"]==44 and all(t["overlap_pairs"]==[0]*4 for t in lm2["trials"])
+ asset=candidate/"w29b-actor.glb"
+ assert sha(asset)==lm2["glb_sha256"]=="8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1" and asset.stat().st_size==lm2["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
@@ -121,6 +130,7 @@ assert not grip or grip_compare or linen_compare or brow_compare
 assert not linen or linen_compare or brow_compare
 assert not brows or brow_compare
 assert not skin or brow_compare
+assert not lashes or brow_compare
 out=(candidate or root)/("visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
@@ -147,6 +157,10 @@ if brows:
  brow=next(o for o in imported if o.type=="MESH" and o.data.name.startswith("W28t_CC0_brows"))
  brk=brow.data.shape_keys;bra=brk.animation_data;brt=next(t for t in bra.nla_tracks if t.name=="Mother_GestureTowardsBasket")
  bra.use_nla=False;bra.action=brt.strips[0].action;bra.action_slot=brt.strips[0].action_slot
+if lashes:
+ lash=next(o for o in imported if o.type=="MESH" and o.data.name.startswith("W29b_CC0_lashes"))
+ lk=lash.data.shape_keys;la=lk.animation_data;lt=next(t for t in la.nla_tracks if t.name=="Mother_GestureTowardsBasket")
+ la.use_nla=False;la.action=lt.strips[0].action;la.action_slot=lt.strips[0].action_slot
 scene.frame_set(60);bpy.context.view_layer.update()
 if gaze:
  expected=next(a["peak_frame_60"] for a in gm["animations"] if a["name"]=="Mother_GestureTowardsBasket")
@@ -190,6 +204,8 @@ for name,frame,eye,target,lens in views:
   assert all(abs(bk.key_blocks[k].value-expected_blink)<.0001 for k in ("blink_left","blink_right"))
  if brows:
   assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
+ if lashes:
+  assert max(abs(lk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
  if close or brow_compare:
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()

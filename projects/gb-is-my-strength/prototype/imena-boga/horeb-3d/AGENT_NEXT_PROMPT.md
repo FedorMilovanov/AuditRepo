@@ -8,7 +8,10 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W29a (2026-11-26)
+## Current handoff: W29b v3 (2026-11-26)
+
+- W29b v3 adds 44 short upper-lid lash strands (220 vertices, 132 triangles) fitted to the visible skin, not the colliding original helper strips. Source references are pinned CC0 MakeHuman assets. Lower lashes are not implemented. Candidate SHA-256 8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1, 12,592,592 bytes. Evidence H:/HOREB_ArtPipeline/evidence/W29b-lashes-v3-20261126. Reproducible; 55 coarse/guard states and independent 417+144 reimport samples pass, zero overlaps with skin, eyes, brows, hood and self; focused Chromium facial channels 561/561, 9 meshes, 53 bones, no JS errors. Earlier v2 failed 6 samples and is rejected. Full scene browser and ART acceptance still required; no canonical replacement.
+
 
 - W28r v3: complete local 417 gesture + 144 idle pair clearance, desktop/mobile browser pass; historical CI 8/8 at 58f46427. W28s linen and W28t conforming CC0 brow overlay are derivative ART-HOLD studies. W28t brow-only reimport and focused real Chromium: 561 samples, zero tested overlaps/desync, 53 bones, eight skinned meshes. This is not a full scene acceptance.
 - W29a: bounded detail restored from the pinned original CC0 skin atlas, original geometry/animation/roughness unchanged, deterministic export. Candidate 12,567,992 bytes, SHA-256 3cd8372200534849bbdb39ccc6d48dedddce21dac0305ef3963be53a016c5e69. Local evidence: H:/HOREB_ArtPipeline/evidence/W29a-skin-20261126. Generated binary stays local. Compare exact-source frontal and blink renders; do not infer artistic acceptance from the checksum. Size increase is an optimization debt.
