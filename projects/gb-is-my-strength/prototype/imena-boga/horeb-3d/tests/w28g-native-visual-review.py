@@ -17,7 +17,9 @@ assert len(export["clips"])==2
 for c,name,n,step in zip(export["clips"],("Mother_GestureTowardsBasket","Mother_QuietIdle"),(417,144),(.25,1)):
  assert c["name"]==name and not c["bad"] and len(c["rows"])==n
  assert all(abs(r["frame"]-(1+i*step))<1e-6 and not any(r[k] for k in ("prop_hits","skin_cloth","self_pairs","sash_pairs","sash_self_pairs")) for i,r in enumerate(c["rows"]))
+gaze=os.environ.get("HOREB_W28L_OUTPUT")
 candidate=os.environ.get("HOREB_W28K_OUTPUT")
+assert not (gaze and candidate), "Choose one visual study"
 if candidate:
  candidate=Path(candidate)
  cm=json.loads((candidate/"w28k-material-manifest.json").read_text(encoding="utf8"))
@@ -26,6 +28,14 @@ if candidate:
  assert cm["geometry_animation_binary_unchanged"] is True and cm["house_sha256"]==m["house_sha256"]
  asset=candidate/"w28k-actor.glb"
  assert sha(asset)==cm["glb_sha256"] and asset.stat().st_size==cm["glb_bytes"]
+if gaze:
+ candidate=Path(gaze)
+ gm=json.loads((candidate/"w28l-eye-manifest.json").read_text(encoding="utf8"))
+ assert gm["status"]=="ART_HOLD_W28L_GAZE_TRIAL" and gm["source_sha256"]==m["glb_sha256"]
+ assert gm["original_geometry_and_bone_animation_unchanged"] is True and gm["house_sha256"]==m["house_sha256"]
+ assert gm["bones"]==53 and gm["morph_targets"]==8
+ asset=candidate/"w28l-actor.glb"
+ assert sha(asset)==gm["glb_sha256"] and asset.stat().st_size==gm["glb_bytes"]
 out=(candidate or root)/"visual-review";assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
@@ -39,7 +49,17 @@ for o in imported:
   mat=o.matrix_world.copy();mat.translation+=Vector((-.58,-.30,.015));o.matrix_world=mat
 ad=rig.animation_data;track=next(t for t in ad.nla_tracks if t.name=="Mother_GestureTowardsBasket")
 ad.use_nla=False;ad.action=track.strips[0].action;ad.action_slot=track.strips[0].action_slot
+if gaze:
+ eyes=next(o for o in imported if o.type=="MESH" and o.data.shape_keys and len(o.data.shape_keys.key_blocks)==9)
+ keys=eyes.data.shape_keys
+ ka=keys.animation_data;kt=next(t for t in ka.nla_tracks if t.name=="Mother_GestureTowardsBasket")
+ ka.use_nla=False;ka.action=kt.strips[0].action;ka.action_slot=kt.strips[0].action_slot
 scene.frame_set(60);bpy.context.view_layer.update()
+if gaze:
+ expected=next(a["peak_frame_60"] for a in gm["animations"] if a["name"]=="Mother_GestureTowardsBasket")
+ actual=[k.value for k in list(keys.key_blocks)[1:]]
+ assert len(actual)==8 and max(abs(x-y) for x,y in zip(actual,expected))<.0001
+ print("W28L_MORPH_REIMPORT_PASS",actual,flush=True)
 w=rig.matrix_world@rig.pose.bones["hand_l"].head
 assert (w-Vector((-.1729625,-.2631747,1.2095803))).length<.002,tuple(w)
 scene.render.engine="CYCLES";scene.cycles.device="CPU";scene.cycles.samples=16;scene.cycles.use_denoising=True
@@ -52,7 +72,8 @@ views=[
  ("face-peak",60,(-.85,-1.65,1.49),(-.44,-.32,1.30),62),
  ("hand-peak",60,(.18,-1.25,1.70),(-.12,-.25,1.19),64),
 ]
-if candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
+if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
+elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
