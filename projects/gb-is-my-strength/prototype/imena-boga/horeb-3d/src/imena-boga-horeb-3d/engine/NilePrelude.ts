@@ -19,7 +19,32 @@ export type NilePreludeControl = {
   setMovement: (direction: NileDirection, active: boolean) => void;
   rotateView: (dx: number, dy: number) => void;
 };
-export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket'): NilePreludeControl {
+// The imported prop is owned by this one lab scene. Dispose GPU textures as
+// well as meshes, including when a pending load is cancelled.
+export function disposeNileSharedBasket(group:THREE.Group){
+  const textures=new Set<THREE.Texture>(),materials=new Set<THREE.Material>(),geometries=new Set<THREE.BufferGeometry>();
+  group.traverse(o=>{
+    if(!(o instanceof THREE.Mesh))return;
+    geometries.add(o.geometry);
+    for(const m of Array.isArray(o.material)?o.material:[o.material]){
+      materials.add(m);
+      for(const value of Object.values(m))if(value instanceof THREE.Texture)textures.add(value);
+    }
+  });
+  geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());
+}
+export async function loadNileSharedBasket(url:string):Promise<THREE.Group>{
+  const {GLTFLoader}=await import('three/addons/loaders/GLTFLoader.js');
+  const group=(await new GLTFLoader().loadAsync(url)).scene;
+  try{
+    const anchor=group.getObjectByName('BASKET_OBJECT_ACTION_ANCHOR');
+    let meshes=0;group.traverse(o=>{if(o instanceof THREE.Mesh)meshes++;});
+    const bounds=new THREE.Box3().setFromObject(group),size=bounds.getSize(new THREE.Vector3());
+    if(!anchor||meshes!==92||Math.abs(size.x-1)>.0001||Math.abs(size.y-.331727)>.0001||Math.abs(size.z-.702)>.0001||Math.abs(bounds.min.y)>.0001)throw Error('Invalid shared basket');
+    return group;
+  }catch(e){disposeNileSharedBasket(group);throw e;}
+}
+export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: boolean, moment: NileMoment = 'basket',sharedBasket?:THREE.Group): NilePreludeControl {
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true, alpha: false, powerPreference: 'low-power',
   });
@@ -34,7 +59,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   // Shoot FROM the river side: neither reeds nor the bank obscure the chest.
   const wideShot = moment === 'discovery'
     ? { x: -1.55, y: 2.15, z: 3.2, focusX: 1.85, focusY: .92, focusZ: -2.0 }
-    : { x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
+    : sharedBasket?{x:-1.45,y:1.28,z:.45,focusX:.73,focusY:.25,focusZ:-2.1}:{ x: -1.8, y: 1.75, z: 1.15, focusX: 0.55, focusY: 0.32, focusZ: -2.3 };
   // W8C second, closer cinematographic angle: the same real scene and
   // stationary cradle, never a new physical path or false location.
   const closeShot = { x: -.82, y: 1.82, z: 1.06, focusX: 1.44, focusY: .80, focusZ: -2.20 };
@@ -146,6 +171,8 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
   // Wicker/papyrus chest: stationary, just inside the riverside growth.
   const basket = new THREE.Group();
   basket.name='moses-papyrus-cradle';
+  if(sharedBasket)basket.add(sharedBasket);
+  else{
   const weave=material(0x80613d);
   const darkWeave=material(0x5d3d26);
   const bowlGeo = new THREE.SphereGeometry(1, 28, 12, 0, Math.PI * 2, Math.PI/2, Math.PI/2);
@@ -194,22 +221,30 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     basket.add(new THREE.Mesh(new THREE.TubeGeometry(curve,12,.008,3,false),
       strand%3===0?fiberLight:fiber));
   }
+  }
   // A cloth-wrapped silhouette, no invented face/identity or depiction of
   // specific human anatomy. The baby is deliberately not animated.
   const cloth = new THREE.Mesh(new THREE.SphereGeometry(1,16,10), material(0xd2bda0));
-  cloth.scale.set(0.46,0.19,0.27);
-  cloth.position.set(0,0.16,0);
+  if(sharedBasket){cloth.scale.set(.28,.105,.145);cloth.position.set(0,.13,0);}
+  else{cloth.scale.set(0.46,0.19,0.27);cloth.position.set(0,0.16,0);}
   basket.add(cloth);
   const foldedCloth = new THREE.Mesh(new THREE.SphereGeometry(1,14,8),material(0xeee0c5));
-  foldedCloth.scale.set(0.19,0.13,0.22);
-  foldedCloth.position.set(0.28,0.18,-0.03);
+  if(sharedBasket){foldedCloth.scale.set(.12,.075,.12);foldedCloth.position.set(.18,.15,-.015);}
+  else{foldedCloth.scale.set(0.19,0.13,0.22);foldedCloth.position.set(0.28,0.18,-0.03);}
   basket.add(foldedCloth);
   // Approximate readable scale only; Scripture gives no basket dimensions.
   // The base intersects the shallow water by a few centimetres, not mid-air.
-  basket.position.set(NILE_CRADLE.x,-.03,NILE_CRADLE.z);
+  basket.position.set(NILE_CRADLE.x,sharedBasket?NILE_WATER_LEVEL-.012:-.03,NILE_CRADLE.z);
   basket.rotation.y=-0.25;
-  basket.scale.setScalar(.88);
+  basket.scale.setScalar(sharedBasket?1:.88);
   scene.add(basket);
+  if(sharedBasket)basket.updateWorldMatrix(true,true);
+  const sharedBounds=sharedBasket?new THREE.Box3().setFromObject(sharedBasket):null;
+  if(sharedBasket){
+    canvas.dataset.nileBasketAsset='w32e';
+    canvas.dataset.nileBasketMeshes='92';
+    canvas.dataset.nileBasketScale='1';
+  }
   // W10B: papyrus (Cyperus papyrus), informed by Met 30.4.60:
   // fine, drooping branched umbels and tiny ochre seed-bearing tips,
   // not cartoon spherical fruit on thick star-shaped plastic arms.
@@ -715,6 +750,17 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
       waterPosition.needsUpdate=true;
       waterGeo.computeVertexNormals();
     }
+    if(sharedBounds){
+      camera.updateMatrixWorld(true);
+      // Actual projected authored geometry, not a nominal camera target.
+      const bounds=sharedBounds;
+      let extent=0,depth=true;
+      for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
+        const v=new THREE.Vector3(x,y,z).project(camera);
+        extent=Math.max(extent,Math.abs(v.x),Math.abs(v.y));depth=depth&&v.z>=-1&&v.z<=1;
+      }
+      canvas.dataset.nileBasketFrameExtent=depth?extent.toFixed(4):'outside';
+    }
     renderer.render(scene,camera);
     canvas.dataset.nileRendered='true';
   };
@@ -731,6 +777,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     cancelAnimationFrame(frame);
     observer?.disconnect();resizer?.disconnect();
     window.removeEventListener('resize',resize);
+    if(sharedBasket){sharedBasket.removeFromParent();disposeNileSharedBasket(sharedBasket);}
     scene.traverse(o=>{
       if(o instanceof THREE.Mesh){
         o.geometry.dispose();
@@ -740,6 +787,7 @@ export function createNilePrelude(canvas: HTMLCanvasElement, reducedMotion: bool
     });
     renderer.dispose();
     renderer.forceContextLoss();
+    delete canvas.dataset.nileBasketAsset;delete canvas.dataset.nileBasketMeshes;delete canvas.dataset.nileBasketScale;delete canvas.dataset.nileBasketFrameExtent;
     delete canvas.dataset.nileReady;
     delete canvas.dataset.nileMoment;
     delete canvas.dataset.nileFigures;

@@ -88,6 +88,14 @@ if(plasterDir){
  assert.deepEqual(candidate,base);
  console.log('W32D_MATERIAL_IDENTITY_PASS',JSON.stringify({unchangedViews:1251,sha:plasterManifest.glb_sha256}));
 }
+const sharedBasketDir=process.env.HOREB_W32E_BASKET_OUTPUT;
+let sharedBasketBytes=null;
+if(sharedBasketDir){
+ if(pair?.name!=='w31f'||!plasterBytes)throw Error('Shared basket requires the verified house trial');
+ const bm=JSON.parse(fs.readFileSync(path.join(sharedBasketDir,'w32e-basket-manifest.json'),'utf8'));
+ sharedBasketBytes=fs.readFileSync(path.join(sharedBasketDir,'w32e-basket.glb'));
+ if(bm.status!=='ART_HOLD_W32E_SHARED_BASKET'||bm.source_sha256!==m.glb_sha256||bm.glb_sha256!=='54f7cbb510e55580e602228a26a9f0af132add0a76eaa4f5e17c57483cd1aab6'||crypto.createHash('sha256').update(sharedBasketBytes).digest('hex')!==bm.glb_sha256||sharedBasketBytes.length!==bm.bytes||bm.meshes!==92||bm.identical_views!==288||bm.scale!==1)throw Error('Shared basket asset mismatch');
+}
 const contactLimit=w28?10:25;
 const chrome=[process.env.HOREB_BROWSER_PATH,'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&fs.existsSync(x));
 if(!chrome)throw Error('Actual Chromium required');
@@ -97,9 +105,9 @@ if(!chrome)throw Error('Actual Chromium required');
  fs.mkdirSync(dir,{recursive:true});
  const page=await browser.newPage();page.setDefaultTimeout(60000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- let requests=0,actorRequests=0,plasterRequests=0;
+ let requests=0,actorRequests=0,plasterRequests=0,basketRequests=0;
  if(bytes||actorBytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
- page.on('request',r=>{if(plasterBytes&&new URL(r.url()).pathname.endsWith('/artlab/w32d-house.glb')){plasterRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:plasterBytes});}if(bytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-house.glb':'/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/'+actorFile:'/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
+ page.on('request',r=>{if(sharedBasketBytes&&new URL(r.url()).pathname.endsWith('/artlab/w32e-basket.glb')){basketRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:sharedBasketBytes});}if(plasterBytes&&new URL(r.url()).pathname.endsWith('/artlab/w32d-house.glb')){plasterRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:plasterBytes});}if(bytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-house.glb':'/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/'+actorFile:'/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
  const sel='[data-testid="house-lookdev-canvas"]';
  const state=()=>page.$eval(sel,c=>({...c.dataset}));
  const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
@@ -117,10 +125,10 @@ if(!chrome)throw Error('Actual Chromium required');
  }
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
- const prior=requests,priorActor=actorRequests,priorPlaster=plasterRequests;
+ const prior=requests,priorActor=actorRequests,priorPlaster=plasterRequests,priorBasket=basketRequests;
  const baseUrl=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:'');
  const compare=pair?.name==='w31f'&&process.env.HOREB_W32C_LIGHT_COMPARE==='1';
- if((compare||plasterBytes)&&!mobile){
+ if((compare||plasterBytes)&&!sharedBasketBytes&&!mobile){
   const profiles=plasterBytes?[{name:'baseline',light:'w32c',material:'baseline'},{name:'w32d',light:'w32c',material:'w32d'}]:[{name:'baseline',light:'baseline',material:'baseline'},{name:'w32c',light:'w32c',material:'baseline'}];
   for(const {name,light,material} of profiles){
    await page.goto(baseUrl+'&light='+light+'&material='+material,{waitUntil:'domcontentloaded'});
@@ -135,7 +143,7 @@ if(!chrome)throw Error('Actual Chromium required');
   }
   console.log(plasterBytes?'W32D_PLASTER_COMPARE_PASS':'W32C_LIGHT_COMPARE_PASS');
  }
- await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':''),{waitUntil:'domcontentloaded'});
+ await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':'')+(sharedBasketBytes?'&basket=w32e':''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(plasterBytes?plasterRequests<=priorPlaster:bytes&&requests<=prior)throw Error('No candidate request');
  const episode=pair?.name==='w31f';
@@ -219,6 +227,10 @@ if(!chrome)throw Error('Actual Chromium required');
   if(await page.$(sel)||await page.$$eval('canvas',c=>c.length)!==1)throw Error('House renderer retained across chapter cut');
   const shore=await page.$eval('[data-testid="moses-nile-3d"]',c=>({...c.dataset}));
   if(shore.nileFigures!=='0'||Number(shore.nilePapyrusCount)<=0)throw Error('Wrong Nile moment '+JSON.stringify(shore));
+  if(sharedBasketBytes){
+   if(basketRequests<=priorBasket||shore.nileBasketAsset!=='w32e'||shore.nileBasketMeshes!=='92'||shore.nileBasketScale!=='1'||!Number.isFinite(Number(shore.nileBasketFrameExtent))||Number(shore.nileBasketFrameExtent)>=1)throw Error('Shared basket not framed '+JSON.stringify(shore));
+   console.log('W32E_SHARED_BASKET_PASS',JSON.stringify({mobile,meshes:shore.nileBasketMeshes,extent:shore.nileBasketFrameExtent}));
+  }
   await (await page.$('[data-testid="moses-nile-3d"]')).screenshot({path:path.join(dir,mobile?'nile-mobile390.png':'nile-desktop1440.png')});
   await page.click('[data-testid="nile-lab-return"]');
   await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);

@@ -37,9 +37,14 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false, la
       setView('wide');
     }
     const reduced=reducedMotion||(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false);
-    import('../engine/NilePrelude').then(({createNilePrelude})=>{
+    const useShared=import.meta.env.DEV&&labShot&&moment==='basket'&&new URLSearchParams(location.search).get('basket')==='w32e';
+    import('../engine/NilePrelude').then(async({createNilePrelude,loadNileSharedBasket,disposeNileSharedBasket})=>{
       if(disposed)return;
-      const scene=createNilePrelude(canvas,reduced,moment);
+      const shared=useShared?await loadNileSharedBasket(new URL('./artlab/w32e-basket.glb',window.location.href).href):undefined;
+      if(disposed){if(shared)disposeNileSharedBasket(shared);return;}
+      let scene:NilePreludeControl;
+      try{scene=createNilePrelude(canvas,reduced,moment,shared);}
+      catch(e){if(shared)disposeNileSharedBasket(shared);throw e;}
       if(disposed){scene.dispose();return;}
       controller.current=scene;
       if(viewRef.current!=='wide')scene.setView(viewRef.current);
@@ -58,7 +63,7 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false, la
       controller.current?.dispose();
       controller.current=null;
     };
-  },[moment,reducedMotion]);
+  },[moment,reducedMotion,labShot]);
   useEffect(()=>{
     if(!exploring)return;
     const prior=document.body.style.overflow;
