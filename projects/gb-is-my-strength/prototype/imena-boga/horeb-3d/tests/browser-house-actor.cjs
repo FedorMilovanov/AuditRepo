@@ -162,6 +162,23 @@ if(!chrome)throw Error('Actual Chromium required');
   if((await state()).houseObservationReady!=='true')await hold('s',s=>document.querySelector(s).dataset.houseObservationReady==='true','episode return to observation');
   await page.waitForFunction(()=>!document.querySelector('[data-testid="house-actor-perform"]').disabled);
   console.log('W32A_EPISODE_PASS',JSON.stringify({mobile,progress:(await state()).houseEpisodeProgress}));
+  // The real narrative cut swaps canvases, not coordinates in the house.
+  await page.click('[data-testid="house-episode-nile"]');
+  await page.waitForFunction(()=>{const c=document.querySelector('[data-testid="moses-nile-3d"]');return c?.dataset.nileRendered==='true'&&c.dataset.nileMoment==='basket';});
+  if(await page.$(sel)||await page.$$eval('canvas',c=>c.length)!==1)throw Error('House renderer retained across chapter cut');
+  const shore=await page.$eval('[data-testid="moses-nile-3d"]',c=>({...c.dataset}));
+  if(shore.nileFigures!=='0'||Number(shore.nilePapyrusCount)<=0)throw Error('Wrong Nile moment '+JSON.stringify(shore));
+  await (await page.$('[data-testid="moses-nile-3d"]')).screenshot({path:path.join(dir,mobile?'nile-mobile390.png':'nile-desktop1440.png')});
+  await page.click('[data-testid="nile-lab-return"]');
+  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
+  if(await page.$('[data-testid="moses-nile-3d"]')||await page.$$eval('canvas',c=>c.length)!==1||(await state()).houseEpisodeProgress!==undefined)throw Error('Chapter return retained stale scene state');
+  await page.click('[data-testid="house-actor-toggle"]');
+  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle');
+  await enterWalk();
+  await hold('w',s=>document.querySelector(s).dataset.houseObservationReady==='true','return to house observation');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-actor-perform"]').disabled);
+  console.log('W32B_CHAPTER_CUT_PASS',JSON.stringify({mobile,shore:shore.nileMoment,papyrus:shore.nilePapyrusCount}));
+
  }
  // A replay must reset contact evidence and cancel on leaving the walk.
  await page.click('[data-testid="house-actor-perform"]');

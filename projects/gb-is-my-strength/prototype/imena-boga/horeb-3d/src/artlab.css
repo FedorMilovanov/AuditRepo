@@ -66,3 +66,9 @@ button:disabled{opacity:.55;cursor:wait}
 .house-actor-note{font-size:11px;line-height:1.45;margin:6px 0 14px;color:var(--muted,#bcae95)}
 
 .house-actor-caption{position:absolute;bottom:42px;left:12px;right:12px;z-index:3;text-align:center;color:#ead6b1;font-size:12px;padding:7px;background:#201b16df;border-radius:5px;pointer-events:none}.house-walking .corner[hidden]{display:none}
+
+.nile-lab-layout .nile-lab-shot{min-height:360px;height:min(70vh,760px)}
+.nile-lab-layout .side{padding-top:0}
+.nile-lab-layout .switch{min-height:44px}
+.nile-lab-layout .loading{padding:18px;text-align:center}
+@media(max-width:560px){.nile-lab-layout .nile-lab-shot{height:48svh;min-height:280px}.nile-lab-layout .side{gap:12px}}

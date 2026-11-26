@@ -23,7 +23,7 @@ const TITLES:Record<View,string>={
 };
 type WalkKey='w'|'a'|'s'|'d'|'q'|'e';
 type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void;toggleActor:()=>void;performActor:()=>void;startEpisode:()=>void};
-export function HouseArtLab(){
+export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
  // Dev-only exact paired rehearsal; distinct URLs fail closed without the
  // explicitly supplied candidate files. Never substitute canonical binaries.
  const study=import.meta.env.DEV?new URLSearchParams(location.search).get('study'):null;
@@ -39,7 +39,7 @@ export function HouseArtLab(){
  const [actorPhase,setActorPhase]=useState<ActorPhase>('off');
  const [observationReady,setObservationReady]=useState(false);
  const [episodeProgress,setEpisodeProgress]=useState<number|null>(null);
- const episodeHint=episodeProgress===null?null:!(episodeProgress&1)?"Войдите во двор и пройдите в жилище.":!(episodeProgress&2)?"Подойдите к отметке у входа и наблюдайте жест матери.":!(episodeProgress&4)?"Подойдите к столу и осмотрите корзину.":"Эпизод дома завершён. Следующая часть — берег Нила — пока не связана с этой сценой.";
+ const episodeHint=episodeProgress===null?null:!(episodeProgress&1)?"Войдите во двор и пройдите в жилище.":!(episodeProgress&2)?"Подойдите к отметке у входа и наблюдайте жест матери.":!(episodeProgress&4)?"Подойдите к столу и осмотрите корзину.":"Дом осмотрен. Далее — берег Нила.";
  const inspectClose=useRef<HTMLButtonElement>(null);
  const focusRestore=useRef(false);
  useEffect(()=>{
@@ -461,6 +461,7 @@ export function HouseArtLab(){
      <button type="button" data-testid="house-inspect-basket" disabled={!canInspect||inspected} onClick={()=>api.current?.inspect()}>Осмотреть · F</button>
      {actorPhase!=='off'&&<button type="button" data-testid="house-actor-perform" disabled={!observationReady||!['idle','complete'].includes(actorPhase)} onClick={()=>api.current?.performActor()}>{actorPhase==='complete'?'Повторить жест':'Наблюдать жест'}</button>}
      {actorPhase!=='off'&&!observationReady&&<span className="house-walk-objective">Для жеста встаньте на отметку у входа</span>}
+     {episodeProgress===7&&onContinueToNile&&<button type="button" data-testid="house-episode-nile" onClick={onContinueToNile}>К берегу Нила</button>}
      {actorPhase==='complete'&&<span role="status" className="house-walk-objective">Жест завершён</span>}
      {actorPhase==='failed'&&<span role="status" className="house-walk-objective">Репетиция не прошла проверку</span>}
     </div>}

@@ -5,7 +5,7 @@ import type { NileDirection, NileMoment, NilePreludeControl, NileView } from '..
  * camera. Existing cinematic shots remain available as an optional view.
  * No legacy/Horeb checkpoint, scene material or Exhibit registry mutation.
  */
-export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: { moment?: NileMoment; reducedMotion?: boolean }) {
+export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false, labShot = false }: { moment?: NileMoment; reducedMotion?: boolean; labShot?:boolean }) {
   const ref=useRef<HTMLCanvasElement>(null);
   const controller=useRef<NilePreludeControl|null>(null);
   const viewRef=useRef<NileView>('wide');
@@ -89,6 +89,12 @@ export function NilePreludeCanvas({ moment = 'basket', reducedMotion = false }: 
       onLostPointerCapture={()=>controller.current?.setMovement(direction,false)}
       className="select-none touch-none w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-parch/60 bg-black/70 text-parch text-xl font-bold shadow-lg active:bg-bronze/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">{label}</button>
   );
+  // The DEV art lab uses the same scene lifecycle, without mounting the
+  // Product's full-screen walk controls or importing its global stylesheet.
+  if(labShot)return <div className="viewer nile-lab-shot" data-testid="nile-lab-shot">
+    <canvas ref={ref} data-testid="moses-nile-3d" role="img" aria-label="Художественная реконструкция берега Нила, Исход 2:3–4"/>
+    {(!ready||failed)&&<div className="loading" role="status">{failed?"Трёхмерная сцена недоступна. Библейский контекст сохранён.":"Загрузка берега…"}</div>}
+  </div>;
   return <div data-testid="nile-viewport"
     className={`bg-[#314e54] overflow-hidden ${exploring
       ? 'fixed inset-0 z-[90] !w-screen !h-[100dvh]'
