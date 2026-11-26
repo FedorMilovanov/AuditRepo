@@ -162,6 +162,18 @@ if drape:
  assert bm2["probe_sha256"]==sha(candidate/"w30b-probe.json") and bm2["delta_sha256"]==sha(candidate/"w30b-drape-delta.json")
  asset=candidate/"w30b-actor.glb"
  assert sha(asset)==bm2["glb_sha256"]=="cff945d163c95bd7673e3a5405f55b45168b764eaa412fa7b8b81714f9da6668"
+shape=os.environ.get("HOREB_W30C_OUTPUT")
+shape_compare=os.environ.get("HOREB_VISUAL_DRAPE_SHAPE_COMPARE")=="1"
+if shape:
+ assert drape and shape_compare
+ candidate=Path(shape)
+ cm3=json.loads((candidate/"w30c-manifest.json").read_text(encoding="utf8"))
+ assert cm3["status"]=="ART_HOLD_W30C_DRAPE_SHAPE_TRIAL" and cm3["source_sha256"]==bm2["glb_sha256"]
+ assert cm3["only_drape_positions_normals_changed"] is True and cm3["unchanged_views"]==309
+ assert cm3["probe_sha256"]==sha(candidate/"w30c-probe.json") and cm3["delta_sha256"]==sha(candidate/"w30c-drape-delta.json")
+ asset=candidate/"w30c-actor.glb"
+ assert sha(asset)==cm3["glb_sha256"]=="d5b1dc8af5e2dc0156be33b03f78b4c2d91baf2e3c7ea2646e8b8803f965e442"
+assert not shape_compare or (drape_compare and drape)
 assert not drape_compare or (head_compare and head_linen)
 assert not head_compare or eye_lookdev
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
@@ -178,7 +190,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -250,6 +262,10 @@ if head_compare:
  views=[("frontal-peak",60,None,None,56),("threequarter-peak",60,None,None,56)]
 if drape_compare:
  views=[("side-peak",60,None,None,56),("rear-peak",60,None,None,56)]
+if shape_compare:
+ # Identical local inspection fill for both assets. Not a game lighting change.
+ light_data=bpy.data.lights.new("Drape_inspection_fill","AREA");light_data.energy=45;light_data.shape="DISK";light_data.size=.8
+ fill=bpy.data.objects.new("Drape_inspection_fill",light_data);scene.collection.objects.link(fill)
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
@@ -272,6 +288,9 @@ for name,frame,eye,target,lens in views:
    focus=transform@Vector((0,.015,1.33))
    direction=(side-.7*front if name=="side-peak" else -front+.38*side).normalized()
    eye=focus+direction*.80+up*.04;target=focus
+ if shape_compare:
+  fill.location=Vector(eye)+up*.25
+  fill.rotation_euler=(Vector(target)-fill.location).to_track_quat("-Z","Y").to_euler()
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))
  bpy.ops.render.render(write_still=True)
