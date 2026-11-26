@@ -4,16 +4,22 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-root=Path(os.environ["HOREB_W28F_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
-m=json.loads((root/"w28f-manifest.json").read_text(encoding="utf8"))
+variant="w28g" if os.environ.get("HOREB_W28G_OUTPUT") else "w28f"
+assert not (os.environ.get("HOREB_W28G_OUTPUT") and os.environ.get("HOREB_W28F_OUTPUT")),"Choose one audit candidate"
+root=Path(os.environ["HOREB_"+variant.upper()+"_OUTPUT"]);house=Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])
+expected={
+ "w28f":("ART_HOLD_W28F_NECKLINE_SASH","be7c3f919d56f3b415d6fdaf707be11663888898408fb425134d6a5699e19e64","w28f-dense-audit.json"),
+ "w28g":("ART_HOLD_W28G_HEAD_ARM","a30e66d6b0bf1b973d52869244873ca1be2ad2033b36e4cb397af8e563da4c36","w28g-native-audit.json"),
+}[variant]
+m=json.loads((root/(variant+"-manifest.json")).read_text(encoding="utf8"))
 h=json.loads((house/"w28-house-manifest.json").read_text(encoding="utf8"))
-asset=root/"w28f-actor.glb";glb=house/"w28-house.glb"
-assert m["status"]=="ART_HOLD_W28F_NECKLINE_SASH"
-assert m["source_sha256"]=="be7c3f919d56f3b415d6fdaf707be11663888898408fb425134d6a5699e19e64"
+asset=root/(variant+"-actor.glb");glb=house/"w28-house.glb"
+assert m["status"]==expected[0]
+assert m["source_sha256"]==expected[1]
 assert sha(asset)==m["glb_sha256"]
 assert sha(glb)==m["house_sha256"]==h["glb_sha256"]=="fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622"
 assert asset.stat().st_size==m["glb_bytes"] and glb.stat().st_size==h["bytes"]
-assert sha(root/"w28f-dense-audit.json")==m["audit_sha256"]
+assert sha(root/expected[2])==m["audit_sha256"]
 assert m["sample_counts"]==[417,144] and m["placement_three"]==[-.58,.015,.30]
 assert m["actor_meshes"]==7
 blob=asset.read_bytes();magic,version,size=struct.unpack_from("<4sII",blob);assert magic==b"glTF" and version==2 and size==len(blob)
@@ -118,11 +124,11 @@ def check(track,n):
  if track==gesture:
   assert (Vector(rows[0]["wrist"])-Vector((.40878424,-.15502822,.94349938))).length<.001,rows[0]
   assert (Vector(rows[236]["wrist"])-Vector((.4070375,.0368253,1.1945803))).length<.001,rows[236]
- print("W28F_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"]),None)}),flush=True)
+ print(variant.upper()+"_REIMPORT_CLIP",json.dumps({"name":track.name,"samples":len(rows),"bad":bad,"first_hit":next((r for r in rows if r["prop_hits"] or r["skin_cloth"] or r["self_pairs"] or r["sash_pairs"] or r["sash_self_pairs"]),None)}),flush=True)
  return {"name":track.name,"rows":rows,"bad":bad}
 idle=next(t for t in tracks if t.name=="Mother_QuietIdle")
 results=[check(gesture,417),check(idle,144)]
-out=root/"w28f-glb-audit.json";assert not out.exists()
-out.write_text(json.dumps({"status":"W28F_EXPORTED_SKIN_PROP_SAMPLED_CLEARANCE","actor_sha256":sha(asset),"house_sha256":sha(glb),"actor_meshes":len(actor_meshes),"props":len(props),"excluded_importer_helpers":excluded,"clips":results},indent=2),encoding="utf8")
+out=root/(variant+"-glb-audit.json");assert not out.exists()
+out.write_text(json.dumps({"status":variant.upper()+"_EXPORTED_SKIN_PROP_SAMPLED_CLEARANCE","actor_sha256":sha(asset),"house_sha256":sha(glb),"actor_meshes":len(actor_meshes),"props":len(props),"excluded_importer_helpers":excluded,"clips":results},indent=2),encoding="utf8")
 assert all(not r["bad"] for r in results),"Exported garment failed clearance"
-print("W28F_EXPORTED_PAIR_PASS",flush=True)
+print(variant.upper()+"_EXPORTED_PAIR_PASS",flush=True)
