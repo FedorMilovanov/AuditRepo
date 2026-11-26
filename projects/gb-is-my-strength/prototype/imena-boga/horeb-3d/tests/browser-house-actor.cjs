@@ -54,6 +54,40 @@ const bytes=m?fs.readFileSync(path.join(w28?w28House:study,w28?'w28-house.glb':m
 const actorBytes=am?fs.readFileSync(path.join(w28?w28Actor:actorStudy,w28?actorFile:'w24-wardrobe-study.glb')):null;
 if(bytes&&(crypto.createHash('sha256').update(bytes).digest('hex')!==m.glb_sha256||bytes.length!==m.bytes))throw Error('Asset hash mismatch');
 if(actorBytes&&(crypto.createHash('sha256').update(actorBytes).digest('hex')!==am.glb_sha256||actorBytes.length!==am.glb_bytes))throw Error('Actor study hash mismatch');
+const plasterDir=process.env.HOREB_W32D_HOUSE_OUTPUT;
+let plasterBytes=null,plasterManifest=null;
+if(plasterDir){
+ if(pair?.name!=='w31f'||!bytes)throw Error('Plaster trial requires exact W31f pair');
+ const assert=require('node:assert/strict');
+ const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+ plasterManifest=JSON.parse(fs.readFileSync(path.join(plasterDir,'w32d-house-manifest.json'),'utf8'));
+ plasterBytes=fs.readFileSync(path.join(plasterDir,'w32d-house.glb'));
+ if(plasterManifest.status!=='ART_HOLD_W32D_PLASTER_TRIAL'||plasterManifest.source_sha256!==m.glb_sha256||plasterManifest.glb_sha256!=='d6ab60e6d967add22c82a02812d200bb785051ee0cc96190e13654ae65e2ddc3'||sha(plasterBytes)!==plasterManifest.glb_sha256||plasterBytes.length!==plasterManifest.bytes)throw Error('Plaster asset mismatch');
+ const decode=b=>{
+  assert.equal(b.toString('ascii',0,4),'glTF');assert.equal(b.readUInt32LE(4),2);assert.equal(b.readUInt32LE(8),b.length);
+  const n=b.readUInt32LE(12);assert.equal(b.toString('ascii',16,20),'JSON');assert.equal(b.toString('ascii',24+n,27+n),'BIN');assert.equal(b.readUInt32LE(20+n)+28+n,b.length);
+  return [JSON.parse(b.toString('utf8',20,20+n)),b.subarray(28+n)];
+ };
+ const [base,bb]=decode(bytes),[candidate,cb]=decode(plasterBytes),view=5,mat=0;
+ assert.equal(base.materials[mat].name,'CC0_clay_plaster_unpolished');
+ assert.equal(candidate.materials[mat].normalTexture.scale,.8);
+ assert.equal(base.images[base.textures[base.materials[mat].pbrMetallicRoughness.baseColorTexture.index].source].bufferView,view);
+ assert(!base.accessors.some(a=>a.bufferView===view));assert.equal(base.bufferViews.length,1252);assert.equal(candidate.bufferViews.length,1252);
+ const slice=(b,v)=>b.subarray(v.byteOffset||0,(v.byteOffset||0)+v.byteLength);
+ for(let i=0;i<base.bufferViews.length;i++){
+  const a=base.bufferViews[i],c=candidate.bufferViews[i];
+  if(i===view){
+   assert.equal(sha(slice(bb,a)),plasterManifest.source_texture_sha256);assert.equal(sha(slice(cb,c)),plasterManifest.texture_sha256);
+  }else{
+   assert.deepEqual({...c,byteOffset:a.byteOffset},{...a,byteOffset:a.byteOffset});
+   assert(slice(bb,a).equals(slice(cb,c)),`Geometry or other view changed: ${i}`);
+  }
+ }
+ candidate.materials[mat].normalTexture.scale=base.materials[mat].normalTexture.scale;
+ candidate.bufferViews=base.bufferViews;candidate.buffers=base.buffers;
+ assert.deepEqual(candidate,base);
+ console.log('W32D_MATERIAL_IDENTITY_PASS',JSON.stringify({unchangedViews:1251,sha:plasterManifest.glb_sha256}));
+}
 const contactLimit=w28?10:25;
 const chrome=[process.env.HOREB_BROWSER_PATH,'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&fs.existsSync(x));
 if(!chrome)throw Error('Actual Chromium required');
@@ -63,9 +97,9 @@ if(!chrome)throw Error('Actual Chromium required');
  fs.mkdirSync(dir,{recursive:true});
  const page=await browser.newPage();page.setDefaultTimeout(60000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- let requests=0,actorRequests=0;
+ let requests=0,actorRequests=0,plasterRequests=0;
  if(bytes||actorBytes){await page.setCacheEnabled(false);await page.setRequestInterception(true);
- page.on('request',r=>{if(bytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-house.glb':'/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/'+actorFile:'/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
+ page.on('request',r=>{if(plasterBytes&&new URL(r.url()).pathname.endsWith('/artlab/w32d-house.glb')){plasterRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:plasterBytes});}if(bytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/w28-house.glb':'/artlab/horeb_egypt_house_hero_pilot.glb')){requests++;return r.respond({status:200,contentType:'model/gltf-binary',body:bytes});}if(actorBytes&&new URL(r.url()).pathname.endsWith(w28?'/artlab/'+actorFile:'/artlab/horeb_mother_w22_candidate.glb')){actorRequests++;return r.respond({status:200,contentType:'model/gltf-binary',body:actorBytes});}return r.continue();});}
  const sel='[data-testid="house-lookdev-canvas"]';
  const state=()=>page.$eval(sel,c=>({...c.dataset}));
  const until=(fn)=>page.waitForFunction(fn,{timeout:60000},sel);
@@ -83,26 +117,27 @@ if(!chrome)throw Error('Actual Chromium required');
  }
  for(const mobile of [false,true]){
  await page.setViewport({width:mobile?390:1440,height:mobile?844:900,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
- const prior=requests,priorActor=actorRequests;
+ const prior=requests,priorActor=actorRequests,priorPlaster=plasterRequests;
  const baseUrl=(process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:'');
  const compare=pair?.name==='w31f'&&process.env.HOREB_W32C_LIGHT_COMPARE==='1';
- if(compare&&!mobile){
-  for(const light of ['baseline','w32c']){
-   await page.goto(baseUrl+'&light='+light,{waitUntil:'domcontentloaded'});
+ if((compare||plasterBytes)&&!mobile){
+  const profiles=plasterBytes?[{name:'baseline',light:'w32c',material:'baseline'},{name:'w32d',light:'w32c',material:'w32d'}]:[{name:'baseline',light:'baseline',material:'baseline'},{name:'w32c',light:'w32c',material:'baseline'}];
+  for(const {name,light,material} of profiles){
+   await page.goto(baseUrl+'&light='+light+'&material='+material,{waitUntil:'domcontentloaded'});
    await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
-   if((await state()).houseLight!==light)throw Error('Wrong light profile');
+   const profileState=await state();if(profileState.houseLight!==light||profileState.houseMaterial!==material)throw Error('Wrong visual profile');
    for(const view of ['courtyard','room','basket']){
     await page.click('[data-testid="house-view-'+view+'"]');
     await page.waitForFunction((s,v)=>document.querySelector(s).dataset.houseView===v,{},sel,view);
     await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
-    await (await page.$(sel)).screenshot({path:path.join(dir,'light-'+light+'-'+view+'.png')});
+    await (await page.$(sel)).screenshot({path:path.join(dir,(plasterBytes?'plaster-':'light-')+name+'-'+view+'.png')});
    }
   }
-  console.log('W32C_LIGHT_COMPARE_PASS');
+  console.log(plasterBytes?'W32D_PLASTER_COMPARE_PASS':'W32C_LIGHT_COMPARE_PASS');
  }
- await page.goto(baseUrl+(compare?'&light=w32c':''),{waitUntil:'domcontentloaded'});
+ await page.goto(baseUrl+(plasterBytes?'&light=w32c&material=w32d':compare?'&light=w32c':''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
- if(bytes&&requests<=prior)throw Error('No candidate request');
+ if(plasterBytes?plasterRequests<=priorPlaster:bytes&&requests<=prior)throw Error('No candidate request');
  const episode=pair?.name==='w31f';
  if(episode)await page.click('[data-testid="house-episode-start"]');
  else await page.click('[data-testid="house-actor-toggle"]');
@@ -246,7 +281,7 @@ if(!chrome)throw Error('Actual Chromium required');
  if((await state()).houseActorBones!==undefined)throw Error('Actor retained after removal');
 
  if(errors.length)throw Error(errors.join('; '));
- console.log('W27A_HOUSE_ACTOR_PASS',JSON.stringify({mobile,asset:m?.glb_sha256||'canonical W17',start,end,errors}));
+ console.log('W27A_HOUSE_ACTOR_PASS',JSON.stringify({mobile,asset:plasterManifest?.glb_sha256||m?.glb_sha256||'canonical W17',start,end,errors}));
  }
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

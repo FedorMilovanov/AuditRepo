@@ -30,6 +30,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
  const w28=study==='w28'||study==='w28e'||study==='w28f'||study==='w28g'||study==='w28o'||study==='w28q'||study==='w28r'||study==='w29c'||study==='w31a'||study==='w31f';
  const actorProfile=study==='w31f'?HOUSE_ACTOR_PROFILES.w31f:study==='w31a'?HOUSE_ACTOR_PROFILES.w31a:study==='w29c'?HOUSE_ACTOR_PROFILES.w29c:study==='w28r'?HOUSE_ACTOR_PROFILES.w28r:study==='w28q'?HOUSE_ACTOR_PROFILES.w28q:study==='w28o'?HOUSE_ACTOR_PROFILES.w28o:study==='w28g'?HOUSE_ACTOR_PROFILES.w28g:study==='w28f'?HOUSE_ACTOR_PROFILES.w28f:study==='w28e'?HOUSE_ACTOR_PROFILES.w28e:w28?HOUSE_ACTOR_PROFILES.w28:HOUSE_ACTOR_PROFILES.canonical;
  const lightTrial=study==='w31f'&&new URLSearchParams(location.search).get('light')==='w32c';
+ const plasterTrial=study==='w31f'&&new URLSearchParams(location.search).get('material')==='w32d';
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
  const [view,setView]=useState<View>('courtyard');
@@ -247,6 +248,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
    renderer.toneMapping=THREE.ACESFilmicToneMapping;
    renderer.toneMappingExposure=lightTrial?1.12:1.15;
    c.dataset.houseLight=lightTrial?'w32c':'baseline';
+   c.dataset.houseMaterial=plasterTrial?'w32d':'baseline';
    renderer.shadowMap.enabled=true;
    renderer.shadowMap.type=THREE.PCFShadowMap;
    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
@@ -340,7 +342,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
   activeRenderer.setAnimationLoop(render);
   const loader=new GLTFLoader();
   // Served from a same-origin local art lab. The local asset is not a Product dependency.
-  const src=new URL('./artlab/'+(w28?'w28-house.glb':'horeb_egypt_house_hero_pilot.glb'),window.location.href).href;
+  const src=new URL('./artlab/'+(plasterTrial?'w32d-house.glb':w28?'w28-house.glb':'horeb_egypt_house_hero_pilot.glb'),window.location.href).href;
   loader.load(src,gltf=>{
    if(disposed){gltf.scene.traverse(o=>{const m=o as THREE.Mesh;if(m.isMesh){m.geometry?.dispose();}});return;}
    loaded=gltf.scene;loaded.name='HOREB_ORIGINAL_HOUSE_PILOT';
@@ -418,7 +420,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
    c.removeEventListener('pointerdown',lookStart);c.removeEventListener('pointermove',lookMove);c.removeEventListener('pointerup',lookEnd);c.removeEventListener('pointercancel',lookEnd);c.removeEventListener('lostpointercapture',lookEnd);
    window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);window.removeEventListener('blur',clear);document.removeEventListener('visibilitychange',visibility);
    for(const key of ['houseWalk','houseWalkX','houseWalkZ','houseWalkYaw','houseWalkPitch','houseWalkBlocked','houseWalkRegion','houseWalkColliders','houseInspectReady','houseInspected','houseObservationReady','houseActorAperture'])delete c.dataset[key];
-   delete c.dataset.houseLight;delete c.dataset.houseEpisodeProgress;
+   delete c.dataset.houseMaterial;delete c.dataset.houseLight;delete c.dataset.houseEpisodeProgress;
    activeRenderer.setAnimationLoop(null);activeControls.dispose();
    const geos=new Set<THREE.BufferGeometry>(),mats=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
    if(loaded)loaded.traverse(o=>{
@@ -500,7 +502,7 @@ export function HouseArtLab({onContinueToNile}:{onContinueToNile?:()=>void}={}){
      <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'||actorPhase==='loading'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
      <h3>Репетиция персонажа · ART HOLD</h3>
      <button type="button" className="switch" data-testid="house-actor-toggle" disabled={status!=='ready'||walking||actorPhase==='loading'} aria-pressed={actorPhase!=='off'} onClick={()=>api.current?.toggleActor()}>{actorPhase==='off'?'Показать персонажа':actorPhase==='loading'?'Загрузка персонажа…':'Убрать персонажа'}</button>
-     <p className="house-actor-note">{w28?'Экспериментальная пара '+(study==='w31f'?'W31f':study==='w31a'?'W31a':study==='w29c'?'W29c':study==='w28r'?'W28r':study==='w28q'?'W28q':study==='w28o'?'W28o':study==='w28g'?'W28g':study==='w28f'?'W28f':study==='w28e'?'W28e':'W28')+(study==='w31f'?'. Проба согласованного движения рук и переходов. ART HOLD до полной приёмки.':study==='w31a'?'. Проба жеста и движения покоя. ART HOLD до полной приёмки.':study==='w29c'||study==='w28r'?'. Проба захвата корзины. ART HOLD до полной приёмки.':'. Измерение поверхности пальца, не захват.'):'Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.'}</p>
+     <p className="house-actor-note">{w28?'Экспериментальная пара '+(study==='w31f'?'W31f':study==='w31a'?'W31a':study==='w29c'?'W29c':study==='w28r'?'W28r':study==='w28q'?'W28q':study==='w28o'?'W28o':study==='w28g'?'W28g':study==='w28f'?'W28f':study==='w28e'?'W28e':'W28')+(study==='w31f'?'. Проба согласованного движения рук и переходов. ART HOLD до полной приёмки.':study==='w31a'?'. Проба жеста и движения покоя. ART HOLD до полной приёмки.':study==='w29c'||study==='w28r'?'. Проба движения пальцев у корзины, не физический захват. ART HOLD до полной приёмки.':'. Измерение поверхности пальца, не захват.'):'Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.'}</p>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
      {(Object.keys(POSES) as View[]).map(key=><button key={key}
