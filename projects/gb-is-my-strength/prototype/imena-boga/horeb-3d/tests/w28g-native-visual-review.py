@@ -19,7 +19,8 @@ for c,name,n,step in zip(export["clips"],("Mother_GestureTowardsBasket","Mother_
  assert all(abs(r["frame"]-(1+i*step))<1e-6 and not any(r[k] for k in ("prop_hits","skin_cloth","self_pairs","sash_pairs","sash_self_pairs")) for i,r in enumerate(c["rows"]))
 gaze=os.environ.get("HOREB_W28L_OUTPUT")
 candidate=os.environ.get("HOREB_W28K_OUTPUT")
-assert not (gaze and candidate), "Choose one visual study"
+surface=os.environ.get("HOREB_W28N_OUTPUT")
+assert not (gaze and candidate) and not (surface and (not gaze or candidate)), "Choose one visual study; W28n requires W28l provenance"
 if candidate:
  candidate=Path(candidate)
  cm=json.loads((candidate/"w28k-material-manifest.json").read_text(encoding="utf8"))
@@ -36,7 +37,17 @@ if gaze:
  assert gm["bones"]==53 and gm["morph_targets"]==8
  asset=candidate/"w28l-actor.glb"
  assert sha(asset)==gm["glb_sha256"] and asset.stat().st_size==gm["glb_bytes"]
-out=(candidate or root)/"visual-review";assert not out.exists();out.mkdir()
+if surface:
+ prior_gaze=candidate
+ candidate=Path(surface)
+ nm=json.loads((candidate/"w28n-eye-manifest.json").read_text(encoding="utf8"))
+ assert nm["status"]=="ART_HOLD_W28N_EYE_SURFACE" and nm["source_sha256"]==gm["glb_sha256"]
+ assert nm["source_audit_sha256"]==sha(prior_gaze/"w28l-glb-audit.json")
+ assert nm["geometry_and_motion_unchanged"] is True and nm["house_sha256"]==m["house_sha256"]
+ asset=candidate/"w28n-actor.glb"
+ assert sha(asset)==nm["glb_sha256"] and asset.stat().st_size==nm["glb_bytes"]
+close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
+out=(candidate or root)/("visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -74,8 +85,18 @@ views=[
 ]
 if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
 elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
+if close:views=[("frontal-peak",60,None,None,82),("threequarter-peak",60,None,None,82)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
+ if close:
+  head=rig.pose.bones["head"]
+  transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
+  focus=transform@Vector((0,-.102479,1.424))
+  front=(transform.to_3x3()@Vector((0,-1,0))).normalized()
+  up=(transform.to_3x3()@Vector((0,0,1))).normalized()
+  side=(transform.to_3x3()@Vector((1,0,0))).normalized()
+  direction=(front+(.40*side if name.startswith("threequarter") else Vector((0,0,0)))).normalized()
+  eye=focus+direction*.66+up*.025;target=focus
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))
  bpy.ops.render.render(write_still=True)
