@@ -1,0 +1,6 @@
+AUDITREPO STRUCTURE CHECK: PASS
+AUDITREPO ARTIFACT ADMISSION: PASS
+AUDITREPO VALIDATION: PASS
+AUDITREPO WORKFLOW PREFLIGHT: PASS (5 workflows; PyYAML 6.0.3 checksum verified)
+matrix: 44 active ids, 0 closed rows, 44 open rows; evidence files: 964; historical files: 544; legacy/archive ids: 1124; registry: 90 (aliases: 10, informational: 9, retired: 66, false-positive: 5); direct witnesses: 0; historical-only active: 0; evidence-only ids: 1809
+OK: compact active matrix coverage checks passed

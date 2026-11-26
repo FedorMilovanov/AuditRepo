@@ -86,3 +86,11 @@
 - Result: closed in branch; all six jobs pin the currently proven `ubuntu-24.04` image.
 - Boundary: future OS upgrade remains an explicit exact-head CI transaction.
 - Detailed evidence: `../verification/2026-10-29-wave-11-runner-image-stability/REPORT.md`.
+
+## 2026-11-17 — issue lifecycle owner decision current-check
+
+- Scope: historical `AR-ISSUE-LIFECYCLE-001` only; this is a **fresh reconciliation of live issue states**, not a replay of October's integration-403 write attempts.
+- Direct GitHub REST readback of `FedorMilovanov/AuditRepo`: [#489](https://github.com/FedorMilovanov/AuditRepo/issues/489) `closed/not_planned` at `2026-11-03T14:41:10Z`; [#485](https://github.com/FedorMilovanov/AuditRepo/issues/485) `closed/completed` at `2026-11-03T14:40:59Z`; [#484](https://github.com/FedorMilovanov/AuditRepo/issues/484) `closed/completed` at `2026-11-03T14:40:41Z`; [#437](https://github.com/FedorMilovanov/AuditRepo/issues/437) `closed/completed` at `2026-11-05T03:47:57Z`.
+- Their `labels` arrays are empty: **no historical label application is asserted**. `CONTRIBUTING.md` requires a lifecycle label for **new open issues**; wave 5 explicitly says backfilling all already-closed history is not required. No active owner decision remains on these four closed records.
+- Result: remove stale open-issue owner row from the active MASTER and retire `AR-THEME-TRUSTED-STATE` from `active-work` into historical/resolved. The issue history and original October report remain unchanged; other projects' defects, protected branches and provider operations are outside this closure.
+- Freshness: bounded to direct 2026-11-17 issue readback and baseline AuditRepo main `53bfa9e5376854c303efd7fcc103c380c437ef2b`; a reopened issue or materially changed admission policy requires a new current check, not retroactive rewriting of this witness.

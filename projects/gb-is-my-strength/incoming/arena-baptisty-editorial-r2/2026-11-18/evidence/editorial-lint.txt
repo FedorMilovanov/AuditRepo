@@ -1,0 +1,8 @@
+> gb-is-my-strength@1.6.3 editorial:lint
+> node scripts/editorial-lint.js --sources
+
+[editorial-lint] mode=sources root=.
+
+GB EDITORIAL LINT
+✅ Editorial lint passed (sources)
+EDITORIAL UPDATES CONTRACT: PASS — 2 published meaningful updates, 2 ledger entries.

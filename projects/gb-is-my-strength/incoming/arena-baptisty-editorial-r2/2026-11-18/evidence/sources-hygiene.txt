@@ -1,0 +1,6 @@
+> gb-is-my-strength@1.6.3 sources:hygiene
+> node scripts/sources-hygiene.js
+
+=== sources:hygiene (Charter S12) ===
+Scanned 164 article/metadata/config files across 5 directory scopes + 1 explicit reader config(s).
+✅ No backstage research scaffolding in reader-facing content/metadata/config.

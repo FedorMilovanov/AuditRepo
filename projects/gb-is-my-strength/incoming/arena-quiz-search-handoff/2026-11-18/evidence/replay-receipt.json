@@ -1,0 +1,230 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "casesPerRun": 16,
+  "chromium": "153.0.8010.0",
+  "node": "22.23.4",
+  "pinned": 48,
+  "playwright": "1.62.1",
+  "priorPinned": 66,
+  "priorWitnessSha256": "cb3b2cb2ce8f6934ce7feb7ef1de7b7d6eed85c561aae59ec52de47d320b5dba",
+  "screenshots": {
+    "before-search-390.png": {
+      "a": "68b8751ec124e58932a586cc52bba085b4f4b27e017c465cb3982348bd9a509f",
+      "b": "b408b2059fc8d280b5d5be330d96fce87ccdd8129a56ef8f0131caa6d225fbff",
+      "byteIdentical": false
+    },
+    "escape-and-tab-390.png": {
+      "a": "15389d9a56cacc4fb87afff054a99bf80db7aea8658d26c6011cf3c3520e05a6",
+      "b": "15389d9a56cacc4fb87afff054a99bf80db7aea8658d26c6011cf3c3520e05a6",
+      "byteIdentical": true
+    },
+    "solo-after-next-390.png": {
+      "a": "b81c52a5d3e865547d41090b0e4aa150477c7f02a203ef3764bf3fbd66a034be",
+      "b": "0c20fdb66bd799bc8a1762950da5cf2a0843619efce97a1f96588934b8540347",
+      "byteIdentical": false
+    }
+  },
+  "sharedPins": 48,
+  "stableOutcomeByCase": {
+    "1440-after-miss-no-search": {
+      "control": "uninterrupted",
+      "landing": "sec-canticles",
+      "sourceHitAtStart": false
+    },
+    "1440-after-miss-section-button": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "globalSearchBtn"
+    },
+    "1440-after-miss-shortcut-cold": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "glsQuizSource"
+    },
+    "1440-after-miss-shortcut-warm": {
+      "atOverlayOpen": "glsQuizSource",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": false,
+      "nextShiftTab": "gb-note-endnotes__back",
+      "nextTab": "gb-hl-fab",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "glsQuizSource"
+    },
+    "1440-before-answer-no-search": {
+      "control": "uninterrupted",
+      "landing": "sec-canticles",
+      "sourceHitAtStart": null
+    },
+    "1440-before-answer-shortcut-cold": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "quiz-option"
+    },
+    "1440-before-answer-shortcut-warm": {
+      "atOverlayOpen": "quiz-option",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": false,
+      "nextShiftTab": "gb-note-endnotes__back",
+      "nextTab": "gb-hl-fab",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "quiz-option"
+    },
+    "1440-solo-escape-and-next": {
+      "afterNext": "glsQuizNext",
+      "afterNextKeys": [
+        "heading-anchor",
+        "learning-close",
+        "heading-anchor"
+      ],
+      "backgroundExposedInAX": true,
+      "control": "standalone",
+      "learningEscape": "body",
+      "settingsEscape": "railSettingsBtn",
+      "wrap": "heading-anchor"
+    },
+    "390-after-miss-no-search": {
+      "control": "uninterrupted",
+      "landing": "sec-canticles",
+      "sourceHitAtStart": true
+    },
+    "390-after-miss-section-button": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "globalSearchBtn"
+    },
+    "390-after-miss-shortcut-cold": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "glsQuizSource"
+    },
+    "390-after-miss-shortcut-warm": {
+      "atOverlayOpen": "glsQuizSource",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": false,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "glsQuizSource"
+    },
+    "390-before-answer-no-search": {
+      "control": "uninterrupted",
+      "landing": "sec-canticles",
+      "sourceHitAtStart": null
+    },
+    "390-before-answer-shortcut-cold": {
+      "atOverlayOpen": "body",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": true,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "quiz-option"
+    },
+    "390-before-answer-shortcut-warm": {
+      "atOverlayOpen": "quiz-option",
+      "landing": "sec-canticles",
+      "navigationInertAfterEscape": false,
+      "navigationInertRestoredAtClose": false,
+      "nextShiftTab": "body",
+      "nextTab": "skip-link",
+      "postEscapeFocus": [
+        "body",
+        "body",
+        "body",
+        "body"
+      ],
+      "preSearch": "quiz-option"
+    },
+    "390-solo-escape-and-next": {
+      "afterNext": "body",
+      "afterNextKeys": [
+        "body",
+        "skip-link",
+        "body"
+      ],
+      "backgroundExposedInAX": true,
+      "control": "standalone",
+      "learningEscape": "body",
+      "settingsEscape": "mobSettingsBtn",
+      "wrap": "learning-handle"
+    }
+  },
+  "witnessSha256": {
+    "a": "7391e97817968d22c9bdf0ba95c21d11da6c3d076183b18d8e8e46a911329bf4",
+    "b": "ff42053cf5d09db4047ed45daddb42d413a75dc0b65c992b74511d7f42794b5e"
+  }
+}

@@ -1,0 +1,51 @@
+# Stage 21 — intake slot 2026-11-18 UTC: Home glossary → search → close → Tab.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0, existing Draft #570.
+
+[Coordination and source]
+git status --short --branch
+git rev-parse HEAD
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+# Before: open Draft with same title/body, 143 exact paths, 829ac6bc2b9979bb146fb331104021ed53d2317c. No reviews/merge.
+# AuditRepo main fe692393; anchor→main only references/ARENA_COLLABORATIVE_WORKFLOW.md. Product main unchanged.
+# Read-only compare stage 20→current tips: Audit #538 18d6e83d→4c0597b3, #543 194d45e0→4c033226, source lanes 97ed46a6/b5babdc2. No overlapping paths.
+# Product #2340 latest f8590220, #2347 9e8ad958, bare JournalMasthead lane 2f1c603d; anchor→tips +35/46, +4/24, +39/54 (commits/paths). No audited owner overlap.
+# #2248 is merged (bedc3c119); verify opener identity separately from lock release. Ledger and the October tooltip-owner reverify are dedup, not a new row.
+gh api repos/FedorMilovanov/gb-is-my-strength/pulls/2248 --jq '[.state,.merged,.merge_commit_sha]'
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# QPDF has the same pinned anchor, 48 pins and PDF.js 5.4.624. Native print witness pending; fixture not modified.
+
+[Inputs]
+# Same unmodified production-like distribution as stages 12/20 (stage 12 commands.log has bootstrap).
+# PRODUCT/TOOLS are absolute; CHROMIUM is the extracted Shell; OUT has fresh run dirs.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && npm run overlay:runtime:test && node scripts/homepage-resume-owner-contract-test.js)
+# Runtime integrity, canonical overlay API and Home resume owner contracts PASS. Source guard, not proof of this composite flow.
+for f in js/search.js js/site.js js/site-utils.js js/glossary.js css/command-palette.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# Source/distribution bytes agree. Read close/re/restore in search.js; document-capture Escape in site-utils.js; legacy focusout/click/Escape in site.js.
+# Pilots: first Escape restores opener but leaves legacy lock; arming close-button actions after 700ms distinguishes an ordinary click from capture Escape without relying on subtiming.
+
+[Two cold-open replays]
+P="$PWD/projects/gb-is-my-strength/incoming"
+W="$P/arena-quiz-home-search-focus/2026-11-18"
+V="$RAW_INCOMING/arena-quiz-resume-focus/2026-11-18"
+node --check "$W/harness/home-search-focus.mjs"
+for run in a b; do
+  node "$W/harness/home-search-focus.mjs" "$PRODUCT" "$OUT/run-$run" "$CHROMIUM" 2>&1 | tee "$OUT/run-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$V/evidence/resume-focus-witness.json" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# 13/13 ×2; 66 exact dist pins / 63 shared with stage 20 / all its 67 rechecked. 2/2 PNGs A=B; retain A.
+# Keyboard Tab, Enter and Escape, plus one pointer-close control per run. No seeded state, style/API modifications, forced focus, synthetic scroll or fabricated Pagefind.
+# Two profiles per run make the Gill record via real quiz/source before Home; the rest are genuinely empty.
+# Search overlay opens/closes once on the same Home document; actual opener 26/26. 5 next stops out of viewport per run; 2 before-Tab second-Escape recoveries.
+# No unexpected HTTP≥400 or pageerror. One real optional HEAD /pagefind/pagefind.js -> 404 per cold palette in the no-index lab; no query-result claims.
+
+[Admission]
+# CHANGED is the exact cumulative path list vs fcf2e69b. Stage only this intake; force-add only this ignored commands.log.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Recheck external refs and exact paths before push. Preserve all previous body/title; update only the existing Draft; check exact-head CI.
+# No Product, MASTER/ledger, other branch, review, merge, deploy or Drive mutation.

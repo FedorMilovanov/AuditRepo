@@ -1,0 +1,831 @@
+{
+  "chromium": "153.0.8010.0",
+  "network": "intercepted canonical requests served from local dist; external requests aborted; service workers blocked",
+  "htmlSha256": {
+    "/articles/kod-da-vinchi/": "fe2e458188c74664533adb8747b702bc151801ec7b7561a08696c3f941d8de89",
+    "/nagornaya/istochniki/": "55a52c9d32e8c4b67f1ff2f07efadd22f1504b0483baab6ab41a453d4b865563",
+    "/baptisty-rossii/spravochnik/": "516e1a2fd4f11442199343103519be144b41f8adf08e70517157c4725c92a35b",
+    "/baptisty-rossii/podpolnaya-pechat/": "f441a32b1888bda81f2560a6a7b13aa0c2f553d3b244b4e75eac48cb0ced41ba"
+  },
+  "timeline": {
+    "320": {
+      "innerWidth": 320,
+      "axisWidthPx": 80.39,
+      "axisTicks": [
+        {
+          "year": 30,
+          "centerPct": 8.44,
+          "modelPct": 0
+        },
+        {
+          "year": 100,
+          "centerPct": 26.2,
+          "modelPct": 17.5
+        },
+        {
+          "year": 200,
+          "centerPct": 46.1,
+          "modelPct": 42.5
+        },
+        {
+          "year": 300,
+          "centerPct": 67.25,
+          "modelPct": 67.5
+        },
+        {
+          "year": 400,
+          "centerPct": 88.91,
+          "modelPct": 92.5
+        }
+      ],
+      "rows": [
+        {
+          "label": "Канонические Евангелия",
+          "date": "44–96 г.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "Написаны ок. 44–96 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 3.5,
+          "endPct": 16.48,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Послания Павла",
+          "date": "50–65 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 50–65 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 5,
+          "endPct": 8.73,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Фомы",
+          "date": "II–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "II–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 17.49,
+          "endPct": 92.48,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Филиппа",
+          "date": "III–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "III–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 42.49,
+          "endPct": 92.48,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Мураториев фрагмент",
+          "date": "ок. 170 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 170 г. — 22 из 27 книг НЗ",
+          "markerTabIndex": -1,
+          "startPct": 34.99,
+          "endPct": 39.98,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Ириней Лионский",
+          "date": "180 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 180 г. — четыре Евангелия закреплены",
+          "markerTabIndex": -1,
+          "startPct": 37.49,
+          "endPct": 40.99,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Первый Никейский собор",
+          "date": "325",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "325 г. — арианский спор, не канон",
+          "markerTabIndex": -1,
+          "startPct": 73.74,
+          "endPct": null,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "39-е послание Афанасия",
+          "date": "367 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "367 г. — первый полный список 27 книг",
+          "markerTabIndex": -1,
+          "startPct": 84.24,
+          "endPct": 85.73,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Соборы в Гиппоне и Карфагене",
+          "date": "393–397 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "393–397 г. — подтверждение консенсуса",
+          "markerTabIndex": -1,
+          "startPct": 90.75,
+          "endPct": 91.74,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        }
+      ],
+      "scrollPort": {
+        "clientWidth": 188,
+        "scrollWidth": 188,
+        "overflowX": "hidden",
+        "role": "region",
+        "tabIndex": 0
+      }
+    },
+    "390": {
+      "innerWidth": 390,
+      "axisWidthPx": 144.8,
+      "axisTicks": [
+        {
+          "year": 30,
+          "centerPct": 6.56,
+          "modelPct": 0
+        },
+        {
+          "year": 100,
+          "centerPct": 27.25,
+          "modelPct": 17.5
+        },
+        {
+          "year": 200,
+          "centerPct": 47.24,
+          "modelPct": 42.5
+        },
+        {
+          "year": 300,
+          "centerPct": 67.92,
+          "modelPct": 67.5
+        },
+        {
+          "year": 400,
+          "centerPct": 91.37,
+          "modelPct": 92.5
+        }
+      ],
+      "rows": [
+        {
+          "label": "Канонические Евангелия",
+          "date": "44–96 г.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "Написаны ок. 44–96 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 3.5,
+          "endPct": 16.49,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Послания Павла",
+          "date": "50–65 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 50–65 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 5,
+          "endPct": 8.74,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Фомы",
+          "date": "II–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "II–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 17.49,
+          "endPct": 92.49,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Филиппа",
+          "date": "III–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "III–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 42.49,
+          "endPct": 92.49,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Мураториев фрагмент",
+          "date": "ок. 170 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 170 г. — 22 из 27 книг НЗ",
+          "markerTabIndex": -1,
+          "startPct": 35,
+          "endPct": 39.99,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Ириней Лионский",
+          "date": "180 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 180 г. — четыре Евангелия закреплены",
+          "markerTabIndex": -1,
+          "startPct": 37.5,
+          "endPct": 40.99,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Первый Никейский собор",
+          "date": "325",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "325 г. — арианский спор, не канон",
+          "markerTabIndex": -1,
+          "startPct": 73.75,
+          "endPct": null,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "39-е послание Афанасия",
+          "date": "367 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "367 г. — первый полный список 27 книг",
+          "markerTabIndex": -1,
+          "startPct": 84.25,
+          "endPct": 85.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Соборы в Гиппоне и Карфагене",
+          "date": "393–397 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "393–397 г. — подтверждение консенсуса",
+          "markerTabIndex": -1,
+          "startPct": 90.74,
+          "endPct": 91.73,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        }
+      ],
+      "scrollPort": {
+        "clientWidth": 253,
+        "scrollWidth": 253,
+        "overflowX": "hidden",
+        "role": "region",
+        "tabIndex": 0
+      }
+    },
+    "640": {
+      "innerWidth": 640,
+      "axisWidthPx": 374.8,
+      "axisTicks": [
+        {
+          "year": 30,
+          "centerPct": 2.53,
+          "modelPct": 0
+        },
+        {
+          "year": 100,
+          "centerPct": 25.87,
+          "modelPct": 17.5
+        },
+        {
+          "year": 200,
+          "centerPct": 48.93,
+          "modelPct": 42.5
+        },
+        {
+          "year": 300,
+          "centerPct": 72.26,
+          "modelPct": 67.5
+        },
+        {
+          "year": 400,
+          "centerPct": 96.66,
+          "modelPct": 92.5
+        }
+      ],
+      "rows": [
+        {
+          "label": "Канонические Евангелия",
+          "date": "44–96 г.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "Написаны ок. 44–96 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 3.5,
+          "endPct": 16.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Послания Павла",
+          "date": "50–65 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 50–65 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 5,
+          "endPct": 8.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Фомы",
+          "date": "II–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "II–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 17.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Филиппа",
+          "date": "III–IV вв.",
+          "dateDisplay": "none",
+          "dateRects": 0,
+          "dateWithinScrollPortX": null,
+          "title": "III–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 42.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Мураториев фрагмент",
+          "date": "ок. 170 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 170 г. — 22 из 27 книг НЗ",
+          "markerTabIndex": -1,
+          "startPct": 35,
+          "endPct": 40,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Ириней Лионский",
+          "date": "180 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 180 г. — четыре Евангелия закреплены",
+          "markerTabIndex": -1,
+          "startPct": 37.5,
+          "endPct": 41,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Первый Никейский собор",
+          "date": "325",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "325 г. — арианский спор, не канон",
+          "markerTabIndex": -1,
+          "startPct": 73.75,
+          "endPct": null,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "39-е послание Афанасия",
+          "date": "367 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "367 г. — первый полный список 27 книг",
+          "markerTabIndex": -1,
+          "startPct": 84.25,
+          "endPct": 85.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Соборы в Гиппоне и Карфагене",
+          "date": "393–397 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "393–397 г. — подтверждение консенсуса",
+          "markerTabIndex": -1,
+          "startPct": 90.75,
+          "endPct": 91.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        }
+      ],
+      "scrollPort": {
+        "clientWidth": 483,
+        "scrollWidth": 483,
+        "overflowX": "hidden",
+        "role": "region",
+        "tabIndex": 0
+      }
+    },
+    "641": {
+      "innerWidth": 641,
+      "axisWidthPx": 396,
+      "axisTicks": [
+        {
+          "year": 30,
+          "centerPct": 3.03,
+          "modelPct": 0
+        },
+        {
+          "year": 100,
+          "centerPct": 26.2,
+          "modelPct": 17.5
+        },
+        {
+          "year": 200,
+          "centerPct": 48.86,
+          "modelPct": 42.5
+        },
+        {
+          "year": 300,
+          "centerPct": 71.78,
+          "modelPct": 67.5
+        },
+        {
+          "year": 400,
+          "centerPct": 96.09,
+          "modelPct": 92.5
+        }
+      ],
+      "rows": [
+        {
+          "label": "Канонические Евангелия",
+          "date": "44–96 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 44–96 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 3.5,
+          "endPct": 16.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Послания Павла",
+          "date": "50–65 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 50–65 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 5,
+          "endPct": 8.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Фомы",
+          "date": "II–IV вв.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "II–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 17.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Филиппа",
+          "date": "III–IV вв.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "III–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 42.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Мураториев фрагмент",
+          "date": "ок. 170 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 170 г. — 22 из 27 книг НЗ",
+          "markerTabIndex": -1,
+          "startPct": 35,
+          "endPct": 40,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Ириней Лионский",
+          "date": "180 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 180 г. — четыре Евангелия закреплены",
+          "markerTabIndex": -1,
+          "startPct": 37.5,
+          "endPct": 41,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Первый Никейский собор",
+          "date": "325",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": false,
+          "title": "325 г. — арианский спор, не канон",
+          "markerTabIndex": -1,
+          "startPct": 73.75,
+          "endPct": null,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "39-е послание Афанасия",
+          "date": "367 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": false,
+          "title": "367 г. — первый полный список 27 книг",
+          "markerTabIndex": -1,
+          "startPct": 84.25,
+          "endPct": 85.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Соборы в Гиппоне и Карфагене",
+          "date": "393–397 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": false,
+          "title": "393–397 г. — подтверждение консенсуса",
+          "markerTabIndex": -1,
+          "startPct": 90.75,
+          "endPct": 91.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        }
+      ],
+      "scrollPort": {
+        "clientWidth": 484,
+        "scrollWidth": 605,
+        "overflowX": "auto",
+        "role": "region",
+        "tabIndex": 0
+      },
+      "afterArrowRightPx": 48
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "axisWidthPx": 494,
+      "axisTicks": [
+        {
+          "year": 30,
+          "centerPct": 2.43,
+          "modelPct": 0
+        },
+        {
+          "year": 100,
+          "centerPct": 25.96,
+          "modelPct": 17.5
+        },
+        {
+          "year": 200,
+          "centerPct": 49.09,
+          "modelPct": 42.5
+        },
+        {
+          "year": 300,
+          "centerPct": 72.42,
+          "modelPct": 67.5
+        },
+        {
+          "year": 400,
+          "centerPct": 96.86,
+          "modelPct": 92.5
+        }
+      ],
+      "rows": [
+        {
+          "label": "Канонические Евангелия",
+          "date": "44–96 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 44–96 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 3.5,
+          "endPct": 16.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Послания Павла",
+          "date": "50–65 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Написаны ок. 50–65 г. н.э.",
+          "markerTabIndex": -1,
+          "startPct": 5,
+          "endPct": 8.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Фомы",
+          "date": "II–IV вв.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "II–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 17.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Евангелие от Филиппа",
+          "date": "III–IV вв.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "III–IV вв. — гностический текст",
+          "markerTabIndex": -1,
+          "startPct": 42.5,
+          "endPct": 92.5,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Мураториев фрагмент",
+          "date": "ок. 170 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 170 г. — 22 из 27 книг НЗ",
+          "markerTabIndex": -1,
+          "startPct": 35,
+          "endPct": 40,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Ириней Лионский",
+          "date": "180 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "Ок. 180 г. — четыре Евангелия закреплены",
+          "markerTabIndex": -1,
+          "startPct": 37.5,
+          "endPct": 41,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Первый Никейский собор",
+          "date": "325",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "325 г. — арианский спор, не канон",
+          "markerTabIndex": -1,
+          "startPct": 73.75,
+          "endPct": null,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "39-е послание Афанасия",
+          "date": "367 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": true,
+          "title": "367 г. — первый полный список 27 книг",
+          "markerTabIndex": -1,
+          "startPct": 84.25,
+          "endPct": 85.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        },
+        {
+          "label": "Соборы в Гиппоне и Карфагене",
+          "date": "393–397 г.",
+          "dateDisplay": "block",
+          "dateRects": 1,
+          "dateWithinScrollPortX": false,
+          "title": "393–397 г. — подтверждение консенсуса",
+          "markerTabIndex": -1,
+          "startPct": 90.75,
+          "endPct": 91.75,
+          "plotVsAxisLeftPx": 0,
+          "plotVsAxisWidthPx": 0
+        }
+      ],
+      "scrollPort": {
+        "clientWidth": 678,
+        "scrollWidth": 695,
+        "overflowX": "auto",
+        "role": "region",
+        "tabIndex": 0
+      },
+      "afterArrowRightPx": 17
+    }
+  },
+  "timelineCopy": {
+    "subtitle": "Канон сложился до Никеи — независимо и постепенно",
+    "conclusion": "Вывод: Гностические тексты писались позже канонических Евангелий. Никея появилась через 150 лет после первых списков канона и не обсуждала его состав."
+  },
+  "church": [
+    {
+      "speaker": "Апостол Иоанн",
+      "quote": "«Всякий дух, который не исповедует Иисуса Христа, пришедшего во плоти, не есть от Бога, но это дух антихриста»",
+      "footnote": null
+    },
+    {
+      "speaker": "Апостол Павел",
+      "quote": "«Если бы даже мы или Ангел с неба стал благовествовать вам не то, что мы благовествовали вам, да будет анафема»",
+      "footnote": null
+    },
+    {
+      "speaker": "Поликарп Смирнский",
+      "quote": "«Да, я узнаю тебя как перворождённого сатаны».",
+      "footnote": "20"
+    }
+  ],
+  "glossary": {
+    "trigger": "плоти",
+    "expanded": "true",
+    "visible": true,
+    "text": "В павловском богословии — не просто тело, а падший человек в его самонадеянной и греховной направленности против Бога."
+  },
+  "polycarp": {
+    "expanded": "true",
+    "text": "⟦сноска: Ириней Лионский, Против ересей (III.3.4); подтверждено: Евсевий Кесарийский, Церковная история (IV.14.7). Это не институциональная жёсткость — это голос человека, знавшего апостолов лично и понимавшего, что ересь разрушает людей.⟧"
+  },
+  "chicago49": "[49]\nChicago Statement on Biblical Hermeneutics (1982)\nArt. XIII: экзегезис, интеграция, применение."
+}

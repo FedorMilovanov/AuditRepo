@@ -1,0 +1,135 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "da9480c811a2e896d526cf82c5fcb6468ee994bdf957288022a8b35c90b74b0b",
+  "witnessSha256B": "29ffbbc0adce3d11c4da613eab15d36db785053b3d9e99048be5a9bc6dc10e34",
+  "pairedDispatchSemantics": true,
+  "casesPerReplay": 12,
+  "distPins": 36,
+  "stage14PinsVerified": 35,
+  "browserDefaultAttemptsPerReplay": 7,
+  "confirmedNewPagesA": 6,
+  "confirmedNewPagesB": 6,
+  "canceledModifiedLocalClicksPerReplay": 3,
+  "pairs": [
+    {
+      "id": "anatomy-click",
+      "browserDefaultPath": false,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": false,
+      "parentKeepsPanel": null,
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-ctrl",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": false,
+      "parentKeepsPanel": null,
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-middle",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": null,
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-ctrl-enter",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": null,
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "learning-local-click",
+      "browserDefaultPath": false,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": true,
+      "parentKeepsPanel": false,
+      "seenA": "Пройдено: 11",
+      "seenB": "Пройдено: 8"
+    },
+    {
+      "id": "learning-local-ctrl",
+      "browserDefaultPath": false,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": true,
+      "parentKeepsPanel": false,
+      "seenA": "Пройдено: 22",
+      "seenB": "Пройдено: 20"
+    },
+    {
+      "id": "learning-local-middle",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": true,
+      "seenA": "Пройдено: 1",
+      "seenB": "Пройдено: 26"
+    },
+    {
+      "id": "learning-local-ctrl-enter",
+      "browserDefaultPath": false,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": true,
+      "parentKeepsPanel": false,
+      "seenA": "Пройдено: 4",
+      "seenB": "Пройдено: 4"
+    },
+    {
+      "id": "learning-cross-ctrl",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": true,
+      "seenA": "Пройдено: 10",
+      "seenB": "Пройдено: 30"
+    },
+    {
+      "id": "learning-tracked-ctrl",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 1,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": true,
+      "seenA": "Пройдено: 19",
+      "seenB": "Пройдено: 11"
+    },
+    {
+      "id": "learning-play-ctrl",
+      "browserDefaultPath": false,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 0,
+      "preventedBoth": true,
+      "parentKeepsPanel": false,
+      "seenA": "Пройдено: 16",
+      "seenB": "Пройдено: 17"
+    },
+    {
+      "id": "learning-play-middle",
+      "browserDefaultPath": true,
+      "confirmedNewPagesA": 0,
+      "confirmedNewPagesB": 1,
+      "preventedBoth": false,
+      "parentKeepsPanel": true,
+      "seenA": "Пройдено: 13",
+      "seenB": "Пройдено: 8"
+    }
+  ]
+}

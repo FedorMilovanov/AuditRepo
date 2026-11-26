@@ -1,0 +1,91 @@
+# 2026-11-18 UTC — этап 11: первая/повторная печать без запуска квиза, холодный шрифт и соседний #2339.
+# PRODUCT: FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo: arena/9713b5a4-auditrepo, Draft #570; base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+# All builds, browsers, raw PDFs, initial probes and downloads stayed outside AuditRepo.
+
+[Restore known draft plus coordination, read-only]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+for repo in AuditRepo gb-is-my-strength; do
+  gh pr list -R "FedorMilovanov/$repo" --state open --limit 100 --json number,title,headRefOid,headRefName,baseRefName,isDraft,updatedAt,url
+done
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# OPEN Draft exact 7ae91277eb0c79d897fb51e83ba7fe35064026ce, 62 added files, preflight 44373904877 and validate 44373904865 SUCCESS.
+# Sandbox restored at base + untracked intake. Fetch only current ref; assert ancestor and compare all 62 current file blobs
+# to the published additions before git reset --mixed to the exact published SHA. No checkout, clean or file overwrite.
+for n in 2338 2339 2340 2341 2342; do
+  gh api --paginate "repos/FedorMilovanov/gb-is-my-strength/pulls/$n/files?per_page=100" --jq '.[].filename'
+done
+for n in 538 543; do
+  gh api --paginate "repos/FedorMilovanov/AuditRepo/pulls/$n/files?per_page=100" --jq '.[].filename'
+done
+# #2340/2341/2342 advances from previous receipts: Journal, g3Series and its scripture index, not PDF owner.
+# Branch-only caf08e1 is Journal QA; 4ff1954 tip is Lawson source registry; compared cumulative paths from main as well.
+# Audit tips 539d7b8 and d7f247c2 differ on header/reader close-out and editorial/archive paths, not this intake.
+# #538 and #543 templates/3D evidence; #543 advanced 67bf0e6 -> dd90c52 (fabric prototype and its test) during the initial read.
+# Updated refs/PRs and inspected any new paths immediately before publication, without changing any neighbor PR or branch.
+
+[Build exact Product without source edits]
+# PRODUCT, TOOLS and OUT are isolated temporary directories. Full bootstrap is in the stage 1 commands.log.
+PROD_SHA=9edef94ece08012223c1364bec7ddcd561cf5713
+curl -fsSL --retry 2 "https://codeload.github.com/FedorMilovanov/gb-is-my-strength/tar.gz/$PROD_SHA" | tar -xz --strip-components=1 -C "$PRODUCT"
+npm install --prefix "$TOOLS" --no-audit --no-fund node@22.23.4 @sparticuz/chromium@153.0.0
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+# Extract al2023.tar.br from the Chromium package into TOOLS/libs (via Node Brotli + tar).
+# CHROMIUM = await chromium.executablePath() from its ESM package in cwd TOOLS.
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && npm ci --no-audit --no-fund)
+(cd "$PRODUCT" && GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like)
+(cd "$PRODUCT" && npm run page-ownership:dist:production-like && node scripts/check-print-geometry-contract.js)
+# Exit 0, 112 Astro pages plus legacy copy (1047), page ownership PASS, geometry source 13/13.
+# Before experiments verified all 38 dist pins from stage 10 against this rebuild (no Pagefind activity here).
+# Browser: Chromium Headless Shell 153.0.8010.0, Playwright 1.62.1, Node 22.23.4. PDFium 126.0.6462.0.
+python3 -m venv "$OUT/pdf-venv"
+"$OUT/pdf-venv/bin/pip" install 'pypdfium2==4.30.0' 'Pillow==11.3.0'
+
+[Exact neighboring font bytes, no checkout or build of the stack]
+FONTS=0b9576278d2ec5ea89da804934823d460720501a
+JOURNAL=b2ae614730b0c2e164d3b07453797074253d9698
+FONT_ROOT="$OUT/adjacent-fonts"
+gh api "repos/FedorMilovanov/gb-is-my-strength/compare/$JOURNAL...$FONTS" --jq '.files[].filename' > "$OUT/neighbor-case-paths.txt"
+# Only the nine known font filenames from this compare, no source or runtime changed.
+grep -E '^fonts/(fonts\.css|[^/]+/[^/]+\.woff2)$' "$OUT/neighbor-case-paths.txt" > "$OUT/neighbor-assets.txt"
+test "$(wc -l < "$OUT/neighbor-assets.txt")" -eq 9
+while IFS= read -r f; do
+  mkdir -p "$FONT_ROOT/$(dirname "$f")"
+  gh api "repos/FedorMilovanov/gb-is-my-strength/contents/$f?ref=$FONTS" > "$OUT/asset.json"
+  jq -r .content "$OUT/asset.json" | base64 -d > "$FONT_ROOT/$f"
+  test "$(git hash-object --no-filters "$FONT_ROOT/$f")" = "$(jq -r .sha "$OUT/asset.json")"
+done < "$OUT/neighbor-assets.txt"
+# Exact CSS @font-face declarations 28 -> 36; no old font-face removed, no Cyrillic 500 replacement.
+# Overlay only fulfills responses for these 9 paths. No Git branch switch, no SW mutation, no full PR/release claim.
+
+[Browser/API controls and real PDF receipts]
+R=$(pwd)
+G="$R/projects/gb-is-my-strength"
+N="$G/incoming/arena-quiz-print-readiness/2026-11-18"
+node --check "$N/harness/print-tail.mjs"
+for replay in a b; do
+  (cd "$PRODUCT" && node "$N/harness/print-tail.mjs" "$PRODUCT" "$OUT/main-$replay" "$CHROMIUM")
+  (cd "$PRODUCT" && GB_TAIL_FONT_ROOT="$FONT_ROOT" node "$N/harness/print-tail.mjs" "$PRODUCT" "$OUT/overlay-$replay" "$CHROMIUM")
+done
+"$OUT/pdf-venv/bin/python" "$N/harness/summarize-pdfs.py" "$OUT" "$PRODUCT/dist" \
+  "$G/incoming/arena-quiz-projection/2026-11-18/evidence/pdf-text-witness-replay.json"
+# Each independent A/B pair: main 16/16, overlay 5/5 for Chromium click/direct negative and preload controls.
+# Total 42 contexts and 84 actual PDF files; 18 first-print omissions (14 main, 4 overlay), not interpreted as user prevalence.
+# 48 main / 47 unmodified plus 9 overlay font pins; 0 pageerror/local HTTP >=400, SW/egress intentionally blocked.
+# Main narrow and cold: Source Sans 3 500 Cyrillic request during print despite screen `fonts.ready`.
+# Time-only delay 200 ms does not rescue page 13. CSS Font Loading API puts same request before click; complete first PDF.
+# Early print media also gives 13 pages, but modifies grouping. Exploratory print->screen toggle is not the retained control:
+# it produced 15-page output without the static quiz notice and is not an acceptable workaround.
+# Raw artifacts and parser trace remain temporary. Retain only summary/print-tail-witness.json and a PDFium crop of page 13.
+# The counts above are the original series. On a fresh run, use coldTail and the first-PDF comparison flags in the summary;
+# successful parsing does not mean that all first PDFs match the old observations or that the product is fixed.
+
+[AuditRepo admission and draft publication]
+# CHANGED = paths staged cumulatively vs fcf2e69b; new diff restricted to this intake.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+# Push only current Arena branch and attach exact-head report link to same draft #570 after read-only overlap refresh.
+# Verify CI check runs on the new exact head; no merge, Product code/issue/PR, deploy, Drive or Telegram action.

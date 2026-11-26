@@ -1,0 +1,125 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "735294059a8026a09ccd1169fab7653bf96bcfc2ddad9a250ad9fa987d7be560",
+  "witnessSha256B": "6518e88e10697a315304204cbc1fb9a68bb2028ac38d2cc502a8bfd3d84658be",
+  "sameOutcomeForAllCases": true,
+  "casesPerReplay": 8,
+  "movedAwayPerReplay": 4,
+  "distPins": 35,
+  "stage13PinsVerified": 35,
+  "sharedPins": 35,
+  "pairs": [
+    {
+      "id": "anatomy-narrow-idle",
+      "sourceLeftBoth": false,
+      "scrollYA": [
+        1854,
+        1854
+      ],
+      "scrollYB": [
+        1854,
+        1854
+      ],
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-narrow-on",
+      "sourceLeftBoth": true,
+      "scrollYA": [
+        1854,
+        0
+      ],
+      "scrollYB": [
+        1854,
+        0
+      ],
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-wide-on",
+      "sourceLeftBoth": true,
+      "scrollYA": [
+        1753,
+        0
+      ],
+      "scrollYB": [
+        1753,
+        0
+      ],
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "anatomy-narrow-reduce",
+      "sourceLeftBoth": false,
+      "scrollYA": [
+        1854,
+        1854
+      ],
+      "scrollYB": [
+        1854,
+        1854
+      ],
+      "seenA": "Вопрос 1 из 8",
+      "seenB": "Вопрос 1 из 8"
+    },
+    {
+      "id": "gill-learning-narrow-idle",
+      "sourceLeftBoth": false,
+      "scrollYA": [
+        8004,
+        8004
+      ],
+      "scrollYB": [
+        8004,
+        8004
+      ],
+      "seenA": "Пройдено: 27",
+      "seenB": "Пройдено: 17"
+    },
+    {
+      "id": "gill-learning-narrow-on",
+      "sourceLeftBoth": true,
+      "scrollYA": [
+        8004,
+        665
+      ],
+      "scrollYB": [
+        8004,
+        665
+      ],
+      "seenA": "Пройдено: 14",
+      "seenB": "Пройдено: 8"
+    },
+    {
+      "id": "gill-learning-narrow-reduce",
+      "sourceLeftBoth": false,
+      "scrollYA": [
+        8004,
+        8004
+      ],
+      "scrollYB": [
+        8004,
+        8004
+      ],
+      "seenA": "Пройдено: 14",
+      "seenB": "Пройдено: 16"
+    },
+    {
+      "id": "gill-learning-wide-pause",
+      "sourceLeftBoth": true,
+      "scrollYA": [
+        5446,
+        618
+      ],
+      "scrollYB": [
+        5446,
+        618
+      ],
+      "seenA": "Пройдено: 25",
+      "seenB": "Пройдено: 28"
+    }
+  ]
+}
