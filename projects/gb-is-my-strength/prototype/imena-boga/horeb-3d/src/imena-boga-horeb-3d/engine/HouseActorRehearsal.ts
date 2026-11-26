@@ -12,7 +12,7 @@ export const HOUSE_ACTOR_PROFILES={
  w28q:{file:'w28q-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w28r:{file:'w28r-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w29c:{file:'w29c-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
- w31a:{file:'w31a-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
+ w31a:{file:'w31a-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010,blendSeconds:.25},
 } as const;
 export type HouseActorProfile=typeof HOUSE_ACTOR_PROFILES[keyof typeof HOUSE_ACTOR_PROFILES];
 const IDLE='Mother_QuietIdle',GESTURE='Mother_GestureTowardsBasket';
@@ -37,6 +37,11 @@ function release(root:THREE.Object3D){
 export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,canvas:HTMLCanvasElement,onPhase:(v:ActorPhase)=>void,profile:HouseActorProfile=HOUSE_ACTOR_PROFILES.canonical){
  let phase:ActorPhase='off',actor:THREE.Group|null=null,mixer:THREE.AnimationMixer|null=null,idle:THREE.AnimationAction|null=null,gesture:THREE.AnimationAction|null=null,wrist:THREE.Object3D|null=null;
  let generation=0,disposed=false,min=Infinity,max=0,hold=0,previousSample:number|null=null;
+ const blendSeconds='blendSeconds' in profile?profile.blendSeconds:0;
+ let blend:{kind:'enter'|'return';elapsed:number;result?:'complete'|'failed'}|null=null;
+ function clearBlend(){
+  blend=null;delete canvas.dataset.houseActorBlend;delete canvas.dataset.houseActorBlendWeight;
+ }
  let skinSamples:{mesh:THREE.SkinnedMesh;indices:number[]}|null=null;
  const samplePos=new THREE.Vector3();
  function locateMiddleSkin(root:THREE.Group):{mesh:THREE.SkinnedMesh;indices:number[]}|null{
@@ -110,15 +115,22 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
  }
  function finished(e:{action:THREE.AnimationAction}){
   if(phase!=='performing'||e.action!==gesture)return;
-  gesture?.stop();idle?.reset().play();
-  report(max<profile.limit&&hold>=MIN_HOLD?'complete':'failed');
+  const result=max<profile.limit&&hold>=MIN_HOLD?'complete':'failed';
+  if(blendSeconds&&idle&&gesture){
+   // The finished action stays clamped at its last pose while idle fades in.
+   idle.reset().setEffectiveWeight(0).play();
+   blend={kind:'return',elapsed:0,result};
+   canvas.dataset.houseActorBlend='return';canvas.dataset.houseActorBlendWeight='0.000';
+  }else{
+   gesture?.stop();idle?.reset().setEffectiveWeight(1).play();report(result);
+  }
  }
  function cancel(){
   if(phase!=='performing')return;
-  gesture?.stop();idle?.reset().play();resetContact();report('idle');
+  clearBlend();gesture?.stop();idle?.reset().setEffectiveWeight(1).play();resetContact();report('idle');
  }
  function clear(){
-  generation++;
+  generation++;clearBlend();
   if(mixer){mixer.removeEventListener('finished',finished);mixer.stopAllAction();if(actor)mixer.uncacheRoot(actor);}
   if(actor)release(actor);
   actor=null;mixer=null;idle=null;gesture=null;wrist=null;skinSamples=null;
@@ -155,13 +167,35 @@ export function createHouseActorRehearsal(scene:THREE.Scene,house:THREE.Group,ca
  function perform(){
   if(!gesture||!idle||!mixer||!['idle','complete'].includes(phase))return false;
   resetContact();
-  idle.stop();gesture.reset().setEffectiveWeight(1).setEffectiveTimeScale(1).setLoop(THREE.LoopOnce,1);
+  clearBlend();
+  if(blendSeconds){
+   // Keep the actual idle phase, rather than snapping it to frame one.
+   idle.setEffectiveWeight(1);
+   blend={kind:'enter',elapsed:0};
+   canvas.dataset.houseActorBlend='enter';canvas.dataset.houseActorBlendWeight='0.000';
+  }else idle.stop();
+  gesture.reset().setEffectiveWeight(blendSeconds?0:1).setEffectiveTimeScale(1).setLoop(THREE.LoopOnce,1);
   gesture.clampWhenFinished=true;gesture.play();report('performing');return true;
  }
  function tick(dt:number,camera:THREE.PerspectiveCamera){
   if(disposed||!mixer||document.hidden)return;
-  mixer.update(Math.min(.075,Math.max(0,dt)));
-  if(phase==='performing'&&gesture){
+  const step=Math.min(.075,Math.max(0,dt));
+  const activeBlend=blend;
+  if(activeBlend&&idle&&gesture){
+   activeBlend.elapsed=Math.min(blendSeconds,activeBlend.elapsed+step);
+   const t=activeBlend.elapsed/blendSeconds,w=t*t*(3-2*t);
+   idle.setEffectiveWeight(activeBlend.kind==='enter'?1-w:w);
+   gesture.setEffectiveWeight(activeBlend.kind==='enter'?w:1-w);
+   canvas.dataset.houseActorBlendWeight=w.toFixed(3);
+  }
+  mixer.update(step);
+  if(activeBlend&&blend===activeBlend&&activeBlend.elapsed>=blendSeconds){
+   if(activeBlend.kind==='enter')idle?.stop();
+   else gesture?.stop();
+   clearBlend();
+   if(activeBlend.result)report(activeBlend.result);
+  }
+  if(phase==='performing'&&gesture&&blend?.kind!=='return'){
    canvas.dataset.houseActorTime=gesture.time.toFixed(3);
    if(gesture.time>=48/24&&gesture.time<=70/24)sample(gesture.time,camera);
   }

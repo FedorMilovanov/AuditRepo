@@ -118,6 +118,10 @@ if(!chrome)throw Error('Actual Chromium required');
  const observation=await state();
  await page.click('[data-testid="house-actor-perform"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
+ if(pair?.name==='w31a'){
+  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend==='enter'&&Number(d.houseActorBlendWeight)>0&&Number(d.houseActorBlendWeight)<1;});
+  await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorPhase==='performing'&&d.houseActorBlend===undefined;});
+ }
  await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorFrameExtent)));
  const peak=await state();
  if(!Number.isFinite(Number(peak.houseActorContactMm)))await until(s=>Number.isFinite(Number(document.querySelector(s).dataset.houseActorContactMm)));
@@ -129,7 +133,10 @@ if(!chrome)throw Error('Actual Chromium required');
  if(Number(actual.houseActorContactMm)>=contactLimit)throw Error('Actor contact witness misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
+ if(pair?.name==='w31a')await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend==='return'&&Number(d.houseActorBlendWeight)>0&&Number(d.houseActorBlendWeight)<1;});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
+ if(pair?.name==='w31a'&&(await state()).houseActorBlend!==undefined)throw Error('Stale blend on completion');
+
  const endGesture=await state();
  if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=contactLimit||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
  console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:actual.houseActorAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,metric:actor.houseActorContactMetric,skinSamples:actor.houseActorSkinSamples,actor:am?.glb_sha256||'canonical W22'}));
@@ -141,6 +148,7 @@ if(!chrome)throw Error('Actual Chromium required');
  await page.click('[data-testid="house-walk-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle'&&document.querySelector(s).dataset.houseWalk==='false');
  if((await state()).houseActorTime!==undefined)throw Error('Stale clip clock after cancellation');
+ if((await state()).houseActorBlend!==undefined)throw Error('Stale blend on cancellation');
  // A fresh real entry must acknowledge the reset before input, not only
  // dispatch a click and race the React event/focus on slow runners.
  await enterWalk();

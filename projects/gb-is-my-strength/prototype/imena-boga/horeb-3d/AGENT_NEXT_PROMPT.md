@@ -8,7 +8,14 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W31a idle motion (2026-11-26)
+## Current handoff: W31b runtime motion transitions (2026-11-26)
+
+- W31a full Chromium desktop and mobile PASS on exact actor SHA 8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113; both 4.92 mm proximity, .825 s hold, 53 bones, 9 meshes, no JS errors. Logs w31a-house-browser.log. W31a is the latest full browser-proven experimental candidate, not final art.
+- W31b changes only the rehearsal engine and existing browser test; no GLB, contact interval, canonical profile, or other legacy profile change. W31a DEV profile blends the current idle phase into the gesture over .25 s using complementary smoothstep weights. At completion keep the gesture clamped and blend back to the idle start over .25 s before reporting complete/failed. Stop inactive actions; cancellation clears blend and contact state immediately on leaving walk; do not imply arbitrary mid-gesture cancellation has a collision-safe blend. Existing full browser test now witnesses intermediate entry and return weights and cleared state after completion/cancel.
+- TypeScript, JS syntax, diff check PASS. Desktop contact/return checks passed; confirm final desktop/mobile results in H:/HOREB_ArtPipeline/evidence/w31b-house-browser.log. Diagnostic actual Chromium pose probe script and report (if complete) in evidence/w31b-motion-probe.cjs and w31b-motion-probe.json. Separate blended-path collision clearance is not established by per-clip Blender samples alone. ART HOLD.
+- Next: verify the two runtime transition results, then improve expressive coordination of the free arm and torso while preserving exact contact. No new branches or repo copies. No canonical asset swap.
+
+### Prior handoff: W31a idle motion (2026-11-26)
 
 - W30e full paired reimport PASS, 417 gesture + 144 idle, zero bad samples. The prior visible head-cover gap is corrected. W30e remains a study, not production art.
 - W31a adds only four idle rotation channels (spine_02 peak .650 deg, spine_01 .312 deg, clavicle_l/r .750 deg), with the original 144 integer-frame times and exact original end quaternions. Source GLB bytes, full gesture, facial tracks, geometry, and other channels remain unchanged. No pelvis or foot motion. Exact GLB SHA-256 8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113, 10,553,668 bytes, deterministic rerun PASS. Evidence H:/HOREB_ArtPipeline/evidence/W31a-idle-20261126.
