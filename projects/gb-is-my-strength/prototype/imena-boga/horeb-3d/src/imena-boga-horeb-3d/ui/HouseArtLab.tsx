@@ -27,8 +27,8 @@ export function HouseArtLab(){
  // Dev-only exact paired rehearsal; distinct URLs fail closed without the
  // explicitly supplied candidate files. Never substitute canonical binaries.
  const study=import.meta.env.DEV?new URLSearchParams(location.search).get('study'):null;
- const w28=study==='w28'||study==='w28e'||study==='w28f'||study==='w28g'||study==='w28o'||study==='w28q';
- const actorProfile=study==='w28q'?HOUSE_ACTOR_PROFILES.w28q:study==='w28o'?HOUSE_ACTOR_PROFILES.w28o:study==='w28g'?HOUSE_ACTOR_PROFILES.w28g:study==='w28f'?HOUSE_ACTOR_PROFILES.w28f:study==='w28e'?HOUSE_ACTOR_PROFILES.w28e:w28?HOUSE_ACTOR_PROFILES.w28:HOUSE_ACTOR_PROFILES.canonical;
+ const w28=study==='w28'||study==='w28e'||study==='w28f'||study==='w28g'||study==='w28o'||study==='w28q'||study==='w28r';
+ const actorProfile=study==='w28r'?HOUSE_ACTOR_PROFILES.w28r:study==='w28q'?HOUSE_ACTOR_PROFILES.w28q:study==='w28o'?HOUSE_ACTOR_PROFILES.w28o:study==='w28g'?HOUSE_ACTOR_PROFILES.w28g:study==='w28f'?HOUSE_ACTOR_PROFILES.w28f:study==='w28e'?HOUSE_ACTOR_PROFILES.w28e:w28?HOUSE_ACTOR_PROFILES.w28:HOUSE_ACTOR_PROFILES.canonical;
  const canvas=useRef<HTMLCanvasElement>(null);
  const api=useRef<SceneApi|null>(null);
  const [view,setView]=useState<View>('courtyard');
@@ -464,7 +464,7 @@ export function HouseArtLab(){
      <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'||actorPhase==='loading'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
      <h3>Репетиция персонажа · ART HOLD</h3>
      <button type="button" className="switch" data-testid="house-actor-toggle" disabled={status!=='ready'||walking||actorPhase==='loading'} aria-pressed={actorPhase!=='off'} onClick={()=>api.current?.toggleActor()}>{actorPhase==='off'?'Показать персонажа':actorPhase==='loading'?'Загрузка персонажа…':'Убрать персонажа'}</button>
-     <p className="house-actor-note">{w28?'Экспериментальная пара '+(study==='w28q'?'W28q':study==='w28o'?'W28o':study==='w28g'?'W28g':study==='w28f'?'W28f':study==='w28e'?'W28e':'W28')+'. Измерение поверхности пальца, не захват.':'Экспериментальный образ W22. Только жест к корзине, не утверждённая постановка.'}</p>
+     <p className="house-actor-note">{w28?'????????????????? ???? '+(study==='w28r'?'W28r':study==='w28q'?'W28q':study==='w28o'?'W28o':study==='w28g'?'W28g':study==='w28f'?'W28f':study==='w28e'?'W28e':'W28')+(study==='w28r'?'. ????? ??????? ???????. ART HOLD ?? ?????? ???????.':'. ????????? ??????????? ??????, ?? ??????.'):'????????????????? ????? W22. ?????? ???? ? ???????, ?? ???????????? ??????????.'}</p>
      <h3>Режиссёрские точки зрения</h3>
      <div className="choices">
      {(Object.keys(POSES) as View[]).map(key=><button key={key}

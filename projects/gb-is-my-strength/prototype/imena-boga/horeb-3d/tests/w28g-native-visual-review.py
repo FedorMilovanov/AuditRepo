@@ -55,8 +55,34 @@ if blink:
  assert bm["bone_animation_unchanged"] is True and bm["house_sha256"]==m["house_sha256"]
  asset=candidate/"w28o-actor.glb"
  assert sha(asset)==bm["glb_sha256"] and asset.stat().st_size==bm["glb_bytes"]
+shoulder=os.environ.get("HOREB_W28Q_OUTPUT")
+if shoulder:
+ assert blink and surface and gaze
+ candidate=Path(shoulder)
+ qm=json.loads((candidate/"w28q-manifest.json").read_text(encoding="utf8"))
+ assert qm["status"]=="ART_HOLD_W28Q_SHOULDER_TRIAL" and qm["source_sha256"]==bm["glb_sha256"]
+ assert qm["facial_animation_unchanged"] is True and qm["bone_animation_unchanged"] is True
+ assert qm["house_sha256"]==m["house_sha256"] and qm["params_mm"]==[24,16]
+ asset=candidate/"w28q-actor.glb"
+ assert sha(asset)==qm["glb_sha256"] and asset.stat().st_size==qm["glb_bytes"]
+grip=os.environ.get("HOREB_W28R_OUTPUT")
+if grip:
+ assert shoulder
+ candidate=Path(grip)
+ rm=json.loads((candidate/"w28r-manifest.json").read_text(encoding="utf8"))
+ assert rm["status"]=="ART_HOLD_W28R_GRIP_MOTION_TRIAL" and rm["source_sha256"]==qm["glb_sha256"]
+ assert rm["facial_animation_unchanged"] is True and rm["geometry_unchanged"] is True and rm["non_target_bone_channels_unchanged"] is True
+ assert rm["house_sha256"]==m["house_sha256"] and len(rm["changed_rotation_channels"])==12
+ assert rm["probe_sha256"]==sha(candidate/"w28r-grip-probe.json")
+ asset=candidate/"w28r-actor.glb"
+ assert sha(asset)==rm["glb_sha256"]=="40b966d66bd72ef628e572bf2f356d6ff13f7752d021b60bdd6c217bb77b81dc" and asset.stat().st_size==rm["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
-out=(candidate or root)/("visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
+grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
+assert sum((close,shoulder_compare,grip_compare))<=1
+assert not shoulder or shoulder_compare or grip_compare
+assert not grip or grip_compare
+out=(candidate or root)/("visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -99,9 +125,15 @@ views=[
 if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
 elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
 if close:views=[("frontal-peak",60,None,None,82),("threequarter-peak",60,None,None,82)]
-if blink:
+if blink and not shoulder_compare and not grip_compare:
  assert close
  views=[("blink-open-before",10,None,None,82),("blink-closed",12,None,None,82),("blink-open-after",16,None,None,82)]
+if shoulder_compare:
+ assert blink
+ views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("upper-peak",60,(-.85,-1.65,1.49),(-.44,-.32,1.23),49)]
+if grip_compare:
+ assert shoulder
+ views=[("grip-peak",60,(-.36,-.82,1.58),(-.12,-.34,1.19),75)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:

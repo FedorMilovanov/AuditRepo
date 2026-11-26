@@ -118,6 +118,6 @@ ad.use_nla=False;ad.action=track.strips[0].action;ad.action_slot=track.strips[0]
 scene.frame_set(60);bpy.context.view_layer.update()
 peak_error=max(qerror(rig.pose.bones[n].rotation_quaternion.normalized(),Quaternion(q).normalized()) for n,q in expect.items())
 assert peak_error<.0002,peak_error
-report={"status":"ART_HOLD_W28R_GRIP_MOTION_TRIAL","source_sha256":sha(raw),"glb_sha256":sha(result),"glb_bytes":len(result),"house_sha256":probe["house_sha256"],"probe_sha256":sha((out/"w28r-grip-probe.json").read_bytes()),"changed_rotation_channels":changes,"envelope_frames":[35,48,71,90],"peak_quaternion_error":peak_error,"import_mapping_error":mapping_error,"facial_animation_unchanged":True,"geometry_unchanged":True}
+report={"status":"ART_HOLD_W28R_GRIP_MOTION_TRIAL","source_sha256":sha(raw),"glb_sha256":sha(result),"glb_bytes":len(result),"house_sha256":probe["house_sha256"],"probe_sha256":sha((out/"w28r-grip-probe.json").read_bytes()),"changed_rotation_channels":changes,"envelope_frames":[35,48,71,90],"peak_quaternion_error":peak_error,"import_mapping_error":mapping_error,"facial_animation_unchanged":True,"geometry_unchanged":True,"non_target_bone_channels_unchanged":True,"changed_bone_names":[x["name"] for x in changes]}
 manifest.write_text(json.dumps(report,indent=2),encoding="utf8")
 print("W28R_MOTION_REIMPORT_PASS",sha(result),len(changes),peak_error,mapping_error,flush=True)

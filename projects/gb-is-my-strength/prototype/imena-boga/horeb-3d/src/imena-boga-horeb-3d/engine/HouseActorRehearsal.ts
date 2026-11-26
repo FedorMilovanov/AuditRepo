@@ -10,6 +10,7 @@ export const HOUSE_ACTOR_PROFILES={
  w28g:{file:'w28g-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w28o:{file:'w28o-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w28q:{file:'w28q-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
+ w28r:{file:'w28r-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
 } as const;
 export type HouseActorProfile=typeof HOUSE_ACTOR_PROFILES[keyof typeof HOUSE_ACTOR_PROFILES];
 const IDLE='Mother_QuietIdle',GESTURE='Mother_GestureTowardsBasket';
