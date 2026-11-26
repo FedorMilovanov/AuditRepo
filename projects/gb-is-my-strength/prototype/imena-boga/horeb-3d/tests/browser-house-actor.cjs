@@ -11,6 +11,7 @@ const pairedProfiles=[
  {name:'w28f',dir:process.env.HOREB_W28F_OUTPUT,status:'ART_HOLD_W28F_NECKLINE_SASH',sha:'d0638cd9f808820e1295e73e0421b003e36fcaf58068e841c0b9b8790497df59',meshes:7,audit:'w28f-glb-audit.json',manifest:'w28f-manifest.json'},
  {name:'w28g',dir:process.env.HOREB_W28G_OUTPUT,status:'ART_HOLD_W28G_HEAD_ARM',sha:'3e1baf347b9197b2a59da935f15245f2ef289302b72cde22047642e563acc488',meshes:7,audit:'w28g-glb-audit.json',manifest:'w28g-manifest.json'},
  {name:'w28o',dir:process.env.HOREB_W28O_OUTPUT,status:'ART_HOLD_W28O_BLINK_TRIAL',sha:'a4c2bad8ee870766717151369ce3de6cda2fdaddc17bf14e43741d4c79397f74',meshes:7,audit:'w28o-glb-audit.json',manifest:'w28o-blink-manifest.json'},
+ {name:'w28q',dir:process.env.HOREB_W28Q_OUTPUT,status:'ART_HOLD_W28Q_SHOULDER_TRIAL',sha:'6bb286037d794b0830840dd709ba257d5a3e722540665f6527b782338f8499cd',meshes:7,audit:'w28q-glb-audit.json',manifest:'w28q-manifest.json'},
 ].filter(p=>p.dir);
 if(pairedProfiles.length>1)throw Error('Choose one actor profile');
 const pair=pairedProfiles[0],w28Actor=pair?.dir;
@@ -21,14 +22,15 @@ const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-b
 const m=w28?JSON.parse(fs.readFileSync(path.join(w28House,'w28-house-manifest.json'),'utf8')):study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
 const am=w28?JSON.parse(fs.readFileSync(path.join(w28Actor,pair.manifest),'utf8')):actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
 if(w28){
- if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||(pair.name!=='w28o'&&JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]'))throw Error('Invalid W28 house/placement contract');
+ if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||(!['w28o','w28q'].includes(pair.name)&&JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]'))throw Error('Invalid W28 house/placement contract');
  if(am.status!==pair.status||am.glb_sha256!==pair.sha)throw Error('Invalid paired actor');
  if(pair.name==='w28e'&&(am.topology?.faces!==36332||am.topology?.verts!==18390))throw Error('Invalid triangle topology');
  if(pair.name==='w28f'&&JSON.stringify(am.params)!=='[0.025,0.012,0.006]')throw Error('Invalid neckline/sash parameters');
  if(pair.name==='w28g'&&JSON.stringify(am.params)!=='[55,18,0.25]')throw Error('Invalid head/arm parameters');
  if(pair.name==='w28o'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='70cd23b9029efcd1357a9211ce7ab651d8b816438f20ad0c198fdbf7bd042741'||am.bone_animation_unchanged!==true||am.mapped_vertices!==14517))throw Error('Invalid blink provenance');
+ if(pair.name==='w28q'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='a4c2bad8ee870766717151369ce3de6cda2fdaddc17bf14e43741d4c79397f74'||am.bone_animation_unchanged!==true||am.facial_animation_unchanged!==true||am.garment_mapped_vertices!==18390||JSON.stringify(am.params_mm)!=='[24,16]'))throw Error('Invalid shoulder provenance');
  const a=JSON.parse(fs.readFileSync(path.join(w28Actor,pair.audit),'utf8'));
- const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(!['w28f','w28g','w28o'].includes(pair.name)||r.sash_pairs===0&&r.sash_self_pairs===0)&&(pair.name!=='w28o'||r.eye_face_pairs===0&&r.eye_face_pairs_neutral===0&&Array.isArray(r.blink_weights)&&r.blink_weights.length===2&&r.blink_weights.every(w=>Number.isFinite(w)&&w>=-1e-6&&w<=1+1e-6)&&Math.abs(r.blink_weights[0]-r.blink_weights[1])<1e-6);
+ const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(!['w28f','w28g','w28o','w28q'].includes(pair.name)||r.sash_pairs===0&&r.sash_self_pairs===0)&&(!['w28o','w28q'].includes(pair.name)||r.eye_face_pairs===0&&r.eye_face_pairs_neutral===0&&Array.isArray(r.blink_weights)&&r.blink_weights.length===2&&r.blink_weights.every(w=>Number.isFinite(w)&&w>=-1e-6&&w<=1+1e-6)&&Math.abs(r.blink_weights[0]-r.blink_weights[1])<1e-6);
  const validClip=(c,name,count,step)=>c?.name===name&&Array.isArray(c.bad)&&c.bad.length===0&&Array.isArray(c.rows)&&c.rows.length===count&&c.rows.every((r,i)=>r?.frame===1+i*step&&validRow(r));
  if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==pair.meshes||a.props!==98||!Array.isArray(a.clips)||a.clips.length!==2||!validClip(a.clips[0],'Mother_GestureTowardsBasket',417,.25)||!validClip(a.clips[1],'Mother_QuietIdle',144,1))throw Error('Missing full pair clearance');
 
