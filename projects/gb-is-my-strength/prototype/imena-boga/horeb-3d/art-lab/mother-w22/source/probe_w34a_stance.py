@@ -109,16 +109,38 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
   pole=(pole-axis*pole.dot(axis)).normalized()
   along=(l1*l1-l2*l2+d*d)/(2*d)
   elbow=a+axis*along+pole*math.sqrt(max(0,l1*l1-along*along))
-  rotate(up,(b-a).rotation_difference(elbow-a))
-  b,c=p(low),p(hand)
-  rotate(low,(c-b).rotation_difference(wrist-b))
-  if (p(hand)-wrist).length>.0001:return False
+  hinge=os.environ.get("HOREB_W34B_HINGE")=="1"
   def basis(f,t):
    f=f.normalized();t=(t-f*t.dot(f)).normalized()
    return Matrix((f,t,f.cross(t))).transposed()
+  if hinge:
+   u,v=b-a,c-b;du,dv=elbow-a,wrist-elbow
+   # Rotate the upper arm's entire original bending plane to the
+   # target bending plane, retaining its anatomical hinge orientation.
+   n=u.cross(v);dn=du.cross(dv)
+   rotate(up,(basis(du,dn)@basis(u,n).transposed()).to_quaternion())
+  else:rotate(up,(b-a).rotation_difference(elbow-a))
+  b,c=p(low),p(hand)
+  rotate(low,(c-b).rotation_difference(wrist-b))
+  if (p(hand)-wrist).length>.0001:return False
   forward=p("middle_01_"+side)-p(hand)
   lateral=p("index_01_"+side)-p("pinky_01_"+side)
+  if hinge:
+   # Swing/twist decomposition around the actual forearm direction.
+   # Share axial orientation with forearm pronation, not wrist flexion.
+   axis=(p(hand)-p(low)).normalized()
+   desired=(basis(facing,transverse)@basis(forward,lateral).transposed()).to_quaternion()
+   twist=Quaternion((desired.w,*(axis*Vector((desired.x,desired.y,desired.z)).dot(axis))))
+   if twist.magnitude>1e-8:
+    twist.normalize()
+    if twist.w<0:twist.negate()
+    portion=float(os.environ.get("HOREB_W34B_PRONATION",".65"))
+    angle=2*math.atan2(Vector((twist.x,twist.y,twist.z)).dot(axis),twist.w)
+    rotate(low,Quaternion(axis,angle*portion))
+   forward=p("middle_01_"+side)-p(hand)
+   lateral=p("index_01_"+side)-p("pinky_01_"+side)
   rotate(hand,(basis(facing,transverse)@basis(forward,lateral).transposed()).to_quaternion())
+  if (p(hand)-wrist).length>.0001:return False
   return True
  digits=("thumb","index","middle","ring","pinky")
  groups={}
@@ -142,6 +164,28 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
   return [[n,len(pairs)] for n,t in candidates if (pairs:=tree.overlap(t))]
  def pad_dist(pts,side):
   return {d:sum(sorted(rimtree.find_nearest(pts[i])[3]*1000 for i in ids)[:5])/5 for d,ids in groups[side].items()}
+ hinge=os.environ.get("HOREB_W34B_HINGE")=="1"
+ if hinge:
+  # Score the actual evaluated arm and tunic, before choosing finalists.
+  skinfaces=[tuple(f.vertices) for f in body.data.polygons]
+  skinids=[];canon={}
+  for v in body.data.vertices:
+   sig=(tuple(v.co),tuple(tuple(k.data[v.index].co) for k in body.data.shape_keys.key_blocks),tuple(sorted((g.group,float(g.weight)) for g in v.groups if g.weight!=0)))
+   skinids.append(canon.setdefault(sig,len(canon)))
+  skinsets=[{skinids[k] for k in f} for f in skinfaces]
+  tunic=next(o for o in meshes if o.name=="W28e_tailored_linen")
+  arm_regions={}
+  for side in ("l","r"):
+   names={f"{n}_{side}" for n in ("clavicle","upperarm","lowerarm","hand")}|{f"{d}_{i:02d}_{side}" for d in digits for i in (1,2,3)}
+   ids={g.index for g in body.vertex_groups if g.name in names}
+   vs={v.index for v in body.data.vertices if sum(g.weight for g in v.groups if g.group in ids)>.1}
+   arm_regions[side]=[i for i,f in enumerate(skinfaces) if any(k in vs for k in f)]
+  def side_score(pts,faces,side):
+   bt=BVHTree.FromPolygons(pts,faces);region=arm_regions[side]
+   at=BVHTree.FromPolygons(pts,[faces[i] for i in region])
+   sk={tuple(sorted((region[i],j))) for i,j in at.overlap(bt) if region[i]!=j and not skinsets[region[i]]&skinsets[j]}
+   tp,tf=eval_mesh(tunic);tt=BVHTree.FromPolygons(tp,tf);sets=list(map(set,tf))
+   return [len(sk),len(bt.overlap(tt)),sum(1 for i,j in tt.overlap(tt) if i<j and not sets[i]&sets[j])]
  if os.environ["HOREB_W34A_IK"]=="1":
   candidates={}
   for side in ("l","r"):
@@ -154,11 +198,15 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
        for n,q in baseline.items():bones[n].rotation_quaternion=q
        bpy.context.view_layer.update()
        wrist=target+Vector((-dx,sign*.015,dz))
-       if not solve(side,wrist,Vector((1,-sign*.10,-dip)),Vector((0,-sign,0)),pole):continue
+       palm=math.radians(float(os.environ.get("HOREB_W34B_PALM_DEG","0")))
+       transverse=Vector((0,-sign*math.cos(palm),math.sin(palm)))
+       if not solve(side,wrist,Vector((1,-sign*.10,-dip)),transverse,pole):continue
        pts,faces=eval_mesh(body);hits=prop_hits(pts,faces);dist=pad_dist(pts,side)
-       row={"side":side,"wrist":list(wrist),"dx":dx,"dz":dz,"dip":dip,"pole":pole,"distances_mm":dist,"prop_hits":hits,"quats":{n:list(bones[n].rotation_quaternion) for n in allnames if n.endswith("_"+side)}}
-       if not hits:rows.append(row)
-   rows.sort(key=lambda r:sum(max(0,d-3)**2 for d in r["distances_mm"].values()))
+       row={"side":side,"wrist":list(wrist),"dx":dx,"dz":dz,"dip":dip,"pole":pole,"palm_deg":math.degrees(palm),"distances_mm":dist,"prop_hits":hits,"quats":{n:list(bones[n].rotation_quaternion) for n in allnames if n.endswith("_"+side)}}
+       if not hits:
+        if hinge:row["side_audit"]=side_score(pts,faces,side)
+        rows.append(row)
+   rows.sort(key=lambda r:(sum(r.get("side_audit",[])),sum(max(0,d-3)**2 for d in r["distances_mm"].values())))
    candidates[side]=rows[:8]
    print("W34A_IK_SIDE",side,"clear",len(rows),"best",json.dumps(rows[:1]),flush=True)
  if os.environ["HOREB_W34A_IK"]=="1":
@@ -215,7 +263,17 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
    for t in clothes[i+1:]:
     if any(n in ("W22_plain_linen_head_cover","W22_linen_rear_drape") for n in (o.name,t.name)) or set((o.name,t.name))=={"W28e_tailored_linen","W22_hand_woven_waist_tie"}:
      pair[o.name+"|"+t.name]=len(trees[o.name].overlap(trees[t.name]))
-  return {"prop_hits":hits,"skin_pairs":len(skin),"skin_cloth":cloth,"cloth_self":selfpairs,"garment_pairs":pair}
+  result={"prop_hits":hits,"skin_pairs":len(skin),"skin_cloth":cloth,"cloth_self":selfpairs,"garment_pairs":pair}
+  if os.environ.get("HOREB_W34B_DIAG")=="1":
+   from collections import Counter
+   def label(fi):
+    weights={}
+    for vi in faces[fi]:
+     for g in body.data.vertices[vi].groups:
+      weights[g.group]=weights.get(g.group,0)+g.weight
+    return body.vertex_groups[max(weights,key=weights.get)].name
+   result["skin_regions"]=dict(Counter("|".join(sorted((label(i),label(j)))) for i,j in skin))
+  return result
  for n,q in baseline.items():bones[n].rotation_quaternion=q
  bpy.context.view_layer.update()
  initial=full();print("W34A_STATIC_BASE",json.dumps(initial),flush=True)
@@ -230,3 +288,16 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
  cleared=[r for r in checked if clear(r)]
  (out/"w34a-static-full.json").write_text(json.dumps({"status":"ART_HOLD_STATIC_IK_SCREEN","actor_sha256":sha(actor),"house_sha256":sha(asset),"baseline":initial,"checked":checked,"clear_count":len(cleared)},indent=2))
  print("W34A_STATIC_FULL",json.dumps({"checked":len(checked),"clear":len(cleared),"first":checked[0]["audit"] if checked else None}),flush=True)
+
+ if os.environ.get("HOREB_W34B_DIAG")=="1" and checked:
+  # Isolate the source of residual overlap without changing vertices or rig.
+  bestrow=min(checked,key=lambda r:r["audit"]["skin_pairs"]+sum(r["audit"]["skin_cloth"].values())+sum(r["audit"]["cloth_self"].values()))
+  goal=bestrow["pose"]["left"]["quats"]|bestrow["pose"]["right"]["quats"]
+  trials=[]
+  for factor in (0,.25,.5,.75,1):
+   for n,q in goal.items():bones[n].rotation_quaternion=baseline[n].slerp(Quaternion(q),factor) if n.startswith("hand_") else Quaternion(q)
+   bpy.context.view_layer.update()
+   pts,fs=eval_mesh(body);a=full()
+   trials.append({"wrist_factor":factor,"audit":a,"pads_mm":{side:pad_dist(pts,side) for side in ("l","r")}})
+  (out/"w34b-wrist-diagnostic.json").write_text(json.dumps({"best":bestrow,"trials":trials},indent=2))
+  print("W34B_WRIST_DIAG",json.dumps([{"factor":r["wrist_factor"],"skin":r["audit"]["skin_pairs"],"regions":r["audit"].get("skin_regions"),"cloth":sum(r["audit"]["skin_cloth"].values()),"self":sum(r["audit"]["cloth_self"].values()),"prop":len(r["audit"]["prop_hits"])} for r in trials]),flush=True)
