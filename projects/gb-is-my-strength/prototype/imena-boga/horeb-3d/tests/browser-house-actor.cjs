@@ -9,6 +9,7 @@ const pairedProfiles=[
  {name:'w28',dir:process.env.HOREB_W28_ACTOR_OUTPUT,status:'ART_HOLD_W28_STAGED_ACTOR',sha:'e8101ec691c52a5ce3549f0825e925688ecb15ba76ebc8ca2937c6e13d24662a',meshes:9,audit:'w28-pair-reimport-audit.json',manifest:'w28-actor-manifest.json'},
  {name:'w28e',dir:process.env.HOREB_W28E_OUTPUT,status:'ART_HOLD_W28E_TAILORED_LINEN',sha:'6ec8db07064ac848ffe121b6fb7d0ca3eb9869b39390cb9bb2af2241b86a8014',meshes:7,audit:'w28e-glb-audit.json',manifest:'w28e-manifest.json'},
  {name:'w28f',dir:process.env.HOREB_W28F_OUTPUT,status:'ART_HOLD_W28F_NECKLINE_SASH',sha:'d0638cd9f808820e1295e73e0421b003e36fcaf58068e841c0b9b8790497df59',meshes:7,audit:'w28f-glb-audit.json',manifest:'w28f-manifest.json'},
+ {name:'w28g',dir:process.env.HOREB_W28G_OUTPUT,status:'ART_HOLD_W28G_HEAD_ARM',sha:'3e1baf347b9197b2a59da935f15245f2ef289302b72cde22047642e563acc488',meshes:7,audit:'w28g-glb-audit.json',manifest:'w28g-manifest.json'},
 ].filter(p=>p.dir);
 if(pairedProfiles.length>1)throw Error('Choose one actor profile');
 const pair=pairedProfiles[0],w28Actor=pair?.dir;
@@ -23,8 +24,9 @@ if(w28){
  if(am.status!==pair.status||am.glb_sha256!==pair.sha)throw Error('Invalid paired actor');
  if(pair.name==='w28e'&&(am.topology?.faces!==36332||am.topology?.verts!==18390))throw Error('Invalid triangle topology');
  if(pair.name==='w28f'&&JSON.stringify(am.params)!=='[0.025,0.012,0.006]')throw Error('Invalid neckline/sash parameters');
+ if(pair.name==='w28g'&&JSON.stringify(am.params)!=='[55,18,0.25]')throw Error('Invalid head/arm parameters');
  const a=JSON.parse(fs.readFileSync(path.join(w28Actor,pair.audit),'utf8'));
- const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(pair.name!=='w28f'||r.sash_pairs===0&&r.sash_self_pairs===0);
+ const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(!['w28f','w28g'].includes(pair.name)||r.sash_pairs===0&&r.sash_self_pairs===0);
  const validClip=(c,name,count,step)=>c?.name===name&&Array.isArray(c.bad)&&c.bad.length===0&&Array.isArray(c.rows)&&c.rows.length===count&&c.rows.every((r,i)=>r?.frame===1+i*step&&validRow(r));
  if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==pair.meshes||a.props!==98||!Array.isArray(a.clips)||a.clips.length!==2||!validClip(a.clips[0],'Mother_GestureTowardsBasket',417,.25)||!validClip(a.clips[1],'Mother_QuietIdle',144,1))throw Error('Missing full pair clearance');
 
