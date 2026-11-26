@@ -15,6 +15,7 @@ const pairedProfiles=[
  {name:'w28r',dir:process.env.HOREB_W28R_OUTPUT,status:'ART_HOLD_W28R_GRIP_MOTION_TRIAL',sha:'40b966d66bd72ef628e572bf2f356d6ff13f7752d021b60bdd6c217bb77b81dc',meshes:7,audit:'w28r-glb-audit.json',manifest:'w28r-manifest.json'},
  {name:'w29c',dir:process.env.HOREB_W29C_OUTPUT,status:'ART_HOLD_W29C_LOSSLESS_COMPACT_TRIAL',sha:'0d11d1b64a7b23b60fc1833d82bd938038f43c6369116ed9ac393b7cfa75ea94',meshes:9,audit:'w29c-glb-audit.json',manifest:'w29c-manifest.json'},
  {name:'w31a',dir:process.env.HOREB_W31A_OUTPUT,status:'ART_HOLD_W31A_IDLE_MOTION_TRIAL',sha:'8c03caab4aa8d4871883ff5d8a71ee15f556abf226c0789c0dbe368c65be6113',meshes:9,audit:'w31a-glb-audit.json',manifest:'w31a-manifest.json'},
+ {name:'w31f',dir:process.env.HOREB_W31F_OUTPUT,status:'ART_HOLD_W31F_LASH_CLEARANCE_TRIAL',sha:'2a72465f5efb0995926b9641a103365122907174447af1ca61b875366e43eb3b',meshes:9,audit:'w31f-glb-audit.json',manifest:'w31f-manifest.json'},
 ].filter(p=>p.dir);
 if(pairedProfiles.length>1)throw Error('Choose one actor profile');
 const pair=pairedProfiles[0],w28Actor=pair?.dir;
@@ -25,7 +26,7 @@ const dir=process.env.HOREB_ARTLAB_SCREENSHOTS||path.join(process.cwd(),'.test-b
 const m=w28?JSON.parse(fs.readFileSync(path.join(w28House,'w28-house-manifest.json'),'utf8')):study?JSON.parse(fs.readFileSync(path.join(study,'w26-study-manifest.json'),'utf8')):null;
 const am=w28?JSON.parse(fs.readFileSync(path.join(w28Actor,pair.manifest),'utf8')):actorStudy?JSON.parse(fs.readFileSync(path.join(actorStudy,'w24-export-manifest.json'),'utf8')):null;
 if(w28){
- if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||(!['w28o','w28q','w28r','w29c','w31a'].includes(pair.name)&&JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]'))throw Error('Invalid W28 house/placement contract');
+ if(m.status!=='ART_HOLD_W28_COMPACT_HOUSE'||m.glb_sha256!=='fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622'||(!['w28o','w28q','w28r','w29c','w31a','w31f'].includes(pair.name)&&JSON.stringify(am.placement_three)!=='[-0.58,0.015,0.3]'))throw Error('Invalid W28 house/placement contract');
  if(am.status!==pair.status||am.glb_sha256!==pair.sha)throw Error('Invalid paired actor');
  if(pair.name==='w28e'&&(am.topology?.faces!==36332||am.topology?.verts!==18390))throw Error('Invalid triangle topology');
  if(pair.name==='w28f'&&JSON.stringify(am.params)!=='[0.025,0.012,0.006]')throw Error('Invalid neckline/sash parameters');
@@ -35,8 +36,13 @@ if(w28){
  if(pair.name==='w28r'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='6bb286037d794b0830840dd709ba257d5a3e722540665f6527b782338f8499cd'||am.non_target_bone_channels_unchanged!==true||am.facial_animation_unchanged!==true||am.geometry_unchanged!==true||am.changed_rotation_channels.length!==12||!am.changed_rotation_channels.every(c=>/^(thumb|index|ring|pinky)_0[123]_l$/.test(c.name))||am.peak_quaternion_error>=.0002||am.import_mapping_error>=.0002))throw Error('Invalid grip provenance');
  if(pair.name==='w29c'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='8f11fc78285d4aece03b94554967f4deb3ad191b6a01055784f6a08e16a2c8d1'||am.all_other_json_identical_after_remap!==true||am.accessors_byte_identical!==305||am.active_material_graphs_identical!==9||am.saved_bytes!==2057736))throw Error('Invalid compact provenance');
  if(pair.name==='w31a'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='af19f098d2eac791453745181bde30ca51df8565bbec946b5dd8b68cec9b0669'||am.source_pair_audit_sha256!=='f2098d4e75e10906a8e7a14083c1d4022a8ee62e38bcc9bc0071bf91ded6872d'||am.geometry_gesture_and_other_channels_unchanged!==true||am.loop_endpoints_preserved!==true||am.idle_samples!==144||JSON.stringify(am.changes.map(c=>c.name))!=='["spine_02","spine_01","clavicle_l","clavicle_r"]'))throw Error('Invalid idle motion provenance');
+ if(pair.name==='w31f'&&(am.house_sha256!==m.glb_sha256||am.source_sha256!=='4b87b59ac8c7c61968ef7c9a00f23939f21e53558d8f74072fde5e5b495e9db8'||am.source_blend_audit_sha256!=='c2ae78bb67c1a0911f18fd67a717a8a72d0226b928d644c1fb165a83e0d59292'||am.only_lash_topology_subset_changed!==true||am.sample_states!==547||JSON.stringify(am.removed_strands)!=='[4,5,8,9]'||am.strands!==40||am.unchanged_views!==310))throw Error('Invalid lash subset provenance');
  const a=JSON.parse(fs.readFileSync(path.join(w28Actor,pair.audit),'utf8'));
- const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(!['w28f','w28g','w28o','w28q','w28r','w29c','w31a'].includes(pair.name)||r.sash_pairs===0&&r.sash_self_pairs===0)&&(!['w28o','w28q','w28r','w29c','w31a'].includes(pair.name)||r.eye_face_pairs===0&&r.eye_face_pairs_neutral===0&&Array.isArray(r.blink_weights)&&r.blink_weights.length===2&&r.blink_weights.every(w=>Number.isFinite(w)&&w>=-1e-6&&w<=1+1e-6)&&Math.abs(r.blink_weights[0]-r.blink_weights[1])<1e-6)&&(!['w28r','w29c','w31a'].includes(pair.name)||r.hand_self_pairs===0)&&(!['w29c','w31a'].includes(pair.name)||(r.facial_bad===false&&r.facial_pairs?.overlay_pair===0&&Object.entries(r.facial_pairs).filter(([k])=>k!=='overlay_pair').length===2&&Object.entries(r.facial_pairs).filter(([k])=>k!=='overlay_pair').every(([k,v])=>Object.keys(v).length===8&&Object.values(v).every(n=>n===0))))&&(pair.name!=='w31a'||(r.head_linen_bad===false&&Object.keys(r.head_linen_pairs).length===9&&Object.values(r.head_linen_pairs).every(n=>n===0)));
+ const validRow=r=>pair.name==='w28'?Array.isArray(r.hits)&&!r.hits.length:Array.isArray(r.skin_cloth)&&Array.isArray(r.prop_hits)&&!r.skin_cloth.length&&!r.prop_hits.length&&r.self_pairs===0&&(!['w28f','w28g','w28o','w28q','w28r','w29c','w31a','w31f'].includes(pair.name)||r.sash_pairs===0&&r.sash_self_pairs===0)&&(!['w28o','w28q','w28r','w29c','w31a','w31f'].includes(pair.name)||r.eye_face_pairs===0&&r.eye_face_pairs_neutral===0&&Array.isArray(r.blink_weights)&&r.blink_weights.length===2&&r.blink_weights.every(w=>Number.isFinite(w)&&w>=-1e-6&&w<=1+1e-6)&&Math.abs(r.blink_weights[0]-r.blink_weights[1])<1e-6)&&(!['w28r','w29c','w31a','w31f'].includes(pair.name)||r.hand_self_pairs===0)&&(!['w29c','w31a','w31f'].includes(pair.name)||(r.facial_bad===false&&r.facial_pairs?.overlay_pair===0&&Object.entries(r.facial_pairs).filter(([k])=>k!=='overlay_pair').length===2&&Object.entries(r.facial_pairs).filter(([k])=>k!=='overlay_pair').every(([k,v])=>Object.keys(v).length===8&&Object.values(v).every(n=>n===0))))&&(!['w31a','w31f'].includes(pair.name)||(r.head_linen_bad===false&&Object.keys(r.head_linen_pairs).length===9&&Object.values(r.head_linen_pairs).every(n=>n===0)));
+ if(pair.name==='w31f'){
+  const mixed=JSON.parse(fs.readFileSync(path.join(w28Actor,'w31e-blend-audit.json'),'utf8'));
+  if(mixed.actor_sha256!==pair.sha||mixed.house_sha256!==m.glb_sha256||mixed.sample_rate!==60||mixed.bad.length||mixed.rows.length!==160||!mixed.rows.every((r,i)=>r.frame===i&&validRow(r)&&r.right_skin_pairs===0&&r.transition?.kind===(i<144?'enter':'return')))throw Error('Missing offline transition clearance');
+ }
  const validClip=(c,name,count,step)=>c?.name===name&&Array.isArray(c.bad)&&c.bad.length===0&&Array.isArray(c.rows)&&c.rows.length===count&&c.rows.every((r,i)=>r?.frame===1+i*step&&validRow(r));
  if(a.actor_sha256!==am.glb_sha256||a.house_sha256!==m.glb_sha256||a.actor_meshes!==pair.meshes||a.props!==98||!Array.isArray(a.clips)||a.clips.length!==2||!validClip(a.clips[0],'Mother_GestureTowardsBasket',417,.25)||!validClip(a.clips[1],'Mother_QuietIdle',144,1))throw Error('Missing full pair clearance');
 
@@ -118,7 +124,7 @@ if(!chrome)throw Error('Actual Chromium required');
  const observation=await state();
  await page.click('[data-testid="house-actor-perform"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
- if(pair?.name==='w31a'){
+ if(['w31a','w31f'].includes(pair?.name)){
   await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorEnterBlendSeen==='true';});
   await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorBlend!=='enter';});
  }
@@ -134,9 +140,9 @@ if(!chrome)throw Error('Actual Chromium required');
  if(Number(actual.houseActorContactMm)>=contactLimit)throw Error('Actor contact witness misses actual rim: '+JSON.stringify(actual));
  const actorCanvas=await page.$(sel);
  await actorCanvas.screenshot({path:path.join(dir,mobile?'actor-mobile390.png':'actor-desktop1440.png')});
- if(pair?.name==='w31a')await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorReturnBlendSeen==='true';});
+ if(['w31a','w31f'].includes(pair?.name))await until(s=>{const d=document.querySelector(s).dataset;return d.houseActorReturnBlendSeen==='true';});
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='complete');
- if(pair?.name==='w31a'&&(await state()).houseActorBlend!==undefined)throw Error('Stale blend on completion');
+ if(['w31a','w31f'].includes(pair?.name)&&(await state()).houseActorBlend!==undefined)throw Error('Stale blend on completion');
 
  const endGesture=await state();
  if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=contactLimit||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));

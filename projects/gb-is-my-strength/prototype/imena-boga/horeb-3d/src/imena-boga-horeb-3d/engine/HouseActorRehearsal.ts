@@ -13,6 +13,7 @@ export const HOUSE_ACTOR_PROFILES={
  w28r:{file:'w28r-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w29c:{file:'w29c-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010},
  w31a:{file:'w31a-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010,blendSeconds:.25},
+ w31f:{file:'w31f-actor.glb',offset:[-.58,.015,.30],metric:'middle-skin-vertex',limit:.010,blendSeconds:.25},
 } as const;
 export type HouseActorProfile=typeof HOUSE_ACTOR_PROFILES[keyof typeof HOUSE_ACTOR_PROFILES];
 const IDLE='Mother_QuietIdle',GESTURE='Mother_GestureTowardsBasket';
