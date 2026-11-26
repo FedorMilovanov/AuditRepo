@@ -8,6 +8,12 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
+## Current handoff: W29a (2026-11-26)
+
+- W28r v3: complete local 417 gesture + 144 idle pair clearance, desktop/mobile browser pass; historical CI 8/8 at 58f46427. W28s linen and W28t conforming CC0 brow overlay are derivative ART-HOLD studies. W28t brow-only reimport and focused real Chromium: 561 samples, zero tested overlaps/desync, 53 bones, eight skinned meshes. This is not a full scene acceptance.
+- W29a: bounded detail restored from the pinned original CC0 skin atlas, original geometry/animation/roughness unchanged, deterministic export. Candidate 12,567,992 bytes, SHA-256 3cd8372200534849bbdb39ccc6d48dedddce21dac0305ef3963be53a016c5e69. Local evidence: H:/HOREB_ArtPipeline/evidence/W29a-skin-20261126. Generated binary stays local. Compare exact-source frontal and blink renders; do not infer artistic acceptance from the checksum. Size increase is an optimization debt.
+- Next: eyelash fit with blink morphs, skin/eye lookdev, head-cover and garment silhouette, then expressive body performance and house/interior. No canonical asset swap before full scene audit. Recover missing W28g generator or explicitly document native-source reproducibility boundary. Keep one draft PR; verify CI on exact current SHA. Older W17-W25 sections below are history, not a reset of the active baseline.
+
 ## W25 — Game architecture / single-owner vertical slice
 
 Владелец попросил вести крупные завершённые волны одним исполнителем. Сначала надёжный embodied-interaction blockout, затем art assets/rigged performance, spatial sound, mobile walkthrough и независимая художественная приёмка; не расширять число глав до утверждённого первого hero slice. W25 не снимает ART HOLD и не разрешает интеграцию W22/W24 актёров.

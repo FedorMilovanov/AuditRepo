@@ -98,6 +98,18 @@ if brows:
  assert tm["house_sha256"]==m["house_sha256"] and tm["conform_trials"][-1]["overlap_pairs"]==[0]*5
  asset=candidate/"w28t-actor.glb"
  assert sha(asset)==tm["glb_sha256"]=="689c81ae948f6ba0dca8f338b9a06dcd9f604bee525edea1499ff21c9dac6cb3" and asset.stat().st_size==tm["glb_bytes"]
+skin=os.environ.get("HOREB_W29A_OUTPUT")
+if skin:
+ assert brows
+ prior_brows=candidate
+ candidate=Path(skin)
+ sk=json.loads((candidate/"w29a-manifest.json").read_text(encoding="utf8"))
+ assert sk["status"]=="ART_HOLD_W29A_SKIN_DETAIL_TRIAL" and sk["source_sha256"]==tm["glb_sha256"]
+ assert sk["brow_audit_sha256"]==sha(prior_brows/"w28t-brow-audit.json")
+ assert sk["geometry_animation_unchanged"] is True and sk["roughness_unchanged"] is True
+ assert sk["house_sha256"]==m["house_sha256"] and sk["source_samples"]==561
+ asset=candidate/"w29a-actor.glb"
+ assert sha(asset)==sk["glb_sha256"]=="3cd8372200534849bbdb39ccc6d48dedddce21dac0305ef3963be53a016c5e69" and asset.stat().st_size==sk["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
@@ -108,6 +120,7 @@ assert not shoulder or shoulder_compare or grip_compare or linen_compare or brow
 assert not grip or grip_compare or linen_compare or brow_compare
 assert not linen or linen_compare or brow_compare
 assert not brows or brow_compare
+assert not skin or brow_compare
 out=(candidate or root)/("visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
