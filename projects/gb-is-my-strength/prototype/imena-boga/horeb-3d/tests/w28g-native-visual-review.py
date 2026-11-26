@@ -173,6 +173,18 @@ if shape:
  assert cm3["probe_sha256"]==sha(candidate/"w30c-probe.json") and cm3["delta_sha256"]==sha(candidate/"w30c-drape-delta.json")
  asset=candidate/"w30c-actor.glb"
  assert sha(asset)==cm3["glb_sha256"]=="d5b1dc8af5e2dc0156be33b03f78b4c2d91baf2e3c7ea2646e8b8803f965e442"
+tunic=os.environ.get("HOREB_W30D_OUTPUT")
+tunic_compare=os.environ.get("HOREB_VISUAL_TUNIC_COMPARE")=="1"
+if tunic:
+ assert shape and tunic_compare
+ candidate=Path(tunic)
+ tm3=json.loads((candidate/"w30d-manifest.json").read_text(encoding="utf8"))
+ assert tm3["status"]=="ART_HOLD_W30D_TUNIC_SHAPE_TRIAL" and tm3["source_sha256"]==cm3["glb_sha256"]
+ assert tm3["only_tunic_positions_normals_changed"] is True and tm3["unchanged_views"]==309
+ assert tm3["probe_sha256"]==sha(candidate/"w30d-probe.json") and tm3["delta_sha256"]==sha(candidate/"w30d-tunic-delta.json")
+ asset=candidate/"w30d-actor.glb"
+ assert sha(asset)==tm3["glb_sha256"]=="8b63fcab7933a8493b6337437f0ae7f17c5ba3e50106d40945687ea1ce8aac6b"
+assert not tunic_compare or (shape_compare and shape)
 assert not shape_compare or (drape_compare and drape)
 assert not drape_compare or (head_compare and head_linen)
 assert not head_compare or eye_lookdev
@@ -190,7 +202,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-tunic" if tunic_compare else "visual-drape-shape" if shape_compare else "visual-drape" if drape_compare else "visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -266,6 +278,8 @@ if shape_compare:
  # Identical local inspection fill for both assets. Not a game lighting change.
  light_data=bpy.data.lights.new("Drape_inspection_fill","AREA");light_data.energy=45;light_data.shape="DISK";light_data.size=.8
  fill=bpy.data.objects.new("Drape_inspection_fill",light_data);scene.collection.objects.link(fill)
+if tunic_compare:
+ views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("skirt-peak",60,(-.65,-1.65,1.05),(-.40,-.30,.58),43)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
@@ -275,7 +289,7 @@ for name,frame,eye,target,lens in views:
   assert max(abs(brk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
  if lashes:
   assert max(abs(lk.key_blocks[k].value-bk.key_blocks[k].value) for k in ("blink_left","blink_right"))<1e-6
- if close or brow_compare:
+ if (close or brow_compare) and not tunic_compare:
   head=rig.pose.bones["head"]
   transform=rig.matrix_world@head.matrix@head.bone.matrix_local.inverted()
   focus=transform@Vector((0,-.102479,1.424))
@@ -289,7 +303,7 @@ for name,frame,eye,target,lens in views:
    direction=(side-.7*front if name=="side-peak" else -front+.38*side).normalized()
    eye=focus+direction*.80+up*.04;target=focus
  if shape_compare:
-  fill.location=Vector(eye)+up*.25
+  fill.location=Vector(eye)+(Vector((0,0,.25)) if tunic_compare else up*.25)
   fill.rotation_euler=(Vector(target)-fill.location).to_track_quat("-Z","Y").to_euler()
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))
