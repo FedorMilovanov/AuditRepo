@@ -8,7 +8,14 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W31f rehearsal integration (2026-11-26)
+## Current handoff: W32a guided house rehearsal (2026-11-26)
+
+- W31f actual Chromium desktop/mobile PASS, exact SHA 2a72465f5efb0995926b9641a103365122907174447af1ca61b875366e43eb3b, 4.92 mm proximity, .843/.825 s hold, 53 bones, 9 meshes, no JS errors. Logs w31f-house-browser.log. W31f is latest full browser-proven actor/house pair; no claim of continuous runtime clearance or approved art.
+- W32a adds a DEV-only guided house rehearsal on study=w31f. One start action loads the existing actor then enters the physical courtyard. Session-local witnesses for actual room entry, successful gesture and successful basket inspection; no movement lock or new story registry. UI hints select the next unfinished beat, ordinary lab walk remains available, exit/view switch clears witnesses. Biblical context is paraphrased from Exod 2:1-3 and explicitly distinguishes the conditional reconstruction; no infant, lift, carry or Nile transition presented as implemented.
+- Existing browser scenario now exercises guided start, room entry, real gesture, inspection in the same visit, replay, exit/reset and ordinary reentry on desktop/mobile. TypeScript, JS syntax, diff check PASS. Actual run requested, confirm w32a-house-browser.log (W32A_EPISODE_PASS and W27A_HOUSE_ACTOR_PASS for both) before acceptance.
+- Next: actual scene and camera visual assessment, then authored connection to the separately existing Nile stage, with source-ordered time/place transitions and no claim of historical location. Keep existing PR/branch and ART HOLD. No additional face microvariants without a concrete blocker.
+
+### Prior handoff: W31f rehearsal integration (2026-11-26)
 
 - Exact W31f full reimport PASS: 417 gesture + 144 idle, non-lash measured rows identical to W31d. Offline blended-pose audit 160/160 PASS, zero bad, including previously failed blink positions. Evidence w31f-full-pair.log and w31f-blend.log; reports in H:/HOREB_ArtPipeline/evidence/W31f-lash-subset-20261126. This is sampled local-pose interpolation, not proof of continuous exact runtime clearance.
 - Added only the W31f DEV rehearsal profile with the existing .25 s blend, exact source/model manifest and full pair/mixed report gates in the existing browser test; canonical asset and other profiles unchanged. UTF-8 note checked, TypeScript, JS syntax and diff check PASS. Desktop/mobile run requested; confirm w31f-house-browser.log before declaring runtime acceptance.

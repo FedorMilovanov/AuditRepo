@@ -22,7 +22,7 @@ const TITLES:Record<View,string>={
  basket:'Подготовка корзины',
 };
 type WalkKey='w'|'a'|'s'|'d'|'q'|'e';
-type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void;toggleActor:()=>void;performActor:()=>void};
+type SceneApi={view:(v:View)=>void;roof:(show:boolean)=>void;walk:(on:boolean)=>void;move:(key:WalkKey,on:boolean)=>void;clear:()=>void;inspect:()=>boolean;closeInspect:()=>void;toggleActor:()=>void;performActor:()=>void;startEpisode:()=>void};
 export function HouseArtLab(){
  // Dev-only exact paired rehearsal; distinct URLs fail closed without the
  // explicitly supplied candidate files. Never substitute canonical binaries.
@@ -38,6 +38,8 @@ export function HouseArtLab(){
  const [inspected,setInspected]=useState(false);
  const [actorPhase,setActorPhase]=useState<ActorPhase>('off');
  const [observationReady,setObservationReady]=useState(false);
+ const [episodeProgress,setEpisodeProgress]=useState<number|null>(null);
+ const episodeHint=episodeProgress===null?null:!(episodeProgress&1)?"Войдите во двор и пройдите в жилище.":!(episodeProgress&2)?"Подойдите к отметке у входа и наблюдайте жест матери.":!(episodeProgress&4)?"Подойдите к столу и осмотрите корзину.":"Эпизод дома завершён. Следующая часть — берег Нила — пока не связана с этой сценой.";
  const inspectClose=useRef<HTMLButtonElement>(null);
  const focusRestore=useRef(false);
  useEffect(()=>{
@@ -86,6 +88,13 @@ export function HouseArtLab(){
   let fitDirty=true;
   let rehearsal:ReturnType<typeof createHouseActorRehearsal>|null=null,actorClock=0;
   let observerReady=false;
+  // Session-local witnesses, not a second story registry or a movement gate.
+  let episodeMask:number|null=null;
+  function resetEpisode(){episodeMask=null;setEpisodeProgress(null);delete c.dataset.houseEpisodeProgress;}
+  function markEpisode(bit:number){
+   if(episodeMask===null||(episodeMask&bit))return;
+   episodeMask|=bit;setEpisodeProgress(episodeMask);c.dataset.houseEpisodeProgress=String(episodeMask);
+  }
   const observationTarget=new THREE.Vector3(-.10,.95,.27);
   const observationPoint=new THREE.Vector3(0,.018,2.02);
   const observationMark=new THREE.Mesh(new THREE.RingGeometry(.22,.245,48),new THREE.MeshBasicMaterial({color:0xd4b77e,transparent:true,opacity:.85,side:THREE.DoubleSide}));
@@ -134,7 +143,7 @@ export function HouseArtLab(){
   }
   function inspect(){
    if(inspecting||!inspectAvailable())return false;
-   clear();inspecting=true;setInspected(true);c.dataset.houseInspected='true';return true;
+   clear();inspecting=true;setInspected(true);c.dataset.houseInspected='true';markEpisode(4);return true;
   }
   function closeInspect(){
    clear();inspecting=false;setInspected(false);c.dataset.houseInspected='false';
@@ -156,6 +165,7 @@ export function HouseArtLab(){
    c.dataset.houseWalkX=walkX.toFixed(3);c.dataset.houseWalkZ=walkZ.toFixed(3);
    c.dataset.houseWalkPitch=pitch.toFixed(3);c.dataset.houseWalkYaw=yaw.toFixed(3);c.dataset.houseWalkBlocked=String(blocked);
    c.dataset.houseWalkRegion=walkZ<2.24?'room':walkZ>3.10?'yard':'threshold';
+   if(walkZ<2.24)markEpisode(1);
   };
   let pointer:number|null=null,px=0,py=0;
   const releaseLook=()=>{
@@ -206,6 +216,7 @@ export function HouseArtLab(){
   }
   function setWalk(on:boolean){
    if(on&&rehearsal?.phase()==='loading')return;
+   if(!on)resetEpisode();
    clear();closeInspect();rehearsal?.cancel();updateInspectReady(false);walking=on;lastFrame=0;blocked=false;
    activeControls.enabled=!on;
    c.dataset.houseWalk=String(on);
@@ -359,8 +370,19 @@ export function HouseArtLab(){
    fitDirty=true;
    const showRoof=true;
    roofObjs.forEach(o=>o.visible=showRoof);
-   rehearsal=createHouseActorRehearsal(scene,loaded,c,next=>{setActorPhase(next);if(walking)walkLens();if(next!=='performing')delete c.dataset.houseActorAperture;updateObservation();},actorProfile);
-   api.current={view:mode=>{currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect,
+   rehearsal=createHouseActorRehearsal(scene,loaded,c,next=>{setActorPhase(next);if(walking&&next==='complete')markEpisode(2);if(walking)walkLens();if(next!=='performing')delete c.dataset.houseActorAperture;updateObservation();},actorProfile);
+   api.current={view:mode=>{resetEpisode();currentView=mode;if(walking)setWalk(false);setPose(POSES[mode]);},roof:show=>roofObjs.forEach(o=>o.visible=show),walk:setWalk,move,clear,inspect,closeInspect,
+    startEpisode:async()=>{
+     if(study!=='w31f'||walking||episodeMask!==null||!rehearsal||rehearsal.phase()==='loading')return;
+     episodeMask=0;setEpisodeProgress(0);c.dataset.houseEpisodeProgress='0';
+     if(!rehearsal.present()){
+      if(rehearsal.phase()!=='off')rehearsal.clear();
+      await rehearsal.enable();
+     }
+     if(disposed||episodeMask===null)return;
+     if(!rehearsal.present()){resetEpisode();return;}
+     setRoof(true);setWalking(true);setWalk(true);
+    },
     toggleActor:()=>{
      if(!rehearsal)return;
      if(rehearsal.phase()==='off'){
@@ -392,6 +414,7 @@ export function HouseArtLab(){
    c.removeEventListener('pointerdown',lookStart);c.removeEventListener('pointermove',lookMove);c.removeEventListener('pointerup',lookEnd);c.removeEventListener('pointercancel',lookEnd);c.removeEventListener('lostpointercapture',lookEnd);
    window.removeEventListener('keydown',keyDown);window.removeEventListener('keyup',keyUp);window.removeEventListener('blur',clear);document.removeEventListener('visibilitychange',visibility);
    for(const key of ['houseWalk','houseWalkX','houseWalkZ','houseWalkYaw','houseWalkPitch','houseWalkBlocked','houseWalkRegion','houseWalkColliders','houseInspectReady','houseInspected','houseObservationReady','houseActorAperture'])delete c.dataset[key];
+   delete c.dataset.houseEpisodeProgress;
    activeRenderer.setAnimationLoop(null);activeControls.dispose();
    const geos=new Set<THREE.BufferGeometry>(),mats=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
    if(loaded)loaded.traverse(o=>{
@@ -434,7 +457,7 @@ export function HouseArtLab(){
     </div>}
     {walking&&!inspected&&actorPhase==='performing'&&<div className="house-actor-caption" role="status">Репетиция жеста · позиция игрока сохранена</div>}
     {walking&&!inspected&&actorPhase!=='performing'&&<div className="house-walk-hud">
-     <div className="house-walk-objective">{canInspect?'Корзина рядом · осмотреть':'Найдите стол с корзиной'}</div>
+     <div className="house-walk-objective">{episodeHint??(canInspect?'Корзина рядом · осмотреть':'Найдите стол с корзиной')}</div>
      <button type="button" data-testid="house-inspect-basket" disabled={!canInspect||inspected} onClick={()=>api.current?.inspect()}>Осмотреть · F</button>
      {actorPhase!=='off'&&<button type="button" data-testid="house-actor-perform" disabled={!observationReady||!['idle','complete'].includes(actorPhase)} onClick={()=>api.current?.performActor()}>{actorPhase==='complete'?'Повторить жест':'Наблюдать жест'}</button>}
      {actorPhase!=='off'&&!observationReady&&<span className="house-walk-objective">Для жеста встаньте на отметку у входа</span>}
@@ -460,6 +483,14 @@ export function HouseArtLab(){
    </section>
    <section className="side house-tools" aria-label="Управление сценой">
     <div>
+     {study==='w31f'&&<div className="note" data-testid="house-episode-panel">
+      <p className="kicker">01 / EXODUS 2</p>
+      <h3>В доме матери Моисея</h3>
+      <p>Исх. 2:1–3. Мать скрывала младенца три месяца, затем приготовила осмолённую корзину. Обстановка дома и жест — условная художественная реконструкция.</p>
+      <button type="button" className="switch" data-testid="house-episode-start" disabled={status!=='ready'||walking||actorPhase==='loading'||episodeProgress!==null} onClick={()=>api.current?.startEpisode()}>Начать эпизод</button>
+      {episodeProgress!==null&&<p role="status" data-testid="house-episode-progress">{episodeHint}</p>}
+      <p>Здесь показано только приготовление к действию: младенец, подъём корзины и путь к Нилу ещё не поставлены.</p>
+     </div>}
      <h3>Исследование пространства</h3>
      <button type="button" className={'switch '+(walking?'selected':'')} data-testid="house-walk-toggle" disabled={status!=='ready'||actorPhase==='loading'} aria-pressed={walking} onClick={toggleWalk}>{walking?'Закончить прогулку':'Войти во двор и дом'}</button>
      <h3>Репетиция персонажа · ART HOLD</h3>

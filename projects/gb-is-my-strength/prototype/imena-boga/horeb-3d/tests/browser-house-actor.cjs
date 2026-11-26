@@ -87,13 +87,16 @@ if(!chrome)throw Error('Actual Chromium required');
  await page.goto((process.env.HOREB_ARTLAB_BASE_URL||'http://127.0.0.1:5192').replace(/\/$/,'')+'/artlab.html'+(w28?'?study='+pair.name:''),{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="house-meshes"]')?.textContent)>0);
  if(bytes&&requests<=prior)throw Error('No candidate request');
- await page.click('[data-testid="house-actor-toggle"]');
+ const episode=pair?.name==='w31f';
+ if(episode)await page.click('[data-testid="house-episode-start"]');
+ else await page.click('[data-testid="house-actor-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle');
  if(actorBytes&&actorRequests<=priorActor)throw Error('No exact actor study request');
  const actor=await state();
  if(actor.houseActorBones!=='53'||Number(actor.houseActorSkinned)<2||(pair&&Number(actor.houseActorSkinned)!==pair.meshes))throw Error('Missing real skinning');
  if(actor.houseActorContactMetric!==(w28?'middle-skin-vertex':'wrist-vertex')||(w28&&Number(actor.houseActorSkinSamples)<20))throw Error('Wrong proximity metric '+JSON.stringify(actor));
- await enterWalk();
+ if(episode)await until(s=>{const d=document.querySelector(s).dataset;return d.houseWalk==='true'&&d.houseWalkRegion==='yard'&&d.houseEpisodeProgress==='0';});
+ else await enterWalk();
  const start=await state();
  if(Number(start.houseWalkColliders)<12||start.houseWalkRegion!=='yard')throw Error('Incomplete walk start '+JSON.stringify(start));
  if(!await page.$eval('[data-testid="house-inspect-basket"]',b=>b.disabled))throw Error('Distant basket interaction available');
@@ -148,12 +151,25 @@ if(!chrome)throw Error('Actual Chromium required');
  if(Number(endGesture.houseActorTime)<2.91||Number(endGesture.houseActorWorstMm)>=contactLimit||Number(endGesture.houseActorHoldSeconds)<.5)throw Error('Action completion invalid '+JSON.stringify(endGesture));
  console.log('W27A_RIG_CONTACT',JSON.stringify({mobile,peak:actual.houseActorContactMm,completed:endGesture.houseActorContactMm,extent:actual.houseActorFrameExtent,aperture:peakAperture,worst:endGesture.houseActorWorstMm,hold:endGesture.houseActorHoldSeconds,bones:actor.houseActorBones,metric:actor.houseActorContactMetric,skinSamples:actor.houseActorSkinSamples,actor:am?.glb_sha256||'canonical W22'}));
 
+ if(episode){
+  await until(s=>document.querySelector(s).dataset.houseEpisodeProgress==='3');
+  if(await page.$eval('[data-testid="house-inspect-basket"]',b=>b.disabled))await hold('w',s=>document.querySelector(s).dataset.houseInspectReady==='true','episode approach basket');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-inspect-basket"]').disabled);
+  await page.click('[data-testid="house-inspect-basket"]');
+  await until(s=>document.querySelector(s).dataset.houseEpisodeProgress==='7');
+  await page.click('[data-testid="house-inspect-close"]');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-basket-inspection"]'));
+  if((await state()).houseObservationReady!=='true')await hold('s',s=>document.querySelector(s).dataset.houseObservationReady==='true','episode return to observation');
+  await page.waitForFunction(()=>!document.querySelector('[data-testid="house-actor-perform"]').disabled);
+  console.log('W32A_EPISODE_PASS',JSON.stringify({mobile,progress:(await state()).houseEpisodeProgress}));
+ }
  // A replay must reset contact evidence and cancel on leaving the walk.
  await page.click('[data-testid="house-actor-perform"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='performing');
  if((await state()).houseActorHoldSeconds!==undefined)throw Error('Stale contact on replay');
  await page.click('[data-testid="house-walk-toggle"]');
  await until(s=>document.querySelector(s).dataset.houseActorPhase==='idle'&&document.querySelector(s).dataset.houseWalk==='false');
+ if((await state()).houseEpisodeProgress!==undefined)throw Error('Stale episode after exit');
  if((await state()).houseActorTime!==undefined)throw Error('Stale clip clock after cancellation');
  if((await state()).houseActorBlend!==undefined)throw Error('Stale blend on cancellation');
  if((await state()).houseActorPeakAperture!==undefined||(await state()).houseActorEnterBlendSeen!==undefined||(await state()).houseActorReturnBlendSeen!==undefined)throw Error('Stale transition evidence on cancellation');
