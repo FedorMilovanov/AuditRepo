@@ -76,13 +76,27 @@ if grip:
  assert rm["probe_sha256"]==sha(candidate/"w28r-grip-probe.json")
  asset=candidate/"w28r-actor.glb"
  assert sha(asset)==rm["glb_sha256"]=="40b966d66bd72ef628e572bf2f356d6ff13f7752d021b60bdd6c217bb77b81dc" and asset.stat().st_size==rm["glb_bytes"]
+linen=os.environ.get("HOREB_W28S_OUTPUT")
+if linen:
+ assert grip
+ prior_grip=candidate
+ candidate=Path(linen)
+ lm=json.loads((candidate/"w28s-manifest.json").read_text(encoding="utf8"))
+ assert lm["status"]=="ART_HOLD_W28S_LINEN_TRIAL" and lm["source_sha256"]==rm["glb_sha256"]
+ assert lm["source_audit_sha256"]==sha(prior_grip/"w28r-glb-audit.json")
+ assert lm["geometry_animation_unchanged"] is True and lm["source_samples"]==561
+ assert lm["house_sha256"]==m["house_sha256"] and len(lm["material_changes"])==3
+ asset=candidate/"w28s-actor.glb"
+ assert sha(asset)==lm["glb_sha256"]=="52053a9553e195fd32d413b49509ab9360af2810148c570c73464c25f6b7943d" and asset.stat().st_size==lm["glb_bytes"]
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
-assert sum((close,shoulder_compare,grip_compare))<=1
-assert not shoulder or shoulder_compare or grip_compare
-assert not grip or grip_compare
-out=(candidate or root)/("visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+linen_compare=os.environ.get("HOREB_VISUAL_LINEN_COMPARE")=="1"
+assert sum((close,shoulder_compare,grip_compare,linen_compare))<=1
+assert not shoulder or shoulder_compare or grip_compare or linen_compare
+assert not grip or grip_compare or linen_compare
+assert not linen or linen_compare
+out=(candidate or root)/("visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -125,7 +139,7 @@ views=[
 if gaze: views=[v for v in views if v[0] in ("face-before","face-peak")]
 elif candidate: views=[v for v in views if v[0] in ("whole-peak","face-peak")]
 if close:views=[("frontal-peak",60,None,None,82),("threequarter-peak",60,None,None,82)]
-if blink and not shoulder_compare and not grip_compare:
+if blink and not shoulder_compare and not grip_compare and not linen_compare:
  assert close
  views=[("blink-open-before",10,None,None,82),("blink-closed",12,None,None,82),("blink-open-after",16,None,None,82)]
 if shoulder_compare:
@@ -134,6 +148,9 @@ if shoulder_compare:
 if grip_compare:
  assert shoulder
  views=[("grip-peak",60,(-.36,-.82,1.58),(-.12,-.34,1.19),75)]
+if linen_compare:
+ assert grip
+ views=[("whole-peak",60,(-.25,-2.05,1.63),(-.14,-.13,.94),30),("upper-peak",60,(-.85,-1.65,1.49),(-.44,-.32,1.23),49)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
