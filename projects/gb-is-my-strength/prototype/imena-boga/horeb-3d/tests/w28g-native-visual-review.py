@@ -141,6 +141,17 @@ if eye_lookdev:
  assert dm["all_geometry_animation_unchanged"] is True and dm["source_samples"]==561 and dm["unchanged_views"]==310
  asset=candidate/"w29d-actor.glb"
  assert sha(asset)==dm["glb_sha256"]=="18cb0e76a90a272df9a080c0145f8d3465e3ab13e817c52f7deb291cfe655c44" and asset.stat().st_size==dm["glb_bytes"]
+head_linen=os.environ.get("HOREB_W30A_OUTPUT")
+head_compare=os.environ.get("HOREB_VISUAL_HEAD_LINEN_COMPARE")=="1"
+if head_linen:
+ assert eye_lookdev and head_compare
+ candidate=Path(head_linen)
+ hm=json.loads((candidate/"w30a-manifest.json").read_text(encoding="utf8"))
+ assert hm["status"]=="ART_HOLD_W30A_HEAD_LINEN_TRIAL" and hm["source_sha256"]==dm["glb_sha256"]
+ assert hm["only_head_linen_positions_normals_changed"] is True and hm["unchanged_views"]==307
+ asset=candidate/"w30a-actor.glb"
+ assert sha(asset)==hm["glb_sha256"]=="85c24882620b35154ac9e333c6d37406b457d4d3b05aa07fbc024812b5f0ac35"
+assert not head_compare or eye_lookdev
 close=os.environ.get("HOREB_VISUAL_FACE_CLOSE")=="1"
 shoulder_compare=os.environ.get("HOREB_VISUAL_SHOULDER_COMPARE")=="1"
 grip_compare=os.environ.get("HOREB_VISUAL_GRIP_COMPARE")=="1"
@@ -155,7 +166,7 @@ assert not skin or brow_compare
 assert not lashes or brow_compare
 assert not compact or brow_compare
 assert not eye_lookdev or brow_compare
-out=(candidate or root)/("visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
+out=(candidate or root)/("visual-head-linen" if head_compare else "visual-brows" if brow_compare else "visual-linen" if linen_compare else "visual-grip" if grip_compare else "visual-shoulder" if shoulder_compare else "visual-face-close" if close else "visual-review");assert not out.exists();out.mkdir()
 bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False)
 scene=bpy.context.scene;scene.render.fps=24;scene.render.fps_base=1
 prior=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(asset))
@@ -221,6 +232,10 @@ if linen_compare:
 if brow_compare:
  assert linen
  views=[("frontal-peak",60,None,None,82),("frontal-blink",12,None,None,82)]
+if head_compare:
+ assert brow_compare
+ scene.cycles.samples=8;scene.render.resolution_x=480;scene.render.resolution_y=360
+ views=[("frontal-peak",60,None,None,56),("threequarter-peak",60,None,None,56)]
 for name,frame,eye,target,lens in views:
  scene.frame_set(frame);bpy.context.view_layer.update()
  if blink:
@@ -237,7 +252,7 @@ for name,frame,eye,target,lens in views:
   front=(transform.to_3x3()@Vector((0,-1,0))).normalized()
   up=(transform.to_3x3()@Vector((0,0,1))).normalized()
   side=(transform.to_3x3()@Vector((1,0,0))).normalized()
-  direction=(front+(.40*side if name.startswith("threequarter") else Vector((0,0,0)))).normalized()
+  direction=(front+((.85 if head_compare else .40)*side if name.startswith("threequarter") else Vector((0,0,0)))).normalized()
   eye=focus+direction*.66+up*.025;target=focus
  cam.location=eye;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat("-Z","Y").to_euler();cam.data.lens=lens
  scene.render.filepath=str(out/(name+".png"))
