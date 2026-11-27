@@ -69,6 +69,83 @@ def contact_geometry(side):
  thumb=Vector(r["thumb"]["rim_normal"])
  r["thumb_opposition_dots"]={d:thumb.dot(Vector(r[d]["rim_normal"])) for d in digits[1:]}
  return r
+replay=os.environ.get("HOREB_W34I_REPLAY")
+if replay:
+ q=json.loads(Path(replay).read_text());assert q["actor_sha256"]==h and q["final_clear"]
+ for side in ("l","r"):apply(side,q["sides"][side]["best"]["params"])
+ assert clear(full())
+ if os.environ.get("HOREB_W34I_SUPPORT")=="1":
+  # Small forearm adjustments around the accepted pose, coupled with
+  # wrist/thumb orientation. Corrective is NOT presumed safe away from
+  # its original pose: every accepted improvement must pass full().
+  fore={side:bones["lowerarm_"+side].rotation_quaternion.copy() for side in ("l","r")}
+  def apply_support(side,v):
+   n="lowerarm_"+side
+   delta=Quaternion((1,0,0),math.radians(v[12]))@Quaternion((0,1,0),math.radians(v[13]))@Quaternion((0,0,1),math.radians(v[14]))
+   bones[n].rotation_quaternion=fore[side]@delta
+   bpy.context.view_layer.update()
+   apply(side,v[:12])
+  def assess_support(side,v):
+   apply_support(side,v)
+   geo=contact_geometry(side)
+   thumb=geo["thumb"]["mean5_mm"]
+   # Surface-normal and gap proxy: favour actual nearby underside
+   # support and an opposed thumb on a different face of the rim.
+   fs=[geo[d] for d in digits[1:]]
+   support=sorted(max(0,x["mean5_mm"]-3)**2+150*max(0,x["rim_normal"][2]+.35)**2 for x in fs)
+   opp=min(300*max(0,geo["thumb_opposition_dots"][d]+.6)**2+max(0,geo[d]["mean5_mm"]-3)**2 for d in digits[1:])
+   cost=3*max(0,thumb-3)**2+sum(support[:2])+.25*sum(support[2:])+opp+.05*sum(x*x for x in v[12:])
+   return {"params":list(v),"geometry":geo,"cost":cost}
+  stats={}
+  for side in ("l","r"):
+   v=q["sides"][side]["best"]["params"]+[0,0,0];assert len(v)==15
+   initial=assess_support(side,v);best=initial;count=1;valid=1
+   # No more than 60 bounded local trials per hand.
+   for step in (4,2):
+    for i in (12,13,14,0,1,2,3,4,5,10,11,6,7,8,9):
+     winner=best
+     for sign in (-1,1):
+      w=best["params"].copy();lo,hi=((-6,6) if i>=12 else bounds[i] if i<len(bounds) else (-25,25))
+      w[i]=max(lo,min(hi,w[i]+sign*step))
+      if w==best["params"]:continue
+      trial=assess_support(side,w);count+=1
+      if trial["cost"]>=winner["cost"]:continue
+      audit=full()
+      if clear(audit):winner=trial;valid+=1
+     best=winner
+    print("W34I_SUPPORT_STEP",side,step,json.dumps({"cost":best["cost"],"thumb_mm":best["geometry"]["thumb"]["mean5_mm"]}),flush=True)
+   apply_support(side,best["params"])
+   stats[side]={"initial":initial,"best":best,"evaluations":count,"accepted_improvements":valid-1}
+  audit=full();assert clear(audit)
+  final={"status":"ART_HOLD_STATIC_SUPPORT_PROXY","actor_sha256":h,"source_report_sha256":hashlib.sha256(Path(replay).read_bytes()).hexdigest(),"sides":stats,"final_audit":audit,"final_clear":True,"quats":{n:list(bones[n].rotation_quaternion) for n in names+["lowerarm_l","lowerarm_r"]},"limitations":["Static pose only; nearest rim normals are not force closure or verified load bearing. Small forearm rotations were independently checked with the fixed corrective; not a new animation."]}
+  (out/"w34i-support.json").write_text(json.dumps(final,indent=2))
+  print("W34I_SUPPORT_PASS",json.dumps({side:{"evaluations":r["evaluations"],"accepted":r["accepted_improvements"],"cost":r["best"]["cost"],"gaps_mm":{d:r["best"]["geometry"][d]["mean5_mm"] for d in digits},"opposition":r["best"]["geometry"]["thumb_opposition_dots"],"normal_z":{d:r["best"]["geometry"][d]["rim_normal"][2] for d in digits}} for side,r in stats.items()}),flush=True)
+ # Snapshot evaluated geometry before rendering (no animation re-evaluation).
+ scene=bpy.context.scene
+ rot,off,basket=ns["rot"],ns["off"],ns["basket"]
+ transform=rot.to_4x4();transform.translation=off
+ for o in list(scene.objects):o.hide_render=True
+ for o in list(scene.objects):
+  p=o.parent
+  while p and p!=basket:p=p.parent
+  if p==basket and o.type=="MESH":o.hide_render=False
+ for o in meshes:
+  ev=o.evaluated_get(bpy.context.evaluated_depsgraph_get())
+  m=bpy.data.meshes.new_from_object(ev)
+  c=bpy.data.objects.new("W34i_review_"+o.name,m);scene.collection.objects.link(c);c.matrix_world=transform@ev.matrix_world
+ scene.render.engine="BLENDER_WORKBENCH"
+ scene.render.resolution_x=720;scene.render.resolution_y=480;scene.render.resolution_percentage=100
+ scene.display.shading.light="STUDIO";scene.display.shading.color_type="MATERIAL";scene.display.shading.show_cavity=True;scene.display.shading.cavity_type="BOTH";scene.display.shading.show_shadows=True
+ cam=bpy.data.objects.new("W34i_camera",bpy.data.cameras.new("W34i_camera"));scene.collection.objects.link(cam);scene.camera=cam;cam.data.type="ORTHO";cam.data.ortho_scale=.34
+ geo={side:contact_geometry(side) for side in ("l","r")}
+ for side,sign in (("l",1),("r",-1)):
+  center=sum((Vector(geo[side][d]["skin_point"]) for d in digits),Vector())/5
+  for label,direction in (("top",Vector((-.38,sign*.40,.85))),("inside",Vector((.65,sign*.25,.45)))):
+   cam.location=center+direction.normalized()*.8;cam.rotation_euler=(center-cam.location).to_track_quat("-Z","Y").to_euler()
+   scene.render.filepath=str(out/f"w34i-{side}-{label}.png");bpy.ops.render.render(write_still=True)
+ (out/"w34i-visual-contact.json").write_text(json.dumps(geo,indent=2))
+ print("W34I_RENDER_PASS",flush=True)
+ raise SystemExit(0)
 results={};params={}
 for side in ("l","r"):
  v=(refine["sides"][side]["best"]["params"]+[0,0]) if refine else [0]*10
