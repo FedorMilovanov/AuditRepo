@@ -29,6 +29,25 @@ projects/gb-is-my-strength/prototype/study-panel-lab/
 - Манифест проверки: TRANSFER_MANIFEST.json.
 - Не переносятся автоматически: node_modules, dist, временные кэши и локальные файлы других агентов, отсутствовавшие в исходном Git-коммите.
 
+## Воспроизводимость после переноса — сверка 2026-11-27
+
+Проверка Git trees: все 65 исходных blob SHA совпадают с Product `e4eb0660a1f25642f7a7f010989112673a795b55` и AuditRepo transfer `62c0978246c3cfd4db7d77e01b09ea235b2be6be`; 43 PNG сохранены, размеры 65 записей исходного manifest совпадают. В самой лаборатории 67 файлов (65 оригиналов + transfer manifest + данный handoff). Эта проверка не заменяет clean build.
+
+**Это не автономный архив всех входных данных.** Оригинальный README описывает прежнее расположение в Product; `build.mjs` читает реальную статью, словарь, Bible corpus, CSS, шрифты и series data из внешнего checkout. Для исторического воспроизведения использовать отдельный read-only checkout точного Product commit `e4eb0660a1f25642f7a7f010989112673a795b55`, явно задав `GB_SOURCE_ROOT` на него. Не использовать текущий Product main в качестве неявного источника: на `3ce78622` уже отличаются `css/site.css`, `css/reader-preferences.css`, `css/floating-cluster.css`, `ReaderRail.astro` и `hardTextsSeriesConfig.ts` из 12 проверенных обязательных путей. Привязка к текущему Product является новой адаптацией, а не воспроизведением старого результата.
+
+Из каталога лаборатории AuditRepo после проверки SHA внешнего checkout, прав на материалы и отдельного временного окружения:
+
+```bash
+export GB_SOURCE_ROOT=/absolute/path/to/isolated-product-checkout
+git -C "$GB_SOURCE_ROOT" rev-parse HEAD
+# Expected: e4eb0660a1f25642f7a7f010989112673a795b55
+npm ci --no-audit --no-fund
+npm run build
+npm start
+```
+
+Команды выше — маршрут воспроизведения, не утверждение о повторном успешном запуске. `build.mjs` пишет восстановимые локальные `data/`, `vendor/` и `index.html`; не коммитить их и не переносить в Product. Сервер слушает 0.0.0.0 и browser helper использует старые общие /tmp-пути, включая возможность импорта /tmp/launch-helper.js. Запускать только в изолированной среде без чужих процессов/профилей/непроверенного helper, без открытого внешнего доступа. Не применять legacy NSS/LD_PRELOAD recipe на рабочем компьютере владельца. Старый Chromium-only аудит не является WebKit или визуальной приёмкой. Clean build и новый browser QA остаются NOT RUN; исходные 65 файлов и manifest не переписывались ради этого уточнения.
+
 ## Разрешённая интеграция
 
 1. Получить точный HEAD/SHA и PR владельца актуальной унификации Reader.
