@@ -7,11 +7,29 @@ from mathutils import Vector,Matrix,Quaternion
 out=Path(os.environ["HOREB_W34A_OUTPUT"]);root=Path(os.environ["HOREB_W34F_OUTPUT"])
 # Fail before the imported probe can write any existing evidence.
 actor_pole=os.environ.get("HOREB_W34K_ACTOR_POLE")=="1"
-if actor_pole:
+foot_witness=os.environ.get("HOREB_W34L_FOOT_WITNESS")
+if actor_pole or foot_witness:
  assert os.environ.get("HOREB_W34J_LONG_SIDE")=="1" and os.environ.get("HOREB_W34J_LEAN")=="1"
  assert not any((out/name).exists() for name in ("w34j-shell-approach.json","w34a-stance.json","w34a-static-full.json")), "Use a fresh evidence directory"
 asset=root/"w34f-actor.glb";h=hashlib.sha256(asset.read_bytes()).hexdigest()
 assert h=="587c7b0b10d38207a3a305ba71557f8f4ba82abd2ca21fc3389aba5e52009dcf"
+grounded={}
+if foot_witness:
+ witness_bytes=Path(foot_witness).read_bytes()
+ witness=json.loads(witness_bytes)
+ assert witness["status"]=="ART_HOLD_FOOT_SURFACE_WITNESS"
+ assert witness["actor_sha256"]==h
+ assert witness["house_sha256"]==hashlib.sha256((Path(os.environ["HOREB_W28_HOUSE_OUTPUT"])/"w28-house.glb").read_bytes()).hexdigest()
+ assert abs(witness["frame_time_s"]-1/24)<1e-6 and max(witness["shoulder_reference_errors_mm"])<.1
+ for row in witness["rows"]:
+  if row["yaw_deg"]!=180:continue
+  trial=row["grounded_trial"];before=row["offset"];after=trial["offset"]
+  assert before[:2]==after[:2] and abs(before[2]-.015)<1e-7
+  assert abs((before[2]-after[2])*1000-min(f["minimum_gap_mm"] for f in row["feet"].values()))<.001
+  assert set(trial["feet"])=={"l","r"}
+  assert all(f["below_floor_vertices"]==0 and f["within_2mm_vertices"]>0 and abs(f["minimum_gap_mm"])<.5 for f in trial["feet"].values())
+  grounded[(row["yaw_deg"],*before[:2])]=after[2]
+ assert set(grounded)=={(180,.35,-.96),(180,.35,-1.04)}
 os.environ.update(HOREB_W34A_IK="audit",HOREB_W34B_HINGE="1",HOREB_W34A_STANCE_X="-.52",HOREB_W34B_DIAG="0")
 ns=runpy.run_path(str(Path(__file__).with_name("probe_w34a_stance.py")),init_globals={"candidate_asset":asset})
 rig,body,meshes,bones,full,eval_mesh,solve,props,safe,p,groups=[ns[k] for k in ("rig","body","meshes","bones","full","eval_mesh","solve","props","safe","p","groups")]
@@ -74,7 +92,8 @@ def setup(lean):
    ns["rotate"](n,Quaternion((1,0,0),math.radians(-lean/2)))
 for yaw,sx,sy,lean in placements:
  g["rot"]=Matrix.Rotation(math.radians(yaw),3,"Z");g["inv"]=g["rot"].transposed()
- g["off"]=Vector((sx,sy,.015))
+ stance_z=grounded[(yaw,sx,sy)] if foot_witness else .015
+ g["off"]=Vector((sx,sy,stance_z))
  setup(lean)
  neutral=full()
  if not long_side:assert not neutral["prop_hits"]
@@ -109,7 +128,7 @@ for yaw,sx,sy,lean in placements:
     targets[side]={"shell_point":list(hit),"shell_normal":list(n),"wrist":list(wrist)}
     if pole is not None:targets[side]["elbow_pole_world"]=list(pole)
    if not ok:
-    rows.append({"stance_x":sx,"stance_y":sy,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":False,"reason":reason});continue
+    rows.append({"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":False,"reason":reason});continue
    pts,fs=eval_mesh(body)
    for side in ("l","r"):
     vals=[shell.find_nearest(pts[i]) for i in landmarks[side]["ids"]]
@@ -121,7 +140,7 @@ for yaw,sx,sy,lean in placements:
      targets[side]["palm_wicker_min_mm"]=min(gaps)*1000
     targets[side]["palm_normal_dot"]=float((-1 if side=="l" else 1)*(hand_basis(side).col[2]).dot(Vector(targets[side]["shell_normal"])))
    a=full()
-   row={"stance_x":sx,"stance_y":sy,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":True,"targets":targets,"audit":a,"quats":{n:list(bones[n].rotation_quaternion) for n in ("spine_01","spine_02","upperarm_l","lowerarm_l","hand_l","upperarm_r","lowerarm_r","hand_r")}}
+   row={"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":True,"targets":targets,"audit":a,"quats":{n:list(bones[n].rotation_quaternion) for n in ("spine_01","spine_02","upperarm_l","lowerarm_l","hand_l","upperarm_r","lowerarm_r","hand_r")}}
    rows.append(row)
 def clear(a):return not a["prop_hits"] and not a["skin_pairs"] and not any(a["skin_cloth"].values()) and not any(a["cloth_self"].values()) and not any(a["garment_pairs"].values())
 reachable=[r for r in rows if r["reachable"]]
@@ -130,7 +149,7 @@ accepted=[r for r in propclear if clear(r["audit"])]
 def rank(r):
  a=r["audit"];return 100000*len(a["prop_hits"])+a["skin_pairs"]+sum(a["skin_cloth"].values())+sum(a["cloth_self"].values())+sum(a["garment_pairs"].values())+sum(t["palm_mean_mm"] for t in r["targets"].values())
 best=sorted(reachable,key=rank)[:3]
-report={"actor_relative_elbow_pole":actor_pole,"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof."]}
+report={"foot_witness_sha256":hashlib.sha256(witness_bytes).hexdigest() if foot_witness else None,"actor_relative_elbow_pole":actor_pole,"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof."]}
 (out/"w34j-shell-approach.json").write_text(json.dumps(report,indent=2))
 print("W34J_SHELL",json.dumps({k:report[k] for k in ("tested","reachable","prop_clear","fully_clear","table_base_gap_mm","best")}),flush=True)
 # Test a tabletop tip geometry only: a pivot around a far-side bottom
@@ -166,7 +185,7 @@ if os.environ.get("HOREB_W34J_RENDER")=="1":
  assert lean_trial and best
  row=best[0]
  g["rot"]=Matrix.Rotation(math.radians(row["yaw_deg"]),3,"Z");g["inv"]=g["rot"].transposed()
- g["off"]=Vector((row["stance_x"],row["stance_y"],.015))
+ g["off"]=Vector((row["stance_x"],row["stance_y"],row["stance_z"]))
  reset()
  for n,q in row["quats"].items():bones[n].rotation_quaternion=Quaternion(q)
  bpy.context.view_layer.update()
