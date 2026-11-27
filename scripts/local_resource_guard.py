@@ -268,6 +268,7 @@ class Job:
         self.api = api
         self.handle = api.require(api.k.CreateJobObjectW(None, None))
         self.process = None
+        self.prohibited_process = None
         self.pid = None
         try:
             limits = ExtendedLimit()
@@ -290,6 +291,9 @@ class Job:
         if self.process:
             self.api.k.CloseHandle(self.process)
             self.process = None
+        if self.prohibited_process:
+            self.api.k.CloseHandle(self.prohibited_process)
+            self.prohibited_process = None
 
     def start(self, command: list[str], cwd: Path, log) -> int:
         import msvcrt
@@ -370,8 +374,12 @@ class Job:
         raise RuntimeError("owned job process list too large or unstable")
 
     def prohibited_child(self) -> bool:
+        if self.prohibited_process:
+            return True
         for pid in self.process_ids():
-            h = self.api.k.OpenProcess(0x1000, False, pid)  # QUERY_LIMITED_INFORMATION
+            # Keep a synchronizable handle to the exact confirmed member,
+            # not a PID that could be reused during termination.
+            h = self.api.k.OpenProcess(0x101000, False, pid)  # SYNCHRONIZE | QUERY_LIMITED_INFORMATION
             if not h:
                 error = C.get_last_error()
                 if pid in self.process_ids():
@@ -390,9 +398,12 @@ class Job:
                         raise C.WinError(error)
                     continue
                 if prohibited_image(buf.value):
+                    self.prohibited_process = h
+                    h = None  # ownership transferred to Job until exit witness
                     return True
             finally:
-                self.api.k.CloseHandle(h)
+                if h:
+                    self.api.k.CloseHandle(h)
         return False
 
     def exited(self, ms: int) -> bool:
@@ -412,9 +423,15 @@ class Job:
         return True
 
     def stop(self) -> bool:
+        end = time.monotonic() + 5.0
         if self.active():
             self.api.require(self.api.k.TerminateJobObject(self.handle, 1))
-        return self.wait_empty(5.0)
+        # Job accounting reaching zero does not independently witness the
+        # signaled state of the exact stopped root and detected child.
+        for handle in (self.process, self.prohibited_process):
+            if handle and self.api.wait(handle, max(0, int((end - time.monotonic()) * 1000))) != WAIT_OBJECT_0:
+                return False
+        return self.wait_empty(max(0.0, end - time.monotonic()))
 
 
 def run_owned_job(api: Windows, command: list[str], cwd: Path, log,
