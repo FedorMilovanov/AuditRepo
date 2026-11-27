@@ -8,7 +8,8 @@ out=Path(os.environ["HOREB_W34A_OUTPUT"]);root=Path(os.environ["HOREB_W34F_OUTPU
 # Fail before the imported probe can write any existing evidence.
 actor_pole=os.environ.get("HOREB_W34K_ACTOR_POLE")=="1"
 foot_witness=os.environ.get("HOREB_W34L_FOOT_WITNESS")
-if actor_pole or foot_witness:
+room_audit=os.environ.get("HOREB_W34N_ROOM_AUDIT")=="1"
+if actor_pole or foot_witness or room_audit:
  assert os.environ.get("HOREB_W34J_LONG_SIDE")=="1" and os.environ.get("HOREB_W34J_LEAN")=="1"
  assert not any((out/name).exists() for name in ("w34j-shell-approach.json","w34a-stance.json","w34a-static-full.json")), "Use a fresh evidence directory"
 asset=root/"w34f-actor.glb";h=hashlib.sha256(asset.read_bytes()).hexdigest()
@@ -34,6 +35,45 @@ os.environ.update(HOREB_W34A_IK="audit",HOREB_W34B_HINGE="1",HOREB_W34A_STANCE_X
 ns=runpy.run_path(str(Path(__file__).with_name("probe_w34a_stance.py")),init_globals={"candidate_asset":asset})
 rig,body,meshes,bones,full,eval_mesh,solve,props,safe,p,groups=[ns[k] for k in ("rig","body","meshes","bones","full","eval_mesh","solve","props","safe","p","groups")]
 g=eval_mesh.__globals__
+# W34n: keep the original 98 props (and basket ray trees) unchanged.
+# Audit all remaining imported meshes separately, including floor contacts.
+room_inventory=[]
+floor_names={"Room_floor_earthen","Courtyard_earthen_ground"}
+if room_audit:
+ from mathutils.bvhtree import BVHTree
+ prop_names={n for n,_,_,_ in props}
+ scene_meshes=[o for o in ns["imported"] if o.type=="MESH"]
+ assert len(prop_names)==len(props)==98
+ assert len({o.name for o in scene_meshes})==len(scene_meshes)
+ assert prop_names<={o.name for o in scene_meshes}
+ for o in scene_meshes:
+  if o.name in prop_names:continue
+  # Exact world-space bounds, not a local-space box or object origin.
+  pts=[o.matrix_world@v.co for v in o.data.vertices]
+  assert pts and len(o.data.polygons)>0,o.name
+  lo=tuple(min(v[k] for v in pts) for k in range(3));hi=tuple(max(v[k] for v in pts) for k in range(3))
+  room_inventory.append({"object":o,"lo":lo,"hi":hi,"tree":None})
+ assert len(room_inventory)+len(props)==len(scene_meshes)
+ assert floor_names<={r["object"].name for r in room_inventory}
+ original_full=full
+ def full():
+  a=original_full()
+  a["room_surface_hits"]=[];a["floor_surface_hits"]=[]
+  for o in meshes:
+   pts,faces=eval_mesh(o)
+   lo=tuple(min(v[k] for v in pts) for k in range(3));hi=tuple(max(v[k] for v in pts) for k in range(3))
+   candidates=[r for r in room_inventory if all(lo[k]<=r["hi"][k] and hi[k]>=r["lo"][k] for k in range(3))]
+   if not candidates:continue
+   tree=BVHTree.FromPolygons(pts,faces)
+   for r in candidates:
+    obj=r["object"]
+    if r["tree"] is None:
+     r["tree"]=BVHTree.FromPolygons([obj.matrix_world@v.co for v in obj.data.vertices],[tuple(f.vertices) for f in obj.data.polygons])
+    pairs=tree.overlap(r["tree"])
+    if pairs:
+     key="floor_surface_hits" if obj.name in floor_names else "room_surface_hits"
+     a[key].append([o.name,obj.name,len(pairs)])
+  return a
 tunic=next(o for o in meshes if o.name=="W28e_tailored_linen")
 for o in (body,tunic):
  o.data.shape_keys.animation_data_clear()
@@ -96,6 +136,7 @@ for yaw,sx,sy,lean in placements:
  g["off"]=Vector((sx,sy,stance_z))
  setup(lean)
  neutral=full()
+ neutral_room={k:neutral[k] for k in ("room_surface_hits","floor_surface_hits")} if room_audit else {}
  if not long_side:assert not neutral["prop_hits"]
  for lateral,z in ((.17,1.015),(.22,1.055),(.27,1.095)):
   for direction in ((-1,) if lean_trial else (-1,1)):
@@ -128,7 +169,7 @@ for yaw,sx,sy,lean in placements:
     targets[side]={"shell_point":list(hit),"shell_normal":list(n),"wrist":list(wrist)}
     if pole is not None:targets[side]["elbow_pole_world"]=list(pole)
    if not ok:
-    rows.append({"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":False,"reason":reason});continue
+    rows.append({"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],**neutral_room,"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":False,"reason":reason});continue
    pts,fs=eval_mesh(body)
    for side in ("l","r"):
     vals=[shell.find_nearest(pts[i]) for i in landmarks[side]["ids"]]
@@ -140,16 +181,18 @@ for yaw,sx,sy,lean in placements:
      targets[side]["palm_wicker_min_mm"]=min(gaps)*1000
     targets[side]["palm_normal_dot"]=float((-1 if side=="l" else 1)*(hand_basis(side).col[2]).dot(Vector(targets[side]["shell_normal"])))
    a=full()
-   row={"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":True,"targets":targets,"audit":a,"quats":{n:list(bones[n].rotation_quaternion) for n in ("spine_01","spine_02","upperarm_l","lowerarm_l","hand_l","upperarm_r","lowerarm_r","hand_r")}}
+   row={"stance_x":sx,"stance_y":sy,"stance_z":stance_z,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],**neutral_room,"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":True,"targets":targets,"audit":a,"quats":{n:list(bones[n].rotation_quaternion) for n in ("spine_01","spine_02","upperarm_l","lowerarm_l","hand_l","upperarm_r","lowerarm_r","hand_r")}}
    rows.append(row)
-def clear(a):return not a["prop_hits"] and not a["skin_pairs"] and not any(a["skin_cloth"].values()) and not any(a["cloth_self"].values()) and not any(a["garment_pairs"].values())
+def clear(a):return not a["prop_hits"] and not a.get("room_surface_hits") and not a.get("floor_surface_hits") and not a["skin_pairs"] and not any(a["skin_cloth"].values()) and not any(a["cloth_self"].values()) and not any(a["garment_pairs"].values())
 reachable=[r for r in rows if r["reachable"]]
 propclear=[r for r in reachable if not r["audit"]["prop_hits"]]
 accepted=[r for r in propclear if clear(r["audit"])]
+roomclear=[r for r in propclear if not r["audit"]["room_surface_hits"]] if room_audit else None
 def rank(r):
- a=r["audit"];return 100000*len(a["prop_hits"])+a["skin_pairs"]+sum(a["skin_cloth"].values())+sum(a["cloth_self"].values())+sum(a["garment_pairs"].values())+sum(t["palm_mean_mm"] for t in r["targets"].values())
+ a=r["audit"];score=100000*len(a["prop_hits"])+a["skin_pairs"]+sum(a["skin_cloth"].values())+sum(a["cloth_self"].values())+sum(a["garment_pairs"].values())+sum(t["palm_mean_mm"] for t in r["targets"].values())
+ return (len(a["prop_hits"]),len(a["room_surface_hits"]),len(a["floor_surface_hits"]),score) if room_audit else score
 best=sorted(reachable,key=rank)[:3]
-report={"foot_witness_sha256":hashlib.sha256(witness_bytes).hexdigest() if foot_witness else None,"actor_relative_elbow_pole":actor_pole,"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof."]}
+report={"room_audit_enabled":room_audit,"additional_room_meshes":len(room_inventory) if room_audit else None,"prop_and_nonfloor_room_clear":len(roomclear) if room_audit else None,"foot_witness_sha256":hashlib.sha256(witness_bytes).hexdigest() if foot_witness else None,"actor_relative_elbow_pole":actor_pole,"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof.","Room audit, when enabled, is sampled surface overlap only; floor hits may include intended contact and require review. No solid containment, balance or trajectory proof. When disabled, the 98-prop result excludes the remaining room."]}
 (out/"w34j-shell-approach.json").write_text(json.dumps(report,indent=2))
 print("W34J_SHELL",json.dumps({k:report[k] for k in ("tested","reachable","prop_clear","fully_clear","table_base_gap_mm","best")}),flush=True)
 # Test a tabletop tip geometry only: a pivot around a far-side bottom
