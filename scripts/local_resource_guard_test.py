@@ -8,12 +8,14 @@ import subprocess
 import sys
 import tempfile
 import time
+import threading
+from unittest.mock import Mock, patch
 import unittest
 import uuid
 
 from local_resource_guard import (
     GIB, Job, Snapshot, Windows, admission, pressure, timeout_for, lease, run_guarded,
-    WAIT_OBJECT_0, prohibited_image, EventJournal,
+    WAIT_OBJECT_0, WAIT_TIMEOUT, prohibited_image, EventJournal,
 )
 
 
@@ -56,6 +58,23 @@ class Policy(unittest.TestCase):
             self.assertEqual([x["status"] for x in rows], ["STARTED", "PASS"])
             self.assertTrue(all(x["job_id"] == "fixture" and x["utc"] for x in rows))
 
+    def test_stopped_process_identity_is_required(self):
+        # The portable mock proves a zero job count cannot hide a still
+        # unsignaled detected member; actual Windows behavior is tested below.
+        job = object.__new__(Job)
+        job.api = Mock()
+        job.handle, job.process, job.prohibited_process = 10, 11, 12
+        job.active = Mock(return_value=0)
+        job.wait_empty = Mock(return_value=True)
+        job.api.wait.side_effect = [WAIT_OBJECT_0, WAIT_TIMEOUT]
+        self.assertFalse(job.stop())
+        job.wait_empty.assert_not_called()
+        self.assertEqual([call.args[0] for call in job.api.wait.call_args_list], [11, 12])
+        job.api.wait.reset_mock(side_effect=True)
+        job.api.wait.side_effect = [WAIT_OBJECT_0, WAIT_OBJECT_0]
+        self.assertTrue(job.stop())
+        job.wait_empty.assert_called_once()
+
     def test_deadlines(self):
         self.assertEqual(timeout_for("browser", None, None), 600)
         self.assertEqual(timeout_for("build", None, None), 1200)
@@ -85,6 +104,27 @@ class WindowsIntegration(unittest.TestCase):
 
     def test_live_counters(self):
         self.assertTrue(self.api.snapshot((self.root,)).valid())
+
+    def test_log_handle_rundown(self):
+        path = self.root / "held.log"
+        path.write_bytes(b"fixture")
+        with path.open("rb") as held:
+            self.assertFalse(self.api.wait_log_released(path, seconds=0.05))
+            timer = threading.Timer(0.20, held.close)
+            timer.start()
+            try:
+                self.assertTrue(self.api.wait_log_released(path, seconds=2.0))
+            finally:
+                timer.join(timeout=2.0)
+        path.unlink()
+
+    def test_cleanup_hold_is_not_pass(self):
+        with patch.object(self.api, "wait_log_released", return_value=False):
+            r = self.run_child("print('ok')", "cleanup-hold.log")
+        self.assertEqual(r["status"], "CLEANUP_HOLD", r)
+        self.assertEqual(r["prior_status"], "PASS")
+        self.assertFalse(r["cleanup_verified"])
+        self.assertEqual(r["exit"], 27)
 
     def test_success_nonzero_and_log(self):
         r = self.run_child("print('witness', flush=True)", "success.log")
@@ -127,6 +167,10 @@ class WindowsIntegration(unittest.TestCase):
         r = self.run_child(code, "policy-stop.log")
         self.assertEqual(r["status"], "POLICY_STOP", r)
         self.assertTrue(r["cleanup_verified"])
+        # Separate real executable-image release witness. No access-denied
+        # suppression/retry and no deletion of a non-fixture executable.
+        binary.unlink()
+        self.assertFalse(binary.exists())
 
     def test_orphan_is_not_pass(self):
         code = "import subprocess,sys; subprocess.Popen([sys.executable,'-c','import time; time.sleep(120)'])"
