@@ -858,3 +858,15 @@ In all five, under print emulation after print generation, **zero** `[data-print
 **Boundaries preserved:** this confirms restoration of the identified encoding-loss class only. Publication Research scaffold leakage in Baptist research-status panels, rights/publication dates and potential new content issues are independently owned and **not closed here**. Also, this is source/live text verification, not a full manual art-direction review.
 
 **Arithmetic:** direct 12→11, total 45→44; 8 verified improvements + 1 narrowed residual + 24 system lanes unchanged; 0 closed rows remain in active MASTER. Prior row recoverable from Git history and Product PRs. No new Product change or issue created by this AuditRepo wave.
+
+### 2026-11-22 — wave 62: superseded G3 historical sticky selector retired
+
+**Disposition:** `GBS-JOURNAL-STICKY-NAV-SCROLL-OWNER` — **STALE / SUPERSEDED IDENTIFIER**, not `FIXED-CURRENT`. Its old October browser/root-cause evidence remains preserved in source AuditRepo reports and Git history.
+
+The old finding asserts an offscreen `.dossier-nav` after a `#finance` jump and proposes an old-body overflow scroll-owner correction. Exact current Product main `274c3a85d525b0f92640ed569256416a732f3aae` renders **no `.dossier-nav`** in G3 (`G3Dossier.astro` blob `6358fdb25d61fd7dd5c568d6984a740058def736`); the active G3 PR #2357 also has **zero** instances (component blob `7ff76573b36ab2f7a76a6946337e983133cb65a0`). Navigation is now owned by `JournalContents.astro` / `.je-editorial-rail` (shared CSS blob `09fe0c7384a2492b3b135bffa2804824c6cb70f6`).
+
+**No false closure:** this does **not** prove current sticky positioning is correct; no current desktop/scroll-ancestor reproduction is asserted. Old `.dossier-nav` repair is inappropriate for new DOM. G3 browser CI `45050100913` passed Chromium/WebKit 32 mobile cases each and 24 PDFs, but Firefox did not pass; newer head `1472ed29` is undergoing fresh checks. Shared Chrome readability remains separately recorded in Product #2359. Future evidence for `.je-editorial-rail` must be admitted separately if a real current defect reproduces.
+
+**Evidence:** [W62 source-current verification](../reverify/2026-11-22-g3-journal-sticky-nav-supersession-w62.md) and original `../incoming/arena-full-spectrum-audit/2026-10-14/REPORT.md` §23.3.
+
+**Arithmetic:** one retired selector-specific direct row: active **45 → 44**, direct **11 → 10**, improvements **8**, residuals **1**, systems **25**, decisions **0**. No Product mutation by this AuditRepo package.

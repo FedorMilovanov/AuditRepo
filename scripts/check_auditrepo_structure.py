@@ -5,7 +5,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT_REQUIRED = (
     'README.md', 'PROJECT_META.yml', 'DOC_MAP.md', 'WORK_QUEUE.md',
-    'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive',
+    'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'legacy', 'archive',
     'verified/MASTER_BUG_MATRIX.md', 'verified/SYSTEM_THEMES.md',
     'verified/CLOSURE_LEDGER.md',
 )
@@ -14,11 +14,11 @@ PROJECT_REQUIRED = (
 def structure_errors(root: Path) -> list[str]:
     errors: list[str] = []
     projects = root / 'projects'
-    if not (root / 'README.md').exists():
-        errors.append('Missing root README.md')
-    if not (root / 'PROJECT_REGISTRY.md').exists():
-        errors.append('Missing PROJECT_REGISTRY.md')
-    if not projects.exists():
+    if not (root / 'README.md').is_file():
+        errors.append('Missing root README.md (regular file required)')
+    if not (root / 'PROJECT_REGISTRY.md').is_file():
+        errors.append('Missing PROJECT_REGISTRY.md (regular file required)')
+    if not projects.is_dir():
         errors.append('Missing projects/ directory')
         return errors
 
@@ -26,8 +26,11 @@ def structure_errors(root: Path) -> list[str]:
         if not project.is_dir() or project.name.startswith('_'):
             continue
         for rel in PROJECT_REQUIRED:
-            if not (project / rel).exists():
-                errors.append(f'{project}: missing {rel}')
+            path = project / rel
+            expected_file = bool(Path(rel).suffix)
+            if not (path.is_file() if expected_file else path.is_dir()):
+                kind = 'file' if expected_file else 'directory'
+                errors.append(f'{project}: missing {rel} ({kind} required)')
     return errors
 
 

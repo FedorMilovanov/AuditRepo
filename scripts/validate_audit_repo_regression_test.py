@@ -166,6 +166,11 @@ def main() -> int:
         admitted_docs = run_validator(root)
         require(admitted_docs.returncode == 0, 'approved root docs rejected', admitted_docs)
 
+        # Shared workstation policy is an explicitly admitted root authority.
+        write(root / 'LOCAL_EXECUTION_RESOURCE_PROTOCOL.md', '# Local execution policy\n')
+        local_policy = run_validator(root)
+        require(local_policy.returncode == 0, 'shared local execution policy rejected', local_policy)
+
         forbidden_doc = root / 'UNREVIEWED_ROOT.md'
         write(forbidden_doc, '# Unreviewed root document\n')
         forbidden_docs = run_validator(root)

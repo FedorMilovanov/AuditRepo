@@ -1,0 +1,54 @@
+# 2026-11-18 UTC — этап 5: подтверждающий текст из «Обучение → Поиск».
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713; read-only.
+# AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor and adjacent work]
+git ls-remote origin refs/heads/main refs/heads/arena/9713b5a4-auditrepo
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main
+gh pr list -R FedorMilovanov/AuditRepo --state open --limit 45 --json number,title,headRefName,updatedAt
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 45 --json number,title,headRefName,updatedAt
+# Also read both repos' published refs/heads/arena/* via git ls-remote and their commit tip metadata via gh api.
+# Relevant neighbors: AuditRepo #562 head 0238de937 / only MASTER; #557 head 3a48c5a85 / browser docs.
+# Product #2338 head a88595600 when sampled / Journal and registries, no Learning sheet or local-search code.
+# Product #2328 merged c8e70a82f: checked actual file list, then successor main/E browser witness for QE-01.
+# Product #2332 merged 5138e7435: quiz data + generated iframe are in scope, QuizHub itself is not changed.
+# Product #1714 merged 485db8c25: accessible name only, not an indexing repair.
+# First four evidence packages: push 5a18e920b055778a714d439b2016a3cd0da04369, AuditRepo Draft #570.
+# validate and preflight succeeded on that first PR head. No merge/deploy.
+# Peer review: gh pr comment 2328 returned 'Resource not accessible by integration' (no Product comment created).
+# Wrote the same bounded note in AuditRepo: https://github.com/FedorMilovanov/AuditRepo/pull/570#issuecomment-6983861606
+
+[Reproduction]
+# Before starting, use the Stage 1 commands.log to obtain exact Product, Node and Chromium,
+# and build dist, ownership and Pagefind with GB_BUILD_INSTANT=2026-11-18T13:24:28Z.
+# PRODUCT and TOOLS are absolute paths; CHROMIUM is the executable from @sparticuz/chromium 153.0.0.
+R=$(pwd)
+D="$R/projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18"
+G="$R/projects/gb-is-my-strength/incoming/arena-quiz-source-search/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-source-search.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --version
+node --check "$G/harness/search.mjs"
+node "$D/harness/census.cjs" "$PRODUCT" "$OUT"
+(cd "$PRODUCT" && node "$G/harness/search.mjs" "$PRODUCT" "$OUT" "$CHROMIUM")
+# Optional fourth argument filters scenario name. Output in OUT only; do not overwrite saved evidence.
+# Two full runs (one fresh with installed harness): 10/10, equal census and 7 dist digests.
+# Footnote screenshot matched byte-for-byte on replay (SHA-256 dab7d526d40d084baebab70ed4ad7757d179383d863da2bda909d943e4e6bb05).
+# Quiz order is unseeded; number of previous items and seen counter may differ between runs.
+
+[Method controls]
+# Input statuses observed after the built debounce, with a clear between queries. Five cases x two profiles.
+# Visible-text evidence is an independent CSS-filtered TreeWalker read for selected blocks, not source HTML alone.
+# Corrected the early harness expectation: desktop Gill I footnote has opacity:0, not visibility:hidden.
+# Gill II caption must use the rendered wording from GillPart2ImageCorrections, not superseded inline HTML wording.
+# Prior outline census normalized hrefs to route + hash. Browser DOM actually has #odno-slovo etc.; no full-URL-selector failure.
+# Shadow comparison to GBReaderProjection.getSearchText is read-only; no edits, no fixture overrides in Product.
+# Normal pointer and keyboard events. One fresh context per run, SW blocked, external name resolution disabled.
+# Pagefind control reached real options in global modal for Грэнтем, not a claim that every phrase works on that surface.
+# Seven SHA-256s, selected landings/hit-tests, projection comparisons, same-document quiz state and zero local errors in witness.
+
+[AuditRepo admission]
+# CHANGED contains intended paths for this intake or cumulative PR diff against the AuditRepo base.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Separate commit and normal push to arena/9713b5a4-auditrepo. No merge, Product mutation or authority transition.

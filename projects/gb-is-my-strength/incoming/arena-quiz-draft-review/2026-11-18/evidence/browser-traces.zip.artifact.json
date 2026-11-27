@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "path": "projects/gb-is-my-strength/incoming/arena-quiz-draft-review/2026-11-18/evidence/browser-traces.zip",
+  "sha256": "2027768f51b37f28d7725c4f938785667a7e726c12fe229b405e00ab46186b88",
+  "sizeBytes": 6041529,
+  "purpose": "Byte-for-byte trace and supplementary frame storage for Draft #570; keep raw captures out of the review diff.",
+  "provenance": "FedorMilovanov/AuditRepo@3940425bb5371fa0590163686d04620d4d45dbe3 for original paths; three replay-b frames from the original F22 and QNL run B, pinned by their retained receipts. Audited Product main 9edef94ece08012223c1364bec7ddcd561cf5713.",
+  "retention": "Authoritative copies in this tracked ZIP; manifests and original-path reconstruction do not depend on a surviving draft branch, old commit or external storage.",
+  "sourceCommit": "3940425bb5371fa0590163686d04620d4d45dbe3",
+  "members": {
+    "projects/gb-is-my-strength/incoming/arena-quiz-accessibility/2026-11-18/evidence/keyboard-witness.json": {
+      "sha256": "0864e074792485720aacb742474457f83eecd1255e73c1542147d63fbc6cfbe2",
+      "sizeBytes": 276567
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-active-playback/2026-11-18/evidence/active-playback-witness.json": {
+      "sha256": "40777816b6c1d8f36ef1af87bc06408f7eb7b9b0aae06efc27aa7c0851669229",
+      "sizeBytes": 98950
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-editorial/2026-11-18/evidence/browser-witness.json": {
+      "sha256": "a0e9e4930fbf3778928cad714634ba855fd4a0f5756ccad5159a62ee9915afcf",
+      "sizeBytes": 39402
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-home-search-focus/2026-11-18/evidence/home-search-focus-witness-replay.json": {
+      "sha256": "07df514812407a4708e51cd30cb47148240324b554765410219d414f3a20b5fc",
+      "sizeBytes": 203528
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-home-search-focus/2026-11-18/evidence/home-search-focus-witness.json": {
+      "sha256": "cb3b2cb2ce8f6934ce7feb7ef1de7b7d6eed85c561aae59ec52de47d320b5dba",
+      "sizeBytes": 203392
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-learning/2026-11-18/evidence/browser-witness.json": {
+      "sha256": "8596d38ef85fe58a8640d4ac7bd1ff7c94da09894584aac8da95374c71aade1e",
+      "sizeBytes": 139208
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/exact-link-1440-destination.png": {
+      "sha256": "a12dbf25efbe7950d095975807eb688cee2a234003231a44e51a572d97228e6b",
+      "sizeBytes": 667254
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/library-search-navigation-witness-replay.json": {
+      "sha256": "7df9476738604b8d05e4f83025492b157949c6fd9a9ca2bb45bb019df7878352",
+      "sizeBytes": 1180338
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/library-search-navigation-witness.json": {
+      "sha256": "c2ac4611b9e3d9c236aa9ba23abc438c603dfcaf60304f65e86cfc0457fff823",
+      "sizeBytes": 1290275
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/route-draft-390-back.png": {
+      "sha256": "bc6ebb5788b08f3dc020d975cdbb18b681aa7ff1e0de9d5978ac3af50c3c9fe8",
+      "sizeBytes": 256029
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-navigation/2026-11-18/evidence/route-solo-390-selected.png": {
+      "sha256": "b136679a7020dff119fc0d4c7532da5bfb479a2e11fe9b8296dcd2d90e136fe7",
+      "sizeBytes": 105913
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-stack/2026-11-18/evidence/library-search-stack-witness-replay.json": {
+      "sha256": "33bd67d57f1d255d3577ae62e5c9cb988e7302a9f69b8b7e818bd83b09e74d84",
+      "sizeBytes": 1333330
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-stack/2026-11-18/evidence/library-search-stack-witness.json": {
+      "sha256": "5e7859b23a64291993c16a24c9aca79200e0d72f6f8905ad3f2a93e7ed54c51a",
+      "sizeBytes": 1400571
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-library-search-stack/2026-11-18/evidence/stacked-1440.png": {
+      "sha256": "e255ce5fead91aea4ea0535b5653bb8b7ec09f6dbce953585431350a04cd748c",
+      "sizeBytes": 139179
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/comment-followup-replay.json": {
+      "sha256": "5a715e5481978c2531dd88d71cb4b710138375d18401d6f27681841f3495ffc6",
+      "sizeBytes": 693560
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/comment-followup-witness.json": {
+      "sha256": "9b2c2546da50b7b74f90434723dc188367b140a9920ed0245a87c4978631e494",
+      "sizeBytes": 693421
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/distinct-1440-distinct-after-reload.png": {
+      "sha256": "355bf593cbe7f9745762b3713188081c9a8918a3ae7cc82bdf773aafba4f60a4",
+      "sizeBytes": 461715
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/note-lifecycle-witness.json": {
+      "sha256": "5fe2e6a979d7fd6bd2d2a125a28d066c55208e842bac81bb31d935c67d06bd11",
+      "sizeBytes": 26429
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/replay-b/same-390-qe-key.png": {
+      "sizeBytes": 95088,
+      "sha256": "70433edebacb082300e6ae496d32eadbc004a0cde7652b95169068de71a28e69"
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-note-lifecycle/2026-11-18/evidence/updated-note-is-absent.png": {
+      "sha256": "ec6236ae66c2eea127939b7ff6ebe3660dbbbd2a9a123c595bf4a35a618ab0e5",
+      "sizeBytes": 38543
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-notes-handoff/2026-11-18/evidence/notes-witness.json": {
+      "sha256": "18ddfdac787108056fd56704bf8c278222ef8467e96bf024246d2d63e80c5b59",
+      "sizeBytes": 64936
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-offline/2026-11-18/evidence/offline-witness.json": {
+      "sha256": "9b02ec8003f2f5c526efdf9bd08ea03305eb8a4cbe2b8284c08f5242f7e3c35f",
+      "sizeBytes": 91265
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-print-readiness/2026-11-18/evidence/print-tail-witness.json": {
+      "sha256": "abf657111129214b6677a1adbfb3adb90c383255942f464be7c10bfbab08e489",
+      "sizeBytes": 298358
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-projection/2026-11-18/evidence/quiz-projection-witness.json": {
+      "sha256": "1981806cb5f831775fe78c3744b65ced6f7f912f1fae8768b538b533c9fc8333",
+      "sizeBytes": 432293
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-reader-adaptation/2026-11-18/evidence/adaptation-witness.json": {
+      "sha256": "88ae44665a9d875d35f4b4fde4a107980b2a6589ba3832d619b7934235daf129",
+      "sizeBytes": 148845
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/offer-variation.json": {
+      "sha256": "3c61b6d1d5122203469f718d41d0e17813a66f0fdcc4156b201a47af50610c85",
+      "sizeBytes": 13589
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/pactum-1440-acted.png": {
+      "sha256": "60ae30268b49dbf6d964e9cfdceb650f2144b8896b60987a747e1fcadfed6258",
+      "sizeBytes": 650605
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/pactum-1440-offered.png": {
+      "sha256": "962bc5b0ed98828101ab6e2dd7438ed15748d5f0d9d15cb2911360050406bf44",
+      "sizeBytes": 669206
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-focus-replay.json": {
+      "sha256": "923dcdba9e233ad85eddcc318c5ac9b418f37b0ff4dc4a997b9079c590d30957",
+      "sizeBytes": 681651
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-focus-witness.json": {
+      "sha256": "1b34cc866ff87598b5d4e440f2a9dcce1f14b18a5db244aaa8dbca165d017e2b",
+      "sizeBytes": 506023
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-keyboard-replay.json": {
+      "sha256": "f6f3ea624caf37b64a0a307df02b2ba6b905f4ddcea448f1ec57b0560c9efbb8",
+      "sizeBytes": 291607
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-keyboard-witness.json": {
+      "sha256": "4338bb90690dbfd3f6e5bc7026ec7ecb83e8e61a0c8a955ddea2a62b46dda847",
+      "sizeBytes": 223800
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-push-replay.json": {
+      "sha256": "e7ae83435cd06f23325c118367f3a2990686202eabec8cd173b6158183157a1b",
+      "sizeBytes": 89619
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/quiz-push-witness.json": {
+      "sha256": "1de88d52a487ce9ce6636eeb4eeff176cad835066f682150ae8bfcb0ce33e391",
+      "sizeBytes": 88428
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness-replay.json": {
+      "sha256": "08f3570a468ca723b869d3a270bc3d0442b3012f4d4520749228f68d76a9b1f5",
+      "sizeBytes": 219139
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-after-fragment-witness.json": {
+      "sha256": "d85d04e3ad7164682adac1ae500d356ce6f56fdc182b7dcca52dbdcb7745e3ef",
+      "sizeBytes": 219407
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-in-page-replay.json": {
+      "sha256": "9ffba7223622c0005f6ae600b08d4b1ce0f66023406f7820bfaa160e54a221d7",
+      "sizeBytes": 185970
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18/evidence/resume-in-page-witness.json": {
+      "sha256": "e86eb8380c8e104d1ee1a60da6ed09d62debdc9522cd6f89d56342f324108a78",
+      "sizeBytes": 185305
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-focus/2026-11-18/evidence/resume-focus-witness-replay.json": {
+      "sha256": "e86b15a3025a826d9b2522373167f6918994a82446d13e33c1b5fb51e4834d45",
+      "sizeBytes": 186171
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-focus/2026-11-18/evidence/resume-focus-witness.json": {
+      "sha256": "ce2176edb49285e5b7ead805d69cacf14ad08074597ff4349f488f64c66bde15",
+      "sizeBytes": 186170
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18/evidence/home-resume-dark-color-probe.png": {
+      "sha256": "330ac3e495b828941e921472ebae4fea8c8fb201f9e22461b621931dae695cc1",
+      "sizeBytes": 54048
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18/evidence/resume-label-witness-replay.json": {
+      "sha256": "25507a2f875eef71da5e6b6e11c749a8782c638a4a07bc786b6b665d5184fc9b",
+      "sizeBytes": 79282
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-resume-label/2026-11-18/evidence/resume-label-witness.json": {
+      "sha256": "a4117b8123ccbe635e3059fc9e492642d1f2fc21bd761e30f6b7e5e702b50eea",
+      "sizeBytes": 79282
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-review-loop/2026-11-18/evidence/browser-witness.json": {
+      "sha256": "908e11a2fd40dffb430b431efe3fdf8a6cceaaa88c572ca5c16dbe1da73e37c8",
+      "sizeBytes": 100296
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/before-search-390.png": {
+      "sha256": "68b8751ec124e58932a586cc52bba085b4f4b27e017c465cb3982348bd9a509f",
+      "sizeBytes": 94349
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/quiz-search-handoff-witness-replay.json": {
+      "sha256": "ff42053cf5d09db4047ed45daddb42d413a75dc0b65c992b74511d7f42794b5e",
+      "sizeBytes": 488377
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/quiz-search-handoff-witness.json": {
+      "sha256": "7391e97817968d22c9bdf0ba95c21d11da6c3d076183b18d8e8e46a911329bf4",
+      "sizeBytes": 487346
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/replay-b/before-search-390.png": {
+      "sizeBytes": 94604,
+      "sha256": "b408b2059fc8d280b5d5be330d96fce87ccdd8129a56ef8f0131caa6d225fbff"
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-handoff/2026-11-18/evidence/replay-b/solo-after-next-390.png": {
+      "sizeBytes": 95794,
+      "sha256": "0c20fdb66bd799bc8a1762950da5cf2a0843619efce97a1f96588934b8540347"
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/ab-390-manual.png": {
+      "sha256": "61a1a7c554f3aa70baa3921eb7960a982c65afed5440491b7cc4b9ee850b2c89",
+      "sizeBytes": 94235
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/ab-390-recovered.png": {
+      "sha256": "eb1ca307139c0b1ae10a45061ffb4873bc15b88a98ceba09f6c1eaa23b7aa884",
+      "sizeBytes": 261690
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/ba-1440-replayed.png": {
+      "sha256": "201c0aa2303167e969fb3090ed8077701f108a1530e4fba111d0412b7aacc272",
+      "sizeBytes": 330628
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/mixed-1440-recent.png": {
+      "sha256": "8d521442f9393dc7170165d057cf84f6e113df03d54029fae7ec2bd64cde903a",
+      "sizeBytes": 360274
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness-replay.json": {
+      "sha256": "47db7507a39383e467164144c0a8cf1786ca92ee1aa6be1b621f8fa9232fc573",
+      "sizeBytes": 410125
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness.json": {
+      "sha256": "7cd2b51b80b82ac3b4ed226adf035f1510140bc3d2970a27b7e53fa30174410d",
+      "sizeBytes": 409595
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/home-390-card.png": {
+      "sha256": "e5e2632329c64ad82bf3520ef478af8b766c74347be827d8cd853b4db45ce871",
+      "sizeBytes": 81451
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/home-390-landing.png": {
+      "sha256": "5c7b6e41e47d2105e93f73127f2031a424801f9115ad4187bb74d8446cbc4b2f",
+      "sizeBytes": 290605
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/other-preview-1440-palette.png": {
+      "sha256": "14a79d3866051057c49a1b1961279190cbdae096b81f2f7b55cd6617c8ce478d",
+      "sizeBytes": 374795
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness-replay.json": {
+      "sha256": "3017037ef3bf4cc20376a3af99e65ff3cd005b55f109c5daf78f99834a5c8f56",
+      "sizeBytes": 328979
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-search-resume-route/2026-11-18/evidence/search-resume-route-witness.json": {
+      "sha256": "0beb881dfbb6f84fca4efff06c2cfee07aa40d1dcc11f4678adc36a28c213995",
+      "sizeBytes": 328950
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness-replay.json": {
+      "sha256": "6518e88e10697a315304204cbc1fb9a68bb2028ac38d2cc502a8bfd3d84658be",
+      "sizeBytes": 85733
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness.json": {
+      "sha256": "735294059a8026a09ccd1169fab7653bf96bcfc2ddad9a250ad9fa987d7be560",
+      "sizeBytes": 85734
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-history/2026-11-18/evidence/source-history-witness-replay.json": {
+      "sha256": "7dcab9d67775559c9991fa74ceba0939b7c29785e9ed2ae86fe62c5d03c0dee8",
+      "sizeBytes": 82825
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-history/2026-11-18/evidence/source-history-witness.json": {
+      "sha256": "74961203ee34e478e713b4103f70b2646c822a1066aac1890e56a7a24dc6899f",
+      "sizeBytes": 82826
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18/evidence/source-readerstate-witness-replay.json": {
+      "sha256": "dfa8f23c0c8b235fff8d02d8669fe8d3c57fb0fde8fd1a9257a0e3c8e577a9fe",
+      "sizeBytes": 77004
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-readerstate/2026-11-18/evidence/source-readerstate-witness.json": {
+      "sha256": "58d60e4e68b2336cc3d29bbce048da386d11019377ded85422c884e482076a4d",
+      "sizeBytes": 77008
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-resume/2026-11-18/evidence/source-resume-witness-replay.json": {
+      "sha256": "6a1bd17f90a2de22d1f795594e96187d2cc737b5613734ed68383ee0001c1d7c",
+      "sizeBytes": 31336
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-resume/2026-11-18/evidence/source-resume-witness.json": {
+      "sha256": "72b6f68732fa8eef672e047417353fb720140ebee886c3508422dd4e8fa0a568",
+      "sizeBytes": 31335
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-search/2026-11-18/evidence/search-witness.json": {
+      "sha256": "9a08c18bdfabb03889ea743e3007d43d7bc45364750ae49474a4eeb42a443c74",
+      "sizeBytes": 74975
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness-replay.json": {
+      "sha256": "29ffbbc0adce3d11c4da613eab15d36db785053b3d9e99048be5a9bc6dc10e34",
+      "sizeBytes": 42518
+    },
+    "projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18/evidence/source-tabs-witness.json": {
+      "sha256": "da9480c811a2e896d526cf82c5fcb6468ee994bdf957288022a8b35c90b74b0b",
+      "sizeBytes": 42528
+    }
+  }
+}

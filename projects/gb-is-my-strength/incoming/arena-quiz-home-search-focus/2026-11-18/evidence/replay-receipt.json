@@ -1,0 +1,855 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "casesPerRun": 13,
+  "replays": 2,
+  "currentDistPins": 66,
+  "stage20PinsRechecked": 67,
+  "sharedDistPins": 63,
+  "screenshots": {
+    "empty-quick-escape.png": {
+      "width": 390,
+      "height": 844,
+      "sha256A": "8ea7e4e7da37aaa7ccb1e58944edb8b0e5a3e78c5a2a0c75565197acd6e99c3a",
+      "sha256B": "8ea7e4e7da37aaa7ccb1e58944edb8b0e5a3e78c5a2a0c75565197acd6e99c3a",
+      "byteIdentical": true
+    },
+    "empty-quick-second-escape.png": {
+      "width": 390,
+      "height": 844,
+      "sha256A": "81dba7ef9be020468004fdd2f37cccc3df45ceaaa9c135875ee7bb055dd85f3a",
+      "sha256B": "81dba7ef9be020468004fdd2f37cccc3df45ceaaa9c135875ee7bb055dd85f3a",
+      "byteIdentical": true
+    }
+  },
+  "rows": [
+    {
+      "id": "empty-quick-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 897,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 897,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 897,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 897,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-quick-normal",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 915,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 915,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 915,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 915,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-quick-touch-emulation",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 884,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 884,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 884,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 884,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-quick-held-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 897,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 897,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 897,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 897,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-quick-second-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        },
+        "beforeTabEscape": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        },
+        "beforeTabEscape": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-quick-close-enter",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      }
+    },
+    {
+      "id": "empty-quick-close-click",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      }
+    },
+    {
+      "id": "empty-dwell-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      }
+    },
+    {
+      "id": "empty-early-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 415,
+          "scrollY": 482
+        }
+      }
+    },
+    {
+      "id": "empty-header-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "gbSearchBtn",
+          "href": null,
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 8,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "themeToggle",
+          "href": null,
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 8,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "gbSearchBtn",
+          "href": null,
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 8,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "themeToggle",
+          "href": null,
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 8,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "empty-wide-quick-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 684,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 443,
+          "scrollY": 756
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 684,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 443,
+          "scrollY": 756
+        }
+      }
+    },
+    {
+      "id": "learning-quick-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 998,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 998,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": false,
+          "hit": false,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 998,
+          "scrollY": 0
+        },
+        "afterTabEscape": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": false,
+          "hit": false,
+          "locks": [],
+          "top": 998,
+          "scrollY": 0
+        }
+      }
+    },
+    {
+      "id": "learning-quick-second-escape",
+      "a": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 435,
+          "scrollY": 563
+        },
+        "beforeTabEscape": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        }
+      },
+      "b": {
+        "inputLocks": [
+          "overlay:search:command-palette",
+          "tooltip-mobile-sheet"
+        ],
+        "closed": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [
+            "tooltip-mobile-sheet"
+          ],
+          "top": 589,
+          "scrollY": 0
+        },
+        "tab": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 435,
+          "scrollY": 563
+        },
+        "beforeTabEscape": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "inView": true,
+          "hit": true,
+          "locks": [],
+          "top": 589,
+          "scrollY": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "74961203ee34e478e713b4103f70b2646c822a1066aac1890e56a7a24dc6899f",
+  "witnessSha256B": "7dcab9d67775559c9991fa74ceba0939b7c29785e9ed2ae86fe62c5d03c0dee8",
+  "casesPerReplay": 10,
+  "matchedDistPinsFromStage15": 35,
+  "blockedForwardPerReplay": 4,
+  "caughtSameHashRecoveryPerReplay": 2,
+  "pairs": [
+    {
+      "id": "native-390",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 1854,
+        "scrollYBack": 17066,
+        "scrollYForward": 1854,
+        "headingTopForward": 88,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Вопрос 1 из 8"
+      },
+      "b": {
+        "scrollYClick": 1854,
+        "scrollYBack": 17066,
+        "scrollYForward": 1854,
+        "headingTopForward": 88,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Вопрос 1 из 8"
+      }
+    },
+    {
+      "id": "closed-390",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 8004,
+        "headingTopForward": 400,
+        "focusForward": "#sec-canticles",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 13"
+      },
+      "b": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 8004,
+        "headingTopForward": 400,
+        "focusForward": "#sec-canticles",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 15"
+      }
+    },
+    {
+      "id": "close-before-390",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 8004,
+        "headingTopForward": 400,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 16"
+      },
+      "b": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 8004,
+        "headingTopForward": 400,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 4"
+      }
+    },
+    {
+      "id": "reopen-dismiss-390",
+      "headingHitOnForwardBoth": false,
+      "sheetLockedOnForwardBoth": true,
+      "headingHitAfterRecoveryBoth": false,
+      "a": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 8404,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 0,
+        "seen": "Пройдено: 5"
+      },
+      "b": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 8404,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 0,
+        "seen": "Пройдено: 5"
+      }
+    },
+    {
+      "id": "reopen-link-390",
+      "headingHitOnForwardBoth": false,
+      "sheetLockedOnForwardBoth": true,
+      "headingHitAfterRecoveryBoth": true,
+      "a": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 8404,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 8004,
+        "seen": "Пройдено: 8"
+      },
+      "b": {
+        "scrollYClick": 8004,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 8404,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 8004,
+        "seen": "Пройдено: 11"
+      }
+    },
+    {
+      "id": "native-1440",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 1753,
+        "scrollYBack": 12597,
+        "scrollYForward": 1753,
+        "headingTopForward": 168,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Вопрос 1 из 8"
+      },
+      "b": {
+        "scrollYClick": 1753,
+        "scrollYBack": 12597,
+        "scrollYForward": 1753,
+        "headingTopForward": 168,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Вопрос 1 из 8"
+      }
+    },
+    {
+      "id": "closed-1440",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 5446,
+        "headingTopForward": 483,
+        "focusForward": "#sec-canticles",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 22"
+      },
+      "b": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 5446,
+        "headingTopForward": 483,
+        "focusForward": "#sec-canticles",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 12"
+      }
+    },
+    {
+      "id": "close-before-1440",
+      "headingHitOnForwardBoth": true,
+      "sheetLockedOnForwardBoth": false,
+      "headingHitAfterRecoveryBoth": null,
+      "a": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 5446,
+        "headingTopForward": 483,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 25"
+      },
+      "b": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 5446,
+        "headingTopForward": 483,
+        "focusForward": "body.gbs-world",
+        "scrollYRecovery": null,
+        "seen": "Пройдено: 8"
+      }
+    },
+    {
+      "id": "reopen-dismiss-1440",
+      "headingHitOnForwardBoth": false,
+      "sheetLockedOnForwardBoth": true,
+      "headingHitAfterRecoveryBoth": false,
+      "a": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 5929,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 0,
+        "seen": "Пройдено: 16"
+      },
+      "b": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 5929,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 0,
+        "seen": "Пройдено: 19"
+      }
+    },
+    {
+      "id": "reopen-link-1440",
+      "headingHitOnForwardBoth": false,
+      "sheetLockedOnForwardBoth": true,
+      "headingHitAfterRecoveryBoth": true,
+      "a": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 5929,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 5446,
+        "seen": "Пройдено: 17"
+      },
+      "b": {
+        "scrollYClick": 5446,
+        "scrollYBack": 0,
+        "scrollYForward": 0,
+        "headingTopForward": 5929,
+        "focusForward": "#tabTerms",
+        "scrollYRecovery": 5446,
+        "seen": "Пройдено: 10"
+      }
+    }
+  ]
+}
