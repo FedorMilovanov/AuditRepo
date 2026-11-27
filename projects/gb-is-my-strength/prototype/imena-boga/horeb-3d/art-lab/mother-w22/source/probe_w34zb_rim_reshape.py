@@ -10,7 +10,7 @@ from probe_w34r_static_correction import contacts,deadline
 def unit(x):
     return x/np.linalg.norm(x)
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--side',choices=('l','r'),required=True);parser.add_argument('--coupled',action='store_true');parser.add_argument('--fine',action='store_true');args=parser.parse_args();assert not(args.fine and not args.coupled)
+    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--side',choices=('l','r'),required=True);parser.add_argument('--coupled',action='store_true');parser.add_argument('--fine',action='store_true');parser.add_argument('--route',action='store_true');parser.add_argument('--approach',action='store_true');args=parser.parse_args();assert not((args.fine or args.route or args.approach) and not args.coupled);assert sum((args.fine,args.route,args.approach))<=1
     root=args.evidence;out=args.output;assert not out.exists();side=args.side
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     fit=json.loads((root/'W34za-rim-radial-v-20261127/w34y-rim-fit.json').read_text())
@@ -69,6 +69,20 @@ def main():
         ub=point_triangle_min(point,rt[i:i+1]);jj=np.asarray(tree.query_ball_point(point,ub+rad.max()+1e-10,workers=1),int)
         jj=jj[np.linalg.norm(rc[jj]-point,axis=1)-rad[jj]<=ub+1e-10]
         return point_triangle_min(point,rt[jj])*1000
+    # Smooth conservative tube clearance proxy, verified against the actual exported rim.
+    # Final candidates still require exact triangle audit; proxy is not a solid collision proof.
+    alpha=np.linspace(0,2*np.pi,121)
+    line=np.column_stack((.35+.474*np.cos(alpha),np.full(121,1.147),.26+.325*np.sin(alpha)))
+    seg=line[1:]-line[:-1];mid=(line[1:]+line[:-1])/2
+    segtree=cKDTree(mid)
+    def tube_dist(points):
+        _,jj=segtree.query(points,k=4,workers=1)
+        v=points[:,None,:]-line[jj]
+        e=seg[jj];t=np.clip(np.sum(v*e,axis=2)/np.sum(e*e,axis=2),0,1)
+        diff=v-t[:,:,None]*e
+        return np.sqrt(np.min(np.sum(diff*diff,axis=2),axis=1))
+    tube_radius=tube_dist(rim['v'])
+    assert tube_radius.max()<.0265 and tube_radius.min()>.023, (tube_radius.min(),tube_radius.max())
     def make(params):
         M={i:x.copy() for i,x in base.items()}
         for digit,values in params.items():
@@ -124,6 +138,11 @@ def main():
         params={k:v.copy() for k,v in prior['best']['params'].items()};params['wrist']=[0]*6
         initial=trial(params,True);assert initial['basket_crossings']==prior['best']['basket_crossings']
         best=initial;tested=1
+        if args.route:
+            prior2=json.loads((root/f'W34zd-fine-rim-{side}-20261127/w34zb-reshape.json').read_text())
+            initial=trial(prior2['best']['params'],True)
+            assert initial['basket_crossings']==prior2['best']['basket_crossings']
+            best=initial;tested=1
         if args.fine:
             prior2=json.loads((root/f'W34zc-coupled-rim-{side}-20261127/w34zb-reshape.json').read_text())
             initial=trial(prior2['best']['params'],True)
@@ -141,7 +160,110 @@ def main():
                 if pp==seed:continue
                 row=trial(pp);tested+=1
                 if rank(row)<rank(best):best=row
-        for phase in ((3,4) if args.fine else (1,2)):
+        if args.route:
+            from scipy.optimize import minimize
+            from time import monotonic
+            from probe_w34r_static_correction import START
+            seed={k:v.copy() for k,v in best['params'].items()}
+            variable_digits=('index',) if side=='l' else ('index','middle')
+            # Keep thumb and other fingers fixed initially. Solve the offending whole phalanx
+            # chain together with a small wrist correction; reject moves losing near contact.
+            keys=[(k,j) for k in variable_digits for j in range(4)]+[('wrist',j) for j in range(6)]
+            limits=[((-50,50) if j<3 else (-35,35)) if k!='wrist' else ((-30,30) if j<3 else (-24,24)) for k,j in keys]
+            def decode(vec):
+                pp={k:v.copy() for k,v in seed.items()}
+                for (k,j),val in zip(keys,vec):pp[k][j]=float(val)
+                return pp
+            # Work with unique skin vertices. Sign is relative to the enclosing circular tube.
+            _,unique=np.unique(template['canon'],return_index=True)
+            selected=np.unique(np.r_[unique,*[pads[k] for k in digits]])
+            lookup={int(i):j for j,i in enumerate(selected)}
+            support_idx=np.array([lookup[int(i)] for k in variable_digits for i in pads[k]])
+            thumb_idx=np.array([lookup[int(i)] for i in pads['thumb']])
+            def objective(vec):
+                deadline();_,q=make(decode(vec));p=q[selected]
+                td=tube_dist(p)*1000
+                penetration=np.maximum(0,26.15-td)
+                # Penalize all intruding vertices, not just tips. Max term avoids tiny
+                # deeply embedded clusters being hidden by the mean.
+                cost=4*np.mean(penetration**2)+.4*np.max(penetration)**2
+                thumb_gap=np.abs(td[thumb_idx]-26)
+                supp_gap=np.abs(td[support_idx]-26)
+                cost+=.15*max(0,thumb_gap.min()-3)**2+.12*max(0,supp_gap.min()-3)**2
+                # The supporting long finger should be inside the ellipse, not on the
+                # same external surface as the thumb.
+                pp=p[support_idx]
+                rr=((pp[:,0]-.35)/.474)**2+((pp[:,2]-.26)/.325)**2
+                cost+=20*max(0,float(rr.min())-.985)**2
+                cost+=.0002*np.sum((vec-v0)**2)
+                return float(cost)
+            v0=np.array([seed[k][j] for k,j in keys],float)
+            def route_rank(row):
+                return (row['self_crossings']>0,row['arm_reserve_mm']<5,row['thumb_min_mm']>8 or row['support_min_mm']>15,row['basket_crossings'],row['gap_proxy_mm'])
+            starts=[v0.copy()]
+            # Open from the blocked shape, lifting the hand 10 mm before bending.
+            opened=v0.copy()
+            for idx,(key,j) in enumerate(keys):
+                if key!='wrist' and j==0:opened[idx]=min(45,opened[idx]+24)
+                if key=='wrist' and j==1:opened[idx]=min(30,opened[idx]+10)
+            starts.append(opened)
+            scored=[]
+            for n,start0 in enumerate(starts):
+                if monotonic()-START>15:break
+                start0=np.clip(start0,[a for a,b in limits],[b for a,b in limits])
+                # Powell bounded optimization, with a firm evaluation cap.
+                opt=minimize(objective,start0,method='Powell',bounds=limits,options={'maxfev':260,'maxiter':5,'xtol':.5,'ftol':.025})
+                row=trial(decode(opt.x),True);tested+=1
+                row['tube_objective']=float(opt.fun);row['optimizer_evaluations']=int(opt.nfev)
+                scored.append(row)
+                print(json.dumps({'route':n,'evaluations':opt.nfev,'objective':opt.fun,'basket':row['basket_crossings'],'self':row['self_crossings'],'thumb_mm':row['thumb_min_mm'],'support_mm':row['support_min_mm']}),flush=True)
+                if route_rank(row)<route_rank(best):best=row
+            # Save the sampled transition from a raised open pose to the finalist.
+            # Do not assert continuous clearance from discrete samples.
+            clear_path=[]
+            if best['basket_crossings']==0 and best['self_crossings']==0:
+                target=np.array([best['params'][k][j] for k,j in keys])
+                for f in np.linspace(0,1,7):
+                    q=trial(decode(opened*(1-f)+target*f))
+                    tested+=1
+                    clear_path.append({'fraction':float(f),'basket':q['basket_crossings'],'self':q['self_crossings']})
+            route_meta={'proxy_radius_mm':[float(tube_radius.min()*1000),float(tube_radius.max()*1000)],'optimizer_trials':scored,'sampled_path':clear_path}
+        if args.approach:
+            prior3=json.loads((root/f'W34ze-chain-route-{side}-20261127/w34zb-reshape.json').read_text())
+            initial=trial(prior3['best']['params'],True);assert initial['basket_crossings']==initial['self_crossings']==0
+            best=initial;tested=1
+            # Search reverse retreat of the empty hand, not movement of the basket.
+            # Translation is an isolated wrist target, not a local skeletal translation.
+            seed={k:v.copy() for k,v in best['params'].items()}
+            dirs=[(0,1,0),(0,1,1),(0,1,-1),(-1 if side=='l' else 1,1,0),(-1 if side=='l' else 1,1,1),(0,0,1)]
+            paths=[];winner=None
+            for direction in dirs:
+                dvec=unit(np.array(direction,dtype=float))
+                samples=[]
+                for distance in np.arange(0,61,5):
+                    pp={k:v.copy() for k,v in seed.items()}
+                    pp['wrist'][:3]=(np.array(seed['wrist'][:3])+distance*dvec).tolist()
+                    row=trial(pp);tested+=1
+                    M,q=make(pp)
+                    gap=float((tube_dist(q).min()-.026)*1000)
+                    samples.append({'distance_mm':int(distance),'basket':row['basket_crossings'],'self':row['self_crossings'],'reserve_mm':row['arm_reserve_mm'],'tube_clearance_proxy_mm':gap})
+                    if row['basket_crossings'] or row['self_crossings'] or row['arm_reserve_mm']<5:break
+                last=samples[-1]
+                row={'direction':list(direction),'samples':samples,'clear_60mm':len(samples)==13 and last['basket']==last['self']==0 and last['reserve_mm']>=5}
+                paths.append(row)
+                print(json.dumps({'direction':direction,'samples':len(samples),'last':last,'clear_60mm':row['clear_60mm']}),flush=True)
+                if row['clear_60mm'] and (winner is None or last['tube_clearance_proxy_mm']>winner['samples'][-1]['tube_clearance_proxy_mm']):winner=row
+            dense=[]
+            if winner:
+                dvec=unit(np.array(winner['direction'],dtype=float))
+                for distance in np.arange(0,60.001,2.5):
+                    pp={k:v.copy() for k,v in seed.items()}
+                    pp['wrist'][:3]=(np.array(seed['wrist'][:3])+distance*dvec).tolist()
+                    row=trial(pp);tested+=1
+                    dense.append({'distance_mm':float(distance),'basket':row['basket_crossings'],'self':row['self_crossings'],'reserve_mm':row['arm_reserve_mm']})
+                print(json.dumps({'dense_samples':len(dense),'clear_samples':sum(q['basket']==q['self']==0 and q['reserve_mm']>=5 for q in dense)}),flush=True)
+            approach_meta={'paths':paths,'selected':winner,'dense_samples':dense,'dense_all_clear':bool(dense) and all(q['basket']==q['self']==0 and q['reserve_mm']>=5 for q in dense)}
+        for phase in (() if args.route or args.approach else (3,4) if args.fine else (1,2)):
             for k in (1,2,0,3,4,5):
                 tune('wrist',k,(-8,-4,4,8) if phase==1 else (-4,-2,2,4) if phase in (2,3) else (-2,-1,1,2),(-24,24) if k<3 else (-20,20))
             print(json.dumps({'phase':phase,'stage':'wrist','tested':tested,'basket':best['basket_crossings'],'self':best['self_crossings'],'thumb_mm':best['thumb_min_mm'],'support_mm':best['support_min_mm']}),flush=True)
@@ -163,7 +285,9 @@ def main():
                     if rank(row)<rank(best):best=row
             print(json.dumps({'digit':digit,'tested':tested,'basket':best['basket_crossings'],'self':best['self_crossings']}),flush=True)
     best=trial(best['params'],True)
-    out.mkdir();report={'status':'ART_HOLD_RIM_HAND_RESHAPE','source_sha256':r['glb_sha256'],'side':side,'coupled':args.coupled,'fine':args.fine,'tested':tested+1,'initial':initial,'best':best,'limitations':['Fully hand-weighted subset only; wrist transition and arm/cloth/scene not solved. Rim triangle normal proxy, no force closure. No exported actor or animation.']}
+    out.mkdir();report={'status':'ART_HOLD_RIM_HAND_RESHAPE','source_sha256':r['glb_sha256'],'side':side,'coupled':args.coupled,'fine':args.fine,'route':args.route,'approach':args.approach,'tested':tested+1,'initial':initial,'best':best,'limitations':['Fully hand-weighted subset only; wrist transition and arm/cloth/scene not solved. Rim triangle normal proxy, no force closure. No exported actor or animation.']}
+    if args.route:report['route_meta']=route_meta
+    if args.approach:report['approach_meta']=approach_meta
     (out/'w34zb-reshape.json').write_text(json.dumps(report,indent=2))
     print(json.dumps({'side':side,'tested':tested+1,'initial':initial['basket_crossings'],'best':{k:v for k,v in best.items() if k!='joint_world_matrices'}}),flush=True)
 if __name__=='__main__':main()
