@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -93,16 +94,72 @@ def artifact_admission_errors(root: Path, changed: list[str], tracked: list[str]
         duplicates = sorted(item for item in hashes.get((size, digest), []) if item != relative)
         if duplicates:
             errors.append(f'{relative}: exact artifact duplicate of {duplicates}')
-        if path.suffix.lower() in ARCHIVE_EXTENSIONS or size > LARGE_BYTES:
+        # Optional metadata, when present, is still an identity assertion.
+        if (path.suffix.lower() in ARCHIVE_EXTENSIONS or size > LARGE_BYTES
+                or (root / f'{relative}{sidecar_suffix}').exists()):
             errors.extend(manifest_errors(root, relative, size, digest))
     return errors
 
 
+def capture_changed_paths(root: Path, destination: Path, *, push_before: str | None = None) -> None:
+    """Capture literal paths, including both sides of renames.
+
+    The existing CI consumers share a UTF-8 line-oriented file. Refuse paths
+    that cannot be represented in that format instead of silently losing them.
+    """
+    if push_before is not None:
+        # A push may contain several commits. Use the event's previous tip,
+        # not HEAD^1. A newly created ref has an all-zero previous tip.
+        if not re.fullmatch(r'[0-9a-f]{40}', push_before):
+            raise ValueError('push-before must be a full Git SHA')
+        base = push_before
+        if base == '0' * 40:
+            base = subprocess.check_output(
+                ['git', 'hash-object', '-t', 'tree', '--stdin'], input=b'', cwd=root,
+            ).decode('ascii').strip()
+        command = ['git', 'diff', '--no-renames', '--name-only', '-z', base, 'HEAD']
+    else:
+        # GitHub pull_request checkout is the synthetic merge commit; its
+        # first parent is the PR base used for the integration test.
+        has_parent = subprocess.run(
+            ['git', 'rev-parse', '--verify', 'HEAD^1'], cwd=root,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        ).returncode == 0
+        if has_parent:
+            command = ['git', 'diff', '--no-renames', '--name-only', '-z', 'HEAD^1', 'HEAD']
+        else:
+            command = ['git', 'diff-tree', '--root', '--no-commit-id', '--no-renames',
+                       '--name-only', '-z', '-r', 'HEAD']
+    raw = subprocess.check_output(command, cwd=root)
+    if raw and not raw.endswith(b'\0'):
+        raise ValueError('Git path list has no terminating NUL')
+    paths = [entry.decode('utf-8') for entry in raw.split(b'\0') if entry]
+    if any(path.splitlines() != [path] for path in paths):
+        raise ValueError('Git path contains a line separator; cannot represent in CI path list')
+    destination.write_bytes(''.join(f'{path}\n' for path in paths).encode('utf-8'))
+
+
+def read_changed_paths(path: Path) -> list[str]:
+    return [line for line in path.read_text(encoding='utf-8').split('\n') if line]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--changed-paths', required=True, type=Path)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--changed-paths', type=Path)
+    mode.add_argument('--capture-changed-paths', type=Path)
+    parser.add_argument('--push-before', help='Previous tip from a push event (capture only)')
     args = parser.parse_args()
-    changed = [line.strip() for line in args.changed_paths.read_text(encoding='utf-8').splitlines() if line.strip()]
+    if args.push_before is not None and args.capture_changed_paths is None:
+        parser.error('--push-before requires --capture-changed-paths')
+    if args.capture_changed_paths is not None:
+        try:
+            capture_changed_paths(ROOT, args.capture_changed_paths, push_before=args.push_before)
+        except (OSError, UnicodeError, ValueError, subprocess.CalledProcessError) as error:
+            print(f'AUDITREPO CHANGED PATHS: FAIL: {error}', file=sys.stderr)
+            return 1
+        return 0
+    changed = read_changed_paths(args.changed_paths)
     tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
     errors = artifact_admission_errors(ROOT, changed, [item for item in tracked if item])
     if errors:
