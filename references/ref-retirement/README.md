@@ -50,7 +50,7 @@ The engine refuses to delete:
 
 For `archive-preserved`, the engine additionally refuses the target unless the named `archiveRef` is under `archive/`, is a required retained ref, exists live, and resolves to exactly the same SHA as the target immediately before deletion.
 
-It performs a complete preflight before the first DELETE, verifies every target as HTTP 404 afterward, defers an open source branch, prunes local remote refs, reruns repository validation and deep history forensic, and uploads machine-readable evidence.
+It performs a complete preflight before the first deletion, including any non-open maintenance source. Before each deletion it rechecks live main, PR ownership, branch inventory, exact target SHA and any archive proof. Git push uses an explicit `--force-with-lease` on the target ref, so a newer target commit cannot be deleted by a stale review. The Git transport must have write authentication (provided by Actions checkout); the REST client remains read-only. It verifies every target as HTTP 404 afterward, defers an open source branch, prunes local remote refs, reruns repository validation and deep history forensic, and uploads machine-readable evidence. Replacement merge commits must be ancestors of current main. Cross-ref changes (main, archive or newly opened PR) cannot be made atomic with the target lease; do not execute during concurrent edits of retirement targets or their proof refs.
 
 The standalone Python engine is dry-run by default. Destructive execution requires the explicit `--execute` flag supplied only by the reviewed workflow.
 

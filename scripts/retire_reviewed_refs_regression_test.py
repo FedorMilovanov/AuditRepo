@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
@@ -58,6 +59,8 @@ class FakeClient:
             return {"status": "ahead", "ahead_by": 1, "behind_by": 0, "files": []}
         if (base, head) == ("main-sha", "old-sha"):
             return {"status": "behind", "ahead_by": 0, "behind_by": 1, "files": []}
+        if (base, head) == ("merged-sha", "main-sha"):
+            return {"status": "ahead", "ahead_by": 1, "behind_by": 0, "files": []}
         raise AssertionError(f"unexpected compare {base}...{head}")
 
     def merged_pr(self, number: int) -> dict[str, object]:
@@ -67,6 +70,10 @@ class FakeClient:
         if "/pulls?state=all&head=" in api_path:
             return []
         raise AssertionError(f"unexpected paged request: {api_path}")
+
+    def delete_ref(self, branch: str, expected: str) -> None:
+        require(self.refs.get(branch) == expected, "lease rejected changed branch")
+        self.request("DELETE", self.ref_path(branch, plural=True), allow=(204,))
 
     def ref_path(self, branch: str, *, plural: bool = False) -> str:
         encoded = urllib.parse.quote(f"heads/{branch}", safe="")
@@ -167,6 +174,7 @@ class MergedSourceFakeClient(FakeClient):
                 {
                     "number": 12,
                     "merged_at": "2026-08-06T00:00:00Z",
+                    "merge_commit_sha": "merged-sha",
                     "head": {"sha": "execution-sha", "ref": "execution-branch"},
                 }
             ]
@@ -580,7 +588,78 @@ def main() -> int:
             "execution-branch" in mismatched_fake.refs,
             "mismatched source branch was deleted despite refusing",
         )
-        require(mismatched_fake.delete_calls == ["old-work"], "mismatched-source run deleted outside the target")
+        require(mismatched_fake.delete_calls == [], "mismatched-source run deleted before full preflight")
+
+        # A protected source alias is never a cleanup target.
+        for protected in ("main", "archive/evidence"):
+            protected_request = root / "protected-source.json"
+            payload = json.loads(request.read_text(encoding="utf-8"))
+            payload["sourceBranch"] = protected
+            protected_request.write_text(json.dumps(payload), encoding="utf-8")
+            fake = FakeClient()
+            try:
+                run_engine(module, fake, protected_request, root / "protected.json", execute=True)
+            except module.RetirementError as error:
+                require("protected/retained source" in str(error), "wrong protected-source error")
+            else:
+                raise AssertionError("protected source passed")
+            require(not fake.delete_calls, "protected source triggered deletion")
+
+        class DriftClient(FakeClient):
+            def __init__(self, kind):
+                super().__init__()
+                self.kind = kind
+                self.main_reads = 0
+
+            def get_ref(self, branch):
+                if branch == "main":
+                    self.main_reads += 1
+                    if self.main_reads == 2:
+                        if self.kind == "head":
+                            self.refs["old-work"] = "new-agent-sha"
+                        elif self.kind == "pr":
+                            self.open_heads.add("old-work")
+                        elif self.kind == "main":
+                            self.refs["main"] = "new-main-sha"
+                return super().get_ref(branch)
+
+        for kind in ("head", "pr", "main"):
+            fake = DriftClient(kind)
+            try:
+                run_engine(module, fake, request, root / f"drift-{kind}.json", execute=True)
+            except module.RetirementError:
+                pass
+            else:
+                raise AssertionError(f"post-preflight {kind} drift passed")
+            require(not fake.delete_calls, f"{kind} drift triggered deletion")
+
+        # Real local Git receive-pack: a stale lease cannot delete a newer ref.
+        local = root / "git-work"
+        remote = root / "git-remote"
+        local.mkdir()
+        remote.mkdir()
+        def git(cwd, *args):
+            return subprocess.check_output(
+                ["git", "-c", "user.name=fixture", "-c", "user.email=fixture@example.invalid", *args],
+                cwd=cwd, stderr=subprocess.STDOUT, text=True,
+            ).strip()
+        git(remote, "init", "--bare", "-q")
+        git(local, "init", "-q")
+        git(local, "commit", "--allow-empty", "-qm", "old")
+        old_sha = git(local, "rev-parse", "HEAD")
+        git(local, "push", str(remote), "HEAD:refs/heads/old-work")
+        git(local, "commit", "--allow-empty", "-qm", "new agent work")
+        new_sha = git(local, "rev-parse", "HEAD")
+        git(local, "push", str(remote), "HEAD:refs/heads/old-work")
+        try:
+            module.delete_ref_with_lease(str(remote), "old-work", old_sha, cwd=local)
+        except module.RetirementError:
+            pass
+        else:
+            raise AssertionError("real Git stale lease deleted newer work")
+        require(git(remote, "rev-parse", "refs/heads/old-work") == new_sha, "new work lost")
+        module.delete_ref_with_lease(str(remote), "old-work", new_sha, cwd=local)
+        require(not git(remote, "for-each-ref", "--format=%(refname)", "refs/heads/old-work"), "matching lease did not delete")
 
     print("AUDITREPO REF RETIREMENT REGRESSION: PASS")
     return 0
