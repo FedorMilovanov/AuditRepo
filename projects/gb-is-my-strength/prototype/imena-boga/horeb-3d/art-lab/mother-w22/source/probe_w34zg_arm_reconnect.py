@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');args=p.parse_args();assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');args=p.parse_args();assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb';d,a=load(src,r['glb_sha256'])
@@ -27,8 +27,10 @@ def main():
     def desc(i):
         yield i
         for c in d['nodes'][i].get('children',[]):yield from desc(c)
-    def build(pole_angle,corrective,twist=.65,upper_twist=None):
+    def build(pole_angle,corrective,twist=.65,upper_twist=None,shift=None):
         M={i:x.copy() for i,x in base.items()};info={}
+        if shift is not None:
+            for v in M.values():v[:3,3]+=shift
         for s in ('l','r'):
             up,low,hand=[names[k+'_'+s] for k in ('upperarm','lowerarm','hand')]
             aa,bb,cc=[M[i][:3,3].copy() for i in (up,low,hand)]
@@ -69,7 +71,8 @@ def main():
             scale=np.linalg.norm(local[:3,:3],axis=0);rotation=local[:3,:3]/scale
             assert np.max(abs(rotation.T@rotation-np.eye(3)))<1e-5
             old=np.linalg.inv(base[parent[i]])@base[i] if i in parent else base[i]
-            assert np.max(abs(old[:3,3]-local[:3,3]))<1e-6,(n['name'],old[:3,3],local[:3,3])
+            expected=old[:3,3]+(shift if shift is not None and i not in parent else 0)
+            assert np.max(abs(expected-local[:3,3]))<1e-6,(n['name'],expected,local[:3,3])
             n.pop('matrix',None);n['translation']=local[:3,3].tolist();n['scale']=scale.tolist();n['rotation']=R.from_matrix(rotation).as_quat().tolist()
         n=next(n for n in doc['nodes'] if n['name']=='W28e_tailored_linen')
         idx=doc['meshes'][n['mesh']]['extras']['targetNames'].index('W34s_LocalSleeveCorrection')
@@ -77,7 +80,7 @@ def main():
         geo,w=geometry(doc,a,True);err=max(float(np.max(abs(w[i]-M[i]))) for i in w)
         assert err<1e-5
         return doc,geo,info,err
-    def audit(geo):
+    def audit(geo,shift=None):
         body=geo['ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0'];tunic=geo['W28e_tailored_linen']
         # Assign actual dominant skin/cloth joint region to localize failures.
         for k in ('ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0','W28e_tailored_linen'):
@@ -87,7 +90,7 @@ def main():
             geo[k]['region']=dom[geo[k]['tri'][:,0]]
         changed={}
         for k,v in geo.items():
-            mask=np.linalg.norm(v['v']-g[k]['v'],axis=1)>1e-7
+            mask=np.linalg.norm(v['v']-g[k]['v']-(shift if shift is not None else 0),axis=1)>1e-7
             changed[k]=np.flatnonzero(np.any(mask[v['tri']],axis=1))
         def test(A,B,ids,selfcheck=False):
             if not len(ids):return 0
@@ -208,6 +211,8 @@ def main():
         allowed=(np.sum(ws*arm[js],axis=1)>.05)&(np.sum(ws*digits[js],axis=1)<1e-9)
         active=np.flatnonzero(np.any(allowed[b['tri']],axis=1))
         detail=contacts(b,b,active,True)
+        if not detail['pairs']:
+            return {key:dict(v) for key,v in geo.items()},{'unique_vertices':0,'max_delta_mm':0.,'edge_ratio_min':1.,'edge_ratio_max':1.,'normal_reversals':0}
         _,first,canon=np.unique(b['canon'],return_index=True,return_inverse=True)
         p=b['v'][first];ct=canon[b['tri']]
         assert np.max(abs(p[canon]-b['v']))<1e-6
@@ -286,7 +291,119 @@ def main():
         row={'pole_deg':pole,'twist':twist,'old_sleeve_correction':corr,'arm':info,'matrix_error':err,'audit':au,'crossings':count}
         rows.append(row);print(json.dumps({'pole':pole,'twist':twist,'count':count,'skin':au['skin_self'],'cloth':au['tunic_self'],'skin_cloth':au['skin_tunic'],'scene':au['scene'],'skin_regions':au['skin_regions']}),flush=True)
         if best is None or (bool(au['scene']),count)<(bool(best[0]['audit']['scene']),best[0]['crossings']):best=(row,doc)
-    if args.upper_combined:
+    if args.stance_mm is not None:
+        assert 0<=args.stance_mm<=160
+        shift=np.array([0.,0.,args.stance_mm/1000])
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best']
+        doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'],{'l':30,'r':-30},shift)
+        dq0,_=dq_geometry(doc,geo,(1.,1.))
+        key='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0'
+        def full_scene(candidate):
+            actor=merged(candidate.values());at=actor['v'][actor['tri']]
+            lo=at.min(axis=1);hi=at.max(axis=1);amin=lo.min(0);amax=hi.max(0)
+            groups={'floor':[],'basket':[],'room':[]}
+            for k,v in hg.items():
+                if np.any((v['v'].min(0)>amax+1e-8)|(v['v'].max(0)<amin-1e-8)):continue
+                kind='floor' if k in ('Room_floor_earthen','Courtyard_earthen_ground') else 'basket' if v['basket'] else 'room'
+                groups[kind].append(v)
+            result={}
+            for kind,items in groups.items():
+                if not items:result[kind]=0;continue
+                prop=merged(items);bt=prop['v'][prop['tri']]
+                mask=np.all((bt.min(1)<=amax+1e-8)&(bt.max(1)>=amin-1e-8),axis=1)
+                prop=dict(prop,tri=prop['tri'][mask],region=prop['region'][mask])
+                if not len(prop['tri']):result[kind]=0;continue
+                bt=prop['v'][prop['tri']]
+                active=np.flatnonzero(np.all((lo<=bt.max(axis=(0,1))+1e-8)&(hi>=bt.min(axis=(0,1))-1e-8),axis=1))
+                result[kind]=contacts(actor,prop,active)['pairs']
+            # Check every near-floor foot vertex against actual floor triangles by
+            # vertical barycentric interpolation, not a nominal plane.
+            floors=merged([hg[k] for k in ('Room_floor_earthen','Courtyard_earthen_ground')])
+            ft=floors['v'][floors['tri']];xz=ft[:,:,[0,2]]
+            u=xz[:,1]-xz[:,0];v=xz[:,2]-xz[:,0];den=u[:,0]*v[:,1]-u[:,1]*v[:,0]
+            valid=abs(den)>1e-12
+            points=candidate[key]['v'];points=points[points[:,1]<.015]
+            gaps=[]
+            for point in points:
+                q=point[[0,2]]-xz[:,0]
+                s=np.divide(q[:,0]*v[:,1]-q[:,1]*v[:,0],den,out=np.zeros_like(den),where=valid)
+                t=np.divide(u[:,0]*q[:,1]-u[:,1]*q[:,0],den,out=np.zeros_like(den),where=valid)
+                ok=valid&(s>=-1e-8)&(t>=-1e-8)&(s+t<=1+1e-8)
+                heights=ft[:,0,1]+s*(ft[:,1,1]-ft[:,0,1])+t*(ft[:,2,1]-ft[:,0,1])
+                ok&=heights<point[1]+.05
+                if np.any(ok):gaps.append(float(point[1]-heights[ok].max()))
+            result['near_floor_vertices']=len(points);result['floor_ray_matches']=len(gaps)
+            result['min_floor_gap_mm']=min(gaps)*1000 if gaps else None
+            result['below_floor_half_mm']=sum(v<-.0005 for v in gaps)
+            return result
+        configs=[('dq',dq0)]
+        if not args.stance_dq_only:configs.append(('guarded',smooth_skin(doc,dq0,6,.006,True)[0]))
+        def bind_strain(candidate):
+            from collections import Counter
+            out={}
+            for k in (key,'W28e_tailored_linen'):
+                n=d['nodes'][names[k]];mesh=d['meshes'][n['mesh']];pr=mesh['primitives'][0];at=pr['attributes']
+                v=a(at['POSITION']).astype(float)
+                for weight,t in zip(n.get('weights',mesh.get('weights',[])),pr.get('targets',[])):
+                    if weight:v+=weight*a(t['POSITION'])
+                js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][n['skin']]['joints']])
+                dom=jn[js[np.arange(len(js)),ws.argmax(1)]];tri=candidate[k]['tri']
+                def area(vv):
+                    t=vv[tri];return np.linalg.norm(np.cross(t[:,1]-t[:,0],t[:,2]-t[:,0]),axis=1)
+                a0=area(v);a1=area(candidate[k]['v']);old=(a0>1e-12)&(area(g[k]['v'])<.1*a0)
+                bad=(a0>1e-12)&(a1<.1*a0)
+                out[k]={'severe':int(bad.sum()),'new':int((bad&~old).sum()),'regions':dict(Counter(dom[tri[bad,0]].tolist())),'face_ids':np.flatnonzero(bad).tolist()}
+            return out
+        for label,candidate in configs:
+            deadline();au=audit(candidate,shift);q=quality_relative(dq0,candidate);scene=full_scene(candidate)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['other_actor'].values())
+            gate=quality_gate(q,au) and scene['basket']==scene['room']==scene['below_floor_half_mm']==0 and scene['floor_ray_matches']==scene['near_floor_vertices'] and scene['near_floor_vertices']>0
+            row={'method':label,'stance_mm':args.stance_mm,'crossings':count,'quality_gate':bool(gate),'full_scene':scene,'quality':q,'bind_strain':bind_strain(candidate),'audit':au,'arm':info,'matrix_error':err}
+            rows.append(row);print(json.dumps(row),flush=True)
+            if best is None or (not gate,count)<(not best[0]['quality_gate'],best[0]['crossings']):best=(row,doc)
+        if args.stance_mm==0:assert rows[0]['crossings']=={0:69,30:81,60:95}[int(args.distance)]
+        if args.export_diagnostic:
+            from probe_w34zx_static_export import export_static
+            assert rows[0]['quality_gate'] and rows[0]['crossings']==0
+            out.mkdir()
+            ex,loaded=export_static(src,doc,a,dq0,out/'w34zx-static-actor.glb')
+            au=audit(loaded,shift);scene=full_scene(loaded)
+            assert not any(au[k] for k in ('skin_self','tunic_self','skin_tunic','scene','other_actor'))
+            assert scene['basket']==scene['room']==scene['below_floor_half_mm']==0
+            assert bind_strain(loaded)==rows[0]['bind_strain']
+            report={'status':'ART_HOLD_STATIC_DQ_DIAGNOSTIC','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'stance_mm':args.stance_mm,'export':ex,'reimport_audit':au,'full_scene':scene,'bind_strain':bind_strain(loaded),'limitations':['Static pose-specific morph only. No animation, physical grip or visual acceptance. Two digit-region and six inherited cloth faces severely compressed. Existing unrelated toe/floor residual not waived.']}
+            (out/'w34zx-export.json').write_text(json.dumps(report,indent=2))
+            print(json.dumps(report),flush=True);return
+    elif args.separate:
+        from probe_w34zt_separation import separate_skin
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'],{'l':30,'r':-30})
+        dq0,_=dq_geometry(doc,geo,(1.,1.));start,_=smooth_skin(doc,dq0,6,.006,True)
+        key='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0';n=d['nodes'][names[key]];pr=d['meshes'][n['mesh']]['primitives'][0];at=pr['attributes']
+        rest=a(at['POSITION']).astype(float)
+        for weight,t in zip(n.get('weights',d['meshes'][n['mesh']].get('weights',[])),pr.get('targets',[])):
+            if weight:rest+=weight*a(t['POSITION'])
+        js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][n['skin']]['joints']])
+        arm=np.array([name.startswith(('clavicle_','upperarm_','lowerarm_','hand_')) for name in jn])
+        digits=np.array([name.startswith(('thumb_','index_','middle_','ring_','pinky_')) for name in jn])
+        allowed=(np.sum(ws*arm[js],axis=1)>.05)&(np.sum(ws*digits[js],axis=1)<1e-9)
+        tri=start[key]['tri']
+        def areas(v):
+            t=v[tri];return np.linalg.norm(np.cross(t[:,1]-t[:,0],t[:,2]-t[:,0]),axis=1)
+        ar=areas(rest);old=(ar>1e-12)&(areas(start[key]['v'])<.1*ar)
+        for steps,cap,gain in ((0,0,0),(3,.003,0),(6,.005,.35),(10,.007,.5)):
+            deadline();candidate={k:dict(v) for k,v in start.items()};history=[]
+            if steps:candidate[key],history=separate_skin(start[key],rest,allowed,dq0[key],steps,cap,gain)
+            au=audit(candidate);q=quality_relative(dq0,candidate);gate=quality_gate(q,au)
+            severe=(ar>1e-12)&(areas(candidate[key]['v'])<.1*ar)
+            gate=gate and not np.any(severe&~old)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            row={'steps':steps,'cap_mm':cap*1000,'edge_gain':gain,'crossings':count,'quality_gate':bool(gate),'severe_skin_faces':int(severe.sum()),'new_severe_skin_faces':int((severe&~old).sum()),'quality':q,'audit':au,'history':history}
+            rows.append(row);print(json.dumps({'steps':steps,'crossings':count,'gate':bool(gate),'severe':int(severe.sum()),'history':history}),flush=True)
+            if best is None or (not gate,count)<(not best[0]['quality_gate'],best[0]['crossings']):best=(row,doc)
+        assert rows[0]['crossings']=={0:44,30:57,60:74}[int(args.distance)]
+    elif args.upper_combined:
         from collections import Counter
         prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
         seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
@@ -486,8 +603,8 @@ def main():
     else:
         for pole in (0,-25,25):
             for corr in (1,0):trial(pole,corr,.65)
-    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'weight_trial':args.weight_trial,'combined_trial':args.combined,'shared_reference_trial':args.shared_reference,'upper_twist_trial':args.upper_twist,'upper_combined_trial':args.upper_combined,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
-    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth or args.weight_trial or args.combined or args.shared_reference or args.upper_twist or args.upper_combined):
+    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'weight_trial':args.weight_trial,'combined_trial':args.combined,'shared_reference_trial':args.shared_reference,'upper_twist_trial':args.upper_twist,'upper_combined_trial':args.upper_combined,'separation_trial':args.separate,'stance_mm':args.stance_mm,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
+    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth or args.weight_trial or args.combined or args.shared_reference or args.upper_twist or args.upper_combined or args.separate or args.stance_mm is not None):
         doc=best[1];raw=src.read_bytes();jl=struct.unpack_from('<I',raw,12)[0];binchunk=raw[20+jl:];doc['asset']['generator']='HOREB W34zg full arm diagnostic'
         jb=json.dumps(doc,separators=(',',':'),ensure_ascii=True).encode();jb+=b' '*((-len(jb))%4);packed=struct.pack('<5I',0x46546c67,2,20+len(jb)+len(binchunk),len(jb),0x4e4f534a)+jb+binchunk
         f=out/'w34zg-static-actor.glb';f.write_bytes(packed);report['glb_sha256']=hashlib.sha256(packed).hexdigest();load(f,report['glb_sha256'])
