@@ -93,9 +93,9 @@
 
 ## ST-OPERATION-OUTCOME-TRUTH — UI feedback must follow the owning operation
 
-- Status: `evidence-rich / active-work` through `SYS-READER-SHARE-COPY-OUTCOME-CONTRACT`.
+- Status: `evidence-rich / reverify-on-demand`; `SYS-READER-SHARE-COPY-OUTCOME-CONTRACT` closed by Product #2273 and AuditRepo W10.
 - Theme: a dispatched action or attempted fallback is not success; status attributes, live-region text and visual confirmation must be derived from the selected mechanism's terminal outcome. Shared capture owners multiply one false-positive branch across every rendered control.
-- Current boundary: the current proven case is ReaderActions copy fallback returning `false`; do not generalize this to modern Clipboard success or treat API obsolescence alone as a defect.
+- Current boundary: historical false-success/temporary-node leak repaired, with 12 source and 36 native browser outcomes and retained shared owner. Reopen only on new evidence; do not treat API obsolescence alone as a defect.
 - Recheck trigger: action/status owner change, fallback removal, or a new operation whose negative result is announced as success.
 
 ## ST-SOURCE-GUARD-CLOSURE — validator strength and trigger applicability
@@ -108,7 +108,7 @@
 
 - Status: `evidence-rich / active-work` through `SYS-DEPENDENCY-ADVISORY-LIFECYCLE`.
 - Theme: external advisory drift, scheduled detection, bot update grouping, exact-candidate CI and terminal repair/acceptance are one lifecycle. A generated PR or an old green audit is not completion.
-- Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership. Product #2185 is merged and current main has 1 moderate Astro advisory / production 0, but unchanged-main scheduled detection and terminal fix-or-expiring-acceptance for that residual are still absent. #2179 remains the overlapping workflow owner; no open lockfile owner remains.
+- Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership. Product #2265 repaired the historical Astro advisory pair; current source pins Astro 7.4.12, but a fresh advisory feed audit is not claimed. Current remaining work is unchanged-main scheduled detection and dated disposition/expiry; #2348 is the existing candidate owner, not merged closure.
 - Recheck trigger: advisory-feed change, #2179 terminal disposition, audit workflow change, Astro remediation or dated exception expiry.
 
 ## ST-CSS-CASCADE — layered ownership and priority debt
