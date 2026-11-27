@@ -1,0 +1,55 @@
+# 2026-11-18 UTC — этап 12. Native dialog witness pending; verify the collection tool only.
+# FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0, Draft #570.
+
+[Overlap and runtime availability]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+# Список PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md («Сверка веток и PR», только gh pr list).
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# Restored sandbox index at exact published 5c59d79c9442b82ac8fac637a5822385ebb2a31c by mixed reset after verifying all 68 blobs;
+# checkout never switched branches and did not overwrite files. Stage 11 preflight 44380617134 and validate 44380617062 SUCCESS.
+# Compare #2339 0b957627...9a7fccd9 (4 paths: Journal + sitemap), #2341 505ea4e...3ba40b5 and #2342 4efc032...054a8ab.
+# #2343 16 paths and #2344 7 paths via paginated pull file lists; verified package.json adds journal:editorial:contract.
+# Bare 8a8dced journal review; #538 323b39b...c852784 prototype; 841ff35...276cf5c Keston/Tokmak.
+# Pre-push #2344 changed ready state at the same 163ec32, #2345 new (0b021c3) only JournalDocumentHead. No print owner overlap.
+# No DISPLAY/Wayland, no Chrome/Chromium or Xvfb registered, no installed browser/runtime found in /opt or the normal caches.
+# `npm view chromium`, `@playwright/browser-chromium`, `@puppeteer/browsers` showed installer/driver packages, not full browser.
+# HEAD only, no download redirects followed: full macchrome/linchrome asset 722045186 and unpins/xvfb asset 591438380
+# return a 302 from api.github.com to release-assets.githubusercontent.com (outside the current allowlist).
+# Stop here for native-environment acquisition; Headless Shell remains allowed only for fixture validation.
+
+[Rebuild and serve the exact article]
+# PRODUCT, OUT and TOOLS are isolated temporary directories. See stage 1 commands.log for AL2023 / Node bootstrap.
+sha=9edef94ece08012223c1364bec7ddcd561cf5713
+curl -fsSL --retry 2 "https://codeload.github.com/FedorMilovanov/gb-is-my-strength/tar.gz/$sha" | tar -xz --strip-components=1 -C "$PRODUCT"
+npm install --prefix "$TOOLS" --no-audit --no-fund --omit=optional node@22.23.4 @sparticuz/chromium@153.0.0 pdfjs-dist@5.4.624
+# PDF.js as published to registry.npmjs.org: sha512-sm6TxKTtWv1Oh6n3C6J6a8odejb5uO4A4zo/2dgkHuC0iu8ZMAXOezEODkVaoVp8nX1Xzr+0WxFJJmUr45hQzg==
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+(cd "$PRODUCT" && npm ci --no-audit --no-fund)
+(cd "$PRODUCT" && GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like && npm run page-ownership:dist:production-like)
+# Build exit 0; all 48 exact stage 11 pins matched again without Pagefind, no Product source changes.
+H="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-native-print/2026-11-18/harness"
+node --check "$H/preview.mjs"; node --check "$H/checker.mjs"; node --check "$H/smoke.mjs"
+node "$H/preview.mjs" "$PRODUCT/dist" "$TOOLS/node_modules/pdfjs-dist" 4178
+# Long-lived preview process, 0.0.0.0:4178 accepts proxy host (no X-Frame-Options / hardcoded localhost URLs).
+# It hashes 48 files before binding; no Product asset rewritten. The landing does not load the article or article fonts.
+# Use a separate Chrome tab, not the embedded preview, when invoking the native print UI. No receipt upload endpoint.
+
+[Instrument verification, not native evidence]
+# For smoke only: CHROMIUM is from @sparticuz/chromium.executablePath(); extract its AL2023 libs first.
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node "$H/smoke.mjs" "$PRODUCT" "$CHROMIUM" http://127.0.0.1:4178 "$OUT/fixture-smoke.json"
+# Full PDF from Headless Shell as fixture, deliberately clipped 1–12, and neutral setup page. These are not cold-native output.
+# Initial parser result `needs_review`: PDF.js preserved spaces between letters of SOLI DEO GLORIA; signature marker alone
+# now ignores inter-letter spaces. Re-ran complete smoke with final code, retained the actual classifications and SHA-256 values.
+# PASS three: 12→13 `missing_last_page`, 13→13 `tail_present_both`, 1→13 `unconfirmed_article`.
+# Exact HTML hash on HTTP, current browser 153.0.8010.0, responsive 390 with no horizontal overflow, local PDF.js worker,
+# only GET/no body on checker, synthetic POST rejected 405, non-local preview Host HTTPS proxy pattern supported.
+# AuditRepo evidence has only compact JSON fixture receipts; never publish the fixtures as real native PDFs.
+
+[Admission and publication]
+# CHANGED = cumulative diff file list against fcf2e69b. Only one new intake; read-only Product and other agents' PRs.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Draft proof status pending until a first/repeat pair actually saved from normal browser UI arrives. No merge/live/Drive writes.

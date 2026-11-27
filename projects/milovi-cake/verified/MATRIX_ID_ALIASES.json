@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "aliases": {
+    "MC-LIGHTHOUSE-TBT-DIVERGENCE-001": {
+      "status": "alias",
+      "canonical": "MC-MOBILE-PERF-BUDGET-001",
+      "reason": "2026-11-21 reverify at main@8c67865d proved CI Lighthouse and Lighthouse artifact now pass (8 consecutive runs, bento-torty TBT 0/19 ms); narrowed the remaining owner-mandated performance budget residual (#100) into canonical MC-MOBILE-PERF-BUDGET-001."
+    },
+    "MC-WEBKIT-RESILIENCE-001": {
+      "status": "retired",
+      "reason": "PR #107 (9d623c0d) merged and PR #181 (174524cc) resolved WebKit cart/gallery test overload without retries or weakened contracts; Browser compatibility passed all 4 WebKit and 2 Firefox jobs on PR #182 (ccb2972f -> main@8c67865d)."
+    }
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "sameDistPinsAsPointerReplays": 49,
+  "independentRuns": 2,
+  "witnessSha256": [
+    "4338bb90690dbfd3f6e5bc7026ec7ecb83e8e61a0c8a955ddea2a62b46dda847",
+    "f6f3ea624caf37b64a0a307df02b2ba6b905f4ddcea448f1ec57b0560c9efbb8"
+  ],
+  "counts": {
+    "contexts": 4,
+    "trustedKeyboardSource": 4,
+    "sourceWhileOfferOn": 4,
+    "contextsWithCoveredConfidenceKey": 3,
+    "coveredConfidenceKeys": 6,
+    "pointerContinueNoReturn": 4
+  },
+  "casesAB": [
+    [
+      {
+        "id": "quiz-keys-1",
+        "question": "gill.scholar.mishnah",
+        "precedingQuestions": 1,
+        "hash": "#sec-hebrew",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-hebrew",
+        "landedY": 4911,
+        "clickOrSampleY": 4911,
+        "afterY": 4911,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 1604,
+        "toastAtSource": "on",
+        "ctaAgeMs": 1793,
+        "dismissMs": {
+          "off": 1,
+          "removed": 402
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-trinity"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": [],
+        "viewport": [
+          390,
+          844
+        ],
+        "inputToSource": "Tab / Shift+Tab / Enter",
+        "inputToContinue": "pointer",
+        "tabs": 10,
+        "enterActivations": 6,
+        "hiddenSourceTabStops": 1,
+        "tabsOutsideSheet": 0,
+        "confidenceKeysWithPointerCovered": [
+          {
+            "questionOrdinal": 2,
+            "questionId": "gill.scholar.mishnah",
+            "ageMs": 1567,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "quiz-keys-2",
+        "question": "gill.scholar.mishnah",
+        "precedingQuestions": 3,
+        "hash": "#sec-hebrew",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-hebrew",
+        "landedY": 4911,
+        "clickOrSampleY": 4911,
+        "afterY": 4911,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 1759,
+        "toastAtSource": "on",
+        "ctaAgeMs": 1967,
+        "dismissMs": {
+          "off": 1,
+          "removed": 401
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-trinity"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": [],
+        "viewport": [
+          390,
+          844
+        ],
+        "inputToSource": "Tab / Shift+Tab / Enter",
+        "inputToContinue": "pointer",
+        "tabs": 31,
+        "enterActivations": 12,
+        "hiddenSourceTabStops": 3,
+        "tabsOutsideSheet": 0,
+        "confidenceKeysWithPointerCovered": [
+          {
+            "questionOrdinal": 4,
+            "questionId": "gill.scholar.mishnah",
+            "ageMs": 1711,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "quiz-keys-1",
+        "question": "gill.scholar.systematics",
+        "precedingQuestions": 10,
+        "hash": "#sec-systematics",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-systematics",
+        "landedY": 36499,
+        "clickOrSampleY": 36499,
+        "afterY": 36499,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 2314,
+        "toastAtSource": "on",
+        "ctaAgeMs": 2529,
+        "dismissMs": {
+          "off": 1,
+          "removed": 402
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-habakkuk"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": [],
+        "viewport": [
+          390,
+          844
+        ],
+        "inputToSource": "Tab / Shift+Tab / Enter",
+        "inputToContinue": "pointer",
+        "tabs": 88,
+        "enterActivations": 33,
+        "hiddenSourceTabStops": 10,
+        "tabsOutsideSheet": 0,
+        "confidenceKeysWithPointerCovered": [
+          {
+            "questionOrdinal": 5,
+            "questionId": "gill.legacy.rippon",
+            "ageMs": 1792,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          },
+          {
+            "questionOrdinal": 6,
+            "questionId": "gill.legacy.rediscovery",
+            "ageMs": 1854,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          },
+          {
+            "questionOrdinal": 10,
+            "questionId": "gill.legacy.hypercalvinism",
+            "ageMs": 2176,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          },
+          {
+            "questionOrdinal": 11,
+            "questionId": "gill.scholar.systematics",
+            "ageMs": 2256,
+            "center": [
+              83.6640625,
+              735.25
+            ],
+            "sampledHits": 0,
+            "topNode": "SPAN",
+            "scrollRoom": 0,
+            "toastZ": "9999",
+            "sheetZ": "3000",
+            "optionsBeforeAfter": [
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "quiz-keys-2",
+        "question": "gill.scholar.systematics",
+        "precedingQuestions": 0,
+        "hash": "#sec-systematics",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-systematics",
+        "landedY": 36499,
+        "clickOrSampleY": 36499,
+        "afterY": 36499,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 1496,
+        "toastAtSource": "on",
+        "ctaAgeMs": 1714,
+        "dismissMs": {
+          "off": 1,
+          "removed": 401
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-habakkuk"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": [],
+        "viewport": [
+          390,
+          844
+        ],
+        "inputToSource": "Tab / Shift+Tab / Enter",
+        "inputToContinue": "pointer",
+        "tabs": 3,
+        "enterActivations": 3,
+        "hiddenSourceTabStops": 0,
+        "tabsOutsideSheet": 0,
+        "confidenceKeysWithPointerCovered": []
+      }
+    ]
+  ]
+}

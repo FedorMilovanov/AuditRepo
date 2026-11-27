@@ -13,6 +13,10 @@ Run The Legendary Poet repair program as a continuously updated multiagent syste
 - Workers do **not** independently redefine priorities, duplicate roots, rewrite the MASTER matrix, or start adjacent refactors because they noticed them.
 - Product repairs happen in `FedorMilovanov/TheLegendaryPoet`; durable audit truth lives in `FedorMilovanov/AuditRepo`.
 
+## 0.1 Engineering-first coordination — owner directive 2026-11-25
+
+Follow the [shared MAX Engineering First policy](../../AUDITREPO_OPERATING_MODEL.md#max--engineering-first-крупные-волны-минимум-координационной-суеты). MAX executes small safe in-scope fixes and integration personally; delegate only coherent substantial root-family packages with acceptance evidence. Workers finish their package autonomously and send one cumulative handoff when ready, or immediately escalate a genuine blocker/P0/ownership conflict. The historical instruction to refill the worker pool does not require per-minute handoffs or report-only waves. No artificial duration quota; preserve independent QA, owner/branch boundaries and release gates.
+
 ## 1. Freshness rule — mandatory before every wave
 
 Never trust the SHA/count in this document as permanently current.

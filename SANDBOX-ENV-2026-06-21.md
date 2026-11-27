@@ -1,3 +1,50 @@
+> **Внимание (15.11.2026): исторический снимок, не универсальная инструкция для текущей Arena.** Ниже сохранены факты среды июля 2026 года (Debian 13, открытый egress, сохранение /tmp, apt). Эти возможности необходимо заново проверять в каждой сессии. Для ограниченной Arena Sandbox подтверждён другой вариант восстановления браузера:
+
+### Arena Sandbox: актуальный проверенный запасной путь для Chromium
+
+На Debian 12/x86_64 успешно запускался Chromium 153.0.8010.0 с `@sparticuz/chromium@153.0.0` и Playwright 1.64.1. Инструменты устанавливались **вне репозитория**, без изменения зависимостей:
+
+```bash
+npm install --prefix /tmp/arena-browser --no-audit --no-fund @sparticuz/chromium@153.0.0 playwright@1.64.1
+```
+
+Использовать публичный экспорт пакета, а не внутренний путь `build/index.js`. Установка с `--prefix` не добавляет модули в разрешение импортов текущего репозитория. Минимальный smoke-test из каталога установки (изолированная одноразовая среда, только локальный HTML):
+
+```bash
+(
+  cd /tmp/arena-browser || exit 1
+  timeout 60s node --input-type=module <<'JS'
+import Chromium from '@sparticuz/chromium';
+import { chromium } from 'playwright';
+const executablePath = await Chromium.executablePath();
+const browser = await chromium.launch({
+  executablePath,
+  headless: true,
+  args: ['--no-sandbox', '--disable-dev-shm-usage'],
+});
+try {
+  const page = await browser.newPage();
+  await page.setContent('<title>Arena smoke</title><p>ready</p>');
+  if (await page.title() !== 'Arena smoke' ||
+      await page.locator('p').textContent() !== 'ready') {
+    throw new Error('Chromium smoke failed');
+  }
+  console.log('Chromium smoke PASS', browser.version());
+} finally {
+  await browser.close();
+}
+JS
+)
+```
+
+При отсутствии библиотек NSS проверить наличие `/tmp/arena-browser/node_modules/@sparticuz/chromium/bin/al2023.tar.br`; только если этот архив действительно присутствует, распаковать его (Brotli → tar) в отдельный `/tmp/arena-browser/libs` и добавить фактический каталог библиотек в `LD_LIBRARY_PATH` с сохранением прежнего значения, затем повторить smoke-test. Не копировать весь `Chromium.args`: содержит `--disable-web-security`. Патчи NSS и `LD_PRELOAD` в исторически подтверждённой конфигурации не требовались. Флаги без sandbox допустимы только в изолированной одноразовой среде, не на рабочем компьютере. Smoke-test подтверждает запуск, не продуктовую приёмку.
+
+Не полагаться на сохранность `/tmp`, проверять запуск smoke-test. При блокировке CDN не повторять безрезультатно `playwright install`; внешние запросы подменять только адресно с явной отчётностью. Chromium не заменяет WebKit/Firefox и реальные устройства. Это **проверенный альтернативный способ**, а не требование ко всем средам, особенно не к GitHub Actions.
+
+---
+
+> **Ниже — исторический архив, не действующие правила Git/безопасности.** Приоритет имеют [ENGINEERING FIRST](AUDITREPO_OPERATING_MODEL.md), [RESOURCE SMART](LOCAL_EXECUTION_RESOURCE_PROTOCOL.md) и текущие правила Product. Не помещать токены в remote URL, не печатать credentials, не применять исторический пример push напрямую в main или force-push как общий рецепт. Использовать авторизованный connector/credential helper и текущую защищённую рабочую ветку.
+
 ## 🛠 ТЕХНИЧЕСКИЙ ПАСПОРТ СРЕДЫ (Verified 2026-07-04)
 
 **Архитектура:** E2B / Firecracker microVM  

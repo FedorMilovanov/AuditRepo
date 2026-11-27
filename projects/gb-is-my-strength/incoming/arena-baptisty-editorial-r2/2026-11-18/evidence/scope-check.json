@@ -1,0 +1,21 @@
+{
+  "baseSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "productSourceFilesCompared": 3517,
+  "builtBaseSourceDiffs": 0,
+  "productSourceFilesChanged": [
+    "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro",
+    "src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaBody.astro",
+    "src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatBody.astro",
+    "src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochBody.astro",
+    "src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro",
+    "src/components/baptisty-rossii/BaptistyRossiiVsehib1944Body.astro"
+  ],
+  "newOrDeletedSourceFiles": 0,
+  "generatedDirsExcluded": [
+    ".astro",
+    ".git",
+    "dist",
+    "node_modules",
+    "reports"
+  ]
+}

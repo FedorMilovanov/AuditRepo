@@ -1,0 +1,233 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "a4117b8123ccbe635e3059fc9e492642d1f2fc21bd761e30f6b7e5e702b50eea",
+  "witnessSha256B": "25507a2f875eef71da5e6b6e11c749a8782c638a4a07bc786b6b665d5184fc9b",
+  "casesPerReplay": 10,
+  "stateObservationsPerReplay": 26,
+  "oneToOnePerReplay": 17,
+  "distPins": 61,
+  "sharedStage18Pins": 41,
+  "verifiedStage18Pins": 46,
+  "newlyObservedPins": [
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-400.woff2",
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-400i.woff2",
+    "fonts/CormorantGaramond/cormorantgaramond-cyrillic-500.woff2",
+    "fonts/Inter/inter-cyrillic-400.woff2",
+    "fonts/Inter/inter-cyrillic-500.woff2",
+    "fonts/Inter/inter-cyrillic-600.woff2",
+    "fonts/Lora/lora-cyrillic-400.woff2",
+    "fonts/Lora/lora-cyrillic-400i.woff2",
+    "fonts/Lora/lora-cyrillic-600.woff2",
+    "fonts/Lora/lora-latin-400.woff2",
+    "fonts/Lora/lora-latin-400i.woff2",
+    "fonts/Lora/lora-latin-600.woff2",
+    "fonts/NotoSerifHebrew/notoserifhebrew-500.woff2",
+    "fonts/PlayfairDisplay/playfairdisplay-cyrillic-400i.woff2",
+    "fonts/PlayfairDisplay/playfairdisplay-cyrillic-700.woff2",
+    "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+    "fonts/SourceSans3/sourcesans3-cyrillic-500.woff2",
+    "fonts/SourceSans3/sourcesans3-cyrillic-600.woff2",
+    "fonts/SourceSans3/sourcesans3-latin-400.woff2",
+    "js/vosk-tts-engine.js"
+  ],
+  "screenshots": {
+    "home-resume-light-rest.png": {
+      "a": {
+        "width": 352,
+        "height": 258,
+        "sha256": "9075328fe13abbeac49072b53ad83488ede735cf0131827872eb89ac5c8946fa"
+      },
+      "b": {
+        "width": 352,
+        "height": 258,
+        "sha256": "9075328fe13abbeac49072b53ad83488ede735cf0131827872eb89ac5c8946fa"
+      }
+    },
+    "home-resume-light-hover.png": {
+      "a": {
+        "width": 352,
+        "height": 258,
+        "sha256": "bf0f56630c691adcdc02df58998224b45906dd1a4656d55cefbd68173dc67bfb"
+      },
+      "b": {
+        "width": 352,
+        "height": 258,
+        "sha256": "bf0f56630c691adcdc02df58998224b45906dd1a4656d55cefbd68173dc67bfb"
+      }
+    },
+    "home-resume-dark-rest.png": {
+      "a": {
+        "width": 352,
+        "height": 258,
+        "sha256": "2083fee8637505a555b46b21eae4a1eec56a7d8ceac331bdb36d5bef596df11c"
+      },
+      "b": {
+        "width": 352,
+        "height": 258,
+        "sha256": "2083fee8637505a555b46b21eae4a1eec56a7d8ceac331bdb36d5bef596df11c"
+      }
+    },
+    "home-resume-dark-color-probe.png": {
+      "a": {
+        "width": 352,
+        "height": 258,
+        "sha256": "330ac3e495b828941e921472ebae4fea8c8fb201f9e22461b621931dae695cc1"
+      },
+      "b": {
+        "width": 352,
+        "height": 258,
+        "sha256": "330ac3e495b828941e921472ebae4fea8c8fb201f9e22461b621931dae695cc1"
+      }
+    }
+  },
+  "pairs": [
+    {
+      "id": "learning-390-light-pointer",
+      "ratios": {
+        "rest": 9.3012,
+        "hover": 1.0,
+        "keyboard": 9.3012
+      },
+      "whiteOnFill": 9.3012,
+      "fill": "rgb(122, 46, 46)",
+      "labForegroundOnly": {
+        "hover": 9.3012
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    },
+    {
+      "id": "reading-390-light-pointer",
+      "ratios": {
+        "rest": 9.3012,
+        "hover": 1.0,
+        "keyboard": 9.3012
+      },
+      "whiteOnFill": 9.3012,
+      "fill": "rgb(122, 46, 46)",
+      "labForegroundOnly": {
+        "hover": 9.3012
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+    },
+    {
+      "id": "learning-390-dark-pointer",
+      "ratios": {
+        "rest": 1.0,
+        "hover": 1.0,
+        "keyboard": 1.0
+      },
+      "whiteOnFill": 2.2261,
+      "fill": "rgb(212, 165, 116)",
+      "labForegroundOnly": {
+        "rest": 9.4337,
+        "hover": 9.4337
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    },
+    {
+      "id": "reading-390-dark-pointer",
+      "ratios": {
+        "rest": 1.0,
+        "hover": 1.0,
+        "keyboard": 1.0
+      },
+      "whiteOnFill": 2.2261,
+      "fill": "rgb(212, 165, 116)",
+      "labForegroundOnly": {
+        "rest": 9.4337,
+        "hover": 9.4337
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+    },
+    {
+      "id": "learning-1440-light-pointer",
+      "ratios": {
+        "rest": 9.3012,
+        "hover": 1.0,
+        "keyboard": 9.3012
+      },
+      "whiteOnFill": 9.3012,
+      "fill": "rgb(122, 46, 46)",
+      "labForegroundOnly": {
+        "hover": 9.3012
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    },
+    {
+      "id": "reading-1440-light-pointer",
+      "ratios": {
+        "rest": 9.3012,
+        "hover": 1.0,
+        "keyboard": 9.3012
+      },
+      "whiteOnFill": 9.3012,
+      "fill": "rgb(122, 46, 46)",
+      "labForegroundOnly": {
+        "hover": 9.3012
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+    },
+    {
+      "id": "learning-1440-dark-pointer",
+      "ratios": {
+        "rest": 1.0,
+        "hover": 1.0,
+        "keyboard": 1.0
+      },
+      "whiteOnFill": 2.2261,
+      "fill": "rgb(212, 165, 116)",
+      "labForegroundOnly": {
+        "rest": 9.4337,
+        "hover": 9.4337
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    },
+    {
+      "id": "reading-1440-dark-pointer",
+      "ratios": {
+        "rest": 1.0,
+        "hover": 1.0,
+        "keyboard": 1.0
+      },
+      "whiteOnFill": 2.2261,
+      "fill": "rgb(212, 165, 116)",
+      "labForegroundOnly": {
+        "rest": 9.4337,
+        "hover": 9.4337
+      },
+      "action": "Enter",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+    },
+    {
+      "id": "learning-390-light-touch",
+      "ratios": {
+        "rest": 9.3012
+      },
+      "whiteOnFill": 9.3012,
+      "fill": "rgb(122, 46, 46)",
+      "labForegroundOnly": {},
+      "action": "tap",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    },
+    {
+      "id": "learning-390-dark-touch",
+      "ratios": {
+        "rest": 1.0
+      },
+      "whiteOnFill": 2.2261,
+      "fill": "rgb(212, 165, 116)",
+      "labForegroundOnly": {
+        "rest": 9.4337
+      },
+      "action": "tap",
+      "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+    }
+  ]
+}
