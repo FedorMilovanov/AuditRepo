@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);args=p.parse_args();assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and not args.export_diagnostic and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);args=p.parse_args();assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb';d,a=load(src,r['glb_sha256'])
@@ -395,12 +395,15 @@ def main():
             from probe_w34zx_static_export import export_static
             assert rows[0]['quality_gate'] and rows[0]['crossings']==0
             out.mkdir()
-            ex,loaded=export_static(src,doc,a,dq0,out/'w34zx-static-actor.glb')
+            ex,loaded=export_static(src,doc,a,configs[0][1],out/'w34zx-static-actor.glb')
             au=audit(loaded,shift);scene=full_scene(loaded)
             assert not any(au[k] for k in ('skin_self','tunic_self','skin_tunic','scene','other_actor'))
             assert scene['basket']==scene['room']==scene['below_floor_half_mm']==0
             assert bind_strain(loaded)==rows[0]['bind_strain']
             report={'status':'ART_HOLD_STATIC_DQ_DIAGNOSTIC','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'stance_mm':args.stance_mm,'export':ex,'reimport_audit':au,'full_scene':scene,'bind_strain':bind_strain(loaded),'limitations':['Static pose-specific morph only. No animation, physical grip or visual acceptance. Two digit-region and six inherited cloth faces severely compressed. Existing unrelated toe/floor residual not waived.']}
+            if digit_meta is not None:
+                report['digit_area']=digit_meta
+                report['limitations']=['Static pose-specific morph only. No animation, physical grip or visual acceptance.','Six inherited cloth faces severely compressed; digit microcorrection clears the diagnostic area threshold. Existing unrelated toe/floor residual not waived.']
             (out/'w34zx-export.json').write_text(json.dumps(report,indent=2))
             print(json.dumps(report),flush=True);return
     elif args.separate:
