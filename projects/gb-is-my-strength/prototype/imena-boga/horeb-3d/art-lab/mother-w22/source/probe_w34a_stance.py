@@ -10,10 +10,31 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 assert sha(actor)=="2a72465f5efb0995926b9641a103365122907174447af1ca61b875366e43eb3b"
 assert sha(asset)=="fdf603182640b2b4878857b672e635ffae69fcc95070af1814adf14521b49622"
 bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;s.render.fps=24
-bpy.ops.import_scene.gltf(filepath=str(actor),merge_vertices=True)
+# Optional exact candidate from a validated derivative manifest. Keep the
+# original actor path and SHA as the reference for the saved pose data.
+candidate=globals().get("candidate_asset")
+if candidate is not None:
+ candidate=Path(candidate)
+ cm=json.loads(candidate.with_name("w34f-manifest.json").read_text())
+ assert cm["status"]=="ART_HOLD_W34F_CORRECTIVE_MORPH_TRIAL" and cm["source_sha256"]==sha(actor) and sha(candidate)==cm["glb_sha256"]
+bpy.ops.import_scene.gltf(filepath=str(candidate or actor),merge_vertices=True)
 rig=next(o for o in bpy.data.objects if o.type=="ARMATURE")
 meshes=[o for o in bpy.data.objects if o.type=="MESH" and any(m.type=="ARMATURE" and m.object==rig for m in o.modifiers)]
 assert len(meshes)==9,[o.name for o in meshes]
+if candidate is not None:
+ # The glTF importer may use the mesh name instead of the node name
+ # when creating a morph-bearing object. Resolve via the actual key
+ # and original tunic mesh identity, then retain audit names.
+ print("W34F_IMPORTED_MESHES",[(o.name,o.data.name) for o in meshes],flush=True)
+ tunic=next(o for o in meshes if o.data.name.startswith("W28e_trunk") or o.name.startswith("W28e_trunk") or o.name=="W28e_tailored_linen")
+ assert tunic.data.shape_keys and "W34e_JointPoseCorrective" in tunic.data.shape_keys.key_blocks
+ if tunic.name!="W28e_tailored_linen":
+  old=bpy.data.objects.get("W28e_tailored_linen")
+  if old is not None:
+   assert old.type=="EMPTY"
+   old.name="W28e_tailored_linen_node"
+  tunic.name="W28e_tailored_linen"
+  assert tunic.name=="W28e_tailored_linen"
 for owner in [rig]+[o.data.shape_keys for o in meshes if o.data.shape_keys]:
  ad=owner.animation_data;t=next(t for t in ad.nla_tracks if t.name=="Mother_GestureTowardsBasket");st=t.strips[0]
  ad.use_nla=False;ad.action=st.action;ad.action_slot=st.action_slot
