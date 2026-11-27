@@ -2,7 +2,7 @@
 """Retire reviewed AuditRepo refs from an immutable request.
 
 The command is dry-run by default. Destructive execution requires --execute.
-It performs a complete live preflight before the first DELETE and writes
+It performs a complete live preflight before the first leased deletion and writes
 machine-readable evidence throughout execution.
 """
 
@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -20,6 +21,21 @@ from typing import Any
 
 class RetirementError(RuntimeError):
     """Fail-closed retirement error."""
+
+
+def delete_ref_with_lease(remote: str, branch: str, expected: str, *, cwd: Path | None = None) -> None:
+    """Let Git's receive-pack enforce the exact reviewed old object ID."""
+    ref = f"refs/heads/{branch}"
+    if branch == "main" or branch.startswith("archive/"):
+        raise RetirementError(f"protected branch cannot be deleted: {branch}")
+    result = subprocess.run(
+        ["git", "push", "--porcelain", f"--force-with-lease={ref}:{expected}",
+         remote, f":{ref}"],
+        cwd=cwd, env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+    )
+    if result.returncode:
+        raise RetirementError(f"leased deletion rejected for {branch}: {result.stderr.strip()[:500]}")
 
 
 class GitHubClient:
@@ -90,6 +106,11 @@ class GitHubClient:
             return None
         return payload["object"]["sha"]
 
+    def delete_ref(self, branch: str, expected: str) -> None:
+        # Use the explicit repository URL; do not trust a mutable local origin.
+        # Actions checkout provides the authenticated Git transport.
+        delete_ref_with_lease(f"https://github.com/{self.repository}.git", branch, expected)
+
     def compare(self, base: str, head: str) -> dict[str, Any]:
         encoded_base = urllib.parse.quote(base, safe="")
         encoded_head = urllib.parse.quote(head, safe="")
@@ -137,7 +158,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--execute",
         action="store_true",
-        help="Perform DELETE calls after the complete preflight.",
+        help="Perform leased Git ref deletions after the complete preflight.",
     )
     return parser.parse_args()
 
@@ -238,6 +259,8 @@ def main() -> int:
         source_branch = manifest.get("sourceBranch")
         if not source_branch:
             raise RetirementError("sourceBranch is required")
+        if source_branch == "main" or source_branch.startswith("archive/") or source_branch in retained_names:
+            raise RetirementError(f"protected/retained source branch: {source_branch}")
 
         for name in names:
             if name == "main" or name.startswith("archive/"):
@@ -330,6 +353,10 @@ def main() -> int:
                 ]
                 if not replacements:
                     raise RetirementError(f"{branch} has no merged replacement PR")
+                for replacement in replacements:
+                    merged = replacement.get("mergeCommit")
+                    if not merged or client.compare(merged, args.current_main).get("behind_by") != 0:
+                        raise RetirementError(f"replacement PR #{replacement['number']} is not integrated into current main")
                 record["replacementPullRequests"] = replacements
                 record["comparison"] = {
                     "base": base,
@@ -372,6 +399,39 @@ def main() -> int:
                 )
             evidence["preflight"].append(record)
 
+        def current_guard(branch: str, expected: str) -> None:
+            if client.get_ref("main") != args.current_main:
+                raise RetirementError("main moved after preflight")
+            heads = client.open_pr_heads()
+            if branch in heads:
+                raise RetirementError(f"branch acquired an open PR after preflight: {branch}")
+            live_branches = client.branch_names()
+            if live_branches - (retained_names | heads | target_names | {source_branch}):
+                raise RetirementError("unreviewed remote branches appeared after preflight")
+            if any(item.get("required") and item["branch"] not in live_branches for item in retained):
+                raise RetirementError("required retained ref disappeared after preflight")
+            if client.get_ref(branch) != expected:
+                raise RetirementError(f"head mismatch after preflight: {branch}")
+
+        def source_proof(head: str) -> list[int]:
+            encoded_head = urllib.parse.quote(f"{client.owner}:{source_branch}", safe="")
+            pull_requests = client.list_paged(f"/repos/{repository}/pulls?state=all&head={encoded_head}")
+            matching = [
+                pr["number"] for pr in pull_requests
+                if pr.get("merged_at") and pr.get("head", {}).get("sha") == head
+                and pr.get("merge_commit_sha")
+                and client.compare(pr["merge_commit_sha"], args.current_main).get("behind_by") == 0
+            ]
+            if not matching:
+                raise RetirementError(f"source branch head {head} is not the exact head of a merged PR")
+            return matching
+
+        # Validate a non-open source before deleting any target. A bad source
+        # must not produce a partial retirement merely because it was checked last.
+        source_before = client.get_ref(source_branch)
+        if source_before is not None and source_branch not in open_heads:
+            source_proof(source_before)
+
         evidence["initialBranches"] = sorted(initial_branches)
         evidence["openPullRequestHeads"] = sorted(open_heads)
         evidence["status"] = "preflight-passed"
@@ -384,63 +444,57 @@ def main() -> int:
 
         for record in evidence["preflight"]:
             branch = record["branch"]
-            status, _ = client.request(
-                "DELETE", client.ref_path(branch, plural=True), allow=(204,)
-            )
-            if status != 204:
-                raise RetirementError(f"deletion returned {status} for {branch}")
+            current_guard(branch, record["head"])
+            archive = record.get("archivePreservation")
+            if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
+                raise RetirementError(f"archive-preserved head changed after preflight: {branch}")
+            client.delete_ref(branch, record["head"])
             evidence["deleted"].append(
                 {"branch": branch, "head": record["head"]}
             )
             write_evidence()
+            if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
+                raise RetirementError(f"archive-preserved head changed during deletion: {branch}")
 
         source_head = client.get_ref(source_branch)
         if source_head is None:
             evidence["alreadyAbsent"].append(source_branch)
-        elif source_branch in open_heads:
+        elif source_branch in client.open_pr_heads():
             evidence["deferredSourceBranch"] = {
                 "branch": source_branch,
                 "head": source_head,
                 "reason": "Source branch still owns an open pull request.",
             }
         else:
-            encoded_head = urllib.parse.quote(
-                f"{client.owner}:{source_branch}", safe=""
-            )
-            pull_requests = client.list_paged(
-                f"/repos/{repository}/pulls?state=all&head={encoded_head}"
-            )
-            matching_merged = [
-                pr
-                for pr in pull_requests
-                if pr.get("merged_at")
-                and pr.get("head", {}).get("sha") == source_head
-            ]
-            if not matching_merged:
-                raise RetirementError(
-                    f"source branch head {source_head} is not the exact head "
-                    "of a merged PR"
-                )
-            client.request(
-                "DELETE", client.ref_path(source_branch, plural=True), allow=(204,)
-            )
+            if source_head != source_before:
+                raise RetirementError("source branch head changed after preflight")
+            matching_merged = source_proof(source_head)
+            current_guard(source_branch, source_head)
+            client.delete_ref(source_branch, source_head)
             evidence["deleted"].append(
                 {
                     "branch": source_branch,
                     "head": source_head,
                     "mode": "merged-maintenance-source",
-                    "pullRequests": [pr["number"] for pr in matching_merged],
+                    "pullRequests": matching_merged,
                 }
             )
+            write_evidence()
 
         for branch in names:
             if client.get_ref(branch) is not None:
                 raise RetirementError(f"absence verification failed for {branch}")
-        if source_branch not in open_heads and client.get_ref(source_branch) is not None:
+        if source_branch not in client.open_pr_heads() and client.get_ref(source_branch) is not None:
             raise RetirementError(
                 f"absence verification failed for source branch {source_branch}"
             )
 
+        if client.get_ref("main") != args.current_main:
+            raise RetirementError("main moved during execution")
+        for record in evidence["preflight"]:
+            archive = record.get("archivePreservation")
+            if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
+                raise RetirementError(f"archive-preserved head changed during execution: {record['branch']}")
         final_branches = client.branch_names()
         current_open_heads = client.open_pr_heads()
         allowed_after = retained_names | current_open_heads
