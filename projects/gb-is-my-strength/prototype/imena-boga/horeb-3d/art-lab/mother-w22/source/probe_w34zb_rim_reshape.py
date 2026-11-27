@@ -10,7 +10,7 @@ from probe_w34r_static_correction import contacts,deadline
 def unit(x):
     return x/np.linalg.norm(x)
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--side',choices=('l','r'),required=True);parser.add_argument('--coupled',action='store_true');parser.add_argument('--fine',action='store_true');parser.add_argument('--route',action='store_true');parser.add_argument('--approach',action='store_true');args=parser.parse_args();assert not((args.fine or args.route or args.approach) and not args.coupled);assert sum((args.fine,args.route,args.approach))<=1
+    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--side',choices=('l','r'),required=True);parser.add_argument('--coupled',action='store_true');parser.add_argument('--fine',action='store_true');parser.add_argument('--route',action='store_true');parser.add_argument('--approach',action='store_true');parser.add_argument('--opposition',action='store_true');parser.add_argument('--incremental-grip',action='store_true');args=parser.parse_args();assert not((args.fine or args.route or args.approach or args.opposition or args.incremental_grip) and not args.coupled);assert sum((args.fine,args.route,args.approach,args.opposition,args.incremental_grip))<=1
     root=args.evidence;out=args.output;assert not out.exists();side=args.side
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     fit=json.loads((root/'W34za-rim-radial-v-20261127/w34y-rim-fit.json').read_text())
@@ -75,12 +75,13 @@ def main():
     line=np.column_stack((.35+.474*np.cos(alpha),np.full(121,1.147),.26+.325*np.sin(alpha)))
     seg=line[1:]-line[:-1];mid=(line[1:]+line[:-1])/2
     segtree=cKDTree(mid)
-    def tube_dist(points):
+    def tube_dist(points,with_vectors=False):
         _,jj=segtree.query(points,k=4,workers=1)
         v=points[:,None,:]-line[jj]
         e=seg[jj];t=np.clip(np.sum(v*e,axis=2)/np.sum(e*e,axis=2),0,1)
         diff=v-t[:,:,None]*e
-        return np.sqrt(np.min(np.sum(diff*diff,axis=2),axis=1))
+        ds=np.sum(diff*diff,axis=2);idx=ds.argmin(1);near=diff[np.arange(len(points)),idx];dist=np.linalg.norm(near,axis=1)
+        return (dist,near/np.maximum(dist,1e-12)[:,None]) if with_vectors else dist
     tube_radius=tube_dist(rim['v'])
     assert tube_radius.max()<.0265 and tube_radius.min()>.023, (tube_radius.min(),tube_radius.max())
     def make(params):
@@ -263,7 +264,140 @@ def main():
                     dense.append({'distance_mm':float(distance),'basket':row['basket_crossings'],'self':row['self_crossings'],'reserve_mm':row['arm_reserve_mm']})
                 print(json.dumps({'dense_samples':len(dense),'clear_samples':sum(q['basket']==q['self']==0 and q['reserve_mm']>=5 for q in dense)}),flush=True)
             approach_meta={'paths':paths,'selected':winner,'dense_samples':dense,'dense_all_clear':bool(dense) and all(q['basket']==q['self']==0 and q['reserve_mm']>=5 for q in dense)}
-        for phase in (() if args.route or args.approach else (3,4) if args.fine else (1,2)):
+        if args.opposition or args.incremental_grip:
+            from scipy.optimize import minimize
+            from time import monotonic
+            from probe_w34r_static_correction import START
+            prior=json.loads((root/f'W34ze-chain-route-{side}-20261127/w34zb-reshape.json').read_text())
+            seed={k:v.copy() for k,v in prior['best']['params'].items()}
+            initial=trial(seed,True);assert initial['basket_crossings']==initial['self_crossings']==0
+            best=initial;tested=1
+            _,unique=np.unique(template['canon'],return_index=True)
+            selected=np.unique(np.r_[unique,*pads.values()]);lookup={int(i):j for j,i in enumerate(selected)}
+            thumb_idx=np.array([lookup[int(i)] for i in pads['thumb']])
+            shoulder=w[names['upperarm_'+side]][:3,3]+[0,0,.160]
+            elbow=w[names['lowerarm_'+side]][:3,3];sh0=w[names['upperarm_'+side]][:3,3]
+            lengths=np.linalg.norm(elbow-sh0)+np.linalg.norm(w[names['hand_'+side]][:3,3]-elbow)
+            def witness(params,digit):
+                M,q=make(params);dist,nrm=tube_dist(q[pads['thumb']],True);ds,ns=tube_dist(q[pads[digit]],True)
+                dots=nrm@ns.T
+                # Exact surface distances/normals for each pad, not independent minima.
+                th=[nearest(v) for v in q[pads['thumb']]]
+                su=[nearest(v) for v in q[pads[digit]]]
+                pairs=[{'thumb_gap_mm':float(a[0]),'finger_gap_mm':float(b[0]),'normal_dot':float(a[1]@b[1]),'proxy_dot':float(dots[i,j])}
+                       for i,a in enumerate(th) for j,b in enumerate(su)]
+                pair=min(pairs,key=lambda p:(p['thumb_gap_mm']>3 or p['finger_gap_mm']>3 or p['normal_dot']>-.75,
+                    p['thumb_gap_mm']+p['finger_gap_mm']+10*max(0,p['normal_dot']+.75)))
+                reserve=float((lengths-np.linalg.norm(M[names['hand_'+side]][:3,3]-shoulder))*1000)
+                return dict(pair,digit=digit,staged_arm_reserve_mm=reserve,tube_min_mm=float(tube_dist(q).min()*1000))
+            initial['opposed_pairs']=[witness(seed,k) for k in ('index','middle')]
+            rows=[]
+            for digit in (() if args.incremental_grip else ('index','middle')):
+                if monotonic()-START>15:break
+                sup=np.array([lookup[int(i)] for i in pads[digit]])
+                keys=[(k,j) for k in ('thumb',digit) for j in range(4)]+[('wrist',j) for j in range(6)]
+                v0=np.array([seed[k][j] for k,j in keys],float)
+                limits=[]
+                for (k,j),val in zip(keys,v0):
+                    radius=(8 if j<3 else 10) if k=='wrist' else (18 if j<3 else 12)
+                    limits.append((val-radius,val+radius))
+                def decode(vec):
+                    pp={k:v.copy() for k,v in seed.items()}
+                    for (k,j),val in zip(keys,vec):pp[k][j]=float(val)
+                    return pp
+                def objective(vec):
+                    deadline();M,q=make(decode(vec));p=q[selected]
+                    td,nrm=tube_dist(p,True);td*=1000
+                    pen=np.maximum(0,26.15-td)
+                    cost=8*np.mean(pen**2)+1.4*np.max(pen)**2
+                    tg=np.abs(td[thumb_idx]-26.3);sg=np.abs(td[sup]-26.3)
+                    dots=nrm[thumb_idx]@nrm[sup].T
+                    pair_cost=tg[:,None]**2+sg[None,:]**2+160*np.maximum(0,dots+.82)**2
+                    # Keep contact points on nearby cross-sections, avoiding an
+                    # apparent opposed pair at widely separated parts of the rim.
+                    sep=np.linalg.norm(p[thumb_idx,None]-p[sup][None],axis=2)*1000
+                    pair_cost+=.04*np.maximum(0,sep-70)**2
+                    cost+=.5*pair_cost.min()
+                    reserve=(lengths-np.linalg.norm(M[names['hand_'+side]][:3,3]-shoulder))*1000
+                    cost+=2*max(0,8-reserve)**2+.001*np.sum((vec-v0)**2)
+                    return float(cost)
+                opt=minimize(objective,v0,method='Powell',bounds=limits,options={'maxfev':340,'maxiter':6,'xtol':.35,'ftol':.015})
+                # A line search back towards the known clean posture guards
+                # against optimizing a tube approximation through actual wicker.
+                for fraction in (1.,.75,.5,.25):
+                    pp=decode(v0+(opt.x-v0)*fraction)
+                    row=trial(pp,True);tested+=1
+                    row['opposition']=witness(pp,digit);row['optimizer_evaluations']=int(opt.nfev);row['fraction']=fraction
+                    rows.append(row)
+                    print(json.dumps({k:row[k] for k in ('basket_crossings','self_crossings','opposition','fraction','optimizer_evaluations')}),flush=True)
+            def admissible(row):
+                p=row['opposition']
+                return row['basket_crossings']==row['self_crossings']==0 and p['staged_arm_reserve_mm']>=5 and p['tube_min_mm']>=25.9
+            def score(row):
+                p=row['opposition']
+                return p['thumb_gap_mm']+p['finger_gap_mm']+10*max(0,p['normal_dot']+.75)
+            incremental_path=[]
+            if args.incremental_grip:
+                # Small feasible movements from a clean seed. The smooth tube
+                # score is merely a proposal ranker; exact wicker and skin
+                # crossing checks determine admissibility.
+                def proxy(params):
+                    M,q=make(params);td,nrm=tube_dist(q,True);td*=1000
+                    th=pads['thumb'];su=np.concatenate((pads['index'],pads['middle']))
+                    tg=np.abs(td[th]-26.3);sg=np.abs(td[su]-26.3)
+                    dots=nrm[th]@nrm[su].T
+                    sep=np.linalg.norm(q[th,None]-q[su][None],axis=2)*1000
+                    pair=tg[:,None]**2+sg[None,:]**2+160*np.maximum(0,dots+.82)**2+.04*np.maximum(0,sep-70)**2
+                    reserve=(lengths-np.linalg.norm(M[names['hand_'+side]][:3,3]-shoulder))*1000
+                    pen=np.maximum(0,25.9-td)
+                    return float(pair.min()+4*np.max(pen)**2+2*max(0,8-reserve)**2)
+                current=seed;value=proxy(seed)
+                baseline_min=min(q['tube_min_mm'] for q in initial['opposed_pairs'])
+                # Allow the original polygonal rim approximation error but
+                # never increase the maximum estimated penetration.
+                def local_gate(row):
+                    q=row['opposition']
+                    return row['basket_crossings']==row['self_crossings']==0 and q['staged_arm_reserve_mm']>=5 and q['tube_min_mm']>=baseline_min-.05
+                for phase in range(12):
+                    if monotonic()-START>18:break
+                    choices=[];step=1.5 if phase<6 else .75
+                    for k in ('thumb','index','middle','ring','pinky','wrist'):
+                        for j in range(len(current[k])):
+                            if k=='wrist':delta=step if j<3 else step*1.5
+                            else:delta=step*2
+                            for sign in (-1,1):
+                                pp={key:v.copy() for key,v in current.items()}
+                                pp[k][j]+=sign*delta
+                                if abs(pp[k][j]-seed[k][j])>(10 if k=='wrist' else 24):continue
+                                v=proxy(pp)
+                                if v<value-1e-5:choices.append((v,pp,k,j,sign))
+                    choices.sort(key=lambda c:c[0]);accepted=False
+                    for v,pp,k,j,sign in choices[:8]:
+                        row=trial(pp);tested+=1
+                        if row['basket_crossings'] or row['self_crossings']:continue
+                        row['opposition']=min((witness(pp,digit) for digit in ('index','middle')),key=lambda p:p['thumb_gap_mm']+p['finger_gap_mm']+10*max(0,p['normal_dot']+.75))
+                        if not local_gate(row):continue
+                        # Sample midpoint of the small move as well.
+                        midpoint={key:[(a+b)*.5 for a,b in zip(current[key],pp[key])] for key in current}
+                        midrow=trial(midpoint);tested+=1
+                        if midrow['basket_crossings'] or midrow['self_crossings']:continue
+                        row['proxy_score']=v;row['step']=[k,j,pp[k][j]-current[k][j]];row['midpoint_clear']=True
+                        incremental_path.append(row);rows.append(row);current=pp;value=v;accepted=True
+                        print(json.dumps({'phase':phase,'score':v,'step':row['step'],'opposition':row['opposition']}),flush=True);break
+                    if not accepted:break
+                chosen=rows[-1] if rows else None
+                if chosen:best=chosen
+                opposition_meta={'rows':rows,'initial_opposed_pairs':initial['opposed_pairs'],'chosen':chosen,
+                    'passes_opposed_proximity':bool(chosen and chosen['opposition']['thumb_gap_mm']<=3 and chosen['opposition']['finger_gap_mm']<=3 and chosen['opposition']['normal_dot']<=-.75),
+                    'incremental_path':incremental_path,'initial_proxy_score':proxy(seed),'final_proxy_score':value,
+                    'limitations':'Isolated subset; midpoint samples only, not swept clearance. No force closure.'}
+            clean=[row for row in rows if admissible(row)]
+            chosen=min(clean,key=score) if clean else None
+            if chosen and not args.incremental_grip:best=chosen
+            if not args.incremental_grip:opposition_meta={'rows':rows,'initial_opposed_pairs':initial['opposed_pairs'],'chosen':chosen,
+                'passes_opposed_proximity':bool(chosen and chosen['opposition']['thumb_gap_mm']<=3 and chosen['opposition']['finger_gap_mm']<=3 and chosen['opposition']['normal_dot']<=-.75),
+                'limitations':'Isolated hand subset. Rim normal opposition is a geometric proxy, not verified grasp or anatomical joint limits.'}
+        for phase in (() if args.route or args.approach or args.opposition or args.incremental_grip else (3,4) if args.fine else (1,2)):
             for k in (1,2,0,3,4,5):
                 tune('wrist',k,(-8,-4,4,8) if phase==1 else (-4,-2,2,4) if phase in (2,3) else (-2,-1,1,2),(-24,24) if k<3 else (-20,20))
             print(json.dumps({'phase':phase,'stage':'wrist','tested':tested,'basket':best['basket_crossings'],'self':best['self_crossings'],'thumb_mm':best['thumb_min_mm'],'support_mm':best['support_min_mm']}),flush=True)
@@ -288,6 +422,7 @@ def main():
     out.mkdir();report={'status':'ART_HOLD_RIM_HAND_RESHAPE','source_sha256':r['glb_sha256'],'side':side,'coupled':args.coupled,'fine':args.fine,'route':args.route,'approach':args.approach,'tested':tested+1,'initial':initial,'best':best,'limitations':['Fully hand-weighted subset only; wrist transition and arm/cloth/scene not solved. Rim triangle normal proxy, no force closure. No exported actor or animation.']}
     if args.route:report['route_meta']=route_meta
     if args.approach:report['approach_meta']=approach_meta
+    if args.opposition or args.incremental_grip:report['opposition_meta']=opposition_meta
     (out/'w34zb-reshape.json').write_text(json.dumps(report,indent=2))
     print(json.dumps({'side':side,'tested':tested+1,'initial':initial['basket_crossings'],'best':{k:v for k,v in best.items() if k!='joint_world_matrices'}}),flush=True)
 if __name__=='__main__':main()
