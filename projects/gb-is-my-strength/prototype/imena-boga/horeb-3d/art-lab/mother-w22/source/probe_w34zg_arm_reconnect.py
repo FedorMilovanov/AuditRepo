@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');args=p.parse_args();assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');args=p.parse_args();assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb';d,a=load(src,r['glb_sha256'])
@@ -116,7 +116,8 @@ def main():
                     c=test(A,B,np.arange(len(A['tri'])))
                     if c:other[k+' / '+n]=c
         return {'skin_regions':skin_detail['source_regions'],'tunic_regions':cloth_detail['source_regions'],'skin_self':skin_self,'tunic_self':cloth_self,'skin_tunic':skin_cloth,'scene':scene,'other_actor':other,'changed_triangles':{k:len(v) for k,v in changed.items()}}
-    def dq_geometry(doc,geo,amount):
+    def dq_geometry(doc,geo,amount,weight_gamma=1.,weight_smooth=0):
+        from scipy.sparse import coo_matrix
         # Dual quaternion blend of the same joint matrices. Preserve digit-weighted
         # regions and all geometry outside the arm transition, including the feet.
         w=world(doc,doc['nodes']);skin=doc['skins'][0]
@@ -141,6 +142,37 @@ def main():
                 if weight:v+=weight*a(t['POSITION'])
             js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']).astype(float)
             assert np.max(abs(ws.sum(1)-1))<1e-5
+            original=ws.copy()
+            if weight_gamma!=1. or weight_smooth:
+                # Alter only existing arm influence slots. Preserve normalized weights,
+                # digit-influenced vertices, and non-arm weights exactly.
+                allowed=np.isin(jnames[js], [name for name in jnames if name.startswith(('clavicle_','upperarm_','lowerarm_','hand_'))])
+                eligible=(np.sum(original*digit[js],axis=1)<1e-9)&(np.sum((original>1e-6)&allowed,axis=1)>=2)
+                total=np.sum(original*allowed,axis=1)
+                if weight_gamma!=1.:
+                    power=np.where(allowed,original**weight_gamma,0)
+                    power*=np.divide(total,power.sum(1),out=np.zeros_like(total),where=power.sum(1)>0)[:,None]
+                    ws=np.where(eligible[:,None]&allowed,power,original)
+                if weight_smooth:
+                    # Smooth weights on welded geometry while retaining four original slots.
+                    _,first,canon=np.unique(geo[k]['canon'],return_index=True,return_inverse=True)
+                    tri=canon[geo[k]['tri']]
+                    edges=np.sort(np.concatenate((tri[:,[0,1]],tri[:,[1,2]],tri[:,[2,0]])),axis=1)
+                    edges=np.unique(edges[edges[:,0]!=edges[:,1]],axis=0);i,j=edges.T
+                    adj=coo_matrix((np.ones(len(i)*2),(np.r_[i,j],np.r_[j,i])),shape=(len(first),len(first))).tocsr()
+                    degree=np.asarray(adj.sum(1)).ravel()
+                    dense=np.zeros((len(ws),len(jnames)))
+                    np.add.at(dense,(np.arange(len(ws))[:,None],js),ws)
+                    for _ in range(weight_smooth):
+                        avg=(adj@dense[first])/np.maximum(degree,1)[:,None]
+                        proposal=.65*ws+.35*avg[canon[:,None],js]
+                        proposal=np.where(allowed&(original>1e-8),proposal,0.)
+                        proposal*=np.divide(total,proposal.sum(1),out=np.zeros_like(total),where=proposal.sum(1)>0)[:,None]
+                        ws=np.where(eligible[:,None]&allowed,proposal,original)
+                        dense.fill(0);np.add.at(dense,(np.arange(len(ws))[:,None],js),ws)
+                assert np.max(abs(ws.sum(1)-1))<1e-5 and ws.min()>=0
+                assert np.max(abs(ws[~eligible]-original[~eligible]))==0
+                assert np.max(abs((ws-original)[~allowed]))==0
             q=qr[js];r=qd[js];ref=q[np.arange(len(q)),ws.argmax(1)]
             sign=np.where(np.sum(q*ref[:,None],axis=-1)<0,-1.,1.)
             real=np.sum(q*(ws*sign)[...,None],axis=1)
@@ -153,12 +185,12 @@ def main():
             base_pos=geo[k]['v'];alpha=np.minimum(1,np.sum(ws*arm[js],axis=1)*2)*blend
             alpha[np.sum(ws*digit[js],axis=1)>1e-9]=0
             # One-joint identity witness: DQS and LBS are identical there.
-            assert np.max(abs(pos[ws.max(1)>.999999]-base_pos[ws.max(1)>.999999]))<1e-5
+            assert np.max(abs(pos[original.max(1)>.999999]-base_pos[original.max(1)>.999999]))<1e-5
             delta=(pos-base_pos)*alpha[:,None];out[k]['v']=base_pos+delta
-            metrics[k]={'max_delta_mm':float(np.linalg.norm(delta,axis=1).max()*1000),'moved_vertices':int(np.sum(np.linalg.norm(delta,axis=1)>1e-7))}
+            metrics[k]={'max_delta_mm':float(np.linalg.norm(delta,axis=1).max()*1000),'moved_vertices':int(np.sum(np.linalg.norm(delta,axis=1)>1e-7)),'changed_weight_vertices':int(np.sum(np.max(abs(ws-original),axis=1)>1e-7)),'max_weight_delta':float(np.max(abs(ws-original)))}
             assert np.max(abs(delta[alpha==0]))==0
         return out,metrics
-    def smooth_skin(doc,geo,iterations,cap,guarded=False):
+    def smooth_skin(doc,geo,iterations,cap,guarded=False,reference=None):
         from scipy.sparse import coo_matrix
         k='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0';b=geo[k]
         node=doc['nodes'][names[k]];pr=doc['meshes'][node['mesh']]['primitives'][0];at=pr['attributes']
@@ -185,8 +217,12 @@ def main():
         prohibited=np.unique(np.r_[canon[~allowed],edges[count==1].ravel()])
         strength[prohibited]=0
         q=p.copy()
-        p_edges=np.linalg.norm(p[j]-p[i],axis=1)
-        p_tri=p[ct];p_norm=np.cross(p_tri[:,1]-p_tri[:,0],p_tri[:,2]-p_tri[:,0])
+        reference_positions=p if reference is None else reference[k]['v'][first]
+        if reference is not None:
+            assert np.array_equal(reference[k]['tri'],b['tri'])
+            assert np.max(abs(reference_positions[canon]-reference[k]['v']))<1e-6
+        p_edges=np.linalg.norm(reference_positions[j]-reference_positions[i],axis=1)
+        p_tri=reference_positions[ct];p_norm=np.cross(p_tri[:,1]-p_tri[:,0],p_tri[:,2]-p_tri[:,0])
         norm0=np.linalg.norm(p_norm,axis=1)
         def violations(v):
             lengths=np.linalg.norm(v[j]-v[i],axis=1)
@@ -195,6 +231,7 @@ def main():
             nl=np.linalg.norm(n,axis=1)
             bad_faces=(norm0>1e-12)&((np.sum(n*p_norm,axis=1)<.1*nl*norm0)|(nl<.1*norm0))
             return np.unique(np.r_[edges[bad_edges].ravel(),ct[bad_faces].ravel()])
+        if guarded:assert not len(violations(q)), 'Initial geometry violates common reference gate'
         for _ in range(iterations):
             proposal=q+((adj@q)/np.maximum(degree,1)[:,None]-q)*strength[:,None]*.45
             delta=proposal-p;length=np.linalg.norm(delta,axis=1)
@@ -219,6 +256,20 @@ def main():
         valid=(np.linalg.norm(n0,axis=1)>1e-12)&(np.linalg.norm(n1,axis=1)>1e-12)
         flipped=int(np.sum(valid&(np.sum(n0*n1,axis=1)<0)))
         return result,{'unique_vertices':int(np.sum(np.linalg.norm(delta,axis=1)>1e-7)),'max_delta_mm':float(np.linalg.norm(delta,axis=1).max()*1000),'edge_ratio_min':float(ratios.min()),'edge_ratio_max':float(ratios.max()),'normal_reversals':flipped}
+    def quality_relative(reference,candidate):
+        result={}
+        for k in ('ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0','W28e_tailored_linen'):
+            t=reference[k]['tri'];a0=reference[k]['v'][t];a1=candidate[k]['v'][t]
+            n0=np.cross(a0[:,1]-a0[:,0],a0[:,2]-a0[:,0]);n1=np.cross(a1[:,1]-a1[:,0],a1[:,2]-a1[:,0])
+            l0=np.linalg.norm(n0,axis=1);l1=np.linalg.norm(n1,axis=1);valid=l0>1e-12
+            e0=np.linalg.norm(a0[:,[1,2,0]]-a0,axis=2);e1=np.linalg.norm(a1[:,[1,2,0]]-a1,axis=2)
+            ratio=e1[e0>1e-9]/e0[e0>1e-9]
+            result[k]={'relative_normal_reversals':int(np.sum(valid&(np.sum(n0*n1,axis=1)<0))),
+                       'area_below_tenth':int(np.sum(valid&(l1<.1*l0))),
+                       'edge_min':float(ratio.min()),'edge_max':float(ratio.max())}
+        return result
+    def quality_gate(q,au):
+        return all(v['relative_normal_reversals']==0 and v['area_below_tenth']==0 and v['edge_min']>=.5 and v['edge_max']<=2 for v in q.values()) and not au['scene'] and not au['other_actor']
     rows=[];best=None
     def trial(pole,corr,twist):
         nonlocal best
@@ -227,7 +278,35 @@ def main():
         row={'pole_deg':pole,'twist':twist,'old_sleeve_correction':corr,'arm':info,'matrix_error':err,'audit':au,'crossings':count}
         rows.append(row);print(json.dumps({'pole':pole,'twist':twist,'count':count,'skin':au['skin_self'],'cloth':au['tunic_self'],'skin_cloth':au['skin_tunic'],'scene':au['scene'],'skin_regions':au['skin_regions']}),flush=True)
         if best is None or (bool(au['scene']),count)<(bool(best[0]['audit']['scene']),best[0]['crossings']):best=(row,doc)
-    if args.smooth or args.guarded_smooth:
+    if args.combined or args.shared_reference:
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
+        baseline,_=dq_geometry(doc,geo,(1.,1.))
+        weighted,_=dq_geometry(doc,geo,(1.,1.),1.,1)
+        for label,source,iterations,cap in [('dq',baseline,0,0),('guarded',baseline,6,.006),('weight',weighted,0,0),('combined2',weighted,2,.002),('combined4',weighted,4,.004),('combined6',weighted,6,.006)]:
+            deadline()
+            candidate=source if not iterations else smooth_skin(doc,source,iterations,cap,True,baseline if args.shared_reference else None)[0]
+            au=audit(candidate);q=quality_relative(baseline,candidate)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            gate=quality_gate(q,au)
+            row={'method':label,'iterations':iterations,'cap_mm':cap*1000,'quality':q,'quality_gate':gate,'crossings':count,'audit':au}
+            rows.append(row);print(json.dumps({'method':label,'crossings':count,'quality_gate':gate,'quality':q}),flush=True)
+            if best is None or (not gate,count)<(not best[0]['quality_gate'],best[0]['crossings']):best=(row,doc)
+        assert rows[0]['crossings']=={0:80,30:107,60:128}[int(args.distance)]
+    elif args.weight_trial:
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
+        baseline,_=dq_geometry(doc,geo,(1.,1.))
+        for gamma,steps in ((1.,0),(.7,0),(1.4,0),(1.,1),(1.,3),(.7,2)):
+            deadline();gg,metrics=dq_geometry(doc,geo,(1.,1.),gamma,steps);au=audit(gg)
+            quality=quality_relative(baseline,gg)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            gate=quality_gate(quality,au)
+            row={'gamma':gamma,'smooth_steps':steps,'delta':metrics,'quality':quality,'quality_gate':gate,'audit':au,'crossings':count}
+            rows.append(row);print(json.dumps(row),flush=True)
+            if best is None or (not gate,count)<(not best[0]['quality_gate'],best[0]['crossings']):best=(row,doc)
+        assert rows[0]['crossings']=={0:80,30:107,60:128}[int(args.distance)]
+    elif args.smooth or args.guarded_smooth:
         prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
         seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
         gg,metrics=dq_geometry(doc,geo,(1.,1.))
@@ -278,8 +357,8 @@ def main():
     else:
         for pole in (0,-25,25):
             for corr in (1,0):trial(pole,corr,.65)
-    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
-    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth):
+    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'weight_trial':args.weight_trial,'combined_trial':args.combined,'shared_reference_trial':args.shared_reference,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
+    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth or args.weight_trial or args.combined or args.shared_reference):
         doc=best[1];raw=src.read_bytes();jl=struct.unpack_from('<I',raw,12)[0];binchunk=raw[20+jl:];doc['asset']['generator']='HOREB W34zg full arm diagnostic'
         jb=json.dumps(doc,separators=(',',':'),ensure_ascii=True).encode();jb+=b' '*((-len(jb))%4);packed=struct.pack('<5I',0x46546c67,2,20+len(jb)+len(binchunk),len(jb),0x4e4f534a)+jb+binchunk
         f=out/'w34zg-static-actor.glb';f.write_bytes(packed);report['glb_sha256']=hashlib.sha256(packed).hexdigest();load(f,report['glb_sha256'])
