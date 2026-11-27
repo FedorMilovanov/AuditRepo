@@ -69,6 +69,33 @@ with tempfile.TemporaryDirectory(prefix='auditrepo-artifacts-') as temp:
     sidecar.unlink()
     assert artifact_admission_errors(root, [archive_rel, sidecar_rel], []) == []
 
+    # A small artifact does not require metadata, but a surviving optional
+    # sidecar must not make a false identity assertion after an artifact edit.
+    small_rel = 'evidence/optional.png'
+    small = root / small_rel
+    small_sidecar_rel = small_rel + '.artifact.json'
+    small_sidecar = root / small_sidecar_rel
+    small.write_bytes(b'old small fixture')
+    small_manifest = {
+        'schemaVersion': 1, 'path': small_rel,
+        'sha256': hashlib.sha256(small.read_bytes()).hexdigest(),
+        'sizeBytes': small.stat().st_size,
+        'purpose': 'fixture', 'provenance': 'fixture', 'retention': 'fixture',
+    }
+    small_sidecar.write_text(json.dumps(small_manifest), encoding='utf-8')
+    small_tracked = [small_rel, small_sidecar_rel]
+    assert artifact_admission_errors(root, [small_rel], small_tracked) == []
+    small.write_bytes(b'new small fixture')
+    for changed in ([small_rel], small_tracked):
+        assert any('identity does not match' in error for error in
+                   artifact_admission_errors(root, changed, small_tracked))
+    small_manifest['sha256'] = hashlib.sha256(small.read_bytes()).hexdigest()
+    small_manifest['sizeBytes'] = small.stat().st_size
+    small_sidecar.write_text(json.dumps(small_manifest), encoding='utf-8')
+    assert artifact_admission_errors(root, small_tracked, small_tracked) == []
+    small_sidecar.unlink()
+    assert artifact_admission_errors(root, small_tracked, [small_rel]) == []
+
     spaced = root / 'evidence/bad name.webp'
     spaced.write_bytes(b'unique image fixture')
     errors = artifact_admission_errors(root, ['evidence/bad name.webp'], ['evidence/bad name.webp'])

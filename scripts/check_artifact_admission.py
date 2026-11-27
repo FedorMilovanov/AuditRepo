@@ -94,7 +94,9 @@ def artifact_admission_errors(root: Path, changed: list[str], tracked: list[str]
         duplicates = sorted(item for item in hashes.get((size, digest), []) if item != relative)
         if duplicates:
             errors.append(f'{relative}: exact artifact duplicate of {duplicates}')
-        if path.suffix.lower() in ARCHIVE_EXTENSIONS or size > LARGE_BYTES:
+        # Optional metadata, when present, is still an identity assertion.
+        if (path.suffix.lower() in ARCHIVE_EXTENSIONS or size > LARGE_BYTES
+                or (root / f'{relative}{sidecar_suffix}').exists()):
             errors.extend(manifest_errors(root, relative, size, digest))
     return errors
 
