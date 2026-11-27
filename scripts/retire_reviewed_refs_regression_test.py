@@ -174,6 +174,7 @@ class MergedSourceFakeClient(FakeClient):
                 {
                     "number": 12,
                     "merged_at": "2026-08-06T00:00:00Z",
+                    "merge_commit_sha": "merged-sha",
                     "head": {"sha": "execution-sha", "ref": "execution-branch"},
                 }
             ]

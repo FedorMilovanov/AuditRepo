@@ -2,7 +2,7 @@
 """Retire reviewed AuditRepo refs from an immutable request.
 
 The command is dry-run by default. Destructive execution requires --execute.
-It performs a complete live preflight before the first DELETE and writes
+It performs a complete live preflight before the first leased deletion and writes
 machine-readable evidence throughout execution.
 """
 
@@ -158,7 +158,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--execute",
         action="store_true",
-        help="Perform DELETE calls after the complete preflight.",
+        help="Perform leased Git ref deletions after the complete preflight.",
     )
     return parser.parse_args()
 
@@ -419,6 +419,8 @@ def main() -> int:
             matching = [
                 pr["number"] for pr in pull_requests
                 if pr.get("merged_at") and pr.get("head", {}).get("sha") == head
+                and pr.get("merge_commit_sha")
+                and client.compare(pr["merge_commit_sha"], args.current_main).get("behind_by") == 0
             ]
             if not matching:
                 raise RetirementError(f"source branch head {head} is not the exact head of a merged PR")
@@ -447,12 +449,12 @@ def main() -> int:
             if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
                 raise RetirementError(f"archive-preserved head changed after preflight: {branch}")
             client.delete_ref(branch, record["head"])
-            if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
-                raise RetirementError(f"archive-preserved head changed during deletion: {branch}")
             evidence["deleted"].append(
                 {"branch": branch, "head": record["head"]}
             )
             write_evidence()
+            if archive and client.get_ref(archive["archiveRef"]) != archive["archiveHead"]:
+                raise RetirementError(f"archive-preserved head changed during deletion: {branch}")
 
         source_head = client.get_ref(source_branch)
         if source_head is None:
