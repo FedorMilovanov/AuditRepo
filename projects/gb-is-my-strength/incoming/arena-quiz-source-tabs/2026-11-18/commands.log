@@ -1,0 +1,53 @@
+# 2026-11-18 UTC — stage 15, modified activation of actual quiz source links.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713.
+# AuditRepo arena/9713b5a4-auditrepo from fcf2e69b2c1531fe606d9838c811b7d1b1071db0; Draft #570.
+
+[Coordination]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+# Список PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md («Сверка веток и PR», только gh pr list).
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+# Clean 94af5691d4aabb86ff615a19c6545f266f60bec1 / 91 / OPEN Draft. preflight 44406528269 and validate 44406528286 SUCCESS.
+# Exact compares + paginated /pulls/{n}/files:
+# Product #2339 798b85f→d7646aa +1/2 masthead/CSS (full 88); #2340 7d74f9d→ab3e23a +1/1 visual handoff (full 19);
+# #2341 d70b33c→f5122c1 +3/2 report/CSS (full 14); #2343 cbe3ebe→86f59f5 +1/3 Journal PDF harness/CSS/report (full 18);
+# bare fcd4a46→6ff1520 +1/4 G3/PDF helper. Journal print probes use page.pdf for different routes, not native dialog receipt.
+# Audit #538 755d3cd→1752933 +1/4 Atlas v13 paths (180 full), #543 5b87585→140d6a5 +1/4 Horeb docs (139 full).
+# Near publication #2340 ab3e23aa24666bf909758778f28688c2f0d081a6...295a779c2a268c6c44543eb9a237f4a1c6612780 +1/4 Journal transfer;
+# #2341 f5122c18816e4eeac0415b4691c159789d3d0fe7...537b59f7295a34ceb6ac9911b23b0ce1206342d3 +1/1 Journal comparison.
+# Owner-path intersection check (GillLearningSheet, gillLearningData, article-quiz, reader-tts, native quiz data, quiz intake) empty.
+
+[Exact build and existing normal-click check]
+# Reuse stage 12 Product dist (build/bootstrap in arena-quiz-native-print commands.log). 35/35 exact stage 14 pins initially match.
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# CHROMIUM is the AL2023-compatible @sparticuz/chromium@153.0.0 executable. Node 22.23.4, Playwright 1.62.1.
+export GB_PLAYWRIGHT_CHROMIUM_EXECUTABLE="$CHROMIUM"
+(cd "$PRODUCT" && node scripts/series-quiz-source-handoff-browser-contract.mjs)
+# 55/55 PASS (native mobile Dark/reduced; unmodified clicks). No source, deployed site or Pagefind mutation.
+
+[Modified input and independent observations]
+W="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-source-tabs/2026-11-18"
+Q="$RAW_INCOMING/arena-quiz-source-follow/2026-11-18/evidence/source-follow-witness.json"
+node --check "$W/harness/source-tabs.mjs"
+for run in a b; do
+  node "$W/harness/source-tabs.mjs" "$PRODUCT" "$OUT/replay-$run" "$CHROMIUM" 2>&1 | tee "$OUT/replay-$run.log"
+done
+python3 "$W/harness/check-replays.py" "$OUT/replay-a/source-tabs-witness.json" "$OUT/replay-b/source-tabs-witness.json" "$Q" "$PRODUCT/dist" "$OUT/replay-receipt.json"
+# Pilot outcomes were not treated as passes: first native Ctrl saw no new Page; targeted rerun did. Strict centre hit
+# check for Learning was wrong for its link geometry; use Playwright actionability there and real `isTrusted` receipt.
+# Opt-in restored Chromium popup-blocking profile was not stable, and standard Headless Shell also occasionally did not
+# surface a Page for an unprevented input. One such case had two HTML 200s, another a Page stuck at about:blank. No attribution.
+# Count final defaultPrevented, source in originating tab vs unchanged, document responses, Page and actual fragment hit separately.
+# For a browser-default action: bound new Page observation to 3500 ms, then allow 4500 ms for a commit to destination.
+# 'document-response-without-page' and 'blank-context' do not count as a confirmed opening. Standard Playwright launch used for final runs.
+# Native control hit tested before real mouse chord, Learning uses trial actionability then real click, Ctrl+Enter via sequential focus.
+# Final: both 12/12 completed, 36 pins. 6 of 7 requested native openings confirmed in each run; one blank context each.
+# All three modified-local intercepts reproduce in both runs; middle without Play confirmed in both, with Play once.
+# Audio held only in two rows per run (Web Speech platform only, first utterance); no audio, Vosk or OS focus inference.
+
+[Admission and publication]
+# CHANGED = cumulative paths against fcf2e69b. Explicitly stage only new intake; commands.log by git add -f.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# Publish only to existing Draft #570; verify exact head/base, check runs and no merge. Neither main changed.
+# QPDF-01 still PENDING_NATIVE_DIALOG. No live/deploy/Drive writes and no Product, MASTER/ledger changes.

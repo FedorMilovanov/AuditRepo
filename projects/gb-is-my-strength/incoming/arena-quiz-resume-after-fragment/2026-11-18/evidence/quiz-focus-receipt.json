@@ -1,0 +1,143 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "equalDistPins": 49,
+  "independentRuns": 2,
+  "witnessSha256": [
+    "1b34cc866ff87598b5d4e440f2a9dcce1f14b18a5db244aaa8dbca165d017e2b",
+    "923dcdba9e233ad85eddcc318c5ac9b418f37b0ff4dc4a997b9079c590d30957"
+  ],
+  "casesAB": [
+    [
+      {
+        "id": "quiz-focus-press",
+        "dismissal": "pointer-cta",
+        "questionNumber": 6,
+        "hash": "#sec-hebrew",
+        "sourceAgeMs": 2114,
+        "continueAgeMs": 2362,
+        "removedAgeMs": 2763,
+        "focusBefore": [
+          "sec-hebrew",
+          "gbs-world"
+        ],
+        "viewportY": [
+          4911,
+          4911,
+          0,
+          881
+        ],
+        "firstTab": {
+          "focus": "skip-link",
+          "label": "Перейти к содержимому",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi/#main-content",
+          "headingVisible": false
+        },
+        "secondTab": {
+          "focus": "gill-card__cta",
+          "label": "Читать Часть I →",
+          "href": "/articles/dzhon-gill-chast-1-chelovek/",
+          "headingVisible": false
+        },
+        "scrollAfterRemovalBeforeKey": 0
+      },
+      {
+        "id": "quiz-focus-timer",
+        "dismissal": "timer-control",
+        "questionNumber": 14,
+        "hash": "#sec-hebrew",
+        "sourceAgeMs": 2707,
+        "continueAgeMs": null,
+        "removedAgeMs": 7280,
+        "focusBefore": [
+          "sec-hebrew",
+          "sec-hebrew"
+        ],
+        "viewportY": [
+          4911,
+          4911,
+          5125,
+          6055
+        ],
+        "firstTab": {
+          "focus": "IMG",
+          "label": "Художественная реконструкция самостоятельного изучения раввинистических книг в кабинете XVIII века — открыть просмотр",
+          "href": null,
+          "headingVisible": true
+        },
+        "secondTab": {
+          "focus": "manuscript-table",
+          "label": null,
+          "href": null,
+          "headingVisible": false
+        },
+        "scrollAfterRemovalBeforeKey": 0
+      }
+    ],
+    [
+      {
+        "id": "quiz-focus-press",
+        "dismissal": "pointer-cta",
+        "questionNumber": 22,
+        "hash": "#sec-hebrew",
+        "sourceAgeMs": 3447,
+        "continueAgeMs": 3663,
+        "removedAgeMs": 4064,
+        "focusBefore": [
+          "sec-hebrew",
+          "gbs-world"
+        ],
+        "viewportY": [
+          4911,
+          4911,
+          0,
+          881
+        ],
+        "firstTab": {
+          "focus": "skip-link",
+          "label": "Перейти к содержимому",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi/#main-content",
+          "headingVisible": false
+        },
+        "secondTab": {
+          "focus": "gill-card__cta",
+          "label": "Читать Часть I →",
+          "href": "/articles/dzhon-gill-chast-1-chelovek/",
+          "headingVisible": false
+        },
+        "scrollAfterRemovalBeforeKey": 0
+      },
+      {
+        "id": "quiz-focus-timer",
+        "dismissal": "timer-control",
+        "questionNumber": 13,
+        "hash": "#sec-hebrew",
+        "sourceAgeMs": 2634,
+        "continueAgeMs": null,
+        "removedAgeMs": 7300,
+        "focusBefore": [
+          "sec-hebrew",
+          "sec-hebrew"
+        ],
+        "viewportY": [
+          4911,
+          4911,
+          5125,
+          6055
+        ],
+        "firstTab": {
+          "focus": "IMG",
+          "label": "Художественная реконструкция самостоятельного изучения раввинистических книг в кабинете XVIII века — открыть просмотр",
+          "href": null,
+          "headingVisible": true
+        },
+        "secondTab": {
+          "focus": "manuscript-table",
+          "label": null,
+          "href": null,
+          "headingVisible": false
+        },
+        "scrollAfterRemovalBeforeKey": 0
+      }
+    ]
+  ]
+}

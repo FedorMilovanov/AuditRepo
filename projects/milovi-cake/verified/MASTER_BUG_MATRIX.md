@@ -6,10 +6,10 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **2** |
+| Active work units | **1** |
 | Direct current defects | **0** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **2** |
+| Narrowed residuals | **1** |
 | System verification lanes | **0** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -24,12 +24,11 @@
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 2
+## NARROWED RESIDUALS — 1
 
 | ID | Current residual | Next boundary | Evidence |
 |---|---|---|---|
-| `MC-LIGHTHOUSE-TBT-DIVERGENCE-001` | Current-main Lighthouse repeatedly fails while the merged bounded investigation reproduces materially different bento TBT locally with the same declared config; simulated-window placement is demonstrated, but the CI/runtime cause and homepage render delay are not established. | Preserve the gate. Obtain a matched exact-SHA/environment control or another causal witness before Product mutation or threshold change. | [`current owners`](../reverify/REVERIFY_76675a2_2026-10-29_current-owners.md) |
-| `MC-WEBKIT-RESILIENCE-001` | Open Product PR #107 owns gallery/cart/suburb changes but exact-head WebKit remains red/unstable; small media/CSS A/B samples do not prove a cause. | Do not open a parallel repair or merge red. Continue only in the current Product owner until exact-head required checks and owner authorization are satisfied. | [`current owners`](../reverify/REVERIFY_76675a2_2026-10-29_current-owners.md) |
+| `MC-MOBILE-PERF-BUDGET-001` | Owner issue `Milovi_Cake#100` remains open: CI `Lighthouse` and `Lighthouse artifact` pass on `main@8c67865d`, but non-blocking warnings remain for `largest-contentful-paint > 2500 ms` on `/` (`3157.17 ms`) and `/meringue-roll/` (`2868.61 ms`), `/` artifact `n=3` hits `LCP 2327/2520 ms` and max `TBT 1574 ms` (median `72 ms`), and field CrUX p75 is unproven. | Trace and reduce cold mobile main-thread Layout/hero paint delay on `/` and `/meringue-roll/` until `LCP <= 2500 ms` and `TBT <= 300 ms` pass across runs without threshold relaxation, `content-visibility:auto`, or protected UI/SEO regressions. | [`reverify 8c67865`](../reverify/CURRENT_HEAD_REVERIFY_2026-11-21_8c67865.md) |
 
 ## SYSTEM VERIFICATION LANES — 0
 
@@ -43,9 +42,11 @@
 
 ## Current disposition
 
-The 2026-09-12 suburb sitemap-freshness root remains fixed and is not revived. Current Product movement instead admitted two later, independently bounded runtime/CI residuals at `main@76675a26538809435f5f1a66132e54b9f12b8ea9`.
+The 2026-09-12 suburb sitemap-freshness root and `MC-WEBKIT-RESILIENCE-001` (closed across PRs `#107`, `#181`, and `#182` at `main@8c67865d37e79f2772558f90c231f3aa2d604fc5`) remain closed and absent from MASTER.
 
-Product issues #82 and #84 remain wait-for-signal/measurement work in `../WORK_QUEUE.md`, not MASTER defects.
+`MC-LIGHTHOUSE-TBT-DIVERGENCE-001` is reconciled into `MC-MOBILE-PERF-BUDGET-001` (`Milovi_Cake#100`): CI `Lighthouse` workflows are green, while strict owner mobile LCP/TBT budgets remain unproven in cold runs and field CrUX.
+
+Product issue `#82` closed `completed` on `2026-11-05`. Measurement/GSC wait-for-signal items `#84` and `#145` remain in `../WORK_QUEUE.md`, not MASTER defects.
 
 ## Terminal rule
 

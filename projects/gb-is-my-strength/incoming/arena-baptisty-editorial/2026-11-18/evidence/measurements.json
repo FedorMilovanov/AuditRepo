@@ -1,0 +1,1277 @@
+{
+  "date": "2026-11-18",
+  "anchor": "381f8f9613bb968754c2432ed9648cd6e42282a9",
+  "surface": "local postprocessed production-like dist, not live HTML",
+  "toolchain": {
+    "node": "22.23.4",
+    "npm": "10.9.9",
+    "browser": "Chromium 153.0.8010.0"
+  },
+  "buildInstant": "2026-11-18T10:39:11Z",
+  "scenario": {
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark",
+      "sepia"
+    ],
+    "viewportCases": 132,
+    "height": {
+      "320": 844,
+      "390": 844,
+      "768": 900,
+      "1440": 900
+    },
+    "stubs": "no mocks; external origins aborted during sweep (0 matching requests), SW disabled, images decoded and fonts awaited"
+  },
+  "landing": [
+    [
+      "/baptisty-rossii/noch-na-kure/",
+      "СТАТЬЯ 1 · 18 МИН Воронин и ночь на Куре 1867 · Воронин, Кальвейт и первая община"
+    ],
+    [
+      "/baptisty-rossii/yuzhnaya-shtunda/",
+      "СТАТЬЯ 2 · 20 МИН Южная штунда и первые крещения 1867–1870 · Рябошапка, Ратушный, первые крещения"
+    ],
+    [
+      "/baptisty-rossii/dva-sezda-1884/",
+      "СТАТЬЯ 3 · 17 МИН Петербург и Ново-Васильевка: две развилки 1884 года 1884 · Петербург и Ново-Васильевка"
+    ],
+    [
+      "/baptisty-rossii/peterburgskaya-liniya/",
+      "СТАТЬЯ 1 · 21 МИН Петербургское пробуждение: Редсток, Пашков и Проханов 1874–1911 · Редсток, Пашков, Проханов"
+    ],
+    [
+      "/baptisty-rossii/goneniya-i-sovest/",
+      "СТАТЬЯ 2 · 24 МИН Свобода совести и военный вопрос 1919–1929 · Военный вопрос и гонения"
+    ],
+    [
+      "/baptisty-rossii/sovetskaya-noch/",
+      "СТАТЬЯ 1 · 28 МИН Советская ночь: закон 1929 года и репрессии 1929–1937 · Закон 1929 и репрессии"
+    ],
+    [
+      "/baptisty-rossii/vsehib-1944/",
+      "СТАТЬЯ 2 · 26 МИН ВСЕХБ 1944: один союз под надзором 1944 · ВСЕХиБ под надзором"
+    ],
+    [
+      "/baptisty-rossii/iniciativnaya-gruppa/",
+      "СТАТЬЯ 1 · 25 МИН Инициативная группа: путь к Совету Церквей 1960–1966 · Путь к Совету Церквей"
+    ],
+    [
+      "/baptisty-rossii/podpolnaya-pechat/",
+      "СТАТЬЯ 2 · 23 МИН Подпольная печать: Вестники, «Христианин» и память узников 1966–1971 · Вестники, «Христианин», узники"
+    ],
+    [
+      "/baptisty-rossii/spravochnik/",
+      "ФОРЗАЦ · 27 МИН Справочник источников Люди, даты, документы, источники"
+    ]
+  ],
+  "brokenInternalBodyLinks": [],
+  "measured": [
+    {
+      "slug": "hub",
+      "h1": [
+        "Баптисты России"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 10,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 10,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n13 июня 2026",
+      "body": {
+        "paragraphs": 5,
+        "words": 200,
+        "maxParagraphWords": 48,
+        "mainH2": 3,
+        "summaryPoints": 3,
+        "sourceRows": 0,
+        "sourceLinks": 0,
+        "sourceListId": null
+      },
+      "toc": null
+    },
+    {
+      "slug": "noch-na-kure",
+      "h1": [
+        "Воронин и ночь на Куре"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 3,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 19,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n1 июня 2026\n·Обновлено 13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-01T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-22T10:21:51.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-01T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-08-22T10:21:51.000Z"
+        ]
+      ],
+      "body": {
+        "paragraphs": 49,
+        "words": 1902,
+        "maxParagraphWords": 71,
+        "mainH2": 12,
+        "summaryPoints": 6,
+        "sourceRows": 6,
+        "sourceLinks": 0,
+        "sourceListId": "gill-search-p-084"
+      },
+      "toc": {
+        "items": 6,
+        "omitted": [
+          [
+            "#why-language-matters",
+            "Почему здесь так важен перевод"
+          ],
+          [
+            "#the-southward-bridge",
+            "Из Тифлиса не в одну точку, а в несколько направлений"
+          ],
+          [
+            "#pavlov",
+            "Павлов: когда ранний узел начинает говорить дальше"
+          ],
+          [
+            "#what-1869-proves",
+            "Что мы действительно получаем из 1869 года"
+          ],
+          [
+            "#from-scene-to-network",
+            "От реки к сети"
+          ],
+          [
+            "#ending",
+            "Почему эту ночь всё-таки стоит помнить"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "ДАЛЬШЕ · 2 ИЗ 9 Южная штунда Унгер, Цимбал, Рябошапка, Ратушный и путь от библейских ча",
+          "target": "/baptisty-rossii/yuzhnaya-shtunda/",
+          "shown": true
+        },
+        {
+          "label": "ЧЕРЕЗ ДВЕ ГЛАВЫ 1884: два съезда Петербургская попытка широкого союза и Ново-Васильевск",
+          "target": "/baptisty-rossii/dva-sezda-1884/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "yuzhnaya-shtunda",
+      "h1": [
+        "Южная штунда и первые крещения"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 3,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 16,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n2 июня 2026\n·Обновлено 13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-02T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-22T11:01:22.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-02T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-08-22T11:01:22.000Z"
+        ]
+      ],
+      "body": {
+        "paragraphs": 35,
+        "words": 2216,
+        "maxParagraphWords": 149,
+        "mainH2": 9,
+        "summaryPoints": 6,
+        "sourceRows": 9,
+        "sourceLinks": 7,
+        "sourceListId": "gill-search-p-063"
+      },
+      "toc": {
+        "items": 5,
+        "omitted": [
+          [
+            "#village-reading",
+            "Деревенское чтение до баптистского имени"
+          ],
+          [
+            "#orthodox-polemics",
+            "Православная полемика и граница слова «штунда»"
+          ],
+          [
+            "#not-import-only",
+            "Не импорт и не самозарождение"
+          ],
+          [
+            "#from-circles-to-network",
+            "От локальных кружков к сети"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 1 ИЗ 9 Ночь на Куре Воронин, Кальвейт, Деляков и первая русская баптистская общ",
+          "target": "/baptisty-rossii/noch-na-kure/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 3 ИЗ 9 1884: два съезда Петербургское совещание и Ново-Васильевский съезд — дв",
+          "target": "/baptisty-rossii/dva-sezda-1884/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "dva-sezda-1884",
+      "h1": [
+        "Петербург и Ново-Васильевка: две развилки 1884 года"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 2,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 17,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n3 июня 2026\n·Обновлено 13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-03T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-22T12:01:29.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-03T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-08-22T12:01:29.000Z"
+        ]
+      ],
+      "body": {
+        "paragraphs": 29,
+        "words": 1868,
+        "maxParagraphWords": 103,
+        "mainH2": 10,
+        "summaryPoints": 6,
+        "sourceRows": 7,
+        "sourceLinks": 4,
+        "sourceListId": "gill-search-p-057"
+      },
+      "toc": {
+        "items": 6,
+        "omitted": [
+          [
+            "#petersburg-circle",
+            "Петербургский круг: Редсток, Пашков и Общество чтения"
+          ],
+          [
+            "#south-before-1884",
+            "Юг до съезда: дорога к Ново-Васильевке"
+          ],
+          [
+            "#what-union-meant",
+            "Что означала организационная форма"
+          ],
+          [
+            "#kargel-bridge",
+            "Каргель: человек на обоих берегах"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 2 ИЗ 9 Южная штунда Унгер, Цимбал, Рябошапка, Ратушный, Прицкау, Онкен и Вилер",
+          "target": "/baptisty-rossii/yuzhnaya-shtunda/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 4 ИЗ 9 Петербургская линия Редсток, Пашков, Корф, Каргель и Проханов",
+          "target": "/baptisty-rossii/peterburgskaya-liniya/",
+          "shown": true
+        }
+      ],
+      "click": {
+        "want": "/baptisty-rossii/peterburgskaya-liniya/",
+        "got": "/baptisty-rossii/peterburgskaya-liniya/"
+      }
+    },
+    {
+      "slug": "peterburgskaya-liniya",
+      "h1": [
+        "Петербургское пробуждение: Редсток, Пашков и Проханов"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 4,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 22,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n4 июня 2026\n·Обновлено 20 августа 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-04T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-20T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-06-04T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-08-20T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 49,
+        "words": 2727,
+        "maxParagraphWords": 105,
+        "mainH2": 14,
+        "summaryPoints": 6,
+        "sourceRows": 13,
+        "sourceLinks": 2,
+        "sourceListId": "gill-search-p-086"
+      },
+      "toc": {
+        "items": 10,
+        "omitted": [
+          [
+            "#vladikavkaz-1885",
+            "1885: контакт, который не надо превращать в пророчество"
+          ],
+          [
+            "#print-1906-1910",
+            "1906–1910: печать меняет масштаб"
+          ],
+          [
+            "#freedom-and-pressure",
+            "Свобода на бумаге и давление на местах"
+          ],
+          [
+            "#house-of-gospel",
+            "1911: Дом Евангелия становится публичной сценой"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 3 ИЗ 9 1884: два съезда Петербургское совещание и Ново-Васильевский съезд — две",
+          "target": "/baptisty-rossii/dva-sezda-1884/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 5 ИЗ 9 Гонения и совесть Военный вопрос, право совести и давление государства",
+          "target": "/baptisty-rossii/goneniya-i-sovest/",
+          "shown": true
+        }
+      ],
+      "click": {
+        "want": "/baptisty-rossii/goneniya-i-sovest/",
+        "got": "/baptisty-rossii/goneniya-i-sovest/"
+      }
+    },
+    {
+      "slug": "goneniya-i-sovest",
+      "h1": [
+        "Свобода совести и военный вопрос"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 1,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 22,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n5 июня 2026\n·Обновлено 13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-05T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-22T13:32:07.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-05T00:00:00+03:00"
+        ],
+        [
+          "TIME",
+          "2026-08-22T13:32:07.000Z"
+        ]
+      ],
+      "body": {
+        "paragraphs": 43,
+        "words": 2177,
+        "maxParagraphWords": 108,
+        "mainH2": 15,
+        "summaryPoints": 6,
+        "sourceRows": 13,
+        "sourceLinks": 6,
+        "sourceListId": "gill-search-p-083"
+      },
+      "toc": {
+        "items": 12,
+        "omitted": [
+          [
+            "#before-1917",
+            "До 1917: имперские гонения и окно 1905 года"
+          ],
+          [
+            "#world-war-i",
+            "Первая мировая: две позиции внутри одного братства"
+          ],
+          [
+            "#great-patriotic-turn",
+            "1941–1945: патриотический поворот и цена выживания"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 4 ИЗ 9 Петербургская линия Редсток, Пашков, Корф, Каргель и Проханов",
+          "target": "/baptisty-rossii/peterburgskaya-liniya/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 6 ИЗ 9 Советская ночь Закон 1929, Инструкция НКВД, закрытия и репрессии",
+          "target": "/baptisty-rossii/sovetskaya-noch/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "sovetskaya-noch",
+      "h1": [
+        "Советская ночь: закон 1929 года и репрессии"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 2,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 24,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-06T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-25T02:05:05.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-06T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 52,
+        "words": 2615,
+        "maxParagraphWords": 75,
+        "mainH2": 18,
+        "summaryPoints": 3,
+        "sourceRows": 11,
+        "sourceLinks": 10,
+        "sourceListId": "gill-search-p-078"
+      },
+      "toc": {
+        "items": 12,
+        "omitted": [
+          [
+            "#uneven-window",
+            "Не свобода, а неравномерное окно"
+          ],
+          [
+            "#may-1929",
+            "18 мая: слово «пропаганда» исчезает"
+          ],
+          [
+            "#four-step-sequence",
+            "Четыре шага — один сужающийся коридор"
+          ],
+          [
+            "#what-was-lost",
+            "Что теряла поместная церковь"
+          ],
+          [
+            "#people",
+            "Люди за институциональной хронологией"
+          ],
+          [
+            "#what-survived",
+            "Что пережило ночь"
+          ]
+        ]
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 5 ИЗ 9 Гонения и совесть Военный вопрос, право совести и давление государства",
+          "target": "/baptisty-rossii/goneniya-i-sovest/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 7 ИЗ 9 1944: один союз ВСЕХиБ, Братский Вестник, ХВЕ и Прибалтика",
+          "target": "/baptisty-rossii/vsehib-1944/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "vsehib-1944",
+      "h1": [
+        "ВСЕХБ 1944: один союз под надзором"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 2,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 21,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-07T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-07-11T15:12:16.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-07T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 38,
+        "words": 1570,
+        "maxParagraphWords": 70,
+        "mainH2": 14,
+        "summaryPoints": 6,
+        "sourceRows": 6,
+        "sourceLinks": 5,
+        "sourceListId": "gill-search-p-072"
+      },
+      "toc": {
+        "items": 14,
+        "omitted": []
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 6 ИЗ 9 Советская ночь Закон 1929, Инструкция НКВД, закрытия и репрессии",
+          "target": "/baptisty-rossii/sovetskaya-noch/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 8 ИЗ 9 Инициативная группа 1960–1966: Положение, письмо, Оргкомитет и Совет Це",
+          "target": "/baptisty-rossii/iniciativnaya-gruppa/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "iniciativnaya-gruppa",
+      "h1": [
+        "Инициативная группа: путь к Совету Церквей"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 4,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 21,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-08T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-07-11T15:21:36.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-08T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 42,
+        "words": 1797,
+        "maxParagraphWords": 131,
+        "mainH2": 12,
+        "summaryPoints": 3,
+        "sourceRows": 10,
+        "sourceLinks": 3,
+        "sourceListId": "gill-search-p-085"
+      },
+      "toc": {
+        "items": 12,
+        "omitted": []
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 7 ИЗ 9 1944: один союз ВСЕХиБ, Братский Вестник, ХВЕ и Прибалтика",
+          "target": "/baptisty-rossii/vsehib-1944/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · 9 ИЗ 9 Подпольная печать Вестник спасения, Вестник истины, Совет родственников",
+          "target": "/baptisty-rossii/podpolnaya-pechat/",
+          "shown": true
+        }
+      ],
+      "click": null
+    },
+    {
+      "slug": "podpolnaya-pechat",
+      "h1": [
+        "Подпольная печать: Вестники, «Христианин» и память узников"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 4,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 22,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n13 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-09T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-08T04:02:02.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-09T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 35,
+        "words": 1454,
+        "maxParagraphWords": 68,
+        "mainH2": 13,
+        "summaryPoints": 3,
+        "sourceRows": 11,
+        "sourceLinks": 7,
+        "sourceListId": "gill-search-p-081"
+      },
+      "toc": {
+        "items": 13,
+        "omitted": []
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 8 ИЗ 9 Инициативная группа 1960–1966: Положение, письмо, Оргкомитет и Совет Цер",
+          "target": "/baptisty-rossii/iniciativnaya-gruppa/",
+          "shown": true
+        },
+        {
+          "label": "ДАЛЬШЕ · СПРАВОЧНИК СЕРИИ Справочник Люди, даты, документы, спорные факты и источникова",
+          "target": "/baptisty-rossii/spravochnik/",
+          "shown": true
+        }
+      ],
+      "click": {
+        "want": "/baptisty-rossii/spravochnik/",
+        "got": "/baptisty-rossii/spravochnik/"
+      }
+    },
+    {
+      "slug": "spravochnik",
+      "h1": [
+        "Справочник источников"
+      ],
+      "statuses": [
+        200
+      ],
+      "maxPageOverflow": 0,
+      "failedImages": [],
+      "imageCount": 1,
+      "brokenAnchors": [],
+      "duplicateIds": [],
+      "sameRouteFragments": 18,
+      "readerQuestionMarkDamage": false,
+      "localFailures": [],
+      "pageErrors": [],
+      "visibleByline": "Автор-редактор: Фёдор Милованов\n·\n14 июня 2026",
+      "dates": [
+        [
+          "META",
+          "2026-06-14T00:00:00+03:00"
+        ],
+        [
+          "META",
+          "2026-08-20T11:04:03.000Z"
+        ],
+        [
+          "TIME",
+          "2026-06-14T00:00:00+03:00"
+        ]
+      ],
+      "body": {
+        "paragraphs": 12,
+        "words": 487,
+        "maxParagraphWords": 69,
+        "mainH2": 9,
+        "summaryPoints": 3,
+        "sourceRows": 35,
+        "sourceLinks": 35,
+        "sourceListId": "gill-search-p-140"
+      },
+      "toc": {
+        "items": 9,
+        "omitted": []
+      },
+      "nav": [
+        {
+          "label": "НАЗАД · 9 ИЗ 9 Подпольная печать Вестник спасения, Вестник истины, Совет родственников,",
+          "target": "/baptisty-rossii/podpolnaya-pechat/",
+          "shown": true
+        }
+      ],
+      "click": {
+        "want": "/baptisty-rossii/podpolnaya-pechat/",
+        "got": "/baptisty-rossii/podpolnaya-pechat/"
+      }
+    }
+  ],
+  "interaction": {
+    "referenceTOC": {
+      "shown": true,
+      "activeItems": [
+        "#source-levels",
+        "#people",
+        "#timeline",
+        "#documents",
+        "#disputed-facts",
+        "#map-backlog",
+        "#transferred",
+        "#what-to-search-next",
+        "#glossary"
+      ],
+      "afterClick": {
+        "hash": "#what-to-search-next",
+        "y": 88,
+        "hidden": "true"
+      }
+    },
+    "topMenu": {
+      "expanded": "true",
+      "control": "partTocOverlay",
+      "dialogs": [
+        [
+          "partTocOverlay",
+          "toc-overlay is-open",
+          null
+        ],
+        [
+          "",
+          "toc-sheet",
+          "Часть IV · Петербургская линия"
+        ]
+      ]
+    },
+    "summaryButton": {
+      "pre": "false",
+      "text": "Коротко\n6 тезисов\n›",
+      "post": "true",
+      "reclose": "false"
+    },
+    "glossary": [
+      {
+        "slug": "vsehib-1944",
+        "info": {
+          "seen": [
+            [
+              "gterm",
+              "плоть",
+              "В павловском богословии — не просто тело, а падший человек в его самонадеянной и греховной направленности против Бога.ПодробнееЕсли сло"
+            ]
+          ],
+          "bodyMatch": "ело единения вошло «в плоть и кровь» всех братьев и сестёр. Журнал должен был не просто информировать. Он формировал новую общую память, новый язык",
+          "glossaryGlobal": [
+            "__gbGlossaryInitialized",
+            "__gbGlossaryRuntime"
+          ],
+          "popups": [
+            "В павловском богословии — не просто тело, а падший человек в его самонадеянной и греховной направленности против Бога.\nПОДРОБНЕЕ\nЕсли слово «плоть» понимать только как физическое тело, многие тексты Павла начинают звучать почти как презрение к материальному миру. Но в большинстве ключевых мест речь идёт о гораздо более глубокой реальности"
+          ]
+        }
+      },
+      {
+        "slug": "yuzhnaya-shtunda",
+        "info": {
+          "seen": [
+            [
+              "gterm",
+              "штунда",
+              " ⟦определение: Штунда — от немецкого Stunde, «час»: первоначально домашние часы чтения Библии и молитвы, связанные с немецкими колонист"
+            ]
+          ],
+          "glossaryGlobal": [
+            "__gbGlossaryInitialized",
+            "__gbGlossaryRuntime"
+          ],
+          "popups": [
+            "Штунда — от немецкого Stunde, «час»: первоначально домашние часы чтения Библии и молитвы, связанные с немецкими колонистами и пиетистской средой. Позднее слово стало широким и часто полемическим ярлыком для евангельского движения на юге.\nПОДРОБНЕЕ\nНазвание происходит от нем. Stunde («час»): немецкие колонисты-пиетисты, селившиеся с 1817 г"
+          ]
+        }
+      }
+    ]
+  },
+  "archival": {
+    "taggedMediaCount": 16,
+    "checks": 48,
+    "defective": [],
+    "widths": [
+      320,
+      390,
+      1440
+    ]
+  },
+  "atlas": [
+    {
+      "slug": "noch-na-kure",
+      "width": 760,
+      "height": 520,
+      "result": []
+    },
+    {
+      "slug": "yuzhnaya-shtunda",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "Южная штунда: встреча двух линий, а не односторонний «импорт»",
+          "x": 42,
+          "edge": 911,
+          "overX": 151
+        },
+        {
+          "text": "К 1870-м: общины, хлебопреломление, служители, конференционная связь",
+          "x": 146,
+          "edge": 770,
+          "overX": 10
+        },
+        {
+          "text": "ещё не готовая всероссийская конфессия — но уже сеть, из которой вырастет союзная форма",
+          "x": 146,
+          "edge": 762,
+          "overX": 2
+        },
+        {
+          "text": "Граница: «штунда» — меняющийся исторический термин; часть штундистской среды получила баптистскую форму.",
+          "x": 42,
+          "edge": 803,
+          "overX": 43
+        }
+      ]
+    },
+    {
+      "slug": "dva-sezda-1884",
+      "width": 760,
+      "height": 500,
+      "result": [
+        {
+          "text": "30 апреля – 1 мая · Ново-Васильевка",
+          "x": 418,
+          "edge": 781,
+          "overX": 21
+        }
+      ]
+    },
+    {
+      "slug": "peterburgskaya-liniya",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "Петербургская сеть: не один центр и не одна деноминация",
+          "x": 42,
+          "edge": 807,
+          "overX": 47
+        }
+      ]
+    },
+    {
+      "slug": "goneniya-i-sovest",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "Военный вопрос: совесть внутри меняющейся правовой рамки",
+          "x": 42,
+          "edge": 845,
+          "overX": 85
+        },
+        {
+          "text": "Церковные ответы: объяснять · апеллировать · организовываться · иногда разделяться",
+          "x": 95,
+          "edge": 813,
+          "overX": 53
+        }
+      ]
+    },
+    {
+      "slug": "sovetskaya-noch",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "Советская ночь: не один запрет, а несколько слоёв давления",
+          "x": 42,
+          "edge": 833,
+          "overX": 73
+        },
+        {
+          "text": "наблюдение · возможность закрыть собрание · признать общину незарегистрированной",
+          "x": 236,
+          "edge": 827,
+          "overX": 67
+        },
+        {
+          "text": "Для события нужен отдельный акт, дело, регистрационный отказ, протокол, бюллетень или надёжная биографическая цепочка.",
+          "x": 42,
+          "edge": 908,
+          "overX": 148
+        }
+      ]
+    },
+    {
+      "slug": "vsehib-1944",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "ВСЕХиБ после 1944: братская структура и внешняя рамка",
+          "x": 42,
+          "edge": 786,
+          "overX": 26
+        },
+        {
+          "text": "Редакционная граница: церковное единство было реальным, но существовало внутри контролируемой правовой системы.",
+          "x": 42,
+          "edge": 830,
+          "overX": 70
+        }
+      ]
+    },
+    {
+      "slug": "iniciativnaya-gruppa",
+      "width": 760,
+      "height": 520,
+      "result": [
+        {
+          "text": "1960–1966: как протест стал отдельной церковной сетью",
+          "x": 42,
+          "edge": 780,
+          "overX": 20
+        },
+        {
+          "text": "организационный центр подготовки съезда",
+          "x": 534,
+          "edge": 811,
+          "overX": 51
+        },
+        {
+          "text": "как всесоюзный центр нерегистрированных церквей",
+          "x": 440,
+          "edge": 774,
+          "overX": 14
+        },
+        {
+          "text": "Схема показывает изменение структуры конфликта, а не объявляет одну сторону единственным голосом всей церкви.",
+          "x": 42,
+          "edge": 795,
+          "overX": 35
+        }
+      ]
+    },
+    {
+      "slug": "podpolnaya-pechat",
+      "width": 760,
+      "height": 500,
+      "result": [
+        {
+          "text": "Подпольная печать: память → выпуск → распространение",
+          "x": 42,
+          "edge": 778,
+          "overX": 18
+        },
+        {
+          "text": "Сплошная стрелка — подтверждённая функция сети; пунктир — редакционная связка, не отдельный архивный факт.",
+          "x": 70,
+          "edge": 893,
+          "overX": 133
+        }
+      ]
+    },
+    {
+      "slug": "spravochnik",
+      "width": 760,
+      "height": 500,
+      "result": [
+        {
+          "text": "Академическая реконструкция",
+          "x": 528,
+          "edge": 783,
+          "overX": 23
+        },
+        {
+          "text": "и отделяет вывод от свидетельства",
+          "x": 528,
+          "edge": 768,
+          "overX": 8
+        },
+        {
+          "text": "Внутренние A/B/C/D помогают редакции организовать проверку, но не являются публичной шкалой «истинности».",
+          "x": 42,
+          "edge": 809,
+          "overX": 49
+        }
+      ]
+    }
+  ],
+  "atlasAt320": [
+    {
+      "slug": "noch-na-kure",
+      "measurements": [
+        [
+          "rb-01-kura-origins-route.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "yuzhnaya-shtunda",
+      "measurements": [
+        [
+          "rb-02-southern-shtunda-network.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "dva-sezda-1884",
+      "measurements": [
+        [
+          "rb-03-two-1884-events.svg",
+          760,
+          244,
+          161,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "peterburgskaya-liniya",
+      "measurements": [
+        [
+          "rb-04-petersburg-line-network.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "goneniya-i-sovest",
+      "measurements": [
+        [
+          "rb-05-conscience-decision-tree.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "sovetskaya-noch",
+      "measurements": [
+        [
+          "rb-06-soviet-night-pressure-layers.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "vsehib-1944",
+      "measurements": [
+        [
+          "rb-07-vsehib-union-under-oversight.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "iniciativnaya-gruppa",
+      "measurements": [
+        [
+          "rb-08-initiative-group-1960-1966.svg",
+          760,
+          244,
+          167,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "podpolnaya-pechat",
+      "measurements": [
+        [
+          "rb-09-underground-press-distribution.svg",
+          760,
+          244,
+          161,
+          true,
+          true
+        ]
+      ]
+    },
+    {
+      "slug": "spravochnik",
+      "measurements": [
+        [
+          "rb-10-source-confidence-matrix.svg",
+          760,
+          244,
+          161,
+          true,
+          true
+        ]
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Grok Reader — обязательная визуальная приёмка владельца (7 ноября 2026)
 
-**Статус:** актуальное требование владельца к следующему редизайну и его приёмке. **Единственный визуальный эталон для сравнения — `v26/REFERENCE-V26.html` и принятые решения `v26/DECISIONS-V26.md` / `DESIGN-AND-HANDOFF.md`.** V22–V25 — история. HTML V26 не перезаписывать под видом обновлённого Product. Последующее согласованное изменение эталона возможно только с новыми доказательствами и явным одобрением владельца.
+**Статус:** требования владельца и исторические свидетельства на 7 ноября 2026 года; актуальность реализации проверять по Product. Сверка интеграции от 27 ноября приведена в §8. **Единственный визуальный эталон для сравнения — `v26/REFERENCE-V26.html` и принятые решения `v26/DECISIONS-V26.md` / `DESIGN-AND-HANDOFF.md`.** V22–V25 — история. HTML V26 не перезаписывать под видом обновлённого Product. Последующее согласованное изменение эталона возможно только с новыми доказательствами и явным одобрением владельца.
 
 ## 0. Почему задача вновь ОТКРЫТА
 
@@ -44,7 +44,7 @@
 
 **Последнее слово владельца:** «Совсем не то, что я хотел, зачем мы столько улучшали макет? … без в отдельном окне оглавление, а уже по формату нашего макета, со сворачиваемостью ещё … только через скриншоты приёмка премиально вылизанные качественные! Доводим до идеала». Передать эту претензию следующим агентам как **актуальный открытый визуальный дефект**, а не как завершённый V27.
 
-## 5. Новый эталон Grok Focus V17 и реальная реализация — 7 ноября 2026
+## 5. Новый эталон Grok Focus V17 и реальная реализация — 7 ноября 2026 (исторический срез)
 
 **Источник владельца:** приложенный `grok-focus-web-layout (1).zip`, SHA-256 `b47b5ae562ce92a64291651af8a2f6b142decb80236b68dcb343ae880b01f5cb`. Содержит React/Vite-прототип (`src/index.css`, `Sidebar.tsx`, `Reader.tsx`, `qa16.mjs`, `qa17.mjs`). Это **дизайнерский эталон, а не замена Product/Astro runtime**. Не переписывать ReaderState, Search, PlayEmber, GBReaderLibrary V3, Theme, source rights и OverlayRuntime заново.
 
@@ -57,13 +57,13 @@
 - До первого H2 отображать «Введение», не «0/10». Сохранить прежнюю типографику статьи, права TMSJ, ссылки на источник, поведение мобильного оглавления и доступность.
 - **Не принимать по зелёному CI**: показывать реальные браузерные скриншоты нового Product и *настоящего* live production, а также V26/V17 референсы. Валидация Play/Save/Search/Library, WebKit, short viewport, reduced-motion и WCAG обязательна.
 
-**Рабочая реализация:** [Product PR #2292](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292), точный HEAD `3a8e8a677afcfcb8d3c202efb2142d8c299f9b14`; **Draft, НЕ опубликован и НЕ принят владельцем**. Технический перенос V17 и разграничение ответственности описаны в [Product docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/lane/grok-premium-integrated-rail-20261107/docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md). Проверка локальной сборки: Astro 111 страниц, Grok **306/306** Chromium/Firefox/WebKit, keyboard **252/252**, theme/print **72/72**, реальная Library **27/27**, Library V3 **8/8**, компактные действия **15/15**. CI на GitHub перепроверять для актуального HEAD; эти числа не равны согласию владельца.
+**Рабочая реализация:** [Product PR #2292](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292), точный HEAD `3a8e8a677afcfcb8d3c202efb2142d8c299f9b14`; **Draft, НЕ опубликован и НЕ принят владельцем**. Технический перенос V17 и разграничение ответственности описаны в [Product docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/ba9552dd5a3cc5b16c1a164d471306cbe286d200/docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md). Проверка локальной сборки: Astro 111 страниц, Grok **306/306** Chromium/Firefox/WebKit, keyboard **252/252**, theme/print **72/72**, реальная Library **27/27**, Library V3 **8/8**, компактные действия **15/15**. CI на GitHub перепроверять для актуального HEAD; эти числа не равны согласию владельца.
 
 **Настоящие скриншоты на ПК владельца:** `E:\GROK_READER_V17_PREMIUM_VISUAL_ACCEPTANCE_2026-11-07.zip`, 27 JPEG с provenance, SHA-256 `bb0f5aadbe90ae7bab304126561ddfcd0bb9076dafe94e0a0fb0ff4cc90ff309`. Раздельно: текущий публичный сайт (проверенный releaseSha/controlPlaneSha `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`), новый локальный Product кандидат, исторический V27 и V26 reference. Локальная версия для просмотра **только на устройстве владельца:** `http://127.0.0.1:8766/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`.
 
 **STOP-SHIP:** пока владелец не сказал «принимаю» после скриншотов, **не мержить Product PR #2292**, не утверждать, что V17 вышел на прод. После приёмки — полный CI на точный HEAD, merge, GitHub Pages, публичный SHA и свежие live screenshots. Не плодить новые ветки с дизайном; продолжать в PR #2292.
 
-## 6. PlayEmber — премиальное раскрытие скоростей (7 ноября 2026)
+## 6. PlayEmber — премиальное раскрытие скоростей (7 ноября 2026, исторический срез)
 
 Владелец предоставил два снимка фактического Reader: в компактной рейке нажатие Play не предлагало скорости, а раскрытая справа панель показывала наложенные окружности и обводки. Не менять принцип горизонтального выдвижения, но выполнить качественную геометрию.
 
@@ -77,7 +77,7 @@
 
 STOP-SHIP: PR остаётся Draft до явной визуальной приёмки владельцем и полного CI на точном HEAD. Не объявлять работу опубликованной.
 
-## 7. Reader overlay dismissal and selected icon — 2026-11-07
+## 7. Reader overlay dismissal and selected icon — 2026-11-07 (historical snapshot)
 
 Owner supplied screenshot of overlapping «Настройки чтения» and «Разделы сайта»: site menu stayed open after clicking empty space, settings could open over it. Owner also selected the FIRST GPT-generated collapse icon, asking to enlarge the simple arrow.
 
@@ -88,3 +88,9 @@ Owner supplied screenshot of overlapping «Настройки чтения» and
 - Owner screenshot archive on authorized PC: E:\GROK_READER_OVERLAY_ARROW_V17_ACCEPTANCE_2026-11-07.zip, SHA-256 852a04a824e31a936cbd761e42c161ebfe1f5c1ee52af5b022505dd7d29aadf0. Contains 14 actual Chrome/WebKit local Product screenshots, 4 enlarged crops of same captures, source provenance and test logs. Candidate preview: http://127.0.0.1:8766/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ (local machine only).
 
 STOP SHIP remains active: Product PR #2292 is Draft until owner visually approves and exact-HEAD GitHub CI succeeds. Production Ledger previously remained 5e2db6f0fdd0257818f1a215fca16d4cc884e2d8; new overlay/icon changes are NOT live.
+
+## 8. Сверка интеграции — 27 ноября 2026
+
+- Product [#2292](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292) уже **merged**; GitHub merge SHA [`ba9552dd`](https://github.com/FedorMilovanov/gb-is-my-strength/commit/ba9552dd5a3cc5b16c1a164d471306cbe286d200). Указания «Draft / не мержить #2292 / продолжать в #2292» в §5–7 описывают состояние 7 ноября, а не текущую команду.
+- 27 JPEG из архива §5 относятся к историческому сравнению V17/V26/V27, тогдашнему публичному SHA `5e2db6f0…` и локальному кандидату, не к merge SHA `ba9552dd` или сегодняшнему live. Архив заново не скачивался и не проверялся в этой сверке.
+- Факт merge не доказывает актуальный deploy или визуальную приёмку владельцем. Не отменять screenshot/signoff gate и не открывать конкурирующую реализацию. Для следующего шага сверить актуальные Product PR/ветки и существующих владельцев Reader, включая [#2346](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2346), а не возобновлять закрытый #2292.

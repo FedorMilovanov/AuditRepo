@@ -1,0 +1,624 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "perRun": {
+    "saved-heading-restored": 4,
+    "visible-toast-click-no-return": 2
+  },
+  "witnessSha256": [
+    "e86eb8380c8e104d1ee1a60da6ed09d62debdc9522cd6f89d56342f324108a78",
+    "9ffba7223622c0005f6ae600b08d4b1ce0f66023406f7820bfaa160e54a221d7"
+  ],
+  "pins": {
+    "bothRuns": 49,
+    "recheckedF27": 52,
+    "sharedF27": 49
+  },
+  "cases": [
+    {
+      "id": "plain-390",
+      "outcome": "saved-heading-restored",
+      "route": "plain",
+      "hash": "",
+      "hashchange": 0,
+      "entryY": 0,
+      "clickY": 0,
+      "afterY": 8316,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 14,
+        "scrollY": 8105,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 14,
+        "scrollY": 8316,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 14%",
+      "historyDelta": 0
+    },
+    {
+      "id": "toc-390",
+      "outcome": "visible-toast-click-no-return",
+      "route": "sheet",
+      "hash": "#sec-hebrew",
+      "hashchange": 1,
+      "entryY": 0,
+      "clickY": 5223,
+      "afterY": 5223,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 14,
+        "scrollY": 8105,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "sec-hebrew",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-hebrew",
+        "sectionTitle": "Раввинист — христианин с Мишной в руках",
+        "progress": 9,
+        "scrollY": 5223,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 14%",
+      "historyDelta": 1
+    },
+    {
+      "id": "outline-390",
+      "outcome": "saved-heading-restored",
+      "route": "outline",
+      "hash": "",
+      "hashchange": 0,
+      "entryY": 0,
+      "clickY": 4911,
+      "afterY": 8316,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 14,
+        "scrollY": 8105,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "sec-trinity",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 14,
+        "scrollY": 8316,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 14%",
+      "historyDelta": 0
+    },
+    {
+      "id": "plain-1440",
+      "outcome": "saved-heading-restored",
+      "route": "plain",
+      "hash": "",
+      "hashchange": 0,
+      "entryY": 0,
+      "clickY": 0,
+      "afterY": 5761,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 15,
+        "scrollY": 5630,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 15,
+        "scrollY": 5761,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 15%",
+      "historyDelta": 0
+    },
+    {
+      "id": "toc-1440",
+      "outcome": "visible-toast-click-no-return",
+      "route": "rail",
+      "hash": "#sec-hebrew",
+      "hashchange": 1,
+      "entryY": 0,
+      "clickY": 3458,
+      "afterY": 3458,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 15,
+        "scrollY": 5630,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "sec-hebrew",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-hebrew",
+        "sectionTitle": "Раввинист — христианин с Мишной в руках",
+        "progress": 8,
+        "scrollY": 3458,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 15%",
+      "historyDelta": 1
+    },
+    {
+      "id": "outline-1440",
+      "outcome": "saved-heading-restored",
+      "route": "outline",
+      "hash": "",
+      "hashchange": 0,
+      "entryY": 0,
+      "clickY": 3143,
+      "afterY": 5761,
+      "storedAtOffer": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 15,
+        "scrollY": 5630,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "liveSectionBeforeClick": "sec-trinity",
+      "storedAfter": {
+        "version": 1,
+        "siteId": "gb-strength",
+        "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+        "surface": "series",
+        "seriesId": "dzhon-gill",
+        "pageId": "part2",
+        "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+        "sectionId": "sec-canticles",
+        "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+        "progress": 15,
+        "scrollY": 5761,
+        "completed": false,
+        "dismissedAt": 0,
+        "source": "reader-state-v1"
+      },
+      "toastText": "Вы здесь былиВы остановились на 15%",
+      "historyDelta": 0
+    }
+  ],
+  "actionSamplesAB": {
+    "plain-390": [
+      {
+        "actionAgeMs": 1380,
+        "hideLatencyMs": {
+          "off": 5,
+          "removed": 406
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 14,
+          "scrollY": 8105,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182224321,
+        "savedAtAfter": 1795182227299
+      },
+      {
+        "actionAgeMs": 1384,
+        "hideLatencyMs": {
+          "off": 7,
+          "removed": 408
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 14,
+          "scrollY": 8105,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182274677,
+        "savedAtAfter": 1795182277941
+      }
+    ],
+    "toc-390": [
+      {
+        "actionAgeMs": 2865,
+        "hideLatencyMs": {
+          "off": 1,
+          "removed": 402
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-hebrew",
+          "sectionTitle": "Раввинист — христианин с Мишной в руках",
+          "progress": 9,
+          "scrollY": 5223,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182233055,
+        "savedAtAfter": 1795182233055
+      },
+      {
+        "actionAgeMs": 2904,
+        "hideLatencyMs": {
+          "off": 0,
+          "removed": 401
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-hebrew",
+          "sectionTitle": "Раввинист — христианин с Мишной в руках",
+          "progress": 9,
+          "scrollY": 5223,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182285577,
+        "savedAtAfter": 1795182285577
+      }
+    ],
+    "outline-390": [
+      {
+        "actionAgeMs": 2847,
+        "hideLatencyMs": {
+          "off": 5,
+          "removed": 406
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-trinity",
+          "sectionTitle": "«Учение о Троице» — манифест против унитарианства",
+          "progress": 8,
+          "scrollY": 4911,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182240607,
+        "savedAtAfter": 1795182241951
+      },
+      {
+        "actionAgeMs": 3043,
+        "hideLatencyMs": {
+          "off": 4,
+          "removed": 405
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-trinity",
+          "sectionTitle": "«Учение о Троице» — манифест против унитарианства",
+          "progress": 8,
+          "scrollY": 4911,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182295226,
+        "savedAtAfter": 1795182296614
+      }
+    ],
+    "plain-1440": [
+      {
+        "actionAgeMs": 1545,
+        "hideLatencyMs": {
+          "off": 3,
+          "removed": 403
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 15,
+          "scrollY": 5630,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182246143,
+        "savedAtAfter": 1795182249751
+      },
+      {
+        "actionAgeMs": 1458,
+        "hideLatencyMs": {
+          "off": 4,
+          "removed": 405
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 15,
+          "scrollY": 5630,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182302848,
+        "savedAtAfter": 1795182306230
+      }
+    ],
+    "toc-1440": [
+      {
+        "actionAgeMs": 2747,
+        "hideLatencyMs": {
+          "off": 2,
+          "removed": 402
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-hebrew",
+          "sectionTitle": "Раввинист — христианин с Мишной в руках",
+          "progress": 8,
+          "scrollY": 3458,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182256252,
+        "savedAtAfter": 1795182256252
+      },
+      {
+        "actionAgeMs": 2763,
+        "hideLatencyMs": {
+          "off": 1,
+          "removed": 401
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 15,
+          "scrollY": 5630,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182311680,
+        "savedAtAfter": 1795182315510
+      }
+    ],
+    "outline-1440": [
+      {
+        "actionAgeMs": 3050,
+        "hideLatencyMs": {
+          "off": 5,
+          "removed": 406
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-canticles",
+          "sectionTitle": "Песнь Песней: самый личный труд Гилла",
+          "progress": 15,
+          "scrollY": 5630,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182263392,
+        "savedAtAfter": 1795182268252
+      },
+      {
+        "actionAgeMs": 3016,
+        "hideLatencyMs": {
+          "off": 3,
+          "removed": 404
+        },
+        "storedAtClick": {
+          "version": 1,
+          "siteId": "gb-strength",
+          "routePath": "/articles/dzhon-gill-chast-2-uchenyi",
+          "surface": "series",
+          "seriesId": "dzhon-gill",
+          "pageId": "part2",
+          "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+          "sectionId": "sec-trinity",
+          "sectionTitle": "«Учение о Троице» — манифест против унитарианства",
+          "progress": 7,
+          "scrollY": 3143,
+          "completed": false,
+          "dismissedAt": 0,
+          "source": "reader-state-v1"
+        },
+        "savedAtClick": 1795182325888,
+        "savedAtAfter": 1795182326960
+      }
+    ]
+  },
+  "screens": {
+    "outline-390-after.png": {
+      "runA": "e2e3c8f6528064cd9d02cbe213a0e90c92ab97dd2dc07a2c50e32e0b839eeb99",
+      "runB": "e2e3c8f6528064cd9d02cbe213a0e90c92ab97dd2dc07a2c50e32e0b839eeb99",
+      "equal": true
+    },
+    "outline-390-before.png": {
+      "runA": "906776c080481ecc7fbf702704cca2e92a287f991d70c300350300d89e1a04b0",
+      "runB": "906776c080481ecc7fbf702704cca2e92a287f991d70c300350300d89e1a04b0",
+      "equal": true
+    },
+    "toc-390-after.png": {
+      "runA": "33f9ccf0865ea413c59e3b7c7381873cb305f36c2067fa1b3a56542c1b9d752b",
+      "runB": "33f9ccf0865ea413c59e3b7c7381873cb305f36c2067fa1b3a56542c1b9d752b",
+      "equal": true
+    },
+    "toc-390-before.png": {
+      "runA": "0a24bcf638b163a18ad73d957158ac892aa4ee4b9762af35345e3c4394393f44",
+      "runB": "0a24bcf638b163a18ad73d957158ac892aa4ee4b9762af35345e3c4394393f44",
+      "equal": true
+    }
+  }
+}

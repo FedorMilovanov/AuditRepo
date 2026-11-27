@@ -1,0 +1,273 @@
+> gb-is-my-strength@1.6.3 strangler:build:production-like
+> npm run astro:build && node scripts/copy-legacy-to-dist.js --omit-build-only && node scripts/astro-cache-bust-postbuild.js && node scripts/pastor-series-heading-id-hygiene.js && node scripts/heading-name-hygiene.js && node scripts/pastor-series-guards-dist.js
+
+
+> gb-is-my-strength@1.6.3 astro:build
+> npm run dist:clean && npm run astro:check && node scripts/astro-cli.mjs build
+
+
+> gb-is-my-strength@1.6.3 dist:clean
+> node -e "require('fs').rmSync('dist',{recursive:true,force:true})"
+
+
+> gb-is-my-strength@1.6.3 astro:check
+> npm run astro:7:satteri:contract && node scripts/astro-cli.mjs check
+
+
+> gb-is-my-strength@1.6.3 astro:7:satteri:contract
+> node scripts/astro7-satteri-contract.mjs
+
+ASTRO 7 SATTERI CONTRACT: PASS (Astro 7.4.12, MDX 8.1.6, native Satteri 0.4.10; Node 22.23.4; no Unified override)
+13:58:05 [content] Syncing content
+13:58:05 [content] Synced content
+13:58:05 [types] Generated 1.32s
+13:58:05 [check] Getting diagnostics for Astro files in before...
+src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:37:6 - warning ts(6196): 'HermenevtikaTocItem' is declared but never used.
+
+37 type HermenevtikaTocItem = (typeof HERMENEVTIKA_TOC)[number];
+        ~~~~~~~~~~~~~~~~~~~
+
+src/components/konfessii/russkij-baptizm/Baptizm3DBody.astro:100:9 - warning astro(4000): This script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+100 <script type="text/javascript">
+            ~~~~
+
+src/components/reader-platform/ReaderPreferencesHead.astro:158:12 - warning ts(80006): This may be converted to an async function.
+
+158   function open(source, opener) {
+               ~~~~
+
+src/components/rodosloviye/RodosloviyeBody.astro:311:11 - warning astro(4000): This script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+311   <script src="/js/sw-register.js?v=921dd6a2" defer></script>
+              ~~~
+src/components/rodosloviye/RodosloviyeBody.astro:309:11 - warning astro(4000): This script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+309   <script src="/js/site.js?v=9fa8818a" defer></script>
+              ~~~
+src/components/rodosloviye/RodosloviyeBody.astro:308:11 - warning astro(4000): This script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+308   <script src="/js/site-utils.js?v=e80f1dfb" defer></script>
+              ~~~
+
+src/components/ui/floating-cluster/SingleArticleCluster.astro:44:11 - warning ts(6196): 'Props' is declared but never used.
+
+44 interface Props {
+             ~~~~~
+
+Result (655 files):
+- 0 errors
+- 0 warnings
+- 7 hints
+
+14:00:47 [content] Syncing content
+14:00:47 [content] Synced content
+14:00:47 [types] Generated 930ms
+14:00:47 [build] output: "static"
+14:00:47 [build] mode: "static"
+14:00:47 [build] directory: before/dist/
+14:00:47 [build] Collecting build info...
+14:00:47 [build] ✓ Completed in 1.02s.
+14:00:47 [build] Building static entrypoints...
+14:00:48 [WARN] [vite]
+../images/og-karty-1200x630.webp referenced in ../images/og-karty-1200x630.webp didn't resolve at build time, it will remain unchanged to be resolved at runtime
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+[Shiki] The language "greek" doesn't exist, falling back to "plaintext".
+14:00:51 [vite] ✓ built in 4.57s
+14:00:52 [vite] ✓ built in 323ms
+14:00:52 [build] Rearranging server assets...
+
+ generating static routes
+14:00:52   ├─ /about/index.html (+14ms)
+14:00:52   ├─ /app/index.html (+4ms)
+14:00:52   ├─ /articles/20-antisovetov-pastoru/index.html (+259ms)
+14:00:52   ├─ /articles/anatomiya-padeniya-pyat-stadiy/index.html (+37ms)
+14:00:52   ├─ /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/index.html (+21ms)
+14:00:52   ├─ /articles/chto-bibliya-nazyvaet-serdcem/index.html (+102ms)
+14:00:52   ├─ /articles/diotrefy-nashego-vremeni/index.html (+24ms)
+14:00:53   ├─ /articles/dzhon-gill-chast-1-chelovek/index.html (+16ms)
+14:00:53   ├─ /articles/dzhon-gill-chast-2-uchenyi/index.html (+51ms)
+14:00:53   ├─ /articles/dzhon-gill-chast-3-nasledie/index.html (+50ms)
+14:00:53   ├─ /articles/dzhon-gill-chast-4-ekzeget/index.html (+15ms)
+14:00:53   ├─ /articles/dzhon-gill-istoricheskiy-kontekst/index.html (+10ms)
+14:00:53   ├─ /articles/dzhon-gill-spravochnik/index.html (+11ms)
+14:00:53   ├─ /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html (+129ms)
+14:00:53   ├─ /articles/kak-hranit-serdce/index.html (+20ms)
+14:00:53   ├─ /articles/kak-menyaetsya-serdce/index.html (+10ms)
+14:00:53   ├─ /articles/kod-da-vinchi/index.html (+30ms)
+14:00:53   ├─ /articles/kogda-chelovek-uhodit-ot-very/index.html (+41ms)
+14:00:53   ├─ /articles/kogda-uhodit-kogda-ostavatsya/index.html (+18ms)
+14:00:53   ├─ /articles/krajne-li-isporcheno-serdce/index.html (+46ms)
+14:00:53   ├─ /articles/lot-i-sodom/index.html (+56ms)
+14:00:53   ├─ /articles/myslennaya-zhizn-serdca/index.html (+23ms)
+14:00:53   ├─ /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/index.html (+16ms)
+14:00:53   ├─ /articles/novoe-serdce/index.html (+25ms)
+14:00:53   ├─ /articles/osvobozhdennoe-serdce/index.html (+12ms)
+14:00:53   ├─ /articles/otreklis-ot-hrista-istoriya-cerkvi/index.html (+10ms)
+14:00:53   ├─ /articles/otstuplenie-chto-govorit-bibliya/index.html (+48ms)
+14:00:53   ├─ /articles/otstupniki-biblii-iuda-saul-ierovoam-dimas/index.html (+39ms)
+14:00:53   ├─ /articles/petr-i-iuda-padenie-ili-otstuplenie/index.html (+24ms)
+14:00:53   ├─ /articles/podrostok-za-kadrom-chto-delat-tserkvi/index.html (+31ms)
+14:00:53   ├─ /articles/podrostok-za-kadrom-dvoynaya-zhizn/index.html (+27ms)
+14:00:53   ├─ /articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/index.html (+38ms)
+14:00:53   ├─ /articles/priznaki-zdorovoy-cerkvi/index.html (+19ms)
+14:00:53   ├─ /articles/religioznoe-serdce/index.html (+22ms)
+14:00:53   ├─ /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html (+24ms)
+14:00:53   ├─ /articles/sem-tipov-razlichenie-uchiteley/index.html (+27ms)
+14:00:53   ├─ /articles/serdce-hrista-k-nemoshchnym/index.html (+35ms)
+14:00:53   ├─ /articles/serdce-i-duh/index.html (+23ms)
+14:00:53   ├─ /articles/serdce-i-iskushenie/index.html (+11ms)
+14:00:53   ├─ /articles/serdce-i-sokrovishche/index.html (+14ms)
+14:00:53   ├─ /articles/serdce-i-telo/index.html (+12ms)
+14:00:54   ├─ /articles/serdce-i-yazyk/index.html (+14ms)
+14:00:54   ├─ /articles/serdce-ne-v-odinochku/index.html (+10ms)
+14:00:54   ├─ /articles/serdce-pod-skorbyu/index.html (+22ms)
+14:00:54   ├─ /articles/serdce-spravochnik/index.html (+87ms)
+14:00:54   ├─ /articles/skrytye-idoly-serdca/index.html (+15ms)
+14:00:54   ├─ /articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/index.html (+28ms)
+14:00:54   ├─ /articles/sovest-vnutrenniy-sud/index.html (+12ms)
+14:00:54   ├─ /articles/starye-dorozhki-serdca/index.html (+17ms)
+14:00:54   ├─ /articles/steven-lawson-samoobman-i-publichnyy-golos/index.html (+109ms)
+14:00:54   ├─ /articles/strah-bozhij-rabskij-ili-synovnij/index.html (+15ms)
+14:00:54   ├─ /articles/svoboda-vo-hriste/index.html (+16ms)
+14:00:54   ├─ /articles/teksty-pisaniya-kotorymi-manipuliruyut/index.html (+30ms)
+14:00:54   ├─ /articles/tma-na-serdce/index.html (+33ms)
+14:00:54   ├─ /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/index.html (+18ms)
+14:00:54   ├─ /articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/index.html (+31ms)
+14:00:54   ├─ /articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/index.html (+21ms)
+14:00:54   ├─ /articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/index.html (+29ms)
+14:00:54   ├─ /articles/index.html (+7ms)
+14:00:54   ├─ /baptisty-rossii/dva-sezda-1884/index.html (+8ms)
+14:00:54   ├─ /baptisty-rossii/goneniya-i-sovest/index.html (+7ms)
+14:00:54   ├─ /baptisty-rossii/iniciativnaya-gruppa/index.html (+6ms)
+14:00:54   ├─ /baptisty-rossii/noch-na-kure/index.html (+6ms)
+14:00:54   ├─ /baptisty-rossii/peterburgskaya-liniya/index.html (+6ms)
+14:00:54   ├─ /baptisty-rossii/podpolnaya-pechat/index.html (+7ms)
+14:00:54   ├─ /baptisty-rossii/sovetskaya-noch/index.html (+5ms)
+14:00:54   ├─ /baptisty-rossii/spravochnik/index.html (+6ms)
+14:00:54   ├─ /baptisty-rossii/vsehib-1944/index.html (+9ms)
+14:00:54   ├─ /baptisty-rossii/yuzhnaya-shtunda/index.html (+9ms)
+14:00:54   ├─ /baptisty-rossii/index.html (+10ms)
+14:00:54   ├─ /biografii/index.html (+4ms)
+14:00:54   ├─ /data/relations.compiled.json (+11ms)
+14:00:54   ├─ /hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/index.html (+20ms)
+14:00:54   ├─ /hard-texts/blagovestie-mertvym-1-petra-4-5-6/index.html (+18ms)
+14:00:54   ├─ /hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/index.html (+17ms)
+14:00:54   ├─ /hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/index.html (+11ms)
+14:00:54   ├─ /hard-texts/genesis-6/index.html (+4ms)
+14:00:54   ├─ /hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/index.html (+23ms)
+14:00:54   ├─ /hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/index.html (+41ms)
+14:00:54   ├─ /hard-texts/otstuplenie-ot-very-iuda-evreyam-6/index.html (+104ms)
+14:00:54   ├─ /hard-texts/index.html (+4ms)
+14:00:54   ├─ /izbrannoe/index.html (+2ms)
+14:00:54   ├─ /journal/dossiers/g3/index.html (+4ms)
+14:00:54   ├─ /journal/index.html (+2ms)
+14:00:54   ├─ /js/atlas-runtime.js (+2ms)
+14:00:54   ├─ /karty/avraam/index.html (+7ms)
+14:00:54   ├─ /karty/early-church/index.html (+3ms)
+14:00:54   ├─ /karty/ishod/index.html (+8ms)
+14:00:54   ├─ /karty/maccabim/index.html (+2ms)
+14:00:54   ├─ /karty/melachim/index.html (+2ms)
+14:00:54   ├─ /karty/pavel/index.html (+2ms)
+14:00:54   ├─ /karty/revelation/index.html (+3ms)
+14:00:54   ├─ /karty/shoftim/index.html (+2ms)
+14:00:54   ├─ /karty/shvatim/index.html (+3ms)
+14:00:54   ├─ /karty/yeshua/index.html (+2ms)
+14:00:54   ├─ /karty/index.html (+11ms)
+14:00:54   ├─ /konfessii/russkij-baptizm/index.html (+4ms)
+14:00:54   ├─ /konfessii/index.html (+3ms)
+14:00:54   ├─ /map/index.html (+6ms)
+14:00:54   ├─ /nagornaya/chast-1/index.html (+50ms)
+14:00:54   ├─ /nagornaya/chast-2/index.html (+17ms)
+14:00:54   ├─ /nagornaya/chast-3/index.html (+30ms)
+14:00:55   ├─ /nagornaya/chast-4/index.html (+24ms)
+14:00:55   ├─ /nagornaya/chast-5/index.html (+26ms)
+14:00:55   ├─ /nagornaya/istochniki/index.html (+4ms)
+14:00:55   ├─ /nagornaya/nakhodki/index.html (+3ms)
+14:00:55   ├─ /nagornaya/seriya/index.html (+3ms)
+14:00:55   ├─ /nagornaya/index.html (+3ms)
+14:00:55   ├─ /otstupniki/index.html (+2ms)
+14:00:55   ├─ /pastor-series/index.html (+3ms)
+14:00:55   ├─ /podrostok-za-kadrom/index.html (+2ms)
+14:00:55   ├─ /rodosloviye/index.html (+37ms)
+14:00:55   ├─ /updates/index.html (+4ms)
+14:00:55   ├─ /index.html (+14ms)
+14:00:55 ✓ Completed in 2.63s.
+
+14:00:55 [build] ✓ Completed in 7.83s.
+14:00:55 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+14:00:55 [build] 112 page(s) built in 8.88s
+14:00:55 [build] Complete!
+   Copy operation manifest: reports/dist-copy-manifest.json
+✅ copy-legacy-to-dist: copied 1047 files (76057 KB)
+   Astro-owned legacy pages skipped: /articles/20-antisovetov-pastoru/, /articles/dzhon-gill-chast-1-chelovek/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/dzhon-gill-chast-3-nasledie/, /articles/dzhon-gill-chast-4-ekzeget/, /articles/dzhon-gill-istoricheskiy-kontekst/, /articles/dzhon-gill-spravochnik/, /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, /articles/, /articles/kod-da-vinchi/, /articles/krajne-li-isporcheno-serdce/, /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/, /about/, /baptisty-rossii/dva-sezda-1884/, /baptisty-rossii/goneniya-i-sovest/, /baptisty-rossii/, /baptisty-rossii/iniciativnaya-gruppa/, /baptisty-rossii/noch-na-kure/, /baptisty-rossii/peterburgskaya-liniya/, /baptisty-rossii/podpolnaya-pechat/, /baptisty-rossii/sovetskaya-noch/, /baptisty-rossii/spravochnik/, /baptisty-rossii/vsehib-1944/, /baptisty-rossii/yuzhnaya-shtunda/, /biografii/, /hard-texts/, /karty/avraam/, /karty/early-church/, /karty/, /karty/ishod/, /karty/maccabim/, /karty/melachim/, /karty/pavel/, /karty/revelation/, /karty/shoftim/, /karty/shvatim/, /karty/yeshua/, /konfessii/, /konfessii/russkij-baptizm/, /map/, /nagornaya/chast-1/, /nagornaya/chast-2/, /nagornaya/chast-3/, /nagornaya/chast-4/, /nagornaya/chast-5/, /nagornaya/, /nagornaya/istochniki/, /nagornaya/nakhodki/, /nagornaya/seriya/, /pastor-series/
+   Internal source directories not published: data/bible
+   Partial Astro sitemap files removed: sitemap-0.xml, sitemap-index.xml
+relation projection: 16 panels, 0 legacy blocks removed, runtime fetch eliminated
+note projection: 184 notes across 5 routes; interaction owner=article-inline-tooltip
+=== Editorial Metadata v3 Projection ===
+Registry records: 78
+Approved/blocked: 78/0
+HTML matched/changed: 78/78
+Search manifest matched: 78
+Sitemap files/routes: 1/78
+RSS matched: 78
+RSS final order changed: true
+Unknown publication/modification dates: 0/0
+Technical build instant: 2026-11-18T13:24:28.000Z
+✅ Editorial Metadata v3 projected approved decisions to final dist
+Reader linear-text projection: 68 file(s), 74 article(s), 227 metadata field(s), 235 popup payload(s), 7/7 teen source boundaries
+
+⚡ astro-cache-bust-postbuild.js
+
+  HTML files scanned:       117
+  Files touched:            1
+  Hash replacements:        8
+  Governed runtime assets:  1
+  CSP files touched:        116 (injected: 50, form-action fixed: 65, wasm fixed: 66)
+  CSP WASM verified:        116
+  Sitemap images:           28 inserted, 17 synchronized, 58 unchanged
+
+✅ dist asset, CSP, Atlas, relation, editorial metadata, reader semantic projection and sitemap image drift → 0
+✅ pastor-series heading id hygiene: 8 pages, 90 auto non-latin heading ids stripped
+✅ heading-name hygiene: 117 файлов, 95 изменено, 1766 заголовков получили статический aria-label (пустых 11, с aria-labelledby 0, уже помечено 5, без локации 0); постпроверка прошла
+✅ pastor-series guards (dist): G-1 a11y, G-2 anchors, G-3 summary, G-4 empty-state, G-5 metadata, G-6 reading-time, G-7 article root, G-8 print — all passed

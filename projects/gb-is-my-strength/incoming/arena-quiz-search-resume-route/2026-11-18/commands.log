@@ -1,0 +1,63 @@
+# Stage 26 — intake 2026-11-18 (UTC). Correctly saved quiz source → Home vs command palette «Продолжить».
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713; AuditRepo arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Read-only baseline + parallel lanes]
+git status --short --branch
+git rev-parse HEAD
+# Сверка веток и PR: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+gh api repos/FedorMilovanov/AuditRepo/pulls/570
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/files?per_page=100' --jq '.[].filename'
+gh api --paginate 'repos/FedorMilovanov/AuditRepo/pulls/570/reviews?per_page=100' | jq -cs add
+# Prior ecb78eb32b7b59192270538f6c928822a4f6d860, 201 paths, title/body/base unchanged; draft/open/unmerged, reviews [].
+# Exact-head Validate 44638286840 and Preflight 44638286737 were green at start.
+# Read-only gh api repos/FedorMilovanov/REPO/compare/START...END to distinguish changed paths:
+# AuditRepo Baptists 2a2c7e58..54f3cae0 +1/4; Keston ff43786d..7da2765a +1/3; unrelated intake prefixes.
+# Product journal 26d4e375..723e0b1f +4/2, anchor..tip +44/54, journal/design/literary navigation.
+# Product #2348 1d3fc3ce..c274b1dd +7/137 includes asset authority in Gill/Home/Search heads;
+# floating-cluster-controller.js changes VOSK_ENGINE_SRC, not the resume logic. No Search/BookmarkEngine/ReaderState runtime changes.
+# c274b1dd..e0fe929c +1/1 Scripture index (not used in empty-input acceptance);
+# e0fe929c..20bad90d +1/1 source-contract for Search head asset URLs, not resume destination.
+# Run anchored to exact Product main, not whole-branch equivalence. Recheck refs and owners around publish.
+curl -fsS http://127.0.0.1:4178/__print-witness/status.json
+# PENDING_NATIVE_DIALOG / 48 pins / PDF.js 5.4.624, unchanged. No new native print witness.
+
+[Input build and independent Pagefind trees]
+# Absolute PRODUCT/TOOLS/CHROMIUM and scratch OUT. Exact retained production-like dist, or restore on exact source anchor:
+# npm ci --no-audit --no-fund; GB_BUILD_INSTANT=2026-11-18T13:24:28Z npm run strangler:build:production-like
+# npm run page-ownership:dist:production-like
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+for f in js/search.js js/site-utils.js js/reader-state.js js/bookmark-engine.js js/floating-cluster-controller.js css/command-palette.css; do
+  cmp "$PRODUCT/$f" "$PRODUCT/dist/$f"
+done
+# INDEX_A/INDEX_B are the two independent Pagefind 1.5.2 trees from stage 24. Re-create outside dist if missing:
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_A" --version 1.5.2
+# node "$PRODUCT/scripts/build-pagefind.js" --site "$PRODUCT/dist" --output-path "$INDEX_B" --version 1.5.2
+test ! -e "$PRODUCT/dist/pagefind"
+
+[Browser A/B]
+# Read HomeResumeClient..resumeHref/listSaved, search.js we/be/Le and preview CTA, adapter candidate, ReaderState restore, toast.
+# Rejected pilot 1 began at the no-slash alias. The authored review source has a slash and the same-document branch did not apply.
+# Pilots 2/3 identified the glossary DOM mixed with Home meta and a stationary pointer in palette. Use direct visible label
+# pieces; move pointer off list before Ctrl+K. No fixture content or app/response mutations. Optional 308 adds slash only.
+I="$PWD/projects/gb-is-my-strength/incoming"
+S="$I/arena-quiz-search-resume-route/2026-11-18"
+PREV="$RAW_INCOMING/arena-quiz-search-recent-return/2026-11-18/evidence/search-recent-return-witness.json"
+PRIOR_READER="$RAW_INCOMING/arena-quiz-source-readerstate/2026-11-18/evidence/source-readerstate-witness.json"
+node --check "$S/harness/search-resume-route.mjs"
+node "$S/harness/search-resume-route.mjs" "$PRODUCT" "$INDEX_A" "$OUT/run-a" "$CHROMIUM"
+node "$S/harness/search-resume-route.mjs" "$PRODUCT" "$INDEX_B" "$OUT/run-b" "$CHROMIUM"
+python3 "$S/harness/check-replays.py" "$OUT/run-a" "$OUT/run-b" "$PREV" "$PRIOR_READER" \
+  "$PRODUCT/dist" "$INDEX_A" "$INDEX_B" "$OUT/replay-receipt.json"
+# Complete A/B were run concurrently in different browser processes, 12+12 clean contexts; all trusted activations logged.
+# Pagefind was loaded, no search query typed. Palette uses intact BookmarkEngine data, no Recent row before activation.
+# Home 6/6 visibly hits section; palette 18/18 opens top in new document, toast recovery 14/14, dismissed no prompt 4/4.
+# From current Gill II 6/6 new document + answered UI reset, incl. 2 local 308 controls with unchanged final pathname.
+# A/B match 70 dist, prior F25 67/64 shared, F18 46/42; Pagefind 147/1 requested; 8/8 screenshots match.
+# Keep six unique new PNGs, witness pair and receipt. Do not duplicate other-dismiss-390-palette.png (same as other-enter-390-palette.png)
+# or other-dismiss-390-landing.png (same pixels as F24 route-draft-390-back.png, different tested workflow).
+
+[Admission]
+# CHANGED: sorted accumulated file list against fcf2e69b. Stage only this intake; force-add only commands.log.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+# FF this branch only then append to current Draft #570 body after REST reports exact head/files. Check exact-head CI.
+# Product, MASTER/ledger, Drive, deployments, other branches, merge and review decisions all untouched.

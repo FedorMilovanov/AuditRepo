@@ -1,0 +1,241 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "article": "/articles/anatomiya-padeniya-pyat-stadiy/",
+  "articleSha256": "995afe15aa2e06f6be814b79cd73a2082adc6d8984caad4ddbcf2722d2f247ae",
+  "distPinsVerifiedAtStartup": 48,
+  "pdfjs": "5.4.624",
+  "nativePrintWitness": "pending",
+  "expectedProfile": {
+    "width": 390,
+    "height": 844,
+    "paper": "A4"
+  },
+  "coverage": "fixture-only (Chromium Headless; pageRanges explicitly trims the control)",
+  "chromium": "153.0.8010.0",
+  "receipts": [
+    {
+      "result": "missing_last_page",
+      "first": {
+        "pages": 12,
+        "bytes": 840893,
+        "sha256": "b1118016973310a664f48dcc47b448b7d91d714cc54161e0e462bd559d16e40d",
+        "paperPoints": [
+          "595×842"
+        ],
+        "markerPages": {
+          "headline": [
+            1
+          ],
+          "quizNotice": [
+            12
+          ],
+          "editorial": [],
+          "signature": [],
+          "feedback": []
+        },
+        "pageSha256": [
+          "81146b5b4434da21e17df6500964fc2e5f442aadf6dad7f0611b5e724b997d6f",
+          "ba81723499dafc3ffb685751e271266b3287fdd6b457433a49f619cdcd4d1203",
+          "70bfe2271a9528e682bf208ef2b7dd180efa2046749f3e6a527aae8f784f8a90",
+          "a2a4ec3ae053670e8a6a0bb9c1718652ab0a632f4a84812ab066a925d97bc021",
+          "88e9459d190b58a4740bac2b972a488784b593327bf265c1d5082d7e73ab95bd",
+          "d9f34245ae35c44ba678527c6edab224eee3651d45a124be3ddd26ce550b317c",
+          "3f27a4ce58b8a389d1ab06bb11c12eaa28539a65858fa0fa93b39fcfbda9227d",
+          "a828038a04ea6a80fc93a6e73c69b68c3b7a57fdfd692a2efd035733505e3e80",
+          "4965f3a2350caec8b589b2b440498b9505579b1b2f99c73fd1d85aa00fbf461d",
+          "05a8fc29263f3ef2fb940eb27c513f6723c761aa04d05ebcedbf85b17e15c6c5",
+          "f94efb900c13fe343f2d48f7bc39b35df6ec07dccbc0fc284a6c168dee5d336a",
+          "273275d9139e4b6ed2c601c544a8ee71c3545c74f49948a150c7648b68b21a8f"
+        ]
+      },
+      "repeat": {
+        "pages": 13,
+        "bytes": 869575,
+        "sha256": "799a8bc4e2f350388748fd5c74fe9e832fb2cbce84343c67d765c70f64f293db",
+        "paperPoints": [
+          "595×842"
+        ],
+        "markerPages": {
+          "headline": [
+            1
+          ],
+          "quizNotice": [
+            12
+          ],
+          "editorial": [
+            13
+          ],
+          "signature": [
+            13
+          ],
+          "feedback": [
+            13
+          ]
+        },
+        "pageSha256": [
+          "81146b5b4434da21e17df6500964fc2e5f442aadf6dad7f0611b5e724b997d6f",
+          "ba81723499dafc3ffb685751e271266b3287fdd6b457433a49f619cdcd4d1203",
+          "70bfe2271a9528e682bf208ef2b7dd180efa2046749f3e6a527aae8f784f8a90",
+          "a2a4ec3ae053670e8a6a0bb9c1718652ab0a632f4a84812ab066a925d97bc021",
+          "88e9459d190b58a4740bac2b972a488784b593327bf265c1d5082d7e73ab95bd",
+          "d9f34245ae35c44ba678527c6edab224eee3651d45a124be3ddd26ce550b317c",
+          "3f27a4ce58b8a389d1ab06bb11c12eaa28539a65858fa0fa93b39fcfbda9227d",
+          "a828038a04ea6a80fc93a6e73c69b68c3b7a57fdfd692a2efd035733505e3e80",
+          "4965f3a2350caec8b589b2b440498b9505579b1b2f99c73fd1d85aa00fbf461d",
+          "05a8fc29263f3ef2fb940eb27c513f6723c761aa04d05ebcedbf85b17e15c6c5",
+          "f94efb900c13fe343f2d48f7bc39b35df6ec07dccbc0fc284a6c168dee5d336a",
+          "273275d9139e4b6ed2c601c544a8ee71c3545c74f49948a150c7648b68b21a8f",
+          "494e23a3f4b72e7f63942acdd22b69850256bf3d85797203d12e4db5226cc8b8"
+        ]
+      }
+    },
+    {
+      "result": "tail_present_both",
+      "first": {
+        "pages": 13,
+        "bytes": 869575,
+        "sha256": "799a8bc4e2f350388748fd5c74fe9e832fb2cbce84343c67d765c70f64f293db",
+        "paperPoints": [
+          "595×842"
+        ],
+        "markerPages": {
+          "headline": [
+            1
+          ],
+          "quizNotice": [
+            12
+          ],
+          "editorial": [
+            13
+          ],
+          "signature": [
+            13
+          ],
+          "feedback": [
+            13
+          ]
+        },
+        "pageSha256": [
+          "81146b5b4434da21e17df6500964fc2e5f442aadf6dad7f0611b5e724b997d6f",
+          "ba81723499dafc3ffb685751e271266b3287fdd6b457433a49f619cdcd4d1203",
+          "70bfe2271a9528e682bf208ef2b7dd180efa2046749f3e6a527aae8f784f8a90",
+          "a2a4ec3ae053670e8a6a0bb9c1718652ab0a632f4a84812ab066a925d97bc021",
+          "88e9459d190b58a4740bac2b972a488784b593327bf265c1d5082d7e73ab95bd",
+          "d9f34245ae35c44ba678527c6edab224eee3651d45a124be3ddd26ce550b317c",
+          "3f27a4ce58b8a389d1ab06bb11c12eaa28539a65858fa0fa93b39fcfbda9227d",
+          "a828038a04ea6a80fc93a6e73c69b68c3b7a57fdfd692a2efd035733505e3e80",
+          "4965f3a2350caec8b589b2b440498b9505579b1b2f99c73fd1d85aa00fbf461d",
+          "05a8fc29263f3ef2fb940eb27c513f6723c761aa04d05ebcedbf85b17e15c6c5",
+          "f94efb900c13fe343f2d48f7bc39b35df6ec07dccbc0fc284a6c168dee5d336a",
+          "273275d9139e4b6ed2c601c544a8ee71c3545c74f49948a150c7648b68b21a8f",
+          "494e23a3f4b72e7f63942acdd22b69850256bf3d85797203d12e4db5226cc8b8"
+        ]
+      },
+      "repeat": {
+        "pages": 13,
+        "bytes": 869575,
+        "sha256": "799a8bc4e2f350388748fd5c74fe9e832fb2cbce84343c67d765c70f64f293db",
+        "paperPoints": [
+          "595×842"
+        ],
+        "markerPages": {
+          "headline": [
+            1
+          ],
+          "quizNotice": [
+            12
+          ],
+          "editorial": [
+            13
+          ],
+          "signature": [
+            13
+          ],
+          "feedback": [
+            13
+          ]
+        },
+        "pageSha256": [
+          "81146b5b4434da21e17df6500964fc2e5f442aadf6dad7f0611b5e724b997d6f",
+          "ba81723499dafc3ffb685751e271266b3287fdd6b457433a49f619cdcd4d1203",
+          "70bfe2271a9528e682bf208ef2b7dd180efa2046749f3e6a527aae8f784f8a90",
+          "a2a4ec3ae053670e8a6a0bb9c1718652ab0a632f4a84812ab066a925d97bc021",
+          "88e9459d190b58a4740bac2b972a488784b593327bf265c1d5082d7e73ab95bd",
+          "d9f34245ae35c44ba678527c6edab224eee3651d45a124be3ddd26ce550b317c",
+          "3f27a4ce58b8a389d1ab06bb11c12eaa28539a65858fa0fa93b39fcfbda9227d",
+          "a828038a04ea6a80fc93a6e73c69b68c3b7a57fdfd692a2efd035733505e3e80",
+          "4965f3a2350caec8b589b2b440498b9505579b1b2f99c73fd1d85aa00fbf461d",
+          "05a8fc29263f3ef2fb940eb27c513f6723c761aa04d05ebcedbf85b17e15c6c5",
+          "f94efb900c13fe343f2d48f7bc39b35df6ec07dccbc0fc284a6c168dee5d336a",
+          "273275d9139e4b6ed2c601c544a8ee71c3545c74f49948a150c7648b68b21a8f",
+          "494e23a3f4b72e7f63942acdd22b69850256bf3d85797203d12e4db5226cc8b8"
+        ]
+      }
+    },
+    {
+      "result": "unconfirmed_article",
+      "first": {
+        "pages": 1,
+        "bytes": 17701,
+        "sha256": "cc64dae97a2a71dc541839d36d24b542fab71b1ed66434eb97b0746a2e692a2d",
+        "paperPoints": [
+          "596×843"
+        ],
+        "markerPages": {
+          "headline": [],
+          "quizNotice": [],
+          "editorial": [],
+          "signature": [],
+          "feedback": []
+        },
+        "pageSha256": [
+          "90545f64b86c5cf091099cf36a73cb9862c4f546394ea78791ab04f9b813bf9e"
+        ]
+      },
+      "repeat": {
+        "pages": 13,
+        "bytes": 869575,
+        "sha256": "799a8bc4e2f350388748fd5c74fe9e832fb2cbce84343c67d765c70f64f293db",
+        "paperPoints": [
+          "595×842"
+        ],
+        "markerPages": {
+          "headline": [
+            1
+          ],
+          "quizNotice": [
+            12
+          ],
+          "editorial": [
+            13
+          ],
+          "signature": [
+            13
+          ],
+          "feedback": [
+            13
+          ]
+        },
+        "pageSha256": [
+          "81146b5b4434da21e17df6500964fc2e5f442aadf6dad7f0611b5e724b997d6f",
+          "ba81723499dafc3ffb685751e271266b3287fdd6b457433a49f619cdcd4d1203",
+          "70bfe2271a9528e682bf208ef2b7dd180efa2046749f3e6a527aae8f784f8a90",
+          "a2a4ec3ae053670e8a6a0bb9c1718652ab0a632f4a84812ab066a925d97bc021",
+          "88e9459d190b58a4740bac2b972a488784b593327bf265c1d5082d7e73ab95bd",
+          "d9f34245ae35c44ba678527c6edab224eee3651d45a124be3ddd26ce550b317c",
+          "3f27a4ce58b8a389d1ab06bb11c12eaa28539a65858fa0fa93b39fcfbda9227d",
+          "a828038a04ea6a80fc93a6e73c69b68c3b7a57fdfd692a2efd035733505e3e80",
+          "4965f3a2350caec8b589b2b440498b9505579b1b2f99c73fd1d85aa00fbf461d",
+          "05a8fc29263f3ef2fb940eb27c513f6723c761aa04d05ebcedbf85b17e15c6c5",
+          "f94efb900c13fe343f2d48f7bc39b35df6ec07dccbc0fc284a6c168dee5d336a",
+          "273275d9139e4b6ed2c601c544a8ee71c3545c74f49948a150c7648b68b21a8f",
+          "494e23a3f4b72e7f63942acdd22b69850256bf3d85797203d12e4db5226cc8b8"
+        ]
+      }
+    }
+  ],
+  "workerSameOrigin": true,
+  "noFileBytesSent": true,
+  "writeRejectedWith": 405,
+  "previewHostAccepted": true
+}

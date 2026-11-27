@@ -1,0 +1,155 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "distPinsEqualToInPage": 49,
+  "independentRuns": 2,
+  "witnessSha256": [
+    "1de88d52a487ce9ce6636eeb4eeff176cad835066f682150ae8bfcb0ce33e391",
+    "e7ae83435cd06f23325c118367f3a2990686202eabec8cd173b6158183157a1b"
+  ],
+  "counts": {
+    "no-action-in-offer-window": 2,
+    "visible-toast-click-no-return": 2
+  },
+  "casesAB": [
+    [
+      {
+        "id": "quiz-390",
+        "question": "gill.scholar.mishnah",
+        "precedingQuestions": 3,
+        "hash": "#sec-hebrew",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-hebrew",
+        "landedY": 4911,
+        "clickOrSampleY": 4911,
+        "afterY": 4911,
+        "hashchange": 0,
+        "outcome": "no-action-in-offer-window",
+        "sourceAgeMs": 7561,
+        "toastAtSource": "absent",
+        "ctaAgeMs": null,
+        "dismissMs": null,
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-canticles"
+        ],
+        "storedSectionAtClick": null,
+        "autoDismissControl": [
+          {
+            "control": "#glsQuizConfRow [data-conf=sure]",
+            "q": "Сколько лет Гилл прослужил пастором в Хорслидауне?",
+            "beforePoint": null,
+            "firstCenter": [
+              83.6640625,
+              735.25
+            ],
+            "scrollDeltaAvailable": 0,
+            "afterAutoDismissPoint": [
+              83.6640625,
+              735.25
+            ],
+            "beforeAgeMs": 1704,
+            "afterAgeMs": 7378
+          }
+        ]
+      },
+      {
+        "id": "quiz-1440",
+        "question": "gill.scholar.mishnah",
+        "precedingQuestions": 6,
+        "hash": "#sec-hebrew",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-hebrew",
+        "landedY": 3143,
+        "clickOrSampleY": 3143,
+        "afterY": 3143,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 2687,
+        "toastAtSource": "on",
+        "ctaAgeMs": 3165,
+        "dismissMs": {
+          "off": 2,
+          "removed": 403
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-trinity"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": []
+      }
+    ],
+    [
+      {
+        "id": "quiz-390",
+        "question": "gill.scholar.systematics",
+        "precedingQuestions": 3,
+        "hash": "#sec-systematics",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-systematics",
+        "landedY": 36499,
+        "clickOrSampleY": 36499,
+        "afterY": 36499,
+        "hashchange": 0,
+        "outcome": "no-action-in-offer-window",
+        "sourceAgeMs": 7588,
+        "toastAtSource": "absent",
+        "ctaAgeMs": null,
+        "dismissMs": null,
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-canticles"
+        ],
+        "storedSectionAtClick": null,
+        "autoDismissControl": [
+          {
+            "control": "#glsQuizConfRow [data-conf=sure]",
+            "q": "В каком году произошёл доктринальный раскол на Солтерс-Холл?",
+            "beforePoint": null,
+            "firstCenter": [
+              83.6640625,
+              735.25
+            ],
+            "scrollDeltaAvailable": 0,
+            "afterAutoDismissPoint": [
+              83.6640625,
+              735.25
+            ],
+            "beforeAgeMs": 1748,
+            "afterAgeMs": 7391
+          }
+        ]
+      },
+      {
+        "id": "quiz-1440",
+        "question": "gill.scholar.mishnah",
+        "precedingQuestions": 5,
+        "hash": "#sec-hebrew",
+        "targetPseudoClass": null,
+        "focusAtLanding": "sec-hebrew",
+        "landedY": 3143,
+        "clickOrSampleY": 3143,
+        "afterY": 3143,
+        "hashchange": 0,
+        "outcome": "visible-toast-click-no-return",
+        "sourceAgeMs": 2632,
+        "toastAtSource": "on",
+        "ctaAgeMs": 3020,
+        "dismissMs": {
+          "off": 2,
+          "removed": 403
+        },
+        "storedSectionAtOfferBeforeAfter": [
+          "sec-canticles",
+          "sec-canticles",
+          "sec-trinity"
+        ],
+        "storedSectionAtClick": "sec-canticles",
+        "autoDismissControl": []
+      }
+    ]
+  ]
+}
