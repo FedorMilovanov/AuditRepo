@@ -10,6 +10,7 @@ Optimize total cost to obtain a correct, complete result: quality and safety are
 - Hosted sandbox/CI normally suits heavy builds, full browser matrices and reproducible tests. Use existing valid evidence and artifacts, and account for actual queue time. Do not treat a different device, synthetic merge or stale head as the required witness.
 - Official provider API/connector and existing provider-write authority remain binding. Transport optimization is not permission to publish, bypass quotas or use a different account.
 - Preserve owner privacy, isolation and desktop noninterference. Fresh scoped consent for foreground UI remains mandatory; never export private local files merely to save calls.
+- For a requested delivery to the owner's device, check that the available transport supports the actual file format and destination before promising delivery. Verify the original file identity and requested destination after transfer; an accessible archive elsewhere is partial completion, not delivery. Respect explicit API-only/no-paid-intermediary requirements and never reroute a safety denial.
 
 ## 2. Proportionate execution and useful calls
 
