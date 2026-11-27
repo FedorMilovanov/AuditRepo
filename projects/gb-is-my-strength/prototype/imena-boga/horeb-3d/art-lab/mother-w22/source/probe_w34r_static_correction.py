@@ -31,13 +31,13 @@ def crossings(a,b):
             s=np.einsum('ij,ij->i',e2,cross)*inv
             hit|=ok&(u>=-1e-7)&(v>=-1e-7)&(u+v<=1+1e-7)&(s>1e-6)&(s<1-1e-6)
     return hit
-def contacts(A,B,active,selfcheck=False):
+def contacts(A,B,active,selfcheck=False,include_pairs=False):
     av,af,ac=A['v'],A['tri'],A['canon']
     bv,bf,bc=B['v'],B['tri'],B['canon']
     a=av[af];b=bv[bf];ac=ac[af];bc=bc[bf]
     ca=a.mean(1);cb=b.mean(1);ar=np.linalg.norm(a-ca[:,None],axis=2).max(1);br=np.linalg.norm(b-cb[:,None],axis=2).max(1)
     alo=a.min(1);ahi=a.max(1);blo=b.min(1);bhi=b.max(1)
-    total=0;loc={};target_loc={};face_ids=set()
+    total=0;loc={};target_loc={};face_ids=set();pair_ids=[]
     mask=np.zeros(len(a),bool);mask[active]=True
     for low,high in zip((-1,.006,.02,.06),(.006,.02,.06,np.inf)):
         ids=np.flatnonzero((br>low)&(br<=high))
@@ -56,10 +56,13 @@ def contacts(A,B,active,selfcheck=False):
             if not len(ia):continue
             hit=crossings(a[ia],b[ib]);total+=int(hit.sum())
             if selfcheck:face_ids.update(ia[hit].tolist());face_ids.update(ib[hit].tolist())
+            if include_pairs:pair_ids.extend(zip(ia[hit].tolist(),ib[hit].tolist()))
             for tag in A['region'][ia[hit]]:
                 loc[tag]=loc.get(tag,0)+1
             for tag in B['region'][ib[hit]]:target_loc[tag]=target_loc.get(tag,0)+1
-    return {'pairs':total,'source_regions':loc,'target_regions':target_loc,'face_ids':sorted(face_ids)}
+    result={'pairs':total,'source_regions':loc,'target_regions':target_loc,'face_ids':sorted(face_ids)}
+    if include_pairs:result['pair_ids']=sorted(pair_ids)
+    return result
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);args=parser.parse_args()
     root=args.evidence;out=args.output;assert not out.exists()

@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');args=p.parse_args();assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');args=p.parse_args();assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb';d,a=load(src,r['glb_sha256'])
@@ -27,7 +27,7 @@ def main():
     def desc(i):
         yield i
         for c in d['nodes'][i].get('children',[]):yield from desc(c)
-    def build(pole_angle,corrective,twist=.65):
+    def build(pole_angle,corrective,twist=.65,upper_twist=None):
         M={i:x.copy() for i,x in base.items()};info={}
         for s in ('l','r'):
             up,low,hand=[names[k+'_'+s] for k in ('upperarm','lowerarm','hand')]
@@ -44,6 +44,14 @@ def main():
             rot(up,basis(du,np.cross(du,dv))@basis(u,np.cross(u,v)).T)
             rot(low,swing(M[hand][:3,3]-M[low][:3,3],dv))
             assert np.linalg.norm(M[hand][:3,3]-target)<1e-7
+            if upper_twist is not None:
+                # Twist the upper arm along its own axis, then cancel at the elbow.
+                # All descendant matrices except upper arm must remain unchanged.
+                saved={i:M[i].copy() for i in desc(low)}
+                q=R.from_rotvec(unit(du)*math.radians(upper_twist[s])).as_matrix()
+                rot(up,q);rot(low,q.T)
+                assert max(np.max(abs(M[i]-v)) for i,v in saved.items())<1e-6
+                assert np.linalg.norm(M[low][:3,3]-elbow)<1e-7
             # Distribute axial twist before applying remaining wrist rotation.
             ax=unit(dv);Q=targets[s][hand][:3,:3]@np.linalg.inv(M[hand][:3,:3])
             qq=R.from_matrix(Q).as_quat();tw=np.r_[ax*(qq[:3]@ax),qq[3]]
@@ -278,7 +286,128 @@ def main():
         row={'pole_deg':pole,'twist':twist,'old_sleeve_correction':corr,'arm':info,'matrix_error':err,'audit':au,'crossings':count}
         rows.append(row);print(json.dumps({'pole':pole,'twist':twist,'count':count,'skin':au['skin_self'],'cloth':au['tunic_self'],'skin_cloth':au['skin_tunic'],'scene':au['scene'],'skin_regions':au['skin_regions']}),flush=True)
         if best is None or (bool(au['scene']),count)<(bool(best[0]['audit']['scene']),best[0]['crossings']):best=(row,doc)
-    if args.combined or args.shared_reference:
+    if args.upper_combined:
+        from collections import Counter
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
+        baseline,_=dq_geometry(doc,geo,(1.,1.))
+        # Same shoulder axial compensation and correction settings in all poses.
+        doc2,geo2,info2,err2=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'],{'l':30,'r':-30})
+        dq2,_=dq_geometry(doc2,geo2,(1.,1.))
+        weighted,_=dq_geometry(doc2,geo2,(1.,1.),1.,1)
+        def strain_witness(candidate):
+            result={}
+            for k in ('ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0','W28e_tailored_linen'):
+                n=d['nodes'][names[k]];pr=d['meshes'][n['mesh']]['primitives'][0];at=pr['attributes']
+                v=a(at['POSITION']).astype(float)
+                for weight,t in zip(n.get('weights',d['meshes'][n['mesh']].get('weights',[])),pr.get('targets',[])):
+                    if weight:v+=weight*a(t['POSITION'])
+                js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][n['skin']]['joints']])
+                dom=jn[js[np.arange(len(js)),ws.argmax(1)]];tri=candidate[k]['tri'];p0=v[tri];p1=candidate[k]['v'][tri]
+                area=lambda p:np.linalg.norm(np.cross(p[:,1]-p[:,0],p[:,2]-p[:,0]),axis=1)
+                a0=area(p0);a1=area(p1);previous=area(g[k]['v'][tri])
+                severe=(a0>1e-12)&(a1<.1*a0);old=(a0>1e-12)&(previous<.1*a0)
+                region=dom[tri[:,0]]
+                result[k]={'severe_area_faces':int(severe.sum()),'already_severe_in_previous_static':int((severe&old).sum()),
+                           'new_severe_vs_previous_static':int((severe&~old).sum()),'previous_static_severe':int(old.sum()),
+                           'regions':dict(Counter(region[severe].tolist())),'face_ids':np.flatnonzero(severe).tolist()}
+            return result
+        configs=[('prior_combined',baseline,doc,6,.006,True),('twist_dq',dq2,doc2,0,0,False),('twist_guarded',dq2,doc2,6,.006,False),('twist_weight',weighted,doc2,0,0,False),('twist_combined',weighted,doc2,6,.006,False)]
+        for label,source,pose,iterations,cap,prior_mode in configs:
+            deadline()
+            ref=baseline if prior_mode else dq2
+            if prior_mode:source=dq_geometry(doc,geo,(1.,1.),1.,1)[0]
+            candidate=source if not iterations else smooth_skin(pose,source,iterations,cap,True,ref)[0]
+            au=audit(candidate);q=quality_relative(ref,candidate);gate=quality_gate(q,au);absolute=strain_witness(candidate)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            row={'method':label,'crossings':count,'quality_gate_relative_to_own_dq':gate,'quality':q,'absolute_strain':absolute,'audit':au}
+            rows.append(row);print(json.dumps({'method':label,'crossings':count,'gate':gate,'strain':{k:{kk:vv for kk,vv in v.items() if kk!='face_ids'} for k,v in absolute.items()},'scene':au['scene']}),flush=True)
+            if best is None or (not gate,count)<(not best[0]['quality_gate_relative_to_own_dq'],best[0]['crossings']):best=(row,pose)
+        assert rows[0]['crossings']=={0:56,30:87,60:99}[int(args.distance)]
+        assert rows[1]['crossings']=={0:69,30:81,60:95}[int(args.distance)]
+    elif args.upper_twist:
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best']
+        # A common set of offsets for all three sampled wrist positions.
+        for l,r0 in [(0,0),(-15,15),(15,-15),(-30,30),(30,-30),(-30,0),(0,30),(30,0),(0,-30)]:
+            deadline();doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'],{'l':l,'r':r0})
+            gg,_=dq_geometry(doc,geo,(1.,1.));au=audit(gg)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            strain={}
+            for k in ('ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0','W28e_tailored_linen'):
+                n=d['nodes'][names[k]];pr=d['meshes'][n['mesh']]['primitives'][0]
+                v=a(pr['attributes']['POSITION']).astype(float)
+                for weight,t in zip(n.get('weights',d['meshes'][n['mesh']].get('weights',[])),pr.get('targets',[])):
+                    if weight:v+=weight*a(t['POSITION'])
+                tri=gg[k]['tri'];p0=v[tri];p1=gg[k]['v'][tri]
+                e0=np.linalg.norm(p0[:,[1,2,0]]-p0,axis=2);e1=np.linalg.norm(p1[:,[1,2,0]]-p1,axis=2)
+                ratio=e1[e0>1e-9]/e0[e0>1e-9]
+                n0=np.linalg.norm(np.cross(p0[:,1]-p0[:,0],p0[:,2]-p0[:,0]),axis=1)
+                n1=np.linalg.norm(np.cross(p1[:,1]-p1[:,0],p1[:,2]-p1[:,0]),axis=1)
+                strain[k]={'edge_ratio_quantiles':np.quantile(ratio,[0,.01,.5,.99,1]).tolist(),
+                           'area_below_tenth':int(np.sum((n0>1e-12)&(n1<.1*n0)))}
+            row={'upper_twist_deg':{'l':l,'r':r0},'crossings':count,'audit':au,'bind_relative_strain':strain,'arm':info,'matrix_error':err}
+            rows.append(row);print(json.dumps({'upper_twist_deg':row['upper_twist_deg'],'crossings':count,'skin':au['skin_self'],'cloth':au['skin_tunic'],'scene':au['scene'],'strain':strain}),flush=True)
+            if best is None or (bool(au['scene']),count)<(bool(best[0]['audit']['scene']),best[0]['crossings']):best=(row,doc)
+        assert rows[0]['crossings']=={0:80,30:107,60:128}[int(args.distance)]
+    elif args.topology_witness:
+        from scipy.sparse import coo_matrix
+        from scipy.sparse.csgraph import connected_components
+        from collections import Counter
+        prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
+        seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
+        baseline,_=dq_geometry(doc,geo,(1.,1.))
+        weighted,_=dq_geometry(doc,geo,(1.,1.),1.,1)
+        combined,_=smooth_skin(doc,weighted,6,.006,True,baseline)
+        key='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0';b=g[key]
+        node=d['nodes'][names[key]];pr=d['meshes'][node['mesh']]['primitives'][0];at=pr['attributes']
+        rest=a(at['POSITION']).astype(float);js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']).astype(float)
+        jnames=np.array([d['nodes'][i]['name'] for i in d['skins'][node['skin']]['joints']])
+        dom=jnames[js[np.arange(len(js)),ws.argmax(1)]]
+        arm=np.array([n.startswith(('clavicle_','upperarm_','lowerarm_','hand_','thumb_','index_','middle_','ring_','pinky_')) for n in jnames])
+        active=np.flatnonzero(np.any((np.sum(ws*arm[js],axis=1)>1e-9)[b['tri']],axis=1))
+        tri=b['tri'];_,first,canon=np.unique(b['canon'],return_index=True,return_inverse=True)
+        ct=canon[tri]
+        edges=np.sort(np.concatenate((ct[:,[0,1]],ct[:,[1,2]],ct[:,[2,0]])),axis=1)
+        e,count=np.unique(edges,axis=0,return_counts=True)
+        unique_faces,face_count=np.unique(np.sort(ct,axis=1),axis=0,return_counts=True)
+        i,j=e.T;adj=coo_matrix((np.ones(len(i)*2),(np.r_[i,j],np.r_[j,i])),shape=(len(first),len(first))).tocsr()
+        num,labels=connected_components(adj,directed=False)
+        topology={'export_vertices':len(rest),'canonical_vertices':len(first),'faces':len(tri),'components':int(num),'component_sizes':sorted(np.bincount(labels).tolist(),reverse=True)[:12],
+                  'boundary_edges':int(np.sum(count==1)),'nonmanifold_edges':int(np.sum(count>2)),'duplicate_canonical_faces':int(np.sum(face_count-1)),
+                  'zero_area_rest_faces':int(np.sum(np.linalg.norm(np.cross(rest[tri[:,1]]-rest[tri[:,0]],rest[tri[:,2]]-rest[tri[:,0]]),axis=1)<1e-12))}
+        regions=dom[tri[:,0]];states={}
+        rest_morph=rest.copy()
+        mesh=d['meshes'][node['mesh']]
+        for wt,t in zip(node.get('weights',mesh.get('weights',[])),pr.get('targets',[])):
+            if wt:rest_morph+=wt*a(t['POSITION'])
+        for label,v in [('bind',rest),('bind_morph',rest_morph),('previous_static',b['v']),('linear',geo[key]['v']),('dq',baseline[key]['v']),('combined',combined[key]['v'])]:
+            deadline();part=dict(b,v=v,region=regions)
+            detail=contacts(part,part,active,True,include_pairs=True)
+            pairs={tuple(sorted(q)) for q in detail['pair_ids']}
+            assert len(pairs)==detail['pairs']
+            states[label]={'pairs':pairs,'regions':detail['source_regions']}
+        pairs=states['combined']['pairs'];bind=states['bind']['pairs'];bm=states['bind_morph']['pairs'];previous=states['previous_static']['pairs']
+        local=[]
+        # A two-edge topological neighborhood is a diagnostic of local folding,
+        # not proof that a proper intersection is harmless.
+        nbr=[set(adj.indices[adj.indptr[i]:adj.indptr[i+1]]) for i in range(len(first))]
+        for i,j in sorted(pairs):
+            vi=set(ct[i]);vj=set(ct[j]);near=set().union(*(nbr[k] for k in vi))
+            near2=set().union(*(nbr[k] for k in near)) if near else set()
+            local.append({'faces':[i,j],'region_pair':sorted([str(regions[i]),str(regions[j])]),
+                          'within_one_edge':bool(near&vj),'within_two_edges':bool((near|near2)&vj),
+                          'rest_centroid_separation_mm':float(np.linalg.norm(rest[tri[i]].mean(0)-rest[tri[j]].mean(0))*1000),
+                          'in_bind':(i,j) in bind,'in_bind_morph':(i,j) in bm,'in_previous_static':(i,j) in previous})
+        result={'status':'ART_HOLD_TOPOLOGY_WITNESS','distance_mm':args.distance,'source_sha256':r['glb_sha256'],'topology':topology,
+                'active_triangles':len(active),'state_counts':{k:len(v['pairs']) for k,v in states.items()},
+                'combined_in_bind':len(pairs&bind),'combined_in_bind_morph':len(pairs&bm),'combined_in_previous_static':len(pairs&previous),
+                'combined_within_one_edge':sum(q['within_one_edge'] for q in local),'combined_within_two_edges':sum(q['within_two_edges'] for q in local),
+                'region_pairs':dict(Counter('/'.join(q['region_pair']) for q in local)),'residual_pairs':local,
+                'limitations':['Canonical weld includes position, original weights and morph state. Proper noncoplanar intersections exclude shared canonical vertices, not all topology defects. Local fold neighborhood is not a waiver.']}
+        out.mkdir();(out/'w34zq-topology.json').write_text(json.dumps(result,indent=2))
+        print(json.dumps({k:v for k,v in result.items() if k!='residual_pairs'}),flush=True);return
+    elif args.combined or args.shared_reference:
         prior=json.loads((root/'W34zh-arm-refine-0-20261127/w34zg-report.json').read_text())
         seed=prior['best'];doc,geo,info,err=build(seed['pole_deg'],seed['old_sleeve_correction'],seed['twist'])
         baseline,_=dq_geometry(doc,geo,(1.,1.))
@@ -357,8 +486,8 @@ def main():
     else:
         for pole in (0,-25,25):
             for corr in (1,0):trial(pole,corr,.65)
-    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'weight_trial':args.weight_trial,'combined_trial':args.combined,'shared_reference_trial':args.shared_reference,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
-    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth or args.weight_trial or args.combined or args.shared_reference):
+    out.mkdir();report={'status':'ART_HOLD_FULL_ARM_RECONNECTION','source_sha256':r['glb_sha256'],'distance_mm':args.distance,'dq_trial':args.dq,'smooth_trial':args.smooth,'guarded_smooth_trial':args.guarded_smooth,'weight_trial':args.weight_trial,'combined_trial':args.combined,'shared_reference_trial':args.shared_reference,'upper_twist_trial':args.upper_twist,'upper_combined_trial':args.upper_combined,'rows':rows,'best':best[0],'limitations':['Changed-triangle proper noncoplanar crossing audit, not containment, swept collision, or visual proof. Static hand targets do not certify grasp. Existing unrelated toe/floor residual not included.']}
+    if best[0]['crossings']==0 and not (args.dq or args.smooth or args.guarded_smooth or args.weight_trial or args.combined or args.shared_reference or args.upper_twist or args.upper_combined):
         doc=best[1];raw=src.read_bytes();jl=struct.unpack_from('<I',raw,12)[0];binchunk=raw[20+jl:];doc['asset']['generator']='HOREB W34zg full arm diagnostic'
         jb=json.dumps(doc,separators=(',',':'),ensure_ascii=True).encode();jb+=b' '*((-len(jb))%4);packed=struct.pack('<5I',0x46546c67,2,20+len(jb)+len(binchunk),len(jb),0x4e4f534a)+jb+binchunk
         f=out/'w34zg-static-actor.glb';f.write_bytes(packed);report['glb_sha256']=hashlib.sha256(packed).hexdigest();load(f,report['glb_sha256'])
