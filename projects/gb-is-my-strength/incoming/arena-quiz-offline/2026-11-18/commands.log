@@ -1,0 +1,67 @@
+# 2026-11-18 UTC — этап 8: квиз, источник, поиск и заметки при потере сети.
+# Product FedorMilovanov/gb-is-my-strength@9edef94ece08012223c1364bec7ddcd561cf5713, read-only.
+# AuditRepo Draft #570, arena/9713b5a4-auditrepo, base fcf2e69b2c1531fe606d9838c811b7d1b1071db0.
+
+[Anchor and overlap]
+git status --short --branch
+git ls-remote origin refs/heads/main 'refs/heads/arena/*'
+git ls-remote https://github.com/FedorMilovanov/gb-is-my-strength.git refs/heads/main 'refs/heads/arena/*'
+gh pr view 570 -R FedorMilovanov/AuditRepo --json state,isDraft,headRefOid,headRefName,baseRefName,changedFiles,reviews,statusCheckRollup
+# At start: 571386f580c50cac130ee213bb63836a9e753c10 OPEN/Draft, 43 paths, 0 reviews.
+# Exact-head validate 44352685297 and preflight 44352685080 both completed SUCCESS.
+gh pr list -R FedorMilovanov/AuditRepo --state open --limit 60 --json number,title,headRefName,headRefOid
+gh pr list -R FedorMilovanov/gb-is-my-strength --state open --limit 60 --json number,title,headRefName,headRefOid
+gh pr diff 2338 -R FedorMilovanov/gb-is-my-strength --name-only
+gh api --paginate 'repos/FedorMilovanov/gb-is-my-strength/pulls/2338/files?per_page=100' --jq '.[]|select(.filename|test("data/(search-manifest|scripture-search-index)\\.json"))|{filename,changes,patch}'
+# Matched previous seven Product tips and open PR file lists. #2338 b2ae614730b0... has G3 manifest edits,
+# timestamp and scripture source-file count change; no search runtime, navigation, service worker or quiz owner edit.
+gh api repos/FedorMilovanov/AuditRepo/compare/e5474986ed9e61d4d07b188c29b43b8dd2de9ba5...bfedc772d238768a33279b14caaa3a4af6fd829f --jq '.files[].filename'
+# d608 tip adds 6 editorial/source evidence files for 1971; no overlap. #545 remains an independent development prototype.
+
+[Artifact and built-in Product controls]
+# Reuse stage-7 exact codeload dist, freshly built from the anchor left unchanged. For clean rebuild use
+# ../../arena-quiz-learning/2026-11-18/commands.log: npm ci, GB_BUILD_INSTANT=2026-11-18T13:24:28Z,
+# strangler:build:production-like, page ownership, pagefind:build:dist. Do not reuse caches from another head.
+R=$(pwd)
+N="$R/projects/gb-is-my-strength/incoming/arena-quiz-offline/2026-11-18"
+OUT=$(mktemp -d "${TMPDIR:-/tmp}/gb-quiz-offline.XXXXXX")
+export PATH="$TOOLS/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+(cd "$PRODUCT" && cmp sw.js dist/sw.js && cmp js/search.js dist/js/search.js)
+# 404.html is postprocessed (head CSP differs); compare served offline digest with dist/404.html, not source bytes.
+(cd "$PRODUCT" && sha256sum dist/sw.js dist/404.html dist/pagefind/pagefind.js dist/js/search.js)
+# Both dist/sw.js and Pagefind bootstrap digests match stage 1 deploy receipts. No new live or release transition.
+(cd "$PRODUCT" && npm run sw:dist:audit:pagefind && npm run sw:dist:audit:deploy-switch)
+# Both PASS. Static gate lists 33 literal precache entries; browser reports 34 including OFFLINE_FALLBACK.
+# Product browser scripts use Playwright default binary resolution. Point a temporary Playwright headless-shell
+# directory to the already installed @sparticuz/chromium@153.0.0 binary, without altering Product/test source.
+export PLAYWRIGHT_BROWSERS_PATH="$OUT/playwright-browsers"
+REV=$(cd "$PRODUCT" && node -p "require('./node_modules/playwright-core/browsers.json').browsers.find(x=>x.name==='chromium-headless-shell').revision")
+SHELLDIR="$PLAYWRIGHT_BROWSERS_PATH/chromium_headless_shell-$REV/chrome-headless-shell-linux64"
+mkdir -p "$SHELLDIR"
+ln -s "$CHROMIUM" "$SHELLDIR/chrome-headless-shell"
+(cd "$PRODUCT" && node scripts/sw-offline-browser-test.mjs && node scripts/sw-root-generation-browser-contract.mjs)
+# A07 PASS 12/12, audit scenario digest sha256:4132300cbef4485666b2d352e28bcf716f2b06b839b99fb984b6210161505c4a.
+# Root generation PASS; failed successor preserves A, valid B retires A and serves exact B bytes.
+# These are Product's fixture controls; no synthetic worker used for the reader witness below.
+
+[Browser witness and replay]
+node --check "$N/harness/offline.mjs"
+for run in run-a run-b; do
+  node "$N/harness/offline.mjs" "$PRODUCT" "$OUT/$run" "$CHROMIUM"
+done
+# Optional final positional argument filters scenario name. Node 22.23.4/Chromium 153.0.8010.0/Playwright 1.62.1.
+# Two executions from the intake harness: 5/5 twice, 19 identical dist pins verified against bytes, 0 pageerror.
+# 2 PNG per run verified against recorded digests/dimensions (390x844 and 587x472). Admit run-a only.
+# Root SW enabled, installation from real pages, no seeded caches/localStorage, origin refuses requests while offline.
+# No Content Security Policy, runtime/module, quiz shuffle or release mutation. No external host access from harness.
+# Expected offline HEAD failure is distinguished from HTTP status and from later reconnected HEAD=200 controls.
+# Initial local-search probe selected two temporary highlights; exclude the just-visited quiz heading from target selector.
+# On retry after fallback, do not force-scroll to #part-pastor: record its natural reload position and confirm the
+# exact URL separately in a new online navigation. The warmed offline source is tested untouched via the quiz link.
+
+[AuditRepo admission]
+# CHANGED contains cumulative Draft #570 paths against fcf2e69b, with staged additions.
+# Общие команды приёмки: arena-quiz-draft-review/2026-11-18/ARCHIVE.md, «Ворота AuditRepo».
+python3 scripts/matrix_coverage_contexts.py --project projects/gb-is-my-strength --json-out "$OUT/contexts.json" --markdown-out "$OUT/contexts.md"
+# Check refs again before regular push to current lane. No Product or shared-status mutation, merge or deployment.

@@ -16,6 +16,7 @@
 | Evidence lifecycle, active matrix, retirement rules | [AUDITREPO_OPERATING_MODEL.md](AUDITREPO_OPERATING_MODEL.md) |
 | Independent witnesses and confidence | [MULTI_WITNESS_VERIFICATION_PROTOCOL.md](MULTI_WITNESS_VERIFICATION_PROTOCOL.md) |
 | Safe concurrent multi-agent editing | [CONCURRENT_EDIT_PROTOCOL.md](CONCURRENT_EDIT_PROTOCOL.md) |
+| Shared workstation execution and Remote Commander budget | [LOCAL_EXECUTION_RESOURCE_PROTOCOL.md](LOCAL_EXECUTION_RESOURCE_PROTOCOL.md) |
 | Active project boundaries | [PROJECT_REGISTRY.md](PROJECT_REGISTRY.md) and individual project `DOC_MAP.md` |
 | Evidence retention, archival/admission | [CLEANUP_RETENTION_POLICY.md](CLEANUP_RETENTION_POLICY.md) |
 | Verified Product code, PRs, deployment and live facts | **Corresponding Product repository and its current source/CI**, never a stale AuditRepo report |

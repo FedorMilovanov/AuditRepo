@@ -1,0 +1,35 @@
+# F27: first two real forward Tabs after the same quiz-source handoff and toast dismissal.
+# Product 9edef94ece08012223c1364bec7ddcd561cf5713. Draft #570 before this update: 24ba2193a76082cc36612468ba97873f8d0c9a0c, 261 paths.
+# Prior keyboard receipt reproduced byte-for-byte. ReaderState, floating controller and site-utils source/dist checked.
+# No Product mutation, public-host run, new print series, or native receipt. Product #2349 timeline and preview status unchanged.
+
+[Coordination]
+# AuditRepo #570: four issue comments, no inline comments/reviews, both CI checks green on previous head.
+# Product #2340 cebf350..47d4223: one W1 plan; #2348 9262011..7574d50: actionlint script only in the delta.
+# #2350 is audit documentation. #2351 6036e103: W57 audit, patch and probes, no F27 runtime change.
+# New QNL D7 handoff: compare exact patch/probe bytes with first #2351 snapshot, read #2346 comment 7047485329.
+# `patch --dry-run --batch -p1` against raw js/highlights.js from #2346 e415560 passed; not applied or run.
+# D7 patch SHA256 79f8461922427f024c91f010460fd8341cf86662abdb0b00ae58f2666c20e9b9.
+# QNL acceptance still needs exports and integrated runtime; current candidate check does not count as closure.
+
+[Browser replays]
+# PRODUCT/OUT/CHROMIUM/TOOLS absolute paths, same production-like build/stock no-store server as commands-in-page.log.
+Q="$PWD/projects/gb-is-my-strength/incoming/arena-quiz-resume-after-fragment/2026-11-18"
+E="$RAW_INCOMING/arena-quiz-resume-after-fragment/2026-11-18/evidence"
+export PATH="$TOOLS/node_modules/.bin:$PATH" LD_LIBRARY_PATH="$TOOLS/libs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+node --check "$Q/harness/resume-in-page.mjs"
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-a" "$CHROMIUM" quiz-focus
+node "$Q/harness/resume-in-page.mjs" "$PRODUCT" "$OUT/run-b" "$CHROMIUM" quiz-focus
+python3 "$Q/harness/check-quiz-focus-replays.py" "$OUT/run-a/resume-in-page-witness.json" \
+  "$OUT/run-b/resume-in-page-witness.json" "$PRODUCT/dist" "$E/quiz-keyboard-witness.json" "$OUT/quiz-focus-receipt.json"
+# Both runs exit 0. Pilot of the same two arms excluded. Named #sec-hebrew fixed before the trials; question order left random.
+# Ctrl: after natural toast removal the H3 retains focus; next Tab reaches IMG at 5125, then table at 6055.
+# Action: after native pointer CTA and actual removal at 401 ms, focus is BODY; no scroll until first Tab goes to 0,
+# then the card to Gill I at 881. URL/hash, history, document and quiz response stay unchanged. No forced clicks or focus writes.
+# 49 dist pins equal to the previous keyboard witness. Same Chromium 153.0.8010.0 / Playwright 1.62.1 / Node 22.23.4.
+# No Search/Pagefind, SW, runtime patches, shuffle/timer interception, or screenshots.
+
+[Read-back]
+# Побайтная сверка сохранённых F27-квитанций: arena-quiz-draft-review/2026-11-18/ARCHIVE.md.
+# Negative checks on copied rows rejected scroll before Tab, untrusted Tab, focus loss in the timer control, and an altered fragment.
+# Preserve original reports and raw witnesses; extend only F27 and add the scoped, read-only D7 pointer in QNL acceptance.

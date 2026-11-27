@@ -1,0 +1,373 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "58d60e4e68b2336cc3d29bbce048da386d11019377ded85422c884e482076a4d",
+  "witnessSha256B": "dfa8f23c0c8b235fff8d02d8669fe8d3c57fb0fde8fd1a9257a0e3c8e577a9fe",
+  "casesPerReplay": 16,
+  "distPins": 46,
+  "sharedStage17Pins": 40,
+  "stage17Only": [],
+  "newlyLoadedPins": [
+    "_astro/Favorites.astro_astro_type_script_index_0_lang.CXC1WxC1.js",
+    "_astro/ResumeMobile.astro_astro_type_script_index_0_lang.CoH9rfWV.js",
+    "_astro/index.BLE-S7HK.css",
+    "css/enhancements-runtime.css",
+    "index.html",
+    "js/enhancements.js"
+  ],
+  "centeredSourceWrongHomeOrToastPerReplay": 4,
+  "libraryReaderStateDisagreementsPerReplay": 2,
+  "pairs": [
+    {
+      "id": "home-learning-390",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+      },
+      "b": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+      }
+    },
+    {
+      "id": "home-native-390",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 88,
+        "readingLine": 325,
+        "scrollYOnSave": 8316,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 88,
+        "readingLine": 325,
+        "scrollYOnSave": 8316,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      }
+    },
+    {
+      "id": "home-wheel-390",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      }
+    },
+    {
+      "id": "toast-learning-390",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "toast-native-390",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 88,
+        "readingLine": 325,
+        "scrollYOnSave": 8316,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 88,
+        "readingLine": 325,
+        "scrollYOnSave": 8316,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "toast-wheel-390",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "fragment-learning-390",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 400,
+        "readingLine": 325,
+        "scrollYOnSave": 8004,
+        "scrollYAfterReturn": 8316,
+        "sourceTopAfterReturn": 88,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles"
+      }
+    },
+    {
+      "id": "library-bridge-wheel-390",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": "sec-hebrew",
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 325,
+        "scrollYOnSave": 8104,
+        "scrollYAfterReturn": 5223,
+        "sourceTopAfterReturn": 3181,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi"
+      }
+    },
+    {
+      "id": "home-learning-1440",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+      },
+      "b": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew"
+      }
+    },
+    {
+      "id": "home-native-1440",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 168,
+        "readingLine": 342,
+        "scrollYOnSave": 5761,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 168,
+        "readingLine": 342,
+        "scrollYOnSave": 5761,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      }
+    },
+    {
+      "id": "home-wheel-1440",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles"
+      }
+    },
+    {
+      "id": "toast-learning-1440",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "toast-native-1440",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 168,
+        "readingLine": 342,
+        "scrollYOnSave": 5761,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 168,
+        "readingLine": 342,
+        "scrollYOnSave": 5761,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "toast-wheel-1440",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/"
+      }
+    },
+    {
+      "id": "fragment-learning-1440",
+      "readerStateSectionBoth": "sec-hebrew",
+      "landingBoth": "sec-canticles",
+      "libraryAnchorBoth": null,
+      "a": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles"
+      },
+      "b": {
+        "sourceTopOnSave": 483,
+        "readingLine": 342,
+        "scrollYOnSave": 5446,
+        "scrollYAfterReturn": 5761,
+        "sourceTopAfterReturn": 168,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles"
+      }
+    },
+    {
+      "id": "library-bridge-wheel-1440",
+      "readerStateSectionBoth": "sec-canticles",
+      "landingBoth": "sec-hebrew",
+      "libraryAnchorBoth": "sec-hebrew",
+      "a": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi"
+      },
+      "b": {
+        "sourceTopOnSave": 300,
+        "readingLine": 342,
+        "scrollYOnSave": 5629,
+        "scrollYAfterReturn": 3458,
+        "sourceTopAfterReturn": 2471,
+        "urlAfterReturn": "/articles/dzhon-gill-chast-2-uchenyi"
+      }
+    }
+  ]
+}

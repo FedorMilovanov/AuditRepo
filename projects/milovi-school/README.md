@@ -11,6 +11,8 @@ The Product repository owns current source, working branches and PRs, exact-head
 
 The former external Google Search Console ownership/API-read blocker `MS-GSC-OWNERSHIP-001` was **closed on 2026-10-28**, after successful Search Console reads and inspection of 166 URLs. Sitemap discovery through `robots.txt` also works. Do **not** describe the old ownership problem as an active row: the current [MASTER](verified/MASTER_BUG_MATRIX.md) has zero active units. A read-only OAuth integration may not submit a sitemap manually; that limitation does not reverse confirmed Search Console read access or ordinary crawler discovery.
 
+**Later source correction (2026-11-27 reconciliation):** Product [#53](https://github.com/FedorMilovanov/Milovi_School/pull/53) merged at `a9db4d18a1d147b5ae2aa1d12129b9f2f49f6c41` with eight owner-approved original editorial illustration replacements. Its explicit exclusions (Equinoxe and other pending identity candidates) must not be described as closed by that PR. The merge is ancestral to the reviewed Product main `577e1359`; current live image bytes and subsequent candidate dispositions were not independently checked in this reconciliation. The November 3 reverify below is an immutable historical snapshot.
+
 Historical evidence remains accessible, but is not a current Product bug. A new issue or failed release gate must be verified against current Product SHA and browser/API evidence before adding a MASTER row.
 
 ## Navigation

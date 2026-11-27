@@ -1,0 +1,11 @@
+--- rhd-115.pdf ---
+curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to www.rp-net.ru:443
+curl exit 35
+
+--- chronicle-15.pdf ---
+curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to vtoraya-literatura.com:443
+curl exit 35
+
+--- chronicle-15-mirror.pdf ---
+curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to antisoviet.narod.ru:443
+curl exit 35

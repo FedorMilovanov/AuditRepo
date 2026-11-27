@@ -1,0 +1,203 @@
+> gb-is-my-strength@1.6.3 astro:audit:baptisty-series:no-build
+> node scripts/baptisty-series-shadow-audit.js --no-build
+
+ℹ️ astro:audit:baptisty-series now runs the effective strict-native series article contract audit.
+✅ API.Bible edition metadata defaults remain fail-closed and rights-bounded
+✅ TMSJ current-translation permission and future-work boundary are explicit
+ARTICLE NATIVE CONTRACT AUDIT (no-build; series articles)
+Legacy HTML and MDX references are migration evidence, not current production truth.
+✅ hermenevtika source: footnote tooltip descendants are static
+✅ hermenevtika source: ordinary Scripture controls remain active (208)
+
+SERIES ARTICLE: /articles/anatomiya-padeniya-pyat-stadiy/
+✅ anatomiya-padeniya-pyat-stadiy: block structure clean (figure outside p, no orphaned direct text)
+✅ anatomiya-padeniya-pyat-stadiy: self canonical is correct
+ℹ️ anatomiya-padeniya-pyat-stadiy: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/
+✅ cerkovnaya-disciplina-vlast-granicy-zashchita: block structure clean (figure outside p, no orphaned direct text)
+✅ cerkovnaya-disciplina-vlast-granicy-zashchita: self canonical is correct
+ℹ️ cerkovnaya-disciplina-vlast-granicy-zashchita: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/kogda-uhodit-kogda-ostavatsya/
+✅ kogda-uhodit-kogda-ostavatsya: block structure clean (figure outside p, no orphaned direct text)
+✅ kogda-uhodit-kogda-ostavatsya: self canonical is correct
+ℹ️ kogda-uhodit-kogda-ostavatsya: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/
+✅ nesovershennyy-chelovek-v-nesovershennoy-cerkvi: block structure clean (figure outside p, no orphaned direct text)
+✅ nesovershennyy-chelovek-v-nesovershennoy-cerkvi: self canonical is correct
+ℹ️ nesovershennyy-chelovek-v-nesovershennoy-cerkvi: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/priznaki-zdorovoy-cerkvi/
+✅ priznaki-zdorovoy-cerkvi: block structure clean (figure outside p, no orphaned direct text)
+✅ priznaki-zdorovoy-cerkvi: self canonical is correct
+ℹ️ priznaki-zdorovoy-cerkvi: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/sem-tipov-razlichenie-uchiteley/
+✅ sem-tipov-razlichenie-uchiteley: block structure clean (figure outside p, no orphaned direct text)
+✅ sem-tipov-razlichenie-uchiteley: self canonical is correct
+ℹ️ sem-tipov-razlichenie-uchiteley: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/teksty-pisaniya-kotorymi-manipuliruyut/
+✅ teksty-pisaniya-kotorymi-manipuliruyut: block structure clean (figure outside p, no orphaned direct text)
+✅ teksty-pisaniya-kotorymi-manipuliruyut: self canonical is correct
+ℹ️ teksty-pisaniya-kotorymi-manipuliruyut: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/
+✅ vernye-i-neizvestnye-zdorovoe-pastyrstvo: block structure clean (figure outside p, no orphaned direct text)
+✅ vernye-i-neizvestnye-zdorovoe-pastyrstvo: self canonical is correct
+ℹ️ vernye-i-neizvestnye-zdorovoe-pastyrstvo: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/podrostok-za-kadrom-dvoynaya-zhizn/
+✅ podrostok-za-kadrom-dvoynaya-zhizn: block structure clean (figure outside p, no orphaned direct text)
+✅ podrostok-za-kadrom-dvoynaya-zhizn: self canonical is correct
+ℹ️ podrostok-za-kadrom-dvoynaya-zhizn: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/
+✅ podrostok-za-kadrom-roditelyam-posle-razoblacheniya: block structure clean (figure outside p, no orphaned direct text)
+✅ podrostok-za-kadrom-roditelyam-posle-razoblacheniya: self canonical is correct
+ℹ️ podrostok-za-kadrom-roditelyam-posle-razoblacheniya: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/podrostok-za-kadrom-chto-delat-tserkvi/
+✅ podrostok-za-kadrom-chto-delat-tserkvi: block structure clean (figure outside p, no orphaned direct text)
+✅ podrostok-za-kadrom-chto-delat-tserkvi: self canonical is correct
+ℹ️ podrostok-za-kadrom-chto-delat-tserkvi: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/
+✅ sovershennoletie-roditelskaya-vlast-chto-menyaetsya: block structure clean (figure outside p, no orphaned direct text)
+✅ sovershennoletie-roditelskaya-vlast-chto-menyaetsya: self canonical is correct
+ℹ️ sovershennoletie-roditelskaya-vlast-chto-menyaetsya: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/
+✅ vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti: block structure clean (figure outside p, no orphaned direct text)
+✅ vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti: self canonical is correct
+ℹ️ vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/
+✅ vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya: block structure clean (figure outside p, no orphaned direct text)
+✅ vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya: self canonical is correct
+ℹ️ vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/
+✅ vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie: block structure clean (figure outside p, no orphaned direct text)
+✅ vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie: self canonical is correct
+ℹ️ vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /baptisty-rossii/dva-sezda-1884/
+✅ dva-sezda-1884: block structure clean (figure outside p, no orphaned direct text)
+✅ dva-sezda-1884: self canonical is correct
+✅ dva-sezda-1884: strict-native dist is not a legacy byte copy
+✅ dva-sezda-1884: body content floor preserved (3315 words; baseline 848; article 2413)
+
+SERIES ARTICLE: /baptisty-rossii/goneniya-i-sovest/
+✅ goneniya-i-sovest: block structure clean (figure outside p, no orphaned direct text)
+✅ goneniya-i-sovest: self canonical is correct
+✅ goneniya-i-sovest: strict-native dist is not a legacy byte copy
+✅ goneniya-i-sovest: body content floor preserved (3819 words; baseline 2055; article 2909)
+
+SERIES ARTICLE: /baptisty-rossii/iniciativnaya-gruppa/
+✅ iniciativnaya-gruppa: block structure clean (figure outside p, no orphaned direct text)
+✅ iniciativnaya-gruppa: self canonical is correct
+✅ iniciativnaya-gruppa: strict-native dist is not a legacy byte copy
+✅ iniciativnaya-gruppa: body content floor preserved (3321 words; baseline 2093; article 2418)
+
+SERIES ARTICLE: /baptisty-rossii/noch-na-kure/
+✅ noch-na-kure: block structure clean (figure outside p, no orphaned direct text)
+✅ noch-na-kure: self canonical is correct
+✅ noch-na-kure: strict-native dist is not a legacy byte copy
+✅ noch-na-kure: body content floor preserved (3424 words; baseline 1105; article 2516)
+
+SERIES ARTICLE: /baptisty-rossii/peterburgskaya-liniya/
+✅ peterburgskaya-liniya: block structure clean (figure outside p, no orphaned direct text)
+✅ peterburgskaya-liniya: self canonical is correct
+✅ peterburgskaya-liniya: strict-native dist is not a legacy byte copy
+✅ peterburgskaya-liniya: body content floor preserved (4369 words; baseline 1410; article 3467)
+
+SERIES ARTICLE: /baptisty-rossii/podpolnaya-pechat/
+✅ podpolnaya-pechat: block structure clean (figure outside p, no orphaned direct text)
+✅ podpolnaya-pechat: self canonical is correct
+✅ podpolnaya-pechat: strict-native dist is not a legacy byte copy
+✅ podpolnaya-pechat: body content floor preserved (3208 words; baseline 1995; article 2310)
+
+SERIES ARTICLE: /baptisty-rossii/sovetskaya-noch/
+✅ sovetskaya-noch: block structure clean (figure outside p, no orphaned direct text)
+✅ sovetskaya-noch: self canonical is correct
+✅ sovetskaya-noch: strict-native dist is not a legacy byte copy
+✅ sovetskaya-noch: body content floor preserved (3664 words; baseline 1957; article 2766)
+
+SERIES ARTICLE: /baptisty-rossii/spravochnik/
+✅ spravochnik: block structure clean (figure outside p, no orphaned direct text)
+✅ spravochnik: self canonical is correct
+✅ spravochnik: strict-native dist is not a legacy byte copy
+✅ spravochnik: body content floor preserved (3563 words; baseline 2493; article 1349)
+
+SERIES ARTICLE: /baptisty-rossii/vsehib-1944/
+✅ vsehib-1944: block structure clean (figure outside p, no orphaned direct text)
+✅ vsehib-1944: self canonical is correct
+✅ vsehib-1944: strict-native dist is not a legacy byte copy
+✅ vsehib-1944: body content floor preserved (2857 words; baseline 1794; article 1951)
+
+SERIES ARTICLE: /baptisty-rossii/yuzhnaya-shtunda/
+✅ yuzhnaya-shtunda: block structure clean (figure outside p, no orphaned direct text)
+✅ yuzhnaya-shtunda: self canonical is correct
+✅ yuzhnaya-shtunda: strict-native dist is not a legacy byte copy
+✅ yuzhnaya-shtunda: body content floor preserved (3715 words; baseline 1039; article 2828)
+
+SERIES ARTICLE: /hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/
+✅ angely-pod-mrakom-iuda-6-7-2-petra-2: block structure clean (figure outside p, no orphaned direct text)
+✅ angely-pod-mrakom-iuda-6-7-2-petra-2: self canonical is correct
+ℹ️ angely-pod-mrakom-iuda-6-7-2-petra-2: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /hard-texts/blagovestie-mertvym-1-petra-4-5-6/
+✅ blagovestie-mertvym-1-petra-4-5-6: block structure clean (figure outside p, no orphaned direct text)
+✅ blagovestie-mertvym-1-petra-4-5-6: self canonical is correct
+ℹ️ blagovestie-mertvym-1-petra-4-5-6: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/
+✅ duhi-v-temnice-noi-kreshchenie-pobeda: block structure clean (figure outside p, no orphaned direct text)
+✅ duhi-v-temnice-noi-kreshchenie-pobeda: self canonical is correct
+ℹ️ duhi-v-temnice-noi-kreshchenie-pobeda: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/
+✅ enoh-prorochestvoval-iuda-14-15-4q204: block structure clean (figure outside p, no orphaned direct text)
+✅ enoh-prorochestvoval-iuda-14-15-4q204: self canonical is correct
+ℹ️ enoh-prorochestvoval-iuda-14-15-4q204: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/
+✅ kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom: block structure clean (figure outside p, no orphaned direct text)
+✅ kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom: self canonical is correct
+ℹ️ kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/
+✅ mozhno-li-doveryat-1-enohu-kanonicheskiy-audit: block structure clean (figure outside p, no orphaned direct text)
+✅ mozhno-li-doveryat-1-enohu-kanonicheskiy-audit: self canonical is correct
+ℹ️ mozhno-li-doveryat-1-enohu-kanonicheskiy-audit: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/otstuplenie-chto-govorit-bibliya/
+✅ otstuplenie-chto-govorit-bibliya: block structure clean (figure outside p, no orphaned direct text)
+✅ otstuplenie-chto-govorit-bibliya: self canonical is correct
+ℹ️ otstuplenie-chto-govorit-bibliya: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/otstupniki-biblii-iuda-saul-ierovoam-dimas/
+✅ otstupniki-biblii-iuda-saul-ierovoam-dimas: block structure clean (figure outside p, no orphaned direct text)
+✅ otstupniki-biblii-iuda-saul-ierovoam-dimas: self canonical is correct
+ℹ️ otstupniki-biblii-iuda-saul-ierovoam-dimas: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/petr-i-iuda-padenie-ili-otstuplenie/
+✅ petr-i-iuda-padenie-ili-otstuplenie: block structure clean (figure outside p, no orphaned direct text)
+✅ petr-i-iuda-padenie-ili-otstuplenie: self canonical is correct
+ℹ️ petr-i-iuda-padenie-ili-otstuplenie: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/otreklis-ot-hrista-istoriya-cerkvi/
+✅ otreklis-ot-hrista-istoriya-cerkvi: block structure clean (figure outside p, no orphaned direct text)
+✅ otreklis-ot-hrista-istoriya-cerkvi: self canonical is correct
+ℹ️ otreklis-ot-hrista-istoriya-cerkvi: no immutable migration baseline found for content floor
+
+SERIES ARTICLE: /articles/kogda-chelovek-uhodit-ot-very/
+✅ kogda-chelovek-uhodit-ot-very: block structure clean (figure outside p, no orphaned direct text)
+✅ kogda-chelovek-uhodit-ot-very: self canonical is correct
+ℹ️ kogda-chelovek-uhodit-ot-very: no immutable migration baseline found for content floor
+
+✅ Article native contract audit passed (36 route(s))
+ℹ️ Warnings: 26

@@ -18,6 +18,7 @@ ALLOWED_ROOT_MD = {
     'MULTI_WITNESS_VERIFICATION_PROTOCOL.md',
     'SANDBOX-ENV-2026-06-21.md',
     'CONCURRENT_EDIT_PROTOCOL.md',
+    'LOCAL_EXECUTION_RESOURCE_PROTOCOL.md',
     # Permanent external-facing portfolio/security documents; no blanket root-MD admission.
     'SECURITY.md',
     'OWNER.md',

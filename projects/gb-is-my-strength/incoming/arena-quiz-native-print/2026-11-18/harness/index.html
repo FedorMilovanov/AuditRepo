@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Проверка первого PDF · Анатомия падения</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./checker.mjs"></script>
+</head>
+<body>
+<main>
+  <header>
+    <p class="tag">AUDITREPO / DRAFT 570</p>
+    <h1>Остаётся ли последний лист<br>в первом PDF?</h1>
+    <p>Проверка «Анатомии падения» через обычное окно печати Chrome. Откройте это превью в новой вкладке, не внутри Arena.</p>
+  </header>
+  <section aria-labelledby="capture-heading">
+    <h2 id="capture-heading">1. Сохраните две копии</h2>
+    <ol>
+      <li>В свежем профиле Chrome откройте эту страницу. Для ширины <strong>390×844</strong> включите режим Responsive в DevTools. Не включайте эмуляцию print media.</li>
+      <li>Если настройки нужно менять, сначала выставьте их в диалоге <strong>на этой нейтральной странице</strong>: «Сохранить как PDF», A4, книжная ориентация, масштаб 100%, поля по умолчанию, фон включён, колонтитулы выключены. Это не загружает шрифты статьи.</li>
+      <li>Откройте статью по ссылке ниже. Не запускайте квиз, не открывайте предпросмотр заранее. Дождитесь загрузки страницы, нажмите «Сохранить как PDF» в статье и сохраните <strong>первую копию</strong>. Запишите число страниц в диалоге.</li>
+      <li>В том же документе, без перезагрузки и смены настроек, нажмите ту же кнопку повторно. Сохраните <strong>вторую копию</strong>. Вернитесь сюда кнопкой «Назад».</li>
+    </ol>
+    <div class="actions">
+      <button id="neutral" type="button">Настроить печать здесь</button>
+      <a class="primary" href="/articles/anatomiya-padeniya-pyat-stadiy/#sec-quiz">Открыть «Анатомию»</a>
+    </div>
+  </section>
+  <section aria-labelledby="compare-heading">
+    <h2 id="compare-heading">2. Сравните файлы локально</h2>
+    <p>Обе копии остаются в вашем браузере. Проверка читает текст и число страниц; файлы и текст никуда не отправляются.</p>
+    <form id="pair">
+      <div class="files">
+        <label>Первая копия <input id="first" type="file" accept=".pdf,application/pdf" required></label>
+        <label>Повторная копия <input id="repeat" type="file" accept=".pdf,application/pdf" required></label>
+      </div>
+      <label for="note">Для свидетельства: ОС, версия Chrome, ширина, число листов в первом диалоге</label>
+      <input id="note" type="text" maxlength="160" placeholder="Например: ОС …, Chrome …, 390×844, … листов">
+      <label class="check"><input id="attest" type="checkbox" required> Это два сохранения через обычное окно печати, без предварительной печати статьи и без перезагрузки между копиями.</label>
+      <button class="primary" id="compare" type="submit" disabled>Сравнить PDF</button>
+      <noscript>Для локального чтения PDF нужен JavaScript.</noscript>
+    </form>
+    <p id="status" role="status" aria-live="polite">Загрузка локальной проверки…</p>
+    <details id="receipt" hidden><summary>Квитанция — её можно прислать вместо файлов</summary><pre id="receipt-text"></pre>
+      <button id="copy" type="button">Скопировать квитанцию</button>
+    </details>
+  </section>
+  <footer>Локальная сборка Product <code>9edef94ece</code> · 48 сверенных файлов · <a href="./status.json">Якорь превью</a></footer>
+</main>
+</body>
+</html>

@@ -38,6 +38,36 @@ with tempfile.TemporaryDirectory(prefix='auditrepo-artifacts-') as temp:
     }), encoding='utf-8')
     assert artifact_admission_errors(root, ['evidence/package.zip'], ['evidence/package.zip']) == []
 
+    # Sidecar-only mutations must not bypass admission for a retained archive.
+    sidecar_rel = 'evidence/package.zip.artifact.json'
+    archive_rel = 'evidence/package.zip'
+    valid_manifest = sidecar.read_text(encoding='utf-8')
+    tracked = [archive_rel, sidecar_rel]
+    assert artifact_admission_errors(root, [sidecar_rel], tracked) == []
+
+    sidecar.unlink()
+    assert any('requires sidecar' in error for error in
+               artifact_admission_errors(root, [sidecar_rel], [archive_rel]))
+    # No retrospective failure when neither the artifact nor its sidecar changed.
+    assert artifact_admission_errors(root, [], [archive_rel]) == []
+
+    sidecar.write_text(valid_manifest.replace(hashlib.sha256(payload).hexdigest(), '0' * 64), encoding='utf-8')
+    assert any('identity does not match' in error for error in
+               artifact_admission_errors(root, [sidecar_rel], tracked))
+    sidecar.write_text('[]', encoding='utf-8')
+    assert any('JSON object' in error for error in
+               artifact_admission_errors(root, [sidecar_rel], tracked))
+    sidecar.write_bytes(b'\xff')
+    assert any('invalid artifact sidecar' in error for error in
+               artifact_admission_errors(root, [sidecar_rel], tracked))
+    sidecar.write_text(valid_manifest, encoding='utf-8')
+    assert artifact_admission_errors(root, [sidecar_rel], tracked) == []
+
+    # Removing both files is not an admission of a surviving artifact.
+    archive.unlink()
+    sidecar.unlink()
+    assert artifact_admission_errors(root, [archive_rel, sidecar_rel], []) == []
+
     spaced = root / 'evidence/bad name.webp'
     spaced.write_bytes(b'unique image fixture')
     errors = artifact_admission_errors(root, ['evidence/bad name.webp'], ['evidence/bad name.webp'])

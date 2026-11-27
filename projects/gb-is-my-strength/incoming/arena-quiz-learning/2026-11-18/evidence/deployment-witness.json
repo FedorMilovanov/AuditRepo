@@ -1,0 +1,102 @@
+{
+  "scope": "Read GitHub deployment and live witnesses recorded by Product CI. Local sha256 comparison; no independent HTTP fetch or live quiz automation was performed in this sandbox.",
+  "releaseSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "controlPlaneSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "workflow": {
+    "conclusion": "success",
+    "created_at": "2026-11-18T13:24:32Z",
+    "event": "push",
+    "head_sha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+    "html_url": "https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/44313404255",
+    "run_attempt": 1,
+    "status": "completed",
+    "updated_at": "2026-11-18T13:38:51Z"
+  },
+  "githubPagesDeployment": {
+    "id": 7884872325,
+    "state": "success",
+    "reportedAt": "2026-11-18T13:38:52Z"
+  },
+  "releaseWitness": {
+    "author": "github-actions[bot]",
+    "created_at": "2026-11-18T13:40:18Z",
+    "html_url": "https://github.com/FedorMilovanov/gb-is-my-strength/pull/2337#issuecomment-6980275368"
+  },
+  "diotrophesLiveWitness": {
+    "author": "github-actions[bot]",
+    "created_at": "2026-11-18T13:39:17Z",
+    "html_url": "https://github.com/FedorMilovanov/gb-is-my-strength/pull/2337#issuecomment-6980249335"
+  },
+  "candidateId": "9edef94ece08012223c1364bec7ddcd561cf5713:44313404255-1",
+  "candidateDigest": "sha256:a3cd47357f839049daeda08ce4b2fd57d8d8b0e1dd216eb7ee99cc279681f0a7",
+  "liveRecorded": {
+    "currentPointer": "https://gospod-bog.ru/deployments/current.json",
+    "runProvenance": "https://gospod-bog.ru/deployments/9edef94ece08012223c1364bec7ddcd561cf5713/44313404255-1.json"
+  },
+  "pointerRecordedByDiotrophesWitness": {
+    "path": "/deployments/current.json",
+    "immutablePath": "/deployments/9edef94ece08012223c1364bec7ddcd561cf5713/44313404255-1.json",
+    "releaseSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+    "controlPlaneSha": "9edef94ece08012223c1364bec7ddcd561cf5713",
+    "workflowRunId": 44313404255,
+    "workflowRunAttempt": 1,
+    "candidateId": "9edef94ece08012223c1364bec7ddcd561cf5713:44313404255-1",
+    "candidateDigest": "sha256:a3cd47357f839049daeda08ce4b2fd57d8d8b0e1dd216eb7ee99cc279681f0a7",
+    "stableAcrossRouteRead": true
+  },
+  "ciArtifactIds": {
+    "releaseCandidate": 14431593485,
+    "liveRelease": 14432312913
+  },
+  "sha256Comparison": [
+    {
+      "surface": "/package-lock.json",
+      "localBytes": 227501,
+      "localSha256": "sha256:5fa7defa3c535c0d9a9f9d8d6f86575298dfa2a83fddd03a162550e121964cf8",
+      "ciRecordedSha256": "sha256:5fa7defa3c535c0d9a9f9d8d6f86575298dfa2a83fddd03a162550e121964cf8",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/",
+      "localBytes": 171199,
+      "localSha256": "sha256:91f60925313ccaf35aff00ecafae439dee8055d92a0c17686fa4bdb097f11d3f",
+      "ciRecordedSha256": "sha256:91f60925313ccaf35aff00ecafae439dee8055d92a0c17686fa4bdb097f11d3f",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/sitemap.xml",
+      "localBytes": 40740,
+      "localSha256": "sha256:9af6845d820d3a7be12c42d09a056277a41cbbe4ae5055dd6364ebfedb100899",
+      "ciRecordedSha256": "sha256:9af6845d820d3a7be12c42d09a056277a41cbbe4ae5055dd6364ebfedb100899",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/feed.xml",
+      "localBytes": 67706,
+      "localSha256": "sha256:2f064bee880d965998b67a43801e4320faa27e010ca788e823d78ea5286e2724",
+      "ciRecordedSha256": "sha256:2f064bee880d965998b67a43801e4320faa27e010ca788e823d78ea5286e2724",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/pagefind/pagefind.js",
+      "localBytes": 45555,
+      "localSha256": "sha256:252d272bd34d483d19a752060f6a065114d15ab12c42d8f905ca565e2768a009",
+      "ciRecordedSha256": "sha256:252d272bd34d483d19a752060f6a065114d15ab12c42d8f905ca565e2768a009",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/sw.js",
+      "localBytes": 12075,
+      "localSha256": "sha256:bb819eefeb367797643b820409be424c876862bb6e13b31740a4e9c4d9c5c301",
+      "ciRecordedSha256": "sha256:bb819eefeb367797643b820409be424c876862bb6e13b31740a4e9c4d9c5c301",
+      "byteDigestMatches": true
+    },
+    {
+      "surface": "/articles/diotrefy-nashego-vremeni/",
+      "localBytes": 309496,
+      "localSha256": "sha256:93c83df7c1c719e5fb69b546cd1d647ef1620c0c4b5d7e289212a7a5ab1abc35",
+      "ciRecordedSha256": "sha256:93c83df7c1c719e5fb69b546cd1d647ef1620c0c4b5d7e289212a7a5ab1abc35",
+      "byteDigestMatches": true
+    }
+  ]
+}

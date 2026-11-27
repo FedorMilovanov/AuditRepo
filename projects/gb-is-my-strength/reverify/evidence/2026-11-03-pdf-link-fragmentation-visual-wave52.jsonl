@@ -1,0 +1,32 @@
+{"kind":"baseline","head":"c734ad540b526d8e76d524370c71da6a45048e06","printGeometry":"PASS","engineContracts":"PASS","productionBuildPages":111,"productClean":true}
+{"kind":"nativeAction","routes":73,"trusted":73,"printOnce":73,"urlStable":73,"downloads":0,"outcome":"browser print workflow; no direct file download"}
+{"kind":"visual","pdfs":73,"pages":1425,"globalSheets":8,"sparseNonterminalCandidates":88,"sparsePairsReviewed":88,"newBlankInterior":0,"newOrderFailure":0,"newImageClip":0}
+{"kind":"links","total":2020,"uri":1666,"internalUri":432,"externalUri":1234,"namedGoto":354,"zeroRects":0,"outsideMediaBox":0,"badDestinationPageOrPoint":0,"imageLinksWithoutText":3,"exactSameTargetDuplicates":8}
+{"kind":"conflictingOverlap","total":3,"newLinkedCard":2,"existingSkipLink":1,"newRoute":"/articles/dzhon-gill-spravochnik/","page":14,"areasPt2":[9590.62,9590.62]}
+{"kind":"gillCardSplit","route":"/articles/dzhon-gill-spravochnik/","pages":[13,14],"cards":["Исторический контекст","Часть I: Человек"],"overlapsWith":["Часть II: Учёный","Часть III: Экзегет"],"screenNativeTargets":"5/5 correct URL + H1"}
+{"kind":"antisovetovCardSplit","route":"/articles/20-antisovetov-pastoru/","pages":[58,59],"card":"№ 6 Когда говорить, когда молчать; когда уходить, когда оставаться","screenNativeTarget":"correct URL + H1"}
+{"kind":"atomicControl","css":".context-links>a,.series-card { break-inside: avoid-page }","gillPages":"18→18","antisovetovPages":"62→62","gillConflictingOverlaps":"2→0","gillCards":"all five whole on page 14","antisovetovCard":"whole on page 59"}
+{"kind":"noImageCoverSummary","routes":20,"page1":"masthead + breadcrumb + empty bordered hero + numeral; H1 begins page 2","computedHeightPx":235.109,"cause":"specific .gbs2-hero.gbs2-noimg aspect survives less-specific print reset; pseudo/background/caption are removed","owner":"SYS-READER-PRINT-EXCLUSION-POLICY-PARITY"}
+{"kind":"noImageCoverRoute","route":"/articles/kak-hranit-serdce/"}
+{"kind":"noImageCoverRoute","route":"/articles/kak-menyaetsya-serdce/"}
+{"kind":"noImageCoverRoute","route":"/articles/myslennaya-zhizn-serdca/"}
+{"kind":"noImageCoverRoute","route":"/articles/novoe-serdce/"}
+{"kind":"noImageCoverRoute","route":"/articles/osvobozhdennoe-serdce/"}
+{"kind":"noImageCoverRoute","route":"/articles/religioznoe-serdce/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-hrista-k-nemoshchnym/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-i-duh/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-i-iskushenie/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-i-sokrovishche/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-i-telo/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-i-yazyk/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-ne-v-odinochku/"}
+{"kind":"noImageCoverRoute","route":"/articles/serdce-pod-skorbyu/"}
+{"kind":"noImageCoverRoute","route":"/articles/skrytye-idoly-serdca/"}
+{"kind":"noImageCoverRoute","route":"/articles/sovest-vnutrenniy-sud/"}
+{"kind":"noImageCoverRoute","route":"/articles/starye-dorozhki-serdca/"}
+{"kind":"noImageCoverRoute","route":"/articles/strah-bozhij-rabskij-ili-synovnij/"}
+{"kind":"noImageCoverRoute","route":"/articles/svoboda-vo-hriste/"}
+{"kind":"noImageCoverRoute","route":"/articles/tma-na-serdce/"}
+{"kind":"noImageControl","route":"/articles/kak-hranit-serdce/","change":"collapse empty no-image hero only","pages":"8→7","page1":"H1 + summary + byline + article start preserved"}
+{"kind":"screenNavigationControl","gillCards":5,"gillCorrect":5,"antisovetovCards":1,"antisovetovCorrect":1,"conclusion":"source href and screen navigation healthy; failures are PDF fragmentation"}
+{"kind":"owner","id":"SYS-PRINT-LINKED-CARD-ATOMICITY","class_":"system","manifestations":2,"activeBefore":62,"activeAfter":63,"systemsBefore":23,"systemsAfter":24}
