@@ -1,0 +1,138 @@
+"""Independent glTF LINEAR rotation/weight playback audit, not a renderer."""
+import argparse,copy,json,math,sys
+from pathlib import Path
+import numpy as np
+from probe_w34l_foot_surface import load
+from probe_w34t_whole_scene import geometry,merged
+from probe_w34r_static_correction import contacts,deadline
+
+BODY='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0';TUNIC='W28e_tailored_linen'
+def pose(doc,acc,t):
+    d=dict(doc,nodes=copy.deepcopy(doc['nodes']))
+    anim=doc['animations'][0]
+    for ch in anim['channels']:
+        sampler=anim['samplers'][ch['sampler']];target=ch['target']
+        assert sampler['interpolation']=='LINEAR'
+        times=acc(sampler['input']).ravel().astype(float)
+        assert np.all(np.diff(times)>0)
+        i=int(np.clip(np.searchsorted(times,t,side='right')-1,0,len(times)-2))
+        u=float(np.clip((t-times[i])/(times[i+1]-times[i]),0,1))
+        values=acc(sampler['output']).reshape(len(times),-1).astype(float)
+        a,b=values[i],values[i+1];field=target['path']
+        if field=='rotation':
+            a/=np.linalg.norm(a);b/=np.linalg.norm(b)
+            dot=float(a@b)
+            if dot<0:b=-b;dot=-dot
+            if dot>.9995:v=(1-u)*a+u*b
+            else:
+                theta=math.acos(np.clip(dot,-1,1))
+                v=(math.sin((1-u)*theta)*a+math.sin(u*theta)*b)/math.sin(theta)
+            v/=np.linalg.norm(v)
+        else:v=(1-u)*a+u*b
+        d['nodes'][target['node']][field]=v.tolist()
+    return d
+
+def audit(root,frame):
+    folder=root/'W35d-approach-20261127';r=json.loads((folder/'w35d-assembly.json').read_text())
+    doc,acc=load(folder/'w35d-approach.glb',r['sha256'])
+    source,sa=load(root/'W34v-finger-refine-20261127/w34u-static-actor.glb',r['source_sha256'])
+    m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text())
+    h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
+    hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
+    baseline,bw=geometry(source,sa,True)
+    t=frame/24;d=pose(doc,acc,t);g,w=geometry(d,acc,True);assert set(g)==set(baseline)
+    names={n['name']:i for i,n in enumerate(d['nodes'])}
+    changed={}
+    for k,v in g.items():
+        assert np.array_equal(v['tri'],baseline[k]['tri'])
+        mask=np.linalg.norm(v['v']-baseline[k]['v']-[0,0,.160],axis=1)>1e-6
+        changed[k]=np.flatnonzero(np.any(mask[v['tri']],axis=1))
+    def hit(a,b,active=None,selfcheck=False,ids=False):
+        if active is None:active=np.arange(len(a['tri']))
+        if not len(active):return {'pairs':0,'face_ids':[]}
+        return contacts(a,b,active,selfcheck,include_pairs=ids)
+    body=g[BODY];tunic=g[TUNIC]
+    skin=hit(body,body,selfcheck=True,ids=True)
+    toe_pairs=sum(np.max(body['v'][body['tri'][[i,j]],1])<.15 for i,j in skin['pair_ids'])
+    cloth=hit(tunic,tunic,selfcheck=True)['pairs']
+    garment_hits={}
+    for k,v in g.items():
+        if k==BODY:continue
+        # Audit all body/garment pairs; eye/brow/lash anatomy is separately unchanged.
+        if k not in ('W19_CC0_Eyes','W28t_CC0_brows','W29b_CC0_lashes'):
+            garment_hits[k]=hit(body,v)['pairs']
+    other={}
+    for k,v in g.items():
+        idx=changed[k]
+        if not len(idx):continue
+        aa=dict(v,tri=v['tri'][idx],region=v['region'][idx]);at=aa['v'][aa['tri']];lo=at.min(axis=(0,1));hi=at.max(axis=(0,1))
+        for n,b in g.items():
+            if k==n or (k==BODY and n in garment_hits) or (n==BODY and k in garment_hits):continue
+            if len(changed[n]) and n<k:continue
+            bt=b['v'][b['tri']];mask=np.all((bt.min(1)<=hi+1e-8)&(bt.max(1)>=lo-1e-8),axis=1)
+            if np.any(mask):
+                count=hit(aa,dict(b,tri=b['tri'][mask],region=b['region'][mask]))['pairs']
+                if count:other[k+' / '+n]=count
+    actor=merged(g.values());at=actor['v'][actor['tri']];lo=at.min(1);hi=at.max(1);amin=lo.min(0);amax=hi.max(0)
+    groups={'floor':[],'basket':[],'room':[]}
+    for k,v in hg.items():
+        if np.any((v['v'].min(0)>amax+1e-8)|(v['v'].max(0)<amin-1e-8)):continue
+        kind='floor' if k in ('Room_floor_earthen','Courtyard_earthen_ground') else 'basket' if v['basket'] else 'room'
+        groups[kind].append(v)
+    scene={}
+    for kind,items in groups.items():
+        if not items:scene[kind]=0;continue
+        prop=merged(items);bt=prop['v'][prop['tri']]
+        mask=np.all((bt.min(1)<=amax+1e-8)&(bt.max(1)>=amin-1e-8),axis=1)
+        prop=dict(prop,tri=prop['tri'][mask],region=prop['region'][mask])
+        if not len(prop['tri']):scene[kind]=0;continue
+        bt=prop['v'][prop['tri']];active=np.flatnonzero(np.all((lo<=bt.max(axis=(0,1))+1e-8)&(hi>=bt.min(axis=(0,1))-1e-8),axis=1))
+        scene[kind]=hit(actor,prop,active)['pairs']
+    strain={}
+    for k in (BODY,TUNIC):
+        n=next(n for n in source['nodes'] if n['name']==k);mesh=source['meshes'][n['mesh']];pr=mesh['primitives'][0]
+        v=sa(pr['attributes']['POSITION']).astype(float)
+        for wt,z in zip(n.get('weights',mesh.get('weights',[])),pr.get('targets',[])):
+            if wt:v+=wt*sa(z['POSITION'])
+        tri=g[k]['tri']
+        def area(points):
+            x=points[tri];return np.linalg.norm(np.cross(x[:,1]-x[:,0],x[:,2]-x[:,0]),axis=1)
+        a0=area(v);a1=area(g[k]['v']);strain[k]=np.flatnonzero((a0>1e-12)&(a1<.1*a0)).tolist()
+    error={}
+    for side in ('l','r'):
+        q=json.loads((root/f'W34zf-retreat-{side}-20261127/w34zb-reshape.json').read_text())
+        direction=np.array(q['approach_meta']['selected']['direction'],float);direction/=np.linalg.norm(direction)
+        target=np.array(q['best']['joint_world_matrices']['hand_'+side])[:3,3]+direction*.06*(1-t/1.5)
+        error[side]=float(np.linalg.norm(w[names['hand_'+side]][:3,3]-target)*1000)
+    endpoint=None
+    if frame in (0,36):
+        f=root/f'W35c-static-160-{60 if frame==0 else 0}-20261127';q=json.loads((f/'w34zx-export.json').read_text())
+        dd,aa=load(f/'w34zx-static-actor.glb',q['export']['sha256']);gg,_=geometry(dd,aa,True)
+        endpoint=max(float(np.max(abs(v['v']-gg[k]['v']))) for k,v in g.items())
+    # Floor height is a verified constant on this staging area; feet unchanged from source.
+    floor_gap=float((body['v'][:,1].min()+.005)*1000)
+    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap}
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path)
+    modes=p.add_mutually_exclusive_group(required=True);modes.add_argument('--frame',type=int);modes.add_argument('--all',action='store_true')
+    p.add_argument('--report',type=Path);args=p.parse_args()
+    if args.frame is not None:
+        assert args.report is None and 0<=args.frame<=36
+        print(json.dumps(audit(args.evidence,args.frame)),flush=True);return
+    import subprocess
+    folder=args.evidence/'W35d-approach-20261127'
+    path=args.report or folder/'w35e-playback.json';assert not path.exists()
+    sha=json.loads((folder/'w35d-assembly.json').read_text())['sha256']
+    report={'status':'PARTIAL','sha256':sha,'sample_rate_fps':24,'rows':[]}
+    def save():path.write_text(json.dumps(report,indent=2),encoding='utf-8')
+    save()
+    for frame in range(37):
+        proc=subprocess.run([sys.executable,__file__,str(args.evidence),'--frame',str(frame)],capture_output=True,text=True,timeout=30)
+        if proc.returncode:raise RuntimeError(proc.stdout[-1200:]+proc.stderr[-1200:])
+        row=json.loads(proc.stdout);assert row['frame']==frame
+        report['rows'].append(row);save();print('FRAME',frame,flush=True)
+    rows=report['rows'];report['status']='ART_HOLD_SAMPLED_PLAYBACK_AUDITED'
+    report['summary']={'frames':len(rows),'max_wrist_error_mm':max(max(row['wrist_error_mm'].values()) for row in rows),'non_toe_skin_pairs':sum(row['skin_self_total']-row['toe_pairs_below_150mm'] for row in rows),'tunic_self_pairs':sum(row['tunic_self'] for row in rows),'body_clothes_pairs':sum(sum(row['body_clothes'].values()) for row in rows),'other_changed_pairs':sum(sum(row['other_changed_actor'].values()) for row in rows),'basket_room_pairs':sum(row['scene']['basket']+row['scene']['room'] for row in rows),'severe_skin_faces':sum(len(row['severe_faces'][BODY]) for row in rows),'max_endpoint_error_m':max(row['endpoint_max_error_m'] for row in rows if row['endpoint_max_error_m'] is not None)}
+    save();print('SUMMARY',json.dumps(report['summary']),flush=True)
+if __name__=='__main__':main()
