@@ -3,8 +3,9 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 
-from check_artifact_admission import artifact_admission_errors
+from check_artifact_admission import artifact_admission_errors, capture_changed_paths, read_changed_paths
 
 with tempfile.TemporaryDirectory(prefix='auditrepo-artifacts-') as temp:
     root = Path(temp)
@@ -72,5 +73,71 @@ with tempfile.TemporaryDirectory(prefix='auditrepo-artifacts-') as temp:
     spaced.write_bytes(b'unique image fixture')
     errors = artifact_admission_errors(root, ['evidence/bad name.webp'], ['evidence/bad name.webp'])
     assert any('must not contain whitespace' in error for error in errors)
+
+# Exercise the exact Git capture used by the workflow, not a synthetic list.
+with tempfile.TemporaryDirectory(prefix='auditrepo-git-paths-') as temp:
+    root = Path(temp)
+    repo = root / 'repo'
+    repo.mkdir()
+    output = root / 'changed.txt'
+
+    def git(*args):
+        return subprocess.check_output(['git', '-c', 'user.name=fixture',
+                                        '-c', 'user.email=fixture@example.invalid',
+                                        *args], cwd=repo)
+
+    git('init', '-q')
+    (repo / 'initial.md').write_text('root', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-qm', 'initial')
+    capture_changed_paths(repo, output)
+    assert read_changed_paths(output) == ['initial.md']
+
+    archive_rel = 'архив.zip'
+    archive = repo / archive_rel
+    archive.write_bytes(b'archive fixture')
+    spaced_rel = ' leading.png'
+    (repo / spaced_rel).write_bytes(b'image fixture')
+    git('add', '.')
+    git('commit', '-qm', 'literal paths')
+    capture_changed_paths(repo, output)
+    changed = read_changed_paths(output)
+    assert set(changed) == {archive_rel, spaced_rel}
+    errors = artifact_admission_errors(repo, changed, changed)
+    assert any(archive_rel in error and 'requires sidecar' in error for error in errors)
+    assert any(spaced_rel in error and 'whitespace' in error for error in errors)
+
+    old_rel = archive_rel + '.artifact.json'
+    new_rel = 'renamed.artifact.json'
+    (repo / old_rel).write_text(json.dumps({
+        'schemaVersion': 1, 'path': archive_rel,
+        'sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
+        'sizeBytes': archive.stat().st_size,
+        'purpose': 'fixture', 'provenance': 'fixture', 'retention': 'fixture',
+    }), encoding='utf-8')
+    git('add', '.')
+    git('commit', '-qm', 'manifest')
+    (repo / old_rel).rename(repo / new_rel)
+    git('add', '-A')
+    git('commit', '-qm', 'rename manifest')
+    capture_changed_paths(repo, output)
+    changed = read_changed_paths(output)
+    assert set(changed) == {old_rel, new_rel}
+    assert any(archive_rel in error and 'requires sidecar' in error for error in
+               artifact_admission_errors(repo, changed, [archive_rel, new_rel]))
+
+    # A line-oriented consumer cannot represent this path without ambiguity.
+    # This fixture is valid on the Linux CI host, not on Windows.
+    import os
+    if os.name != 'nt':
+        (repo / 'bad\nname.md').write_text('fixture', encoding='utf-8')
+        git('add', '.')
+        git('commit', '-qm', 'unrepresentable path')
+        try:
+            capture_changed_paths(repo, output)
+        except ValueError as error:
+            assert 'line separator' in str(error)
+        else:
+            raise AssertionError('unrepresentable Git path silently accepted')
 
 print('AUDITREPO ARTIFACT ADMISSION REGRESSION: PASS')
