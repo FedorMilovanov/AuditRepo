@@ -38,8 +38,10 @@ def manifest_errors(root: Path, relative: str, size: int, digest: str) -> list[s
         return [f'{relative}: requires sidecar {relative}.artifact.json']
     try:
         data = json.loads(sidecar.read_text(encoding='utf-8'))
-    except (OSError, json.JSONDecodeError) as error:
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
         return [f'{relative}: invalid artifact sidecar: {error}']
+    if not isinstance(data, dict):
+        return [f'{relative}: artifact sidecar must be a JSON object']
     expected = {'schemaVersion', 'path', 'sha256', 'sizeBytes', 'purpose', 'provenance', 'retention'}
     missing = sorted(expected - data.keys())
     errors = [f'{relative}: sidecar missing fields {missing}'] if missing else []
@@ -55,8 +57,23 @@ def manifest_errors(root: Path, relative: str, size: int, digest: str) -> list[s
 
 def artifact_admission_errors(root: Path, changed: list[str], tracked: list[str]) -> list[str]:
     changed_artifacts = [p for p in changed if Path(p).suffix.lower() in ARTIFACT_EXTENSIONS and (root / p).is_file()]
+    # A sidecar is part of the evidence identity. Editing or removing only
+    # the sidecar must still validate its surviving artifact. Unchanged
+    # historical artifacts otherwise remain outside the prospective gate.
+    sidecar_suffix = '.artifact.json'
+    sidecar_artifacts = sorted({
+        p[:-len(sidecar_suffix)] for p in changed if p.endswith(sidecar_suffix)
+        and (root / p[:-len(sidecar_suffix)]).is_file()
+        and Path(p[:-len(sidecar_suffix)]).suffix.lower() in ARTIFACT_EXTENSIONS
+    } - set(changed_artifacts))
+    errors: list[str] = []
+    for relative in sidecar_artifacts:
+        path = root / relative
+        size = path.stat().st_size
+        if path.suffix.lower() in ARCHIVE_EXTENSIONS or size > LARGE_BYTES or (root / f'{relative}{sidecar_suffix}').exists():
+            errors.extend(manifest_errors(root, relative, size, sha256(path)))
     if not changed_artifacts:
-        return []
+        return errors
 
     hashes: dict[tuple[int, str], list[str]] = {}
     for relative in tracked:
@@ -67,7 +84,6 @@ def artifact_admission_errors(root: Path, changed: list[str], tracked: list[str]
         digest = sha256(path)
         hashes.setdefault((size, digest), []).append(relative)
 
-    errors: list[str] = []
     for relative in changed_artifacts:
         path = root / relative
         size = path.stat().st_size
