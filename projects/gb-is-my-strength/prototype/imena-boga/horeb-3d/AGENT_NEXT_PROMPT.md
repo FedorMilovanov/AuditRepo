@@ -8,7 +8,14 @@
 
 **W19E ART-first handoff:** Подтверждён [реальный Blender→GLB CC0-пилот](art-lab/mother-w19/README.md) с устранённой утечкой MakeHuman helper-geometries, 53 скелетными костями, двумя клипами, материалами кожи/глаз и льна. Сравнены оригинальные 1440/390 скриншоты. **Новая визуальная задача — правдоподобные глаза/рот/лицо и качественная одежда; исправить UV и facial-rig без возврата helper-полосок.** W19E ART HOLD, модель не интегрировать в основной W15, не создавать новые микро-волны камней.
 
-## Current handoff: W34j alternative shell support staging (2026-11-27)
+## Current handoff: W34k actor-relative elbow pole diagnostic (2026-11-27)
+
+- Recovered exact W34j HEAD ee412451 and local evidence, working checkout H:/HOREB_ArtPipeline/publish. Old C: isolated checkout is dirty and untouched. Re-read ART-first and local resource protocols.
+- Static code review: solve() used the original yaw=90 world-space elbow pole (-.20, sign*elbow_out, -1) even for yaw=180 long-side stance. This makes its lateral/depth components inconsistent with the new actor orientation. Added an optional explicit world pole and opt-in HOREB_W34K_ACTOR_POLE=1, transforming the reference vector by yaw-90; at yaw180 the lateral components are opposite X, the depth component is -.20 Y. Existing calls retain the original pole. Degenerate projected pole is rejected. No geometry, rig, canonical asset or clip modified.
+- Python AST parse for both scripts, four analytic side/yaw checks and git diff --check PASS. Actual Blender A/B, room/floor clearance and visual review NOT RUN; no positive shared heavy-job admission established. Do not claim lower collisions or accepted grip.
+- Next: use a fresh W34k evidence directory with only the exact W34b-hinge-52 w34a-dual-ik.json copied in; existing W34j long-side/lean flags plus HOREB_W34K_ACTOR_POLE=1. Compare same 12 candidates against existing W34j report with full audit; inspect actual poses before any localized corrective morph. Guard refuses pre-existing diagnostic outputs. Preserve W31f/W33b and PR #543; ART HOLD.
+
+### Prior handoff: W34j alternative shell support staging (2026-11-27)
 
 - W34i f174ff15 candidate close images actually reviewed: only marginal improvement, no credible opposed thumb grip. Stop proximity-only searches.
 - W34j exact W28 basket/table and W34f actor. Tabletop .840 m; base bottom .851 m, initial gap 11 mm, insufficient for palm insertion. Rigid tilt geometry (92 basket meshes) around actual far bottom vertex x=.652, after settling to tabletop, produces 40.53?42.13 mm near-base gap at 4 deg, 80.86?84.06 mm at 8 deg. NOT an accepted tipping action, especially with infant; no stability/contact/infant safety proof.

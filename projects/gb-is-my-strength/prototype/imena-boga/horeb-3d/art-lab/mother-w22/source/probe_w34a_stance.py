@@ -119,15 +119,19 @@ if os.environ.get("HOREB_W34A_IK") in ("1","audit"):
   actor_delta=(inv@delta.to_matrix()@rot).to_quaternion()
   bones[n].rotation_quaternion=bones[n].rotation_quaternion@(q.inverted()@actor_delta@q)
   bpy.context.view_layer.update()
- def solve(side,wrist,facing,transverse,elbow_out):
+ def solve(side,wrist,facing,transverse,elbow_out,pole_world=None):
   sign=1 if side=="l" else -1
   up,low,hand=[f"{n}_{side}" for n in ("upperarm","lowerarm","hand")]
   a,b,c=p(up),p(low),p(hand);l1=(b-a).length;l2=(c-b).length
   delta=wrist-a;d=delta.length
   if not abs(l1-l2)+.005<d<l1+l2-.005:return False
   axis=delta.normalized()
-  pole=Vector((-.20,sign*elbow_out,-1))
-  pole=(pole-axis*pole.dot(axis)).normalized()
+  # The legacy pole is world-relative for the original yaw=90 approach.
+  # Alternate staging may supply its own world-space direction.
+  pole=Vector((-.20,sign*elbow_out,-1)) if pole_world is None else Vector(pole_world)
+  pole=pole-axis*pole.dot(axis)
+  if pole.length<1e-8:return False
+  pole=pole.normalized()
   along=(l1*l1-l2*l2+d*d)/(2*d)
   elbow=a+axis*along+pole*math.sqrt(max(0,l1*l1-along*along))
   hinge=os.environ.get("HOREB_W34B_HINGE")=="1"

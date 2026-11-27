@@ -5,6 +5,11 @@ from pathlib import Path
 import bpy
 from mathutils import Vector,Matrix,Quaternion
 out=Path(os.environ["HOREB_W34A_OUTPUT"]);root=Path(os.environ["HOREB_W34F_OUTPUT"])
+# Fail before the imported probe can write any existing evidence.
+actor_pole=os.environ.get("HOREB_W34K_ACTOR_POLE")=="1"
+if actor_pole:
+ assert os.environ.get("HOREB_W34J_LONG_SIDE")=="1" and os.environ.get("HOREB_W34J_LEAN")=="1"
+ assert not any((out/name).exists() for name in ("w34j-shell-approach.json","w34a-stance.json","w34a-static-full.json")), "Use a fresh evidence directory"
 asset=root/"w34f-actor.glb";h=hashlib.sha256(asset.read_bytes()).hexdigest()
 assert h=="587c7b0b10d38207a3a305ba71557f8f4ba82abd2ca21fc3389aba5e52009dcf"
 os.environ.update(HOREB_W34A_IK="audit",HOREB_W34B_HINGE="1",HOREB_W34A_STANCE_X="-.52",HOREB_W34B_DIAG="0")
@@ -98,9 +103,11 @@ for yaw,sx,sy,lean in placements:
     shoulder,elbow,oldw=[p(n+"_"+side) for n in ("upperarm","lowerarm","hand")]
     reach=(elbow-shoulder).length+(oldw-elbow).length
     distance=(wrist-shoulder).length
-    if not solve(side,wrist,f,t,.50):
+    pole=Matrix.Rotation(math.radians(yaw-90),3,"Z")@Vector((-.20,sign*.50,-1)) if actor_pole else None
+    if not solve(side,wrist,f,t,.50,pole_world=pole):
      ok=False;reason={"side":side,"kind":"ik_failed","distance_mm":distance*1000,"arm_length_mm":reach*1000,"wrist":list(wrist),"shell_point":list(hit)};break
     targets[side]={"shell_point":list(hit),"shell_normal":list(n),"wrist":list(wrist)}
+    if pole is not None:targets[side]["elbow_pole_world"]=list(pole)
    if not ok:
     rows.append({"stance_x":sx,"stance_y":sy,"yaw_deg":yaw,"neutral_prop_hits":neutral["prop_hits"],"lean_deg":lean,"lateral":lateral,"height":z,"direction":direction,"reachable":False,"reason":reason});continue
    pts,fs=eval_mesh(body)
@@ -123,7 +130,7 @@ accepted=[r for r in propclear if clear(r["audit"])]
 def rank(r):
  a=r["audit"];return 100000*len(a["prop_hits"])+a["skin_pairs"]+sum(a["skin_cloth"].values())+sum(a["cloth_self"].values())+sum(a["garment_pairs"].values())+sum(t["palm_mean_mm"] for t in r["targets"].values())
 best=sorted(reachable,key=rank)[:3]
-report={"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof."]}
+report={"actor_relative_elbow_pole":actor_pole,"long_side":long_side,"lean_trial":lean_trial,"status":"ART_HOLD_SHELL_PALM_APPROACH","actor_sha256":h,"table_base_gap_mm":gap,"tested":len(rows),"reachable":len(reachable),"prop_clear":len(propclear),"fully_clear":len(accepted),"best":best,"rows":rows,"limitations":["Static shell approach only, corrective morphs disabled for the new pose. No lift, contact forces, finger closure or continuous path proof."]}
 (out/"w34j-shell-approach.json").write_text(json.dumps(report,indent=2))
 print("W34J_SHELL",json.dumps({k:report[k] for k in ("tested","reachable","prop_clear","fully_clear","table_base_gap_mm","best")}),flush=True)
 # Test a tabletop tip geometry only: a pivot around a far-side bottom
