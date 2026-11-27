@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');args=p.parse_args();assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);args=p.parse_args();assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and not args.export_diagnostic and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb';d,a=load(src,r['glb_sha256'])
@@ -337,7 +337,32 @@ def main():
             result['min_floor_gap_mm']=min(gaps)*1000 if gaps else None
             result['below_floor_half_mm']=sum(v<-.0005 for v in gaps)
             return result
-        configs=[('dq',dq0)]
+        digit_meta=None
+        if args.digit_area_factor is not None:
+            b=dq0[key];tri=b['tri'];canon=b['canon'];q=b['v'].copy()
+            delta=np.zeros_like(q);witness=[]
+            node=d['nodes'][names[key]];mesh=d['meshes'][node['mesh']];pr=mesh['primitives'][0];at=pr['attributes']
+            rest=a(at['POSITION']).astype(float)
+            for weight,t in zip(node.get('weights',mesh.get('weights',[])),pr.get('targets',[])):
+                if weight:rest+=weight*a(t['POSITION'])
+            def ratio(fi,points):
+                vv=points[tri[fi]];rr=rest[tri[fi]]
+                return float(np.linalg.norm(np.cross(vv[1]-vv[0],vv[2]-vv[0]))/np.linalg.norm(np.cross(rr[1]-rr[0],rr[2]-rr[0])))
+            selected=[]
+            for fi in (5715,16988):
+                ids=tri[fi];vv=q[ids];pairs=((0,1),(1,2),(2,0))
+                i,j=min(pairs,key=lambda ij:np.linalg.norm(vv[ij[1]]-vv[ij[0]]))
+                edge=vv[j]-vv[i];correction=.5*(args.digit_area_factor-1)*edge
+                ii=np.flatnonzero(canon==canon[ids[i]]);jj=np.flatnonzero(canon==canon[ids[j]])
+                assert not set(selected)&set(np.r_[ii,jj]);selected.extend(np.r_[ii,jj].tolist())
+                delta[ii]-=correction;delta[jj]+=correction
+                witness.append({'face':fi,'canonical_edge':[int(canon[ids[i]]),int(canon[ids[j]])],'original_edge_mm':float(np.linalg.norm(edge)*1000),'area_ratio_before':ratio(fi,q)})
+            q+=delta
+            for rec in witness:rec['area_ratio_after']=ratio(rec['face'],q)
+            corrected={k:dict(v) for k,v in dq0.items()};corrected[key]['v']=q
+            digit_meta={'factor':args.digit_area_factor,'unique_vertices':len(set(canon[selected].tolist())),'max_delta_mm':float(np.linalg.norm(delta,axis=1).max()*1000),'faces':witness}
+            configs=[('digit_area',corrected)]
+        else:configs=[('dq',dq0)]
         if not args.stance_dq_only:configs.append(('guarded',smooth_skin(doc,dq0,6,.006,True)[0]))
         def bind_strain(candidate):
             from collections import Counter
@@ -359,7 +384,10 @@ def main():
             deadline();au=audit(candidate,shift);q=quality_relative(dq0,candidate);scene=full_scene(candidate)
             count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['other_actor'].values())
             gate=quality_gate(q,au) and scene['basket']==scene['room']==scene['below_floor_half_mm']==0 and scene['floor_ray_matches']==scene['near_floor_vertices'] and scene['near_floor_vertices']>0
-            row={'method':label,'stance_mm':args.stance_mm,'crossings':count,'quality_gate':bool(gate),'full_scene':scene,'quality':q,'bind_strain':bind_strain(candidate),'audit':au,'arm':info,'matrix_error':err}
+            strain=bind_strain(candidate)
+            if digit_meta is not None:gate=gate and strain[key]['new']==0 and strain['W28e_tailored_linen']['new']==0
+            row={'method':label,'stance_mm':args.stance_mm,'crossings':count,'quality_gate':bool(gate),'full_scene':scene,'quality':q,'bind_strain':strain,'audit':au,'arm':info,'matrix_error':err}
+            if digit_meta is not None:row['digit_area']=digit_meta
             rows.append(row);print(json.dumps(row),flush=True)
             if best is None or (not gate,count)<(not best[0]['quality_gate'],best[0]['crossings']):best=(row,doc)
         if args.stance_mm==0:assert rows[0]['crossings']=={0:69,30:81,60:95}[int(args.distance)]
