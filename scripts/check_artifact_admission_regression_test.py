@@ -126,6 +126,29 @@ with tempfile.TemporaryDirectory(prefix='auditrepo-git-paths-') as temp:
     assert any(archive_rel in error and 'requires sidecar' in error for error in
                artifact_admission_errors(repo, changed, [archive_rel, new_rel]))
 
+    # The first commit of a multi-commit push must not escape admission.
+    before = git('rev-parse', 'HEAD').decode('ascii').strip()
+    (repo / 'first-commit.zip').write_bytes(b'new archive')
+    git('add', '.')
+    git('commit', '-qm', 'push first')
+    (repo / 'last-commit.md').write_text('later commit', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-qm', 'push last')
+    capture_changed_paths(repo, output, push_before=before)
+    changed = read_changed_paths(output)
+    assert set(changed) == {'first-commit.zip', 'last-commit.md'}
+    assert any('first-commit.zip' in error and 'requires sidecar' in error for error in
+               artifact_admission_errors(repo, changed, changed))
+    capture_changed_paths(repo, output, push_before='0' * 40)
+    assert {'initial.md', 'first-commit.zip', 'last-commit.md'} <= set(read_changed_paths(output))
+    for invalid in ('HEAD', 'f' * 40):
+        try:
+            capture_changed_paths(repo, output, push_before=invalid)
+        except (ValueError, subprocess.CalledProcessError):
+            pass
+        else:
+            raise AssertionError('unresolved push base silently accepted')
+
     # A line-oriented consumer cannot represent this path without ambiguity.
     # This fixture is valid on the Linux CI host, not on Windows.
     import os

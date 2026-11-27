@@ -29,10 +29,18 @@ jobs:
 
       - name: Capture changed paths
         shell: bash
+        env:
+          AUDITREPO_EVENT_NAME: ${{ github.event_name }}
+          AUDITREPO_PUSH_BEFORE: ${{ github.event.before }}
         run: |
           set -euo pipefail
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
-          python3 scripts/check_artifact_admission.py --capture-changed-paths "${changed_file}"
+          if [[ "${AUDITREPO_EVENT_NAME}" == "push" ]]; then
+            test -n "${AUDITREPO_PUSH_BEFORE}"
+            python3 scripts/check_artifact_admission.py --capture-changed-paths "${changed_file}" --push-before "${AUDITREPO_PUSH_BEFORE}"
+          else
+            python3 scripts/check_artifact_admission.py --capture-changed-paths "${changed_file}"
+          fi
           printf 'Captured %s changed paths\n' "$(wc -l < "${changed_file}")"
           echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
 
