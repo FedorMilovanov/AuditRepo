@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-retire-reviewed-arena-2026-11-27",
+  "execute": true,
+  "executionNonce": 1,
+  "preparedOnMain": "fd42c2ba567315182d2486bbf5c8ff1e8f2eb1a0",
+  "sourceBranch": "maintenance/retire-reviewed-arena-20261127",
+  "retainedRefs": [
+    {
+      "branch": "archive/forensic-arena-019fe0b5-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-arena-019fe0c4-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-bugverifikator-audit-2026-07-17-2026-09-06",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-engine-contracts-pr323-2026-09-06",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-gb-arena-master-reverify-20260717-2026-09-06",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-gb-control-reconciliation-bc786-20260809",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-gb-intake-pr482-20261006",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-gb-source-surface-closure-20260907",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-horeb-arena-7f74c768-20261108",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-horeb-arena-13fed2e7-20261108",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-current-20260809",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "archive/legacy-diverged-heads-20260801",
+      "required": true,
+      "reason": "Intentional exact-SHA forensic preservation; never a retirement target."
+    },
+    {
+      "branch": "main",
+      "required": true,
+      "reason": "Default authority"
+    }
+  ],
+  "targets": [
+    {
+      "branch": "arena/a33be340-auditrepo",
+      "mode": "superseded",
+      "expectedHead": "d7f247c2c97baeeaf1bf22d970a3e6f87591a357",
+      "comparisonBase": "ae3669bf7a9b87af06e999c0bb3ef5009c400d43",
+      "expectedAhead": 40,
+      "replacementPullRequests": [
+        548
+      ],
+      "allowedChangedPaths": [
+        "_coordination/arena-agent-2026-11-09/BAPTISTY_SERIES_AUDIT.md",
+        "_coordination/arena-agent-2026-11-09/BEFORE_REPAIR.md",
+        "_coordination/arena-agent-2026-11-09/BODY_ASTRO_HISTORY.md",
+        "_coordination/arena-agent-2026-11-09/BUILD_OWNERSHIP_AND_STALE_SHADOWS.md",
+        "_coordination/arena-agent-2026-11-09/CHARTER_VIOLATIONS_AND_PROSE_READING.md",
+        "_coordination/arena-agent-2026-11-09/CITATIONS_AND_ATTRIBUTION.md",
+        "_coordination/arena-agent-2026-11-09/CORPUS_COMPLETENESS_MAP.md",
+        "_coordination/arena-agent-2026-11-09/CORRECTION_RENDERED_LAYER.md",
+        "_coordination/arena-agent-2026-11-09/CRITERIA_AI_DEFECTS.md",
+        "_coordination/arena-agent-2026-11-09/CRITERIA_CATALOG.md",
+        "_coordination/arena-agent-2026-11-09/FACT_CHECK_DATES.md",
+        "_coordination/arena-agent-2026-11-09/FINAL_AUDIT.md",
+        "_coordination/arena-agent-2026-11-09/GLOSSARY_DEFECT_VERIFIED.md",
+        "_coordination/arena-agent-2026-11-09/GOOD_PARAGRAPH_STANDARD.md",
+        "_coordination/arena-agent-2026-11-09/GRADED_MATRIX_PRODUCT.md",
+        "_coordination/arena-agent-2026-11-09/MATRIX_EXTRACTION_PLAN.md",
+        "_coordination/arena-agent-2026-11-09/MEASUREMENT_CONFLICTS.md",
+        "_coordination/arena-agent-2026-11-09/METRIC2_LISTS_AND_DRIVE_FUNNEL.md",
+        "_coordination/arena-agent-2026-11-09/NO_RETURN_STANDARD.md",
+        "_coordination/arena-agent-2026-11-09/PRELIMINARY_AUDIT.md",
+        "_coordination/arena-agent-2026-11-09/PROSE_GUARDS.md",
+        "_coordination/arena-agent-2026-11-09/PROSE_METRICS_PRODUCT.md",
+        "_coordination/arena-agent-2026-11-09/QUALITY_OF_ARGUMENT_AUDIT.md",
+        "_coordination/arena-agent-2026-11-09/READING_KOROTKO_AND_GLOSSARY.md",
+        "_coordination/arena-agent-2026-11-09/README.md",
+        "_coordination/arena-agent-2026-11-09/REQUIREMENTS_AND_AI_OBJECTIONS.md",
+        "_coordination/arena-agent-2026-11-09/SERIES_COMPLETENESS_MAP.md",
+        "_coordination/arena-agent-2026-11-09/SERIES_JSON_FALSE_ALARM.md",
+        "_coordination/arena-agent-2026-11-09/SUMMARY_BLOCK_DECISION.md",
+        "_coordination/arena-agent-2026-11-09/SUMMARY_COLLAPSE_RECOMMENDATIONS.md",
+        "_coordination/arena-agent-2026-11-09/URL_AND_CANONICAL_ARCHITECTURE.md",
+        "_coordination/arena-agent-2026-11-09/data/all_articles_metrics.tsv",
+        "_coordination/arena-agent-2026-11-09/data/findings.tsv",
+        "_coordination/arena-agent-2026-11-09/data/findings_profiles.tsv",
+        "_coordination/arena-agent-2026-11-09/data/grade_matrix.tsv",
+        "_coordination/arena-agent-2026-11-09/data/product_prose_metrics.tsv",
+        "_coordination/arena-agent-2026-11-09/data/product_prose_metrics_v3.tsv",
+        "_coordination/arena-agent-2026-11-09/data/prose_guards.tsv",
+        "_coordination/arena-agent-2026-11-09/legacy/CORPUS_AUDIT_REPORT.md",
+        "_coordination/arena-agent-2026-11-09/legacy/FINAL_BUG_MATRIX.md",
+        "_coordination/arena-agent-2026-11-09/legacy/README.md",
+        "_coordination/arena-agent-2026-11-09/legacy/STATUS.md",
+        "_coordination/arena-agent-2026-11-09/tools/corpus_audit.py",
+        "_coordination/arena-agent-2026-11-09/tools/grade_matrix.py",
+        "_coordination/arena-agent-2026-11-09/tools/grade_matrix_v3.py",
+        "_coordination/arena-agent-2026-11-09/tools/metric3_prose_only.py",
+        "_coordination/arena-agent-2026-11-09/tools/profile_and_matrix.py",
+        "_coordination/arena-agent-2026-11-09/tools/prose_guards.py",
+        "_coordination/arena-agent-2026-11-09/tools/prose_product_metrics.py",
+        "projects/gb-is-my-strength/incoming/arena-agent/2026-11-09/PROSE_STRUCTURE_AND_COMPLETENESS_AUDIT.md",
+        "projects/gb-is-my-strength/incoming/arena-agent/2026-11-09/evidence/measure_baptisty_prose.py"
+      ],
+      "reason": "Exact W11 source/main blob census 51/51 identical; PR #548 integrated all 61 original blobs, including explicit coordination-path relocation; no open PR owner. Main fd42c2ba."
+    },
+    {
+      "branch": "arena/c6d6c46c-auditrepo",
+      "mode": "superseded",
+      "expectedHead": "adb8efff2ffcd62cfbb1d5bec0c217035c8861a5",
+      "comparisonBase": "ae3669bf7a9b87af06e999c0bb3ef5009c400d43",
+      "expectedAhead": 20,
+      "replacementPullRequests": [
+        548
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/00-CRITERIA.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/01-ARTICLE_REGISTRY.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/02-COORDINATION.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/03-CROSS_AGENT_SYNTHESIS.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/MATRIX-A.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/MATRIX-B.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/MATRIX-C.md",
+        "projects/gb-is-my-strength/incoming/arena-agent-article-quality/2026-11-09/REPORT.md"
+      ],
+      "reason": "Exact W11 source/main blob census 8/8 identical; PR #548 integrated all 61 original blobs, including explicit coordination-path relocation; no open PR owner. Main fd42c2ba."
+    },
+    {
+      "branch": "arena/0b6f34f6-auditrepo",
+      "mode": "superseded",
+      "expectedHead": "a17056baace190996ce01f55bf0de0a6d8d6e512",
+      "comparisonBase": "ae3669bf7a9b87af06e999c0bb3ef5009c400d43",
+      "expectedAhead": 19,
+      "replacementPullRequests": [
+        548
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/ALL_ARTICLES_MATRIX.csv",
+        "projects/gb-is-my-strength/incoming/arena-all-articles-audit/2026-11-09/REPORT.md"
+      ],
+      "reason": "Exact W11 source/main blob census 2/2 identical; PR #548 integrated all 61 original blobs, including explicit coordination-path relocation; no open PR owner. Main fd42c2ba."
+    },
+    {
+      "branch": "arena/01a10d48-auditrepo",
+      "mode": "archive-preserved",
+      "expectedHead": "539d7b81ccb19b5f5267f4455bd6c25871ad177f",
+      "archiveRef": "archive/forensic-gb-intake-pr482-20261006",
+      "reason": "Closed unmerged #482, reviewed supersession in #502; preserve complete historical raw evidence at exact archive SHA."
+    },
+    {
+      "branch": "arena/7f74c768-auditrepo",
+      "mode": "archive-preserved",
+      "expectedHead": "31ef6f05c4d36b09403e4b8748162cfc27008949",
+      "archiveRef": "archive/forensic-horeb-arena-7f74c768-20261108",
+      "reason": "Historical Arena HOREB variant, not the current canonical #543 source. Preserve complete history and unique variant files at identical archive SHA."
+    },
+    {
+      "branch": "arena/13fed2e7-auditrepo",
+      "mode": "archive-preserved",
+      "expectedHead": "ec5c0598259d2758c0e5d358c9bcfd4d35f10a34",
+      "archiveRef": "archive/forensic-horeb-arena-13fed2e7-20261108",
+      "reason": "Historical Arena HOREB variant, not the current canonical #543 source. Preserve complete history and unique variant files at identical archive SHA."
+    }
+  ]
+}
