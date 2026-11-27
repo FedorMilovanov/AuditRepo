@@ -1,0 +1,13 @@
+PASS /baptisty-rossii/ (390 + 1440, 9 local fragments)
+PASS /baptisty-rossii/noch-na-kure/ (390 + 1440, 8 local fragments)
+PASS /baptisty-rossii/yuzhnaya-shtunda/ (390 + 1440, 7 local fragments)
+PASS /baptisty-rossii/dva-sezda-1884/ (390 + 1440, 8 local fragments)
+PASS /baptisty-rossii/peterburgskaya-liniya/ (390 + 1440, 12 local fragments)
+PASS /baptisty-rossii/goneniya-i-sovest/ (390 + 1440, 14 local fragments)
+PASS /baptisty-rossii/sovetskaya-noch/ (390 + 1440, 14 local fragments)
+PASS /baptisty-rossii/vsehib-1944/ (390 + 1440, 16 local fragments)
+PASS /baptisty-rossii/iniciativnaya-gruppa/ (390 + 1440, 14 local fragments)
+PASS /baptisty-rossii/podpolnaya-pechat/ (390 + 1440, 15 local fragments)
+PASS /baptisty-rossii/spravochnik/ (390 + 1440, 11 local fragments)
+PASS mobile reference TOC -> #what-to-search-next; heading y=88px; closes on selection.
+PASS 33 page visits; 891 cross-route fragments; 128 unique same-page targets summed across routes.

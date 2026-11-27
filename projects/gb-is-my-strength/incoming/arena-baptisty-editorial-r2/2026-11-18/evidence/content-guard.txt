@@ -1,0 +1,8 @@
+> gb-is-my-strength@1.6.3 content:guard
+> node scripts/check-public-content-baseline.js
+
+✅ Public content baseline OK: 43 baseline pages, +3 current delta
+ℹ️ Non-blocking content metadata changes:
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-1-chelovek/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть I: Человек"
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-2-uchenyi/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть II: Учёный"
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-3-nasledie/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть IV: Наследие"

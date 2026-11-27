@@ -1,0 +1,405 @@
+{
+  "verdict": "PASS",
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "chromium": "153.0.8010.0",
+  "playwright": "1.62.1",
+  "node": "22.23.4",
+  "counts": {
+    "a": 12,
+    "b": 12,
+    "distPins": 70,
+    "homeDirect": 6,
+    "paletteAtTop": 18,
+    "toastRecovered": 14,
+    "dismissedNoPrompt": 4,
+    "quizReset": 6,
+    "pagefindFiles": 147,
+    "pagefindRequested": 1,
+    "pngIdentical": 8,
+    "pngCompared": 8
+  },
+  "pagefindTreeSha256": "21052438a939d7b666f9bb0c3c8c6a49b5b083d30c17b408d0fe5cdc95514697",
+  "prior": {
+    "recentSearch": {
+      "sha256": "7cd2b51b80b82ac3b4ed226adf035f1510140bc3d2970a27b7e53fa30174410d",
+      "rechecked": 67,
+      "shared": 64
+    },
+    "sourceReaderState": {
+      "sha256": "58d60e4e68b2336cc3d29bbce048da386d11019377ded85422c884e482076a4d",
+      "rechecked": 46,
+      "shared": 42
+    }
+  },
+  "witnessSha256": {
+    "a": "0beb881dfbb6f84fca4efff06c2cfee07aa40d1dcc11f4678adc36a28c213995",
+    "b": "3017037ef3bf4cc20376a3af99e65ff3cd005b55f109c5daf78f99834a5c8f56"
+  },
+  "cases": [
+    {
+      "id": "home-390",
+      "before": "/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "home",
+      "landing": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true,
+        "toast": true,
+        "target": "sec-canticles"
+      },
+      "restored": null,
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "other-enter-390",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 8404.16,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "current-enter-390",
+      "before": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 8404.16,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": true
+    },
+    {
+      "id": "other-dismiss-390",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 8404.16,
+        "visible": false,
+        "toast": false,
+        "target": null
+      },
+      "restored": null,
+      "dismissed": true,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "home-1440",
+      "before": "/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 5630,
+      "savedProgress": 15,
+      "cta": "home",
+      "landing": {
+        "y": 5761,
+        "headingTop": 168.17,
+        "visible": true,
+        "toast": true,
+        "target": "sec-canticles"
+      },
+      "restored": null,
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "other-enter-1440",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 5630,
+      "savedProgress": 15,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 5929.17,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 5761,
+        "headingTop": 168.17,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "current-enter-1440",
+      "before": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 5630,
+      "savedProgress": 15,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 5929.17,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 5761,
+        "headingTop": 168.17,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": true
+    },
+    {
+      "id": "other-dismiss-1440",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 5630,
+      "savedProgress": 15,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 5929.17,
+        "visible": false,
+        "toast": false,
+        "target": null
+      },
+      "restored": null,
+      "dismissed": true,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "other-preview-1440",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi"
+      ],
+      "slashRedirect": false,
+      "savedSection": "sec-canticles",
+      "savedY": 5630,
+      "savedProgress": 15,
+      "cta": "preview",
+      "landing": {
+        "y": 0,
+        "headingTop": 5929.17,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 5761,
+        "headingTop": 168.17,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "home-redirect-390",
+      "before": "/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "slashRedirect": true,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "home",
+      "landing": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true,
+        "toast": true,
+        "target": "sec-canticles"
+      },
+      "restored": null,
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "other-enter-redirect-390",
+      "before": "/articles/anatomiya-padeniya-pyat-stadiy/",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/",
+        "/articles/anatomiya-padeniya-pyat-stadiy/",
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "slashRedirect": true,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 8404.16,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": false
+    },
+    {
+      "id": "current-enter-redirect-390",
+      "before": "/articles/dzhon-gill-chast-2-uchenyi/#sec-canticles",
+      "destination": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "html": [
+        "/articles/dzhon-gill-chast-2-uchenyi/",
+        "/articles/dzhon-gill-chast-2-uchenyi/"
+      ],
+      "slashRedirect": true,
+      "savedSection": "sec-canticles",
+      "savedY": 8105,
+      "savedProgress": 14,
+      "cta": "enter",
+      "landing": {
+        "y": 0,
+        "headingTop": 8404.16,
+        "visible": false,
+        "toast": true,
+        "target": null
+      },
+      "restored": {
+        "y": 8316,
+        "headingTop": 88.16,
+        "visible": true
+      },
+      "dismissed": false,
+      "quizResetInNewDocument": true
+    }
+  ],
+  "images": {
+    "home-390-card.png": {
+      "a": "e5e2632329c64ad82bf3520ef478af8b766c74347be827d8cd853b4db45ce871",
+      "b": "e5e2632329c64ad82bf3520ef478af8b766c74347be827d8cd853b4db45ce871"
+    },
+    "home-390-landing.png": {
+      "a": "5c7b6e41e47d2105e93f73127f2031a424801f9115ad4187bb74d8446cbc4b2f",
+      "b": "5c7b6e41e47d2105e93f73127f2031a424801f9115ad4187bb74d8446cbc4b2f"
+    },
+    "other-dismiss-390-landing.png": {
+      "a": "bc6ebb5788b08f3dc020d975cdbb18b681aa7ff1e0de9d5978ac3af50c3c9fe8",
+      "b": "bc6ebb5788b08f3dc020d975cdbb18b681aa7ff1e0de9d5978ac3af50c3c9fe8"
+    },
+    "other-dismiss-390-palette.png": {
+      "a": "bdb624aeea633b54591e2239a6da2948ac3ed9dfa17c6994a114684bae345396",
+      "b": "bdb624aeea633b54591e2239a6da2948ac3ed9dfa17c6994a114684bae345396"
+    },
+    "other-enter-390-landing.png": {
+      "a": "c92ba0896bee9d5d5f4db2dbdbd257bcaa22221606060ffc09f7a2000cee3451",
+      "b": "c92ba0896bee9d5d5f4db2dbdbd257bcaa22221606060ffc09f7a2000cee3451"
+    },
+    "other-enter-390-palette.png": {
+      "a": "bdb624aeea633b54591e2239a6da2948ac3ed9dfa17c6994a114684bae345396",
+      "b": "bdb624aeea633b54591e2239a6da2948ac3ed9dfa17c6994a114684bae345396"
+    },
+    "other-enter-390-recovered.png": {
+      "a": "e2e3c8f6528064cd9d02cbe213a0e90c92ab97dd2dc07a2c50e32e0b839eeb99",
+      "b": "e2e3c8f6528064cd9d02cbe213a0e90c92ab97dd2dc07a2c50e32e0b839eeb99"
+    },
+    "other-preview-1440-palette.png": {
+      "a": "14a79d3866051057c49a1b1961279190cbdae096b81f2f7b55cd6617c8ce478d",
+      "b": "14a79d3866051057c49a1b1961279190cbdae096b81f2f7b55cd6617c8ce478d"
+    }
+  }
+}

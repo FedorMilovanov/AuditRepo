@@ -1,0 +1,13 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "witnessSha256A": "40777816b6c1d8f36ef1af87bc06408f7eb7b9b0aae06efc27aa7c0851669229",
+  "witnessSha256B": "40777816b6c1d8f36ef1af87bc06408f7eb7b9b0aae06efc27aa7c0851669229",
+  "replaysByteEqual": true,
+  "completedScenariosPerReplay": 11,
+  "completePlaySessionsPerReplay": 21,
+  "stoppedPrefixesPerReplay": 1,
+  "distPins": 35,
+  "stage10PinsVerified": 38,
+  "sharedPins": 10,
+  "stage10MatchedCompleteTextStreamsPerReplay": 16
+}

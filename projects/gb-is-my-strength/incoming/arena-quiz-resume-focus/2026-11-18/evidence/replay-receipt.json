@@ -1,0 +1,965 @@
+{
+  "anchor": "9edef94ece08012223c1364bec7ddcd561cf5713",
+  "casesPerRun": 15,
+  "replays": 2,
+  "currentDistPins": 67,
+  "previousDistPinsRechecked": 61,
+  "commonDistPins": 61,
+  "screenshots": {
+    "resume-focus-quick-390.png": {
+      "width": 390,
+      "height": 844,
+      "sha256A": "92e006698ad4ff0dc6421b67aacb52b420d0550222ffdd89f05ce5aca2377adb",
+      "sha256B": "92e006698ad4ff0dc6421b67aacb52b420d0550222ffdd89f05ce5aca2377adb",
+      "byteIdentical": true
+    },
+    "resume-focus-dwell-390.png": {
+      "width": 390,
+      "height": 844,
+      "sha256A": "cbae2e0772fbb221a1c17a4f6c394d03f0a4533303ce0eb8ff439dcebe28f4be",
+      "sha256B": "cbae2e0772fbb221a1c17a4f6c394d03f0a4533303ce0eb8ff439dcebe28f4be",
+      "byteIdentical": true
+    }
+  },
+  "rows": [
+    {
+      "id": "learning-390-reduce-quick",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 36,
+        "afterRecovery": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": "hero-term"
+        },
+        "recoverySinceGlossaryMs": 3286,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 29,
+        "afterRecovery": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": "hero-term"
+        },
+        "recoverySinceGlossaryMs": 3290,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-390-reduce-dwell",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 579,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 580,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-390-reduce-escape",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 54,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 59,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-390-no-preference-quick",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 26,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 998,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 25,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-390-no-preference-dwell",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 584,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 615,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-390-no-preference-escape",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 52,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 60,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "learning-1440-reduce-quick",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 464,
+          "scrollY": 679,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 15,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "top": 464,
+          "scrollY": 679,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 11,
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-hebrew",
+          "target": "sec-hebrew",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "anatomy-reading-390-reduce-quick",
+      "a": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "top": 1042,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 28,
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "resumeReadingLink",
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "top": 1042,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 40,
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "empty-390-reduce-quick",
+      "a": {
+        "entry": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 897,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 59
+      },
+      "b": {
+        "entry": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 897,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "hero-term"
+        },
+        "heroTermDwellMs": 37
+      }
+    },
+    {
+      "id": "empty-390-reduce-dwell",
+      "a": {
+        "entry": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 415,
+          "scrollY": 482,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 586
+      },
+      "b": {
+        "entry": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 415,
+          "scrollY": 482,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "heroTermDwellMs": 604
+      }
+    },
+    {
+      "id": "gill-reading-390-reduce-quick",
+      "a": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 925,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 35,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "target": "sec-canticles",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 925,
+          "scrollY": 0,
+          "inView": false,
+          "hit": false,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 29,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 435,
+          "scrollY": 563,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "activated": {
+          "url": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "target": "sec-canticles",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "dismiss-one-390-reduce-escape",
+      "a": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 414,
+          "scrollY": 0,
+          "inView": true,
+          "hit": true,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 54,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 487,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "body",
+          "href": null,
+          "top": -511,
+          "scrollY": 511,
+          "inView": true,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 386,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "top": 144,
+          "scrollY": 445,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": true,
+          "href": null
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 414,
+          "scrollY": 0,
+          "inView": true,
+          "hit": true,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 75,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 487,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "body",
+          "href": null,
+          "top": -511,
+          "scrollY": 511,
+          "inView": true,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 386,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "top": 144,
+          "scrollY": 445,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": true,
+          "href": null
+        }
+      }
+    },
+    {
+      "id": "dismiss-two-390-reduce-escape",
+      "a": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 414,
+          "scrollY": 0,
+          "inView": true,
+          "hit": true,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 58,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 487,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 531,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 758,
+          "scrollY": 512,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 530,
+          "scrollY": 512,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": false,
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod"
+        },
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 414,
+          "scrollY": 0,
+          "inView": true,
+          "hit": true,
+          "locked": true,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 52,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 487,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 531,
+          "scrollY": 511,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 758,
+          "scrollY": 512,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 530,
+          "scrollY": 512,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": false,
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod"
+        },
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      }
+    },
+    {
+      "id": "dismiss-one-1440-reduce-escape",
+      "a": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 440,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 22,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 501,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "body",
+          "href": null,
+          "top": -642,
+          "scrollY": 642,
+          "inView": true,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 557,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "top": 144,
+          "scrollY": 540,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": true,
+          "href": null
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 440,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 48,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 501,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "body",
+          "href": null,
+          "top": -642,
+          "scrollY": 642,
+          "inView": true,
+          "hit": false,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 557,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "heroSearchBar",
+          "href": "/articles/",
+          "top": 144,
+          "scrollY": 540,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": true,
+          "href": null
+        }
+      }
+    },
+    {
+      "id": "dismiss-two-1440-reduce-escape",
+      "a": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 440,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 40,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 501,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 533,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 443,
+          "scrollY": 1086,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 144,
+          "scrollY": 1031,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": false,
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod"
+        },
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      },
+      "b": {
+        "entry": {
+          "target": "card-term",
+          "href": null,
+          "top": 440,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": "card-term"
+        },
+        "heroTermDwellMs": 23,
+        "afterCardTerm": {
+          "target": "resumeReadingLink",
+          "href": "/articles/dzhon-gill-chast-2-uchenyi#sec-canticles",
+          "top": 501,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "afterHide": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 533,
+          "scrollY": 642,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "next": {
+          "target": "directions-share",
+          "href": "#hDirectionsLabel",
+          "top": 443,
+          "scrollY": 1086,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reverseFromNext": {
+          "target": "resumeReadingDismiss",
+          "href": null,
+          "top": 144,
+          "scrollY": 1031,
+          "inView": true,
+          "hit": true,
+          "locked": false,
+          "definitionOpener": null
+        },
+        "reload": {
+          "hidden": false,
+          "href": "/articles/anatomiya-padeniya-pyat-stadiy#metod"
+        },
+        "activated": {
+          "url": "/articles/anatomiya-padeniya-pyat-stadiy#metod",
+          "target": "metod",
+          "nav": "navigate"
+        }
+      }
+    }
+  ]
+}
