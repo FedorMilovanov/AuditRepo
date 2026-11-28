@@ -32,11 +32,10 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 
-## 🟡 P2 — ОТКРЫТО (1)
+## 🟡 P2 — ОТКРЫТО (0)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| SYS-TLP-DIALOG-LIFETIME-AND-FOCUS | current-local | W113 #615 exact unchanged runtime: Linux WebKit Escape received but portal and lease remain after 5s (retry passes); W104–W107 invoker loss and stale focus restoration independently reproduced. [Evidence](../reverify/REVERIFY_f9b5cb3_2026-11-24_safari-release-and-residuals.md). | Existing shared dialog/focus owner; integrate explicit invoker and guarded restore, certify nested overlays and strict exit lifecycle; no parallel owner. |
 
 ## 🟢 P3 — ОТКРЫТО (0)
 
@@ -47,6 +46,8 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 
 **2026-11-26 — optional poet module containment:** Product #638 has exact-head and resulting-main release proof; only `SYS-TLP-OPTIONAL-POET-MODULE-CONTAINMENT` is retired. See [closure ledger](CLOSURE_LEDGER.md#2026-11-26--optional-poet-module-containment-certified-and-retired). The independent dialog root remains open.
 
+**2026-11-28 W34 — dialog lifetime/focus release-certified closure:** Product #627, tested and resulting-main tree `a8ab6449eb5ebf0508df4283054685cd5d6dfe15`, resulting main `d1952d56`. All nine resulting-main workflows succeeded, including all five Browser QA jobs and Pages. Later main `056daf7e` changes only twelve documentation paths. The last active P2 is retired; see [closure ledger](CLOSURE_LEDGER.md#2026-11-28--dialog-lifetime-and-focus-release-certified). Zero current registered engineering rows is not a claim of whole-project completion, physical iPhone certification or future absence of regressions.
+
 ## Summary
 
 | Категория | Количество |
@@ -54,11 +55,11 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
-| P2 открыто | 1 |
+| P2 открыто | 0 |
 | P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
 Current architecture selection: **none**. Historical Hall #369 remains terminally closed. Product #465/#466 is now a separately completed bounded production-web transaction; documentary rights, human offline approval and full-museum scale-out remain outside the active engineering matrix unless a new verified software root is established.
 
