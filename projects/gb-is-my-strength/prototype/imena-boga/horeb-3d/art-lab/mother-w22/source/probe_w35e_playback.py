@@ -32,20 +32,21 @@ def pose(doc,acc,t):
         d['nodes'][target['node']][field]=v.tolist()
     return d
 
-def audit(root,frame):
-    folder=root/'W35d-approach-20261127';r=json.loads((folder/'w35d-assembly.json').read_text())
-    doc,acc=load(folder/'w35d-approach.glb',r['sha256'])
-    source,sa=load(root/'W34v-finger-refine-20261127/w34u-static-actor.glb',r['source_sha256'])
+def audit(root,frame,bilateral=False):
+    folder=root/('W35y-bilateral-20261128' if bilateral else 'W35d-approach-20261127')
+    r=json.loads((folder/('w35y-assembly.json' if bilateral else 'w35d-assembly.json')).read_text())
+    doc,acc=load(folder/('w35y-approach.glb' if bilateral else 'w35d-approach.glb'),r['sha256'])
+    source,sa=load(root/('W34s-sleeve-correction-20261127/w34s-static-actor.glb' if bilateral else 'W34v-finger-refine-20261127/w34u-static-actor.glb'),r['source_sha256'])
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text())
     h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     baseline,bw=geometry(source,sa,True)
-    t=frame/24;d=pose(doc,acc,t);g,w=geometry(d,acc,True);assert set(g)==set(baseline)
+    t=min(frame/24,r['duration_s']);d=pose(doc,acc,t);g,w=geometry(d,acc,True);assert set(g)==set(baseline)
     names={n['name']:i for i,n in enumerate(d['nodes'])}
     changed={}
     for k,v in g.items():
         assert np.array_equal(v['tri'],baseline[k]['tri'])
-        mask=np.linalg.norm(v['v']-baseline[k]['v']-[0,0,.160],axis=1)>1e-6
+        mask=np.linalg.norm(v['v']-baseline[k]['v']-[0,0,.100 if bilateral else .160],axis=1)>1e-6
         changed[k]=np.flatnonzero(np.any(mask[v['tri']],axis=1))
     def hit(a,b,active=None,selfcheck=False,ids=False):
         if active is None:active=np.arange(len(a['tri']))
@@ -99,40 +100,67 @@ def audit(root,frame):
             x=points[tri];return np.linalg.norm(np.cross(x[:,1]-x[:,0],x[:,2]-x[:,0]),axis=1)
         a0=area(v);a1=area(g[k]['v']);strain[k]=np.flatnonzero((a0>1e-12)&(a1<.1*a0)).tolist()
     error={}
-    for side in ('l','r'):
+    for side in (() if bilateral else ('l','r')):
         q=json.loads((root/f'W34zf-retreat-{side}-20261127/w34zb-reshape.json').read_text())
         direction=np.array(q['approach_meta']['selected']['direction'],float);direction/=np.linalg.norm(direction)
         target=np.array(q['best']['joint_world_matrices']['hand_'+side])[:3,3]+direction*.06*(1-t/1.5)
         error[side]=float(np.linalg.norm(w[names['hand_'+side]][:3,3]-target)*1000)
+    grip=None
+    if bilateral:
+        from probe_w35i_rim_contact import closest,normals
+        left=json.loads((root/'W35k-cross-section-l-20261127.json').read_text())['shapes'][1]['best']
+        right=next(q for q in json.loads((root/'W35l-mirror-contact-20261127.json').read_text())['right'] if q['passes'] and q['left_source_pair']==left['skin_vertices'] and q['delta_mm']==[0,0,0])
+        times=[s['seconds'] for s in r['keys']]
+        for side,record in [('l',left),('r',right)]:
+            sign=-1 if side=='l' else 1
+            base=np.array(record['rotation'])@bw[names['hand_'+side]][:3,3]+record['translation']
+            offsets=np.array([[sign*(s['outset_mm']+(s['distance_mm'] if s['direction']=='outward' else 0)),s['distance_mm'] if s['direction']=='up' else 0,0] for s in r['keys']])*.001
+            target=base+np.array([np.interp(t,times,offsets[:,j]) for j in range(3)])
+            error[side]=float(np.linalg.norm(w[names['hand_'+side]][:3,3]-target)*1000)
+        if frame==58:
+            rim=hg['Basket_thick_lipped_rim'];rt=rim['v'][rim['tri']];rn=normals(rim['v'],rim['tri']);rn/=np.maximum(np.linalg.norm(rn,axis=1),1e-12)[:,None]
+            fn=normals(body['v'],body['tri']);vn=np.zeros((int(body['canon'].max())+1,3))
+            for k in range(3):np.add.at(vn,body['canon'][body['tri'][:,k]],fn)
+            vn=vn[body['canon']];vn/=np.maximum(np.linalg.norm(vn,axis=1),1e-12)[:,None]
+            vn*=np.sign(np.sum(np.einsum('ij,ij->i',body['v'][body['tri'][:,0]],fn)))
+            grip={}
+            for side,ids in [('l',left['skin_vertices']),('r',[q['vertex'] for q in right['contacts']])]:
+                rows=[]
+                for i in ids:
+                    distance,point,j=closest(body['v'][i],rt)
+                    rows.append({'vertex':i,'gap_mm':distance*1000,'normal':rn[j].tolist(),'skin_facing_dot':float(vn[i]@rn[j])})
+                dot=float(np.dot(rows[0]['normal'],rows[1]['normal']))
+                grip[side]={'contacts':rows,'opposition_dot':dot,'pass':bool(dot<=-.75 and all(q['gap_mm']<=3 and q['skin_facing_dot']<=-.5 for q in rows))}
     endpoint=None
-    if frame in (0,36):
+    if not bilateral and frame in (0,36):
         f=root/f'W35c-static-160-{60 if frame==0 else 0}-20261127';q=json.loads((f/'w34zx-export.json').read_text())
         dd,aa=load(f/'w34zx-static-actor.glb',q['export']['sha256']);gg,_=geometry(dd,aa,True)
         endpoint=max(float(np.max(abs(v['v']-gg[k]['v']))) for k,v in g.items())
     # Floor height is a verified constant on this staging area; feet unchanged from source.
     floor_gap=float((body['v'][:,1].min()+.005)*1000)
-    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap}
+    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('evidence',type=Path)
     modes=p.add_mutually_exclusive_group(required=True);modes.add_argument('--frame',type=int);modes.add_argument('--all',action='store_true')
-    p.add_argument('--report',type=Path);args=p.parse_args()
+    p.add_argument('--report',type=Path);p.add_argument('--bilateral',action='store_true');args=p.parse_args()
     if args.frame is not None:
-        assert args.report is None and 0<=args.frame<=36
-        print(json.dumps(audit(args.evidence,args.frame)),flush=True);return
+        assert args.report is None and 0<=args.frame<=(58 if args.bilateral else 36)
+        print(json.dumps(audit(args.evidence,args.frame,args.bilateral)),flush=True);return
     import subprocess
-    folder=args.evidence/'W35d-approach-20261127'
-    path=args.report or folder/'w35e-playback.json';assert not path.exists()
-    sha=json.loads((folder/'w35d-assembly.json').read_text())['sha256']
+    folder=args.evidence/('W35y-bilateral-20261128' if args.bilateral else 'W35d-approach-20261127')
+    path=args.report or folder/('w35z-playback.json' if args.bilateral else 'w35e-playback.json');assert not path.exists()
+    sha=json.loads((folder/('w35y-assembly.json' if args.bilateral else 'w35d-assembly.json')).read_text())['sha256']
     report={'status':'PARTIAL','sha256':sha,'sample_rate_fps':24,'rows':[]}
     def save():path.write_text(json.dumps(report,indent=2),encoding='utf-8')
     save()
-    for frame in range(37):
-        proc=subprocess.run([sys.executable,__file__,str(args.evidence),'--frame',str(frame)],capture_output=True,text=True,timeout=30)
+    for frame in range(59 if args.bilateral else 37):
+        proc=subprocess.run([sys.executable,__file__,str(args.evidence),'--frame',str(frame)]+(['--bilateral'] if args.bilateral else []),capture_output=True,text=True,timeout=30)
         if proc.returncode:raise RuntimeError(proc.stdout[-1200:]+proc.stderr[-1200:])
         row=json.loads(proc.stdout);assert row['frame']==frame
         report['rows'].append(row);save();print('FRAME',frame,flush=True)
     rows=report['rows'];report['status']='ART_HOLD_SAMPLED_PLAYBACK_AUDITED'
-    report['summary']={'frames':len(rows),'max_wrist_error_mm':max(max(row['wrist_error_mm'].values()) for row in rows),'non_toe_skin_pairs':sum(row['skin_self_total']-row['toe_pairs_below_150mm'] for row in rows),'tunic_self_pairs':sum(row['tunic_self'] for row in rows),'body_clothes_pairs':sum(sum(row['body_clothes'].values()) for row in rows),'other_changed_pairs':sum(sum(row['other_changed_actor'].values()) for row in rows),'basket_room_pairs':sum(row['scene']['basket']+row['scene']['room'] for row in rows),'severe_skin_faces':sum(len(row['severe_faces'][BODY]) for row in rows),'max_endpoint_error_m':max(row['endpoint_max_error_m'] for row in rows if row['endpoint_max_error_m'] is not None)}
+    report['summary']={'frames':len(rows),'max_wrist_error_mm':max(max(row['wrist_error_mm'].values()) for row in rows),'non_toe_skin_pairs':sum(row['skin_self_total']-row['toe_pairs_below_150mm'] for row in rows),'tunic_self_pairs':sum(row['tunic_self'] for row in rows),'body_clothes_pairs':sum(sum(row['body_clothes'].values()) for row in rows),'other_changed_pairs':sum(sum(row['other_changed_actor'].values()) for row in rows),'basket_room_pairs':sum(row['scene']['basket']+row['scene']['room'] for row in rows),'severe_skin_faces':sum(len(row['severe_faces'][BODY]) for row in rows),'max_endpoint_error_m':max((row['endpoint_max_error_m'] for row in rows if row['endpoint_max_error_m'] is not None),default=None)}
+    report['summary']['new_severe_cloth_faces']=sum(len(set(row['severe_faces'][TUNIC])-{9480,9514,10476,27658,28641,28647}) for row in rows)
     save();print('SUMMARY',json.dumps(report['summary']),flush=True)
 if __name__=='__main__':main()

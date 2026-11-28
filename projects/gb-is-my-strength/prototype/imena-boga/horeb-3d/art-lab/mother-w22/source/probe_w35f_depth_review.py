@@ -55,14 +55,16 @@ def render(prepared,target,view,span,width,height):
     ok=(proj[:,:,0].max(1)>=0)&(proj[:,:,0].min(1)<width)&(proj[:,:,1].max(1)>=0)&(proj[:,:,1].min(1)<height)
     return Image.fromarray(raster(np.ascontiguousarray(proj[ok]),np.ascontiguousarray(col[ok]),width,height))
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);args=p.parse_args()
-    root=args.evidence;folder=root/'W35d-approach-20261127';r=json.loads((folder/'w35d-assembly.json').read_text())
-    d,a=load(folder/'w35d-approach.glb',r['sha256'])
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--bilateral',action='store_true');args=p.parse_args()
+    root=args.evidence;folder=root/('W35y-bilateral-20261128' if args.bilateral else 'W35d-approach-20261127')
+    r=json.loads((folder/('w35y-assembly.json' if args.bilateral else 'w35d-assembly.json')).read_text())
+    d,a=load(folder/('w35y-approach.glb' if args.bilateral else 'w35d-approach.glb'),r['sha256'])
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text());h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     names={n['name']:i for i,n in enumerate(d['nodes'])}
-    W,H=480,320;sheet=Image.new('RGB',(W*2,H*3+60),(25,28,32));draw=ImageDraw.Draw(sheet)
-    for col,t in enumerate((0.,1.5)):
+    times=(0.,1.1,2.4) if args.bilateral else (0.,1.5)
+    W,H=480,320;sheet=Image.new('RGB',(W*len(times),H*3+60),(25,28,32));draw=ImageDraw.Draw(sheet)
+    for col,t in enumerate(times):
         g,w=geometry(pose(d,a,t),a,True);prepared=prepare(g,hg)
         rows=[('Whole staging',[.35,.86,.75],[1.5,.75,1.3],1.9)]
         for s,sign in [('l',-1),('r',1)]:
@@ -73,6 +75,6 @@ def main():
             y=row*(H+20)
             draw.text((col*W+8,y+3),f'{t:.2f}s | {label}',fill=(230,230,230))
             sheet.paste(render(prepared,target,view,span,W,H),(col*W,y+20))
-    path=folder/'w35f-depth-review.jpg';assert not path.exists();sheet.save(path,quality=88)
+    path=folder/('w35z-depth-review.jpg' if args.bilateral else 'w35f-depth-review.jpg');assert not path.exists();sheet.save(path,quality=88)
     print(json.dumps({'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'bytes':path.stat().st_size,'clip_sha256':r['sha256'],'image':str(path),'limitations':'Untextured orthographic CPU depth-buffer review, not final beauty or physical grip validation.'}),flush=True)
 if __name__=='__main__':main()
