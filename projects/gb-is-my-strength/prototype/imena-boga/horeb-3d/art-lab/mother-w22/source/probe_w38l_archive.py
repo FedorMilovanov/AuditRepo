@@ -18,7 +18,7 @@ def split(b):
 def archived_bytes(path):
     path=Path(path);assert path.name==NAME
     f=path.parent;m=json.loads((f/MANIFEST).read_text())
-    assert m['source_folder']=='W38i-gaze-20261128'
+    assert m['source_folder'] in ('W38i-gaze-20261128','W38v-seam-20261128')
     latest=(f.parent/m['source_folder']/NAME).read_bytes()
     assert sha(latest)==m['source_sha256']
     compressed=(f/HEADER).read_bytes();assert sha(compressed)==m['header_sha256']
@@ -30,7 +30,7 @@ def read_glb(path):
     path=Path(path)
     return path.read_bytes() if path.exists() else archived_bytes(path)
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--restore',choices=('W38a-handoff-20261128','W38e-wrist-20261128'));p.add_argument('--output',type=Path);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--restore',choices=('W38a-handoff-20261128','W38e-wrist-20261128','W38i-gaze-20261128','W38r-torso-20261128'));p.add_argument('--output',type=Path);args=p.parse_args()
     root=args.evidence
     if args.restore:
         assert args.output is not None and not args.output.exists()

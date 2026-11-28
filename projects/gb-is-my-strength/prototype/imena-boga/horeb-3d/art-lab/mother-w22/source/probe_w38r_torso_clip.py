@@ -6,6 +6,7 @@ never retire W38i while its archived predecessors depend on it.
 import argparse,copy,hashlib,json,struct,subprocess,sys,tempfile
 from pathlib import Path
 import numpy as np
+from probe_w38l_archive import read_glb
 from probe_w34l_foot_surface import load
 from probe_w34t_whole_scene import geometry
 from probe_w35e_playback import pose,BODY,TUNIC
@@ -17,7 +18,7 @@ def main():
  p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);args=p.parse_args()
  root=args.evidence;out=args.output;assert not out.exists()
  f=root/'W38i-gaze-20261128';r=json.loads((f/'w38a-assembly.json').read_text());src=f/'w38a-handoff.glb';d,a=load(src,r['sha256'])
- doc=copy.deepcopy(d);raw=src.read_bytes();jl=struct.unpack_from('<I',raw,12)[0];blen,btype=struct.unpack_from('<2I',raw,20+jl);assert btype==0x004e4942
+ doc=copy.deepcopy(d);raw=read_glb(src);jl=struct.unpack_from('<I',raw,12)[0];blen,btype=struct.unpack_from('<2I',raw,20+jl);assert btype==0x004e4942
  payload=bytearray(raw[28+jl:28+jl+blen])[:doc['buffers'][0]['byteLength']]
  def append(v,typ,target=None):
   data=np.asarray(v,dtype='<f4').reshape(-1,{'SCALAR':1,'VEC3':3,'VEC4':4}[typ]);assert np.isfinite(data).all()

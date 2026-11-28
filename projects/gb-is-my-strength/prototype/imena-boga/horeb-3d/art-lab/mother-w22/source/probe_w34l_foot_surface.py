@@ -19,8 +19,26 @@ def load(path, expected):
     assert btype==0x004e4942
     buf=raw[28+jlen:28+jlen+blen]
     def acc(i):
-        a=doc['accessors'][i];v=doc['bufferViews'][a['bufferView']]
-        assert 'sparse' not in a and v['buffer']==0
+        a=doc['accessors'][i]
+        # Restricted sparse glTF morph support: implicit zero VEC3 float32
+        # base, tightly packed unsigned indices and float32 values.
+        if 'sparse' in a:
+            assert 'bufferView' not in a and a.get('byteOffset',0)==0
+            assert a['type']=='VEC3' and a['componentType']==5126 and not a.get('normalized')
+            s=a['sparse'];assert 0<s['count']<=a['count']
+            si=s['indices'];sv=s['values'];iv=doc['bufferViews'][si['bufferView']];vv=doc['bufferViews'][sv['bufferView']]
+            dt=np.dtype({5121:'u1',5123:'<u2',5125:'<u4'}[si['componentType']])
+            assert iv['buffer']==vv['buffer']==0 and 'byteStride' not in iv and 'byteStride' not in vv
+            io=si.get('byteOffset',0);vo=sv.get('byteOffset',0)
+            assert io>=0 and vo>=0 and io+s['count']*dt.itemsize<=iv['byteLength'] and vo+s['count']*12<=vv['byteLength']
+            idx=np.frombuffer(buf,dtype=dt,count=s['count'],offset=iv.get('byteOffset',0)+io).astype(np.int64)
+            assert idx[0]>=0 and idx[-1]<a['count'] and np.all(np.diff(idx)>0)
+            values=np.frombuffer(buf,dtype='<f4',count=s['count']*3,offset=vv.get('byteOffset',0)+vo).reshape(-1,3)
+            assert np.isfinite(values).all()
+            result=np.zeros((a['count'],3),dtype='<f4');result[idx]=values
+            return result
+        v=doc['bufferViews'][a['bufferView']]
+        assert v['buffer']==0
         dt=np.dtype({5121:'u1',5123:'<u2',5125:'<u4',5126:'<f4'}[a['componentType']])
         dim={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4,'MAT4':16}[a['type']]
         result=np.ndarray((a['count'],dim),dtype=dt,buffer=buf,
