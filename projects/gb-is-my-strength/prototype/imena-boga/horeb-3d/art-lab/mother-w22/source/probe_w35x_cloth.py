@@ -1,7 +1,7 @@
 """W35x: bounded local area restoration for the two new sleeve strain faces."""
 import numpy as np
 
-def correct(mesh,rest):
+def correct(mesh,rest,target=(2999,21276),protected=None):
     tri=mesh['tri'];canon=mesh['canon'];v=mesh['v'];_,first,idx=np.unique(canon,return_index=True,return_inverse=True)
     ct=idx[tri];p=v[first].copy();q=p.copy();r=rest[first]
     assert np.max(abs(p[idx]-v))<1e-6
@@ -12,7 +12,8 @@ def correct(mesh,rest):
     edges,counts=np.unique(edges[edges[:,0]!=edges[:,1]],axis=0,return_counts=True)
     boundary=set(edges[counts==1].ravel().tolist())
     es=np.linalg.norm(p[edges[:,1]]-p[edges[:,0]],axis=1)
-    target=(2999,21276);history=[]
+    if protected is not None:boundary.update(idx[np.asarray(protected,dtype=bool)].tolist())
+    history=[]
     # Correct only the target faces, with a continuous ramp above the
     # diagnostic threshold to avoid discontinuities at the onset of strain.
     for fi in target:

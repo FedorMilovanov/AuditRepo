@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');p.add_argument('--grip-strain',action='store_true');p.add_argument('--grip-fine',action='store_true');p.add_argument('--grip-release',choices=('up','back','diagonal','outward'));p.add_argument('--grip-upper',type=float,default=40.);p.add_argument('--grip-outset',type=float,default=0.);p.add_argument('--grip-clearance',action='store_true');p.add_argument('--grip-cloth',action='store_true');p.add_argument('--grip-key-export',action='store_true');p.add_argument('--multidigit',action='store_true');p.add_argument('--multidigit-wrap',action='store_true');p.add_argument('--underside',type=int,choices=(15,20,25));p.add_argument('--underside-refine',action='store_true');p.add_argument('--underside-witness',action='store_true');args=p.parse_args();assert not args.underside_witness or (args.underside is not None and not args.underside_refine);assert not args.underside_refine or args.underside is not None;assert args.underside is None or (args.multidigit and not args.multidigit_wrap);assert not args.multidigit_wrap or args.multidigit;assert not args.multidigit or (args.open_grip and args.distance==0 and not any((args.grip_release,args.grip_review,args.grip_strain,args.grip_staging)));assert not args.grip_key_export or (args.grip_cloth and args.grip_release is not None);assert not args.grip_cloth or args.grip_release is not None;assert not args.grip_clearance or args.grip_release is not None;assert 0<=args.grip_outset<=60 and (args.grip_outset==0 or args.grip_release is not None);assert args.grip_release is None or (args.open_grip and not args.grip_staging and not args.grip_review and not args.grip_strain);assert not args.grip_fine or args.grip_strain;assert not args.grip_strain or (args.open_grip and not args.grip_review and not args.grip_staging);assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or ((args.distance==0 or args.grip_release is not None) and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');p.add_argument('--grip-strain',action='store_true');p.add_argument('--grip-fine',action='store_true');p.add_argument('--grip-release',choices=('up','back','diagonal','outward'));p.add_argument('--grip-upper',type=float,default=40.);p.add_argument('--grip-outset',type=float,default=0.);p.add_argument('--grip-clearance',action='store_true');p.add_argument('--grip-cloth',action='store_true');p.add_argument('--grip-key-export',action='store_true');p.add_argument('--multidigit',action='store_true');p.add_argument('--multidigit-wrap',action='store_true');p.add_argument('--underside',type=int,choices=(15,20,25));p.add_argument('--underside-refine',action='store_true');p.add_argument('--underside-witness',action='store_true');p.add_argument('--asymmetric',action='store_true');p.add_argument('--handoff-angle',type=float,default=20.);p.add_argument('--handoff-retreat',type=float,default=0.);p.add_argument('--asymmetric-fine',action='store_true');p.add_argument('--asymmetric-final',action='store_true');p.add_argument('--asymmetric-rim-restage',action='store_true');p.add_argument('--asymmetric-correct',action='store_true');p.add_argument('--asymmetric-path',action='store_true');p.add_argument('--asymmetric-path-refine',action='store_true');p.add_argument('--asymmetric-review',action='store_true');args=p.parse_args();assert not args.asymmetric_review or (args.asymmetric_path and not args.asymmetric_path_refine and args.handoff_retreat==0);assert not args.asymmetric_path_refine or args.asymmetric_path;assert not args.asymmetric_path or (args.asymmetric and not args.asymmetric_correct and not args.asymmetric_rim_restage and args.handoff_angle==20);assert not args.asymmetric_correct or (args.asymmetric and not args.asymmetric_rim_restage and args.handoff_angle==20 and args.handoff_retreat==0);assert not args.asymmetric_rim_restage or args.asymmetric;assert not args.asymmetric_final or args.asymmetric_fine;assert not args.asymmetric_fine or args.asymmetric;assert not args.asymmetric or (args.underside==20 and not args.underside_refine and not args.underside_witness and 0<=args.handoff_angle<=20 and 0<=args.handoff_retreat<=150);assert not args.underside_witness or (args.underside is not None and not args.underside_refine);assert not args.underside_refine or args.underside is not None;assert args.underside is None or (args.multidigit and not args.multidigit_wrap);assert not args.multidigit_wrap or args.multidigit;assert not args.multidigit or (args.open_grip and args.distance==0 and not any((args.grip_release,args.grip_review,args.grip_strain,args.grip_staging)));assert not args.grip_key_export or (args.grip_cloth and args.grip_release is not None);assert not args.grip_cloth or args.grip_release is not None;assert not args.grip_clearance or args.grip_release is not None;assert 0<=args.grip_outset<=60 and (args.grip_outset==0 or args.grip_release is not None);assert args.grip_release is None or (args.open_grip and not args.grip_staging and not args.grip_review and not args.grip_strain);assert not args.grip_fine or args.grip_strain;assert not args.grip_strain or (args.open_grip and not args.grip_review and not args.grip_staging);assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or ((args.distance==0 or args.grip_release is not None) and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb'
@@ -46,6 +46,7 @@ def main():
         q=json.loads(f0.read_text()) if f0.exists() else json.loads((root/'W36t-w-multidigit-20261128/w36t-w-multidigit.json').read_text())['local']
         assert q['source_sha256']==r2['sha256']
         chosen=min((v for v in q['rows'] if v['crossings']==0),key=lambda v:max(v['gaps_mm'].values()))
+        rim_staging=chosen
         if args.underside is not None:
             f0=root/f'W37c-support-{args.underside}-20261128.json'
             u=json.loads(f0.read_text()) if f0.exists() else json.loads((root/'W37a-f-underside-20261128/w37a-f-underside.json').read_text())['support_screens'][str(args.underside)]
@@ -64,6 +65,29 @@ def main():
             T=np.eye(4);T[:3,:3]=rot;T[:3,3]=trans
             assert np.linalg.det(rot)>.99999
             targets[side]={i:T@w2[n2[k]] for k,i in names.items() if k.endswith('_'+side) and k.startswith(prefix)}
+        if args.asymmetric:
+            # One hand stays at the earlier W36m rim position, attached to
+            # the moving basket frame. Other hand retains lower support pose.
+            # The positive numerical gap from W37 is deliberately preserved.
+            scene0,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
+            pivot=np.array([.35,scene0['Coarse_work_surface']['v'][:,1].max(),scene0['Basket_W26_closed_woven_base']['v'][:,2].min()])
+            qnow=R.from_rotvec([-math.radians(args.handoff_angle),0,0]).as_matrix()
+            snow=pivot-qnow@pivot+[0,0,.18*args.handoff_angle/20]
+            allb=merged([z for z in scene0.values() if z['basket']])
+            snow[1]+=pivot[1]+.00001-(allb['v']@qnow.T+snow)[:,1].min()
+            hg={k:dict(z,v=z['v']@qnow.T+snow) if z['basket'] else z for k,z in scene0.items()}
+            T=np.eye(4);T[:3,:3]=qnow;T[:3,3]=snow
+            L=np.eye(4);L[:3,:3]=bq;L[:3,3]=bs
+            for i,M in targets['l'].items():
+                targets['l'][i]=T@np.linalg.inv(L)@M
+                targets['l'][i][:3,3]+=[0,0,args.handoff_retreat*.001]
+            rim_transform=np.eye(4)
+            if args.asymmetric_rim_restage:
+                qr=np.array(rim_staging['rotation']);sr=np.array(rim_staging['translation'])
+                rim_transform[:3,:3]=F@qr@F@K
+                rim_transform[:3,3]=F@(qr@F@D+sr)+[.7,0,0]
+            targets['r']={i:T@rim_transform@w2[n2[k]] for k,i in names.items() if k.endswith('_r') and k.startswith(prefix)}
+            bq,bs=qnow,snow
     if args.grip_release:
         for side,values in targets.items():
             sign=-1 if side=='l' else 1
@@ -397,11 +421,25 @@ def main():
             settings=[(stance,pole,1.,upper,0) for stance,pole,upper in [(60,-30,30),(60,0,30),(60,30,30),(80,-30,30),(80,0,30),(80,30,30),(100,0,30),(100,30,30)]]
         if args.underside_refine:
             settings=[(80,-30,1.,upper,0) for upper in (0,15,20,25,35,40,45,60)]
+        if args.asymmetric:
+            settings=[(80,{'l':lp,'r':rp},1.,up,0) for lp,rp,up in [(-30,30,25),(-30,0,25),(-30,60,25),(-15,30,25),(-30,30,0),(-30,30,40)]]
+            if args.asymmetric_fine:
+                settings=[(80,{'l':-30,'r':rp},{'l':1.,'r':tw},{'l':25.,'r':-up},0) for rp,tw,up in [(60,.65,25),(60,.8,25),(60,1.,0),(60,1.,40),(70,.8,25),(70,1.,25),(80,1.,25),(90,1.,25)]]
         if args.underside_witness:
             f0=root/'W37e-underside-refine-20261128/w36v-staging.json'
             prior=json.loads(f0.read_text()) if f0.exists() else json.loads((root/'W37a-f-underside-20261128/w37a-f-underside.json').read_text())['refined_rig']
             assert prior['source_sha256']==r2['sha256'] and prior['underside_angle']==args.underside
             b=prior['best'];settings=[(b['stance_mm'],b['pole_deg'],1.,b['upper_twist_deg'],0)]
+        if args.asymmetric_final:
+            settings=[(80,{'l':-30,'r':rp},{'l':1.,'r':tw},{'l':25.,'r':-up},0) for rp,tw,up in [(70,1.,30),(70,1.,35),(70,1.,40),(75,1.,35),(80,1.,30),(80,1.,35),(80,1.,40),(80,.9,35)]]
+        if args.asymmetric_rim_restage:
+            settings=[(80,{'l':-30,'r':rp},1.,{'l':25.,'r':-up},0) for rp,up in [(0,25),(30,25),(60,25),(80,25),(30,0),(60,0),(30,40),(60,40)]]
+        if args.asymmetric_correct:
+            settings=[(80,{'l':-30,'r':rp},1.,{'l':25.,'r':-40},0) for rp in (70,80)]
+        if args.asymmetric_path:
+            settings=[(80,{'l':-30,'r':80},1.,{'l':25.,'r':-40},0)]
+            if args.asymmetric_path_refine:
+                settings=[(80,{'l':lp,'r':80},1.,{'l':up,'r':-40},0) for lp,up in [(-30,0),(-30,15),(-45,0),(-45,15),(-45,25),(-60,15)]]
         if args.multidigit_wrap:
             settings=[(160,30,1.,30,angle) for angle in (0,-5,5,-10,10)]
             from scipy.spatial import cKDTree
@@ -419,7 +457,12 @@ def main():
                 jj=jj[np.linalg.norm(bc[jj]-pt,axis=1)-br[jj]<=ub+1e-10]
                 return point_triangle_min(pt,bt[jj])
         for stance,pole,twist,upper,angle in settings:
-            deadline();shift=np.array([0.,0.,stance*.001]);doc,geo,info,err=build(pole,1,twist,{'l':upper,'r':-upper},shift)
+            deadline();shift=np.array([0.,0.,stance*.001])
+            try:
+                doc,geo,info,err=build(pole,1,twist,upper if isinstance(upper,dict) else {'l':upper,'r':-upper},shift)
+            except AssertionError as exc:
+                if not args.asymmetric:raise
+                print(json.dumps({'stance':stance,'pole':pole,'upper':upper,'rejected':str(exc)}),flush=True);continue
             if angle:
                 M=world(doc,doc['nodes'])
                 for side,sign in [('l',1),('r',-1)]:
@@ -433,7 +476,28 @@ def main():
                             pivot=M[i][:3,3].copy();T=np.eye(4);T[:3,:3]=Q;T[:3,3]=pivot-Q@pivot
                             for j in desc(i):M[j]=T@M[j]
                 geo,wcheck=geometry(doc,a,True);assert max(np.max(abs(wcheck[i]-M[i])) for i in M)<1e-5
-            gg,_=dq_geometry(doc,geo,(1.,1.));au=audit(gg,shift);strain=bind_strain(gg);full=full_scene(gg)
+            gg,_=dq_geometry(doc,geo,(1.,1.));correction=None
+            if args.asymmetric_correct or args.asymmetric_path:
+                from probe_w35x_cloth import correct
+                initial=bind_strain(gg)[key]
+                if args.asymmetric_correct:assert initial['new']==initial['severe']==2 and set(initial['regions'])=={'lowerarm_r'}
+                targets0=tuple(f for f in initial['face_ids'] if f in (5844,5845,5859))
+                assert len(targets0)==2
+                node=d['nodes'][names[key]];mesh=d['meshes'][node['mesh']];pr=mesh['primitives'][0];at=pr['attributes']
+                rest=a(at['POSITION']).astype(float)
+                for weight,t in zip(node.get('weights',mesh.get('weights',[])),pr.get('targets',[])):
+                    if weight:rest+=weight*a(t['POSITION'])
+                js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][node['skin']]['joints']])
+                valid=np.array([k in ('upperarm_r','lowerarm_r') for k in jn])
+                protected=np.sum(ws*valid[js],axis=1)<.999
+                try:
+                    candidate,correction=correct(gg[key],rest,targets0,protected)
+                    assert correction['max_move_mm']<=2
+                    assert np.max(abs(candidate['v'][protected]-gg[key]['v'][protected]))==0
+                    gg[key]=candidate
+                except AssertionError as exc:
+                    correction={'rejected':str(exc)}
+            au=audit(gg,shift);strain=bind_strain(gg);full=full_scene(gg)
             count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
             w=world(doc,doc['nodes'])
             for side in ('l','r'):
@@ -442,8 +506,8 @@ def main():
             gaps=None
             if args.multidigit_wrap and count==full['room']==full['basket']==0 and strain[key]['severe']==strain['W28e_tailored_linen']['new']==0:
                 gaps={name:min(nearest(gg[key]['v'][i])*1000 for i in ids) for name,ids in digit_ids.items()}
-            row={'stance_mm':stance,'pole_deg':pole,'upper_twist_deg':upper,'wrap_deg':angle,'crossings':count,'audit':au,'bind_strain':strain,'full_scene':full,'arms':info,'matrix_error':err,'distal_gaps_mm':gaps}
-            rows.append(row);print(json.dumps({'stance':stance,'pole':pole,'upper':upper,'wrap':angle,'count':count,'scene':full,'skin_severe':strain[key]['severe'],'new_cloth':strain['W28e_tailored_linen']['new'],'gaps':gaps,'arms':info}),flush=True)
+            row={'stance_mm':stance,'pole_deg':pole,'upper_twist_deg':upper,'lower_twist':twist,'wrap_deg':angle,'crossings':count,'audit':au,'bind_strain':strain,'full_scene':full,'arms':info,'matrix_error':err,'distal_gaps_mm':gaps,'local_correction':correction}
+            rows.append(row);print(json.dumps({'stance':stance,'pole':pole,'upper':upper,'wrap':angle,'count':count,'scene':full,'skin_severe':strain[key]['severe'],'new_cloth':strain['W28e_tailored_linen']['new'],'gaps':gaps,'arms':info,'correction':correction}),flush=True)
             rank=(count+full['room']+full['basket'],strain[key]['severe']+strain['W28e_tailored_linen']['new'],max(gaps.values()) if gaps else max(z['forearm_hand_axis_angle_deg'] for z in info.values()))
             if best is None or rank<best[0]:best=(rank,row,gg)
         if args.underside_witness:
@@ -475,6 +539,10 @@ def main():
                 witness[side]=groups
             out.mkdir();(out/'w37f-support-witness.json').write_text(json.dumps({'status':'ART_HOLD_UNDERSIDE_SUPPORT_WITNESS','source_sha256':r2['sha256'],'selected_rig':rows[0],'support':witness,'limitations':['Fully digit-weighted vertex-to-downward-base distances and facing normals; not pressure, load-bearing grip, palm-side anatomical classification, or swept certificate.']},indent=2))
             print(json.dumps(witness),flush=True);return
+        if args.asymmetric and not args.asymmetric_review:
+            out.mkdir()
+            result={'status':'ART_HOLD_ASYMMETRIC_HANDOFF','source_sha256':r2['sha256'],'angle_deg':args.handoff_angle,'retreat_mm':args.handoff_retreat,'fine':args.asymmetric_fine,'final_screen':args.asymmetric_final,'rim_restaged':args.asymmetric_rim_restage,'corrected':args.asymmetric_correct or args.asymmetric_path,'path_screen':args.asymmetric_path,'basket_rotation':bq.tolist(),'basket_translation':bs.tolist(),'rows':rows,'best':best[1] if best else None,'limitations':['Hypothetical static asymmetric poses. No pad morph transfer, contact pressure, continuous motion or physical stability proof.']}
+            (out/'w37g-asymmetric.json').write_text(json.dumps(result,indent=2));return
         # Render only the selected diagnostic, without exporting a model.
         from probe_w35f_depth_review import prepare,render
         from PIL import Image,ImageDraw
@@ -486,6 +554,9 @@ def main():
         for label,target,view,span,x0,y0 in views:
             draw.text((x0+8,y0+3),label,fill=(230,230,230));sheet.paste(render(prepared,target,view,span,480,310),(x0,y0+20))
         out.mkdir();img=out/'w36v-staging-review.jpg';sheet.save(img,quality=84)
+        if args.asymmetric_review:
+            assert best[1]['crossings']==best[1]['bind_strain'][key]['severe']==best[1]['bind_strain']['W28e_tailored_linen']['new']==0
+            (out/'w37n-asymmetric-review.json').write_text(json.dumps({'status':'ART_HOLD_ASYMMETRIC_STATIC_REVIEW','source_sha256':r2['sha256'],'selected_rig':best[1],'jpeg_sha256':hashlib.sha256(img.read_bytes()).hexdigest()},indent=2));return
         (out/'w36v-staging.json').write_text(json.dumps({'underside_angle':args.underside,'underside_refine':args.underside_refine,'status':'ART_HOLD_MULTIDIGIT_FULL_RIG','source_sha256':r2['sha256'],'selected_hand':chosen,'wrap_screen':args.multidigit_wrap,'mirror_joint_error_mm':mirror_error,'rows':rows,'best':best[1],'jpeg_sha256':hashlib.sha256(img.read_bytes()).hexdigest(),'limitations':['W34s source with W36m digit joint targets; original pad corrective not transferred. Sampled crossings, no physical or swept proof.']},indent=2));return
     if args.open_grip:
         from probe_w35i_rim_contact import closest,normals
