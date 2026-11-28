@@ -33,8 +33,10 @@ function createPlayback({duration,now,request,cancel,sample,render,notify,fail})
   origin=time;start=now();changed(true);schedule()
  }
  function setHidden(value){
-  if(disposed)return;hidden=value;
-  if(hidden){changed(false);halt()}else schedule()
+  if(disposed||hidden===value)return;
+  hidden=value;
+  if(hidden){changed(false);halt();dirty=true}
+  else {dirty=true;schedule()}
  }
  function dispose(){disposed=true;halt();changed(false);dirty=false}
  return {invalidate,seek,toggle,setHidden,dispose};
