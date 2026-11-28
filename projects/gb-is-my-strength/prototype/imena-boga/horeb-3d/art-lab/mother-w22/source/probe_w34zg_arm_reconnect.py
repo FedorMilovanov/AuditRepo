@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');args=p.parse_args();assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or (args.distance==0 and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');p.add_argument('--grip-strain',action='store_true');p.add_argument('--grip-fine',action='store_true');p.add_argument('--grip-release',choices=('up','back','diagonal','outward'));p.add_argument('--grip-upper',type=float,default=40.);p.add_argument('--grip-outset',type=float,default=0.);p.add_argument('--grip-clearance',action='store_true');args=p.parse_args();assert not args.grip_clearance or args.grip_release is not None;assert 0<=args.grip_outset<=60 and (args.grip_outset==0 or args.grip_release is not None);assert args.grip_release is None or (args.open_grip and not args.grip_staging and not args.grip_review and not args.grip_strain);assert not args.grip_fine or args.grip_strain;assert not args.grip_strain or (args.open_grip and not args.grip_review and not args.grip_staging);assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or ((args.distance==0 or args.grip_release is not None) and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb'
@@ -37,6 +37,11 @@ def main():
         for side,row in [('l',l),('r',rr)]:
             T=np.eye(4);T[:3,:3]=row['rotation'];T[:3,3]=row['translation']
             targets[side]={i:T@base[i] for k,i in names.items() if k.endswith('_'+side) and k.startswith(('hand_','thumb_','index_','middle_','ring_','pinky_'))}
+    if args.grip_release:
+        for side,values in targets.items():
+            sign=-1 if side=='l' else 1
+            direction=unit(np.array({'up':[0.,1.,0.],'back':[0.,0.,1.],'diagonal':[0.,1.,1.],'outward':[sign,0.,0.]}[args.grip_release]))
+            for v in values.values():v[:3,3]+=direction*args.distance*.001+np.array([sign*args.grip_outset*.001,0.,0.])
     def desc(i):
         yield i
         for c in d['nodes'][i].get('children',[]):yield from desc(c)
@@ -364,7 +369,8 @@ def main():
         rim=hg['Basket_thick_lipped_rim'];rt=rim['v'][rim['tri']];rn=normals(rim['v'],rim['tri']);rn/=np.maximum(np.linalg.norm(rn,axis=1),1e-12)[:,None]
         settings=[(160,pole,twist,upper) for pole,twist,upper in [(25,.65,30),(45,.65,30),(65,.65,30),(45,.9,30),(45,.65,0),(45,.65,60)]]
         if args.grip_staging:settings=[(80,30,1.,30),(100,30,1.,30),(120,30,1.,30),(140,30,1.,30),(140,45,1.,30),(160,45,1.,30)]
-        if args.grip_review:settings=[(100,30,1.,30)]
+        if args.grip_review or args.grip_release:settings=[(100,30,1.,args.grip_upper)]
+        if args.grip_strain:settings=[(100,30,1.,u) for u in ((34,38,42,48,52,56,64,68) if args.grip_fine else (0,15,30,45,60,75))]
         for stance,pole,twist,upper in settings:
             shift=np.array([0.,0.,stance*.001])
             deadline();doc,geo,info,err=build(pole,1,twist,{'l':upper,'r':-upper},shift)
@@ -387,8 +393,34 @@ def main():
                 elbow=w[names['lowerarm_'+side]][:3,3];wrist=w[names['hand_'+side]][:3,3];mid=w[names['middle_01_'+side]][:3,3]
                 info[side]['forearm_hand_axis_angle_deg']=float(np.degrees(np.arccos(np.clip(unit(wrist-elbow)@unit(mid-wrist),-1,1))))
             row={'stance_mm':stance,'pole_deg':pole,'twist':twist,'upper_twist_deg':upper,'crossings':count,'audit':au,'arm':info,'grip':grip,'matrix_error':err}
+            if args.grip_strain or args.grip_release:row['bind_strain']=bind_strain(gg)
+            if args.grip_release:
+                row['release_direction']=args.grip_release;row['outset_mm']=args.grip_outset;row['distance_mm']=args.distance;row['full_scene']=full_scene(gg)
+                scene=row['full_scene'];strain=row['bind_strain']
+                row['strict_sample_gate']=bool(count==0 and strain[key]['severe']==0 and strain['W28e_tailored_linen']['new']==0 and scene['basket']==scene['room']==scene['below_floor_half_mm']==0 and scene['floor_ray_matches']==scene['near_floor_vertices']==1798)
+            if args.grip_clearance:
+                from scipy.spatial import cKDTree
+                basket=merged([v for v in hg.values() if v['basket']]);bt=basket['v'][basket['tri']]
+                center=bt.mean(1);rad=np.linalg.norm(bt-center[:,None],axis=2).max(1);tree=cKDTree(center)
+                node=d['nodes'][names[key]];at=d['meshes'][node['mesh']]['primitives'][0]['attributes']
+                js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][node['skin']]['joints']])
+                _,first=np.unique(b['canon'],return_index=True);clearance={}
+                for side in ('l','r'):
+                    hm=np.array([n.endswith('_'+side) and n.startswith(('hand_','thumb_','index_','middle_','ring_','pinky_')) for n in jn])
+                    ids=first[np.sum(ws[first]*hm[js[first]],axis=1)>.999]
+                    distances=[]
+                    for i in ids:
+                        pt=b['v'][i];_,j=tree.query(pt,workers=1)
+                        ub,_,_=closest(pt,bt[j:j+1]);jj=np.array(tree.query_ball_point(pt,ub+rad.max()+1e-10,workers=1),int)
+                        jj=jj[np.linalg.norm(center[jj]-pt,axis=1)-rad[jj]<=ub+1e-10]
+                        dist,_,_=closest(pt,bt[jj]);distances.append(dist)
+                    clearance[side]={'unique_vertices':len(ids),'minimum_vertex_to_basket_mm':min(distances)*1000,'minimum_vertex_id':int(ids[np.argmin(distances)])}
+                row['hand_vertex_clearance']=clearance
             rows.append(row);print(json.dumps({'stance':stance,'pole':pole,'twist':twist,'upper':upper,'count':count,'skin':au['skin_self'],'cloth':au['skin_tunic'],'tunic':au['tunic_self'],'scene':au['scene'],'grip':grip,'arm':info}),flush=True)
-            if best is None or (count,max(z['forearm_hand_axis_angle_deg'] for z in info.values()))<(best[0]['crossings'],max(z['forearm_hand_axis_angle_deg'] for z in best[0]['arm'].values())):best=(row,doc)
+            def rank(v):
+                strain=v.get('bind_strain',{}).get(key,{}).get('severe',0)
+                return (not all(z['pass'] for z in v['grip'].values()) if not args.grip_release else False,v['crossings'],strain,max(z['forearm_hand_axis_angle_deg'] for z in v['arm'].values()))
+            if best is None or rank(row)<rank(best[0]):best=(row,doc)
         if args.grip_review:
             assert len(rows)==1 and rows[0]['crossings']==0 and all(q['pass'] for q in rows[0]['grip'].values())
             b=gg[key];full=full_scene(gg);strain=bind_strain(gg)
