@@ -38,9 +38,18 @@ def winding(p,t):
     den=la*lb*lc+np.sum(a*b,axis=1)*lc+np.sum(b*c,axis=1)*la+np.sum(c*a,axis=1)*lb
     return float(np.sum(2*np.arctan2(det,den))/(4*np.pi))
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--bilateral',action='store_true');parser.add_argument('--closure',action='store_true');args=parser.parse_args();assert not args.closure or args.bilateral
     root=args.evidence;out=args.output;assert not out.exists()
-    f=root/'W35c-static-160-0-20261127';r=json.loads((f/'w34zx-export.json').read_text());d,a=load(f/'w34zx-static-actor.glb',r['export']['sha256']);g,_=geometry(d,a,True)
+    if args.bilateral:
+        from probe_w35e_playback import pose
+        f=root/'W35y-bilateral-20261128';r=json.loads((f/'w35y-assembly.json').read_text());sha=r['sha256']
+        d,a=load(f/'w35y-approach.glb',sha);d=pose(d,a,r['duration_s'])
+        if args.closure:
+            from probe_w36a_contact_closure import apply_closure
+            d,_=apply_closure(d,root,1.,sha)
+    else:
+        f=root/'W35c-static-160-0-20261127';r=json.loads((f/'w34zx-export.json').read_text());sha=r['export']['sha256'];d,a=load(f/'w34zx-static-actor.glb',sha)
+    g,_=geometry(d,a,True)
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text());h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     rim=hg['Basket_thick_lipped_rim'];t=rim['v'][rim['tri']];top=topology(rim['v'],rim['tri'])
@@ -115,9 +124,9 @@ def main():
         pairs.sort(key=lambda q:q['max_gap_mm'])
         result={'min_vertex_distance_to_closure_mm':min(closest(v,bridge_t)[0] for v in b['v'][ids])*1000,'unique_hand_vertices':len(ids),'aabb_candidates':len(near),'inside_vertices':inside,'within_12mm':len(rows),'facing_within_3mm':sum(x['gap_mm']<=3 for x in facing),
                 'by_digit':{digit:{'min_gap_mm':min((x['gap_mm'] for x in rows if x['digit']==digit),default=None),'facing_min_gap_mm':min((x['gap_mm'] for x in facing if x['digit']==digit),default=None)} for digit in ('thumb','index','middle','ring','pinky','hand')},
-                'opposed_facing_pairs_within_3mm':sum(q['max_gap_mm']<=3 for q in pairs),'best_opposed_pair':pairs[0] if pairs else None,'same_section_facing_pairs':len(same_section),
+                'opposed_facing_pairs_within_3mm':sum(q['max_gap_mm']<=3 for q in pairs),'best_opposed_pair':pairs[0] if pairs else None,'opposed_pairs_within_1mm':sum(q['max_gap_mm']<=1 for q in pairs),'opposed_pairs_within_half_mm':sum(q['max_gap_mm']<=.5 for q in pairs),'same_section_facing_pairs':len(same_section),
                 'largest_angle_within_12mm':min(same_section,key=lambda q:q['dot']) if same_section else None,
                 'largest_angle_within_5mm':min((q for q in same_section if q['max_gap_mm']<=5),key=lambda q:q['dot'],default=None)}
         results[side]=result;print(side,json.dumps(result),flush=True)
-    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':r['export']['sha256'],'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
+    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':sha,'closure':args.closure,'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
 if __name__=='__main__':main()

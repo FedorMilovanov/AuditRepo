@@ -32,7 +32,7 @@ def pose(doc,acc,t):
         d['nodes'][target['node']][field]=v.tolist()
     return d
 
-def audit(root,frame,bilateral=False):
+def audit(root,frame,bilateral=False,closure_fraction=None):
     folder=root/('W35y-bilateral-20261128' if bilateral else 'W35d-approach-20261127')
     r=json.loads((folder/('w35y-assembly.json' if bilateral else 'w35d-assembly.json')).read_text())
     doc,acc=load(folder/('w35y-approach.glb' if bilateral else 'w35d-approach.glb'),r['sha256'])
@@ -41,7 +41,12 @@ def audit(root,frame,bilateral=False):
     h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     baseline,bw=geometry(source,sa,True)
-    t=min(frame/24,r['duration_s']);d=pose(doc,acc,t);g,w=geometry(d,acc,True);assert set(g)==set(baseline)
+    t=min(frame/24,r['duration_s']);d=pose(doc,acc,t);chosen=None
+    if closure_fraction is not None:
+        assert bilateral and frame==58
+        from probe_w36a_contact_closure import apply_closure
+        d,chosen=apply_closure(d,root,closure_fraction,r['sha256'])
+    g,w=geometry(d,acc,True);assert set(g)==set(baseline)
     names={n['name']:i for i,n in enumerate(d['nodes'])}
     changed={}
     for k,v in g.items():
@@ -124,7 +129,7 @@ def audit(root,frame,bilateral=False):
             vn=vn[body['canon']];vn/=np.maximum(np.linalg.norm(vn,axis=1),1e-12)[:,None]
             vn*=np.sign(np.sum(np.einsum('ij,ij->i',body['v'][body['tri'][:,0]],fn)))
             grip={}
-            for side,ids in [('l',left['skin_vertices']),('r',[q['vertex'] for q in right['contacts']])]:
+            for side,ids in (chosen.items() if chosen else [('l',left['skin_vertices']),('r',[q['vertex'] for q in right['contacts']])]):
                 rows=[]
                 for i in ids:
                     distance,point,j=closest(body['v'][i],rt)
@@ -138,15 +143,15 @@ def audit(root,frame,bilateral=False):
         endpoint=max(float(np.max(abs(v['v']-gg[k]['v']))) for k,v in g.items())
     # Floor height is a verified constant on this staging area; feet unchanged from source.
     floor_gap=float((body['v'][:,1].min()+.005)*1000)
-    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip}
+    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip,'closure_fraction':closure_fraction}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('evidence',type=Path)
     modes=p.add_mutually_exclusive_group(required=True);modes.add_argument('--frame',type=int);modes.add_argument('--all',action='store_true')
-    p.add_argument('--report',type=Path);p.add_argument('--bilateral',action='store_true');args=p.parse_args()
+    p.add_argument('--report',type=Path);p.add_argument('--bilateral',action='store_true');p.add_argument('--closure-fraction',type=float);args=p.parse_args();assert args.closure_fraction is None or (args.bilateral and args.frame==58 and 0<=args.closure_fraction<=1)
     if args.frame is not None:
         assert args.report is None and 0<=args.frame<=(58 if args.bilateral else 36)
-        print(json.dumps(audit(args.evidence,args.frame,args.bilateral)),flush=True);return
+        print(json.dumps(audit(args.evidence,args.frame,args.bilateral,args.closure_fraction)),flush=True);return
     import subprocess
     folder=args.evidence/('W35y-bilateral-20261128' if args.bilateral else 'W35d-approach-20261127')
     path=args.report or folder/('w35z-playback.json' if args.bilateral else 'w35e-playback.json');assert not path.exists()
