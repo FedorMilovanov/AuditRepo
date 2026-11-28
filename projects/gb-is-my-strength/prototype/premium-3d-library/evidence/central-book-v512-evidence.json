@@ -1,0 +1,102 @@
+{
+  "schema": "gb-library-v512-central-book-image-evidence-v1",
+  "baseCommit": "b2f02a444296020194e5620055f20e02d34c09d0",
+  "date": "2026-11-09",
+  "limitations": [
+    "Windows desktop Chrome and Playwright WebKit emulated mobile; not physical Safari/Android",
+    "Screenshots establish geometry presentation only; not expert art acceptance",
+    "Contact sheet cropped to center, full-viewport lossless PNG-derived originals are provided"
+  ],
+  "images": [
+    {
+      "path": "central-book-v512-chromium-1440x900-before.webp",
+      "bytes": 411910,
+      "sha256": "1483ec4acf3c39848ad2db185b6fd6f794cc67fc9a8bccbf2125455576b48050",
+      "size": [
+        1440,
+        900
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-chromium-1440x900-after.webp",
+      "bytes": 412918,
+      "sha256": "3d3120ce7db9857aea9d2575184ed6d1e247fd3c29134ad5dd63245e36598137",
+      "size": [
+        1440,
+        900
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-chromium-390x844-before.webp",
+      "bytes": 117758,
+      "sha256": "29de89e8e3c4325b27d4c80e6c9e7d6844b3e7036a19d155b40ae4a1352e2452",
+      "size": [
+        390,
+        844
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-chromium-390x844-after.webp",
+      "bytes": 117970,
+      "sha256": "7722c60176c56e603618fca82803d99ed9652caa4bce3fc229596da65c102079",
+      "size": [
+        390,
+        844
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-webkit-1440x900-before.webp",
+      "bytes": 394562,
+      "sha256": "671df10fd7ba49c552b6d17d11d3a9b9b97c350d8c18fe185a8ed59554b7620c",
+      "size": [
+        1440,
+        900
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-webkit-1440x900-after.webp",
+      "bytes": 395148,
+      "sha256": "71cf075c658bed3c2fb746349f9f370521b9136c009280a3ba3b673bae04df8a",
+      "size": [
+        1440,
+        900
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-webkit-390x844-before.webp",
+      "bytes": 106858,
+      "sha256": "7c7cb618e787f23e76120d0f18f6a86258259917592936cab2b05dafd63bb1e7",
+      "size": [
+        390,
+        844
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-webkit-390x844-after.webp",
+      "bytes": 107404,
+      "sha256": "802663ada9fc2d17f76675395ba75139f51ec017dee25e06165f19eb6d5d929e",
+      "size": [
+        390,
+        844
+      ],
+      "lossless_decoded_rgb": true
+    },
+    {
+      "path": "central-book-v512-desktop-before-after.jpg",
+      "bytes": 86610,
+      "sha256": "f2d848ee0bf82f3eee7781ed7134fcbc70906c01a71d9e8ae0359f412ecf8e05",
+      "size": [
+        1098,
+        525
+      ],
+      "note": "Contact sheet made from real browser crops, not raw lossless"
+    }
+  ]
+}

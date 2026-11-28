@@ -1,0 +1,88 @@
+{
+  "schema": "gb-library-v512-central-book-source-evidence-v1",
+  "baseCommit": "b2f02a444296020194e5620055f20e02d34c09d0",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "scope": "Central open-book geometry, real visual browser evidence and manual texture disposal",
+  "gates": {
+    "labChecks": 5,
+    "typescript": true,
+    "viteBuild": true,
+    "bookBrowser": "4/4",
+    "architecture": "4/4",
+    "mobileHUD": "6/6",
+    "referenceBay": "5/5",
+    "interaction": "12/12"
+  },
+  "limitations": [
+    "No physical Safari/Android or XR certification",
+    "Screenshots are not proof of full premium fidelity",
+    "3D demo content and performance release gates remain open"
+  ],
+  "files": [
+    {
+      "path": "src/scene/Center.tsx",
+      "bytes": 4329,
+      "sha256": "91928ab6a3aa64dca12ca75c3a131cadd1fd60fc5fac0a77df550f440dedc693"
+    },
+    {
+      "path": "tests/central-book-browser.py",
+      "bytes": 3081,
+      "sha256": "ef49788da3959520b56d5afdbb8db86e8d5d26df499a0faade6fafe2d7a53121"
+    },
+    {
+      "path": "V512_CENTRAL_BOOK_ENGINEERING.md",
+      "bytes": 5226,
+      "sha256": "574af62c2d61b1509e8b12fe8ad9f6ddeea33d0e19deee724f3a4542d6ae1b51"
+    },
+    {
+      "path": "evidence/central-book-v512-evidence.json",
+      "bytes": 2923,
+      "sha256": "235b799e2708661983397b975d1671d8dfd945152c1746766875da3945bb7638"
+    },
+    {
+      "path": "evidence/central-book-v512-desktop-before-after.jpg",
+      "bytes": 86610,
+      "sha256": "f2d848ee0bf82f3eee7781ed7134fcbc70906c01a71d9e8ae0359f412ecf8e05"
+    },
+    {
+      "path": "evidence/central-book-v512-chromium-1440x900-before.webp",
+      "bytes": 411910,
+      "sha256": "1483ec4acf3c39848ad2db185b6fd6f794cc67fc9a8bccbf2125455576b48050"
+    },
+    {
+      "path": "evidence/central-book-v512-chromium-1440x900-after.webp",
+      "bytes": 412918,
+      "sha256": "3d3120ce7db9857aea9d2575184ed6d1e247fd3c29134ad5dd63245e36598137"
+    },
+    {
+      "path": "evidence/central-book-v512-chromium-390x844-before.webp",
+      "bytes": 117758,
+      "sha256": "29de89e8e3c4325b27d4c80e6c9e7d6844b3e7036a19d155b40ae4a1352e2452"
+    },
+    {
+      "path": "evidence/central-book-v512-chromium-390x844-after.webp",
+      "bytes": 117970,
+      "sha256": "7722c60176c56e603618fca82803d99ed9652caa4bce3fc229596da65c102079"
+    },
+    {
+      "path": "evidence/central-book-v512-webkit-1440x900-before.webp",
+      "bytes": 394562,
+      "sha256": "671df10fd7ba49c552b6d17d11d3a9b9b97c350d8c18fe185a8ed59554b7620c"
+    },
+    {
+      "path": "evidence/central-book-v512-webkit-1440x900-after.webp",
+      "bytes": 395148,
+      "sha256": "71cf075c658bed3c2fb746349f9f370521b9136c009280a3ba3b673bae04df8a"
+    },
+    {
+      "path": "evidence/central-book-v512-webkit-390x844-before.webp",
+      "bytes": 106858,
+      "sha256": "7c7cb618e787f23e76120d0f18f6a86258259917592936cab2b05dafd63bb1e7"
+    },
+    {
+      "path": "evidence/central-book-v512-webkit-390x844-after.webp",
+      "bytes": 107404,
+      "sha256": "802663ada9fc2d17f76675395ba75139f51ec017dee25e06165f19eb6d5d929e"
+    }
+  ]
+}

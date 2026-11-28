@@ -1,0 +1,78 @@
+{
+  "id": "premium-3d-reading-v536-real-browser-before-after",
+  "baseline_commit": "2401bd3903c869cd994e220d6c64d7983d48c51e",
+  "candidate": "V5.36 from same existing Draft PR branch; exact SHA assigned on commit",
+  "method": "public station UI navigation, headless installed Chrome / Playwright WebKit on Windows, reduced-motion, no camera injection; 1x DPR; PNG to lossless RGB-equivalent WebP",
+  "limitations": [
+    "screenshots are evidence, not owner art approval",
+    "WebKit on Windows is not physical iPhone Safari"
+  ],
+  "files": [
+    {
+      "name": "reading-v536-chromium-1440x900-lectern-before.webp",
+      "engine": "chromium",
+      "size": "1440x900",
+      "subject": "lectern",
+      "stage": "before",
+      "source_png_sha256": "3299ec4de768ce6c200d2103dc00dff37ccea05b1d0ea2ef49d00db778ab4852",
+      "webp_sha256": "cb6a53b58e3741cbc5ab4d6779d2a5019f1f9392a55b38949ee50e0b25f9a9a0",
+      "webp_bytes": 708552,
+      "decoded_rgb_equal": true
+    },
+    {
+      "name": "reading-v536-chromium-1440x900-lectern-after.webp",
+      "engine": "chromium",
+      "size": "1440x900",
+      "subject": "lectern",
+      "stage": "after",
+      "source_png_sha256": "d2ede6a2379c783ac567f55d85e78067129eb265d87d7e703a74c9fdd5a0f688",
+      "webp_sha256": "6eae37d8b81936441eef5f80cf8cb6ff6d1e878ba7c6a6bc36c81e7a0991415f",
+      "webp_bytes": 707616,
+      "decoded_rgb_equal": true
+    },
+    {
+      "name": "reading-v536-webkit-390x844-lectern-before.webp",
+      "engine": "webkit",
+      "size": "390x844",
+      "subject": "lectern",
+      "stage": "before",
+      "source_png_sha256": "9eb7cef937b7e33b7386658c870e0d5d5c064ea6abdd5c116981ec06cc5fb515",
+      "webp_sha256": "81b0e0719ae4e7917dc1c250fc6dfa30026b9af46873260a88d90686af6c77a3",
+      "webp_bytes": 168294,
+      "decoded_rgb_equal": true
+    },
+    {
+      "name": "reading-v536-webkit-390x844-lectern-after.webp",
+      "engine": "webkit",
+      "size": "390x844",
+      "subject": "lectern",
+      "stage": "after",
+      "source_png_sha256": "a8eab662f96307b65199cc5ad07bc0376ca629b4af3d97c51dad6d1f5d546724",
+      "webp_sha256": "4947efa1544628dd0927af2678b325e19b50ecdc579e0f559b875e069cbf48a5",
+      "webp_bytes": 168570,
+      "decoded_rgb_equal": true
+    },
+    {
+      "name": "reading-v536-chromium-1440x900-central-before.webp",
+      "engine": "chromium",
+      "size": "1440x900",
+      "subject": "central",
+      "stage": "before",
+      "source_png_sha256": "0c3cd96086c1a646716aa7249fc53e7c080e1311b0af386e35965e28c9de8961",
+      "webp_sha256": "0425383bd1ad3e175dcf8bc40b951b5902f9bf8c0daf4ba8caf6f7999498a140",
+      "webp_bytes": 805364,
+      "decoded_rgb_equal": true
+    },
+    {
+      "name": "reading-v536-chromium-1440x900-central-after.webp",
+      "engine": "chromium",
+      "size": "1440x900",
+      "subject": "central",
+      "stage": "after",
+      "source_png_sha256": "f055154a77080e423de1afd6594fd958cd78a8040fb1743b50f6fe6091d75b83",
+      "webp_sha256": "84be40c032e1cb91bf3d059b04e3b4de0951a77ea92c5ba804304ac7c1346136",
+      "webp_bytes": 805298,
+      "decoded_rgb_equal": true
+    }
+  ]
+}

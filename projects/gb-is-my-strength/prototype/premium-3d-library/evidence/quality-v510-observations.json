@@ -1,0 +1,828 @@
+{
+  "schema": "gb-library-v510-quality-timing-observations-v1",
+  "date": "2026-11-09",
+  "baselineCommit": "620b1e316b11c9641a0eb551fcd7b61dd65ac317",
+  "environment": "DESKTOP-O3FDOA4 Windows desktop, Chromium Chrome channel and Playwright WebKit, DPR 1, mobile emulated touch/viewport",
+  "limitations": [
+    "rAF is not GPU frame time; remote desktop is not a physical mobile device",
+    "the WebGL API timing probe monkeypatches isolated browser functions and can change timing",
+    "measured long stalls are observed during first graphics quality changes but not causally proven shader compilation",
+    "no real iPhone/Android/VR GPU/memory/thermal certification"
+  ],
+  "previousQualityTimerDiagnostic": [
+    {
+      "engine": "chromium",
+      "toggle": 1,
+      "data": {
+        "labelBefore": "Ультра",
+        "labelAfter": "Лёгкая",
+        "events": [
+          {
+            "at": 10.8,
+            "inline": "1",
+            "computed": "0"
+          },
+          {
+            "at": 831.9,
+            "inline": "0",
+            "computed": "0"
+          }
+        ],
+        "samples": [
+          {
+            "at": 831.6,
+            "inline": "1",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 928.6,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1025.7,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1128.8,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1228.8,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1328.7,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1425.2,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1528.6,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          }
+        ],
+        "rafCount": 48,
+        "maxGap": 817.3,
+        "p95Gap": 16.8
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "toggle": 2,
+      "data": {
+        "labelBefore": "Лёгкая",
+        "labelAfter": "Ультра",
+        "events": [
+          {
+            "at": 6.6,
+            "inline": "1",
+            "computed": "0"
+          },
+          {
+            "at": 526.5,
+            "inline": "0",
+            "computed": "1"
+          }
+        ],
+        "samples": [
+          {
+            "at": 28.6,
+            "inline": "1",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 125.6,
+            "inline": "1",
+            "computed": "0.134096",
+            "label": "Ультра"
+          },
+          {
+            "at": 226.5,
+            "inline": "1",
+            "computed": "0.614181",
+            "label": "Ультра"
+          },
+          {
+            "at": 325.8,
+            "inline": "1",
+            "computed": "0.876351",
+            "label": "Ультра"
+          },
+          {
+            "at": 426.5,
+            "inline": "1",
+            "computed": "0.975454",
+            "label": "Ультра"
+          },
+          {
+            "at": 526.3,
+            "inline": "1",
+            "computed": "1",
+            "label": "Ультра"
+          },
+          {
+            "at": 626.8,
+            "inline": "0",
+            "computed": "0.949895",
+            "label": "Ультра"
+          },
+          {
+            "at": 726.3,
+            "inline": "0",
+            "computed": "0.542227",
+            "label": "Ультра"
+          },
+          {
+            "at": 826.4,
+            "inline": "0",
+            "computed": "0.185354",
+            "label": "Ультра"
+          },
+          {
+            "at": 926.7,
+            "inline": "0",
+            "computed": "0.0468075",
+            "label": "Ультра"
+          },
+          {
+            "at": 1026.6,
+            "inline": "0",
+            "computed": "0.00239549",
+            "label": "Ультра"
+          },
+          {
+            "at": 1126.7,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1226.6,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1326.6,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1426.8,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1526.9,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          }
+        ],
+        "rafCount": 93,
+        "maxGap": 66.7,
+        "p95Gap": 16.8
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "toggle": 1,
+      "data": {
+        "labelBefore": "Ультра",
+        "labelAfter": "Лёгкая",
+        "events": [
+          {
+            "at": 29,
+            "inline": "1",
+            "computed": "0"
+          },
+          {
+            "at": 834,
+            "inline": "0",
+            "computed": "1"
+          }
+        ],
+        "samples": [
+          {
+            "at": 818,
+            "inline": "1",
+            "computed": "0.000008",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 942,
+            "inline": "0",
+            "computed": "0.894276",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1065,
+            "inline": "0",
+            "computed": "0.336561",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1188,
+            "inline": "0",
+            "computed": "0.083081",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1311,
+            "inline": "0",
+            "computed": "0.006377",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1444,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          },
+          {
+            "at": 1558,
+            "inline": "0",
+            "computed": "0",
+            "label": "Лёгкая"
+          }
+        ],
+        "rafCount": 20,
+        "maxGap": 818,
+        "p95Gap": 818
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "toggle": 2,
+      "data": {
+        "labelBefore": "Лёгкая",
+        "labelAfter": "Ультра",
+        "events": [
+          {
+            "at": 11,
+            "inline": "1",
+            "computed": "0"
+          },
+          {
+            "at": 563,
+            "inline": "0",
+            "computed": "1"
+          }
+        ],
+        "samples": [
+          {
+            "at": 102,
+            "inline": "1",
+            "computed": "0.001991",
+            "label": "Ультра"
+          },
+          {
+            "at": 241,
+            "inline": "1",
+            "computed": "0.552867",
+            "label": "Ультра"
+          },
+          {
+            "at": 378,
+            "inline": "1",
+            "computed": "0.93331",
+            "label": "Ультра"
+          },
+          {
+            "at": 516,
+            "inline": "1",
+            "computed": "0.999865",
+            "label": "Ультра"
+          },
+          {
+            "at": 654,
+            "inline": "0",
+            "computed": "0.910667",
+            "label": "Ультра"
+          },
+          {
+            "at": 793,
+            "inline": "0",
+            "computed": "0.268065",
+            "label": "Ультра"
+          },
+          {
+            "at": 948,
+            "inline": "0",
+            "computed": "0.036373",
+            "label": "Ультра"
+          },
+          {
+            "at": 1102,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1224,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1348,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          },
+          {
+            "at": 1487,
+            "inline": "0",
+            "computed": "0",
+            "label": "Ультра"
+          }
+        ],
+        "rafCount": 40,
+        "maxGap": 99,
+        "p95Gap": 46
+      },
+      "errors": []
+    }
+  ],
+  "qualitySwitchingWithFrameBasedLifecycle": [
+    {
+      "engine": "chromium",
+      "viewport": "1440x900",
+      "result": "PASS",
+      "switches": [
+        {
+          "first": "Ультра",
+          "last": "Лёгкая",
+          "records": [
+            {
+              "at": 8.9,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 919.5,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 926.4,
+              "key": "off/Лёгкая"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 867.4,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 1
+        },
+        {
+          "first": "Лёгкая",
+          "last": "Ультра",
+          "records": [
+            {
+              "at": 11.3,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 59.2,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 78.3,
+              "key": "off/Ультра"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 83.4,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 2
+        }
+      ],
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "viewport": "390x844",
+      "result": "PASS",
+      "switches": [
+        {
+          "first": "Лёгкая",
+          "last": "Ультра",
+          "records": [
+            {
+              "at": 3.6,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 221.6,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 238.7,
+              "key": "off/Ультра"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 183.4,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 1
+        },
+        {
+          "first": "Ультра",
+          "last": "Лёгкая",
+          "records": [
+            {
+              "at": 14.1,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 47.4,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 80.4,
+              "key": "off/Лёгкая"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 16.9,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 2
+        }
+      ],
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "viewport": "1440x900",
+      "result": "PASS",
+      "switches": [
+        {
+          "first": "Ультра",
+          "last": "Лёгкая",
+          "records": [
+            {
+              "at": 9,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 901,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 973,
+              "key": "off/Лёгкая"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 824,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 1
+        },
+        {
+          "first": "Лёгкая",
+          "last": "Ультра",
+          "records": [
+            {
+              "at": 29,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 170,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 270,
+              "key": "off/Ультра"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 98,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 2
+        }
+      ],
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "viewport": "390x844",
+      "result": "PASS",
+      "switches": [
+        {
+          "first": "Лёгкая",
+          "last": "Ультра",
+          "records": [
+            {
+              "at": 23,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 1705,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 1787,
+              "key": "off/Ультра"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 1641,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 1
+        },
+        {
+          "first": "Ультра",
+          "last": "Лёгкая",
+          "records": [
+            {
+              "at": 10,
+              "key": "on/Ультра"
+            },
+            {
+              "at": 82,
+              "key": "on/Лёгкая"
+            },
+            {
+              "at": 132,
+              "key": "off/Лёгкая"
+            }
+          ],
+          "framesOldQualityCovered": 2,
+          "maxRafGapMs": 33,
+          "overlayGone": true,
+          "beigeVeilOpacity": "0",
+          "canvasIdentityRetained": true,
+          "attempt": 2
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "webglApiTimingProbe": [
+    {
+      "engine": "chromium",
+      "size": "1440x900",
+      "stats": {
+        "on": false,
+        "entries": [],
+        "summary": {
+          "bindFramebuffer": {
+            "calls": 6,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "useProgram": {
+            "calls": 486,
+            "totalMs": 0.5,
+            "maxMs": 0.1
+          },
+          "drawElementsInstanced": {
+            "calls": 431,
+            "totalMs": 0.3,
+            "maxMs": 0.1
+          },
+          "drawElements": {
+            "calls": 1898,
+            "totalMs": 0.7,
+            "maxMs": 0.1
+          },
+          "drawArrays": {
+            "calls": 40,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "shaderSource": {
+            "calls": 24,
+            "totalMs": 6.4,
+            "maxMs": 0.5
+          },
+          "compileShader": {
+            "calls": 24,
+            "totalMs": 0.1,
+            "maxMs": 0.1
+          },
+          "linkProgram": {
+            "calls": 12,
+            "totalMs": 0.2,
+            "maxMs": 0.1
+          },
+          "texStorage2D": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "texSubImage2D": {
+            "calls": 1,
+            "totalMs": 0.1,
+            "maxMs": 0.1
+          },
+          "generateMipmap": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          }
+        },
+        "max": 0.5,
+        "topSlowCalls": []
+      }
+    },
+    {
+      "engine": "webkit",
+      "size": "1440x900",
+      "stats": {
+        "on": false,
+        "entries": [
+          {
+            "name": "texSubImage2D",
+            "ms": 8,
+            "at": 4854
+          }
+        ],
+        "summary": {
+          "bindFramebuffer": {
+            "calls": 6,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "useProgram": {
+            "calls": 342,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "drawElementsInstanced": {
+            "calls": 308,
+            "totalMs": 3,
+            "maxMs": 1
+          },
+          "drawElements": {
+            "calls": 1334,
+            "totalMs": 4,
+            "maxMs": 1
+          },
+          "drawArrays": {
+            "calls": 28,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "shaderSource": {
+            "calls": 24,
+            "totalMs": 5,
+            "maxMs": 1
+          },
+          "compileShader": {
+            "calls": 24,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "linkProgram": {
+            "calls": 12,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "texStorage2D": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "texSubImage2D": {
+            "calls": 1,
+            "totalMs": 8,
+            "maxMs": 8
+          },
+          "generateMipmap": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          }
+        },
+        "max": 8,
+        "topSlowCalls": [
+          {
+            "name": "texSubImage2D",
+            "ms": 8,
+            "at": 4854
+          }
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "size": "390x844",
+      "stats": {
+        "on": false,
+        "entries": [
+          {
+            "name": "texSubImage2D",
+            "ms": 34,
+            "at": 4713
+          }
+        ],
+        "summary": {
+          "useProgram": {
+            "calls": 276,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "drawElements": {
+            "calls": 751,
+            "totalMs": 5,
+            "maxMs": 1
+          },
+          "drawElementsInstanced": {
+            "calls": 196,
+            "totalMs": 1,
+            "maxMs": 1
+          },
+          "texImage2D": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "bindFramebuffer": {
+            "calls": 14,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "texStorage2D": {
+            "calls": 2,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "shaderSource": {
+            "calls": 30,
+            "totalMs": 5,
+            "maxMs": 1
+          },
+          "compileShader": {
+            "calls": 30,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "linkProgram": {
+            "calls": 15,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "bufferData": {
+            "calls": 6,
+            "totalMs": 0,
+            "maxMs": 0
+          },
+          "texSubImage2D": {
+            "calls": 1,
+            "totalMs": 34,
+            "maxMs": 34
+          },
+          "generateMipmap": {
+            "calls": 1,
+            "totalMs": 0,
+            "maxMs": 0
+          }
+        },
+        "max": 34,
+        "topSlowCalls": [
+          {
+            "name": "texSubImage2D",
+            "ms": 34,
+            "at": 4713
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "gb-library-v58-scoped-interaction-evidence-manifest-v1",
+  "baseCommit": "df303c7f620ee63534baa0f9e9d28f38360701fd",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "purpose": "Fix intro short-height scroll and sitemap modal focus semantics; screenshots from real browser QA",
+  "note": "Baseline V5_SOURCE_MANIFEST.json and V52_ART_MANIFEST.json intentionally unchanged",
+  "files": [
+    {
+      "path": "src/ui/Overlay.tsx",
+      "bytes": 49700,
+      "sha256": "569deec83e37737d38bb899604f49f586d9c5c5c3358af99ffdce3a211e7aaf1"
+    },
+    {
+      "path": "tests/interaction-regression-browser.py",
+      "bytes": 7666,
+      "sha256": "579b438b4ea205fba21c91584245f073d2543257c8f0c789d81f5a20bbd69fd2"
+    },
+    {
+      "path": "V58_INTERACTION_ENGINEERING.md",
+      "bytes": 6215,
+      "sha256": "5ed5b8cd908f6f854fb698af76ef8336b622e6e4bb9ed7a345faaf881da276e3"
+    },
+    {
+      "path": "evidence/interaction-v58-chrome-1440x900-dialog.webp",
+      "bytes": 482880,
+      "sha256": "3870b108efc31398911afadb3d7159006c1227b8f13eef0da82983863ad328c1"
+    },
+    {
+      "path": "evidence/interaction-v58-chrome-844x390-entry-visible.webp",
+      "bytes": 234112,
+      "sha256": "35f59bfbf148e262ad8682ebb8145699256342f187db65e3a35fc04ae39b3b79"
+    },
+    {
+      "path": "evidence/interaction-v58-chrome-844x390-hall.webp",
+      "bytes": 172432,
+      "sha256": "b176da234864dcba2302fd8a8e9d4d7819f63a2f1575aeb7a73ccac29b8b9e7b"
+    },
+    {
+      "path": "evidence/interaction-v58-webkit-390x844-dialog.webp",
+      "bytes": 99096,
+      "sha256": "6f6649a617b4600015272f82dc0468617d6a0330e648a7bb3dc0b39655feca62"
+    },
+    {
+      "path": "evidence/interaction-v58-webkit-844x390-entry-visible.webp",
+      "bytes": 199084,
+      "sha256": "1dd920f1f7c5cadec48c0f1069c85dd8bcdc3ae9fd050eba6bdbe986c6e61c8f"
+    }
+  ]
+}

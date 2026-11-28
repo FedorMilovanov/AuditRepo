@@ -1,0 +1,79 @@
+{
+  "schema": "gb-library-v513-arcade-source-manifest-v1",
+  "baseCommit": "e6fbb870293e5551f7fbb5673a49588f4f1ff82f",
+  "status": "LAB_DRAFT_ART_HOLD",
+  "purpose": "Four contiguous joinery bays, batched materials + arches, true browser QA and performance negative control",
+  "safety": {
+    "minRadialReachM": 14.6,
+    "originalWalkingBoundaryM": 14.5,
+    "entranceBayPreserved": true,
+    "windowBaysPreserved": true
+  },
+  "qualityGates": {
+    "labCommands": 5,
+    "typescript": true,
+    "viteBuild": true,
+    "referenceBay": "5/5",
+    "architecturalArt": "4/4",
+    "centralBook": "4/4",
+    "mobileHud": "6/6",
+    "interaction": "12/12",
+    "performance": "4 browser profiles; one sample each, descriptive only"
+  },
+  "limitations": [
+    "No physical phone/headset acceptance, GLB/PBR professional art remains open",
+    "WebKit desktop performance confidence insufficient; not an FPS optimization"
+  ],
+  "files": [
+    {
+      "path": "src/scene/ArchitecturalPolish.tsx",
+      "bytes": 11056,
+      "sha256": "4fe543e7e3b17ab9c85c96df035664f0fe58669824a2e74e3fd6263a416ca197"
+    },
+    {
+      "path": "V513_CRAFTED_ARCADE_ENGINEERING.md",
+      "bytes": 7518,
+      "sha256": "7d752362948bb387cc25c52ed0e2208a2de468159e57b6e087635ccce14221a1"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-evidence.json",
+      "bytes": 5388,
+      "sha256": "6ecf31e1de15c5257abc7079d5daabebd099a8a01fc42118f7e00d2ea1fe87bd"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-detail-comparison.jpg",
+      "bytes": 125441,
+      "sha256": "5c48a1b722eed15af4dbca5dddad77414be6b8a24916a78b0bbe4a4b3caf2b66"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-chrome-creeds-desktop-before.webp",
+      "bytes": 519472,
+      "sha256": "1b7f3f37cc0dcde64ce699adedde21ff2713887d8aad24c8c902793a1a197cdd"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-chrome-creeds-desktop-after.webp",
+      "bytes": 527832,
+      "sha256": "ea4b04049f51f80e2d8210cf9561bbbe14801f48f72ee5fa9ef2a0691bbbef88"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-chrome-article-desktop-before.webp",
+      "bytes": 513166,
+      "sha256": "c15e2944412f28995339ab6e7637761e8a3c29758eabb62f6aec337669a261cf"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-chrome-article-desktop-after.webp",
+      "bytes": 513088,
+      "sha256": "382aa3b58a6cd418ec34e1ddaa872d74357faaa5d13b782377715e390d45d905"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-webkit-creeds-mobile-before.webp",
+      "bytes": 141746,
+      "sha256": "0f45dca643935437eabb9b26074e988e0fac211c1a98703604f2b62ed41d3e3f"
+    },
+    {
+      "path": "evidence/crafted-arcade-v513-webkit-creeds-mobile-after.webp",
+      "bytes": 144202,
+      "sha256": "70c09afcc4b56de34354464ca328c91de1936edfc679e0702b879ed4cca4e8af"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "gb-library-v52-art-scoped-source-manifest-v1",
+  "baseCommit": "4a0f4504f4f0b414c5175cac0a0216b272d54f33",
+  "status": "LAB_ART_HOLD",
+  "scope": "only architectural art changes; V5_SOURCE_MANIFEST.json preserves baseline provenance",
+  "files": [
+    {
+      "path": "ART_V52_ENGINEERING.md",
+      "bytes": 10128,
+      "sha256": "098808821789ac90269fb939354c208f0692aeb27f04d9850d22902ead26b010"
+    },
+    {
+      "path": "evidence/art-v52/chromium-1440x900.png",
+      "bytes": 559253,
+      "sha256": "9b896574afca5f4f43754cd775241d52de6ed75741077280416b03d6682e746d"
+    },
+    {
+      "path": "evidence/art-v52/chromium-390x844.png",
+      "bytes": 178740,
+      "sha256": "e9ca5d368501adfd46306d39dd6d2709cade9cdfb2facef94542467ac5de5311"
+    },
+    {
+      "path": "evidence/art-v52/webkit-1440x900.png",
+      "bytes": 587788,
+      "sha256": "b2cddd695d60e34b866b097fcab4237746aadad9a8eedbfb28e9ba3621ed74f0"
+    },
+    {
+      "path": "evidence/art-v52/webkit-390x844.png",
+      "bytes": 184246,
+      "sha256": "089a4492c57acc1fd4e3088d3e2a8f170a77503be9e244ea4c195c753c19073f"
+    },
+    {
+      "path": "evidence/reference-v56-before-creeds-chromium-1440x900.webp",
+      "bytes": 516540,
+      "sha256": "fd13028a12022b8929f217e4e548936c73f8daa83a9936832dc684e9b97fc9bb"
+    },
+    {
+      "path": "evidence/reference-v56-after-creeds-chromium-1440x900.webp",
+      "bytes": 518706,
+      "sha256": "32f61f60ff1b1f48da59217eb8fd6531829b269792b86caff03f266fe2dc8c39"
+    },
+    {
+      "path": "evidence/reference-v56-after-creeds-chromium-390x844.webp",
+      "bytes": 159260,
+      "sha256": "1e1f6bda45efba3efe1dafc8d74faf95b0805a1c23916b42b276c3781f28c840"
+    },
+    {
+      "path": "evidence/reference-v56-after-creeds-webkit-390x844.webp",
+      "bytes": 142636,
+      "sha256": "6ca37775e4f5e305973e07182945a24c527ecd92e15b5f17adeb0ca75a9c82c1"
+    },
+    {
+      "path": "scripts/generate-architecture-materials.py",
+      "bytes": 2051,
+      "sha256": "90fc72d00a7e76a1babf4f1f8befc22c4d7a0574dec8cc322f303d904350656b"
+    },
+    {
+      "path": "scripts/requirements-art-v52.txt",
+      "bytes": 28,
+      "sha256": "170569426540ccc4e8a5294f25d7d4d381d9df2d8f955ec3a8091002cb4c9f19"
+    },
+    {
+      "path": "src/assets/pbr/limestone-color.webp",
+      "bytes": 3170,
+      "sha256": "a0c2da13a9d5b5c42676bfdceedc93c375293361754d002e93ceee8ae86459be"
+    },
+    {
+      "path": "src/assets/pbr/limestone-normal.webp",
+      "bytes": 337436,
+      "sha256": "c1fdf9d1be34eeef3e81787231a08dd4212cad16e19e7cedbd6712c2db1fcaa5"
+    },
+    {
+      "path": "src/assets/pbr/oak-color.webp",
+      "bytes": 9108,
+      "sha256": "a9d06ab0b40905b05b548948aa1014bb7c03c60abd04f030ea47c7df21fe5963"
+    },
+    {
+      "path": "src/assets/pbr/oak-normal.webp",
+      "bytes": 381692,
+      "sha256": "e2cd4e6b34fa8a2516548e19796a03fb5ab915224ef32d61f62d0f5e0f3cc4f0"
+    },
+    {
+      "path": "src/scene/ArchitecturalPolish.tsx",
+      "bytes": 9835,
+      "sha256": "be96c2787af770b29a47f0866b632d01f275c8257296588b39f776207cb15065"
+    },
+    {
+      "path": "src/scene/Vault.tsx",
+      "bytes": 2897,
+      "sha256": "bef28a46d9761f1bb023dddfaa662ab5f3416972e6cce128bba4d11c70a69a5f"
+    },
+    {
+      "path": "src/scene/World.tsx",
+      "bytes": 6577,
+      "sha256": "994390a91152fc6a729f2460ed1a6fba1b3237e8806ee7318b60c5d4eeb53603"
+    },
+    {
+      "path": "tests/architectural-art-browser.py",
+      "bytes": 3241,
+      "sha256": "9ed25521b12eb3eac3e57b2cd9b7820af688d245e4e5b84af7fe3699f169a7fe"
+    },
+    {
+      "path": "tests/reference-bay-browser.py",
+      "bytes": 4273,
+      "sha256": "44678816bc833b3ce4cceded8b61691ce5f722c992f0216cebdee5e70f17c712"
+    }
+  ]
+}
