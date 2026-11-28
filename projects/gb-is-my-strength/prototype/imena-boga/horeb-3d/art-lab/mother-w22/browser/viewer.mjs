@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {bindBasket,attachAction,morphBudget,PHASES} from './scene.mjs';
+import {bindCpuMorphs} from './cpu-morphs.mjs';
 const $=id=>document.getElementById(id);
 const canvas=$('scene'),status=$('status'),time=$('time'),play=$('play');
 let renderer,orbit,scene,actor,house,performanceClip,frame=0,stopped=false,playing=false,t=0,last=0,dirty=true;
@@ -21,9 +22,9 @@ function setShot(key){
  for(const b of document.querySelectorAll('[data-shot]'))b.setAttribute('aria-pressed',String(b.dataset.shot===key));
  canvas.dataset.shot=key;dirty=true;
 }
-let camera,basket,clip;
+let camera,basket,clip,cpuMorphs;
 function sync(t0){
- t=performanceClip.sample(t0);time.value=String(t);
+ t=performanceClip.sample(t0);cpuMorphs?.update();time.value=String(t);
  $('clock').textContent=t.toFixed(2).replace('.',',')+' / 4,70 с';
  $('phase').textContent=PHASES.filter(p=>p[0]<=t+1e-8).at(-1)[1];
  canvas.dataset.time=String(t);dirty=true;
@@ -50,11 +51,17 @@ async function main(){
  if(a.animations.length!==1)throw Error('Expected one action');
  actor.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;if(o.isSkinnedMesh)o.frustumCulled=false}});
  house.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true}});
- basket=bindBasket(house,actor,manifest.settleDeltaM);clip=a.animations[0];performanceClip=attachAction(actor,clip,basket);
- const caps=renderer.capabilities,budget=morphBudget(actor,caps.maxTextureSize);
+ const caps=renderer.capabilities,nativeBudget=morphBudget(actor,caps.maxTextureSize);
+ const mode=new URLSearchParams(location.search).get('morph')==='native'?'native':'hybrid';
+ if(mode==='hybrid')cpuMorphs=bindCpuMorphs(actor);
+ basket=bindBasket(house,actor,manifest.settleDeltaM);clip=a.animations[0];performanceClip=attachAction(actor,clip,basket);cpuMorphs?.update();
+ const budget=morphBudget(actor,caps.maxTextureSize);
+ canvas.dataset.morphMode=mode;canvas.dataset.estimatedMorphGpuBytes=String(budget.estimatedGpuBytes);
+ canvas.dataset.nativeMorphGpuBytes=String(nativeBudget.estimatedGpuBytes);
  const layers=renderer.getContext().getParameter(renderer.getContext().MAX_ARRAY_TEXTURE_LAYERS);
  if(budget.rows.some(r=>r.count>layers))throw Error('GPU array texture layer limit below morph count');
  $('metrics').textContent='GLB: '+((manifest.actor.bytes+manifest.house.bytes)/1048576).toFixed(1)+' МиБ · оценка GPU-текстур морфов: '+(budget.estimatedGpuBytes/1048576).toFixed(1)+' МиБ · '+basket.meshCount+' элементов корзины';
+ $('metrics').textContent+=' | '+mode;
  const resize=()=>{const {width,height}=canvas.getBoundingClientRect();renderer.setSize(Math.max(1,width),Math.max(1,height),false);camera.aspect=width/Math.max(1,height);camera.fov=THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(THREE.MathUtils.degToRad(21))*Math.max(1,1.1/camera.aspect)));camera.updateProjectionMatrix();dirty=true};
  new ResizeObserver(resize).observe(canvas);resize();setShot('action');sync(0);
  for(const b of document.querySelectorAll('[data-shot]'))b.addEventListener('click',()=>setShot(b.dataset.shot));
@@ -67,7 +74,7 @@ async function main(){
    if(stopped)return;
    try{
     if(playing){if(last)sync(Math.min(clip.duration,t+Math.min(.075,(now-last)/1000)));last=now;if(t>=clip.duration-1e-6)setPlaying(false)}
-    if(dirty){renderer.render(scene,camera);dirty=false;canvas.dataset.drawCalls=String(renderer.info.render.calls);canvas.dataset.triangles=String(renderer.info.render.triangles);}
+    if(dirty){renderer.render(scene,camera);dirty=false;canvas.dataset.drawCalls=String(renderer.info.render.calls);canvas.dataset.triangles=String(renderer.info.render.triangles);if(cpuMorphs)canvas.dataset.morphUpdates=String(cpuMorphs.stats().updates);}
     frame=requestAnimationFrame(loop);
    }catch(e){fail(e)}
  }

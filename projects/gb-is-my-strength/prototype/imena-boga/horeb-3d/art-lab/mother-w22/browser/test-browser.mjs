@@ -29,8 +29,8 @@ try{
    await page.setViewport({width,height,isMobile,hasTouch:isMobile,deviceScaleFactor:1});
    await page.goto('http://127.0.0.1:'+server.address().port+'/',{waitUntil:'domcontentloaded'});
    await page.waitForFunction(()=>document.querySelector('#scene')?.dataset.ready==='true'||document.querySelector('#status')?.textContent.startsWith('Ошибка'));
-   const state=()=>page.evaluate(()=>{const c=document.querySelector('#scene');return {ready:c.dataset.ready,shot:c.dataset.shot,time:Number(c.dataset.time),basketMeshes:Number(c.dataset.basketMeshes),drawCalls:Number(c.dataset.drawCalls),triangles:Number(c.dataset.triangles),overflow:document.documentElement.scrollWidth>innerWidth,canvasWidth:c.width,canvasHeight:c.height,status:document.querySelector('#status').textContent}});
-   let s=await state();assert.equal(s.ready,'true',s.status);assert.equal(s.basketMeshes,92);assert(!s.overflow);
+   const state=()=>page.evaluate(()=>{const c=document.querySelector('#scene');return {ready:c.dataset.ready,shot:c.dataset.shot,time:Number(c.dataset.time),basketMeshes:Number(c.dataset.basketMeshes),morphMode:c.dataset.morphMode,morphGpuBytes:Number(c.dataset.estimatedMorphGpuBytes),nativeMorphGpuBytes:Number(c.dataset.nativeMorphGpuBytes),drawCalls:Number(c.dataset.drawCalls),triangles:Number(c.dataset.triangles),overflow:document.documentElement.scrollWidth>innerWidth,canvasWidth:c.width,canvasHeight:c.height,status:document.querySelector('#status').textContent}});
+   let s=await state();assert.equal(s.ready,'true',s.status);assert.equal(s.basketMeshes,92);assert.equal(s.morphMode,'hybrid');assert(s.morphGpuBytes<s.nativeMorphGpuBytes*.01);assert(!s.overflow);
    const seek=async t=>{await page.$eval('#time',(el,t)=>{el.value=String(t);el.dispatchEvent(new Event('input',{bubbles:true}))},t);await page.waitForFunction(t=>Math.abs(Number(document.querySelector('#scene').dataset.time)-t)<.002,{},t);await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))};
    const canvas=await page.$('#scene');const snap=async()=>Buffer.from(await canvas.screenshot({type:'png'}));
    await seek(0);const first=await snap();
