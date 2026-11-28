@@ -79,6 +79,33 @@ not clip triangles); it is not a GPU visibility proof or a material render.
 The full-house shot is exterior, not an interior view of the actor.
 Actual browser and art acceptance remain HOLD.
 
+## W39m playback and W39n source material audit
+
+The viewer schedules rendering on demand: one pending frame, no recurring
+RAF while paused, actual monotonic elapsed time (not a capped frame delta),
+clamp at the action end, and pause on document hide. Hidden time is not
+replayed on return. Seeking/replay and error cleanup use the same controller.
+Run the exact controller source in a synthetic clock harness:
+
+    node test-playback.mjs
+
+27 assertions passed in Node, including one-second frame delay, idle,
+end/replay, seek, hidden pause and render-error cleanup. No DOM/GPU claim.
+
+The material inspection reads the original two exact GLBs, verifies SHA256,
+decodes all embedded PNG/JPEG via PIL and applies baseColorFactor in linear
+space to thumbnail samples. It does not change any original asset.
+
+    python ..\source\probe_w39n_materials.py $env:HOREB_EVIDENCE_ROOT
+
+21 images,18 materials (12 base-color textured),14,946,304 decoded pixels,
+all decoded. Report and swatch JPEG in the W39c evidence directory. The
+swatch was generated and its SHA verified; image transfer failed, so it
+has not been visually inspected. Thumbnail medians are not scene lighting
+or UV results (alpha-covered texels may influence them). No PBR/normal map,
+texture filtering or actual WebGL evaluation. No blind material changes.
+Actual browser admission remains unconfirmed.
+
 ## Remaining limits
 
 The W39c GLB still contains dense diagnostic pose morphs: 62 body and 74 linen.
