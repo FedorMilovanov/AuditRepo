@@ -8,7 +8,7 @@ from probe_w34r_static_correction import contacts,deadline,basis,swing,unit
 from probe_w34m_reach import solve
 from probe_w34t_whole_scene import geometry,merged
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');p.add_argument('--grip-strain',action='store_true');p.add_argument('--grip-fine',action='store_true');p.add_argument('--grip-release',choices=('up','back','diagonal','outward'));p.add_argument('--grip-upper',type=float,default=40.);p.add_argument('--grip-outset',type=float,default=0.);p.add_argument('--grip-clearance',action='store_true');p.add_argument('--grip-cloth',action='store_true');p.add_argument('--grip-key-export',action='store_true');args=p.parse_args();assert not args.grip_key_export or (args.grip_cloth and args.grip_release is not None);assert not args.grip_cloth or args.grip_release is not None;assert not args.grip_clearance or args.grip_release is not None;assert 0<=args.grip_outset<=60 and (args.grip_outset==0 or args.grip_release is not None);assert args.grip_release is None or (args.open_grip and not args.grip_staging and not args.grip_review and not args.grip_strain);assert not args.grip_fine or args.grip_strain;assert not args.grip_strain or (args.open_grip and not args.grip_review and not args.grip_staging);assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or ((args.distance==0 or args.grip_release is not None) and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('output',type=Path);p.add_argument('--distance',type=float,required=True);p.add_argument('--refine',action='store_true');p.add_argument('--path-witness',action='store_true');p.add_argument('--dq',action='store_true');p.add_argument('--smooth',action='store_true');p.add_argument('--guarded-smooth',action='store_true');p.add_argument('--weight-trial',action='store_true');p.add_argument('--combined',action='store_true');p.add_argument('--shared-reference',action='store_true');p.add_argument('--topology-witness',action='store_true');p.add_argument('--upper-twist',action='store_true');p.add_argument('--upper-combined',action='store_true');p.add_argument('--separate',action='store_true');p.add_argument('--stance-mm',type=float);p.add_argument('--stance-dq-only',action='store_true');p.add_argument('--export-diagnostic',action='store_true');p.add_argument('--digit-area-factor',type=float);p.add_argument('--open-grip',action='store_true');p.add_argument('--grip-staging',action='store_true');p.add_argument('--grip-review',action='store_true');p.add_argument('--grip-strain',action='store_true');p.add_argument('--grip-fine',action='store_true');p.add_argument('--grip-release',choices=('up','back','diagonal','outward'));p.add_argument('--grip-upper',type=float,default=40.);p.add_argument('--grip-outset',type=float,default=0.);p.add_argument('--grip-clearance',action='store_true');p.add_argument('--grip-cloth',action='store_true');p.add_argument('--grip-key-export',action='store_true');p.add_argument('--multidigit',action='store_true');p.add_argument('--multidigit-wrap',action='store_true');args=p.parse_args();assert not args.multidigit_wrap or args.multidigit;assert not args.multidigit or (args.open_grip and args.distance==0 and not any((args.grip_release,args.grip_review,args.grip_strain,args.grip_staging)));assert not args.grip_key_export or (args.grip_cloth and args.grip_release is not None);assert not args.grip_cloth or args.grip_release is not None;assert not args.grip_clearance or args.grip_release is not None;assert 0<=args.grip_outset<=60 and (args.grip_outset==0 or args.grip_release is not None);assert args.grip_release is None or (args.open_grip and not args.grip_staging and not args.grip_review and not args.grip_strain);assert not args.grip_fine or args.grip_strain;assert not args.grip_strain or (args.open_grip and not args.grip_review and not args.grip_staging);assert not args.grip_review or (args.open_grip and not args.grip_staging);assert not args.grip_staging or args.open_grip;assert not args.open_grip or ((args.distance==0 or args.grip_release is not None) and args.stance_mm is None and not args.export_diagnostic);assert args.digit_area_factor is None or (args.stance_mm==160 and args.stance_dq_only and 1<args.digit_area_factor<=2);assert not args.stance_dq_only or args.stance_mm is not None;assert not args.export_diagnostic or (args.stance_mm==160 and args.stance_dq_only);assert sum((args.refine,args.path_witness,args.dq,args.smooth,args.guarded_smooth,args.weight_trial,args.combined,args.shared_reference,args.topology_witness,args.upper_twist,args.upper_combined,args.separate,args.stance_mm is not None,args.open_grip))<=1
     root=args.evidence;out=args.output;assert not out.exists() and 0<=args.distance<=60
     f=root/'W34v-finger-refine-20261127';r=json.loads((f/'w34u-articulation.json').read_text())
     src=f/'w34u-static-actor.glb'
@@ -37,6 +37,26 @@ def main():
         for side,row in [('l',l),('r',rr)]:
             T=np.eye(4);T[:3,:3]=row['rotation'];T[:3,3]=row['translation']
             targets[side]={i:T@base[i] for k,i in names.items() if k.endswith('_'+side) and k.startswith(('hand_','thumb_','index_','middle_','ring_','pinky_'))}
+    if args.multidigit:
+        from probe_w35e_playback import pose
+        f2=root/'W36m-closure-20261128';r2=json.loads((f2/'w36m-assembly.json').read_text())
+        d2,a2=load(f2/'w36m-approach-closure.glb',r2['sha256']);d2=pose(d2,a2,r2['duration_s']);g2,w2=geometry(d2,a2,True)
+        n2={n['name']:i for i,n in enumerate(d2['nodes'])}
+        f0=root/'W36u-local-staging-20261128.json'
+        q=json.loads(f0.read_text()) if f0.exists() else json.loads((root/'W36t-w-multidigit-20261128/w36t-w-multidigit.json').read_text())['local']
+        assert q['source_sha256']==r2['sha256']
+        chosen=min((v for v in q['rows'] if v['crossings']==0),key=lambda v:max(v['gaps_mm'].values()))
+        Q=np.array(chosen['rotation']);S=np.array(chosen['translation']);F=np.diag([-1.,1.,1.])
+        prefix=('hand_','thumb_','index_','middle_','ring_','pinky_')
+        keys=[k[:-1] for k in n2 if k.startswith(prefix) and k.endswith('_l') and k[:-1]+'r' in n2]
+        P=np.stack([w2[n2[k+'r']][:3,3] for k in keys]);Y=np.stack([F@w2[n2[k+'l']][:3,3] for k in keys])
+        U,_,Vt=np.linalg.svd((P-P.mean(0)).T@(Y-Y.mean(0)));K=Vt.T@np.diag([1,1,np.linalg.det(Vt.T@U.T)])@U.T;D=Y.mean(0)-K@P.mean(0)
+        mirror_error=float(np.linalg.norm(P@K.T+D-Y,axis=1).max()*1000)
+        transforms={'l':(Q,S),'r':(F@Q@F@K,F@(Q@F@D+S)+[.7,0,0])}
+        for side,(rot,trans) in transforms.items():
+            T=np.eye(4);T[:3,:3]=rot;T[:3,3]=trans
+            assert np.linalg.det(rot)>.99999
+            targets[side]={i:T@w2[n2[k]] for k,i in names.items() if k.endswith('_'+side) and k.startswith(prefix)}
     if args.grip_release:
         for side,values in targets.items():
             sign=-1 if side=='l' else 1
@@ -363,6 +383,65 @@ def main():
         row={'pole_deg':pole,'twist':twist,'old_sleeve_correction':corr,'arm':info,'matrix_error':err,'audit':au,'crossings':count}
         rows.append(row);print(json.dumps({'pole':pole,'twist':twist,'count':count,'skin':au['skin_self'],'cloth':au['tunic_self'],'skin_cloth':au['skin_tunic'],'scene':au['scene'],'skin_regions':au['skin_regions']}),flush=True)
         if best is None or (bool(au['scene']),count)<(bool(best[0]['audit']['scene']),best[0]['crossings']):best=(row,doc)
+    if args.multidigit:
+        key='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0'
+        settings=[(100,0,1.,30,0),(100,30,1.,30,0),(100,60,1.,30,0),(100,30,1.,0,0),(100,30,1.,60,0),(160,30,1.,30,0)]
+        if args.multidigit_wrap:
+            settings=[(160,30,1.,30,angle) for angle in (0,-5,5,-10,10)]
+            from scipy.spatial import cKDTree
+            from probe_w34t_whole_scene import point_triangle_min
+            basket=merged([v for v in hg.values() if v['basket']]);bt=basket['v'][basket['tri']];bc=bt.mean(1);br=np.linalg.norm(bt-bc[:,None],axis=2).max(1);tree=cKDTree(bc)
+            node=d['nodes'][names[key]];at=d['meshes'][node['mesh']]['primitives'][0]['attributes'];js=a(at['JOINTS_0']);ws=a(at['WEIGHTS_0']);jn=np.array([d['nodes'][i]['name'] for i in d['skins'][node['skin']]['joints']]);dom=jn[js[np.arange(len(js)),ws.argmax(1)]]
+            _,first=np.unique(g[key]['canon'],return_index=True)
+            digit_ids={}
+            for side in ('l','r'):
+                for digit in ('thumb','index','middle','ring','pinky'):
+                    valid=np.array([k.startswith(digit+'_') and k.endswith('_'+side) for k in jn])
+                    digit_ids[side+'_'+digit]=first[(np.sum(ws[first]*valid[js[first]],axis=1)>.999)&np.array([k.startswith(digit+'_') and not k.startswith(digit+'_01') for k in dom[first]])]
+            def nearest(pt):
+                _,j=tree.query(pt,workers=1);ub=point_triangle_min(pt,bt[j:j+1]);jj=np.array(tree.query_ball_point(pt,ub+br.max()+1e-10,workers=1),int)
+                jj=jj[np.linalg.norm(bc[jj]-pt,axis=1)-br[jj]<=ub+1e-10]
+                return point_triangle_min(pt,bt[jj])
+        for stance,pole,twist,upper,angle in settings:
+            deadline();shift=np.array([0.,0.,stance*.001]);doc,geo,info,err=build(pole,1,twist,{'l':upper,'r':-upper},shift)
+            if angle:
+                M=world(doc,doc['nodes'])
+                for side,sign in [('l',1),('r',-1)]:
+                    def pos(k):return M[names[k+'_'+side]][:3,3]
+                    forward=unit(pos('middle_01')-pos('hand'));across=pos('index_01')-pos('pinky_01');across=unit(across-forward*(forward@across));normal=np.cross(forward,across)*sign
+                    for digit in ('index','middle','ring','pinky'):
+                        for k,frac in ((1,1.),(2,.65),(3,.30)):
+                            i=names[f'{digit}_{k:02d}_{side}'];ax=unit(np.cross(unit(M[i][:3,1]),-normal));Q=R.from_rotvec(ax*math.radians(angle*frac)).as_matrix()
+                            P=M[parent[i]][:3,:3];old=R.from_quat(doc['nodes'][i]['rotation']).as_matrix()
+                            doc['nodes'][i]['rotation']=R.from_matrix(P.T@Q@P@old).as_quat().tolist()
+                            pivot=M[i][:3,3].copy();T=np.eye(4);T[:3,:3]=Q;T[:3,3]=pivot-Q@pivot
+                            for j in desc(i):M[j]=T@M[j]
+                geo,wcheck=geometry(doc,a,True);assert max(np.max(abs(wcheck[i]-M[i])) for i in M)<1e-5
+            gg,_=dq_geometry(doc,geo,(1.,1.));au=audit(gg,shift);strain=bind_strain(gg);full=full_scene(gg)
+            count=sum(au[k] for k in ('skin_self','tunic_self','skin_tunic'))+sum(au['scene'].values())+sum(au['other_actor'].values())
+            w=world(doc,doc['nodes'])
+            for side in ('l','r'):
+                elbow=w[names['lowerarm_'+side]][:3,3];wrist=w[names['hand_'+side]][:3,3];mid=w[names['middle_01_'+side]][:3,3]
+                info[side]['forearm_hand_axis_angle_deg']=float(np.degrees(np.arccos(np.clip(unit(wrist-elbow)@unit(mid-wrist),-1,1))))
+            gaps=None
+            if args.multidigit_wrap and count==full['room']==full['basket']==0 and strain[key]['severe']==strain['W28e_tailored_linen']['new']==0:
+                gaps={name:min(nearest(gg[key]['v'][i])*1000 for i in ids) for name,ids in digit_ids.items()}
+            row={'stance_mm':stance,'pole_deg':pole,'upper_twist_deg':upper,'wrap_deg':angle,'crossings':count,'audit':au,'bind_strain':strain,'full_scene':full,'arms':info,'matrix_error':err,'distal_gaps_mm':gaps}
+            rows.append(row);print(json.dumps({'stance':stance,'pole':pole,'upper':upper,'wrap':angle,'count':count,'scene':full,'skin_severe':strain[key]['severe'],'new_cloth':strain['W28e_tailored_linen']['new'],'gaps':gaps,'arms':info}),flush=True)
+            rank=(count+full['room']+full['basket'],strain[key]['severe']+strain['W28e_tailored_linen']['new'],max(gaps.values()) if gaps else max(z['forearm_hand_axis_angle_deg'] for z in info.values()))
+            if best is None or rank<best[0]:best=(rank,row,gg)
+        # Render only the selected diagnostic, without exporting a model.
+        from probe_w35f_depth_review import prepare,render
+        from PIL import Image,ImageDraw
+        prepared=prepare(best[2],hg);sheet=Image.new('RGB',(960,660),(25,28,32));draw=ImageDraw.Draw(sheet)
+        views=[('Whole staging',[.35,.86,.75],[1.5,.75,1.3],1.9,0,0),('Front staging',[.35,.86,.75],[0,.4,1],1.9,480,0)]
+        for side,sign,x0 in [('l',-1,0),('r',1,480)]:
+            wrist=targets[side][names['hand_'+side]][:3,3];mid=targets[side][names['middle_01_'+side]][:3,3]
+            views.append((side.upper()+' hand',(wrist+mid)*.5,[sign,.75,.7],.28,x0,330))
+        for label,target,view,span,x0,y0 in views:
+            draw.text((x0+8,y0+3),label,fill=(230,230,230));sheet.paste(render(prepared,target,view,span,480,310),(x0,y0+20))
+        out.mkdir();img=out/'w36v-staging-review.jpg';sheet.save(img,quality=84)
+        (out/'w36v-staging.json').write_text(json.dumps({'status':'ART_HOLD_MULTIDIGIT_FULL_RIG','source_sha256':r2['sha256'],'selected_hand':chosen,'wrap_screen':args.multidigit_wrap,'mirror_joint_error_mm':mirror_error,'rows':rows,'best':best[1],'jpeg_sha256':hashlib.sha256(img.read_bytes()).hexdigest(),'limitations':['W34s source with W36m digit joint targets; original pad corrective not transferred. Sampled crossings, no physical or swept proof.']},indent=2));return
     if args.open_grip:
         from probe_w35i_rim_contact import closest,normals
         key='ANATOMICAL_ADULT_WOMAN__MAKEHUMAN_CC0';shift=np.array([0.,0.,.160])
