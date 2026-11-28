@@ -32,7 +32,7 @@ def pose(doc,acc,t):
         d['nodes'][target['node']][field]=v.tolist()
     return d
 
-def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,extension=False,sample_time=None,handoff=False):
+def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,extension=False,sample_time=None,handoff=False,handoff_folder=None):
     folder=root/('W35y-bilateral-20261128' if bilateral else 'W35d-approach-20261127')
     r=json.loads((folder/('w35y-assembly.json' if bilateral else 'w35d-assembly.json')).read_text())
     doc,acc=load(folder/('w35y-approach.glb' if bilateral else 'w35d-approach.glb'),r['sha256'])
@@ -44,7 +44,7 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,ext
         doc,acc=load(ext/'w36m-approach-closure.glb',r['sha256'])
     if handoff:
         assert bilateral and not extension and closure_fraction is None and pad_fraction is None
-        ext=root/'W38a-handoff-20261128';r=json.loads((ext/'w38a-assembly.json').read_text())
+        ext=handoff_folder or root/'W38a-handoff-20261128';r=json.loads((ext/'w38a-assembly.json').read_text())
         doc,acc=load(ext/'w38a-handoff.glb',r['sha256'])
     source,sa=load(root/('W34s-sleeve-correction-20261127/w34s-static-actor.glb' if bilateral else 'W34v-finger-refine-20261127/w34u-static-actor.glb'),r['source_sha256'])
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text())

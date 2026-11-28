@@ -4,8 +4,8 @@ from pathlib import Path
 from probe_w35e_playback import audit,BODY,TUNIC
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--time',type=float,required=True);args=p.parse_args()
-    row=audit(args.evidence,0,bilateral=True,sample_time=args.time,handoff=True)
+    p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--time',type=float,required=True);p.add_argument('--folder',type=Path);args=p.parse_args()
+    row=audit(args.evidence,0,bilateral=True,sample_time=args.time,handoff=True,handoff_folder=args.folder)
     b=row['basket_layout']
     gate=bool(row['skin_self_total']==row['toe_pairs_below_150mm']==8 and row['tunic_self']==0
               and not any(row['body_clothes'].values()) and not row['other_changed_actor']
