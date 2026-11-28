@@ -4,6 +4,7 @@ Sub-millimeter local translation is an explicit diagnostic relaxation of
 rigid bone length; not a new bind pose or physical constraint solver.
 """
 import argparse,copy,hashlib,json,struct
+from probe_w38l_archive import read_glb
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation as R
@@ -37,7 +38,7 @@ def main():
  qr=np.array(qr)
  for j in range(1,len(qr)):
   if qr[j]@qr[j-1]<0:qr[j]*=-1
- doc=copy.deepcopy(d);raw=src.read_bytes();jl=struct.unpack_from('<I',raw,12)[0];blen,btype=struct.unpack_from('<2I',raw,20+jl);assert btype==0x004e4942
+ doc=copy.deepcopy(d);raw=read_glb(src);jl=struct.unpack_from('<I',raw,12)[0];blen,btype=struct.unpack_from('<2I',raw,20+jl);assert btype==0x004e4942
  payload=bytearray(raw[28+jl:28+jl+blen])[:doc['buffers'][0]['byteLength']]
  def append(v,typ):
   data=np.asarray(v,dtype='<f4').reshape(-1,{'SCALAR':1,'VEC3':3,'VEC4':4}[typ]);assert np.isfinite(data).all()

@@ -7,7 +7,10 @@ from pathlib import Path
 import numpy as np
 
 def load(path, expected):
-    raw=path.read_bytes()
+    if path.exists():raw=path.read_bytes()
+    else:
+        from probe_w38l_archive import archived_bytes
+        raw=archived_bytes(path)
     assert hashlib.sha256(raw).hexdigest()==expected
     magic,version,total,jlen,jtype=struct.unpack_from('<5I',raw)
     assert (magic,version,total,jtype)==(0x46546c67,2,len(raw),0x4e4f534a)
