@@ -33,7 +33,7 @@ export async function makeServer(root){
   if(pathname==='/manifest.json'){res.writeHead(200,{'Content-Type':'application/json','Content-Length':Buffer.byteLength(manifest)});res.end(req.method==='HEAD'?undefined:manifest);return}
   let file,type;
   if(pathname==='/'){file=path.join(here,'index.html');type='text/html; charset=utf-8'}
-  else if(['/scene.mjs','/viewer.mjs','/cpu-morphs.mjs'].includes(pathname)){file=path.join(here,pathname.slice(1));type='text/javascript; charset=utf-8'}
+  else if(['/scene.mjs','/viewer.mjs','/cpu-morphs.mjs','/camera.mjs'].includes(pathname)){file=path.join(here,pathname.slice(1));type='text/javascript; charset=utf-8'}
   else if(pathname==='/assets/actor.glb'||pathname==='/assets/house.glb'){file=assets[pathname.includes('actor')?'actor':'house'].file;type='model/gltf-binary'}
   else if(/^\/vendor\/three\/(?:build|examples\/jsm)\/[A-Za-z0-9_./-]+\.js$/.test(pathname)){
    file=path.resolve(vendor,pathname.slice('/vendor/three/'.length));type='text/javascript; charset=utf-8';

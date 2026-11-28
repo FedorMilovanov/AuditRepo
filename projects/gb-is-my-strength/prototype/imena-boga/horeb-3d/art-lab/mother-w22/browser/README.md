@@ -51,6 +51,34 @@ shadow controls. The latter is touch emulation, not physical Android.
 The local server and owned browser close in finally; a supervising watchdog
 is still required. No foreground tabs, no production deployment.
 
+## W39j sampled camera framing
+
+Three fixed-world camera envelopes are derived from 61 actual clip samples:
+action = all actor meshes, basket and table; hands = basket and 4079 fully
+hand/forearm-weighted vertices; house = all house/actor geometry. Padding
+30 mm for action/hands, 80 mm for full house. The floor is intentionally not
+included in action framing. Perspective distance is fit to all eight padded
+envelope corners at actual canvas aspect ratio, with fixed 42-degree FOV.
+Automatic refit on resize stops after manual orbit input, resumes on selecting
+a shot. This is framing, not a visibility or occlusion guarantee.
+
+Create-only evidence commands:
+
+    python ..\source\probe_w39j_camera_witness.py $env:HOREB_EVIDENCE_ROOT
+    node test-camera.mjs
+    python ..\source\probe_w39l_camera_review.py $env:HOREB_EVIDENCE_ROOT
+
+18 Three.js camera matrices (3 shots x 6 viewport sizes), 8784 sampled AABB
+corner projections, all within their respective margin; 2745 old-camera
+corner tests outside the frustum. These are conservative box tests, not counts
+of clipped actual vertices. Six actual-geometry CPU perspective panels were
+inspected: coherent framing, but action is conservative/small and hands is
+a medium interaction shot, not a finger detail. The CPU preview omits 39
+near-plane triangles in the desktop hands view (diagnostic renderer does
+not clip triangles); it is not a GPU visibility proof or a material render.
+The full-house shot is exterior, not an interior view of the actor.
+Actual browser and art acceptance remain HOLD.
+
 ## Remaining limits
 
 The W39c GLB still contains dense diagnostic pose morphs: 62 body and 74 linen.

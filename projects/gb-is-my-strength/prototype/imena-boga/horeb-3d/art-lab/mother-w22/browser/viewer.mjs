@@ -3,19 +3,22 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {bindBasket,attachAction,morphBudget,PHASES} from './scene.mjs';
 import {bindCpuMorphs} from './cpu-morphs.mjs';
+import {SHOTS,applyFrame} from './camera.mjs';
 const $=id=>document.getElementById(id);
 const canvas=$('scene'),status=$('status'),time=$('time'),play=$('play');
 let renderer,orbit,scene,actor,house,performanceClip,frame=0,stopped=false,playing=false,t=0,last=0,dirty=true;
 const disposables=new Set();
 function fail(e){stopped=true;playing=false;cancelAnimationFrame(frame);status.hidden=false;status.textContent='Ошибка просмотра: '+String(e.message||e);for(const e of document.querySelectorAll('button,input'))e.disabled=true;}
 function dispose(){stopped=true;cancelAnimationFrame(frame);orbit?.dispose();performanceClip?.dispose();scene?.traverse(o=>{if(o.isMesh){disposables.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material]){disposables.add(m);for(const v of Object.values(m))if(v?.isTexture)disposables.add(v);}}});for(const o of disposables){if(o.isTexture)o.image?.close?.();o.dispose?.()}renderer?.dispose();}
-const shots={
- action:{eye:[2.7,1.8,2.1],target:[.35,.86,.75],cut:true},
- hands:{eye:[1.55,1.42,1.5],target:[.35,1.04,.52],cut:true},
- house:{eye:[5.6,3.8,5.4],target:[.2,1.05,.2],cut:false}
-};
+let currentShot=null,manualCamera=false;
+function refit(){
+ const f=applyFrame(camera,currentShot,camera.aspect);
+ orbit.maxDistance=f.maxDistance;orbit.target.copy(f.target);orbit.update();
+ canvas.dataset.cameraDistance=String(f.distance);
+ dirty=true;
+}
 function setShot(key){
- const s=shots[key];camera.position.set(...s.eye);orbit.target.set(...s.target);orbit.update();
+ const s=SHOTS[key];currentShot=key;manualCamera=false;refit();
  house.traverse(o=>{if(o.isMesh)o.visible=!s.cut||/^(Basket_|Hand_woven_basket_body$|Coarse_work_surface$|Workshop_wood_support|Folded_linen_by_basket$|Room_floor_earthen$|Domestic_clay_bench$)/.test(o.name)});
  // The anchor owns every woven detail, including any non-prefix name.
  basket.anchor.traverse(o=>{o.visible=true});
@@ -39,7 +42,7 @@ async function main(){
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.shadowMap.type=THREE.PCFShadowMap;
  scene=new THREE.Scene();scene.background=new THREE.Color(0x302a22);
  camera=new THREE.PerspectiveCamera(42,1,.04,50);
- orbit=new OrbitControls(camera,canvas);orbit.enableDamping=false;orbit.enablePan=true;orbit.minDistance=.5;orbit.maxDistance=14;orbit.addEventListener('change',()=>dirty=true);
+ orbit=new OrbitControls(camera,canvas);orbit.enableDamping=false;orbit.enablePan=true;orbit.minDistance=.5;orbit.maxDistance=14;orbit.addEventListener('change',()=>dirty=true);orbit.addEventListener('start',()=>manualCamera=true);
  scene.add(new THREE.HemisphereLight(0xffefd7,0x645649,1.75));
  const sun=new THREE.DirectionalLight(0xffdfb1,2.3);sun.position.set(-3,6,4);sun.castShadow=true;
  sun.shadow.mapSize.set(1024,1024);Object.assign(sun.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:.1,far:16});sun.shadow.normalBias=.018;scene.add(sun);
@@ -62,8 +65,9 @@ async function main(){
  if(budget.rows.some(r=>r.count>layers))throw Error('GPU array texture layer limit below morph count');
  $('metrics').textContent='GLB: '+((manifest.actor.bytes+manifest.house.bytes)/1048576).toFixed(1)+' МиБ · оценка GPU-текстур морфов: '+(budget.estimatedGpuBytes/1048576).toFixed(1)+' МиБ · '+basket.meshCount+' элементов корзины';
  $('metrics').textContent+=' | '+mode;
- const resize=()=>{const {width,height}=canvas.getBoundingClientRect();renderer.setSize(Math.max(1,width),Math.max(1,height),false);camera.aspect=width/Math.max(1,height);camera.fov=THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(THREE.MathUtils.degToRad(21))*Math.max(1,1.1/camera.aspect)));camera.updateProjectionMatrix();dirty=true};
- new ResizeObserver(resize).observe(canvas);resize();setShot('action');sync(0);
+ const resize=()=>{const {width,height}=canvas.getBoundingClientRect();if(width<1||height<1)return;renderer.setSize(width,height,false);camera.aspect=width/height;
+ if(currentShot&&!manualCamera)refit();else camera.updateProjectionMatrix();dirty=true};
+ const observer=new ResizeObserver(resize);observer.observe(canvas);window.addEventListener('pagehide',()=>observer.disconnect(),{once:true});resize();setShot('action');sync(0);
  for(const b of document.querySelectorAll('[data-shot]'))b.addEventListener('click',()=>setShot(b.dataset.shot));
  play.addEventListener('click',()=>{if(!playing&&t>=clip.duration-1e-5)sync(0);setPlaying(!playing)});
  $('reset').addEventListener('click',()=>{setPlaying(false);sync(0)});
