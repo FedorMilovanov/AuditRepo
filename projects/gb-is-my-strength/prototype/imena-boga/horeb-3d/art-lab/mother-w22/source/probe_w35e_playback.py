@@ -32,16 +32,24 @@ def pose(doc,acc,t):
         d['nodes'][target['node']][field]=v.tolist()
     return d
 
-def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None):
+def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,extension=False,sample_time=None):
     folder=root/('W35y-bilateral-20261128' if bilateral else 'W35d-approach-20261127')
     r=json.loads((folder/('w35y-assembly.json' if bilateral else 'w35d-assembly.json')).read_text())
     doc,acc=load(folder/('w35y-approach.glb' if bilateral else 'w35d-approach.glb'),r['sha256'])
+    if extension:
+        assert bilateral and closure_fraction is None and pad_fraction is None
+        original,oa=doc,acc;original_sha=r['sha256']
+        ext=root/'W36m-closure-20261128';r=json.loads((ext/'w36m-assembly.json').read_text())
+        assert r['approach_sha256']==original_sha
+        doc,acc=load(ext/'w36m-approach-closure.glb',r['sha256'])
     source,sa=load(root/('W34s-sleeve-correction-20261127/w34s-static-actor.glb' if bilateral else 'W34v-finger-refine-20261127/w34u-static-actor.glb'),r['source_sha256'])
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text())
     h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     baseline,bw=geometry(source,sa,True)
-    t=min(frame/24,r['duration_s']);d=pose(doc,acc,t);chosen=None
+    t=min(frame/24,r['duration_s']) if sample_time is None else sample_time
+    assert 0<=t<=r['duration_s']
+    d=pose(doc,acc,t);chosen=None
     if closure_fraction is not None:
         assert bilateral and frame==58
         from probe_w36a_contact_closure import apply_closure
@@ -51,6 +59,16 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None):
         assert closure_fraction==1
         from probe_w36g_pad_compliance import apply_pad
         g=apply_pad(g,root,pad_fraction,r['sha256'])
+    extension_error=None
+    if extension:
+        from probe_w36a_contact_closure import apply_closure
+        from probe_w36g_pad_compliance import apply_pad
+        ref=pose(original,oa,min(t,2.4))
+        if t>=2.4:
+            ref,chosen=apply_closure(ref,root,float(np.clip((t-2.4)/.5,0,1)),original_sha)
+        rg,_=geometry(ref,oa,True)
+        if t>=2.9:rg=apply_pad(rg,root,float(np.clip((t-2.9)/.25,0,1)),original_sha)
+        extension_error=max(float(np.max(abs(v['v']-rg[k]['v']))) for k,v in g.items())
     names={n['name']:i for i,n in enumerate(d['nodes'])}
     changed={}
     for k,v in g.items():
@@ -126,7 +144,7 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None):
             offsets=np.array([[sign*(s['outset_mm']+(s['distance_mm'] if s['direction']=='outward' else 0)),s['distance_mm'] if s['direction']=='up' else 0,0] for s in r['keys']])*.001
             target=base+np.array([np.interp(t,times,offsets[:,j]) for j in range(3)])
             error[side]=float(np.linalg.norm(w[names['hand_'+side]][:3,3]-target)*1000)
-        if frame==58:
+        if (extension and t>=2.4) or (not extension and frame==58):
             rim=hg['Basket_thick_lipped_rim'];rt=rim['v'][rim['tri']];rn=normals(rim['v'],rim['tri']);rn/=np.maximum(np.linalg.norm(rn,axis=1),1e-12)[:,None]
             fn=normals(body['v'],body['tri']);vn=np.zeros((int(body['canon'].max())+1,3))
             for k in range(3):np.add.at(vn,body['canon'][body['tri'][:,k]],fn)
@@ -147,15 +165,15 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None):
         endpoint=max(float(np.max(abs(v['v']-gg[k]['v']))) for k,v in g.items())
     # Floor height is a verified constant on this staging area; feet unchanged from source.
     floor_gap=float((body['v'][:,1].min()+.005)*1000)
-    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip,'closure_fraction':closure_fraction,'pad_fraction':pad_fraction}
+    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip,'closure_fraction':closure_fraction,'pad_fraction':pad_fraction,'extension_reference_error_m':extension_error}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('evidence',type=Path)
     modes=p.add_mutually_exclusive_group(required=True);modes.add_argument('--frame',type=int);modes.add_argument('--all',action='store_true')
-    p.add_argument('--report',type=Path);p.add_argument('--bilateral',action='store_true');p.add_argument('--closure-fraction',type=float);p.add_argument('--pad-fraction',type=float);args=p.parse_args();assert args.pad_fraction is None or (args.closure_fraction==1 and 0<=args.pad_fraction<=1);assert args.closure_fraction is None or (args.bilateral and args.frame==58 and 0<=args.closure_fraction<=1)
+    p.add_argument('--report',type=Path);p.add_argument('--bilateral',action='store_true');p.add_argument('--closure-fraction',type=float);p.add_argument('--pad-fraction',type=float);p.add_argument('--extension',action='store_true');p.add_argument('--sample-time',type=float);args=p.parse_args();assert not args.extension or (args.bilateral and args.frame is not None and args.closure_fraction is None and args.pad_fraction is None);assert args.sample_time is None or args.extension;assert args.pad_fraction is None or (args.closure_fraction==1 and 0<=args.pad_fraction<=1);assert args.closure_fraction is None or (args.bilateral and args.frame==58 and 0<=args.closure_fraction<=1)
     if args.frame is not None:
-        assert args.report is None and 0<=args.frame<=(58 if args.bilateral else 36)
-        print(json.dumps(audit(args.evidence,args.frame,args.bilateral,args.closure_fraction,args.pad_fraction)),flush=True);return
+        assert args.report is None and 0<=args.frame<=(76 if args.extension else 58 if args.bilateral else 36)
+        print(json.dumps(audit(args.evidence,args.frame,args.bilateral,args.closure_fraction,args.pad_fraction,args.extension,args.sample_time)),flush=True);return
     import subprocess
     folder=args.evidence/('W35y-bilateral-20261128' if args.bilateral else 'W35d-approach-20261127')
     path=args.report or folder/('w35z-playback.json' if args.bilateral else 'w35e-playback.json');assert not path.exists()

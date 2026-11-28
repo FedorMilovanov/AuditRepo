@@ -38,12 +38,15 @@ def winding(p,t):
     den=la*lb*lc+np.sum(a*b,axis=1)*lc+np.sum(b*c,axis=1)*la+np.sum(c*a,axis=1)*lb
     return float(np.sum(2*np.arctan2(det,den))/(4*np.pi))
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--bilateral',action='store_true');parser.add_argument('--closure',action='store_true');parser.add_argument('--pad',action='store_true');args=parser.parse_args();assert not args.pad or args.closure;assert not args.closure or args.bilateral
+    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--bilateral',action='store_true');parser.add_argument('--closure',action='store_true');parser.add_argument('--pad',action='store_true');parser.add_argument('--extension',action='store_true');args=parser.parse_args();assert not args.extension or (args.bilateral and not args.closure and not args.pad);assert not args.pad or args.closure;assert not args.closure or args.bilateral
     root=args.evidence;out=args.output;assert not out.exists()
     if args.bilateral:
         from probe_w35e_playback import pose
         f=root/'W35y-bilateral-20261128';r=json.loads((f/'w35y-assembly.json').read_text());sha=r['sha256']
         d,a=load(f/'w35y-approach.glb',sha);d=pose(d,a,r['duration_s'])
+        if args.extension:
+            f=root/'W36m-closure-20261128';r=json.loads((f/'w36m-assembly.json').read_text());sha=r['sha256']
+            d,a=load(f/'w36m-approach-closure.glb',sha);d=pose(d,a,r['duration_s'])
         if args.closure:
             from probe_w36a_contact_closure import apply_closure
             d,_=apply_closure(d,root,1.,sha)
@@ -131,5 +134,5 @@ def main():
                 'largest_angle_within_12mm':min(same_section,key=lambda q:q['dot']) if same_section else None,
                 'largest_angle_within_5mm':min((q for q in same_section if q['max_gap_mm']<=5),key=lambda q:q['dot'],default=None)}
         results[side]=result;print(side,json.dumps(result),flush=True)
-    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':sha,'closure':args.closure,'pad':args.pad,'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
+    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':sha,'closure':args.closure,'pad':args.pad,'extension':args.extension,'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
 if __name__=='__main__':main()

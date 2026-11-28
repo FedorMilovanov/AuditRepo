@@ -34,7 +34,7 @@ def pair_distance(a,b):
         for k,l in ((0,1),(1,2),(2,0)):d=np.minimum(d,segment_interior(a[:,i],a[:,j],b[:,k],b[:,l]))
     return np.sqrt(np.maximum(d,0))
 
-def contact_witness(body,basket,patches,limit=.0015):
+def contact_witness(body,basket,patches,limit=.0015,near_limit=None):
     """Minimum separated-triangle gap within each patch and facing-normal witness.
     Assumes no proper triangle crossing; not a containment or signed-distance test.
     """
@@ -63,6 +63,8 @@ def contact_witness(body,basket,patches,limit=.0015):
             return {'distance_mm':float(dist[k]*1000),'skin_face':int(ii[k]),'basket_face':int(jj[k]),'basket_mesh':str(basket['region'][jj[k]]),'normal_dot':float(facing[k]),'rim_normal':bn[jj[k]].tolist()}
         near=np.flatnonzero((dist<=limit)&(facing<-.5))
         rows[side+'_'+digit]={'tested_pairs':len(ii),'minimum':witness(int(dist.argmin())),'minimum_facing':witness(int(near[np.argmin(dist[near])])) if len(near) else None}
+        if near_limit is not None:
+            rows[side+'_'+digit]['near_facing']=[witness(int(k)) for k in near[dist[near]<=near_limit]]
     return rows
 
 def self_test():
