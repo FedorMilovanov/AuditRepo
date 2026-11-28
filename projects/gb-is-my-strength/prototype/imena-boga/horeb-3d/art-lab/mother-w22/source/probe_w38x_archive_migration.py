@@ -9,12 +9,17 @@ from probe_w38l_archive import NAME,MANIFEST,HEADER,sha,split,read_glb,archived_
 from probe_w34l_foot_surface import load
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);args=p.parse_args()
- root=args.evidence;latest=root/'W38v-seam-20261128';r=json.loads((latest/'w38a-assembly.json').read_text());q=json.loads((latest/'w38w-playback.json').read_text())
- assert q['sha256']==r['sha256'] and q['status']=='ART_HOLD_SPARSE_SEAM_SAMPLED_PLAYBACK' and len(q['samples'])==38 and all(z['gate'] for z in q['samples'])
+ p=argparse.ArgumentParser();p.add_argument('evidence',type=Path);p.add_argument('--approach',action='store_true');args=p.parse_args()
+ root=args.evidence
+ latest=root/('W39c-approach-20261128' if args.approach else 'W38v-seam-20261128')
+ r=json.loads((latest/'w38a-assembly.json').read_text())
+ q=json.loads((latest/('w39d-playback.json' if args.approach else 'w38w-playback.json')).read_text())
+ status='ART_HOLD_APPROACH_SAMPLED_PLAYBACK' if args.approach else 'ART_HOLD_SPARSE_SEAM_SAMPLED_PLAYBACK'
+ assert q['sha256']==r['sha256'] and q['status']==status and len(q['samples'])==(30 if args.approach else 38) and all(z['gate'] for z in q['samples'])
  final=(latest/NAME).read_bytes();assert sha(final)==r['sha256'];_,bin1=split(final)
- out=latest/'w38x-archive-migration.json';assert not out.exists()
+ out=latest/('w39f-archive-migration.json' if args.approach else 'w38x-archive-migration.json');assert not out.exists()
  specs=[('W38a-handoff-20261128','source_clip_sha256',11),('W38e-wrist-20261128','gaze_source_sha256',12),('W38i-gaze-20261128','torso_source_sha256',13),('W38r-torso-20261128','seam_source_sha256',16)]
+ if args.approach:specs.append(('W38v-seam-20261128','approach_source_sha256',16))
  prepared=[]
  for folder,key,count in specs:
   f=root/folder;raw=read_glb(f/NAME);report=json.loads((f/'w38a-assembly.json').read_text())
@@ -52,6 +57,6 @@ def main():
    else:
     (f/MANIFEST).write_bytes(om);(f/HEADER).write_bytes(oh)
   raise
- result={'status':'LOSSLESS_ARCHIVES_MIGRATED','retained_sha256':r['sha256'],'archives':[m for f,m,h,had_full,om,oh,c in prepared],'full_glbs_retired':2,'saved_bytes':saved}
+ result={'status':'LOSSLESS_ARCHIVES_MIGRATED','retained_sha256':r['sha256'],'archives':[m for f,m,h,had_full,om,oh,c in prepared],'full_glbs_retired':sum(had_full for f,m,h,had_full,om,oh,c in prepared),'saved_bytes':saved}
  out.write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)
 if __name__=='__main__':main()
