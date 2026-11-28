@@ -31,9 +31,14 @@ collect evidence
 | **Program completion roadmap** | `PROGRAM_CLOSURE_MATRIX.md` | editorial/research/publication/rights/retirement waves required for whole-project closure; not a defect matrix |
 | Reusable root-cause context | `verified/SYSTEM_THEMES.md` | context, not automatically active work |
 | Optional non-mandatory improvements | `WORK_QUEUE.md` | performance/refactor/polish candidates; not a second matrix |
+| **Работающие прототипы и образцы для продолжения** | `prototype/<experiment>/` + [Отдел разработок](../../references/PROTOTYPE_LAB.md) | **исходники**, исполняемые проекты, проверенный UI/3D, branch/PR, QA и checkpoint; не словесные предложения и не второй Product |
 | Retired/superseded/closed material | `legacy/` | searchable reference, never an active backlog |
 | Older raw historical collections | `archive/` | evidence/archive only |
 | Stable project orientation | `README.md` | no volatile global HEAD mirror |
+
+## Отдел разработок и аудит — разные контуры
+
+Если уже существует реальный HTML/React/Canvas/Three.js образец (Grok reader, Atlas/Sozvezdie, HOREB 3D), его дальнейшее **кодовое** развитие ведётся в `prototype/` с project README/agent checkpoint, одной активной веткой и PR; обзор и общие правила — [Отдел разработок](../../references/PROTOTYPE_LAB.md). Если есть только идея — это `WORK_QUEUE.md` или Research. Ни реальный прототип, ни открытый draft PR автоматически не дают публикационного допуска или разрешения менять Product.
 
 ## MASTER ownership
 

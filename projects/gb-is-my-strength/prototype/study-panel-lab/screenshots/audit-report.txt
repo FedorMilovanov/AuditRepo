@@ -1,0 +1,154 @@
+
+== DESKTOP 1920 ==
+PASS  accessible names on all buttons
+light contrast ratios: {".article-body p":16.96,".lab-desk__title":16.35,".lab-band__label":9.79}
+PASS  light theme text contrast ≥ 4.5:1
+dark article contrast ratio: 15.22
+PASS  dark theme article contrast ≥ 4.5:1
+PASS  keyboard "/" opens article index
+PASS  index keyboard search returns real refs
+PASS  Escape closes index and restores the desk
+PASS  Alt+1 collapses left rail
+PASS  Alt+2 collapses right panel
+PASS  focus not fully obscured (first 40 focusables)
+PASS  pin survives section change and auto-follow — section now: Оценка христоцентричной герменевтики
+PASS  compare stays locked with one pin
+PASS  compare unlocks after two pins
+PASS  comparison shows two pinned materials
+PASS  auto-follow does not replace manual «Разбор»
+
+== COMPARE: WHOLE SHELF, NOT TWO COLUMNS ==
+PASS  compare opens with an overview of the whole shelf, grouped by the sections it really occurs in — {"title":"Вся полка на одном экране","groups":8,"chips":8,"stats":[8,8,7]}
+PASS  the overview covers more than the old two-material ceiling — [8,8,7]
+PASS  the manual two-material pair is available but folded, so the overview stays on one screen — true
+PASS  «where materials meet» never repeats the same pair three times — ["1 Коринфянам 2:2 ↔ 1 Коринфянам 1:23","1 Коринфянам 2:2 ↔ 2 Коринфянам 4:5","1 Коринфянам 2:2 ↔ Колоссянам 1:28","1 Коринфянам 2:2 ↔ Луки 24:27"]
+PASS  the manual pair takes any two of the eight materials, and refuses to pair one with itself — {"same":true,"options":8}
+PASS  the pair prints both materials verbatim and names the sections of each — {"same":true,"options":8,"cols":2,"verdict":"Общий раздел: «Коротко».","secs":["Аппарат библейских ссылок статьи","Разделы: Коротко","data/glossary.json","Разделы: Коротко, Объяснение христоцентричной герменевтики, Как христоцентричная герм
+PASS  a section name in the overview leads back to the text — {"label":"Коротко","sec":"Коротко","toast":"К разделу «Коротко»","opened":true}
+PASS  pinned shelf remains in viewport
+
+== LABELS AND DOCUMENTED SHORTCUTS ==
+PASS  no two graph nodes carry the same label — []
+PASS  no graph label is cut to an ellipsis — []
+PASS  the material kicker never repeats the band name — Совместная встречаемость / Сеть понятий
+PASS  every instrument names its material differently from its band — [{"mode":"thread","kicker":"Структура автора","band":"Ход статьи"},{"mode":"section","kicker":"Материалы раздела","band":"Раздел"},{"mode":"notes","kicker":"Аппарат сносок","band":"Примечания"},{"mode":"index","kicker":"Все материалы","band":"Указатель"},{"mode":"graph","kicker":"Совместная встречаемость","band":"Сеть понятий"},{"mode":"edition","kicker":"Формы издания","band":"Издание"},{"mode":"compare","kicker":"Отношения на полке","band":"Сопоставление"},{"mode":"help","kicker":"Устройство лаборатории","band":"Как пользоваться"}]
+PASS  an opening bracket and its scripture reference never split across lines — {"wraps":129,"bad":[]}
+
+== SERIES: PICKING A PART IS A REAL STEP ==
+PASS  the book form lists all 22 articles with their real titles, not their slug ids — {"count":22,"slugLike":0,"sample":["Испорчено ли сердце?","Скрытые идолы сердца","Религиозное сердце"]}
+PASS  the book picker shows its two tiers: 4 chapter groups, and one running number per article — {"groups":["Глава I. Диагноз сердца","Глава II. Сердце на войне","Глава III. Перелом и перемена","Глава IV. Жизнь Духом"],"marks":["1","2","3","4","5","6","7","8"]}
+PASS  picking a part changes the margin headline and its chapter/position line — {"before":{"head":"Испорчено ли сердце?","pos":"Книга · Глава I. Диагноз сердца · 1 / 22"},"after":{"head":"Старые дорожки сердца","pos":"Книга · Глава I. Диагноз сердца · 6 / 22","current":"Старые дорожки сердца","toast":"Глава I. Диагноз сердца · 6 / 22"}}
+PASS  the picker confirmation names the chapter and whole-book position — Глава I. Диагноз сердца · 6 / 22
+PASS  the chosen part of the book survives a reload, like the pins — {"pos":"Книга · Глава I. Диагноз сердца · 6 / 22","head":"Старые дорожки сердца","stored":{"key":"heart","item":"krajne"},"hidden":false}
+PASS  choosing a part keeps keyboard focus on the chosen row and scrolls it above the pinned shelf — {"tag":"BUTTON","cls":"lab-ed-part is-current","current":true,"fullyVisible":true,"row":{"top":690,"bottom":735},"viewport":{"top":166,"bottom":846}}
+PASS  going back to the first part resets the place line to 1 / 22 — {"title":"Испорчено ли сердце?","meta":"41 мин","pos":"Книга · Глава I. Диагноз сердца · 1 / 22","head":"Испорчено ли сердце?","inText":false}
+PASS  a flat series is pickable too, and its current part is shown in the open-edition card — {"count":6,"head":"Часть II. Учёный","pos":"Серия · 3 / 6","place":"Часть · 3 / 6","toast":"Часть · 3 / 6"}
+PASS  back in the article the headline is a section again, with no series line — {"head":"Вступление","posHidden":true}
+PASS  the documented ↑/↓ walk the expanded band headings in order — ["desk","pinned"]
+PASS  a closed speed popover does not intercept clicks on the article text — {"probes":[{"f":0.05,"tag":"P","inProse":true},{"f":0.2,"tag":"P","inProse":true},{"f":0.4,"tag":"P","inProse":true}],"pe":"none"}
+PASS  the speed popover opens, takes the click and sets the rate — {"open":true,"pe":"auto","hits":true,"label":"1,5×","expanded":"false"}
+PASS  the «thread» bead is a round dot inside the current row, not a stretched SVG ellipse — {"ok":true,"w":9,"h":9,"round":true,"inRow":true,"html":true}
+PASS  the help names exactly the tools that exist (count from the list, not from prose) — {"heading":"7 инструментов внизу полей","linked":7,"shortcuts":9}
+PASS  help lists every documented keyboard shortcut — 9
+PASS  opening a tall instrument scrolls its body into view, not just its title — {"gap":0,"bodyTop":41,"vh":542}
+PASS  right collapses independently
+PASS  left collapses independently
+PASS  no horizontal page scroll at 1920
+
+== REDUCED MOTION + TYPE ==
+PASS  font scaling control works — 110%
+PASS  prefers-reduced-motion emulation active
+reduced-motion ribbon transition-duration: 0s
+PASS  motion suppressed under reduced-motion
+
+== RESPONSIVE WIDTHS ==
+PASS  1920px: no horizontal scroll — {"hScroll":false,"centerW":1130,"articleW":752,"left":"light","shellLeft":"open","shellRight":"open"}
+PASS  1920px: article fits its reading column
+PASS  1440px: no horizontal scroll — {"hScroll":false,"centerW":778,"articleW":662,"left":"light","shellLeft":"open","shellRight":"open"}
+PASS  1440px: article fits its reading column
+PASS  1280px: no horizontal scroll — {"hScroll":false,"centerW":640,"articleW":538,"left":"light","shellLeft":"open","shellRight":"open"}
+PASS  1280px: article fits its reading column
+PASS  1024px: no horizontal scroll — {"hScroll":false,"centerW":1024,"articleW":786,"left":"light","shellLeft":"closed","shellRight":"closed"}
+PASS  1024px: article fits its reading column
+PASS  1024px: side panels start as drawers
+PASS  768px: no horizontal scroll — {"hScroll":false,"centerW":768,"articleW":707,"left":"light","shellLeft":"closed","shellRight":"closed"}
+PASS  768px: article fits its reading column
+PASS  768px: side panels start as drawers
+PASS  390px: no horizontal scroll — {"hScroll":false,"centerW":390,"articleW":358,"left":"light","shellLeft":"closed","shellRight":"closed"}
+PASS  390px: article fits its reading column
+PASS  390px: side panels start as drawers
+
+== ORIGINAL SVG / CSS FIDELITY + REAL-TEXT INSTRUMENTS ==
+PASS  original PlayEmber SVG + ring CSS active — {"ring":2,"opacity":"1","dash":"283px"}
+PASS  PlayEmber glyph paths byte-for-byte original
+PASS  original sun/moon SVG + morph CSS on all three toggles
+PASS  original rail SVG paths survive the two-switch header
+PASS  canonical 5-speed bloom pill + honest apparatus counts — 181 мест Писания · 244 упоминаний · 14 понятий · 116 сносок · 15 разделов. Все материалы взяты из реальной статьи и словаря сайта.
+PASS  dark theme shows original moon, hides sun — {"theme":"dark","sun":0,"moon":1}
+PASS  original bloom pill opens
+PASS  speed selection uses the site canonical values
+PASS  TOC filter finds the real «Заключение» heading as a subsection — {"hitSub":1,"hitRow":0,"rowsShown":1,"empty":true}
+PASS  real footnotes are listed from the article DOM — 40
+PASS  footnote search filters real bibliographic text
+PASS  footnote opens verbatim with honest provenance — Сноска
+PASS  a real footnote can be pinned
+PASS  section overview counts a heading span including its nested subsections — {"label":"Раздел","title":"Оценка христоцентричной герменевтики","stats":[102,6,29],"noteRows":5,"refs":12}
+PASS  ? opens honest shortcut help plus a legend for all seven glyphs
+PASS  index groups real notes and sections — Писание · 181 | Понятия · 14 | Разделы · 15 | Сноски и источники · 116
+PASS  context band + section digest + reading progress are real — {"noteRows":1,"brief":"7 стих. · 4 понят. · 1 снос.7 стихов","read":"4%"}
+PASS  1200px: open speed pill does not overflow the viewport
+PASS  390px: open speed pill does not overflow the viewport
+
+== ARTICLE / SERIES / BOOK: ONE MARGIN ARCHITECTURE ==
+PASS  real series registry loaded (3 forms of edition) — gill, baptisty, heart
+PASS  book form keeps two tiers: 4 chapters + 22 real articles
+PASS  flat forms keep their real parts and the authentic samizdat theme
+PASS  book reading time is the sum of the real pages (front matter included, chapter headings add none)
+PASS  edition desk shows all three real forms and what changes between them — {"label":"Издание","cards":3,"chapters":4,"rules":3,"now":"Один текст без серии: аппарат ссылок, понятий и сносок тот же."}
+PASS  book form names the chapter in the chip and leaves the article untouched — {"body":"heart","mark":"КН","chipText":"Тайны человеческого сердца · Глава I. Диагноз сердца","accent":"#7a2e2e","articleUnchanged":99}
+PASS  the authentic samizdat skin recolours the margins — {"theme":"samizdat","accent":"#5b3a86","paper":"#f2eadc"}
+PASS  returning to a standalone article restores the base tokens — {"theme":"none","mark":"СТ","accent":"#7a2e2e"}
+PASS  heart: footnotes, pin shelf, context band and index all survive the form switch — {"notes":40,"hScroll":false,"pin":true,"context":true,"index":true}
+PASS  baptisty: footnotes, pin shelf, context band and index all survive the form switch — {"notes":40,"hScroll":false,"pin":true,"context":true,"index":true}
+PASS  gill: footnotes, pin shelf, context band and index all survive the form switch — {"notes":40,"hScroll":false,"pin":true,"context":true,"index":true}
+
+== MARGIN BANDS: ONE ACCORDION, ICONS ONLY WHEN FOLDED ==
+PASS  a fresh margin opens with ONE instrument and two icon rows, quiet switch honestly off — {"quiet":"false","pressed":"false","state":"context:true brief:true desk:false pinned:undefined"}
+PASS  every folded band is ONE iconic row of at most 48 px, body fully gone — context:41/0 brief:41/0 desk:41/0
+PASS  a folded row still shows one honest count, not the three-part sentence — 1 сноска | 7 стихов
+PASS  the quiet switch reports the folded state and secondary controls stop intercepting clicks — {"q":"true","p":"true"}
+PASS  seven instruments live in ONE glyph rail (no 3x2 button grid, no second toolbar) — {"n":7,"h":45}
+PASS  opening a band folds the others (one big band at a time), pinned shelf untouched — {"afterDesk":"context:true brief:true desk:false pinned:undefined","deskOpen":2176,"afterCtx":"context:false brief:true desk:true pinned:undefined"}
+PASS  the folded layout is remembered across a reload (like theme and type) — {"persist":"{\"context\":true,\"brief\":true,\"desk\":true,\"pinned\":false}","state":"context:true brief:true desk:true pinned:undefined","quiet":"true"}
+PASS  a glyph in the rail opens its instrument even from the folded strip, and only it shows as active — {"label":"Издание","cards":3,"desk":"false","pressed":"true","others":true}
+PASS  switching instruments in the rail never loses the last click — {"first":"Ход статьи","second":"Сеть понятий"}
+PASS  the instrument rail never overflows — {"h":45,"overflow":false,"tipW":null,"clipped":false}
+
+== A11Y: CONTRAST, TARGETS, NAMES, HEAD STRIP ==
+PASS  every small caption keeps WCAG AA contrast (>= 4.5:1) — {".lab-band__meta":5.26,".lab-band__label":9.79,".lab-instruments button":5.06,".lab-apparatus__links button":9.79,".lab-ctx-counts":5.26,".lab-follow":5.26,".lab-head__strip":9.41,".lab-apparatus__note":5.26,".lab-note":5.26,".lab-sub":null}
+PASS  all seven glyphs carry a name, an explanation, aria-controls and a 40x32 target — [{"name":"Ход статьи","desc":"Пять тезисов, нить разделов и бусина текущего раздела","w":60,"h":34,"controls":"labDesk"},{"name":"Обзор раздела","desc":"Счётчики, цитата и аппарат всего раздела","w":60,"h":34,"controls":"labDesk"},{"name":"Сноски","desc":"116 примечаний статьи с поиском по автору и книге","w":60,"h":34,"controls":"labDesk"},{"name":"Указатель","desc":"Поиск по ссылкам, понятиям, словам стихов и разделам","w":60,"h":34,"controls":"labDesk"},{"name":"Сеть понятий","desc":"Понятия, которые встречаются в одних абзацах","w":60,"h":34,"controls":"labDesk"},{"name":"Издание","desc":"Статья, серия или книга: что меняется и что нет","w":60,"h":34,"controls":"labDesk"},{"name":"Сравнение","desc":"Вся полка: разделы, пересечения и пара вручную","w":60,"h":34,"controls":"labDesk"}]
+PASS  no unnamed button and no aria-controls pointing at a missing node — {"contrast":{".lab-band__meta":5.26,".lab-band__label":9.79,".lab-instruments button":5.06,".lab-apparatus__links button":9.79,".lab-ctx-counts":5.26,".lab-follow":5.26,".lab-head__strip":9.41,".lab-apparatus__note":5.26,".lab-note":5.26,".lab-sub":null},"rail":[{"name":"Ход статьи","desc":"Пять тезисов, нить разделов и бусина текущего раздела","w":60,"h":34,"controls":"labDesk"},{"name":"Обзор раздела","desc":"Счётчики, цитата и аппарат всего раздела","w":60,"h":34,"controls":"labDesk"},{"name":"Сноски","desc":"116 примечаний статьи с поиском по автору и книге","w":60,"h":34,"controls":"labDesk"},{"name":"Указатель","desc":"Поиск по ссылкам, понятиям, словам стихов и разделам","w":60,"h":34,"controls":"labDesk"},{"name":"Сеть понятий","desc":"Понятия, которые встречаются в одних абзацах","w":60,"h":34,"controls":"labDesk"},{"name":"Издание","desc":"Статья, серия или книга: что меняется и что нет","w":60,"h":34,"controls":"labDesk"},{"name":"Сравнение","desc":"Вся полка: разделы, пересечения и пара вручную","w":60,"h":34,"controls":"labDesk"}],"unnamed":[],"danglingControls":[]}
+PASS  folded margins put a truthful status line in the header (count, section, follow state) — {"hidden":false,"text":"Чистый абзац · без аппарата следит","label":"Чистый абзац · без аппарата\n      следит. Слежение включено. Раскрыть ленту «У этого абзаца»","follow":"true"}
+PASS  the status line is also the way back into the context band — {"contextCollapsed":"false","hidden":true}
+PASS  band headers behave like an accordion for the keyboard (arrows, Home, End) — brief desk brief context pinned context
+PASS  the help sheet explains every glyph and the new keyboard shortcuts — {"tools":7,"rows":9,"hasAltQ":true}
+PASS  the margin explains its three gestures once on the first visit, then stays quiet — {"first":{"visible":true,"text":"Поля следуют за текстом, но ничего не де","fits":true},"closed":true,"stored":"1","coachAgain":true}
+PASS  Alt + Q folds and unfolds the whole margin — {"folded":"true","unfolded":"false"}
+
+== LEFT RAIL: SECTIONS AS ROWS, ONE UNFOLDED ==
+PASS  the flat 15-item list became 5 section rows holding 10 real subsections — {"rows":5,"subs":10,"heights":[30,30,57,30,30],"open":[],"listH":181,"scrollH":550,"count":"1 / 5","nestedLeft":110,"dotLeft":38}
+PASS  the whole table of contents fits above the audio pill instead of scrolling — 181/550 30,30,57,30,30
+PASS  subsections are visibly nested and the counter counts sections, not headings — {"n":110,"d":38,"c":"1 / 5"}
+PASS  the rail follows the reading position: current row highlighted, its subsections unfolded — {"current":"sec-explanation","open":["sec-explanation"],"subCurrent":1,"passed":2,"count":"3 / 5"}
+PASS  the quiet switch strips the rail to a calm reading index (names kept, search gone) and remembers it — {"flag":"quiet","pressed":"true","labels":"flow-root","search":"none","meta":"none","rowH":26,"stored":"{\"quiet\":true,\"open\":\"\"}","railW":286,"restored":"full"}
+PASS  TOC search filters real headings and restores the full rail — {"hit":{"rows":1,"subs":10,"empty":true},"back":5}
+
+== PINNED SHELF: PERSISTED, PER EDITION, BATCH PIN ==
+PASS  on a phone, the open-edition card fits above the empty pinned shelf without horizontal overflow — {"noHScroll":true,"cardVisible":true,"shelfHeight":140,"scTop":82,"bandTop":255,"right":{"top":84,"bottom":793,"transform":"matrix(1, 0, 0, 1, 0, 0)"},"cardParent":"lab-desk","card":{"top":405,"bottom":528},"scroll":{"top":255,"bottom":545}}
+PASS  the mobile theme control changes to night without the open sheet dismissing — {"theme":"dark","right":"open"}
+PASS  one button pins the whole apparatus of the section, and the shelf keeps every one — {"hasBatch":true,"label":"Закрепить все 24","pins":8,"count":"8 / 8","stored":8,"note":" 1 Деяния 13:13–41 2 Римлянам 10:4 3 Галатам 4:4 4 Бытие 3:1–15 5 Евреям 9:1–13 6 Притчи 8"}
+PASS  the shelf survives a reload exactly as it was left — {"pins":8,"count":"8 / 8","labels":["Деяния 13:13–41","Римлянам 10:4","Галатам 4:4"]}
+PASS  each edition has its own shelf: switching to the book shows an empty one, coming back restores the article — {"heart":{"pins":0,"note":"Пока пусто.Закрепите отрывок или понятие — оно останется на "},"back":8,"keys":["arena-study-lab:pins:article","arena-study-lab:pins:heart"]}
+PASS  unpinning updates the stored shelf immediately, not only the screen — {"before":8,"after":7,"stored":7}
+
+TOTAL FAILURES: 0
