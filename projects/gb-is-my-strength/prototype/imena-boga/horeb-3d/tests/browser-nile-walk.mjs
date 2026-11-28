@@ -1,0 +1,214 @@
+// W10: verify that the Nile scene is a physically navigable 3D shoreline,
+// not a cosmetic animated shot. Tests real Chrome keyboard and pointer input.
+import puppeteer from 'puppeteer-core';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+const chrome=[process.env.HOREB_BROWSER_PATH,
+ 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+ '/usr/bin/google-chrome','/usr/bin/chromium'].find(x=>x&&existsSync(x));
+if(!chrome)throw new Error('A real Chromium/Chrome binary is required');
+const args=process.env.HOREB_SWIFTSHADER==='1'
+ ? ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']:[];
+if(process.env.HOREB_NO_SANDBOX==='1')args.push('--no-sandbox','--disable-setuid-sandbox');
+const browser=await puppeteer.launch({executablePath:chrome,headless:true,args,protocolTimeout:120000});
+const out=join(process.cwd(),'.test-build','screenshots');
+mkdirSync(out,{recursive:true});
+const page=await browser.newPage();
+await page.setViewport({width:1024,height:768,deviceScaleFactor:1});
+page.setDefaultTimeout(45000);
+const errors=[];
+page.on('pageerror',e=>errors.push(e.message));
+const base=(process.env.HOREB_BASE_URL||'http://127.0.0.1:5173').replace(/\/$/,'');
+const read=()=>page.$eval('[data-testid="moses-nile-3d"]',c=>({
+ mode:c.dataset.nileMode,x:Number(c.dataset.nileCameraX),
+ z:Number(c.dataset.nileCameraZ),y:Number(c.dataset.nileWalkY),
+ shoreDistance:Number(c.dataset.nileShoreDistance),
+ ground:Number(c.dataset.nileGroundHeight),
+ fineBranches:Number(c.dataset.nilePapyrusFineBranches),
+ rendered:c.dataset.nileRendered==='true',
+ bounds:c.dataset.nileWalkBounds,
+}));
+const sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
+try{
+ const response=await page.goto(base+'/?e2e',{waitUntil:'domcontentloaded'});
+ if(response?.status()!==200)throw new Error('Intro HTTP failure');
+ await page.click('[data-testid="moses-origin-start"]');
+ if(await page.$('[data-testid="moses-nile-3d"]'))throw Error('W15 legacy Nile ran by default');
+ await page.click('[data-testid="nile-legacy-open"]');
+ // Clicking before the async module is ready must never enter fullscreen
+ // without a controller (W12F.1); the button has a real disabled gate.
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileRendered==='true');
+ if(await page.$eval('[data-testid="nile-explore-start"]',b=>b.disabled))
+   throw Error('Nile loaded engine but Explore button remains disabled');
+ await page.click('[data-testid="nile-explore-start"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileCameraPhase==='walk');
+ const first=await read();
+ const size=await page.$eval('[data-testid="nile-viewport"]',el=>{
+   const r=el.getBoundingClientRect();
+   return {x:r.x,y:r.y,width:r.width,height:r.height,winX:innerWidth,winY:innerHeight};
+ });
+ if(!first.rendered||first.bounds!=='shore+0.27,9.45,-20,9'||
+    first.fineBranches!==2808||Math.abs(first.y-first.ground-1.64)>.006||
+    size.width<size.winX-2||size.height<size.winY-2||Math.abs(size.x)>1||Math.abs(size.y)>1)
+   throw new Error('W10 MUST BE FULLSCREEN REAL 3D '+JSON.stringify({first,size}));
+ await page.keyboard.down('w');
+ try{
+   // Keep real input held until the same physical displacement gate is
+   // reached. Slow SwiftShader runners may paint very few frames in 800ms.
+   await page.waitForFunction(start=>{
+     const c=document.querySelector('[data-testid="moses-nile-3d"]');
+     const dx=Number(c?.dataset.nileCameraX)-start.x,dz=Number(c?.dataset.nileCameraZ)-start.z;
+     return Math.hypot(dx,dz)>=.22&&-dx*Math.sin(1.06)-dz*Math.cos(1.06)>=.2;
+   },{timeout:15000},first);
+ }finally{await page.keyboard.up('w');}
+ await sleep(90);
+ const next=await read();
+ // Software WebGL in GitHub Actions renders at fewer frames than desktop.
+ // Verify nontrivial physical progress in the correct forward direction,
+ // not a fixed metres-per-wall-clock threshold that depends on GPU speed.
+ const forwardDisplacement=Math.hypot(next.x-first.x,next.z-first.z);
+ const projectedForward=-(next.x-first.x)*Math.sin(1.06)-(next.z-first.z)*Math.cos(1.06);
+ if(next.mode!=='walk'||forwardDisplacement<.22||projectedForward<.2)
+   throw new Error('W10 GROUNDED FORWARD INPUT FAILED '+JSON.stringify({first,next,forwardDisplacement,projectedForward}));
+ if(!Number.isFinite(next.y)||next.x>9.45||next.z< -20||next.z>9||
+    next.shoreDistance<.269||Math.abs(next.y-next.ground-1.64)>.006)
+   throw new Error('W10B REAL TERRAIN/NAV CONTACT FAILED '+JSON.stringify(next));
+ await page.screenshot({path:join(out,'w10-nile-walking-desktop.png')});
+ // Prove pointer drag changes actual camera orientation, not a decorative UI.
+ const cam=await page.$('[data-testid="moses-nile-3d"]');
+ const rect=await cam.boundingBox();
+ if(!rect)throw new Error('NILE CANVAS IS NOT VISIBLE');
+ const lookStart=await page.$eval('[data-testid="moses-nile-3d"]',c=>Number(c.dataset.nileLookYaw));
+ await page.mouse.move(rect.x+rect.width*.65,rect.y+rect.height*.55);
+ await page.mouse.down();await page.mouse.move(rect.x+rect.width*.35,rect.y+rect.height*.35,{steps:8});
+ await sleep(100);
+ const lookChanged=await page.$eval('[data-testid="moses-nile-3d"]',c=>Number(c.dataset.nileLookYaw));
+ if(Math.abs(lookChanged-lookStart)<.22)
+   throw new Error('W10 POINTER DRAG DID NOT TURN PHYSICAL CAMERA '+JSON.stringify({lookStart,lookChanged}));
+ // Return the view to its intentional composition before mobile captures.
+ await page.mouse.move(rect.x+rect.width*.65,rect.y+rect.height*.55,{steps:8});
+ await page.mouse.up();
+ await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+ await sleep(170);
+ const mobile=await page.$eval('[data-testid="nile-viewport"]',el=>{
+   const r=el.getBoundingClientRect();
+   return {width:r.width,height:r.height,winX:innerWidth,winY:innerHeight,
+     hasControls:!!el.querySelector('[data-testid="nile-move-forward"]')};
+ });
+ if(mobile.width<389||mobile.height<843||!mobile.hasControls)
+   throw new Error('W10 MOBILE WALK VIEWPORT '+JSON.stringify(mobile));
+
+ // W13D: second genuine finger must neither hijack nor rotate the active look.
+ // Primary finger still controls yaw until it releases its own capture.
+ const lookCanvas=await page.$('[data-testid="moses-nile-3d"]');
+ const lookBox=await lookCanvas.boundingBox();
+ if(!lookBox)throw Error('NILE multi-touch canvas absent');
+ const px=lookBox.x+lookBox.width*.57,py=lookBox.y+lookBox.height*.43;
+ const qx=lookBox.x+lookBox.width*.76,qy=lookBox.y+lookBox.height*.45;
+ const getYaw=()=>page.$eval('[data-testid="moses-nile-3d"]',c=>Number(c.dataset.nileLookYaw));
+ // Software WebGL may render <10 FPS: fixed 100ms waits could read stale
+ // canvas.dataset yaw even though real PointerEvents and camera updates ran.
+ const settleLook=()=>page.evaluate(()=>new Promise(resolve=>
+   requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ // On slow software WebGL, the desktop drag can be reversed and the viewport
+ // resized before the next 3D frame publishes the returned yaw to dataset.
+ // Verify the real camera has returned to its pre-drag heading before using
+ // that value as the strict second-finger ownership baseline.
+ await page.waitForFunction(expected=>{
+   const yaw=Number(document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileLookYaw);
+   return Number.isFinite(yaw)&&Math.abs(yaw-expected)<.035;
+ },{polling:100,timeout:12000},lookStart);
+ const yawStart=await getYaw();
+ const multi=await page.createCDPSession();
+ try{
+   await multi.send('Input.dispatchTouchEvent',{type:'touchStart',
+     touchPoints:[{id:1,x:px,y:py}]});
+   await multi.send('Input.dispatchTouchEvent',{type:'touchStart',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx,y:qy}]});
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx+64,y:qy}]});
+   // The canvas exposes yaw in requestAnimationFrame, not synchronously
+   // in pointermove. Wait for two painted frames on slow software WebGL.
+   await settleLook();
+   const yawAfterSecond=await getYaw();
+   if(Math.abs(yawAfterSecond-yawStart)>.035)
+     throw Error('NILE second touch stole active camera '+JSON.stringify({yawStart,yawAfterSecond}));
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px+65,y:py},{id:2,x:qx+64,y:qy}]});
+   await settleLook();
+   const yawAfterPrimary=await getYaw();
+   if(Math.abs(yawAfterPrimary-yawStart)<.11)
+     throw Error('NILE primary touch lost look ownership '+JSON.stringify({yawStart,yawAfterPrimary}));
+   // Return to the original intentional orientation.
+   await multi.send('Input.dispatchTouchEvent',{type:'touchMove',
+     touchPoints:[{id:1,x:px,y:py},{id:2,x:qx+64,y:qy}]});
+   await sleep(60);
+ }finally{
+   await multi.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+   await multi.detach();
+ }
+
+ const beforeTouch=await read();
+ const forward=await page.$('[data-testid="nile-move-forward"]');
+ const box=await forward.boundingBox();
+ if(!box)throw new Error('MOBILE WALK CONTROL HIDDEN');
+ // Real touch input, not desktop mouse standing in for phone movement.
+ const tx=box.x+box.width/2,ty=box.y+box.height/2;
+ const walkTouch=await page.createCDPSession();
+ await walkTouch.send('Input.dispatchTouchEvent',{
+   type:'touchStart',touchPoints:[{id:10,x:tx,y:ty}],
+ });
+ try{
+   // Slow software WebGL renders variable frame counts per wall-clock second.
+   await page.waitForFunction(start=>{
+     const canvas=document.querySelector('[data-testid="moses-nile-3d"]');
+     const x=Number(canvas?.dataset.nileCameraX),z=Number(canvas?.dataset.nileCameraZ);
+     return Number.isFinite(x)&&Number.isFinite(z)&&
+       Math.hypot(x-start.x,z-start.z)>.235;
+   },{timeout:15000},beforeTouch);
+ }finally{
+   await walkTouch.send('Input.dispatchTouchEvent',{
+     type:'touchEnd',touchPoints:[],
+   });
+   await walkTouch.detach();
+ }
+ await sleep(95);
+ const afterTouch=await read();
+ if(Math.hypot(afterTouch.x-beforeTouch.x,afterTouch.z-beforeTouch.z)<.2)
+   throw new Error('W13D MOBILE REAL TOUCH MOVEMENT INERT '+JSON.stringify({beforeTouch,afterTouch}));
+ await page.screenshot({path:join(out,'w10-nile-walking-phone.png')});
+ // Nested Escape must leave the chapter open and return keyboard focus to
+ // the entry button, not tear down the whole Bible story modal.
+ await page.keyboard.press('Escape');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-3d"]')?.dataset.nileMode==='shot');
+ const escapeState=await page.evaluate(()=>({
+   story:!!document.querySelector('[data-testid="moses-origin-story"]'),
+   focused:document.activeElement?.getAttribute('data-testid'),
+ }));
+ if(!escapeState.story||escapeState.focused!=='nile-explore-start')
+   throw new Error('W10B NESTED ESCAPE/FOCUS REGRESSION '+JSON.stringify(escapeState));
+ // The rescue moment must be independently walkable in the same physical
+ // Nile environment; new figures are geometry, not a static picture.
+ await page.click('[data-testid="moses-origin-next"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileRendered==='true');
+ const figures=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>Number(c.dataset.nileFigures));
+ if(figures!==3)throw new Error('RESCUE WORLD LOST ALL THREE FIGURES');
+ await page.click('[data-testid="nile-explore-start"]');
+ await page.waitForFunction(()=>document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileCameraPhase==='walk');
+ const beforeRescue=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>Number(c.dataset.nileCameraZ));
+ await page.keyboard.down('a');
+ try{
+   await page.waitForFunction(start=>{
+     const z=Number(document.querySelector('[data-testid="moses-nile-discovery-3d"]')?.dataset.nileCameraZ);
+     return Number.isFinite(z)&&Math.abs(z-start)>=.16;
+   },{timeout:15000},beforeRescue);
+ }finally{await page.keyboard.up('a');}
+ await sleep(80);
+ const afterRescue=await page.$eval('[data-testid="moses-nile-discovery-3d"]',c=>Number(c.dataset.nileCameraZ));
+ if(Math.abs(afterRescue-beforeRescue)<.16)
+   throw new Error('RESCUE WORLD CAMERA CANNOT WALK '+JSON.stringify({beforeRescue,afterRescue}));
+ await page.screenshot({path:join(out,'w10-nile-rescue-walking.png')});
+ await page.click('[data-testid="nile-explore-close"]');
+ if(errors.length)throw new Error('PAGE ERRORS '+JSON.stringify(errors));
+ console.log('PASS W10 real Nile walking: fullscreen desktop/mobile, keyboard, bounded ground, pointer move, cinematic return');
+}finally{await browser.close();}

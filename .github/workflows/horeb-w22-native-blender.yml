@@ -1,0 +1,61 @@
+name: HOREB W22 Native Blender Art Probe (Draft)
+
+on:
+  push:
+    branches:
+      - lane/horeb-3d-lab-20261108
+    paths:
+      - '.github/workflows/horeb-w22-native-blender.yml'
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/tests/w22-blender-art-probe.py'
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/art-lab/mother-w22/source/horeb_mother_w22_candidate.blend'
+      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/art-lab/mother-w22/source/horeb_mother_w22_candidate.manifest.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: horeb-w22-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-source-render:
+    if: github.ref == 'refs/heads/lane/horeb-3d-lab-20261108'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout experimental Draft PR branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.11 for Blender 4.5 LTS bpy wheel
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+
+      - name: Install official Blender 4.5.16 Python wheel
+        run: |
+          python -m pip install --disable-pip-version-check --only-binary=:all: 'bpy==4.5.16'
+          python -c "import bpy; assert bpy.app.version[:3] == (4,5,16), bpy.app.version_string; print('BLENDER_W22_VERSION', bpy.app.version_string)"
+
+      - name: Render isolated W22 ART HOLD Blender candidate
+        timeout-minutes: 12
+        env:
+          HOREB_W22_ART_OUTPUT: ${{ runner.temp }}/horeb-w22-native
+          OMP_NUM_THREADS: '4'
+        run: |
+          python projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/tests/w22-blender-art-probe.py
+          test -s "$HOREB_W22_ART_OUTPUT/w22-native-face.png"
+          test -s "$HOREB_W22_ART_OUTPUT/w22-native-full.png"
+          test -s "$HOREB_W22_ART_OUTPUT/w22-native-gesture-frame60.png"
+          test -s "$HOREB_W22_ART_OUTPUT/w22-blender-source-probe.json"
+
+      - name: Preserve native render evidence for manual ART review
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: horeb-w22-native-source-${{ github.run_id }}
+          path: ${{ runner.temp }}/horeb-w22-native/
+          retention-days: 7
+          if-no-files-found: warn

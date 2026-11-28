@@ -1,0 +1,52 @@
+{
+  "name": "react-vite-tailwind",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predev": "node tests/generate-reader.mjs",
+    "prebuild": "node tests/generate-reader.mjs",
+    "test:browser:smoke": "node tests/browser-smoke.mjs",
+    "test:browser:exhibits": "node tests/browser-exhibits.mjs",
+    "test:browser:visual": "node tests/browser-visual-witness.mjs && node tests/browser-mother-w20-pose.cjs && node tests/browser-mother-w22.cjs",
+    "test:browser:journey": "node tests/browser-journey.mjs",
+    "test:browser:side": "node tests/browser-side-journey.mjs",
+    "test:browser:quality": "node tests/browser-quality.mjs",
+    "test:browser:chapters": "node tests/browser-chapters.mjs && node tests/browser-nile-walk.mjs && node tests/browser-nile-village.mjs && node tests/browser-midian-walk.mjs && node tests/browser-homestead-walk.mjs",
+    "test:browser:nile-village": "node tests/browser-nile-village.mjs",
+    "test:browser:mother": "node tests/browser-mother-artlab.cjs",
+    "test:browser:mother-w19": "node tests/browser-mother-w19e.cjs",
+    "test:browser:midian-walk": "node tests/browser-midian-walk.mjs",
+    "test:browser:homestead-walk": "node tests/browser-homestead-walk.mjs",
+    "test:browser:nile-walk": "node tests/browser-nile-walk.mjs",
+    "test:browser:firefox": "node tests/browser-firefox-smoke.mjs",
+    "test:hardware:soak": "node tests/browser-hardware-soak.mjs"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/noto-serif": "^5.3.0",
+    "@fontsource/noto-serif-hebrew": "^5.3.0",
+    "@types/three": "^0.187.0",
+    "clsx": "2.1.1",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "tailwind-merge": "3.4.0",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "@tailwindcss/vite": "4.1.17",
+    "@types/node": "22.19.17",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.1.1",
+    "puppeteer-core": "^25.16.0",
+    "tailwindcss": "4.1.17",
+    "typescript": "5.9.3",
+    "vite": "7.3.2",
+    "vite-plugin-singlefile": "2.3.0"
+  }
+}
