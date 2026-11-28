@@ -38,7 +38,7 @@ def winding(p,t):
     den=la*lb*lc+np.sum(a*b,axis=1)*lc+np.sum(b*c,axis=1)*la+np.sum(c*a,axis=1)*lb
     return float(np.sum(2*np.arctan2(det,den))/(4*np.pi))
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--bilateral',action='store_true');parser.add_argument('--closure',action='store_true');args=parser.parse_args();assert not args.closure or args.bilateral
+    parser=argparse.ArgumentParser();parser.add_argument('evidence',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--bilateral',action='store_true');parser.add_argument('--closure',action='store_true');parser.add_argument('--pad',action='store_true');args=parser.parse_args();assert not args.pad or args.closure;assert not args.closure or args.bilateral
     root=args.evidence;out=args.output;assert not out.exists()
     if args.bilateral:
         from probe_w35e_playback import pose
@@ -50,6 +50,9 @@ def main():
     else:
         f=root/'W35c-static-160-0-20261127';r=json.loads((f/'w34zx-export.json').read_text());sha=r['export']['sha256'];d,a=load(f/'w34zx-static-actor.glb',sha)
     g,_=geometry(d,a,True)
+    if args.pad:
+        from probe_w36g_pad_compliance import apply_pad
+        g=apply_pad(g,root,1.,sha)
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text());h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
     hg,_=geometry(h,ha,drop=m['basket_support']['analytic_settle_delta_m'])
     rim=hg['Basket_thick_lipped_rim'];t=rim['v'][rim['tri']];top=topology(rim['v'],rim['tri'])
@@ -128,5 +131,5 @@ def main():
                 'largest_angle_within_12mm':min(same_section,key=lambda q:q['dot']) if same_section else None,
                 'largest_angle_within_5mm':min((q for q in same_section if q['max_gap_mm']<=5),key=lambda q:q['dot'],default=None)}
         results[side]=result;print(side,json.dumps(result),flush=True)
-    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':sha,'closure':args.closure,'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
+    out.write_text(json.dumps({'status':'ART_HOLD_RIM_CONTACT_WITNESS','source_sha256':sha,'closure':args.closure,'pad':args.pad,'rim_topology':top,'body_signed_volume_m3':body_volume,'results':results,'limitations':['Vertex containment for seam-bridged diagnostic rim only, exact original distances, not swept volume, coplanar contact or complete basket solid containment. Facing normal opposition is not proof of load-bearing grip.']},indent=2))
 if __name__=='__main__':main()
