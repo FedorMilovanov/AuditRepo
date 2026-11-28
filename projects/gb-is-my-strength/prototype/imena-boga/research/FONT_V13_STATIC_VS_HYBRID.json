@@ -1,0 +1,91 @@
+{
+  "method": "Chromium 390x844; 4x CPU; 150ms CDP RTT; 200000 B/s download; HTTP gzip; font domains blocked in both; v12=variable local fonts vs v13=static subset local fonts, three runs; localhost benchmark, not field Web Vitals",
+  "summary": [
+    {
+      "app": "atlas",
+      "v": "v12",
+      "medianFCP": 2228,
+      "medianFontsReady": 4539,
+      "medianBytes": 476964,
+      "medianLoadedFontFiles": 20,
+      "medianCLS": 0.09711907642331277
+    },
+    {
+      "app": "atlas",
+      "v": "v13",
+      "medianFCP": 2216,
+      "medianFontsReady": 5107,
+      "medianBytes": 545820,
+      "medianLoadedFontFiles": 20,
+      "medianCLS": 0.09154618661842957
+    }
+  ],
+  "rows": [
+    {
+      "iteration": 1,
+      "version": "v12",
+      "app": "atlas",
+      "fcp": 2236,
+      "fontsReadyMs": 4479,
+      "settledBytes": 476964,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.06572785048427161
+    },
+    {
+      "iteration": 1,
+      "version": "v13",
+      "app": "atlas",
+      "fcp": 2192,
+      "fontsReadyMs": 5107,
+      "settledBytes": 545820,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.09159122442542242
+    },
+    {
+      "iteration": 2,
+      "version": "v13",
+      "app": "atlas",
+      "fcp": 2252,
+      "fontsReadyMs": 5122,
+      "settledBytes": 545820,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.06030447125139447
+    },
+    {
+      "iteration": 2,
+      "version": "v12",
+      "app": "atlas",
+      "fcp": 2204,
+      "fontsReadyMs": 4539,
+      "settledBytes": 476964,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.14686504196116543
+    },
+    {
+      "iteration": 3,
+      "version": "v12",
+      "app": "atlas",
+      "fcp": 2228,
+      "fontsReadyMs": 4956,
+      "settledBytes": 476964,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.09711907642331277
+    },
+    {
+      "iteration": 3,
+      "version": "v13",
+      "app": "atlas",
+      "fcp": 2216,
+      "fontsReadyMs": 5064,
+      "settledBytes": 545820,
+      "localFontFiles": 20,
+      "localRequests": 23,
+      "cls": 0.09154618661842957
+    }
+  ]
+}
