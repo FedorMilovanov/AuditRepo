@@ -39,6 +39,8 @@ jobs:
         run: npm run build
       - name: Typecheck
         run: npx tsc --noEmit
+      - name: Test isolated W39 playback scheduler
+        run: node art-lab/mother-w22/browser/test-playback.mjs
       - name: Verify 42 records and actual geometry
         run: sh tests/test.sh
       - name: Ensure HTML reader is reproducible and committed
