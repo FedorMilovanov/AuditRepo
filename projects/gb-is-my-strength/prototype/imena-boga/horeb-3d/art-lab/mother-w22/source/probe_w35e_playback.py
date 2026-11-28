@@ -32,7 +32,7 @@ def pose(doc,acc,t):
         d['nodes'][target['node']][field]=v.tolist()
     return d
 
-def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,extension=False,sample_time=None):
+def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,extension=False,sample_time=None,handoff=False):
     folder=root/('W35y-bilateral-20261128' if bilateral else 'W35d-approach-20261127')
     r=json.loads((folder/('w35y-assembly.json' if bilateral else 'w35d-assembly.json')).read_text())
     doc,acc=load(folder/('w35y-approach.glb' if bilateral else 'w35d-approach.glb'),r['sha256'])
@@ -42,6 +42,10 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,ext
         ext=root/'W36m-closure-20261128';r=json.loads((ext/'w36m-assembly.json').read_text())
         assert r['approach_sha256']==original_sha
         doc,acc=load(ext/'w36m-approach-closure.glb',r['sha256'])
+    if handoff:
+        assert bilateral and not extension and closure_fraction is None and pad_fraction is None
+        ext=root/'W38a-handoff-20261128';r=json.loads((ext/'w38a-assembly.json').read_text())
+        doc,acc=load(ext/'w38a-handoff.glb',r['sha256'])
     source,sa=load(root/('W34s-sleeve-correction-20261127/w34s-static-actor.glb' if bilateral else 'W34v-finger-refine-20261127/w34u-static-actor.glb'),r['source_sha256'])
     m=json.loads((root/'W34m-reach-20261127/w34m-reach-v3.json').read_text())
     h,ha=load(root/'W28-house-20261125/w28-house.glb',m['house_sha256'])
@@ -70,10 +74,29 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,ext
         if t>=2.9:rg=apply_pad(rg,root,float(np.clip((t-2.9)/.25,0,1)),original_sha)
         extension_error=max(float(np.max(abs(v['v']-rg[k]['v']))) for k,v in g.items())
     names={n['name']:i for i,n in enumerate(d['nodes'])}
+    basket_layout=None
+    stance=.100 if bilateral else .160
+    if handoff:
+        assert r['house_sha256']==m['house_sha256'] and r['settle_delta_m']==m['basket_support']['analytic_settle_delta_m']
+        i=r['basket_track_node'];assert d['nodes'][i]['name']==r['basket_track_name']
+        M=w[i];Q=M[:3,:3];S=M[:3,3]
+        assert np.max(abs(Q.T@Q-np.eye(3)))<1e-6 and np.linalg.det(Q)>.99999
+        hg={k:dict(z,v=z['v']@Q.T+S) if z['basket'] else z for k,z in hg.items()}
+        stance=float(np.interp(t,[z['seconds'] for z in r['keys']],[z['stance_mm'] for z in r['keys']]))*.001
+        bb=merged([z for z in hg.values() if z['basket']]);bv=bb['v'];lo=bv.min(0);hi=bv.max(0);table=hg['Coarse_work_surface'];th=table['v'].max(0);tl=table['v'].min(0)
+        near=bv[(bv[:,0]>=tl[0])&(bv[:,0]<=th[0])&(bv[:,2]>=tl[2])&(bv[:,2]<=th[2])]
+        bc={}
+        for k,z in hg.items():
+            if z['basket'] or np.any((z['v'].max(0)<lo-1e-8)|(z['v'].min(0)>hi+1e-8)):continue
+            bt=z['v'][z['tri']];mask=np.all((bt.min(1)<=hi+1e-8)&(bt.max(1)>=lo-1e-8),axis=1)
+            if mask.any():
+                count=contacts(bb,dict(z,tri=z['tri'][mask],region=z['region'][mask]),np.arange(len(bb['tri'])))['pairs']
+                if count:bc[k]=count
+        basket_layout={'table_min_gap_mm':float((near[:,1].min()-th[1])*1000),'proper_crossings':bc,'rotation':Q.tolist(),'translation':S.tolist()}
     changed={}
     for k,v in g.items():
         assert np.array_equal(v['tri'],baseline[k]['tri'])
-        mask=np.linalg.norm(v['v']-baseline[k]['v']-[0,0,.100 if bilateral else .160],axis=1)>1e-6
+        mask=np.linalg.norm(v['v']-baseline[k]['v']-[0,0,stance],axis=1)>1e-6
         changed[k]=np.flatnonzero(np.any(mask[v['tri']],axis=1))
     def hit(a,b,active=None,selfcheck=False,ids=False):
         if active is None:active=np.arange(len(a['tri']))
@@ -133,7 +156,7 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,ext
         target=np.array(q['best']['joint_world_matrices']['hand_'+side])[:3,3]+direction*.06*(1-t/1.5)
         error[side]=float(np.linalg.norm(w[names['hand_'+side]][:3,3]-target)*1000)
     grip=None
-    if bilateral:
+    if bilateral and not handoff:
         from probe_w35i_rim_contact import closest,normals
         left=json.loads((root/'W35k-cross-section-l-20261127.json').read_text())['shapes'][1]['best']
         right=next(q for q in json.loads((root/'W35l-mirror-contact-20261127.json').read_text())['right'] if q['passes'] and q['left_source_pair']==left['skin_vertices'] and q['delta_mm']==[0,0,0])
@@ -165,7 +188,7 @@ def audit(root,frame,bilateral=False,closure_fraction=None,pad_fraction=None,ext
         endpoint=max(float(np.max(abs(v['v']-gg[k]['v']))) for k,v in g.items())
     # Floor height is a verified constant on this staging area; feet unchanged from source.
     floor_gap=float((body['v'][:,1].min()+.005)*1000)
-    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip,'closure_fraction':closure_fraction,'pad_fraction':pad_fraction,'extension_reference_error_m':extension_error}
+    return {'frame':frame,'seconds':t,'skin_self_total':skin['pairs'],'toe_pairs_below_150mm':int(toe_pairs),'tunic_self':cloth,'body_clothes':garment_hits,'other_changed_actor':other,'scene':scene,'severe_faces':strain,'wrist_error_mm':error,'endpoint_max_error_m':endpoint,'min_body_height_vs_floor_mm':floor_gap,'grip':grip,'closure_fraction':closure_fraction,'pad_fraction':pad_fraction,'extension_reference_error_m':extension_error,'basket_layout':basket_layout}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('evidence',type=Path)
